@@ -1,0 +1,24 @@
+{
+    "name": "tala/tala",
+    "type": "library",
+    "description": "Tala, a consistent, well tested PHP payment processing library",
+    "keywords": ["payment", "merchant", "gateway"],
+    "homepage": "https://adrianmacneil.github.com/tala",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Adrian Macneil",
+            "email": "adrian.macneil@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/http-foundation": "2.0.*",
+        "kriswallsmith/buzz": "0.5"
+    },
+    "autoload": {
+        "psr-0" : {
+            "Tala" : "src/"
+        }
+    }
+}
