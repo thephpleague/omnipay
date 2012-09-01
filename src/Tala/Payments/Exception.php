@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala;
+namespace Tala\Payments;
 
 /**
  * Exception marker interface

@@ -1,8 +1,8 @@
 <?php
 
-namespace Tala;
+namespace Tala\Payments;
 
-use Tala\Exception\BadMethodCallException;
+use Tala\Payments\Exception\BadMethodCallException;
 
 /**
  * Base payment gateway class

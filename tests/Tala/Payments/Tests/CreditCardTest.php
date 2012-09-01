@@ -1,8 +1,8 @@
 <?php
 
-namespace Tala\Tests;
+namespace Tala\Payments\Tests;
 
-use Tala\CreditCard;
+use Tala\Payments\CreditCard;
 
 class CreditCardTest extends \PHPUnit_Framework_TestCase
 {

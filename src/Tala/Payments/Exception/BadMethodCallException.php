@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Exception;
+namespace Tala\Payments\Exception;
 
-use Tala\Exception;
+use Tala\Payments\Exception;
 
 /**
  * Bad method call exception.

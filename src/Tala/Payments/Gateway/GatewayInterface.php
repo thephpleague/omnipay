@@ -1,6 +1,6 @@
 <?php
 
-namespace Tala;
+namespace Tala\Payments;
 
 /**
  * Payment gateway interface
