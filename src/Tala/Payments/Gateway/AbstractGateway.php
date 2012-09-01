@@ -1,6 +1,6 @@
 <?php
 
-namespace Tala\Payments;
+namespace Tala\Payments\Gateway;
 
 use Tala\Payments\Exception\BadMethodCallException;
 

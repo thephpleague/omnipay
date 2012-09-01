@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Payments;
+namespace Tala\Payments\Response;
 
 /**
  * Redirect Response class
@@ -45,7 +45,7 @@ class RedirectResponse implements ResponseInterface
     /**
      * Was the request successful?
      */
-    function isSuccessful()
+    public function isSuccessful()
     {
         return false;
     }
@@ -53,7 +53,7 @@ class RedirectResponse implements ResponseInterface
     /**
      * Gets the response message from the payment gateway.
      */
-    function getMessage()
+    public function getMessage()
     {
         return null;
     }
@@ -61,7 +61,7 @@ class RedirectResponse implements ResponseInterface
     /**
      * Gets the redirect target url.
      */
-    function getRedirectUrl()
+    public function getRedirectUrl()
     {
         return $this->redirectUrl;
     }
@@ -69,7 +69,7 @@ class RedirectResponse implements ResponseInterface
     /**
      * Perform the required redirect.
      */
-    function redirect()
+    public function redirect()
     {
         $response = new \Symfony\Component\HttpFoundation\RedirectResponse($this->redirectUrl);
         $response->send();

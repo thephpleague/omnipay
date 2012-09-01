@@ -102,7 +102,7 @@ class CreditCard
 
     public function setExpiryMonth($value)
     {
-        $this->expiryMonth = (int)$value;
+        $this->expiryMonth = (int) $value;
     }
 
     public function getExpiryYear()
@@ -112,7 +112,7 @@ class CreditCard
 
     public function setExpiryYear($value)
     {
-        $value = (int)$value;
+        $value = (int) $value;
         if ($value < 100) {
             $value += 2000;
         }
@@ -315,38 +315,35 @@ class CreditCard
         $this->shippingCountry = $value;
     }
 
-	protected function validateNumber()
-	{
+    protected function validateNumber()
+    {
         /*
          * Luhn algorithm number checker - (c) 2005-2008 shaman - www.planzero.org
          * This code has been released into the public domain, however please
          * give credit to the original author where possible.
          */
 
-		// Set the string length and parity
-		$number_length = strlen($this->number);
-		$parity = $number_length % 2;
+        // Set the string length and parity
+        $number_length = strlen($this->number);
+        $parity = $number_length % 2;
 
-		// Loop through each digit and do the maths
-		$total = 0;
-		for ($i = 0; $i < $number_length; $i++)
-		{
-			$digit = $this->number[$i];
-			// Multiply alternate digits by two
-			if ($i % 2 == $parity)
-			{
-				$digit *= 2;
-				// If the sum is two digits, add them together (in effect)
-				if ($digit > 9)
-				{
-					$digit -= 9;
-				}
-			}
-			// Total up the digits
-			$total += $digit;
-		}
+        // Loop through each digit and do the maths
+        $total = 0;
+        for ($i = 0; $i < $number_length; $i++) {
+            $digit = $this->number[$i];
+            // Multiply alternate digits by two
+            if ($i % 2 == $parity) {
+                $digit *= 2;
+                // If the sum is two digits, add them together (in effect)
+                if ($digit > 9) {
+                    $digit -= 9;
+                }
+            }
+            // Total up the digits
+            $total += $digit;
+        }
 
-		// If the total mod 10 equals 0, the number is valid
-		return ($total % 10 == 0) ? TRUE : FALSE;
+        // If the total mod 10 equals 0, the number is valid
+        return ($total % 10 == 0) ? TRUE : FALSE;
     }
 }

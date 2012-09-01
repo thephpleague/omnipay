@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Payments;
+namespace Tala\Payments\Response;
 
 /**
  * Response interface
@@ -21,15 +21,15 @@ interface ResponseInterface
     /**
      * Does the request require a redirect?
      */
-    function isRedirect();
+    public function isRedirect();
 
     /**
      * Was the request successful?
      */
-    function isSuccessful();
+    public function isSuccessful();
 
     /**
      * Gets the response message from the payment gateway.
      */
-    function getMessage();
+    public function getMessage();
 }

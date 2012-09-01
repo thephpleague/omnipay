@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Payments;
+namespace Tala\Payments\Response;
 
 /**
  * Base Response class
@@ -26,7 +26,7 @@ class Response implements ResponseInterface
      */
     public function __construct($success, $message = null)
     {
-        $this->success = (bool)$success;
+        $this->success = (bool) $success;
         $this->message = $message;
     }
 
@@ -41,7 +41,7 @@ class Response implements ResponseInterface
     /**
      * Was the request successful?
      */
-    function isSuccessful()
+    public function isSuccessful()
     {
         return $this->success;
     }
@@ -49,7 +49,7 @@ class Response implements ResponseInterface
     /**
      * Get the response message from the payment gateway.
      */
-    function getMessage()
+    public function getMessage()
     {
         return $this->message;
     }

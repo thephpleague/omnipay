@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Payments;
+namespace Tala\Payments\Response;
 
 /**
  * Form Redirect Response class
@@ -46,7 +46,7 @@ class FormRedirectResponse extends RedirectResponse
     /**
      * Perform the required redirect.
      */
-    function redirect()
+    public function redirect()
     {
         $hiddenFields = '';
         foreach ($this->formData as $name => $value) {
@@ -62,12 +62,12 @@ class FormRedirectResponse extends RedirectResponse
     </head>
     <body onload="document.forms[0].submit();">
         <form action="%1$s" method="post">
-    		<p>Redirecting to payment gateway...</p>
-    		<p>
-    		    %2$s
-    		    <input type="submit" value="Continue" />
-    		</p>
-	    </form>
+            <p>Redirecting to payment gateway...</p>
+            <p>
+                %2$s
+                <input type="submit" value="Continue" />
+            </p>
+        </form>
     </body>
 </html>', htmlspecialchars($this->redirectUrl, ENT_QUOTES, 'UTF-8'), $hiddenFields);
 
