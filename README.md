@@ -23,8 +23,8 @@ so it is easy for cart developers to include all payment gateways at once.
 
 # Payment Gateways
 
-All payment gateways will implement `\Tala\Payments\Gateway\GatewayInterface`, and usually
-extend `\Tala\Payments\Gateway\AbstractGateway` for basic functionality.
+All payment gateways will implement [\Tala\Payments\Gateway\GatewayInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/Gateway/GatewayInterface.php), and usually
+extend [\Tala\Payments\Gateway\AbstractGateway](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/Gateway/AbstractGateway.php) for basic functionality.
 
 Gateways are initialized like so:
 
@@ -59,7 +59,7 @@ gateway (other than by the methods they support).
 
 # Credit Card / Payment Form Input
 
-User form input will be directed to a `\Tala\Payments\CreditCard` object. This provides a safe way to mass-assign user input.
+User form input will be directed to a [\Tala\Payments\CreditCard](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/CreditCard.php) object. This provides a safe way to mass-assign user input.
 The `CreditCard` object will have the following fields:
 
 * firstName
@@ -130,7 +130,7 @@ The main methods implemented by gateways are:
 * `void($gatewayReference, $options);` - generally can only be called up to 24 hours after submitting a transaction
 
 On-site gateways do not need to implement the `completeAuthorize` and `completePurchase` methods. If any gateway does not support
-certain features (such as refunds), it will throw a `\Tala\Payments\Exception\BadMethodCallException`.
+certain features (such as refunds), it will throw a [\Tala\Payments\Exception\BadMethodCallException](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/Exception/BadMethodCallException.php).
 
 The payment methods will take a currency (supplied as an integer in the lowest unit, e.g. cents, to avoid floating point
 precision issues), a payment source, and an array of extra options, and return a response object:
@@ -164,7 +164,7 @@ At this point, you may be wondering the difference between gateway settings, `Cr
 
 # The Payment Response
 
-The payment response must implement `\Tala\Payments\Response\ResponseInterface`. There are two main types of response:
+The payment response must implement [\Tala\Payments\Response\ResponseInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/Response/ResponseInterface.php). There are two main types of response:
 
 * Payment was successful (standard response)
 * Website must redirect to off-site payment form (redirect response)
