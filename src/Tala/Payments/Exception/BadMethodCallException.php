@@ -18,6 +18,6 @@ use Tala\Payments\Exception;
  *
  * @author  Adrian Macneil <adrian.macneil@gmail.com>
  */
-class BadMethodCallException extends \BadMethodCallException implements Extension
+class BadMethodCallException extends \BadMethodCallException implements Exception
 {
 }

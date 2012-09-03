@@ -22,7 +22,7 @@ abstract class AbstractGateway implements GatewayInterface
     /**
      * Handles return from an authorization.
      */
-    public function authorizeReturn($options)
+    public function completeAuthorize($amount, $options)
     {
         throw new BadMethodCallException();
     }
@@ -30,7 +30,7 @@ abstract class AbstractGateway implements GatewayInterface
     /**
      * Capture an authorized payment.
      */
-    public function capture($transactionId, $options)
+    public function capture($gatewayReference, $options);
     {
         throw new BadMethodCallException();
     }
@@ -46,7 +46,7 @@ abstract class AbstractGateway implements GatewayInterface
     /**
      * Handle return from a purchase.
      */
-    public function purchaseReturn($options)
+    public function completePurchase($amount, $options)
     {
         throw new BadMethodCallException();
     }
@@ -56,7 +56,7 @@ abstract class AbstractGateway implements GatewayInterface
      * Generally this will refund a transaction which has been already submitted for processing,
      * and may be called up to 30 days after submitting the transaction.
      */
-    public function refund($transactionReference, $options)
+    public function refund($gatewayReference, $options);
     {
         throw new BadMethodCallException();
     }
@@ -66,7 +66,7 @@ abstract class AbstractGateway implements GatewayInterface
      * Generally this will prevent the transaction from being submitted for processing,
      * and can only be called up to 24 hours after submitting the transaction.
      */
-    public function void($transactionReference, $options)
+    public function void($gatewayReference, $options);
     {
         throw new BadMethodCallException();
     }
