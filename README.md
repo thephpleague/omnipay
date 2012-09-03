@@ -23,7 +23,7 @@ so it is easy for cart developers to include all payment gateways at once.
 
 # Payment Gateways
 
-All payment gateways will implement [\Tala\Payments\Gateway\GatewayInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/Gateway/GatewayInterface.php), and usually
+All payment gateways must implement [\Tala\Payments\Gateway\GatewayInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/Gateway/GatewayInterface.php), and usually
 extend [\Tala\Payments\Gateway\AbstractGateway](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/Gateway/AbstractGateway.php) for basic functionality.
 
 Gateways are initialized like so:
@@ -114,8 +114,8 @@ What are the best framework-independent naming conventions for this? I was think
         print_r($errors);
     }
 
-Some gateways will require more fields be present, as well or instead of the standard ones above. Perhaps it is easier
-if this error handling is managed inside the gateway library instead?
+Some gateways will require more fields be present, as well or instead of the standard ones above. It may be easier if
+error handling is removed from the `CreditCard` object and left entirely up to the gateway library.
 
 # Gateway Methods
 
@@ -123,16 +123,16 @@ The main methods implemented by gateways are:
 
 * `authorize($amount, $source, $options)` - authorize an amount on the customer's card
 * `completeAuthorize($amount, $options)` - handle return from off-site gateways after authorization
-* `capture($gatewayReference, $options);` - capture an amount you have previously authorized
+* `capture($gatewayReference, $options)` - capture an amount you have previously authorized
 * `purchase($amount, $source, $options)` - authorize and immediately capture an amount on the customer's card
 * `completePurchase($amount, $options)` - handle return from off-site gateways after purchase
-* `refund($gatewayReference, $options);` - refund an already processed transaction
-* `void($gatewayReference, $options);` - generally can only be called up to 24 hours after submitting a transaction
+* `refund($gatewayReference, $options)` - refund an already processed transaction
+* `void($gatewayReference, $options)` - generally can only be called up to 24 hours after submitting a transaction
 
 On-site gateways do not need to implement the `completeAuthorize` and `completePurchase` methods. If any gateway does not support
 certain features (such as refunds), it will throw a [\Tala\Payments\Exception\BadMethodCallException](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/Exception/BadMethodCallException.php).
 
-The payment methods will take a currency (supplied as an integer in the lowest unit, e.g. cents, to avoid floating point
+The payment methods will take an amount (supplied as an integer in the lowest unit, e.g. cents, to avoid floating point
 precision issues), a payment source, and an array of extra options, and return a response object:
 
     $card = new CreditCard();
@@ -148,18 +148,19 @@ Alternatively, we could introduce some form of payment request object:
     $request->setReturnUrl('https://example.com/payment/complete');
     $response = $gateway->authorize($request);
 
-*Feedback Wanted*: Let me know which option you think provides a nicer API or more flexibility.
+**Feedback Wanted**: Let me know which option you think provides a nicer API or greater flexibility.
 
 In payment requests, the `$source` variable can be either a `CreditCard` object, or a string `token` which has been stored from a previous
-transaction (see the Token Billing section below).
+transaction for certain gateways (see the Token Billing section below).
 
-When calling the `completeAuthorize` or `completePayment` methods, the exact same arguments should be provided as when you made the initial
-`authorize` or `purchase` call.
+When calling the `completeAuthorize` or `completePurchase` methods, the exact same arguments should be provided as when you made the initial
+`authorize` or `purchase` call (some gateways will need to verify for example the actual amount paid equals the amount requested).
+Is there any situation where the `CreditCard` object may need to be passed to a `completePurchase` call?
 
-At this point, you may be wondering the difference between gateway settings, `CreditCard` fields, and `$options` on the `purchase()` method:
+At this point, you may be wondering the difference between gateway `$settings`, `CreditCard` fields, and `$options` on the `purchase()` method:
 
-* Gateway settings are settings which apply to all payments (like gateway username and password). Generally you will store these in a configuration file, or in the database.
-* CreditCard fields are data which the user will supply. For example, you want the user to specify their `firstName` and `billingCountry`, but you don't want a user to specify the payment `currency` or `returnUrl`.
+* Gateway `$settings` are settings which apply to all payments (like the gateway username and password). Generally you will store these in a configuration file or in the database.
+* CreditCard fields are data which the user supplies. For example, you want the user to specify their `firstName` and `billingCountry`, but you don't want a user to specify the payment `currency` or `returnUrl`.
 * `$options` is used for any payment-specific options, which are not set by the customer. For example, the payment `transactionId` and `returnUrl`, and you can also override the `currency` here if you need to.
 
 # The Payment Response
@@ -169,6 +170,8 @@ The payment response must implement [\Tala\Payments\Response\ResponseInterface](
 * Payment was successful (standard response)
 * Website must redirect to off-site payment form (redirect response)
 
+## Successful Response
+
 For a successful responses, a reference will normally be generated, which can be used to capture or refund the transaction
 at a later date. The following methods are always available:
 
@@ -176,6 +179,8 @@ at a later date. The following methods are always available:
     $mesage = $response->getMessage();
 
 In addition, most gateways will override the response object, and provide access to any extra fields returned by the gateway.
+
+## Redirect Response
 
 The redirect response is further broken down by whether the customer's browser must redirect using GET (RedirectResponse object), or
 POST (FormRedirectResponse). These could potentially be combined into a single response class, with a `getRedirectMethod()`.
@@ -228,24 +233,25 @@ However, I'm open to feedback/suggestions on this.
 
 # Token Billing
 
-I'm still working on functions for token billing. Most likely gateways will be able to implement the following functions:
+I'm still working on functions for token billing. Most likely gateways will be able to implement the following methods:
 
 * `store($card)` - returns a response object which includes a `token`, which can be used for future transactions
 * `unstore($token)` - remove a stored card, not all gateways support this method
 
-Feel free to suggest better names for these functions.
+Feel free to suggest better names for these methods.
 
 # Recurring Billing
 
 At this stage, I don't think there will be support for automatic recurring payments functionality (asice from token billing).
-This is because there is likely far too many differences between how each gateway handles recurring profiles. Also in most cases
-token billing will cover your needs. I'm open to suggestions on this.
+This is because there is likely far too many differences between how each gateway handles recurring billing profiles.
+Also in most cases token billing will cover your needs. I'm open to suggestions on this.
 
 # I18n
 
-I'm not sure what the best option for cross-framework localization is. Perhaps it is easier if it's not part of this library?
+I'm not sure what the best option for cross-framework localization is. What do most generic Composer packages use these days?
+Perhaps it is easier if it's not part of this library?
 
 # Feedback
 
-Please provide feedback! We want to make this library useful in as many projects as possible. Please raise a Github issue, and
-point out what you do and don't like, or fork the project and make any suggestions.
+**Please provide feedback!** We want to make this library useful in as many projects as possible.
+Please raise a Github issue, and point out what you do and don't like, or fork the project and make any suggestions.
