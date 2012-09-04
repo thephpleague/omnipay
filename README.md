@@ -18,7 +18,7 @@ only requires PayPal Express in their application, they can simply require `tala
 * Users who only need a single payment gateway don't need to include unnecessary files in their project
 * Obscure gateways can be implemented separately, and supported by third parties, without needing to be include in the main project
 
-We could possibly make a general `tala-payments` package which depends on all the officially supported payment gateways,
+We could possibly make a general `tala-payments` or `tala-payments-all` package which depends on all the officially supported payment gateways,
 so it is easy for cart developers to include all payment gateways at once.
 
 # Payment Gateways
