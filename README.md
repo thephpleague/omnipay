@@ -15,11 +15,13 @@ plus a separate library for each supported payment gateway, which depends on the
 only requires PayPal Express in their application, they can simply require `tala-payments-paypal` in their
 `composer.json` file. This separate gateways method has two advantages:
 
-* Users who only need a single payment gateway don't need to include unnecessary files in their project
-* Obscure gateways can be implemented separately, and supported by third parties, without needing to be include in the main project
+* Developers who only need a single payment gateway don't need to include unnecessary files in their project
+* Obscure gateways can be implemented separately, and supported by third parties, without needing to be included in the main project
 
-We could possibly make a general `tala-payments` or `tala-payments-all` package which depends on all the officially supported payment gateways,
+We can make a `tala-payments-all` package which depends on all the officially supported payment gateways,
 so it is easy for cart developers to include all payment gateways at once.
+
+For an example gateway, see the [tala-payments-paypal](https://github.com/adrianmacneil/tala-payments-paypal) repository.
 
 # Payment Gateways
 
