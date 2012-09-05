@@ -22,10 +22,12 @@ use Tala\Payments\Request;
 abstract class AbstractGateway implements GatewayInterface
 {
     protected $currency;
+    protected $browser;
 
     public function __construct($settings = array())
     {
         $this->initialize($settings);
+        $this->browser = new \Buzz\Browser();
     }
 
     public function __call($name, $arguments)
@@ -56,16 +58,6 @@ abstract class AbstractGateway implements GatewayInterface
     public function getDefaultSettings()
     {
         return array();
-    }
-
-    public function getCurrency()
-    {
-        return $this->currency;
-    }
-
-    public function setCurrency($value)
-    {
-        $this->currency = $value;
     }
 
     /**

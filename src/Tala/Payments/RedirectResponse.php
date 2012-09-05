@@ -65,9 +65,9 @@ class RedirectResponse extends Response
     /**
      * Perform the required redirect.
      */
-    public function redirect()
+    public function redirect($httpRedirectResponseClass = '\Symfony\Component\HttpFoundation\RedirectResponse')
     {
-        $response = new \Symfony\Component\HttpFoundation\RedirectResponse($this->redirectUrl);
+        $response = new $httpRedirectResponseClass($this->redirectUrl);
         $response->send();
     }
 }

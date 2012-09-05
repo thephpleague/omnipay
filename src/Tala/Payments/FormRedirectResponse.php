@@ -46,7 +46,7 @@ class FormRedirectResponse extends RedirectResponse
     /**
      * Perform the required redirect.
      */
-    public function redirect()
+    public function redirect($httpResponseClass = '\Symfony\Component\HttpFoundation\Response')
     {
         $hiddenFields = '';
         foreach ($this->formData as $name => $value) {
@@ -71,7 +71,7 @@ class FormRedirectResponse extends RedirectResponse
     </body>
 </html>', htmlspecialchars($this->redirectUrl, ENT_QUOTES, 'UTF-8'), $hiddenFields);
 
-        $response = new \Symfony\Component\HttpFoundation\Response($output);
+        $response = new $httpResponseClass($output);
         $response->send();
     }
 }

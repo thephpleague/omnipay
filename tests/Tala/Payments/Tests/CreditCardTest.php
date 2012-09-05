@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Tala Payments package.
+ *
+ * (c) Adrian Macneil <adrian.macneil@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Tala\Payments\Tests;
 
 use Tala\Payments\CreditCard;
@@ -16,11 +25,6 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
             'expiryYear' => 2049,
             'cvv' => '123',
         ));
-    }
-
-    public function testCardIsValid()
-    {
-        $this->assertTrue($this->card->isValid());
     }
 
     public function testFirstName()
