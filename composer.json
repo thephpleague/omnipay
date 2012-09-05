@@ -1,9 +1,9 @@
 {
-    "name": "tala/tala",
+    "name": "tala/tala-payments-core",
     "type": "library",
     "description": "Tala, a consistent, well tested PHP payment processing library",
     "keywords": ["payment", "merchant", "gateway"],
-    "homepage": "https://adrianmacneil.github.com/tala",
+    "homepage": "https://github.com/adrianmacneil/tala-payments",
     "license": "MIT",
     "authors": [
         {
@@ -14,7 +14,7 @@
     "require": {
         "php": ">=5.3.2",
         "symfony/http-foundation": "2.0.*",
-        "kriswallsmith/buzz": "0.5"
+        "kriswallsmith/buzz": "0.7"
     },
     "autoload": {
         "psr-0" : {

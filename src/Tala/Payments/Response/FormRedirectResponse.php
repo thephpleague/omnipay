@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Tala package.
+ * This file is part of the Tala Payments package.
  *
  * (c) Adrian Macneil <adrian.macneil@gmail.com>
  *

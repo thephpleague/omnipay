@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Tala package.
+ * This file is part of the Tala Payments package.
  *
  * (c) Adrian Macneil <adrian.macneil@gmail.com>
  *
@@ -24,12 +24,12 @@ interface ResponseInterface
     public function isRedirect();
 
     /**
-     * Was the request successful?
-     */
-    public function isSuccessful();
-
-    /**
      * Gets the response message from the payment gateway.
      */
     public function getMessage();
+
+    /**
+     * Get a reference provided by the gateway for this transaction.
+     */
+    public function getGatewayReference();
 }

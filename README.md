@@ -24,16 +24,16 @@ so it is easy for cart developers to include all payment gateways at once.
 # Payment Gateways
 
 All payment gateways must implement [\Tala\Payments\Gateway\GatewayInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/Gateway/GatewayInterface.php), and usually
-extend [\Tala\Payments\Gateway\AbstractGateway](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/Gateway/AbstractGateway.php) for basic functionality.
+extend [\Tala\Payments\Gateway\Base](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/Gateway/Base.php) for basic functionality.
 
 Gateways are initialized like so:
 
     $settings = array(
         'username' => 'adrian',
-        'password' => 'secret',
+        'password' => '12345',
         'currency' => 'USD',
     );
-    $gateway = new PayPalExpressGateway($settings);
+    $gateway = new PayPalExpress($settings);
 
 Where `$settings` is an array of gateway-specific options. The gateway can also be initialized after creation
 by calling `initialize()`:
@@ -67,9 +67,7 @@ The `CreditCard` object will have the following fields:
 * number
 * expiryMonth
 * expiryYear
-* startMonth
-* startYear
-* verificationCode
+* cvv
 * billingAddress1
 * billingAddress2
 * billingCity
@@ -97,71 +95,43 @@ Gateways are free to extend the `CreditCard` object if they need extra fields, b
 default fields. Even off-site gateways will probably make use of a `CreditCard` object, because often you want to pass
 the customer billing details to the gateway.
 
-The CreditCard object should have built in validation. The validation should check the following requirements:
-
-* firstName, lastName, number, expiryMonth, expiryYear, and verificationCode are all present
-* The card expiry date is valid
-* The card start date is valid, if it was provided
-* The card number is valid according to the [Luhn algorighm](http://en.wikipedia.org/wiki/Luhn_algorithm).
-
-What are the best framework-independent naming conventions for this? I was thinking something along the lines of
-`isValid()` and `getErrors()` methods:
-
-    if ($card->isValid()) {
-        // process payment
-    } else {
-        $errors = $card->getErrors();
-        print_r($errors);
-    }
-
-Some gateways will require more fields be present, as well or instead of the standard ones above. It may be easier if
-error handling is removed from the `CreditCard` object and left entirely up to the gateway library.
-
 # Gateway Methods
 
 The main methods implemented by gateways are:
 
-* `authorize($amount, $source, $options)` - authorize an amount on the customer's card
-* `completeAuthorize($amount, $options)` - handle return from off-site gateways after authorization
-* `capture($gatewayReference, $options)` - capture an amount you have previously authorized
-* `purchase($amount, $source, $options)` - authorize and immediately capture an amount on the customer's card
-* `completePurchase($amount, $options)` - handle return from off-site gateways after purchase
-* `refund($gatewayReference, $options)` - refund an already processed transaction
-* `void($gatewayReference, $options)` - generally can only be called up to 24 hours after submitting a transaction
+* `authorize($request)` - authorize an amount on the customer's card
+* `completeAuthorize($request)` - handle return from off-site gateways after authorization
+* `capture($request)` - capture an amount you have previously authorized
+* `purchase($request)` - authorize and immediately capture an amount on the customer's card
+* `completePurchase($request)` - handle return from off-site gateways after purchase
+* `refund($request)` - refund an already processed transaction
+* `void($request)` - generally can only be called up to 24 hours after submitting a transaction
 
 On-site gateways do not need to implement the `completeAuthorize` and `completePurchase` methods. If any gateway does not support
 certain features (such as refunds), it will throw a [\Tala\Payments\Exception\BadMethodCallException](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/Exception/BadMethodCallException.php).
 
-The payment methods will take an amount (supplied as an integer in the lowest unit, e.g. cents, to avoid floating point
-precision issues), a payment source, and an array of extra options, and return a response object:
+All gateway methods take a [\Tala\Payments\Request](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/Request.php)
+object. The request object holds various details about the transaction:
+
 
     $card = new CreditCard();
-    $options = array('returnUrl' => 'https://example.com/payment/complete');
-    $response = $gateway->authorize(1000, $card, $options); // authorize $10
-
-Alternatively, we could introduce some form of payment request object:
-
-    $card = new CreditCard();
-    $request = new PaymentRequest();
+    $request = new Request();
     $request->setAmount(1000);
     $request->setSource($card);
     $request->setReturnUrl('https://example.com/payment/complete');
     $response = $gateway->authorize($request);
-
-**Feedback Wanted**: Let me know which option you think provides a nicer API or greater flexibility.
 
 In payment requests, the `$source` variable can be either a `CreditCard` object, or a string `token` which has been stored from a previous
 transaction for certain gateways (see the Token Billing section below).
 
 When calling the `completeAuthorize` or `completePurchase` methods, the exact same arguments should be provided as when you made the initial
 `authorize` or `purchase` call (some gateways will need to verify for example the actual amount paid equals the amount requested).
-Is there any situation where the `CreditCard` object may need to be passed to a `completePurchase` call?
 
-At this point, you may be wondering the difference between gateway `$settings`, `CreditCard` fields, and `$options` on the `purchase()` method:
+At this point, you may be wondering the difference between gateway `$settings`, `CreditCard` fields, and `Request` fields:
 
 * Gateway `$settings` are settings which apply to all payments (like the gateway username and password). Generally you will store these in a configuration file or in the database.
 * CreditCard fields are data which the user supplies. For example, you want the user to specify their `firstName` and `billingCountry`, but you don't want a user to specify the payment `currency` or `returnUrl`.
-* `$options` is used for any payment-specific options, which are not set by the customer. For example, the payment `transactionId` and `returnUrl`, and you can also override the `currency` here if you need to.
+* Request fields are used for any payment-specific options, which are not set by the customer. For example, the payment `transactionId` and `returnUrl`, and you can also override the `currency` here if you need to.
 
 # The Payment Response
 
@@ -214,22 +184,6 @@ own exceptions. All payments should be wrapped in a try-catch block:
     } catch (\Tala\Payments\Exception $e) {
         // display error to the user
     }
-
-An alternative to this would be having a response object which indicates the success state. For example:
-
-    $response = $gateway->purchase(1000, $card);
-    if ($response->isSuccessful()) {
-        // mark order as complete
-    } else {
-        // display error to the user
-    }
-
-This method is (arguably) nicer for the end developer, but means we end up writing more boilerplate code in each gateway,
-because we can not easily do things such as throw an exception inside a nested function if there is a network error, or if
-the supplied credit card is invalid. Exceptions would also allow each gateway to be more specific about what is causing a
-particular error, and users could catch specific exceptions and do different things with them.
-
-However, I'm open to feedback/suggestions on this.
 
 # Token Billing
 

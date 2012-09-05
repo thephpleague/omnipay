@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Tala package.
+ * This file is part of the Tala Payments package.
  *
  * (c) Adrian Macneil <adrian.macneil@gmail.com>
  *
@@ -16,22 +16,18 @@ namespace Tala\Payments\Response;
  *
  * @author  Adrian Macneil <adrian.macneil@gmail.com>
  */
-class RedirectResponse implements ResponseInterface
+class RedirectResponse extends Response
 {
     protected $redirectUrl;
 
     /**
      * Constructor.
      *
-     * @param string $url   The URL to redirect to
-     * @param array  $query Optional HTTP query string parameters
+     * @param string $url The URL to redirect to
      */
-    public function __construct($url, $query = array())
+    public function __construct($url)
     {
         $this->redirectUrl = $url;
-        if (!empty($query)) {
-            $this->redirectUrl .= '?'.http_build_query($query);
-        }
     }
 
     /**

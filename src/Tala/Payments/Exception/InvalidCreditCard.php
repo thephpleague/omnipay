@@ -9,13 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Payments;
+namespace Tala\Payments\Exception;
+
+use Tala\Payments\Exception;
 
 /**
- * Exception marker interface
+ * Invalid Credit Card exception.
+ *
+ * Thrown when a gateway responded with invalid or unexpected data (for example, a security hash did not match).
  *
  * @author  Adrian Macneil <adrian.macneil@gmail.com>
  */
-interface Exception
+class InvalidCreditCard extends \RuntimeException implements Exception
 {
 }

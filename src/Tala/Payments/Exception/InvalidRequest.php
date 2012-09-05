@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Tala package.
+ * This file is part of the Tala Payments package.
  *
  * (c) Adrian Macneil <adrian.macneil@gmail.com>
  *
@@ -14,10 +14,12 @@ namespace Tala\Payments\Exception;
 use Tala\Payments\Exception;
 
 /**
- * Bad method call exception.
+ * Invalid Request exception.
+ *
+ * Thrown when a gateway responded with invalid or unexpected data (for example, a security hash did not match).
  *
  * @author  Adrian Macneil <adrian.macneil@gmail.com>
  */
-class BadMethodCallException extends \BadMethodCallException implements Exception
+class InvalidRequest extends \RuntimeException implements Exception
 {
 }

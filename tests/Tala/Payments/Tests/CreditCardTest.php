@@ -14,7 +14,7 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
             'number' => '4222222222222222',
             'expiryMonth' => 4,
             'expiryYear' => 2049,
-            'verificationCode' => '123',
+            'cvv' => '123',
         ));
     }
 
@@ -99,10 +99,10 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(2012, $this->card->getExpiryYear());
     }
 
-    public function testVerificationCode()
+    public function testCvv()
     {
-        $this->card->setVerificationCode('456');
-        $this->assertEquals('456', $this->card->getVerificationCode());
+        $this->card->setCvv('456');
+        $this->assertEquals('456', $this->card->getCvv());
     }
 
     public function testBillingAddress1()

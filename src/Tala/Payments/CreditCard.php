@@ -1,6 +1,18 @@
 <?php
 
+/*
+ * This file is part of the Tala Payments package.
+ *
+ * (c) Adrian Macneil <adrian.macneil@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Tala\Payments;
+
+use Tala\Payments\Exception\InvalidCreditCard;
+use Tala\Payments\Exception\InvalidRequest;
 
 /**
  * Credit Card class
@@ -14,7 +26,11 @@ class CreditCard
     protected $number;
     protected $expiryMonth;
     protected $expiryYear;
-    protected $verificationCode;
+    protected $startMonth;
+    protected $startYear;
+    protected $issue;
+    protected $cvv;
+    protected $type;
     protected $billingAddress1;
     protected $billingAddress2;
     protected $billingCity;
@@ -27,30 +43,21 @@ class CreditCard
     protected $shippingPostcode;
     protected $shippingState;
     protected $shippingCountry;
-    protected $errors;
+    protected $phone;
+    protected $email;
 
     public function __construct($params = array())
     {
-        foreach (array(
-            'firstName',
-            'lastName',
-            'number',
-            'expiryMonth',
-            'expiryYear',
-            ) as $key) {
-            if (isset($params[$key])) {
-                $this->$key = $params[$key];
-            }
-        }
+        $this->initialize($params);
     }
 
-    public function isValid()
+    public function initialize($params)
     {
-        $this->errors = array();
-
-        $this->validateNumber();
-
-        return empty($this->errors);
+        foreach ($params as $key => $value) {
+            if (property_exists($this, $key)) {
+                $this->$key = $value;
+            }
+        }
     }
 
     public function getFirstName()
@@ -112,21 +119,70 @@ class CreditCard
 
     public function setExpiryYear($value)
     {
+        $this->expiryYear = $this->normalizeYear($value);
+    }
+
+    public function getStartMonth()
+    {
+        return $this->startMonth;
+    }
+
+    public function setStartMonth($value)
+    {
+        $this->startMonth = (int) $value;
+    }
+
+    public function getStartYear()
+    {
+        return $this->startYear;
+    }
+
+    public function setStartYear($value)
+    {
+        $this->startYear = $this->normalizeYear($value);
+    }
+
+    /**
+     * Normalize a year to four digits
+     */
+    protected function normalizeYear($value)
+    {
         $value = (int) $value;
         if ($value < 100) {
             $value += 2000;
         }
-        $this->expiryYear = $value;
+
+        return $value;
     }
 
-    public function getVerificationCode()
+    public function getIssue()
     {
-        return $this->verificationCode;
+        return $this->issue;
     }
 
-    public function setVerificationCode($value)
+    public function setIssue($value)
     {
-        $this->verificationCode = $value;
+        $this->issue = $value;
+    }
+
+    public function getCvv()
+    {
+        return $this->cvv;
+    }
+
+    public function setCvv($value)
+    {
+        $this->cvv = $value;
+    }
+
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function setType($value)
+    {
+        $this->type = $value;
     }
 
     public function getBillingAddress1()
@@ -315,7 +371,47 @@ class CreditCard
         $this->shippingCountry = $value;
     }
 
-    protected function validateNumber()
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    public function setPhone($value)
+    {
+        $this->phone = $value;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function setEmail($value)
+    {
+        $this->email = $value;
+    }
+
+    /**
+     * Validate that the specific parameters are not empty.
+     */
+    public function validateRequiredParams($params)
+    {
+        if ( ! is_array($params)) {
+            $params = array($params);
+        }
+
+        foreach ($params as $key) {
+            if (empty($this->$key)) {
+                throw new InvalidRequest("The $key parameter is required!");
+            }
+        }
+    }
+
+    /**
+     * Validate the credit card number using the Luhn alogorithm. If the card number is invalid,
+     * an InvalidCreditCard exception is thrown.
+     */
+    public function validateNumber()
     {
         /*
          * Luhn algorithm number checker - (c) 2005-2008 shaman - www.planzero.org
@@ -343,7 +439,9 @@ class CreditCard
             $total += $digit;
         }
 
-        // If the total mod 10 equals 0, the number is valid
-        return ($total % 10 == 0) ? TRUE : FALSE;
+        // If the total mod 10 does not equal 0, the number is invalid
+        if ($total % 10 != 0) {
+            throw new InvalidCreditCard("The credit card number is invalid");
+        }
     }
 }

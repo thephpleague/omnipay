@@ -9,13 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Payments;
+namespace Tala\Payments\Exception;
+
+use Tala\Payments\Exception;
 
 /**
- * Exception marker interface
+ * Bad method call exception.
  *
  * @author  Adrian Macneil <adrian.macneil@gmail.com>
  */
-interface Exception
+class BadMethodCall extends \BadMethodCallException implements Exception
 {
 }

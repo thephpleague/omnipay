@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Tala package.
+ * This file is part of the Tala Payments package.
  *
  * (c) Adrian Macneil <adrian.macneil@gmail.com>
  *
@@ -18,15 +18,15 @@ namespace Tala\Payments\Response;
  */
 class Response implements ResponseInterface
 {
-    protected $success;
     protected $message;
+    protected $gatewayReference;
 
     /**
      * Constructor.
      */
-    public function __construct($success, $message = null)
+    public function __construct($gatewayReference = null, $message = null)
     {
-        $this->success = (bool) $success;
+        $this->gatewayReference = $gatewayReference;
         $this->message = $message;
     }
 
@@ -39,18 +39,18 @@ class Response implements ResponseInterface
     }
 
     /**
-     * Was the request successful?
-     */
-    public function isSuccessful()
-    {
-        return $this->success;
-    }
-
-    /**
      * Get the response message from the payment gateway.
      */
     public function getMessage()
     {
         return $this->message;
+    }
+
+    /**
+     * Get a reference provided by the gateway for this transaction.
+     */
+    public function getGatewayReference()
+    {
+        return $this->gatewayReference;
     }
 }
