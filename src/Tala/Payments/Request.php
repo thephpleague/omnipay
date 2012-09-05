@@ -11,7 +11,7 @@
 
 namespace Tala\Payments;
 
-use Tala\Payments\Exception\InvalidRequest;
+use Tala\Payments\Exception\InvalidRequestException;
 
 /**
  * Credit Card class
@@ -114,7 +114,7 @@ class Request
 
         foreach ($params as $key) {
             if (empty($this->$key)) {
-                throw new InvalidRequest("The $key parameter is required!");
+                throw new InvalidRequestException("The $key parameter is required!");
             }
         }
     }

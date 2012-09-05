@@ -11,8 +11,7 @@
 
 namespace Tala\Payments;
 
-use Tala\Payments\Exception\InvalidCreditCard;
-use Tala\Payments\Exception\InvalidRequest;
+use Tala\Payments\Exception\InvalidCreditCardException;
 
 /**
  * Credit Card class
@@ -402,7 +401,7 @@ class CreditCard
 
         foreach ($params as $key) {
             if (empty($this->$key)) {
-                throw new InvalidRequest("The $key parameter is required!");
+                throw new InvalidCreditCardException("The $key parameter is required!");
             }
         }
     }
@@ -441,7 +440,7 @@ class CreditCard
 
         // If the total mod 10 does not equal 0, the number is invalid
         if ($total % 10 != 0) {
-            throw new InvalidCreditCard("The credit card number is invalid");
+            throw new InvalidCreditCardException("The credit card number is invalid");
         }
     }
 }

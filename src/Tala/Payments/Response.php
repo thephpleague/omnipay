@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Payments\Response;
+namespace Tala\Payments;
 
 /**
  * Base Response class

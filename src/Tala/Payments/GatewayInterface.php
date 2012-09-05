@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Payments\Gateway;
+namespace Tala\Payments;
 
 use Tala\Payments\Request;
 

@@ -14,12 +14,12 @@ namespace Tala\Payments\Exception;
 use Tala\Payments\Exception;
 
 /**
- * Invalid Request exception.
+ * Invalid Credit Card exception.
  *
  * Thrown when a gateway responded with invalid or unexpected data (for example, a security hash did not match).
  *
  * @author  Adrian Macneil <adrian.macneil@gmail.com>
  */
-class InvalidRequest extends \RuntimeException implements Exception
+class InvalidCreditCardException extends \RuntimeException implements Exception
 {
 }

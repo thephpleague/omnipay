@@ -25,8 +25,8 @@ For an example gateway, see the [tala-payments-paypal](https://github.com/adrian
 
 # Payment Gateways
 
-All payment gateways must implement [\Tala\Payments\Gateway\GatewayInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/Gateway/GatewayInterface.php), and usually
-extend [\Tala\Payments\Gateway\Base](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/Gateway/Base.php) for basic functionality.
+All payment gateways must implement [\Tala\Payments\GatewayInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/GatewayInterface.php), and usually
+extend [\Tala\Payments\AbstractGateway](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/AbstractGateway.php) for basic functionality.
 
 Gateways are initialized like so:
 
@@ -137,7 +137,7 @@ At this point, you may be wondering the difference between gateway `$settings`, 
 
 # The Payment Response
 
-The payment response must implement [\Tala\Payments\Response\ResponseInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/Response/ResponseInterface.php). There are two main types of response:
+The payment response must implement [\Tala\Payments\ResponseInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/ResponseInterface.php). There are two main types of response:
 
 * Payment was successful (standard response)
 * Website must redirect to off-site payment form (redirect response)

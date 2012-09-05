@@ -14,16 +14,12 @@ namespace Tala\Payments\Exception;
 use Tala\Payments\Exception;
 
 /**
- * Invalid Response exception.
+ * Invalid Request exception.
  *
  * Thrown when a gateway responded with invalid or unexpected data (for example, a security hash did not match).
  *
  * @author  Adrian Macneil <adrian.macneil@gmail.com>
  */
-class InvalidResponse extends \RuntimeException implements Exception
+class InvalidRequestException extends \RuntimeException implements Exception
 {
-    public function __construct($message = "Invalid response from payment gateway", $code = 0, $previous = null)
-    {
-        parent::__construct($message, $code, $previous);
-    }
 }

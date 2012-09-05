@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Payments\Gateway;
+namespace Tala\Payments;
 
 use Tala\Payments\Exception\BadMethodCallException;
 use Tala\Payments\Request;
@@ -19,7 +19,7 @@ use Tala\Payments\Request;
  *
  * @author  Adrian Macneil <adrian.macneil@gmail.com>
  */
-abstract class Base implements GatewayInterface
+abstract class AbstractGateway implements GatewayInterface
 {
     protected $currency;
 
