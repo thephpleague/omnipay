@@ -11,6 +11,7 @@
 
 namespace Tala\Payments;
 
+use Tala\Payments\CreditCard;
 use Tala\Payments\Request;
 
 /**
@@ -20,6 +21,11 @@ use Tala\Payments\Request;
  */
 interface GatewayInterface
 {
+    /**
+     * Create a new gateway using an associative array of settings.
+     */
+    public function __construct($settings);
+
     /**
      * Initialize the gateway with an associative array of settings.
      */
@@ -33,7 +39,7 @@ interface GatewayInterface
     /**
      * Authorizes a new payment.
      */
-    public function authorize(Request $request);
+    public function authorize(Request $request, $source);
 
     /**
      * Handles return from an authorization.
@@ -48,7 +54,7 @@ interface GatewayInterface
     /**
      * Creates a new charge (combined authorize + capture).
      */
-    public function purchase(Request $request);
+    public function purchase(Request $request, $source);
 
     /**
      * Handle return from a purchase.

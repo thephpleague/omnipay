@@ -11,6 +11,7 @@
 
 namespace Tala\Payments\Tests;
 
+use Tala\Payments\CreditCard;
 use Tala\Payments\Request;
 
 class AbstractGatewayTest extends \PHPUnit_Framework_TestCase
@@ -18,6 +19,7 @@ class AbstractGatewayTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->gateway = $this->getMockForAbstractClass('\Tala\Payments\AbstractGateway');
+        $this->card = new CreditCard();
         $this->request = new Request();
     }
 
@@ -51,7 +53,7 @@ class AbstractGatewayTest extends \PHPUnit_Framework_TestCase
     public function testAuthorize()
     {
     	$this->setExpectedException('\Tala\Payments\Exception\BadMethodCallException');
-    	$this->gateway->authorize($this->request);
+    	$this->gateway->authorize($this->request, $this->card);
     }
 
     public function testCompleteAuthorize()
@@ -69,7 +71,7 @@ class AbstractGatewayTest extends \PHPUnit_Framework_TestCase
     public function testPurchase()
     {
     	$this->setExpectedException('\Tala\Payments\Exception\BadMethodCallException');
-    	$this->gateway->purchase($this->request);
+    	$this->gateway->purchase($this->request, $this->card);
     }
 
     public function testCompletePurchase()

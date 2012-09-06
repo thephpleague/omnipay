@@ -36,7 +36,7 @@ Gateways are initialized like so:
         'password' => '12345',
         'currency' => 'USD',
     );
-    $gateway = new PayPalExpress($settings);
+    $gateway = new \Tala\Payments\PayPalExpress\Gateway($settings);
 
 Where `$settings` is an array of gateway-specific options. The gateway can also be initialized after creation
 by calling `initialize()`:
@@ -105,10 +105,10 @@ You can also update the fields using properties:
 
 The main methods implemented by gateways are:
 
-* `authorize($request)` - authorize an amount on the customer's card
+* `authorize($request, $source)` - authorize an amount on the customer's card
 * `completeAuthorize($request)` - handle return from off-site gateways after authorization
 * `capture($request)` - capture an amount you have previously authorized
-* `purchase($request)` - authorize and immediately capture an amount on the customer's card
+* `purchase($request, $source)` - authorize and immediately capture an amount on the customer's card
 * `completePurchase($request)` - handle return from off-site gateways after purchase
 * `refund($request)` - refund an already processed transaction
 * `void($request)` - generally can only be called up to 24 hours after submitting a transaction
@@ -120,14 +120,13 @@ All gateway methods take a [\Tala\Payments\Request](https://github.com/adrianmac
 object. The request object holds various details about the transaction (each gateway requires different parameters):
 
 
-    $card = new CreditCard();
+    $source = new CreditCard();
     $request = new Request();
-    $request->amount = 1000;
-    $request->source = $card;
+    $request->amount = 1000; // we will authorize $10
     $request->returnUrl = 'https://example.com/payment/complete';
-    $response = $gateway->authorize($request);
+    $response = $gateway->authorize($request, $source);
 
-In payment requests, the `$source` variable can be either a `CreditCard` object, or a string `token` which has been
+The `$source` variable can be either a `CreditCard` object, or a string token which has been
 stored from a previous transaction for certain gateways (see the Token Billing section below).
 
 When calling the `completeAuthorize` or `completePurchase` methods, the exact same arguments should be provided as

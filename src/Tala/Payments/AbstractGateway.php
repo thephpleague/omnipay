@@ -65,7 +65,7 @@ abstract class AbstractGateway implements GatewayInterface
     /**
      * Authorizes a new payment.
      */
-    public function authorize(Request $request)
+    public function authorize(Request $request, $source)
     {
         throw new BadMethodCallException();
     }
@@ -89,7 +89,7 @@ abstract class AbstractGateway implements GatewayInterface
     /**
      * Creates a new charge.
      */
-    public function purchase(Request $request)
+    public function purchase(Request $request, $source)
     {
         throw new BadMethodCallException();
     }
