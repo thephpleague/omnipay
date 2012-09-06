@@ -103,6 +103,30 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(2012, $this->card->getExpiryYear());
     }
 
+    public function testStartMonth()
+    {
+        $this->card->setStartMonth(9);
+        $this->assertSame(9, $this->card->getStartMonth());
+    }
+
+    public function testStartMonthLeadingZeros()
+    {
+        $this->card->setStartMonth('09');
+        $this->assertSame(9, $this->card->getStartMonth());
+    }
+
+    public function testStartYear()
+    {
+        $this->card->setStartYear(2012);
+        $this->assertSame(2012, $this->card->getStartYear());
+    }
+
+    public function testStartYearTwoDigits()
+    {
+        $this->card->setStartYear('12');
+        $this->assertSame(2012, $this->card->getStartYear());
+    }
+
     public function testCvv()
     {
         $this->card->setCvv('456');
@@ -233,5 +257,17 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('US', $this->card->getCountry());
         $this->assertEquals('US', $this->card->getBillingCountry());
         $this->assertEquals('US', $this->card->getShippingCountry());
+    }
+
+    public function testPhone()
+    {
+        $this->card->setPhone('12345');
+        $this->assertEquals('12345', $this->card->getPhone());
+    }
+
+    public function testEmail()
+    {
+        $this->card->setEmail('adrian@example.com');
+        $this->assertEquals('adrian@example.com', $this->card->getEmail());
     }
 }

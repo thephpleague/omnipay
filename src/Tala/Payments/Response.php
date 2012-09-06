@@ -18,6 +18,7 @@ namespace Tala\Payments;
  */
 class Response implements ResponseInterface
 {
+    protected $data;
     protected $message;
     protected $gatewayReference;
 
@@ -36,6 +37,14 @@ class Response implements ResponseInterface
     public function isRedirect()
     {
         return false;
+    }
+
+    /**
+     * Access raw data returned by the payment gateway.
+     */
+    public function getData()
+    {
+        return $this->data;
     }
 
     /**

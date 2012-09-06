@@ -38,8 +38,10 @@ abstract class AbstractGateway implements GatewayInterface
         switch ($prefix) {
             case 'get':
                 return $this->$property;
+                break;
             case 'set':
-                $this->property = isset($arguments[0]) ? $arguments[0] : null;
+                $this->$property = isset($arguments[0]) ? $arguments[0] : null;
+                break;
             default:
                 throw new BadMethodCallException();
         }

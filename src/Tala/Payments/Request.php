@@ -114,7 +114,7 @@ class Request
 
         foreach ($params as $key) {
             if (empty($this->$key)) {
-                throw new InvalidRequestException("The $key parameter is required!");
+                throw new InvalidRequestException("The $key parameter is required");
             }
         }
     }

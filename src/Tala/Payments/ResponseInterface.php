@@ -24,6 +24,11 @@ interface ResponseInterface
     public function isRedirect();
 
     /**
+     * Access raw data returned by the payment gateway.
+     */
+    public function getData();
+
+    /**
      * Gets the response message from the payment gateway.
      */
     public function getMessage();
