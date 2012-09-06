@@ -12,73 +12,15 @@
 namespace Tala\Payments;
 
 use Tala\Payments\Exception\InvalidCreditCardException;
+use Tala\Payments\AbstractParameterObject;
 
 /**
  * Credit Card class
  *
  * @author  Adrian Macneil <adrian.macneil@gmail.com>
  */
-class CreditCard
+class CreditCard extends AbstractParameterObject
 {
-    protected $firstName;
-    protected $lastName;
-    protected $number;
-    protected $expiryMonth;
-    protected $expiryYear;
-    protected $startMonth;
-    protected $startYear;
-    protected $issue;
-    protected $cvv;
-    protected $type;
-    protected $billingAddress1;
-    protected $billingAddress2;
-    protected $billingCity;
-    protected $billingPostcode;
-    protected $billingState;
-    protected $billingCountry;
-    protected $shippingAddress1;
-    protected $shippingAddress2;
-    protected $shippingCity;
-    protected $shippingPostcode;
-    protected $shippingState;
-    protected $shippingCountry;
-    protected $phone;
-    protected $email;
-
-    public function __construct($params = array())
-    {
-        $this->initialize($params);
-    }
-
-    public function initialize($params)
-    {
-        foreach ($params as $key => $value) {
-            if (property_exists($this, $key)) {
-                $this->$key = $value;
-            }
-        }
-    }
-
-    public function getFirstName()
-    {
-        return $this->firstName;
-    }
-
-    public function setFirstName($value)
-    {
-        $this->firstName = $value;
-    }
-
-    public function getLastName()
-    {
-        return $this->lastName;
-    }
-
-    public function setLastName($value)
-    {
-        $this->lastName = $value;
-    }
-
     public function getName()
     {
         return trim("$this->firstName $this->lastName");
@@ -91,54 +33,29 @@ class CreditCard
         $this->lastName = isset($names[1]) ? $names[1] : null;
     }
 
-    public function getNumber()
-    {
-        return $this->number;
-    }
-
     public function setNumber($value)
     {
-        $this->number = preg_replace('/\D/', '', $value);
-    }
-
-    public function getExpiryMonth()
-    {
-        return $this->expiryMonth;
+        $this->parameters['number'] = preg_replace('/\D/', '', $value);
     }
 
     public function setExpiryMonth($value)
     {
-        $this->expiryMonth = (int) $value;
-    }
-
-    public function getExpiryYear()
-    {
-        return $this->expiryYear;
+        $this->parameters['expiryMonth'] = (int) $value;
     }
 
     public function setExpiryYear($value)
     {
-        $this->expiryYear = $this->normalizeYear($value);
-    }
-
-    public function getStartMonth()
-    {
-        return $this->startMonth;
+        $this->parameters['expiryYear'] = $this->normalizeYear($value);
     }
 
     public function setStartMonth($value)
     {
-        $this->startMonth = (int) $value;
-    }
-
-    public function getStartYear()
-    {
-        return $this->startYear;
+        $this->parameters['startMonth'] = (int) $value;
     }
 
     public function setStartYear($value)
     {
-        $this->startYear = $this->normalizeYear($value);
+        $this->parameters['startYear'] = $this->normalizeYear($value);
     }
 
     /**
@@ -152,156 +69,6 @@ class CreditCard
         }
 
         return $value;
-    }
-
-    public function getIssue()
-    {
-        return $this->issue;
-    }
-
-    public function setIssue($value)
-    {
-        $this->issue = $value;
-    }
-
-    public function getCvv()
-    {
-        return $this->cvv;
-    }
-
-    public function setCvv($value)
-    {
-        $this->cvv = $value;
-    }
-
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    public function setType($value)
-    {
-        $this->type = $value;
-    }
-
-    public function getBillingAddress1()
-    {
-        return $this->billingAddress1;
-    }
-
-    public function setBillingAddress1($value)
-    {
-        $this->billingAddress1 = $value;
-    }
-
-    public function getBillingAddress2()
-    {
-        return $this->billingAddress2;
-    }
-
-    public function setBillingAddress2($value)
-    {
-        $this->billingAddress2 = $value;
-    }
-
-    public function getBillingCity()
-    {
-        return $this->billingCity;
-    }
-
-    public function setBillingCity($value)
-    {
-        $this->billingCity = $value;
-    }
-
-    public function getBillingPostcode()
-    {
-        return $this->billingPostcode;
-    }
-
-    public function setBillingPostcode($value)
-    {
-        $this->billingPostcode = $value;
-    }
-
-    public function getBillingState()
-    {
-        return $this->billingState;
-    }
-
-    public function setBillingState($value)
-    {
-        $this->billingState = $value;
-    }
-
-    public function getBillingCountry()
-    {
-        return $this->billingCountry;
-    }
-
-    public function setBillingCountry($value)
-    {
-        $this->billingCountry = $value;
-    }
-
-    public function getShippingAddress1()
-    {
-        return $this->shippingAddress1;
-    }
-
-    public function setShippingAddress1($value)
-    {
-        $this->shippingAddress1 = $value;
-    }
-
-    public function getShippingAddress2()
-    {
-        return $this->shippingAddress2;
-    }
-
-    public function setShippingAddress2($value)
-    {
-        $this->shippingAddress2 = $value;
-    }
-
-    public function getShippingCity()
-    {
-        return $this->shippingCity;
-    }
-
-    public function setShippingCity($value)
-    {
-        $this->shippingCity = $value;
-    }
-
-    public function getShippingPostcode()
-    {
-        return $this->shippingPostcode;
-    }
-
-    public function setShippingPostcode($value)
-    {
-        $this->shippingPostcode = $value;
-    }
-
-    public function getShippingState()
-    {
-        return $this->shippingState;
-    }
-
-    public function setShippingState($value)
-    {
-        $this->shippingState = $value;
-    }
-
-    public function getShippingCountry()
-    {
-        return $this->shippingCountry;
-    }
-
-    public function setShippingCountry($value)
-    {
-        $this->shippingCountry = $value;
     }
 
     public function getAddress1()
@@ -368,42 +135,6 @@ class CreditCard
     {
         $this->billingCountry = $value;
         $this->shippingCountry = $value;
-    }
-
-    public function getPhone()
-    {
-        return $this->phone;
-    }
-
-    public function setPhone($value)
-    {
-        $this->phone = $value;
-    }
-
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    public function setEmail($value)
-    {
-        $this->email = $value;
-    }
-
-    /**
-     * Validate that the specific parameters are not empty.
-     */
-    public function validateRequiredParams($params)
-    {
-        if ( ! is_array($params)) {
-            $params = array($params);
-        }
-
-        foreach ($params as $key) {
-            if (empty($this->$key)) {
-                throw new InvalidCreditCardException("The $key parameter is required!");
-            }
-        }
     }
 
     /**
