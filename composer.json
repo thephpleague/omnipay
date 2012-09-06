@@ -1,8 +1,8 @@
 {
     "name": "tala/tala-payments-core",
     "type": "library",
-    "description": "Tala, a consistent, well tested PHP payment processing library",
-    "keywords": ["payment", "merchant", "gateway"],
+    "description": "Tala Payments is a framework independent, multi-gateway payment processing library",
+    "keywords": ["payment", "payments", "merchant", "paypal", "gateway"],
     "homepage": "https://github.com/adrianmacneil/tala-payments",
     "license": "MIT",
     "authors": [
