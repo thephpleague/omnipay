@@ -1,5 +1,7 @@
 # Tala Payments
 
+[![Build Status](https://secure.travis-ci.org/adrianmacneil/tala-payments.png)](http://travis-ci.org/adrianmacneil/tala-payments)
+
 Tala Payments is a PHP 5.3, PSR-2 and Composer compliant payment processing library.
 This library is currently under development, and all feedback is welcome - please raise a github issue
 to discuss, or fork the project and send a pull request.
