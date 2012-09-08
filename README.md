@@ -24,12 +24,15 @@ only requires PayPal Express in their application, they can simply require `tala
 In future, a `tala-payments-all` package will depends on all the officially supported payment gateways,
 to make it easy for cart developers to include all payment gateways at once.
 
-For an example gateway, see the [tala-payments-paypal](https://github.com/adrianmacneil/tala-payments-paypal) repository.
-
 # Payment Gateways
 
 All payment gateways must implement [\Tala\Payments\GatewayInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/GatewayInterface.php), and usually
 extend [\Tala\Payments\AbstractGateway](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/AbstractGateway.php) for basic functionality.
+
+The following gateways are already implemented:
+
+* [Authorize.Net (AIM/SIM)](https://github.com/adrianmacneil/tala-payments-authorizenet)
+* [PayPal (Express/Pro)](https://github.com/adrianmacneil/tala-payments-paypal)
 
 Gateways are initialized like so:
 
