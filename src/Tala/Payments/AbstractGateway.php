@@ -28,6 +28,7 @@ abstract class AbstractGateway implements GatewayInterface
     {
         $this->initialize($settings);
         $this->browser = new \Buzz\Browser();
+        $this->httpRequest = \Symfony\Component\HttpFoundation\Request::createFromGlobals();
     }
 
     public function __call($name, $arguments)

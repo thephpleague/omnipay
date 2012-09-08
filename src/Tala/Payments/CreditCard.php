@@ -71,6 +71,22 @@ class CreditCard extends AbstractParameterObject
         return $value;
     }
 
+    /**
+     * Get the card expiry date, using the specified date format
+     */
+    public function getExpiryDate($format = 'mY')
+    {
+        return gmdate($format, gmmktime(0, 0, 0, $this->expiryMonth, 1, $this->expiryYear));
+    }
+
+    /**
+     * Get the card start date, using the specified date format
+     */
+    public function getStartDate($format = 'mY')
+    {
+        return gmdate($format, gmmktime(0, 0, 0, $this->startMonth, 1, $this->startYear));
+    }
+
     public function getAddress1()
     {
         return $this->billingAddress1;
