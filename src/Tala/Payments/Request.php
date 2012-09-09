@@ -11,7 +11,6 @@
 
 namespace Tala\Payments;
 
-use Tala\Payments\Exception\InvalidRequestException;
 use Tala\Payments\AbstractParameterObject;
 
 /**

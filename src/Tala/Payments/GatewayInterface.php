@@ -11,7 +11,6 @@
 
 namespace Tala\Payments;
 
-use Tala\Payments\CreditCard;
 use Tala\Payments\Request;
 
 /**

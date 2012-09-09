@@ -25,59 +25,70 @@ class AbstractGatewayTest extends \PHPUnit_Framework_TestCase
 
     public function testGetDefaultSettings()
     {
-    	$this->assertEquals(array(), $this->gateway->getDefaultSettings());
+        $this->assertEquals(array(), $this->gateway->getDefaultSettings());
     }
 
     public function testBrowser()
     {
-    	$this->assertInstanceOf('\Buzz\Browser', $this->gateway->getBrowser());
+        $this->assertInstanceOf('\Buzz\Browser', $this->gateway->getBrowser());
     }
 
     public function testSetBrowser()
     {
-    	$this->gateway->setBrowser('fakeBrowserObject');
-    	$this->assertEquals('fakeBrowserObject', $this->gateway->getBrowser());
+        $this->gateway->setBrowser('fakeBrowserObject');
+        $this->assertEquals('fakeBrowserObject', $this->gateway->getBrowser());
+    }
+
+    public function testHttpRequest()
+    {
+        $this->assertInstanceOf('\Symfony\Component\HttpFoundation\Request', $this->gateway->getHttpRequest());
+    }
+
+    public function testSetHttpRequest()
+    {
+        $this->gateway->setHttpRequest('fakeHttpRequest');
+        $this->assertEquals('fakeHttpRequest', $this->gateway->getHttpRequest());
     }
 
     public function testAuthorize()
     {
-    	$this->setExpectedException('\Tala\Payments\Exception\BadMethodCallException');
-    	$this->gateway->authorize($this->request, $this->card);
+        $this->setExpectedException('\Tala\Payments\Exception\BadMethodCallException');
+        $this->gateway->authorize($this->request, $this->card);
     }
 
     public function testCompleteAuthorize()
     {
-    	$this->setExpectedException('\Tala\Payments\Exception\BadMethodCallException');
-    	$this->gateway->completeAuthorize($this->request);
+        $this->setExpectedException('\Tala\Payments\Exception\BadMethodCallException');
+        $this->gateway->completeAuthorize($this->request);
     }
 
     public function testCapture()
     {
-    	$this->setExpectedException('\Tala\Payments\Exception\BadMethodCallException');
-    	$this->gateway->capture($this->request);
+        $this->setExpectedException('\Tala\Payments\Exception\BadMethodCallException');
+        $this->gateway->capture($this->request);
     }
 
     public function testPurchase()
     {
-    	$this->setExpectedException('\Tala\Payments\Exception\BadMethodCallException');
-    	$this->gateway->purchase($this->request, $this->card);
+        $this->setExpectedException('\Tala\Payments\Exception\BadMethodCallException');
+        $this->gateway->purchase($this->request, $this->card);
     }
 
     public function testCompletePurchase()
     {
-    	$this->setExpectedException('\Tala\Payments\Exception\BadMethodCallException');
-    	$this->gateway->completePurchase($this->request);
+        $this->setExpectedException('\Tala\Payments\Exception\BadMethodCallException');
+        $this->gateway->completePurchase($this->request);
     }
 
     public function testRefund()
     {
-    	$this->setExpectedException('\Tala\Payments\Exception\BadMethodCallException');
-    	$this->gateway->refund($this->request);
+        $this->setExpectedException('\Tala\Payments\Exception\BadMethodCallException');
+        $this->gateway->refund($this->request);
     }
 
     public function testVoid()
     {
-    	$this->setExpectedException('\Tala\Payments\Exception\BadMethodCallException');
-    	$this->gateway->void($this->request);
+        $this->setExpectedException('\Tala\Payments\Exception\BadMethodCallException');
+        $this->gateway->void($this->request);
     }
 }

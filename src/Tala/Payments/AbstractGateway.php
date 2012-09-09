@@ -11,6 +11,7 @@
 
 namespace Tala\Payments;
 
+use Tala\Payments\AbstractParameterObject;
 use Tala\Payments\Exception\BadMethodCallException;
 use Tala\Payments\Request;
 
@@ -19,47 +20,24 @@ use Tala\Payments\Request;
  *
  * @author  Adrian Macneil <adrian.macneil@gmail.com>
  */
-abstract class AbstractGateway implements GatewayInterface
+abstract class AbstractGateway extends AbstractParameterObject implements GatewayInterface
 {
-    protected $browser;
-
-    public function __construct($settings = array())
+    public function __construct($parameters = array())
     {
-        $this->initialize($settings);
-        $this->browser = new \Buzz\Browser();
-        $this->httpRequest = \Symfony\Component\HttpFoundation\Request::createFromGlobals();
-    }
+        parent::__construct($parameters);
 
-    public function __call($name, $arguments)
-    {
-        $prefix = substr($name, 0, 3);
-        $property = lcfirst(substr($name, 3));
-
-        switch ($prefix) {
-            case 'get':
-                return $this->$property;
-                break;
-            case 'set':
-                $this->$property = isset($arguments[0]) ? $arguments[0] : null;
-                break;
-            default:
-                throw new BadMethodCallException();
-        }
-    }
-
-    public function initialize($settings)
-    {
-        $display = $this->getDefaultSettings();
-        foreach ($display as $key => $value) {
-            if (isset($settings[$key])) {
-                $this->$key = $settings[$key];
-            }
-        }
+        $this->setBrowser(new \Buzz\Browser());
+        $this->setHttpRequest(\Symfony\Component\HttpFoundation\Request::createFromGlobals());
     }
 
     public function getDefaultSettings()
     {
         return array();
+    }
+
+    public function getValidParameters()
+    {
+        return array('browser', 'httpRequest') + array_keys($this->getDefaultSettings());
     }
 
     /**
