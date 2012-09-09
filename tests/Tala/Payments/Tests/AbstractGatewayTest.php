@@ -28,17 +28,6 @@ class AbstractGatewayTest extends \PHPUnit_Framework_TestCase
     	$this->assertEquals(array(), $this->gateway->getDefaultSettings());
     }
 
-    public function testCurrency()
-    {
-    	$this->assertNull($this->gateway->getCurrency());
-    }
-
-    public function testSetCurrency()
-    {
-    	$this->gateway->setCurrency('ABC');
-    	$this->assertEquals('ABC', $this->gateway->getCurrency());
-    }
-
     public function testBrowser()
     {
     	$this->assertInstanceOf('\Buzz\Browser', $this->gateway->getBrowser());

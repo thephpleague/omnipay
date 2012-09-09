@@ -21,7 +21,6 @@ use Tala\Payments\Request;
  */
 abstract class AbstractGateway implements GatewayInterface
 {
-    protected $currency;
     protected $browser;
 
     public function __construct($settings = array())

@@ -39,7 +39,6 @@ Gateways are initialized like so:
     $settings = array(
         'username' => 'adrian',
         'password' => '12345',
-        'currency' => 'USD',
     );
     $gateway = new \Tala\Payments\PayPalExpress\Gateway($settings);
 
@@ -50,11 +49,18 @@ by calling `initialize()`:
 
 Finally, gateway settings can be changed individually using getters and setters:
 
-    $gateway->setCurrency('NZD');
+    $gateway->setUsername('adrian');
     $username = $gateway->getUsername();
 
-Most settings are gateway specific, however `currency` is a setting available in all payment gateways, and
-it can also be overridden for individual payments.
+Most settings are gateway specific. To get an array of available gateway settings, call `getDefaultSettings()`:
+
+    $settings = $gateway->getDefaultSettings();
+    // default settings array format:
+    array(
+        'username' => '', // string variable
+        'testMode' => false, // boolean variable
+        'landingPage' => array('billing', 'login'), // enum variable
+    );
 
 Generally most payment gateways can be classed as one of two main types:
 
@@ -142,7 +148,7 @@ At this point, you may be wondering the difference between gateway `$settings`, 
 
 * Gateway `$settings` are settings which apply to all payments (like the gateway username and password). Generally you will store these in a configuration file or in the database.
 * CreditCard fields are data which the user supplies. For example, you want the user to specify their `firstName` and `billingCountry`, but you don't want a user to specify the payment `currency` or `returnUrl`.
-* Request fields are used for any payment-specific options, which are not set by the customer. For example, the payment `transactionId` and `returnUrl`, and you can also override the `currency` here if you need to.
+* Request fields are used for any payment-specific options, which are not set by the customer. For example, the payment `amount`, `currency`, `transactionId` and `returnUrl`.
 
 # The Payment Response
 
@@ -167,7 +173,7 @@ The redirect response is further broken down by whether the customer's browser m
 POST (FormRedirectResponse). These could potentially be combined into a single response class, with a `getRedirectMethod()`.
 
 After processing a payment, the cart should check whether the response requires a redirect, and if so, redirect accordingly:
-    
+
     $response = $gateway->purchase(1000, $card);
     if ($response->isRedirect()) {
         $response->redirect(); // this will automatically forward the customer
