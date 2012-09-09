@@ -13,7 +13,7 @@ wasted effort of re-implementing countless obscure gateways.
 
 # Package Layout
 
-Tala Payments is split into a core library (`tala-payemnts-core`) which provides the abstract classes and common
+Tala Payments is split into a core library (`tala-payments-core`) which provides the abstract classes and common
 functionality, plus separate libraries for each payment gateway, which depend on the core. For example, if a developer
 only requires PayPal Express in their application, they can simply require `tala-payments-paypal` in their
 `composer.json` file. This separate gateways method has two advantages:
