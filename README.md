@@ -32,6 +32,7 @@ extend [\Tala\Payments\AbstractGateway](https://github.com/adrianmacneil/tala-pa
 The following gateways are already implemented:
 
 * [Authorize.Net (AIM/SIM)](https://github.com/adrianmacneil/tala-payments-authorizenet)
+* [DPS PaymentExpress (PxPay/PxPost)](https://github.com/adrianmacneil/tala-payments-paymentexpress)
 * [PayPal (Express/Pro)](https://github.com/adrianmacneil/tala-payments-paypal)
 
 Gateways are initialized like so:
