@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Payments;
+namespace Tala\Core;
 
-use Tala\Payments\Exception\MissingParameterException;
+use Tala\Core\Exception\MissingParameterException;
 
 /**
  * Abstract Parameter Object class

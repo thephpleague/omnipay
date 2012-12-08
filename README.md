@@ -21,13 +21,10 @@ only requires PayPal Express in their application, they can simply require `tala
 * Developers who only need a single payment gateway don't need to include unnecessary files in their project
 * Obscure gateways can be implemented and supported by third parties, without being merged into the main project
 
-In future, a `tala-payments-all` package will depends on all the officially supported payment gateways,
-to make it easy for cart developers to include all payment gateways at once.
-
 # Payment Gateways
 
-All payment gateways must implement [\Tala\Payments\GatewayInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/GatewayInterface.php), and usually
-extend [\Tala\Payments\AbstractGateway](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/AbstractGateway.php) for basic functionality.
+All payment gateways must implement [\Tala\Core\GatewayInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/GatewayInterface.php), and usually
+extend [\Tala\Core\AbstractGateway](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/AbstractGateway.php) for basic functionality.
 
 The following gateways are already implemented:
 
@@ -41,7 +38,7 @@ Gateways are initialized like so:
         'username' => 'adrian',
         'password' => '12345',
     );
-    $gateway = new \Tala\Payments\PayPalExpress\Gateway($settings);
+    $gateway = new \Tala\Core\PayPalExpress\Gateway($settings);
 
 Where `$settings` is an array of gateway-specific options. The gateway can also be initialized after creation
 by calling `initialize()`:
@@ -74,7 +71,7 @@ gateway (other than by the methods they support).
 
 # Credit Card / Payment Form Input
 
-User form input will be directed to a [\Tala\Payments\CreditCard](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/CreditCard.php) object. This provides a safe way to accept user input.
+User form input will be directed to a [\Tala\Core\CreditCard](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/CreditCard.php) object. This provides a safe way to accept user input.
 The `CreditCard` object has the following fields:
 
 * firstName
@@ -126,9 +123,9 @@ The main methods implemented by gateways are:
 * `void($request)` - generally can only be called up to 24 hours after submitting a transaction
 
 On-site gateways do not need to implement the `completeAuthorize` and `completePurchase` methods. If any gateway does not support
-certain features (such as refunds), it will throw a [\Tala\Payments\Exception\BadMethodCallException](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/Exception/BadMethodCallException.php).
+certain features (such as refunds), it will throw a [\Tala\Core\Exception\BadMethodCallException](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/Exception/BadMethodCallException.php).
 
-All gateway methods take a [\Tala\Payments\Request](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/Request.php)
+All gateway methods take a [\Tala\Core\Request](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/Request.php)
 object. The request object holds various details about the transaction (each gateway requires different parameters):
 
 
@@ -153,7 +150,7 @@ At this point, you may be wondering the difference between gateway `$settings`, 
 
 # The Payment Response
 
-The payment response must implement [\Tala\Payments\ResponseInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/ResponseInterface.php). There are two main types of response:
+The payment response must implement [\Tala\Core\ResponseInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/ResponseInterface.php). There are two main types of response:
 
 * Payment was successful (standard response)
 * Website must redirect to off-site payment form (redirect response)
@@ -199,7 +196,7 @@ can define their own exceptions. All payments should be wrapped in a try-catch b
     try {
         $response = $gateway->purchase(1000, $card);
         // mark order as complete
-    } catch (\Tala\Payments\Exception $e) {
+    } catch (\Tala\Core\Exception $e) {
         // display error to the user
     }
 

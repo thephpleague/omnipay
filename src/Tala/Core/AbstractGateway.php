@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Payments;
+namespace Tala\Core;
 
-use Tala\Payments\AbstractParameterObject;
-use Tala\Payments\Exception\BadMethodCallException;
-use Tala\Payments\Request;
+use Tala\Core\AbstractParameterObject;
+use Tala\Core\Exception\BadMethodCallException;
+use Tala\Core\Request;
 
 /**
  * Base payment gateway class

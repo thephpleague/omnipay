@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Payments;
+namespace Tala\Core;
 
-use Tala\Payments\Request;
+use Tala\Core\Request;
 
 /**
  * Payment gateway interface

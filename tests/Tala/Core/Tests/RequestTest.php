@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Payments\Tests;
+namespace Tala\Core\Tests;
 
-use Tala\Payments\Request;
+use Tala\Core\Request;
 
 /**
  * Request Test class

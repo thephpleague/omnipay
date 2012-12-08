@@ -9,16 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Payments\Tests;
+namespace Tala\Core\Tests;
 
-use Tala\Payments\CreditCard;
-use Tala\Payments\Request;
+use Tala\Core\CreditCard;
+use Tala\Core\Request;
 
 class AbstractGatewayTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->gateway = $this->getMockForAbstractClass('\Tala\Payments\AbstractGateway');
+        $this->gateway = $this->getMockForAbstractClass('\Tala\Core\AbstractGateway');
         $this->card = new CreditCard();
         $this->request = new Request();
     }
@@ -52,43 +52,43 @@ class AbstractGatewayTest extends \PHPUnit_Framework_TestCase
 
     public function testAuthorize()
     {
-        $this->setExpectedException('\Tala\Payments\Exception\BadMethodCallException');
+        $this->setExpectedException('\Tala\Core\Exception\BadMethodCallException');
         $this->gateway->authorize($this->request, $this->card);
     }
 
     public function testCompleteAuthorize()
     {
-        $this->setExpectedException('\Tala\Payments\Exception\BadMethodCallException');
+        $this->setExpectedException('\Tala\Core\Exception\BadMethodCallException');
         $this->gateway->completeAuthorize($this->request);
     }
 
     public function testCapture()
     {
-        $this->setExpectedException('\Tala\Payments\Exception\BadMethodCallException');
+        $this->setExpectedException('\Tala\Core\Exception\BadMethodCallException');
         $this->gateway->capture($this->request);
     }
 
     public function testPurchase()
     {
-        $this->setExpectedException('\Tala\Payments\Exception\BadMethodCallException');
+        $this->setExpectedException('\Tala\Core\Exception\BadMethodCallException');
         $this->gateway->purchase($this->request, $this->card);
     }
 
     public function testCompletePurchase()
     {
-        $this->setExpectedException('\Tala\Payments\Exception\BadMethodCallException');
+        $this->setExpectedException('\Tala\Core\Exception\BadMethodCallException');
         $this->gateway->completePurchase($this->request);
     }
 
     public function testRefund()
     {
-        $this->setExpectedException('\Tala\Payments\Exception\BadMethodCallException');
+        $this->setExpectedException('\Tala\Core\Exception\BadMethodCallException');
         $this->gateway->refund($this->request);
     }
 
     public function testVoid()
     {
-        $this->setExpectedException('\Tala\Payments\Exception\BadMethodCallException');
+        $this->setExpectedException('\Tala\Core\Exception\BadMethodCallException');
         $this->gateway->void($this->request);
     }
 }

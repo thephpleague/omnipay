@@ -9,18 +9,18 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Payments\Tests;
+namespace Tala\Core\Tests;
 
 class AbstractParameterObjectTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->object = $this->getMockForAbstractClass('\Tala\Payments\AbstractParameterObject');
+        $this->object = $this->getMockForAbstractClass('\Tala\Core\AbstractParameterObject');
     }
 
     public function getMockSubclass()
     {
-        $mock = $this->getMock('\Tala\Payments\AbstractParameterObject', array('getValidParameters'));
+        $mock = $this->getMock('\Tala\Core\AbstractParameterObject', array('getValidParameters'));
         $mock->expects($this->atLeastOnce())
             ->method('getValidParameters')
             ->will($this->returnValue(array('firstValid', 'secondValid')));

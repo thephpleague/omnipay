@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Payments;
+namespace Tala\Core;
 
-use Tala\Payments\Exception\InvalidCreditCardException;
-use Tala\Payments\AbstractParameterObject;
+use Tala\Core\Exception\InvalidCreditCardException;
+use Tala\Core\AbstractParameterObject;
 
 /**
  * Credit Card class

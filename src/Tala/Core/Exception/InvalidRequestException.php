@@ -9,15 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Payments\Exception;
+namespace Tala\Core\Exception;
 
-use Tala\Payments\Exception;
+use Tala\Core\Exception;
 
 /**
- * Bad method call exception.
+ * Invalid Request exception.
+ *
+ * Thrown when a gateway responded with invalid or unexpected data (for example, a security hash did not match).
  *
  * @author  Adrian Macneil <adrian.macneil@gmail.com>
  */
-class BadMethodCallException extends \BadMethodCallException implements Exception
+class InvalidRequestException extends \RuntimeException implements Exception
 {
 }

@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Payments\Exception;
+namespace Tala\Core\Exception;
 
-use Tala\Payments\Exception;
+use Tala\Core\Exception;
 
 /**
  * Invalid Response exception.

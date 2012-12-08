@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Payments;
+namespace Tala\Core;
 
-use Tala\Payments\AbstractParameterObject;
+use Tala\Core\AbstractParameterObject;
 
 /**
  * Credit Card class
