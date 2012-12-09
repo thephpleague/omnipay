@@ -3,7 +3,7 @@
 /*
  * This file is part of the Tala Payments package.
  *
- * (c) Adrian Macneil <adrian.macneil@gmail.com>
+ * (c) Adrian Macneil <adrian@adrianmacneil.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -17,8 +17,6 @@ use Tala\Core\Request;
 
 /**
  * Base payment gateway class
- *
- * @author  Adrian Macneil <adrian.macneil@gmail.com>
  */
 abstract class AbstractGateway extends AbstractParameterObject implements GatewayInterface
 {
