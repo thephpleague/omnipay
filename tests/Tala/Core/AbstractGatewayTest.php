@@ -9,10 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Core\Tests;
-
-use Tala\Core\CreditCard;
-use Tala\Core\Request;
+namespace Tala\Core;
 
 class AbstractGatewayTest extends \PHPUnit_Framework_TestCase
 {

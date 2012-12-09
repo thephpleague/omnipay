@@ -9,9 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Core\Tests;
-
-use Tala\Core\Request;
+namespace Tala\Core;
 
 class RequestTest extends \PHPUnit_Framework_TestCase
 {

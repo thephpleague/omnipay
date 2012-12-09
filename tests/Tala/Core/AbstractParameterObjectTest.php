@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Core\Tests;
+namespace Tala\Core;
 
 class AbstractParameterObjectTest extends \PHPUnit_Framework_TestCase
 {
