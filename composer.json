@@ -1,8 +1,8 @@
 {
-    "name": "tala/tala-payments-core",
+    "name": "adrianmacneil/tala-payments",
     "type": "library",
-    "description": "Tala Payments is a framework independent, multi-gateway payment processing library",
-    "keywords": ["payment", "payments", "merchant", "paypal", "gateway"],
+    "description": "Tala Payments is a framework agnostic multi-gateway payment processing library",
+    "keywords": ["payment", "merchant", "gateway", "paypal", "authorize.net", "dps", "paymentexpress"],
     "homepage": "https://github.com/adrianmacneil/tala-payments",
     "license": "MIT",
     "authors": [
@@ -12,7 +12,7 @@
         }
     ],
     "autoload": {
-        "psr-0": { "Tala\\Core" : "src/" }
+        "psr-0": { "Tala" : "src/" }
     },
     "require": {
         "kriswallsmith/buzz": "0.7",

@@ -3,62 +3,68 @@
 [![Build Status](https://secure.travis-ci.org/adrianmacneil/tala-payments.png)](http://travis-ci.org/adrianmacneil/tala-payments)
 
 Tala Payments is a PHP 5.3, PSR-2 and Composer compliant payment processing library.
+It has been designed based on experience using [Active Merchant](http://activemerchant.org/),
+plus experience implementing dozens of gateways for [CI Merchant](http://ci-merchant.org/).
+
 This library is currently under development, and all feedback is welcome - please raise a github issue
 to discuss, or fork the project and send a pull request.
 
-This library has been designed based on experience using [Active Merchant](http://activemerchant.org/),
-plus experience implementing dozens of gateways for [CI Merchant](http://ci-merchant.org/). However,
-it would be great to get as much community support behind this as possible, so we can all save ourselves the
-wasted effort of re-implementing countless obscure gateways.
-
 # Package Layout
 
-Tala Payments is split into a core library (`tala-payments-core`) which provides the abstract classes and common
-functionality, plus separate libraries for each payment gateway, which depend on the core. For example, if a developer
-only requires PayPal Express in their application, they can simply require `tala-payments-paypal` in their
-`composer.json` file. This separate gateways method has two advantages:
-
-* Developers who only need a single payment gateway don't need to include unnecessary files in their project
-* Obscure gateways can be implemented and supported by third parties, without being merged into the main project
+Tala Payments is a single package which provides abstract base classes and implementations
+for all officially supported gateways. Unsupported gateways can either be added by forking
+this package and submitting a pull request, or by distributing a separate library which depends
+on this package and makes use of the base classes and consistent developer API.
 
 # Payment Gateways
 
-All payment gateways must implement [\Tala\Core\GatewayInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/GatewayInterface.php), and usually
-extend [\Tala\Core\AbstractGateway](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/AbstractGateway.php) for basic functionality.
+All payment gateways must implement [\Tala\GatewayInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/GatewayInterface.php), and usually
+extend [\Tala\AbstractGateway](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/AbstractGateway.php) for basic functionality.
 
 The following gateways are already implemented:
 
-* [Authorize.Net (AIM/SIM)](https://github.com/adrianmacneil/tala-payments-authorizenet)
-* [DPS PaymentExpress (PxPay/PxPost)](https://github.com/adrianmacneil/tala-payments-paymentexpress)
-* [PayPal (Express/Pro)](https://github.com/adrianmacneil/tala-payments-paypal)
+* Authorize.Net AIM
+* Authorize.Net SIM
+* DPS PaymentExpress PxPay
+* DPS PaymentExpress PxPost
+* PayPal Express Checkout
+* PayPal Payments Pro
 
 Gateways are initialized like so:
 
-    $settings = array(
-        'username' => 'adrian',
-        'password' => '12345',
-    );
-    $gateway = new \Tala\Core\PayPalExpress\Gateway($settings);
+```php
+$settings = array(
+    'username' => 'adrian',
+    'password' => '12345',
+);
+$gateway = new \Tala\PayPalExpress\Gateway($settings);
+```
 
 Where `$settings` is an array of gateway-specific options. The gateway can also be initialized after creation
 by calling `initialize()`:
 
-    $gateway->initialize($settings);
+```php
+$gateway->initialize($settings);
+```
 
 Finally, gateway settings can be changed individually using getters and setters:
 
-    $gateway->setUsername('adrian');
-    $username = $gateway->getUsername();
+```php
+$gateway->setUsername('adrian');
+$username = $gateway->getUsername();
+```
 
 Most settings are gateway specific. To get an array of available gateway settings, call `getDefaultSettings()`:
 
-    $settings = $gateway->getDefaultSettings();
-    // default settings array format:
-    array(
-        'username' => '', // string variable
-        'testMode' => false, // boolean variable
-        'landingPage' => array('billing', 'login'), // enum variable
-    );
+```php
+$settings = $gateway->getDefaultSettings();
+// default settings array format:
+array(
+    'username' => '', // string variable
+    'testMode' => false, // boolean variable
+    'landingPage' => array('billing', 'login'), // enum variable
+);
+```
 
 Generally most payment gateways can be classed as one of two main types:
 
@@ -71,7 +77,7 @@ gateway (other than by the methods they support).
 
 # Credit Card / Payment Form Input
 
-User form input will be directed to a [\Tala\Core\CreditCard](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/CreditCard.php) object. This provides a safe way to accept user input.
+User form input will be directed to a [\Tala\CreditCard](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/CreditCard.php) object. This provides a safe way to accept user input.
 The `CreditCard` object has the following fields:
 
 * firstName
@@ -102,13 +108,17 @@ use of the `CreditCard` object, because often you need to pass the customer bill
 
 Like a gateway, the `CreditCard` object can be intialized when it is created, or by calling the `initialize()` method:
 
-    $card = new CreditCard($formInput);
-    $card->initialize($formInput); // you only need to use one of these methods
+```php
+$card = new CreditCard($formInput);
+$card->initialize($formInput); // you only need to use one of these methods
+```
 
 You can also update the fields using properties:
 
-    $number = $card->number;
-    $card->firstName = 'Adrian';
+```php
+$number = $card->number;
+$card->firstName = 'Adrian';
+```
 
 # Gateway Methods
 
@@ -123,17 +133,18 @@ The main methods implemented by gateways are:
 * `void($request)` - generally can only be called up to 24 hours after submitting a transaction
 
 On-site gateways do not need to implement the `completeAuthorize` and `completePurchase` methods. If any gateway does not support
-certain features (such as refunds), it will throw a [\Tala\Core\Exception\BadMethodCallException](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/Exception/BadMethodCallException.php).
+certain features (such as refunds), it will throw a [\Tala\Exception\BadMethodCallException](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/Exception/BadMethodCallException.php).
 
-All gateway methods take a [\Tala\Core\Request](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/Request.php)
+All gateway methods take a [\Tala\Request](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/Request.php)
 object. The request object holds various details about the transaction (each gateway requires different parameters):
 
-
-    $source = new CreditCard();
-    $request = new Request();
-    $request->amount = 1000; // we will authorize $10
-    $request->returnUrl = 'https://example.com/payment/complete';
-    $response = $gateway->authorize($request, $source);
+```php
+$source = new CreditCard();
+$request = new Request();
+$request->amount = 1000; // we will authorize $10
+$request->returnUrl = 'https://example.com/payment/complete';
+$response = $gateway->authorize($request, $source);
+```
 
 The `$source` variable can be either a `CreditCard` object, or a string token which has been
 stored from a previous transaction for certain gateways (see the Token Billing section below).
@@ -150,7 +161,7 @@ At this point, you may be wondering the difference between gateway `$settings`, 
 
 # The Payment Response
 
-The payment response must implement [\Tala\Core\ResponseInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/ResponseInterface.php). There are two main types of response:
+The payment response must implement [\Tala\ResponseInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/ResponseInterface.php). There are two main types of response:
 
 * Payment was successful (standard response)
 * Website must redirect to off-site payment form (redirect response)
@@ -160,8 +171,10 @@ The payment response must implement [\Tala\Core\ResponseInterface](https://githu
 For a successful responses, a reference will normally be generated, which can be used to capture or refund the transaction
 at a later date. The following methods are always available:
 
-    $reference = $response->getGatewayReference();
-    $mesage = $response->getMessage();
+```php
+$reference = $response->getGatewayReference();
+$mesage = $response->getMessage();
+```
 
 In addition, most gateways will override the response object, and provide access to any extra fields returned by the gateway.
 
@@ -172,33 +185,39 @@ POST (FormRedirectResponse). These could potentially be combined into a single r
 
 After processing a payment, the cart should check whether the response requires a redirect, and if so, redirect accordingly:
 
-    $response = $gateway->purchase(1000, $card);
-    if ($response->isRedirect()) {
-        $response->redirect(); // this will automatically forward the customer
-    } else {
-        // payment is complete
-    }
+```php
+$response = $gateway->purchase(1000, $card);
+if ($response->isRedirect()) {
+    $response->redirect(); // this will automatically forward the customer
+} else {
+    // payment is complete
+}
+```
 
 The customer isn't automatically forwarded on, because often the cart or developer will want to customize the redirect method
 (or if payment processing is happening inside an AJAX call they will want to return JS to the browser instead).
 
 To display your own redirect page, simply call `getRedirectUrl()` on the response, then display it accordingly:
 
-    $url = $response->getRedirectUrl();
-    // for a form redirect, you can also call the following method:
-    $data = $response->getFormData(); // associative array of fields which must be posted to the redirectUrl
+```php
+$url = $response->getRedirectUrl();
+// for a form redirect, you can also call the following method:
+$data = $response->getFormData(); // associative array of fields which must be posted to the redirectUrl
+```
 
 # Error Handling
 
 If there is an error with the payment, an Exception is thrown. Standard exceptions are provided, or gateways
 can define their own exceptions. All payments should be wrapped in a try-catch block:
 
-    try {
-        $response = $gateway->purchase(1000, $card);
-        // mark order as complete
-    } catch (\Tala\Core\Exception $e) {
-        // display error to the user
-    }
+```php
+try {
+    $response = $gateway->purchase(1000, $card);
+    // mark order as complete
+} catch (\Tala\Exception $e) {
+    // display error to the user
+}
+```
 
 # Token Billing
 
@@ -223,4 +242,5 @@ Perhaps it is easier if it's not part of this library?
 # Feedback
 
 **Please provide feedback!** We want to make this library useful in as many projects as possible.
-Please raise a Github issue, and point out what you do and don't like, or fork the project and make any suggestions.
+Please raise a Github issue, and point out what you do and don't like, or fork the project and make
+suggestions. **No issue is too small.**
