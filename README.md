@@ -18,8 +18,8 @@ on this package and makes use of the base classes and consistent developer API.
 
 # Payment Gateways
 
-All payment gateways must implement [\Tala\GatewayInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/GatewayInterface.php), and usually
-extend [\Tala\AbstractGateway](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/AbstractGateway.php) for basic functionality.
+All payment gateways must implement [\Tala\GatewayInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/GatewayInterface.php), and usually
+extend [\Tala\AbstractGateway](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/AbstractGateway.php) for basic functionality.
 
 The following gateways are already implemented:
 
@@ -77,7 +77,7 @@ gateway (other than by the methods they support).
 
 # Credit Card / Payment Form Input
 
-User form input will be directed to a [\Tala\CreditCard](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/CreditCard.php) object. This provides a safe way to accept user input.
+User form input will be directed to a [\Tala\CreditCard](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/CreditCard.php) object. This provides a safe way to accept user input.
 The `CreditCard` object has the following fields:
 
 * firstName
@@ -133,9 +133,9 @@ The main methods implemented by gateways are:
 * `void($request)` - generally can only be called up to 24 hours after submitting a transaction
 
 On-site gateways do not need to implement the `completeAuthorize` and `completePurchase` methods. If any gateway does not support
-certain features (such as refunds), it will throw a [\Tala\Exception\BadMethodCallException](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/Exception/BadMethodCallException.php).
+certain features (such as refunds), it will throw a [\Tala\Exception\BadMethodCallException](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Exception/BadMethodCallException.php).
 
-All gateway methods take a [\Tala\Request](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/Request.php)
+All gateway methods take a [\Tala\Request](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Request.php)
 object. The request object holds various details about the transaction (each gateway requires different parameters):
 
 ```php
@@ -161,7 +161,7 @@ At this point, you may be wondering the difference between gateway `$settings`, 
 
 # The Payment Response
 
-The payment response must implement [\Tala\ResponseInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Payments/ResponseInterface.php). There are two main types of response:
+The payment response must implement [\Tala\ResponseInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/ResponseInterface.php). There are two main types of response:
 
 * Payment was successful (standard response)
 * Website must redirect to off-site payment form (redirect response)
