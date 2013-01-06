@@ -23,6 +23,7 @@ extend [\Tala\AbstractGateway](https://github.com/adrianmacneil/tala-payments/bl
 
 The following gateways are already implemented:
 
+* 2Checkout
 * Authorize.Net AIM
 * Authorize.Net SIM
 * DPS PaymentExpress PxPay
