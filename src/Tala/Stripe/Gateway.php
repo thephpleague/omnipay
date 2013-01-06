@@ -16,6 +16,8 @@ use Tala\Request;
 
 /**
  * Stripe Gateway
+ *
+ * @link https://stripe.com/docs/api
  */
 class Gateway extends AbstractGateway
 {
