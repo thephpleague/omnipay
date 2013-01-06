@@ -18,7 +18,7 @@ namespace Tala\PayPal;
  *
  * @author  Adrian Macneil <adrian@adrianmacneil.com>
  */
-class Exception extends \RuntimeException implements \Tala\Exception
+class Exception extends \Tala\Exception
 {
     public function __construct($responseData)
     {

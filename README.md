@@ -133,7 +133,7 @@ The main methods implemented by gateways are:
 * `void($request)` - generally can only be called up to 24 hours after submitting a transaction
 
 On-site gateways do not need to implement the `completeAuthorize` and `completePurchase` methods. If any gateway does not support
-certain features (such as refunds), it will throw a [\Tala\Exception\BadMethodCallException](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Exception/BadMethodCallException.php).
+certain features (such as refunds), it will throw a `BadMethodCallException`.
 
 All gateway methods take a [\Tala\Request](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Request.php)
 object. The request object holds various details about the transaction (each gateway requires different parameters):

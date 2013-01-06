@@ -11,6 +11,7 @@
 
 namespace Tala\PaymentExpress;
 
+use Tala\Exception;
 use Tala\Exception\InvalidResponseException;
 
 /**

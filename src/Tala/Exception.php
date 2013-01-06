@@ -12,8 +12,6 @@
 namespace Tala;
 
 /**
- * Exception marker interface
+ * Base exception class
  */
-interface Exception
-{
-}
+class Exception extends \Exception {}

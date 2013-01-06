@@ -49,43 +49,43 @@ class AbstractGatewayTest extends \PHPUnit_Framework_TestCase
 
     public function testAuthorize()
     {
-        $this->setExpectedException('\Tala\Exception\BadMethodCallException');
+        $this->setExpectedException('BadMethodCallException');
         $this->gateway->authorize($this->request, $this->card);
     }
 
     public function testCompleteAuthorize()
     {
-        $this->setExpectedException('\Tala\Exception\BadMethodCallException');
+        $this->setExpectedException('BadMethodCallException');
         $this->gateway->completeAuthorize($this->request);
     }
 
     public function testCapture()
     {
-        $this->setExpectedException('\Tala\Exception\BadMethodCallException');
+        $this->setExpectedException('BadMethodCallException');
         $this->gateway->capture($this->request);
     }
 
     public function testPurchase()
     {
-        $this->setExpectedException('\Tala\Exception\BadMethodCallException');
+        $this->setExpectedException('BadMethodCallException');
         $this->gateway->purchase($this->request, $this->card);
     }
 
     public function testCompletePurchase()
     {
-        $this->setExpectedException('\Tala\Exception\BadMethodCallException');
+        $this->setExpectedException('BadMethodCallException');
         $this->gateway->completePurchase($this->request);
     }
 
     public function testRefund()
     {
-        $this->setExpectedException('\Tala\Exception\BadMethodCallException');
+        $this->setExpectedException('BadMethodCallException');
         $this->gateway->refund($this->request);
     }
 
     public function testVoid()
     {
-        $this->setExpectedException('\Tala\Exception\BadMethodCallException');
+        $this->setExpectedException('BadMethodCallException');
         $this->gateway->void($this->request);
     }
 }

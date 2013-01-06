@@ -18,6 +18,6 @@ use Tala\Exception;
  *
  * Thrown when a gateway responded with invalid or unexpected data (for example, a security hash did not match).
  */
-class InvalidCreditCardException extends \RuntimeException implements Exception
+class InvalidCreditCardException extends Exception
 {
 }

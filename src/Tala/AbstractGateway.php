@@ -11,8 +11,8 @@
 
 namespace Tala;
 
+use BadMethodCallException;
 use Tala\AbstractParameterObject;
-use Tala\Exception\BadMethodCallException;
 use Tala\Request;
 
 /**

@@ -11,6 +11,7 @@
 
 namespace Tala\AuthorizeNet;
 
+use Tala\Exception;
 use Tala\Exception\InvalidResponseException;
 
 /**

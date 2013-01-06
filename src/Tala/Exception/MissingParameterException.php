@@ -18,7 +18,7 @@ use Tala\Exception;
  *
  * Thrown when a credit card or request parameter is missing.
  */
-class MissingParameterException extends \RuntimeException implements Exception
+class MissingParameterException extends Exception
 {
     protected $parameter;
 

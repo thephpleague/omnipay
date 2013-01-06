@@ -11,6 +11,7 @@
 
 namespace Tala;
 
+use BadMethodCallException;
 use Tala\Exception\MissingParameterException;
 
 /**
@@ -73,7 +74,7 @@ abstract class AbstractParameterObject
             return $this->setParameter($property, $value);
         }
 
-        throw new \BadMethodCallException("Undefined method: $name");
+        throw new BadMethodCallException("Undefined method: $name");
     }
 
     public function getParameter($key)
@@ -86,7 +87,7 @@ abstract class AbstractParameterObject
 
             return isset($this->parameters[$key]) ? $this->parameters[$key] : null;
         } else {
-            throw new \BadMethodCallException("Invalid parameter: $key");
+            throw new BadMethodCallException("Invalid parameter: $key");
         }
     }
 
@@ -100,7 +101,7 @@ abstract class AbstractParameterObject
                 $this->parameters[$key] = $value;
             }
         } else {
-            throw new \BadMethodCallException("Invalid parameter: $key");
+            throw new BadMethodCallException("Invalid parameter: $key");
         }
     }
 

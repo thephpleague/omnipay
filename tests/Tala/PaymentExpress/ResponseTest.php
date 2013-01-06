@@ -37,7 +37,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
     public function testDeclined()
     {
-        $this->setExpectedException('\Tala\PaymentExpress\Exception', 'Transaction Declined');
+        $this->setExpectedException('\Tala\Exception', 'Transaction Declined');
         $this->getDeclinedResponse();
     }
 

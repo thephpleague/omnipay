@@ -27,7 +27,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
     public function testErrorResponse()
     {
-        $this->setExpectedException('\Tala\AuthorizeNet\Exception', 'The credit card number is invalid.');
+        $this->setExpectedException('\Tala\Exception', 'The credit card number is invalid.');
         $fixture = '|3|,|1|,|6|,|The credit card number is invalid.|,||,|P|,|0|,||,||,|11.00|,|CC|,|auth_only|,||,|Example|,|User|,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,|1FA778A21F0DA899BA8176E2E6E91C22|,||,||,||,||,||,||,||,||,||,||,||,||,|XXXX2222|,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||';
         $response = new Response($fixture);
     }
