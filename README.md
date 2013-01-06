@@ -26,8 +26,8 @@ The following gateways are already implemented:
 * 2Checkout
 * Authorize.Net AIM
 * Authorize.Net SIM
-* DPS PaymentExpress PxPay
-* DPS PaymentExpress PxPost
+* PaymentExpress (DPS) PxPay
+* PaymentExpress (DPS) PxPost
 * PayPal Express Checkout
 * PayPal Payments Pro
 * Stripe
