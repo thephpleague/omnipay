@@ -29,6 +29,7 @@ The following gateways are already implemented:
 * DPS PaymentExpress PxPost
 * PayPal Express Checkout
 * PayPal Payments Pro
+* Stripe
 
 Gateways are initialized like so:
 
