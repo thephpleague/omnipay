@@ -38,7 +38,7 @@ $settings = array(
     'username' => 'adrian',
     'password' => '12345',
 );
-$gateway = new \Tala\PayPalExpress\Gateway($settings);
+$gateway = new \Tala\PayPal\ExpressGateway($settings);
 ```
 
 Where `$settings` is an array of gateway-specific options. The gateway can also be initialized after creation
@@ -142,7 +142,7 @@ object. The request object holds various details about the transaction (each gat
 ```php
 $source = new CreditCard();
 $request = new Request();
-$request->amount = 1000; // we will authorize $10
+$request->amount = 1000; // we will authorize $10.00
 $request->returnUrl = 'https://example.com/payment/complete';
 $response = $gateway->authorize($request, $source);
 ```
