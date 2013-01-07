@@ -33,9 +33,13 @@ class PxPayGatewayTest extends \PHPUnit_Framework_TestCase
 
     public function testAuthorizeSuccess()
     {
+        $browserResponse = m::mock('Buzz\Message\Response');
+        $browserResponse->shouldReceive('getContent')->once()
+            ->andReturn('<Response valid="1"><URI>https://www.example.com/redirect</URI></Response>');
+
         $this->browser->shouldReceive('post')
             ->with('https://sec.paymentexpress.com/pxpay/pxaccess.aspx', array(), m::type('string'))->once()
-            ->andReturn('<Response valid="1"><URI>https://www.example.com/redirect</URI></Response>');
+            ->andReturn($browserResponse);
 
         $response = $this->gateway->authorize($this->request, null);
 
@@ -48,9 +52,13 @@ class PxPayGatewayTest extends \PHPUnit_Framework_TestCase
      */
     public function testAuthorizeError()
     {
+        $browserResponse = m::mock('Buzz\Message\Response');
+        $browserResponse->shouldReceive('getContent')->once()
+            ->andReturn('<Response valid="0"><URI>https://www.example.com/redirect</URI></Response>');
+
         $this->browser->shouldReceive('post')
             ->with('https://sec.paymentexpress.com/pxpay/pxaccess.aspx', array(), m::type('string'))->once()
-            ->andReturn('<Response valid="0"><URI>https://www.example.com/redirect</URI></Response>');
+            ->andReturn($browserResponse);
 
         $response = $this->gateway->authorize($this->request, null);
     }
@@ -60,9 +68,13 @@ class PxPayGatewayTest extends \PHPUnit_Framework_TestCase
         $this->httpRequest->shouldReceive('get')->with('result')->once()
             ->andReturn('abc123');
 
+        $browserResponse = m::mock('Buzz\Message\Response');
+        $browserResponse->shouldReceive('getContent')->once()
+            ->andReturn('<Response><Success>1</Success><DpsTxnRef>5</DpsTxnRef></Response>');
+
         $this->browser->shouldReceive('post')
             ->with('https://sec.paymentexpress.com/pxpay/pxaccess.aspx', array(), m::type('string'))->once()
-            ->andReturn('<Response><Success>1</Success><DpsTxnRef>5</DpsTxnRef></Response>');
+            ->andReturn($browserResponse);
 
         $response = $this->gateway->completeAuthorize($this->request);
 
@@ -90,18 +102,26 @@ class PxPayGatewayTest extends \PHPUnit_Framework_TestCase
         $this->httpRequest->shouldReceive('get')->with('result')->once()
             ->andReturn('abc123');
 
+        $browserResponse = m::mock('Buzz\Message\Response');
+        $browserResponse->shouldReceive('getContent')->once()
+            ->andReturn('<Response><Success>0</Success><ResponseText>Error processing payment</ResponseText></Response>');
+
         $this->browser->shouldReceive('post')
             ->with('https://sec.paymentexpress.com/pxpay/pxaccess.aspx', array(), m::type('string'))->once()
-            ->andReturn('<Response><Success>0</Success><ResponseText>Error processing payment</ResponseText></Response>');
+            ->andReturn($browserResponse);
 
         $response = $this->gateway->completeAuthorize($this->request);
     }
 
     public function testPurchaseSuccess()
     {
+        $browserResponse = m::mock('Buzz\Message\Response');
+        $browserResponse->shouldReceive('getContent')->once()
+            ->andReturn('<Response valid="1"><URI>https://www.example.com/redirect</URI></Response>');
+
         $this->browser->shouldReceive('post')
             ->with('https://sec.paymentexpress.com/pxpay/pxaccess.aspx', array(), m::type('string'))->once()
-            ->andReturn('<Response valid="1"><URI>https://www.example.com/redirect</URI></Response>');
+            ->andReturn($browserResponse);
 
         $response = $this->gateway->purchase($this->request, null);
 
@@ -114,9 +134,13 @@ class PxPayGatewayTest extends \PHPUnit_Framework_TestCase
      */
     public function testPurchaseError()
     {
+        $browserResponse = m::mock('Buzz\Message\Response');
+        $browserResponse->shouldReceive('getContent')->once()
+            ->andReturn('<Response valid="0"><URI>https://www.example.com/redirect</URI></Response>');
+
         $this->browser->shouldReceive('post')
             ->with('https://sec.paymentexpress.com/pxpay/pxaccess.aspx', array(), m::type('string'))->once()
-            ->andReturn('<Response valid="0"><URI>https://www.example.com/redirect</URI></Response>');
+            ->andReturn($browserResponse);
 
         $response = $this->gateway->purchase($this->request, null);
     }
@@ -126,9 +150,13 @@ class PxPayGatewayTest extends \PHPUnit_Framework_TestCase
         $this->httpRequest->shouldReceive('get')->with('result')->once()
             ->andReturn('abc123');
 
+        $browserResponse = m::mock('Buzz\Message\Response');
+        $browserResponse->shouldReceive('getContent')->once()
+            ->andReturn('<Response><Success>1</Success><DpsTxnRef>5</DpsTxnRef></Response>');
+
         $this->browser->shouldReceive('post')
             ->with('https://sec.paymentexpress.com/pxpay/pxaccess.aspx', array(), m::type('string'))->once()
-            ->andReturn('<Response><Success>1</Success><DpsTxnRef>5</DpsTxnRef></Response>');
+            ->andReturn($browserResponse);
 
         $response = $this->gateway->completePurchase($this->request);
 
@@ -156,9 +184,13 @@ class PxPayGatewayTest extends \PHPUnit_Framework_TestCase
         $this->httpRequest->shouldReceive('get')->with('result')->once()
             ->andReturn('abc123');
 
+        $browserResponse = m::mock('Buzz\Message\Response');
+        $browserResponse->shouldReceive('getContent')->once()
+            ->andReturn('<Response><Success>0</Success><ResponseText>Error processing payment</ResponseText></Response>');
+
         $this->browser->shouldReceive('post')
             ->with('https://sec.paymentexpress.com/pxpay/pxaccess.aspx', array(), m::type('string'))->once()
-            ->andReturn('<Response><Success>0</Success><ResponseText>Error processing payment</ResponseText></Response>');
+            ->andReturn($browserResponse);
 
         $response = $this->gateway->completePurchase($this->request);
     }
