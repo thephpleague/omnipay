@@ -65,7 +65,7 @@ $settings = $gateway->getDefaultSettings();
 array(
     'username' => '', // string variable
     'testMode' => false, // boolean variable
-    'landingPage' => array('billing', 'login'), // enum variable
+    'landingPage' => array('billing', 'login'), // enum variable, first item should be treated as default
 );
 ```
 
