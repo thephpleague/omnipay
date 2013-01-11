@@ -19,11 +19,6 @@ use Tala\Request;
 interface GatewayInterface
 {
     /**
-     * Create a new gateway using an associative array of settings.
-     */
-    public function __construct($settings);
-
-    /**
      * Initialize the gateway with an associative array of settings.
      */
     public function initialize($settings);
