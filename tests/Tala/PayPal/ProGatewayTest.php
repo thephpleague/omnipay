@@ -11,6 +11,7 @@
 
 namespace Tala\PayPal;
 
+use Mockery as m;
 use Tala\CreditCard;
 use Tala\Request;
 
@@ -18,39 +19,25 @@ class ProGatewayTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->gateway = new ProGateway(array(
-            'username' => getenv('PAYPAL_USERNAME'),
-            'password' => getenv('PAYPAL_PASSWORD'),
-            'signature' => getenv('PAYPAL_SIGNATURE'),
-            'testMode' => (bool) getenv('PAYPAL_TEST_MODE'),
-        ));
+        $this->gateway = new ProGateway;
+
+        $this->browser = m::mock('\Buzz\Browser');
+        $this->gateway->setBrowser($this->browser);
+
+        $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
+        $this->gateway->setHttpRequest($this->httpRequest);
 
         $this->card = new CreditCard(array(
             'firstName' => 'Example',
             'lastName' => 'User',
-            'number' => getenv('PAYPAL_CARD_NUMBER'),
-            'expiryMonth' => getenv('PAYPAL_CARD_EXP_MONTH'),
-            'expiryYear' => getenv('PAYPAL_CARD_EXP_YEAR'),
-            'cvv' => getenv('PAYPAL_CARD_CVV'),
+            'number' => '4111111111111111',
+            'expiryMonth' => '12',
+            'expiryYear' => '2016',
+            'cvv' => '123',
         ));
 
         $this->request = new Request();
         $this->request->amount = 1000;
-    }
-
-    protected function getMockBrowser()
-    {
-        return $this->getMock('\Buzz\Browser');
-    }
-
-    protected function getMockResponse($message)
-    {
-        $response = $this->getMock('\Buzz\Message\Response');
-        $response->expects($this->atLeastOnce())
-            ->method('getContent')
-            ->will($this->returnValue($message));
-
-        return $response;
     }
 
     public function testAuthorizeRequiresAmount()
@@ -63,51 +50,33 @@ class ProGatewayTest extends \PHPUnit_Framework_TestCase
 
     public function testAuthorize()
     {
-        $mockBrowser = $this->getMockBrowser();
-        $mockResponse = $this->getMockResponse('TIMESTAMP=2012%2d09%2d06T06%3a34%3a46Z&CORRELATIONID=1a0e1b3ba661b&ACK=Success&VERSION=85%2e0&BUILD=3587318&AMT=11%2e00&CURRENCYCODE=USD&AVSCODE=X&CVV2MATCH=M&TRANSACTIONID=7T274412RY6976239');
+        $browserResponse = m::mock('Buzz\Message\Response');
+        $browserResponse->shouldReceive('getContent')->once()
+            ->andReturn('TIMESTAMP=2012%2d09%2d06T06%3a34%3a46Z&CORRELATIONID=1a0e1b3ba661b&ACK=Success&VERSION=85%2e0&BUILD=3587318&AMT=11%2e00&CURRENCYCODE=USD&AVSCODE=X&CVV2MATCH=M&TRANSACTIONID=7T274412RY6976239');
 
-        $mockBrowser->expects($this->once())
-             ->method('get')
-             ->will($this->returnValue($mockResponse));
+        $this->browser->shouldReceive('get')
+            ->with(m::type('string'))->once()
+            ->andReturn($browserResponse);
 
-        $this->gateway->setBrowser($mockBrowser);
         $response = $this->gateway->authorize($this->request, $this->card);
 
-        $this->assertInstanceOf('\Tala\ResponseInterface', $response);
+        $this->assertInstanceOf('\Tala\Response', $response);
         $this->assertEquals('7T274412RY6976239', $response->getGatewayReference());
     }
 
-    /**
-     * @group remote
-     */
-    public function testAuthorizeCaptureRemote()
+    public function testPurchase()
     {
-        $authRequest = new Request();
-        $authRequest->amount = 1100;
-        $authResponse = $this->gateway->authorize($authRequest, $this->card);
+        $browserResponse = m::mock('Buzz\Message\Response');
+        $browserResponse->shouldReceive('getContent')->once()
+            ->andReturn('TIMESTAMP=2012%2d09%2d06T06%3a34%3a46Z&CORRELATIONID=1a0e1b3ba661b&ACK=Success&VERSION=85%2e0&BUILD=3587318&AMT=11%2e00&CURRENCYCODE=USD&AVSCODE=X&CVV2MATCH=M&TRANSACTIONID=7T274412RY6976239');
 
-        $this->assertInstanceOf('\Tala\ResponseInterface', $authResponse);
-        $this->assertNotEmpty($authResponse->getGatewayReference());
+        $this->browser->shouldReceive('get')
+            ->with(m::type('string'))->once()
+            ->andReturn($browserResponse);
 
-        $captureRequest = new Request();
-        $captureRequest->gatewayReference = $authResponse->getGatewayReference();
-        $captureRequest->amount = 1100;
-        $captureResponse = $this->gateway->capture($captureRequest);
+        $response = $this->gateway->purchase($this->request, $this->card);
 
-        $this->assertInstanceOf('\Tala\ResponseInterface', $captureResponse);
-        $this->assertNotEmpty($captureResponse->getGatewayReference());
-    }
-
-    /**
-     * @group remote
-     */
-    public function testPurchaseRemote()
-    {
-        $purchaseRequest = new Request();
-        $purchaseRequest->amount = 1300;
-        $purchaseResponse = $this->gateway->purchase($purchaseRequest, $this->card);
-
-        $this->assertInstanceOf('\Tala\ResponseInterface', $purchaseResponse);
-        $this->assertNotEmpty($purchaseResponse->getGatewayReference());
+        $this->assertInstanceOf('\Tala\Response', $response);
+        $this->assertEquals('7T274412RY6976239', $response->getGatewayReference());
     }
 }

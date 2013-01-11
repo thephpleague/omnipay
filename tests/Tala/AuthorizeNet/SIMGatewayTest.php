@@ -18,12 +18,7 @@ class SIMGatewayTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->gateway = new SIMGateway(array(
-            'apiLoginId' => getenv('AUTHORIZENET_API_LOGIN_ID'),
-            'transactionKey' => getenv('AUTHORIZENET_TRANSACTION_KEY'),
-            'testMode' => (bool) getenv('AUTHORIZENET_TEST_MODE'),
-            'developerMode' => (bool) getenv('AUTHORIZENET_DEVELOPER_MODE'),
-        ));
+        $this->gateway = new SIMGateway;
 
         $this->card = new CreditCard(array(
             'firstName' => 'Example',

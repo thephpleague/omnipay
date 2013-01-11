@@ -53,7 +53,7 @@ class ExpressGateway extends AbstractGateway
     public function purchase(Request $request, $source)
     {
         // authorize first then process as 'Sale' in DoExpressCheckoutPayment
-        $this->authorize($request, $source);
+        return $this->authorize($request, $source);
     }
 
     public function completePurchase(Request $request)

@@ -7,4 +7,4 @@ php:
 before_script:
   - composer install --dev
 
-script: phpunit --exclude-group remote
+script: phpunit
