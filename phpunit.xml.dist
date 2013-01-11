@@ -9,22 +9,6 @@
          processIsolation="false"
          stopOnFailure="false"
          syntaxCheck="false">
-    <php>
-        <env name="AUTHORIZENET_API_LOGIN_ID" value="" />
-        <env name="AUTHORIZENET_TRANSACTION_KEY" value="" />
-        <env name="AUTHORIZENET_TEST_MODE" value="0" />
-        <env name="AUTHORIZENET_DEVELOPER_MODE" value="1" />
-        <env name="PAYMENTEXPRESS_USERNAME" value="" />
-        <env name="PAYMENTEXPRESS_PASSWORD" value="" />
-        <env name="PAYPAL_USERNAME" value="" />
-        <env name="PAYPAL_PASSWORD" value="" />
-        <env name="PAYPAL_SIGNATURE" value="" />
-        <env name="PAYPAL_TEST_MODE" value="1" />
-        <env name="PAYPAL_CARD_NUMBER" value="2222222222222222" />
-        <env name="PAYPAL_CARD_EXP_MONTH" value="12" />
-        <env name="PAYPAL_CARD_EXP_YEAR" value="15" />
-        <env name="PAYPAL_CARD_CVV" value="123" />
-    </php>
     <testsuites>
         <testsuite name="Tala Payments Test Suite">
             <directory>./tests/</directory>
