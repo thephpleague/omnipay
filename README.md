@@ -13,8 +13,9 @@ to discuss, or fork the project and send a pull request.
 
 Tala Payments is a single package which provides abstract base classes and implementations
 for all officially supported gateways. Unsupported gateways can either be added by forking
-this package and submitting a pull request, or by distributing a separate library which depends
-on this package and makes use of the base classes and consistent developer API.
+this package and submitting a pull request (unit tests and tidy code required), or by
+distributing a separate library which depends on this package and makes use of the base
+classes and consistent developer API.
 
 # Payment Gateways
 
