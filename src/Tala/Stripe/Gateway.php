@@ -58,7 +58,7 @@ class Gateway extends AbstractGateway
 
     protected function send($url, $data)
     {
-        $response = $this->getBrowser()->post($this->endpoint.$url, array(), $data);
+        $response = $this->getBrowser()->post($this->endpoint.$url, array(), http_build_query($data));
 
         return new Response($response->getContent());
     }
