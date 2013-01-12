@@ -32,6 +32,6 @@ class GatewayFactory
             $type .= '\\';
         }
 
-        return '\\Tala\\'.$type.'Gateway';
+        return '\\Tala\\Billing\\'.$type.'Gateway';
     }
 }
