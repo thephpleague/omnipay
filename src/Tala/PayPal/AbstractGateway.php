@@ -109,10 +109,10 @@ abstract class AbstractGateway extends \Tala\AbstractGateway
     protected function send($data)
     {
         // send and decode response
-        $response = $this->getBrowser()->get($this->getCurrentEndpoint().'?'.http_build_query($data));
+        $response = $this->httpClient->get($this->getCurrentEndpoint().'?'.http_build_query($data));
 
         $response_vars = array();
-        parse_str($response->getContent(), $response_vars);
+        parse_str($response, $response_vars);
 
         // check whether response was successful
         if (isset($response_vars['ACK']) and in_array($response_vars['ACK'], array('Success', 'SuccessWithWarning'))) {

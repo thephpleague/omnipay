@@ -19,13 +19,13 @@ class ProGatewayTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->gateway = new ProGateway;
-
-        $this->browser = m::mock('\Buzz\Browser');
-        $this->gateway->setBrowser($this->browser);
-
+        $this->httpClient = m::mock('\Tala\HttpClient\HttpClientInterface');
         $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
-        $this->gateway->setHttpRequest($this->httpRequest);
+
+        $this->gateway = new ProGateway(array(
+            'httpClient' => $this->httpClient,
+            'httpRequest' => $this->httpRequest,
+        ));
 
         $this->card = new CreditCard(array(
             'firstName' => 'Example',
@@ -50,13 +50,9 @@ class ProGatewayTest extends \PHPUnit_Framework_TestCase
 
     public function testAuthorize()
     {
-        $browserResponse = m::mock('Buzz\Message\Response');
-        $browserResponse->shouldReceive('getContent')->once()
-            ->andReturn('TIMESTAMP=2012%2d09%2d06T06%3a34%3a46Z&CORRELATIONID=1a0e1b3ba661b&ACK=Success&VERSION=85%2e0&BUILD=3587318&AMT=11%2e00&CURRENCYCODE=USD&AVSCODE=X&CVV2MATCH=M&TRANSACTIONID=7T274412RY6976239');
-
-        $this->browser->shouldReceive('get')
+        $this->httpClient->shouldReceive('get')
             ->with(m::type('string'))->once()
-            ->andReturn($browserResponse);
+            ->andReturn('TIMESTAMP=2012%2d09%2d06T06%3a34%3a46Z&CORRELATIONID=1a0e1b3ba661b&ACK=Success&VERSION=85%2e0&BUILD=3587318&AMT=11%2e00&CURRENCYCODE=USD&AVSCODE=X&CVV2MATCH=M&TRANSACTIONID=7T274412RY6976239');
 
         $response = $this->gateway->authorize($this->request, $this->card);
 
@@ -66,13 +62,9 @@ class ProGatewayTest extends \PHPUnit_Framework_TestCase
 
     public function testPurchase()
     {
-        $browserResponse = m::mock('Buzz\Message\Response');
-        $browserResponse->shouldReceive('getContent')->once()
-            ->andReturn('TIMESTAMP=2012%2d09%2d06T06%3a34%3a46Z&CORRELATIONID=1a0e1b3ba661b&ACK=Success&VERSION=85%2e0&BUILD=3587318&AMT=11%2e00&CURRENCYCODE=USD&AVSCODE=X&CVV2MATCH=M&TRANSACTIONID=7T274412RY6976239');
-
-        $this->browser->shouldReceive('get')
+        $this->httpClient->shouldReceive('get')
             ->with(m::type('string'))->once()
-            ->andReturn($browserResponse);
+            ->andReturn('TIMESTAMP=2012%2d09%2d06T06%3a34%3a46Z&CORRELATIONID=1a0e1b3ba661b&ACK=Success&VERSION=85%2e0&BUILD=3587318&AMT=11%2e00&CURRENCYCODE=USD&AVSCODE=X&CVV2MATCH=M&TRANSACTIONID=7T274412RY6976239');
 
         $response = $this->gateway->purchase($this->request, $this->card);
 

@@ -87,8 +87,8 @@ class PxPayGateway extends AbstractGateway
 
     protected function sendPurchase($data)
     {
-        $response = $this->getBrowser()->post($this->endpoint, array(), $data->asXML());
-        $xml = new SimpleXMLElement($response->getContent());
+        $response = $this->httpClient->post($this->endpoint, $data->asXML());
+        $xml = new SimpleXMLElement($response);
 
         if ((string) $xml['valid'] == '1') {
             return new RedirectResponse((string) $xml->URI);
@@ -99,8 +99,8 @@ class PxPayGateway extends AbstractGateway
 
     protected function sendComplete($data)
     {
-        $response = $this->getBrowser()->post($this->endpoint, array(), $data->asXML());
+        $response = $this->httpClient->post($this->endpoint, $data->asXML());
 
-        return new Response($response->getContent());
+        return new Response($response);
     }
 }

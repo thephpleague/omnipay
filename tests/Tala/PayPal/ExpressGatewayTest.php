@@ -19,13 +19,13 @@ class ExpressGatewayTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->gateway = new ExpressGateway;
-
-        $this->browser = m::mock('\Buzz\Browser');
-        $this->gateway->setBrowser($this->browser);
-
+        $this->httpClient = m::mock('\Tala\HttpClient\HttpClientInterface');
         $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
-        $this->gateway->setHttpRequest($this->httpRequest);
+
+        $this->gateway = new ExpressGateway(array(
+            'httpClient' => $this->httpClient,
+            'httpRequest' => $this->httpRequest,
+        ));
 
         $this->card = new CreditCard;
 
@@ -37,13 +37,9 @@ class ExpressGatewayTest extends \PHPUnit_Framework_TestCase
 
     public function testAuthorize()
     {
-        $browserResponse = m::mock('Buzz\Message\Response');
-        $browserResponse->shouldReceive('getContent')->once()
-            ->andReturn('TOKEN=EC%2d5BV04722RH241693H&TIMESTAMP=2013%2d01%2d11T18%3a50%3a23Z&CORRELATIONID=43cb1f2bec8db&ACK=Success&VERSION=85%2e0&BUILD=4181146');
-
-        $this->browser->shouldReceive('get')
+        $this->httpClient->shouldReceive('get')
             ->with(m::type('string'))->once()
-            ->andReturn($browserResponse);
+            ->andReturn('TOKEN=EC%2d5BV04722RH241693H&TIMESTAMP=2013%2d01%2d11T18%3a50%3a23Z&CORRELATIONID=43cb1f2bec8db&ACK=Success&VERSION=85%2e0&BUILD=4181146');
 
         $response = $this->gateway->authorize($this->request, $this->card);
 
@@ -53,13 +49,9 @@ class ExpressGatewayTest extends \PHPUnit_Framework_TestCase
 
     public function testPurchase()
     {
-        $browserResponse = m::mock('Buzz\Message\Response');
-        $browserResponse->shouldReceive('getContent')->once()
-            ->andReturn('TOKEN=EC%2d5BV04722RH241693H&TIMESTAMP=2013%2d01%2d11T18%3a50%3a23Z&CORRELATIONID=43cb1f2bec8db&ACK=Success&VERSION=85%2e0&BUILD=4181146');
-
-        $this->browser->shouldReceive('get')
+        $this->httpClient->shouldReceive('get')
             ->with(m::type('string'))->once()
-            ->andReturn($browserResponse);
+            ->andReturn('TOKEN=EC%2d5BV04722RH241693H&TIMESTAMP=2013%2d01%2d11T18%3a50%3a23Z&CORRELATIONID=43cb1f2bec8db&ACK=Success&VERSION=85%2e0&BUILD=4181146');
 
         $response = $this->gateway->purchase($this->request, $this->card);
 

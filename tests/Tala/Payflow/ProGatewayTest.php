@@ -19,10 +19,13 @@ class ProGatewayTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->gateway = new ProGateway;
+        $this->httpClient = m::mock('\Tala\HttpClient\HttpClientInterface');
+        $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
 
-        $this->browser = m::mock('\Buzz\Browser');
-        $this->gateway->setBrowser($this->browser);
+        $this->gateway = new ProGateway(array(
+            'httpClient' => $this->httpClient,
+            'httpRequest' => $this->httpRequest,
+        ));
 
         $this->card = new CreditCard(array(
             'firstName' => 'Example',
@@ -39,13 +42,9 @@ class ProGatewayTest extends \PHPUnit_Framework_TestCase
 
     public function testAuthorizeSuccess()
     {
-        $browserResponse = m::mock('Buzz\Message\Response');
-        $browserResponse->shouldReceive('getContent')->once()
+        $this->httpClient->shouldReceive('post')->once()
+            ->with('https://payflowpro.paypal.com', m::type('array'))
             ->andReturn('RESULT=0&PNREF=V19R3EF62FBE&RESPMSG=Approved&AUTHCODE=048747&CVV2MATCH=Y');
-
-        $this->browser->shouldReceive('post')->once()
-            ->with('https://payflowpro.paypal.com', array(), m::type('string'))
-            ->andReturn($browserResponse);
 
         $response = $this->gateway->authorize($this->request, $this->card);
 
@@ -58,13 +57,9 @@ class ProGatewayTest extends \PHPUnit_Framework_TestCase
      */
     public function testAuthorizeError()
     {
-        $browserResponse = m::mock('Buzz\Message\Response');
-        $browserResponse->shouldReceive('getContent')->once()
+        $this->httpClient->shouldReceive('post')->once()
+            ->with('https://payflowpro.paypal.com', m::type('array'))
             ->andReturn('RESULT=1&RESPMSG=User authentication failed');
-
-        $this->browser->shouldReceive('post')->once()
-            ->with('https://payflowpro.paypal.com', array(), m::type('string'))
-            ->andReturn($browserResponse);
 
         $response = $this->gateway->authorize($this->request, $this->card);
     }
@@ -75,13 +70,9 @@ class ProGatewayTest extends \PHPUnit_Framework_TestCase
         $request->amount = 1000;
         $request->gatewayReference = 'abc123';
 
-        $browserResponse = m::mock('Buzz\Message\Response');
-        $browserResponse->shouldReceive('getContent')->once()
+        $this->httpClient->shouldReceive('post')->once()
+            ->with('https://payflowpro.paypal.com', m::type('array'))
             ->andReturn('RESULT=0&PNREF=V19R3EF62FBE&RESPMSG=Approved&AUTHCODE=048747&CVV2MATCH=Y');
-
-        $this->browser->shouldReceive('post')->once()
-            ->with('https://payflowpro.paypal.com', array(), m::type('string'))
-            ->andReturn($browserResponse);
 
         $response = $this->gateway->capture($request);
 
@@ -90,13 +81,9 @@ class ProGatewayTest extends \PHPUnit_Framework_TestCase
 
     public function testPurchaseSuccess()
     {
-        $browserResponse = m::mock('Buzz\Message\Response');
-        $browserResponse->shouldReceive('getContent')->once()
+        $this->httpClient->shouldReceive('post')->once()
+            ->with('https://payflowpro.paypal.com', m::type('array'))
             ->andReturn('RESULT=0&PNREF=V19R3EF62FBE&RESPMSG=Approved&AUTHCODE=048747&CVV2MATCH=Y');
-
-        $this->browser->shouldReceive('post')->once()
-            ->with('https://payflowpro.paypal.com', array(), m::type('string'))
-            ->andReturn($browserResponse);
 
         $response = $this->gateway->purchase($this->request, $this->card);
 
@@ -109,13 +96,9 @@ class ProGatewayTest extends \PHPUnit_Framework_TestCase
      */
     public function testPurchaseError()
     {
-        $browserResponse = m::mock('Buzz\Message\Response');
-        $browserResponse->shouldReceive('getContent')->once()
+        $this->httpClient->shouldReceive('post')->once()
+            ->with('https://payflowpro.paypal.com', m::type('array'))
             ->andReturn('RESULT=1&RESPMSG=User authentication failed');
-
-        $this->browser->shouldReceive('post')->once()
-            ->with('https://payflowpro.paypal.com', array(), m::type('string'))
-            ->andReturn($browserResponse);
 
         $response = $this->gateway->purchase($this->request, $this->card);
     }
@@ -126,13 +109,9 @@ class ProGatewayTest extends \PHPUnit_Framework_TestCase
         $request->amount = 1000;
         $request->gatewayReference = 'abc123';
 
-        $browserResponse = m::mock('Buzz\Message\Response');
-        $browserResponse->shouldReceive('getContent')->once()
+        $this->httpClient->shouldReceive('post')->once()
+            ->with('https://payflowpro.paypal.com', m::type('array'))
             ->andReturn('RESULT=0&PNREF=V19R3EF62FBE&RESPMSG=Approved&AUTHCODE=048747&CVV2MATCH=Y');
-
-        $this->browser->shouldReceive('post')->once()
-            ->with('https://payflowpro.paypal.com', array(), m::type('string'))
-            ->andReturn($browserResponse);
 
         $response = $this->gateway->refund($request);
 

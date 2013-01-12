@@ -15,10 +15,10 @@
         "psr-0": { "Tala" : "src/" }
     },
     "require": {
-        "kriswallsmith/buzz": "0.7",
         "symfony/http-foundation": "2.*"
     },
     "require-dev": {
+        "kriswallsmith/buzz": "0.*",
         "phpunit/phpunit": "3.7.*",
         "mockery/mockery": "0.7.*"
     },

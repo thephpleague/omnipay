@@ -18,10 +18,13 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->gateway = new Gateway();
+        $this->httpClient = m::mock('\Tala\HttpClient\HttpClientInterface');
+        $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
 
-        $this->browser = m::mock('\Buzz\Browser');
-        $this->gateway->setBrowser($this->browser);
+        $this->gateway = new Gateway(array(
+            'httpClient' => $this->httpClient,
+            'httpRequest' => $this->httpRequest,
+        ));
     }
 
     /**
@@ -33,13 +36,9 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $request = new Request;
         $request->amount = 1000;
 
-        $browserResponse = m::mock('Buzz\Message\Response');
-        $browserResponse->shouldReceive('getContent')->once()
+        $this->httpClient->shouldReceive('post')->once()
+            ->with('https://api.stripe.com/v1/charges', m::type('array'))
             ->andReturn('{"error":{"message":"Your card number is incorrect"}}');
-
-        $this->browser->shouldReceive('post')->once()
-            ->with('https://api.stripe.com/v1/charges', array(), m::type('string'))
-            ->andReturn($browserResponse);
 
         $this->gateway->purchase($request, 'abc123');
     }
@@ -49,13 +48,9 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $request = new Request();
         $request->amount = 1000;
 
-        $browserResponse = m::mock('Buzz\Message\Response');
-        $browserResponse->shouldReceive('getContent')->once()
+        $this->httpClient->shouldReceive('post')->once()
+            ->with('https://api.stripe.com/v1/charges', m::type('array'))
             ->andReturn('{"id":"ch_12RgN9L7XhO9mI"}');
-
-        $this->browser->shouldReceive('post')->once()
-            ->with('https://api.stripe.com/v1/charges', array(), m::type('string'))
-            ->andReturn($browserResponse);
 
         $response = $this->gateway->purchase($request, 'abc123');
 
@@ -72,13 +67,9 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $request->amount = 1000;
         $request->gatewayReference = 'ch_12RgN9L7XhO9mI';
 
-        $browserResponse = m::mock('Buzz\Message\Response');
-        $browserResponse->shouldReceive('getContent')->once()
+        $this->httpClient->shouldReceive('post')->once()
+            ->with('https://api.stripe.com/v1/charges/ch_12RgN9L7XhO9mI/refund', m::type('array'))
             ->andReturn('{"error":{"message":"Charge ch_12RgN9L7XhO9mI has already been refunded."}}');
-
-        $this->browser->shouldReceive('post')->once()
-            ->with('https://api.stripe.com/v1/charges/ch_12RgN9L7XhO9mI/refund', array(), m::type('string'))
-            ->andReturn($browserResponse);
 
         $this->gateway->refund($request);
     }
@@ -89,13 +80,9 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $request->amount = 1000;
         $request->gatewayReference = 'ch_12RgN9L7XhO9mI';
 
-        $browserResponse = m::mock('Buzz\Message\Response');
-        $browserResponse->shouldReceive('getContent')->once()
+        $this->httpClient->shouldReceive('post')->once()
+            ->with('https://api.stripe.com/v1/charges/ch_12RgN9L7XhO9mI/refund', m::type('array'))
             ->andReturn('{"id":"ch_12RgN9L7XhO9mI"}');
-
-        $this->browser->shouldReceive('post')->once()
-            ->with('https://api.stripe.com/v1/charges/ch_12RgN9L7XhO9mI/refund', array(), m::type('string'))
-            ->andReturn($browserResponse);
 
         $response = $this->gateway->refund($request);
 

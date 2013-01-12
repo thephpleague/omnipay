@@ -19,13 +19,13 @@ class PxPostGatewayTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->gateway = new PxPostGateway;
-
-        $this->browser = m::mock('\Buzz\Browser');
-        $this->gateway->setBrowser($this->browser);
-
+        $this->httpClient = m::mock('\Tala\HttpClient\HttpClientInterface');
         $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
-        $this->gateway->setHttpRequest($this->httpRequest);
+
+        $this->gateway = new PxPostGateway(array(
+            'httpClient' => $this->httpClient,
+            'httpRequest' => $this->httpRequest,
+        ));
 
         $this->card = new CreditCard(array(
             'firstName' => 'Example',
@@ -42,13 +42,9 @@ class PxPostGatewayTest extends \PHPUnit_Framework_TestCase
 
     public function testAuthorizeSuccess()
     {
-        $browserResponse = m::mock('Buzz\Message\Response');
-        $browserResponse->shouldReceive('getContent')->once()
+        $this->httpClient->shouldReceive('post')
+            ->with('https://sec.paymentexpress.com/pxpost.aspx', m::type('string'))->once()
             ->andReturn('<Txn><ReCo>00</ReCo><ResponseText>APPROVED</ResponseText><HelpText>Transaction Approved</HelpText><Success>1</Success><DpsTxnRef>000000030884cdc6</DpsTxnRef><TxnRef>inv1278</TxnRef></Txn>');
-
-        $this->browser->shouldReceive('post')
-            ->with('https://sec.paymentexpress.com/pxpost.aspx', array(), m::type('string'))->once()
-            ->andReturn($browserResponse);
 
         $response = $this->gateway->authorize($this->request, $this->card);
 
@@ -62,26 +58,18 @@ class PxPostGatewayTest extends \PHPUnit_Framework_TestCase
      */
     public function testAuthorizeFailure()
     {
-        $browserResponse = m::mock('Buzz\Message\Response');
-        $browserResponse->shouldReceive('getContent')->once()
+        $this->httpClient->shouldReceive('post')
+            ->with('https://sec.paymentexpress.com/pxpost.aspx', m::type('string'))->once()
             ->andReturn('<Txn><HelpText>Transaction Declined</HelpText><Success>0</Success></Txn>');
-
-        $this->browser->shouldReceive('post')
-            ->with('https://sec.paymentexpress.com/pxpost.aspx', array(), m::type('string'))->once()
-            ->andReturn($browserResponse);
 
         $response = $this->gateway->authorize($this->request, $this->card);
     }
 
     public function testCaptureSuccess()
     {
-        $browserResponse = m::mock('Buzz\Message\Response');
-        $browserResponse->shouldReceive('getContent')->once()
+        $this->httpClient->shouldReceive('post')
+            ->with('https://sec.paymentexpress.com/pxpost.aspx', m::type('string'))->once()
             ->andReturn('<Txn><ReCo>00</ReCo><ResponseText>APPROVED</ResponseText><HelpText>Transaction Approved</HelpText><Success>1</Success><DpsTxnRef>000000030884cdc6</DpsTxnRef><TxnRef>inv1278</TxnRef></Txn>');
-
-        $this->browser->shouldReceive('post')
-            ->with('https://sec.paymentexpress.com/pxpost.aspx', array(), m::type('string'))->once()
-            ->andReturn($browserResponse);
 
         $request = new Request;
         $request->amount = 1000;
@@ -95,13 +83,9 @@ class PxPostGatewayTest extends \PHPUnit_Framework_TestCase
 
     public function testPurchaseSuccess()
     {
-        $browserResponse = m::mock('Buzz\Message\Response');
-        $browserResponse->shouldReceive('getContent')->once()
+        $this->httpClient->shouldReceive('post')
+            ->with('https://sec.paymentexpress.com/pxpost.aspx', m::type('string'))->once()
             ->andReturn('<Txn><ReCo>00</ReCo><ResponseText>APPROVED</ResponseText><HelpText>Transaction Approved</HelpText><Success>1</Success><DpsTxnRef>000000030884cdc6</DpsTxnRef><TxnRef>inv1278</TxnRef></Txn>');
-
-        $this->browser->shouldReceive('post')
-            ->with('https://sec.paymentexpress.com/pxpost.aspx', array(), m::type('string'))->once()
-            ->andReturn($browserResponse);
 
         $response = $this->gateway->purchase($this->request, $this->card);
 
@@ -115,26 +99,18 @@ class PxPostGatewayTest extends \PHPUnit_Framework_TestCase
      */
     public function testPurchaseFailure()
     {
-        $browserResponse = m::mock('Buzz\Message\Response');
-        $browserResponse->shouldReceive('getContent')->once()
+        $this->httpClient->shouldReceive('post')
+            ->with('https://sec.paymentexpress.com/pxpost.aspx', m::type('string'))->once()
             ->andReturn('<Txn><HelpText>Transaction Declined</HelpText><Success>0</Success></Txn>');
-
-        $this->browser->shouldReceive('post')
-            ->with('https://sec.paymentexpress.com/pxpost.aspx', array(), m::type('string'))->once()
-            ->andReturn($browserResponse);
 
         $response = $this->gateway->purchase($this->request, $this->card);
     }
 
     public function testRefundSuccess()
     {
-        $browserResponse = m::mock('Buzz\Message\Response');
-        $browserResponse->shouldReceive('getContent')->once()
+        $this->httpClient->shouldReceive('post')
+            ->with('https://sec.paymentexpress.com/pxpost.aspx', m::type('string'))->once()
             ->andReturn('<Txn><ReCo>00</ReCo><ResponseText>APPROVED</ResponseText><HelpText>Transaction Approved</HelpText><Success>1</Success><DpsTxnRef>000000030884cdc6</DpsTxnRef><TxnRef>inv1278</TxnRef></Txn>');
-
-        $this->browser->shouldReceive('post')
-            ->with('https://sec.paymentexpress.com/pxpost.aspx', array(), m::type('string'))->once()
-            ->andReturn($browserResponse);
 
         $request = new Request;
         $request->amount = 1000;

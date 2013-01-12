@@ -19,19 +19,21 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->gateway = new Gateway(array('username' => 'abc', 'password' => '123'));
+        $this->httpClient = m::mock('\Tala\HttpClient\HttpClientInterface');
+        $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
+
+        $this->gateway = new Gateway(array(
+            'username' => 'abc',
+            'password' => '123',
+            'httpClient' => $this->httpClient,
+            'httpRequest' => $this->httpRequest,
+        ));
 
         $this->request = new Request;
         $this->request->amount = 1000;
         $this->request->returnUrl = 'https://www.example.com/complete';
 
         $this->card = new CreditCard;
-
-        $this->browser = m::mock('\Buzz\Browser');
-        $this->gateway->setBrowser($this->browser);
-
-        $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
-        $this->gateway->setHttpRequest($this->httpRequest);
     }
 
     public function testPurchase()
@@ -50,13 +52,9 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $this->httpRequest->shouldReceive('get')->with('signature')->once()
             ->andReturn('416f52e7d287dab49fa8445c1cd0957ca8ddf1c04a6300e00117dc0bedabc7d7');
 
-        $browserResponse = m::mock('Buzz\Message\Response');
-        $browserResponse->shouldReceive('getContent')->once()
+        $this->httpClient->shouldReceive('post')
+            ->with('https://gocardless.com/api/v1/confirm', m::type('string'), m::type('array'))->once()
             ->andReturn('{"success":true}');
-
-        $this->browser->shouldReceive('post')
-            ->with('https://gocardless.com/api/v1/confirm', m::type('array'), m::type('string'))->once()
-            ->andReturn($browserResponse);
 
         $response = $this->gateway->completePurchase($this->request);
 
@@ -76,13 +74,9 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $this->httpRequest->shouldReceive('get')->with('signature')->once()
             ->andReturn('416f52e7d287dab49fa8445c1cd0957ca8ddf1c04a6300e00117dc0bedabc7d7');
 
-        $browserResponse = m::mock('Buzz\Message\Response');
-        $browserResponse->shouldReceive('getContent')->once()
+        $this->httpClient->shouldReceive('post')
+            ->with('https://gocardless.com/api/v1/confirm', m::type('string'), m::type('array'))->once()
             ->andReturn('{"error":["The resource cannot be confirmed"]}');
-
-        $this->browser->shouldReceive('post')
-            ->with('https://gocardless.com/api/v1/confirm', m::type('array'), m::type('string'))->once()
-            ->andReturn($browserResponse);
 
         $response = $this->gateway->completePurchase($this->request);
     }

@@ -64,10 +64,10 @@ class Gateway extends AbstractGateway
             'Accept: application/json',
         );
 
-        $response = $this->getBrowser()->post(
-            $this->getCurrentEndpoint().'/api/v1/confirm', $headers, $this->generateQueryString($data));
+        $response = $this->httpClient->post(
+            $this->getCurrentEndpoint().'/api/v1/confirm', $this->generateQueryString($data), $headers);
 
-        return new Response($response->getContent(), $data['resource_id']);
+        return new Response($response, $data['resource_id']);
     }
 
     protected function buildPurchase(Request $request, $source)

@@ -25,15 +25,15 @@ class AbstractGatewayTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array(), $this->gateway->getDefaultSettings());
     }
 
-    public function testBrowser()
+    public function testHttpClient()
     {
-        $this->assertInstanceOf('\Buzz\Browser', $this->gateway->getBrowser());
+        $this->assertInstanceOf('\Tala\HttpClient\HttpClientInterface', $this->gateway->getHttpClient());
     }
 
-    public function testSetBrowser()
+    public function testSetHttpClient()
     {
-        $this->gateway->setBrowser('fakeBrowserObject');
-        $this->assertEquals('fakeBrowserObject', $this->gateway->getBrowser());
+        $this->gateway->setHttpClient('fakeHttpClient');
+        $this->assertEquals('fakeHttpClient', $this->gateway->getHttpClient());
     }
 
     public function testHttpRequest()

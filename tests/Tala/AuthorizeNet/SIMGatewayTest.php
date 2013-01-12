@@ -11,6 +11,7 @@
 
 namespace Tala\AuthorizeNet;
 
+use Mockery as m;
 use Tala\CreditCard;
 use Tala\Request;
 
@@ -18,7 +19,13 @@ class SIMGatewayTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->gateway = new SIMGateway;
+        $this->httpClient = m::mock('\Tala\HttpClient\HttpClientInterface');
+        $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
+
+        $this->gateway = new SIMGateway(array(
+            'httpClient' => $this->httpClient,
+            'httpRequest' => $this->httpRequest,
+        ));
 
         $this->card = new CreditCard(array(
             'firstName' => 'Example',
@@ -28,21 +35,6 @@ class SIMGatewayTest extends \PHPUnit_Framework_TestCase
         $this->request = new Request();
         $this->request->amount = 1000;
         $this->request->returnUrl = 'https://www.example.com/checkout/complete';
-    }
-
-    protected function getMockBrowser()
-    {
-        return $this->getMock('\Buzz\Browser');
-    }
-
-    protected function getMockResponse($message)
-    {
-        $response = $this->getMock('\Buzz\Message\Response');
-        $response->expects($this->atLeastOnce())
-            ->method('getContent')
-            ->will($this->returnValue($message));
-
-        return $response;
     }
 
     public function testAuthorizeRequiresAmount()

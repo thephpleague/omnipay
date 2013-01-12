@@ -13,6 +13,7 @@ namespace Tala;
 
 use BadMethodCallException;
 use Tala\AbstractParameterObject;
+use Tala\HttpClient\BuzzHttpClient;
 use Tala\Request;
 
 /**
@@ -22,10 +23,16 @@ abstract class AbstractGateway extends AbstractParameterObject implements Gatewa
 {
     public function __construct($parameters = array())
     {
-        parent::__construct($parameters);
+        // configure default dependencies
+        if ( ! isset($parameters['httpClient'])) {
+            $parameters['httpClient'] = new BuzzHttpClient(new \Buzz\Browser(new \Buzz\Client\Curl));
+        }
 
-        $this->setBrowser(new \Buzz\Browser());
-        $this->setHttpRequest(\Symfony\Component\HttpFoundation\Request::createFromGlobals());
+        if ( ! isset($parameters['httpRequest'])) {
+            $parameters['httpRequest'] = \Symfony\Component\HttpFoundation\Request::createFromGlobals();
+        }
+
+        parent::__construct($parameters);
     }
 
     public function getDefaultSettings()
@@ -35,7 +42,7 @@ abstract class AbstractGateway extends AbstractParameterObject implements Gatewa
 
     public function getValidParameters()
     {
-        return array_merge(array('browser', 'httpRequest'), array_keys($this->getDefaultSettings()));
+        return array_merge(array('httpClient', 'httpRequest'), array_keys($this->getDefaultSettings()));
     }
 
     /**
