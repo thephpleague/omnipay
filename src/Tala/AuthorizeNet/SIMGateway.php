@@ -25,7 +25,7 @@ class SIMGateway extends AIMGateway
     {
         $data = $this->buildAuthorizeOrPurchase($request, $source, 'AUTH_ONLY');
 
-        return new FormRedirectResponse($this->getCurentEndpoint(), $data);
+        return new FormRedirectResponse($this->getCurrentEndpoint(), $data);
     }
 
     public function completeAuthorize(Request $request)
@@ -49,7 +49,7 @@ class SIMGateway extends AIMGateway
     {
         $data = $this->buildAuthorizeOrPurchase($request, $source, 'AUTH_CAPTURE');
 
-        return new FormRedirectResponse($this->getCurentEndpoint(), $data);
+        return new FormRedirectResponse($this->getCurrentEndpoint(), $data);
     }
 
     public function completePurchase(Request $request)

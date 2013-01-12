@@ -39,7 +39,7 @@ class ProGateway extends AbstractGateway
         $request->validateRequired('amount');
 
         $source->validateRequired(array('number', 'firstName', 'lastName', 'expiryMonth', 'expiryYear', 'cvv'));
-        $source->validateNumber;
+        $source->validateNumber();
 
         $data = $this->buildPaymentRequest($request, 'DoDirectPayment', $action);
 

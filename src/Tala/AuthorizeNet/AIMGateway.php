@@ -129,12 +129,12 @@ class AIMGateway extends AbstractGateway
      */
     protected function send($data)
     {
-        $response = $this->getBrowser()->post($this->getCurentEndpoint(), array(), http_build_query($data));
+        $response = $this->getBrowser()->post($this->getCurrentEndpoint(), array(), http_build_query($data));
 
         return new Response($response->getContent());
     }
 
-    protected function getCurentEndpoint()
+    protected function getCurrentEndpoint()
     {
         return $this->getDeveloperMode() ? $this->developerEndpoint : $this->endpoint;
     }

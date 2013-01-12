@@ -109,7 +109,7 @@ abstract class AbstractGateway extends \Tala\AbstractGateway
     protected function send($data)
     {
         // send and decode response
-        $response = $this->getBrowser()->get($this->getCurentEndpoint().'?'.http_build_query($data));
+        $response = $this->getBrowser()->get($this->getCurrentEndpoint().'?'.http_build_query($data));
 
         $response_vars = array();
         parse_str($response->getContent(), $response_vars);
@@ -124,7 +124,7 @@ abstract class AbstractGateway extends \Tala\AbstractGateway
         throw new InvalidResponseException();
     }
 
-    protected function getCurentEndpoint()
+    protected function getCurrentEndpoint()
     {
         return $this->getTestMode() ? $this->testEndpoint : $this->endpoint;
     }
