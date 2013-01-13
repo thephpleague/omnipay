@@ -27,6 +27,7 @@ The following gateways are already implemented:
 * 2Checkout
 * Authorize.Net AIM
 * Authorize.Net SIM
+* CardSave
 * GoCardless
 * Netaxept (BBS)
 * Payflow Pro
