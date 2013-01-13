@@ -55,7 +55,7 @@ class PxPayGateway extends AbstractGateway
 
     public function completePurchase(Request $request)
     {
-        $result = $this->getHttpRequest()->get('result');
+        $result = $this->httpRequest->get('result');
         if (empty($result)) {
             throw new InvalidResponseException;
         }

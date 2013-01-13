@@ -48,11 +48,11 @@ class Gateway extends AbstractGateway
     public function completePurchase(Request $request)
     {
         $data = array();
-        $data['resource_uri'] = $this->getHttpRequest()->get('resource_uri');
-        $data['resource_id'] = $this->getHttpRequest()->get('resource_id');
-        $data['resource_type'] = $this->getHttpRequest()->get('resource_type');
+        $data['resource_uri'] = $this->httpRequest->get('resource_uri');
+        $data['resource_id'] = $this->httpRequest->get('resource_id');
+        $data['resource_type'] = $this->httpRequest->get('resource_type');
 
-        if ($this->generateSignature($data) !== $this->getHttpRequest()->get('signature')) {
+        if ($this->generateSignature($data) !== $this->httpRequest->get('signature')) {
             throw new InvalidResponseException;
         }
 
