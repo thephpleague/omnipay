@@ -36,6 +36,7 @@ The following gateways are already implemented:
 * PayPal Express Checkout
 * PayPal Payments Pro
 * Stripe
+* WorldPay
 
 Gateways are initialized like so:
 
