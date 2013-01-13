@@ -28,6 +28,7 @@ The following gateways are already implemented:
 * Authorize.Net AIM
 * Authorize.Net SIM
 * GoCardless
+* Netaxept (BBS)
 * Payflow Pro
 * PaymentExpress (DPS) PxPay
 * PaymentExpress (DPS) PxPost
