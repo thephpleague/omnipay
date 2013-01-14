@@ -47,11 +47,26 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
 
         $this->httpClient->shouldReceive('post')
             ->with('https://gw1.cardsaveonlinepayments.com:4430/', m::type('string'), m::type('array'))->once()
-            ->andReturn('<Response><Elem><Elem><CardDetailsTransactionResult><StatusCode>0</StatusCode></CardDetailsTransactionResult><TransactionOutputData CrossReference="abc123" /></Elem></Elem></Response>');
+            ->andReturn('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><CardDetailsTransactionResponse xmlns="https://www.thepaymentgateway.net/"><CardDetailsTransactionResult AuthorisationAttempted="True"><StatusCode>0</StatusCode><Message>AuthCode: 971112</Message></CardDetailsTransactionResult><TransactionOutputData CrossReference="130114063233159001702222"><AuthCode>971112</AuthCode><ThreeDSecureAuthenticationCheckResult>NOT_ENROLLED</ThreeDSecureAuthenticationCheckResult><GatewayEntryPoints><GatewayEntryPoint EntryPointURL="https://gw1.cardsaveonlinepayments.com:4430/" Metric="100" /><GatewayEntryPoint EntryPointURL="https://gw2.cardsaveonlinepayments.com:4430/" Metric="200" /></GatewayEntryPoints></TransactionOutputData></CardDetailsTransactionResponse></soap:Body></soap:Envelope>');
 
         $response = $this->gateway->purchase($this->request, $this->card);
 
         $this->assertInstanceOf('\Tala\Billing\CardSave\Response', $response);
-        $this->assertEquals('abc123', $response->getGatewayReference());
+        $this->assertEquals('130114063233159001702222', $response->getGatewayReference());
+    }
+
+    /**
+     * @expectedException \Tala\Exception
+     * @expectedExceptionMessage Input variable errors
+     */
+    public function testPurchaseError()
+    {
+        $this->httpRequest->shouldReceive('getClientIp')->once()->andReturn('127.0.0.1');
+
+        $this->httpClient->shouldReceive('post')
+            ->with('https://gw1.cardsaveonlinepayments.com:4430/', m::type('string'), m::type('array'))->once()
+            ->andReturn('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><CardDetailsTransactionResponse xmlns="https://www.thepaymentgateway.net/"><CardDetailsTransactionResult AuthorisationAttempted="False"><StatusCode>30</StatusCode><Message>Input variable errors</Message><ErrorMessages><MessageDetail><Detail>Required variable (PaymentMessage.TransactionDetails.OrderID) is missing</Detail></MessageDetail></ErrorMessages></CardDetailsTransactionResult><TransactionOutputData /></CardDetailsTransactionResponse></soap:Body></soap:Envelope>');
+
+        $response = $this->gateway->purchase($this->request, $this->card);
     }
 }

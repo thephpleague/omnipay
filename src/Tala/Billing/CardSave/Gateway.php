@@ -14,6 +14,7 @@ namespace Tala\Billing\CardSave;
 use SimpleXMLElement;
 use DOMDocument;
 use Tala\AbstractGateway;
+use Tala\Exception;
 use Tala\Exception\InvalidResponseException;
 use Tala\FormRedirectResponse;
 use Tala\Request;
