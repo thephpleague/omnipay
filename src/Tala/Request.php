@@ -18,6 +18,8 @@ use Tala\AbstractParameterObject;
  */
 class Request extends AbstractParameterObject
 {
+    private $currency;
+
     public function setAmount($value)
     {
         $this->parameters['amount'] = round($value);
@@ -25,6 +27,26 @@ class Request extends AbstractParameterObject
 
     public function getAmountDollars()
     {
-        return sprintf('%0.2f', $this->amount / 100);
+        return number_format($this->amount / 100, $this->getCurrencyDecimals(), '.', '');
+    }
+
+    public function setCurrency($value)
+    {
+        $this->currency = Currency::find($value);
+    }
+
+    public function getCurrency()
+    {
+        return $this->currency ? $this->currency->getCode() : null;
+    }
+
+    public function getCurrencyNumeric()
+    {
+        return $this->currency ? $this->currency->getNumeric() : null;
+    }
+
+    public function getCurrencyDecimals()
+    {
+        return $this->currency ? $this->currency->getDecimals() : 2;
     }
 }
