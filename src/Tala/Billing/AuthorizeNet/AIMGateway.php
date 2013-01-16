@@ -66,7 +66,7 @@ class AIMGateway extends AbstractGateway
         $source->validateNumber;
 
         $data = $this->buildRequest($method);
-        $data['x_customer_ip'] = $this->httpRequest->getClientIp();
+        $data['x_customer_ip'] = $this->getHttpRequest()->getClientIp();
         $data['x_card_num'] = $source->number;
         $data['x_exp_date'] = $source->getExpiryDate('my');
         $data['x_card_code'] = $source->cvv;
@@ -128,7 +128,7 @@ class AIMGateway extends AbstractGateway
      */
     protected function send($data)
     {
-        $response = $this->httpClient->post($this->getCurrentEndpoint(), $data);
+        $response = $this->getHttpClient()->post($this->getCurrentEndpoint(), $data);
 
         return new Response($response);
     }

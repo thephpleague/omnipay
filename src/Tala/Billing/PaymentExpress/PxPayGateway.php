@@ -55,7 +55,7 @@ class PxPayGateway extends AbstractGateway
 
     public function completePurchase(Request $request)
     {
-        $result = $this->httpRequest->get('result');
+        $result = $this->getHttpRequest()->get('result');
         if (empty($result)) {
             throw new InvalidResponseException;
         }
@@ -87,7 +87,7 @@ class PxPayGateway extends AbstractGateway
 
     protected function sendPurchase($data)
     {
-        $response = $this->httpClient->post($this->endpoint, $data->asXML());
+        $response = $this->getHttpClient()->post($this->endpoint, $data->asXML());
         $xml = new SimpleXMLElement($response);
 
         if ((string) $xml['valid'] == '1') {
@@ -99,7 +99,7 @@ class PxPayGateway extends AbstractGateway
 
     protected function sendComplete($data)
     {
-        $response = $this->httpClient->post($this->endpoint, $data->asXML());
+        $response = $this->getHttpClient()->post($this->endpoint, $data->asXML());
 
         return new Response($response);
     }

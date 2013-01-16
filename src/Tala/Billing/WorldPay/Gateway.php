@@ -47,18 +47,18 @@ class Gateway extends AbstractGateway
 
     public function completePurchase(Request $request)
     {
-        $callbackPW = (string) $this->httpRequest->get('callbackPW');
+        $callbackPW = (string) $this->getHttpRequest()->get('callbackPW');
         if ($callbackPW != $this->callbackPassword) {
             throw new InvalidResponseException;
         }
 
-        $transStatus = $this->httpRequest->get('transStatus');
+        $transStatus = $this->getHttpRequest()->get('transStatus');
         if (empty($transStatus)) {
             throw new InvalidResponseException;
         } elseif ($transStatus != 'Y') {
-            throw new Exception($this->httpRequest->get('rawAuthMessage'));
+            throw new Exception($this->getHttpRequest()->get('rawAuthMessage'));
         } else {
-            $gatewayReference = $this->httpRequest->get('transId');
+            $gatewayReference = $this->getHttpRequest()->get('transId');
 
             return new Response($gatewayReference);
         }

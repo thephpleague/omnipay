@@ -11,13 +11,27 @@
 
 namespace Tala;
 
+use Mockery as m;
+
 class AbstractGatewayTest extends \PHPUnit_Framework_TestCase
 {
-    public function setUp()
+    private $httpClient;
+    private $httpRequest;
+    private $gateway;
+    private $request;
+    private $card;
+
+    protected function setUp()
     {
-        $this->gateway = $this->getMockForAbstractClass('\Tala\AbstractGateway');
-        $this->card = new CreditCard();
-        $this->request = new Request();
+        $this->httpClient = m::mock('Tala\HttpClient\HttpClientInterface');
+        $this->httpRequest = m::mock('Symfony\Component\HttpFoundation\Request');
+
+        $this->gateway = $this->getMockForAbstractClass('Tala\AbstractGateway', array($this->httpClient, $this->httpRequest));
+        // TODO: figure out how to do this in Mockery - the below doesn't work
+        //$this->gateway = m::mock('Tala\AbstractGateway', array($this->httpClient, $this->httpRequest));
+
+        $this->request = m::mock('Tala\Request');
+        $this->card = m::mock('Tala\CreditCard');
     }
 
     public function testGetDefaultSettings()
@@ -27,24 +41,14 @@ class AbstractGatewayTest extends \PHPUnit_Framework_TestCase
 
     public function testHttpClient()
     {
-        $this->assertInstanceOf('\Tala\HttpClient\HttpClientInterface', $this->gateway->getHttpClient());
-    }
-
-    public function testSetHttpClient()
-    {
-        $this->gateway->setHttpClient('fakeHttpClient');
-        $this->assertEquals('fakeHttpClient', $this->gateway->getHttpClient());
+        $this->assertInstanceOf('Tala\HttpClient\HttpClientInterface', $this->gateway->getHttpClient());
+        $this->assertEquals($this->httpClient, $this->gateway->getHttpClient());
     }
 
     public function testHttpRequest()
     {
-        $this->assertInstanceOf('\Symfony\Component\HttpFoundation\Request', $this->gateway->getHttpRequest());
-    }
-
-    public function testSetHttpRequest()
-    {
-        $this->gateway->setHttpRequest('fakeHttpRequest');
-        $this->assertEquals('fakeHttpRequest', $this->gateway->getHttpRequest());
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Request', $this->gateway->getHttpRequest());
+        $this->assertEquals($this->httpRequest, $this->gateway->getHttpRequest());
     }
 
     public function testAuthorize()

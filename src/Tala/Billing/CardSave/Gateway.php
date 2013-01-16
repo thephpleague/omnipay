@@ -86,7 +86,7 @@ class Gateway extends AbstractGateway
         $data->PaymentMessage->CustomerDetails->BillingAddress->State = $source->state;
         // requires numeric country code
         // $data->PaymentMessage->CustomerDetails->BillingAddress->CountryCode = $source->countryNumeric;
-        $data->PaymentMessage->CustomerDetails->CustomerIPAddress = $this->httpRequest->getClientIp();
+        $data->PaymentMessage->CustomerDetails->CustomerIPAddress = $this->getHttpRequest()->getClientIp();
 
         return $data;
     }
@@ -131,7 +131,7 @@ class Gateway extends AbstractGateway
         $headers = array(
             'Content-Type: text/xml; charset=utf-8',
             'SOAPAction: https://www.thepaymentgateway.net/'.$data->getName());
-        $responseString = $this->httpClient->post($this->endpoint, $document->saveXML(), $headers);
+        $responseString = $this->getHttpClient()->post($this->endpoint, $document->saveXML(), $headers);
 
         // we only care about the content of the soap:Body element
         $responseDom = new DOMDocument;

@@ -12,27 +12,49 @@
 namespace Tala;
 
 use BadMethodCallException;
+use Symfony\Component\HttpFoundation\Request as HttpRequest;
 use Tala\AbstractParameterObject;
-use Tala\HttpClient\BuzzHttpClient;
+use Tala\HttpClient\HttpClientInterface;
 use Tala\Request;
 
 /**
  * Base payment gateway class
+ *
+ * @author Adrian Macneil <adrian@adrianmacneil.com>
+ * @author Alexander Deruwe <alexander.deruwe@gmail.com>
  */
 abstract class AbstractGateway extends AbstractParameterObject implements GatewayInterface
 {
-    public function __construct($parameters = array())
-    {
-        // configure default dependencies
-        if ( ! isset($parameters['httpClient'])) {
-            $parameters['httpClient'] = new BuzzHttpClient(new \Buzz\Browser(new \Buzz\Client\Curl));
-        }
+    private $httpClient;
+    private $httpRequest;
 
-        if ( ! isset($parameters['httpRequest'])) {
-            $parameters['httpRequest'] = \Symfony\Component\HttpFoundation\Request::createFromGlobals();
-        }
+    /**
+     * @param HttpClientInterface $httpClient  Tala HTTP Client
+     * @param HttpRequest         $httpRequest Symfony2 HTTP Request
+     * @param array               $parameters  Additional gateway specific parameters
+     */
+    public function __construct(HttpClientInterface $httpClient, HttpRequest $httpRequest, $parameters = array())
+    {
+        $this->httpClient = $httpClient;
+        $this->httpRequest = $httpRequest;
 
         parent::__construct($parameters);
+    }
+
+    /**
+     * @return HttpClientInterface
+     */
+    public function getHttpClient()
+    {
+        return $this->httpClient;
+    }
+
+    /**
+     * @return HttpRequest
+     */
+    public function getHttpRequest()
+    {
+        return $this->httpRequest;
     }
 
     public function getDefaultSettings()

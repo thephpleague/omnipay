@@ -117,7 +117,7 @@ class ProGateway extends AbstractGateway
      */
     protected function send($data)
     {
-        $response = $this->httpClient->post($this->getCurrentEndpoint(), $data);
+        $response = $this->getHttpClient()->post($this->getCurrentEndpoint(), $data);
 
         return new Response($response);
     }

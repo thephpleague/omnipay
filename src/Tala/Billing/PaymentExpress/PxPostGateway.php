@@ -94,7 +94,7 @@ class PxPostGateway extends AbstractGateway
 
     protected function send($data)
     {
-        $response = $this->httpClient->post($this->endpoint, $data->asXML());
+        $response = $this->getHttpClient()->post($this->endpoint, $data->asXML());
 
         return new Response($response);
     }

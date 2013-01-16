@@ -44,7 +44,7 @@ class Gateway extends AbstractGateway
 
     public function completePurchase(Request $request)
     {
-        $orderNo = $this->httpRequest->get('order_number');
+        $orderNo = $this->getHttpRequest()->get('order_number');
 
         // strange exception specified by 2Checkout
         if ($this->testMode) {
@@ -52,7 +52,7 @@ class Gateway extends AbstractGateway
         }
 
         $key = strtoupper(md5($this->password.$this->username.$orderNo.$request->amountDollars));
-        if ($key != $this->httpRequest->get('key')) {
+        if ($key != $this->getHttpRequest()->get('key')) {
             throw new InvalidResponseException;
         }
 
