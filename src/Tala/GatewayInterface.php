@@ -31,6 +31,8 @@ interface GatewayInterface
 
     /**
      * Get settings which can be displayed for user configuration.
+     *
+     * @return array
      */
     public function getDefaultSettings();
 

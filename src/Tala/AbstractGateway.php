@@ -55,13 +55,11 @@ abstract class AbstractGateway extends AbstractParameterObject implements Gatewa
         return $this->httpRequest;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDefaultSettings()
     {
         return array();
-    }
-
-    public function getValidParameters()
-    {
-        return array_merge(array('httpClient', 'httpRequest'), array_keys($this->getDefaultSettings()));
     }
 }
