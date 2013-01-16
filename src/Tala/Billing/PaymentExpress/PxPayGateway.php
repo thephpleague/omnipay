@@ -11,6 +11,7 @@
 
 namespace Tala\Billing\PaymentExpress;
 
+use BadMethodCallException;
 use SimpleXMLElement;
 use Tala\AbstractGateway;
 use Tala\Exception\InvalidResponseException;
@@ -102,5 +103,29 @@ class PxPayGateway extends AbstractGateway
         $response = $this->getHttpClient()->post($this->endpoint, $data->asXML());
 
         return new Response($response);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function capture(Request $request)
+    {
+        throw new BadMethodCallException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function refund(Request $request)
+    {
+        throw new BadMethodCallException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function void(Request $request)
+    {
+        throw new BadMethodCallException();
     }
 }

@@ -11,6 +11,7 @@
 
 namespace Tala\Billing\AuthorizeNet;
 
+use BadMethodCallException;
 use Tala\AbstractGateway;
 use Tala\Request;
 
@@ -37,6 +38,9 @@ class AIMGateway extends AbstractGateway
         );
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function authorize(Request $request, $source)
     {
         $data = $this->buildAuthorizeOrPurchase($request, $source, 'AUTH_ONLY');
@@ -44,6 +48,9 @@ class AIMGateway extends AbstractGateway
         return $this->send($data);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function capture(Request $request)
     {
         $data = $this->buildCapture($request);
@@ -51,6 +58,9 @@ class AIMGateway extends AbstractGateway
         return $this->send($data);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function purchase(Request $request, $source)
     {
         $data = $this->buildAuthorizeOrPurchase($request, $source, 'AUTH_CAPTURE');
@@ -136,5 +146,37 @@ class AIMGateway extends AbstractGateway
     protected function getCurrentEndpoint()
     {
         return $this->developerMode ? $this->developerEndpoint : $this->endpoint;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function completeAuthorize(Request $request)
+    {
+        throw new BadMethodCallException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function completePurchase(Request $request)
+    {
+        throw new BadMethodCallException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function refund(Request $request)
+    {
+        throw new BadMethodCallException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function void(Request $request)
+    {
+        throw new BadMethodCallException();
     }
 }

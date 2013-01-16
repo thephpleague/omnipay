@@ -11,6 +11,7 @@
 
 namespace Tala\Billing\Stripe;
 
+use BadMethodCallException;
 use Tala\AbstractGateway;
 use Tala\Request;
 
@@ -61,5 +62,45 @@ class Gateway extends AbstractGateway
         $response = $this->getHttpClient()->post($this->endpoint.$url, $data);
 
         return new Response($response);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function authorize(Request $request, $source)
+    {
+        throw new BadMethodCallException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function completeAuthorize(Request $request)
+    {
+        throw new BadMethodCallException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function capture(Request $request)
+    {
+        throw new BadMethodCallException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function completePurchase(Request $request)
+    {
+        throw new BadMethodCallException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function void(Request $request)
+    {
+        throw new BadMethodCallException();
     }
 }

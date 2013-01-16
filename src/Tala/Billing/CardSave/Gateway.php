@@ -11,6 +11,7 @@
 
 namespace Tala\Billing\CardSave;
 
+use BadMethodCallException;
 use SimpleXMLElement;
 use DOMDocument;
 use Tala\AbstractGateway;
@@ -162,5 +163,45 @@ class Gateway extends AbstractGateway
                 // error
                 throw new Exception((string) $response->$resultElement->Message);
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function authorize(Request $request, $source)
+    {
+        throw new BadMethodCallException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function completeAuthorize(Request $request)
+    {
+        throw new BadMethodCallException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function capture(Request $request)
+    {
+        throw new BadMethodCallException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function refund(Request $request)
+    {
+        throw new BadMethodCallException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function void(Request $request)
+    {
+        throw new BadMethodCallException();
     }
 }

@@ -11,6 +11,7 @@
 
 namespace Tala\Billing\PaymentExpress;
 
+use BadMethodCallException;
 use Tala\AbstractGateway;
 use Tala\Request;
 
@@ -97,5 +98,29 @@ class PxPostGateway extends AbstractGateway
         $response = $this->getHttpClient()->post($this->endpoint, $data->asXML());
 
         return new Response($response);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function completeAuthorize(Request $request)
+    {
+        throw new BadMethodCallException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function completePurchase(Request $request)
+    {
+        throw new BadMethodCallException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function void(Request $request)
+    {
+        throw new BadMethodCallException();
     }
 }

@@ -11,6 +11,7 @@
 
 namespace Tala\Billing\WorldPay;
 
+use BadMethodCallException;
 use Tala\AbstractGateway;
 use Tala\Exception;
 use Tala\Exception\InvalidResponseException;
@@ -99,5 +100,45 @@ class Gateway extends AbstractGateway
     protected function getCurrentEndpoint()
     {
         return $this->testMode ? $this->testEndpoint : $this->endpoint;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function authorize(Request $request, $source)
+    {
+        throw new BadMethodCallException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function completeAuthorize(Request $request)
+    {
+        throw new BadMethodCallException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function capture(Request $request)
+    {
+        throw new BadMethodCallException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function refund(Request $request)
+    {
+        throw new BadMethodCallException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function void(Request $request)
+    {
+        throw new BadMethodCallException();
     }
 }

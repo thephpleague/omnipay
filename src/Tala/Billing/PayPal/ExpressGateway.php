@@ -11,6 +11,7 @@
 
 namespace Tala\Billing\PayPal;
 
+use BadMethodCallException;
 use Tala\RedirectResponse;
 use Tala\Request;
 
@@ -100,5 +101,13 @@ class ExpressGateway extends AbstractGateway
         $data['PAYERID'] = isset($_POST['PayerID']) ? $_POST['PayerID'] : '';
 
         return $this->send($data);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function void(Request $request)
+    {
+        throw new BadMethodCallException();
     }
 }

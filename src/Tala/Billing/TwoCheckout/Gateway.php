@@ -11,6 +11,7 @@
 
 namespace Tala\Billing\TwoCheckout;
 
+use BadMethodCallException;
 use Tala\AbstractGateway;
 use Tala\Exception\InvalidResponseException;
 use Tala\RedirectResponse;
@@ -87,5 +88,45 @@ class Gateway extends AbstractGateway
         }
 
         return $data;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function authorize(Request $request, $source)
+    {
+        throw new BadMethodCallException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function completeAuthorize(Request $request)
+    {
+        throw new BadMethodCallException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function capture(Request $request)
+    {
+        throw new BadMethodCallException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function refund(Request $request)
+    {
+        throw new BadMethodCallException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function void(Request $request)
+    {
+        throw new BadMethodCallException();
     }
 }
