@@ -11,10 +11,10 @@
 
 namespace Tala\Billing\PaymentExpress;
 
-use BadMethodCallException;
 use SimpleXMLElement;
 use Tala\AbstractGateway;
 use Tala\Exception\InvalidResponseException;
+use Tala\Exception\UnsupportedOperationException;
 use Tala\RedirectResponse;
 use Tala\Request;
 
@@ -110,7 +110,7 @@ class PxPayGateway extends AbstractGateway
      */
     public function capture(Request $request)
     {
-        throw new BadMethodCallException();
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -118,7 +118,7 @@ class PxPayGateway extends AbstractGateway
      */
     public function refund(Request $request)
     {
-        throw new BadMethodCallException();
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -126,6 +126,6 @@ class PxPayGateway extends AbstractGateway
      */
     public function void(Request $request)
     {
-        throw new BadMethodCallException();
+        throw new UnsupportedOperationException();
     }
 }

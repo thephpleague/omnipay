@@ -11,8 +11,8 @@
 
 namespace Tala\Billing\AuthorizeNet;
 
-use BadMethodCallException;
 use Tala\AbstractGateway;
+use Tala\Exception\UnsupportedOperationException;
 use Tala\Request;
 
 /**
@@ -153,7 +153,7 @@ class AIMGateway extends AbstractGateway
      */
     public function completeAuthorize(Request $request)
     {
-        throw new BadMethodCallException();
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -161,7 +161,7 @@ class AIMGateway extends AbstractGateway
      */
     public function completePurchase(Request $request)
     {
-        throw new BadMethodCallException();
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -169,7 +169,7 @@ class AIMGateway extends AbstractGateway
      */
     public function refund(Request $request)
     {
-        throw new BadMethodCallException();
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -177,6 +177,6 @@ class AIMGateway extends AbstractGateway
      */
     public function void(Request $request)
     {
-        throw new BadMethodCallException();
+        throw new UnsupportedOperationException();
     }
 }

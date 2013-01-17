@@ -11,8 +11,8 @@
 
 namespace Tala\Billing\PaymentExpress;
 
-use BadMethodCallException;
 use Tala\AbstractGateway;
+use Tala\Exception\UnsupportedOperationException;
 use Tala\Request;
 
 /**
@@ -105,7 +105,7 @@ class PxPostGateway extends AbstractGateway
      */
     public function completeAuthorize(Request $request)
     {
-        throw new BadMethodCallException();
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -113,7 +113,7 @@ class PxPostGateway extends AbstractGateway
      */
     public function completePurchase(Request $request)
     {
-        throw new BadMethodCallException();
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -121,6 +121,6 @@ class PxPostGateway extends AbstractGateway
      */
     public function void(Request $request)
     {
-        throw new BadMethodCallException();
+        throw new UnsupportedOperationException();
     }
 }

@@ -9,11 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala;
+namespace Tala\Exception;
+
+use Tala\Exception;
 
 /**
- * Base exception class
+ * Unsupported operation exception.
+ *
+ * Thrown when a gateway is asked to perform an unsupported operation.
  */
-class Exception extends \Exception
+class UnsupportedOperationException extends Exception
 {
 }

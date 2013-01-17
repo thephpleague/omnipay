@@ -11,7 +11,7 @@
 
 namespace Tala\Billing\PayPal;
 
-use BadMethodCallException;
+use Tala\Exception\UnsupportedOperationException;
 use Tala\Request;
 
 /**
@@ -70,7 +70,7 @@ class ProGateway extends AbstractGateway
      */
     public function completeAuthorize(Request $request)
     {
-        throw new BadMethodCallException();
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -78,7 +78,7 @@ class ProGateway extends AbstractGateway
      */
     public function completePurchase(Request $request)
     {
-        throw new BadMethodCallException();
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -86,6 +86,6 @@ class ProGateway extends AbstractGateway
      */
     public function void(Request $request)
     {
-        throw new BadMethodCallException();
+        throw new UnsupportedOperationException();
     }
 }

@@ -11,12 +11,12 @@
 
 namespace Tala\Billing\CardSave;
 
-use BadMethodCallException;
 use SimpleXMLElement;
 use DOMDocument;
 use Tala\AbstractGateway;
 use Tala\Exception;
 use Tala\Exception\InvalidResponseException;
+use Tala\Exception\UnsupportedOperationException;
 use Tala\FormRedirectResponse;
 use Tala\Request;
 
@@ -170,7 +170,7 @@ class Gateway extends AbstractGateway
      */
     public function authorize(Request $request, $source)
     {
-        throw new BadMethodCallException();
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -178,7 +178,7 @@ class Gateway extends AbstractGateway
      */
     public function completeAuthorize(Request $request)
     {
-        throw new BadMethodCallException();
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -186,7 +186,7 @@ class Gateway extends AbstractGateway
      */
     public function capture(Request $request)
     {
-        throw new BadMethodCallException();
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -194,7 +194,7 @@ class Gateway extends AbstractGateway
      */
     public function refund(Request $request)
     {
-        throw new BadMethodCallException();
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -202,6 +202,6 @@ class Gateway extends AbstractGateway
      */
     public function void(Request $request)
     {
-        throw new BadMethodCallException();
+        throw new UnsupportedOperationException();
     }
 }

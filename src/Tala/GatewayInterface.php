@@ -11,7 +11,7 @@
 
 namespace Tala;
 
-use BadMethodCallException;
+use Tala\Exception\UnsupportedOperationException;
 use Tala\Request;
 
 /**
@@ -42,7 +42,7 @@ interface GatewayInterface
      * @param Request $request Payment request
      * @param mixed   $source  Source
      *
-     * @throws BadMethodCallException If the operation is not supported
+     * @throws UnsupportedOperationException If the operation is not supported
      *
      * @return Response
      */
@@ -53,7 +53,7 @@ interface GatewayInterface
      *
      * @param Request $request Payment request
      *
-     * @throws BadMethodCallException If the operation is not supported
+     * @throws UnsupportedOperationException If the operation is not supported
      *
      * @return Response
      */
@@ -64,7 +64,7 @@ interface GatewayInterface
      *
      * @param Request $request Payment request
      *
-     * @throws BadMethodCallException If the operation is not supported
+     * @throws UnsupportedOperationException If the operation is not supported
      *
      * @return Response
      */
@@ -76,7 +76,7 @@ interface GatewayInterface
      * @param Request $request Payment request
      * @param mixed   $source  Source
      *
-     * @throws BadMethodCallException If the operation is not supported
+     * @throws UnsupportedOperationException If the operation is not supported
      *
      * @return Response
      */
@@ -87,7 +87,7 @@ interface GatewayInterface
      *
      * @param Request $request Payment request
      *
-     * @throws BadMethodCallException If the operation is not supported
+     * @throws UnsupportedOperationException If the operation is not supported
      *
      * @return Response
      */
@@ -100,7 +100,7 @@ interface GatewayInterface
      *
      * @param Request $request Payment request
      *
-     * @throws BadMethodCallException If the operation is not supported
+     * @throws UnsupportedOperationException If the operation is not supported
      *
      * @return Response
      */
@@ -113,7 +113,7 @@ interface GatewayInterface
      *
      * @param Request $request Payment request
      *
-     * @throws BadMethodCallException If the operation is not supported
+     * @throws UnsupportedOperationException If the operation is not supported
      *
      * @return Response
      */
