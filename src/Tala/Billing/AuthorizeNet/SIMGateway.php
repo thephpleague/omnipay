@@ -30,7 +30,7 @@ class SIMGateway extends AIMGateway
 
     public function completeAuthorize(Request $request)
     {
-        if ( ! $this->validateReturnHash()) {
+        if ( ! $this->validateReturnHash($request)) {
             throw new InvalidResponseException();
         }
 
@@ -38,7 +38,7 @@ class SIMGateway extends AIMGateway
         $message = isset($_POST['x_response_reason_text']) ? $_POST['x_response_reason_text'] : '';
         $reference = isset($_POST['x_trans_id']) ? $_POST['x_trans_id'] : '';
 
-        if ($response_code == '1') {
+        if ($responseCode == '1') {
             return new Response($reference, $message);
         }
 
