@@ -12,6 +12,7 @@
 namespace Tala\Billing\PaymentExpress;
 
 use Tala\AbstractGateway;
+use Tala\Exception\UnsupportedOperationException;
 use Tala\Request;
 
 /**
@@ -94,8 +95,32 @@ class PxPostGateway extends AbstractGateway
 
     protected function send($data)
     {
-        $response = $this->httpClient->post($this->endpoint, $data->asXML());
+        $response = $this->getHttpClient()->post($this->endpoint, $data->asXML());
 
         return new Response($response);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function completeAuthorize(Request $request)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function completePurchase(Request $request)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function void(Request $request)
+    {
+        throw new UnsupportedOperationException();
     }
 }

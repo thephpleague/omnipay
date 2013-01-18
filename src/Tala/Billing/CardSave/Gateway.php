@@ -16,6 +16,7 @@ use DOMDocument;
 use Tala\AbstractGateway;
 use Tala\Exception;
 use Tala\Exception\InvalidResponseException;
+use Tala\Exception\UnsupportedOperationException;
 use Tala\FormRedirectResponse;
 use Tala\Request;
 
@@ -86,7 +87,7 @@ class Gateway extends AbstractGateway
         $data->PaymentMessage->CustomerDetails->BillingAddress->State = $source->state;
         // requires numeric country code
         // $data->PaymentMessage->CustomerDetails->BillingAddress->CountryCode = $source->countryNumeric;
-        $data->PaymentMessage->CustomerDetails->CustomerIPAddress = $this->httpRequest->getClientIp();
+        $data->PaymentMessage->CustomerDetails->CustomerIPAddress = $this->getHttpRequest()->getClientIp();
 
         return $data;
     }
@@ -131,7 +132,7 @@ class Gateway extends AbstractGateway
         $headers = array(
             'Content-Type: text/xml; charset=utf-8',
             'SOAPAction: https://www.thepaymentgateway.net/'.$data->getName());
-        $responseString = $this->httpClient->post($this->endpoint, $document->saveXML(), $headers);
+        $responseString = $this->getHttpClient()->post($this->endpoint, $document->saveXML(), $headers);
 
         // we only care about the content of the soap:Body element
         $responseDom = new DOMDocument;
@@ -162,5 +163,45 @@ class Gateway extends AbstractGateway
                 // error
                 throw new Exception((string) $response->$resultElement->Message);
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function authorize(Request $request, $source)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function completeAuthorize(Request $request)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function capture(Request $request)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function refund(Request $request)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function void(Request $request)
+    {
+        throw new UnsupportedOperationException();
     }
 }

@@ -13,6 +13,7 @@ namespace Tala\Billing\TwoCheckout;
 
 use Tala\AbstractGateway;
 use Tala\Exception\InvalidResponseException;
+use Tala\Exception\UnsupportedOperationException;
 use Tala\RedirectResponse;
 use Tala\Request;
 use Tala\Response;
@@ -44,7 +45,7 @@ class Gateway extends AbstractGateway
 
     public function completePurchase(Request $request)
     {
-        $orderNo = $this->httpRequest->get('order_number');
+        $orderNo = $this->getHttpRequest()->get('order_number');
 
         // strange exception specified by 2Checkout
         if ($this->testMode) {
@@ -52,7 +53,7 @@ class Gateway extends AbstractGateway
         }
 
         $key = strtoupper(md5($this->password.$this->username.$orderNo.$request->amountDollars));
-        if ($key != $this->httpRequest->get('key')) {
+        if ($key != $this->getHttpRequest()->get('key')) {
             throw new InvalidResponseException;
         }
 
@@ -87,5 +88,45 @@ class Gateway extends AbstractGateway
         }
 
         return $data;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function authorize(Request $request, $source)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function completeAuthorize(Request $request)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function capture(Request $request)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function refund(Request $request)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function void(Request $request)
+    {
+        throw new UnsupportedOperationException();
     }
 }

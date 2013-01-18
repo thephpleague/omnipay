@@ -21,10 +21,7 @@ class PxPayGatewayTest extends \PHPUnit_Framework_TestCase
         $this->httpClient = m::mock('\Tala\HttpClient\HttpClientInterface');
         $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
 
-        $this->gateway = new PxPayGateway(array(
-            'httpClient' => $this->httpClient,
-            'httpRequest' => $this->httpRequest,
-        ));
+        $this->gateway = new PxPayGateway($this->httpClient, $this->httpRequest);
 
         $this->request = new Request;
         $this->request->amount = 1000;

@@ -12,6 +12,7 @@
 namespace Tala\Billing\Payflow;
 
 use Tala\AbstractGateway;
+use Tala\Exception\UnsupportedOperationException;
 use Tala\Request;
 
 /**
@@ -117,7 +118,7 @@ class ProGateway extends AbstractGateway
      */
     protected function send($data)
     {
-        $response = $this->httpClient->post($this->getCurrentEndpoint(), $data);
+        $response = $this->getHttpClient()->post($this->getCurrentEndpoint(), $data);
 
         return new Response($response);
     }
@@ -125,5 +126,29 @@ class ProGateway extends AbstractGateway
     protected function getCurrentEndpoint()
     {
         return $this->testMode ? $this->testEndpoint : $this->endpoint;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function completeAuthorize(Request $request)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function completePurchase(Request $request)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function void(Request $request)
+    {
+        throw new UnsupportedOperationException();
     }
 }

@@ -14,6 +14,7 @@ namespace Tala\Billing\PaymentExpress;
 use SimpleXMLElement;
 use Tala\AbstractGateway;
 use Tala\Exception\InvalidResponseException;
+use Tala\Exception\UnsupportedOperationException;
 use Tala\RedirectResponse;
 use Tala\Request;
 
@@ -55,7 +56,7 @@ class PxPayGateway extends AbstractGateway
 
     public function completePurchase(Request $request)
     {
-        $result = $this->httpRequest->get('result');
+        $result = $this->getHttpRequest()->get('result');
         if (empty($result)) {
             throw new InvalidResponseException;
         }
@@ -87,7 +88,7 @@ class PxPayGateway extends AbstractGateway
 
     protected function sendPurchase($data)
     {
-        $response = $this->httpClient->post($this->endpoint, $data->asXML());
+        $response = $this->getHttpClient()->post($this->endpoint, $data->asXML());
         $xml = new SimpleXMLElement($response);
 
         if ((string) $xml['valid'] == '1') {
@@ -99,8 +100,32 @@ class PxPayGateway extends AbstractGateway
 
     protected function sendComplete($data)
     {
-        $response = $this->httpClient->post($this->endpoint, $data->asXML());
+        $response = $this->getHttpClient()->post($this->endpoint, $data->asXML());
 
         return new Response($response);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function capture(Request $request)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function refund(Request $request)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function void(Request $request)
+    {
+        throw new UnsupportedOperationException();
     }
 }

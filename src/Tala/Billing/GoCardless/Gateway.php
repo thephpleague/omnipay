@@ -13,6 +13,7 @@ namespace Tala\Billing\GoCardless;
 
 use Tala\AbstractGateway;
 use Tala\Exception\InvalidResponseException;
+use Tala\Exception\UnsupportedOperationException;
 use Tala\RedirectResponse;
 use Tala\Request;
 
@@ -48,11 +49,11 @@ class Gateway extends AbstractGateway
     public function completePurchase(Request $request)
     {
         $data = array();
-        $data['resource_uri'] = $this->httpRequest->get('resource_uri');
-        $data['resource_id'] = $this->httpRequest->get('resource_id');
-        $data['resource_type'] = $this->httpRequest->get('resource_type');
+        $data['resource_uri'] = $this->getHttpRequest()->get('resource_uri');
+        $data['resource_id'] = $this->getHttpRequest()->get('resource_id');
+        $data['resource_type'] = $this->getHttpRequest()->get('resource_type');
 
-        if ($this->generateSignature($data) !== $this->httpRequest->get('signature')) {
+        if ($this->generateSignature($data) !== $this->getHttpRequest()->get('signature')) {
             throw new InvalidResponseException;
         }
 
@@ -64,7 +65,7 @@ class Gateway extends AbstractGateway
             'Accept: application/json',
         );
 
-        $response = $this->httpClient->post(
+        $response = $this->getHttpClient()->post(
             $this->getCurrentEndpoint().'/api/v1/confirm', $this->generateQueryString($data), $headers);
 
         return new Response($response, $data['resource_id']);
@@ -155,5 +156,45 @@ class Gateway extends AbstractGateway
         } else {
             $pairs[] = array(rawurlencode($namespace), rawurlencode($params));
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function authorize(Request $request, $source)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function completeAuthorize(Request $request)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function capture(Request $request)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function refund(Request $request)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function void(Request $request)
+    {
+        throw new UnsupportedOperationException();
     }
 }

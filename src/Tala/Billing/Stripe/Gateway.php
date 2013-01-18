@@ -12,6 +12,7 @@
 namespace Tala\Billing\Stripe;
 
 use Tala\AbstractGateway;
+use Tala\Exception\UnsupportedOperationException;
 use Tala\Request;
 
 /**
@@ -58,8 +59,48 @@ class Gateway extends AbstractGateway
 
     protected function send($url, $data)
     {
-        $response = $this->httpClient->post($this->endpoint.$url, $data);
+        $response = $this->getHttpClient()->post($this->endpoint.$url, $data);
 
         return new Response($response);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function authorize(Request $request, $source)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function completeAuthorize(Request $request)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function capture(Request $request)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function completePurchase(Request $request)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function void(Request $request)
+    {
+        throw new UnsupportedOperationException();
     }
 }

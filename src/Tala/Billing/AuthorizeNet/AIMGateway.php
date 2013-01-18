@@ -12,6 +12,7 @@
 namespace Tala\Billing\AuthorizeNet;
 
 use Tala\AbstractGateway;
+use Tala\Exception\UnsupportedOperationException;
 use Tala\Request;
 
 /**
@@ -37,6 +38,9 @@ class AIMGateway extends AbstractGateway
         );
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function authorize(Request $request, $source)
     {
         $data = $this->buildAuthorizeOrPurchase($request, $source, 'AUTH_ONLY');
@@ -44,6 +48,9 @@ class AIMGateway extends AbstractGateway
         return $this->send($data);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function capture(Request $request)
     {
         $data = $this->buildCapture($request);
@@ -51,6 +58,9 @@ class AIMGateway extends AbstractGateway
         return $this->send($data);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function purchase(Request $request, $source)
     {
         $data = $this->buildAuthorizeOrPurchase($request, $source, 'AUTH_CAPTURE');
@@ -66,7 +76,7 @@ class AIMGateway extends AbstractGateway
         $source->validateNumber;
 
         $data = $this->buildRequest($method);
-        $data['x_customer_ip'] = $this->httpRequest->getClientIp();
+        $data['x_customer_ip'] = $this->getHttpRequest()->getClientIp();
         $data['x_card_num'] = $source->number;
         $data['x_exp_date'] = $source->getExpiryDate('my');
         $data['x_card_code'] = $source->cvv;
@@ -128,7 +138,7 @@ class AIMGateway extends AbstractGateway
      */
     protected function send($data)
     {
-        $response = $this->httpClient->post($this->getCurrentEndpoint(), $data);
+        $response = $this->getHttpClient()->post($this->getCurrentEndpoint(), $data);
 
         return new Response($response);
     }
@@ -136,5 +146,37 @@ class AIMGateway extends AbstractGateway
     protected function getCurrentEndpoint()
     {
         return $this->developerMode ? $this->developerEndpoint : $this->endpoint;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function completeAuthorize(Request $request)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function completePurchase(Request $request)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function refund(Request $request)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function void(Request $request)
+    {
+        throw new UnsupportedOperationException();
     }
 }

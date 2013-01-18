@@ -11,6 +11,7 @@
 
 namespace Tala\Billing\PayPal;
 
+use Tala\Exception\UnsupportedOperationException;
 use Tala\Request;
 
 /**
@@ -62,5 +63,29 @@ class ProGateway extends AbstractGateway
         $data['COUNTRYCODE'] = strtoupper($source->country);
 
         return $data;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function completeAuthorize(Request $request)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function completePurchase(Request $request)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function void(Request $request)
+    {
+        throw new UnsupportedOperationException();
     }
 }

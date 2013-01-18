@@ -14,6 +14,7 @@ namespace Tala\Billing\WorldPay;
 use Tala\AbstractGateway;
 use Tala\Exception;
 use Tala\Exception\InvalidResponseException;
+use Tala\Exception\UnsupportedOperationException;
 use Tala\RedirectResponse;
 use Tala\Request;
 use Tala\Response;
@@ -47,18 +48,18 @@ class Gateway extends AbstractGateway
 
     public function completePurchase(Request $request)
     {
-        $callbackPW = (string) $this->httpRequest->get('callbackPW');
+        $callbackPW = (string) $this->getHttpRequest()->get('callbackPW');
         if ($callbackPW != $this->callbackPassword) {
             throw new InvalidResponseException;
         }
 
-        $transStatus = $this->httpRequest->get('transStatus');
+        $transStatus = $this->getHttpRequest()->get('transStatus');
         if (empty($transStatus)) {
             throw new InvalidResponseException;
         } elseif ($transStatus != 'Y') {
-            throw new Exception($this->httpRequest->get('rawAuthMessage'));
+            throw new Exception($this->getHttpRequest()->get('rawAuthMessage'));
         } else {
-            $gatewayReference = $this->httpRequest->get('transId');
+            $gatewayReference = $this->getHttpRequest()->get('transId');
 
             return new Response($gatewayReference);
         }
@@ -99,5 +100,45 @@ class Gateway extends AbstractGateway
     protected function getCurrentEndpoint()
     {
         return $this->testMode ? $this->testEndpoint : $this->endpoint;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function authorize(Request $request, $source)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function completeAuthorize(Request $request)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function capture(Request $request)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function refund(Request $request)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function void(Request $request)
+    {
+        throw new UnsupportedOperationException();
     }
 }

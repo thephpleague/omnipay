@@ -109,7 +109,7 @@ abstract class AbstractGateway extends \Tala\AbstractGateway
     protected function send($data)
     {
         // send and decode response
-        $response = $this->httpClient->get($this->getCurrentEndpoint().'?'.http_build_query($data));
+        $response = $this->getHttpClient()->get($this->getCurrentEndpoint().'?'.http_build_query($data));
 
         $response_vars = array();
         parse_str($response, $response_vars);
