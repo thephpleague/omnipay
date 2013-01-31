@@ -23,12 +23,27 @@ class GatewayFactory
         return $gateway;
     }
 
-    protected function resolveType($type)
+    /**
+     * Resolve a short gateway name to a full namespaced gateway class.
+     *
+     * Class names beginning with a namespace marker (\) are left intact.
+     * Non-namespaced classes are expected to be in the \Tala\Billing namespace, e.g.:
+     *
+     *      \Custom\Gateway     => \Custom\Gateway
+     *      \Custom_Gateway     => \Custom_Gateway
+     *      Stripe              => \Tala\Billing\Stripe\Gateway
+     *      PayPal\Express      => \Tala\Billing\PayPal\ExpressGateway
+     *      PayPal_Express      => \Tala\Billing\PayPal\ExpressGateway
+     */
+    public function resolveType($type)
     {
-        $ns = strpos($type, '\\');
-        if ($ns === 0) {
+        if (0 === strpos($type, '\\')) {
             return $type;
-        } elseif ($ns === false) {
+        }
+
+        // replace underscores with namespace marker, PSR-0 style
+        $type = str_replace('_', '\\', $type);
+        if (false === strpos($type, '\\')) {
             $type .= '\\';
         }
 
