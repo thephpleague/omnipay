@@ -25,6 +25,15 @@ class GatewayFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @expectedException \Tala\Exception\GatewayNotFoundException
+     * @expectedExceptionMessage Class '\Tala\Billing\Invalid\Gateway' not found
+     */
+    public function testCreateGatewayInvalid()
+    {
+        $gateway = $this->factory->createGateway('Invalid');
+    }
+
+    /**
      * Type with namespace should simply be returned as is
      */
     public function testResolveTypeExistingNamespace()

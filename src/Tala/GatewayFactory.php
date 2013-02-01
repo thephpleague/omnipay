@@ -11,11 +11,17 @@
 
 namespace Tala;
 
+use Tala\Exception\GatewayNotFoundException;
+
 class GatewayFactory
 {
     public function createGateway($type, $parameters = array())
     {
         $type = $this->resolveType($type);
+
+        if ( ! class_exists($type)) {
+            throw new GatewayNotFoundException("Class '$type' not found");
+        }
 
         $gateway = new $type;
         $gateway->initialize($parameters);
