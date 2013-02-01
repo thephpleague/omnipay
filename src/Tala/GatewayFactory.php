@@ -15,9 +15,9 @@ use Tala\Exception\GatewayNotFoundException;
 
 class GatewayFactory
 {
-    public function createGateway($type, $parameters = array())
+    public static function createGateway($type, $parameters = array())
     {
-        $type = $this->resolveType($type);
+        $type = static::resolveType($type);
 
         if ( ! class_exists($type)) {
             throw new GatewayNotFoundException("Class '$type' not found");
@@ -41,7 +41,7 @@ class GatewayFactory
      *      PayPal\Express      => \Tala\Billing\PayPal\ExpressGateway
      *      PayPal_Express      => \Tala\Billing\PayPal\ExpressGateway
      */
-    public function resolveType($type)
+    public static function resolveType($type)
     {
         if (0 === strpos($type, '\\')) {
             return $type;

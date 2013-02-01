@@ -13,14 +13,9 @@ namespace Tala;
 
 class GatewayFactoryTest extends \PHPUnit_Framework_TestCase
 {
-    public function setUp()
-    {
-        $this->factory = new GatewayFactory;
-    }
-
     public function testCreateGateway()
     {
-        $gateway = $this->factory->createGateway('Stripe');
+        $gateway = GatewayFactory::createGateway('Stripe');
         $this->assertInstanceOf('\\Tala\\Billing\\Stripe\\Gateway', $gateway);
     }
 
@@ -30,7 +25,7 @@ class GatewayFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateGatewayInvalid()
     {
-        $gateway = $this->factory->createGateway('Invalid');
+        $gateway = GatewayFactory::createGateway('Invalid');
     }
 
     /**
@@ -38,7 +33,7 @@ class GatewayFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testResolveTypeExistingNamespace()
     {
-        $class = $this->factory->resolveType('\\Custom\\Gateway');
+        $class = GatewayFactory::resolveType('\\Custom\\Gateway');
         $this->assertEquals('\\Custom\\Gateway', $class);
     }
 
@@ -47,19 +42,19 @@ class GatewayFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testResolveTypeExistingNamespaceUnderscore()
     {
-        $class = $this->factory->resolveType('\\Custom_Gateway');
+        $class = GatewayFactory::resolveType('\\Custom_Gateway');
         $this->assertEquals('\\Custom_Gateway', $class);
     }
 
     public function testResolveSimple()
     {
-        $class = $this->factory->resolveType('Stripe');
+        $class = GatewayFactory::resolveType('Stripe');
         $this->assertEquals('\\Tala\\Billing\\Stripe\\Gateway', $class);
     }
 
     public function testResolvePartialNamespace()
     {
-        $class = $this->factory->resolveType('PayPal\\Express');
+        $class = GatewayFactory::resolveType('PayPal\\Express');
         $this->assertEquals('\\Tala\\Billing\\PayPal\\ExpressGateway', $class);
     }
 
@@ -68,7 +63,7 @@ class GatewayFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testResolveUnderscoreNamespace()
     {
-        $class = $this->factory->resolveType('PayPal_Express');
+        $class = GatewayFactory::resolveType('PayPal_Express');
         $this->assertEquals('\\Tala\\Billing\\PayPal\\ExpressGateway', $class);
     }
 }
