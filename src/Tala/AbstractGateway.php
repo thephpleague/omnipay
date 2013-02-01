@@ -28,8 +28,8 @@ abstract class AbstractGateway extends AbstractParameterObject implements Gatewa
     /**
      * Create a new gateway instance
      *
-     * @param HttpClientInterface $httpClient An HTTP client to make API calls with
-     * @param HttpRequest $httpRequest A Symfony HTTP request object
+     * @param HttpClientInterface $httpClient  An HTTP client to make API calls with
+     * @param HttpRequest         $httpRequest A Symfony HTTP request object
      */
     public function __construct(HttpClientInterface $httpClient, HttpRequest $httpRequest)
     {

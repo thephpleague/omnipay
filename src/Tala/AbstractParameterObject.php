@@ -116,9 +116,13 @@ abstract class AbstractParameterObject
      */
     private function camelCase($str)
     {
-        return preg_replace_callback('/_([a-z])/', function($match) {
-            return strtoupper($match[1]);
-        }, $str);
+        return preg_replace_callback(
+            '/_([a-z])/',
+            function ($match) {
+                return strtoupper($match[1]);
+            },
+            $str
+        );
     }
 
     /**
