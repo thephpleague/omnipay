@@ -1,6 +1,7 @@
 # Tala Payments
 
 [![Build Status](https://secure.travis-ci.org/adrianmacneil/tala-payments.png)](http://travis-ci.org/adrianmacneil/tala-payments)
+[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=adrian@adrianmacneil.com&currency_code=USD&item_name=Tala+Payments+PHP+Library+Donation)
 
 Tala Payments is a PHP 5.3, PSR-2 and Composer compliant payment processing library.
 It has been designed based on experience using [Active Merchant](http://activemerchant.org/),
