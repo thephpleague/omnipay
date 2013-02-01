@@ -39,6 +39,18 @@ class AbstractParameterObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('hello', $this->object->someParameter);
     }
 
+    public function testGetParameterCamelCase()
+    {
+        $this->object->someParameter = 'hello';
+        $this->assertEquals('hello', $this->object->some_parameter);
+    }
+
+    public function testSetParameterCamelCase()
+    {
+        $this->object->some_parameter = 'hello';
+        $this->assertEquals('hello', $this->object->someParameter);
+    }
+
     public function testDynamicGetter()
     {
         $this->object->someParameter = 'example1';
