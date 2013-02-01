@@ -47,7 +47,9 @@ class Gateway extends AbstractGateway
             'transactionId' => (string) $response->TransactionId,
         );
 
-        return new RedirectResponse($this->getCurrentEndpoint().'/Terminal/Default.aspx?'.http_build_query($redirectData));
+        return new RedirectResponse(
+            $this->getCurrentEndpoint().'/Terminal/Default.aspx?'.http_build_query($redirectData)
+        );
     }
 
     public function completePurchase(Request $request)

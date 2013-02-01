@@ -36,11 +36,15 @@ class ExpressGateway extends AbstractGateway
         $data = $this->buildAuthorize($request, $source);
         $response = $this->send($data);
 
-        return new RedirectResponse($this->getCurrentCheckoutEndpoint().'?'.http_build_query(array(
-            'cmd' => '_express-checkout',
-            'useraction' => 'commit',
-            'token' => $response['TOKEN'],
-        )));
+        return new RedirectResponse(
+            $this->getCurrentCheckoutEndpoint().'?'.http_build_query(
+                array(
+                    'cmd' => '_express-checkout',
+                    'useraction' => 'commit',
+                    'token' => $response['TOKEN'],
+                )
+            )
+        );
     }
 
     public function completeAuthorize(Request $request)

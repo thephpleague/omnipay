@@ -70,7 +70,7 @@ class Gateway extends AbstractGateway
         $data->PaymentMessage->CardDetails->ExpiryDate['Year'] = $source->getExpiryDate('y');
         $data->PaymentMessage->CardDetails->CV2 = $source->cvv;
 
-        if ($source->issue) {;
+        if ($source->issue) {
             $data->PaymentMessage->CardDetails->IssueNumber = $source->issue;
         }
 
@@ -121,7 +121,9 @@ class Gateway extends AbstractGateway
         // the PHP SOAP library sucks, and SimpleXML can't append element trees
         // TODO: find PSR0 SOAP library
         $document = new DOMDocument('1.0', 'utf-8');
-        $envelope = $document->appendChild($document->createElementNS('http://schemas.xmlsoap.org/soap/envelope/', 'soap:Envelope'));
+        $envelope = $document->appendChild(
+            $document->createElementNS('http://schemas.xmlsoap.org/soap/envelope/', 'soap:Envelope')
+        );
         $envelope->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
         $envelope->setAttribute('xmlns:xsd', 'http://www.w3.org/2001/XMLSchema');
         $body = $envelope->appendChild($document->createElement('soap:Body'));

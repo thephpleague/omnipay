@@ -30,8 +30,9 @@ interface HttpClientInterface
     /**
      * Perform an HTTP POST request.
      *
-     * @param  string $url     The request URL
-     * @param  mixed  $data    The POST data. If an array is passed, must be automatically URL encoded. Otherwise must be cast to string.
+     * @param string $url  The request URL
+     * @param mixed  $data The POST data. If an array is passed, must be automatically
+     *                         URL encoded. Otherwise must be cast to string.
      * @param  array  $headers Any extra HTTP headers to be sent with the request.
      * @return string
      */

@@ -48,12 +48,15 @@ class FormRedirectResponse extends RedirectResponse
     {
         $hiddenFields = '';
         foreach ($this->formData as $name => $value) {
-            $hiddenFields .= sprintf('<input type="hidden" name="%1$s" value="%2$s" />',
+            $hiddenFields .= sprintf(
+                '<input type="hidden" name="%1$s" value="%2$s" />',
                 htmlspecialchars($name, ENT_QUOTES, 'UTF-8'),
-                htmlspecialchars($value, ENT_QUOTES, 'UTF-8'));
+                htmlspecialchars($value, ENT_QUOTES, 'UTF-8')
+            );
         }
 
-        $output = sprintf('<!DOCTYPE html>
+        $output = <<<EOF
+<!DOCTYPE html>
 <html>
     <head>
         <title>Redirecting...</title>
@@ -67,7 +70,9 @@ class FormRedirectResponse extends RedirectResponse
             </p>
         </form>
     </body>
-</html>', htmlspecialchars($this->redirectUrl, ENT_QUOTES, 'UTF-8'), $hiddenFields);
+</html>';
+EOF;
+        $output = sprintf($output, htmlspecialchars($this->redirectUrl, ENT_QUOTES, 'UTF-8'), $hiddenFields);
 
         $response = new $httpResponseClass($output);
         $response->send();

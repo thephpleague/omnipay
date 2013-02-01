@@ -18,4 +18,6 @@ use Tala\Exception;
  *
  * Thrown by GatewayFactory when trying to create a gateway which is not available
  */
-class GatewayNotFoundException extends Exception {}
+class GatewayNotFoundException extends Exception
+{
+}

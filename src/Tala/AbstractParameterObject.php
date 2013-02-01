@@ -119,7 +119,9 @@ abstract class AbstractParameterObject
      */
     public function isValidParameter($key)
     {
-        if (empty($key)) return false;
+        if (empty($key)) {
+            return false;
+        }
 
         $validParameters = $this->getValidParameters();
 

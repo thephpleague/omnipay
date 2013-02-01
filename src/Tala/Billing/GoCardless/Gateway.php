@@ -41,8 +41,9 @@ class Gateway extends AbstractGateway
     {
         $data = $this->buildPurchase($request, $source);
 
-        return new RedirectResponse($this->getCurrentEndpoint().'/connect/bills/new?'.
-            $this->generateQueryString($data));
+        return new RedirectResponse(
+            $this->getCurrentEndpoint().'/connect/bills/new?'.$this->generateQueryString($data)
+        );
     }
 
     public function completePurchase(Request $request)
@@ -65,7 +66,10 @@ class Gateway extends AbstractGateway
         );
 
         $response = $this->httpClient->post(
-            $this->getCurrentEndpoint().'/api/v1/confirm', $this->generateQueryString($data), $headers);
+            $this->getCurrentEndpoint().'/api/v1/confirm',
+            $this->generateQueryString($data),
+            $headers
+        );
 
         return new Response($response, $data['resource_id']);
     }

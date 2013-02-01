@@ -85,11 +85,15 @@ class SIMGateway extends AIMGateway
 
     protected function generateHash($data)
     {
-        $fingerprint = implode('^', array(
-            $this->apiLoginId,
-            $data['x_fp_sequence'],
-            $data['x_fp_timestamp'],
-            $data['x_amount'])).'^';
+        $fingerprint = implode(
+            '^',
+            array(
+                $this->apiLoginId,
+                $data['x_fp_sequence'],
+                $data['x_fp_timestamp'],
+                $data['x_amount']
+            )
+        ).'^';
 
         return hash_hmac('md5', $fingerprint, $this->transactionKey);
     }

@@ -12,4 +12,4 @@ matrix:
 before_script:
   - composer install --dev
 
-script: phpunit
+script: vendor/bin/phpcs --standard=PSR2 src && vendor/bin/phpunit
