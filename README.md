@@ -46,17 +46,12 @@ $settings = array(
     'username' => 'adrian',
     'password' => '12345',
 );
-$gateway = new \Tala\PayPal\ExpressGateway($settings);
-```
-
-Where `$settings` is an array of gateway-specific options. The gateway can also be initialized after creation
-by calling `initialize()`:
-
-```php
+$gateway = \Tala\GatewayFactory::createGateway('PayPal\Express');
 $gateway->initialize($settings);
 ```
 
-Finally, gateway settings can be changed individually using getters and setters:
+Where `$settings` is an array of gateway-specific options. Gateway settings can be changed
+individually using getters and setters:
 
 ```php
 $gateway->setUsername('adrian');

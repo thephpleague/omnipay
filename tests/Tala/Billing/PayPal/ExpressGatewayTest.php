@@ -22,10 +22,7 @@ class ExpressGatewayTest extends \PHPUnit_Framework_TestCase
         $this->httpClient = m::mock('\Tala\HttpClient\HttpClientInterface');
         $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
 
-        $this->gateway = new ExpressGateway(array(
-            'httpClient' => $this->httpClient,
-            'httpRequest' => $this->httpRequest,
-        ));
+        $this->gateway = new ExpressGateway($this->httpClient, $this->httpRequest);
 
         $this->card = new CreditCard;
 

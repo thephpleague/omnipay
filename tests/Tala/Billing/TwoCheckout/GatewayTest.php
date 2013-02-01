@@ -22,11 +22,10 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $this->httpClient = m::mock('\Tala\HttpClient\HttpClientInterface');
         $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
 
-        $this->gateway = new Gateway(array(
+        $this->gateway = new Gateway($this->httpClient, $this->httpRequest);
+        $this->gateway->initialize(array(
             'username' => 'abc',
             'password' => '123',
-            'httpClient' => $this->httpClient,
-            'httpRequest' => $this->httpRequest,
         ));
 
         $this->request = new Request;

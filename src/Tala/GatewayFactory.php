@@ -11,11 +11,13 @@
 
 namespace Tala;
 
+use Symfony\Component\HttpFoundation\Request as HttpRequest;
 use Tala\Exception\GatewayNotFoundException;
+use Tala\HttpClient\BuzzHttpClient;
 
 class GatewayFactory
 {
-    public static function createGateway($type, $parameters = array())
+    public static function createGateway($type, $httpClient = null, $httpRequest = null, $parameters = array())
     {
         $type = static::resolveType($type);
 
@@ -23,7 +25,15 @@ class GatewayFactory
             throw new GatewayNotFoundException("Class '$type' not found");
         }
 
-        $gateway = new $type;
+        if (null === $httpClient) {
+            $httpClient = new BuzzHttpClient(new \Buzz\Browser(new \Buzz\Client\Curl));
+        }
+
+        if (null === $httpRequest) {
+            $httpRequest = HttpRequest::createFromGlobals();
+        }
+
+        $gateway = new $type($httpClient, $httpRequest);
         $gateway->initialize($parameters);
 
         return $gateway;

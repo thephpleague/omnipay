@@ -12,8 +12,9 @@
 namespace Tala;
 
 use BadMethodCallException;
+use Symfony\Component\HttpFoundation\Request as HttpRequest;
 use Tala\AbstractParameterObject;
-use Tala\HttpClient\BuzzHttpClient;
+use Tala\HttpClient\HttpClientInterface;
 use Tala\Request;
 
 /**
@@ -21,18 +22,19 @@ use Tala\Request;
  */
 abstract class AbstractGateway extends AbstractParameterObject implements GatewayInterface
 {
-    public function __construct($parameters = array())
+    protected $httpClient;
+    protected $httpRequest;
+
+    /**
+     * Create a new gateway instance
+     *
+     * @param HttpClientInterface $httpClient An HTTP client to make API calls with
+     * @param HttpRequest $httpRequest A Symfony HTTP request object
+     */
+    public function __construct(HttpClientInterface $httpClient, HttpRequest $httpRequest)
     {
-        // configure default dependencies
-        if ( ! isset($parameters['httpClient'])) {
-            $parameters['httpClient'] = new BuzzHttpClient(new \Buzz\Browser(new \Buzz\Client\Curl));
-        }
-
-        if ( ! isset($parameters['httpRequest'])) {
-            $parameters['httpRequest'] = \Symfony\Component\HttpFoundation\Request::createFromGlobals();
-        }
-
-        parent::__construct($parameters);
+        $this->httpClient = $httpClient;
+        $this->httpRequest = $httpRequest;
     }
 
     public function getDefaultSettings()
@@ -42,7 +44,7 @@ abstract class AbstractGateway extends AbstractParameterObject implements Gatewa
 
     public function getValidParameters()
     {
-        return array_merge(array('httpClient', 'httpRequest'), array_keys($this->getDefaultSettings()));
+        return array_keys($this->getDefaultSettings());
     }
 
     /**
