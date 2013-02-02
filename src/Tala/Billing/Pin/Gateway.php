@@ -28,7 +28,8 @@ class Gateway extends AbstractGateway
     public function getDefaultSettings()
     {
         return array(
-            'secret_key' => '',
+            'secretKey' => '',
+            'testMode' => true,
         );
     }
 
@@ -48,6 +49,9 @@ class Gateway extends AbstractGateway
         $data['ip_address'] = $this->httpRequest->getClientIp();
 
         if ($source instanceof CreditCard) {
+            $source->validateRequired(array('number', 'firstName', 'lastName', 'expiryMonth', 'expiryYear', 'cvv'));
+            $source->validateNumber();
+
             $data['card']['number'] = $source->number;
             $data['card']['expiry_month'] = $source->expiryMonth;
             $data['card']['expiry_year'] = $source->expiryYear;
@@ -59,6 +63,7 @@ class Gateway extends AbstractGateway
             $data['card']['address_postcode'] = $source->postcode;
             $data['card']['address_state'] = $source->state;
             $data['card']['address_country'] = $source->country;
+            $data['email'] = $source->email;
         } else {
             $data['card_token'] = $source;
         }
@@ -68,8 +73,14 @@ class Gateway extends AbstractGateway
 
     protected function send($url, $data)
     {
-        $response = $this->httpClient->post($this->endpoint.$url, $data);
+        $headers = array('Authorization: Basic '.base64_encode($this->secretKey.':'));
+        $response = $this->httpClient->post($this->getCurrentEndpoint().$url, $data, $headers);
 
         return new Response($response);
+    }
+
+    protected function getCurrentEndpoint()
+    {
+        return $this->testMode ? $this->testEndpoint : $this->endpoint;
     }
 }
