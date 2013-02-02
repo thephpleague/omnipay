@@ -36,6 +36,7 @@ The following gateways are already implemented:
 * PaymentExpress (DPS) PxPost
 * PayPal Express Checkout
 * PayPal Payments Pro
+* Pin Payments
 * Stripe
 * WorldPay
 
