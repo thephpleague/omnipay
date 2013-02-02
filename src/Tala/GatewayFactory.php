@@ -11,6 +11,9 @@
 
 namespace Tala;
 
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use ReflectionClass;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 use Tala\Exception\GatewayNotFoundException;
 use Tala\HttpClient\BuzzHttpClient;
@@ -64,5 +67,37 @@ class GatewayFactory
         }
 
         return '\\Tala\\Billing\\'.$type.'Gateway';
+    }
+
+    /**
+     * Get a list of supported gateways, in friendly format (e.g. PayPal_Express)
+     */
+    public static function getAvailableGateways($directory = null)
+    {
+        $result = array();
+
+        // find all gateways in the Billing directory
+        $directory = realpath(__DIR__.'/Billing');
+        $it = new RecursiveDirectoryIterator($directory);
+        foreach (new RecursiveIteratorIterator($it) as $file) {
+            $filepath = $file->getPathName();
+            if ('Gateway.php' === substr($filepath, -11)) {
+                // determine class name
+                $type = substr($filepath, 0, -11);
+                $type = str_replace(array($directory, DIRECTORY_SEPARATOR), array('', '_'), $type);
+                $type = trim($type, '_');
+                $class = static::resolveType($type);
+
+                // ensure class exists and is not abstract
+                if (class_exists($class)) {
+                    $reflection = new ReflectionClass($class);
+                    if ( ! $reflection->isAbstract() and $reflection->implementsInterface('\\Tala\\GatewayInterface')) {
+                        $result[] = $type;
+                    }
+                }
+            }
+        }
+
+        return $result;
     }
 }
