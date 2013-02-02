@@ -22,11 +22,6 @@ class AIMGateway extends AbstractGateway
     protected $endpoint = 'https://secure.authorize.net/gateway/transact.dll';
     protected $developerEndpoint = 'https://test.authorize.net/gateway/transact.dll';
 
-    protected $apiLoginId;
-    protected $transactionKey;
-    protected $testMode;
-    protected $developerMode;
-
     public function getDefaultSettings()
     {
         return array(

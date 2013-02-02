@@ -94,6 +94,11 @@ abstract class AbstractParameterObject
         }
     }
 
+    public function getParameters()
+    {
+        return $this->parameters;
+    }
+
     public function setParameter($key, $value)
     {
         // normalize parameter name to camelCase

@@ -19,9 +19,6 @@ use Tala\Request;
  */
 class ExpressGateway extends AbstractGateway
 {
-    protected $solutionType;
-    protected $landingPage;
-
     public function getDefaultSettings()
     {
         $settings = parent::getDefaultSettings();

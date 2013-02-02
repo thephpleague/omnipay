@@ -35,11 +35,32 @@ abstract class AbstractGateway extends AbstractParameterObject implements Gatewa
     {
         $this->httpClient = $httpClient;
         $this->httpRequest = $httpRequest;
+        $this->setDefaultSettings();
     }
 
+    /**
+     * Define gateway settings, in the following format:
+     *
+     * array(
+     *     'username' => '', // string variable
+     *     'testMode' => false, // boolean variable
+     *     'landingPage' => array('billing', 'login'), // enum variable, first item is default
+     * );
+     */
     public function getDefaultSettings()
     {
         return array();
+    }
+
+    public function setDefaultSettings()
+    {
+        foreach ($this->getDefaultSettings() as $key => $value) {
+            if (is_array($value)) {
+                $this->$key = reset($value);
+            } else {
+                $this->$key = $value;
+            }
+        }
     }
 
     public function getValidParameters()

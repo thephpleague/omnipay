@@ -24,11 +24,6 @@ abstract class AbstractGateway extends \Tala\AbstractGateway
     protected $checkoutEndpoint = 'https://www.paypal.com/webscr';
     protected $testCheckoutEndpoint = 'https://www.sandbox.paypal.com/webscr';
 
-    protected $username;
-    protected $password;
-    protected $signature;
-    protected $testMode;
-
     public function getDefaultSettings()
     {
         return array(
