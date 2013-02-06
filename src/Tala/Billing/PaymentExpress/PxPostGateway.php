@@ -60,18 +60,17 @@ class PxPostGateway extends AbstractGateway
     protected function buildAuthorizeOrPurchase($request, $source, $method)
     {
         $request->validateRequired(array('amount'));
-        $source->validateRequired(array('firstName', 'lastName', 'number', 'expiryMonth', 'expiryYear', 'cvv'));
-        $source->validateNumber();
+        $source->validate();
 
         $data = new \SimpleXMLElement('<Txn />');
         $data->PostUsername = $this->username;
         $data->PostPassword = $this->password;
         $data->TxnType = $method;
-        $data->CardNumber = $source->number;
-        $data->CardHolderName = $source->name;
+        $data->CardNumber = $source->getNumber();
+        $data->CardHolderName = $source->getName();
         $data->Amount = $request->amountDollars;
         $data->DateExpiry = $source->getExpiryDate('my');
-        $data->Cvc2 = $source->cvv;
+        $data->Cvc2 = $source->getCvv();
         $data->InputCurrency = $request->currency;
         $data->MerchantReference = $request->description;
 

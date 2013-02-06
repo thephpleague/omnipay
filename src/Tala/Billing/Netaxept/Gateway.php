@@ -85,15 +85,15 @@ class Gateway extends AbstractGateway
         $data['currencyCode'] = $request->currency;
         $data['amount'] = $request->amount;
         $data['redirectUrl'] = $request->returnUrl;
-        $data['customerFirstName'] = $source->firstName;
-        $data['customerLastName'] = $source->lastName;
-        $data['customerEmail'] = $source->email;
-        $data['customerPhoneNumber'] = $source->phone;
-        $data['customerAddress1'] = $source->address1;
-        $data['customerAddress2'] = $source->address2;
-        $data['customerPostcode'] = $source->postcode;
-        $data['customerTown'] = $source->city;
-        $data['customerCountry'] = $source->country;
+        $data['customerFirstName'] = $source->getFirstName();
+        $data['customerLastName'] = $source->getLastName();
+        $data['customerEmail'] = $source->getEmail();
+        $data['customerPhoneNumber'] = $source->getPhone();
+        $data['customerAddress1'] = $source->getAddress1();
+        $data['customerAddress2'] = $source->getAddress2();
+        $data['customerPostcode'] = $source->getPostcode();
+        $data['customerTown'] = $source->getCity();
+        $data['customerCountry'] = $source->getCountry();
 
         return $data;
     }

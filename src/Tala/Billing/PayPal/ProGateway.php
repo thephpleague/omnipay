@@ -70,29 +70,27 @@ class ProGateway extends AbstractGateway
     protected function buildAuthorize($request, $source, $action)
     {
         $request->validateRequired('amount');
-
-        $source->validateRequired(array('number', 'firstName', 'lastName', 'expiryMonth', 'expiryYear', 'cvv'));
-        $source->validateNumber();
+        $source->validate();
 
         $data = $this->buildPaymentRequest($request, 'DoDirectPayment', $action);
 
         // add credit card details
-        $data['CREDITCARDTYPE'] = $source->type;
-        $data['ACCT'] = $source->number;
-        $data['EXPDATE'] = $source->expiryMonth.$source->expiryYear;
-        $data['STARTDATE'] = $source->startMonth.$source->startYear;
-        $data['CVV2'] = $source->cvv;
-        $data['ISSUENUMBER'] = $source->issue;
+        $data['CREDITCARDTYPE'] = $source->getType();
+        $data['ACCT'] = $source->getNumber();
+        $data['EXPDATE'] = $source->getExpiryMonth().$source->getExpiryYear();
+        $data['STARTDATE'] = $source->getStartMonth().$source->getStartYear();
+        $data['CVV2'] = $source->getCvv();
+        $data['ISSUENUMBER'] = $source->getIssue();
         $data['IPADDRESS'] = '';
-        $data['FIRSTNAME'] = $source->firstName;
-        $data['LASTNAME'] = $source->lastName;
-        $data['EMAIL'] = $source->email;
-        $data['STREET'] = $source->address1;
-        $data['STREET2'] = $source->address2;
-        $data['CITY'] = $source->city;
-        $data['STATE'] = $source->state;
-        $data['ZIP'] = $source->postcode;
-        $data['COUNTRYCODE'] = strtoupper($source->country);
+        $data['FIRSTNAME'] = $source->getFirstName();
+        $data['LASTNAME'] = $source->getLastName();
+        $data['EMAIL'] = $source->getEmail();
+        $data['STREET'] = $source->getAddress1();
+        $data['STREET2'] = $source->getAddress2();
+        $data['CITY'] = $source->getCity();
+        $data['STATE'] = $source->getState();
+        $data['ZIP'] = $source->getPostcode();
+        $data['COUNTRYCODE'] = strtoupper($source->getCountry());
 
         return $data;
     }

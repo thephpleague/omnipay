@@ -72,15 +72,15 @@ class Gateway extends AbstractGateway
         $data['skip_landing'] = 1;
         $data['x_receipt_link_url'] = $request->returnUrl;
 
-        $data['card_holder_name'] = $source->name;
-        $data['street_address'] = $source->address1;
-        $data['street_address2'] = $source->address2;
-        $data['city'] = $source->city;
-        $data['state'] = $source->region;
-        $data['zip'] = $source->postcode;
-        $data['country'] = $source->country;
-        $data['phone'] = $source->phone;
-        $data['email'] = $source->email;
+        $data['card_holder_name'] = $source->getName();
+        $data['street_address'] = $source->getAddress1();
+        $data['street_address2'] = $source->getAddress2();
+        $data['city'] = $source->getCity();
+        $data['state'] = $source->getState();
+        $data['zip'] = $source->getPostcode();
+        $data['country'] = $source->getCountry();
+        $data['phone'] = $source->getPhone();
+        $data['email'] = $source->getEmail();
 
         if ($this->testMode) {
             $data['demo'] = 'Y';

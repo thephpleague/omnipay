@@ -56,15 +56,13 @@ class AIMGateway extends AbstractGateway
     protected function buildAuthorizeOrPurchase($request, $source, $method)
     {
         $request->validateRequired('amount');
-
-        $source->validateRequired(array('number', 'firstName', 'lastName', 'expiryMonth', 'expiryYear', 'cvv'));
-        $source->validateNumber;
+        $source->validate();
 
         $data = $this->buildRequest($method);
         $data['x_customer_ip'] = $this->httpRequest->getClientIp();
-        $data['x_card_num'] = $source->number;
+        $data['x_card_num'] = $source->getNumber();
         $data['x_exp_date'] = $source->getExpiryDate('my');
-        $data['x_card_code'] = $source->cvv;
+        $data['x_card_code'] = $source->getCvv();
 
         if ($this->testMode) {
             $data['x_test_request'] = 'TRUE';
@@ -106,16 +104,16 @@ class AIMGateway extends AbstractGateway
         $data['x_amount'] = $request->amountDollars;
         $data['x_invoice_num'] = $request->invoiceId;
         $data['x_description'] = $request->description;
-        $data['x_first_name'] = $source->firstName;
-        $data['x_last_name'] = $source->lastName;
-        $data['x_company'] = $source->company;
-        $data['x_address'] = trim($source->address1." \n".$source->address2);
-        $data['x_city'] = $source->city;
-        $data['x_state'] = $source->state;
-        $data['x_zip'] = $source->postcode;
-        $data['x_country'] = $source->country;
-        $data['x_phone'] = $source->phone;
-        $data['x_email'] = $source->email;
+        $data['x_first_name'] = $source->getFirstName();
+        $data['x_last_name'] = $source->getLastName();
+        $data['x_company'] = $source->getCompany();
+        $data['x_address'] = trim($source->getAddress1()." \n".$source->getAddress2());
+        $data['x_city'] = $source->getCity();
+        $data['x_state'] = $source->getState();
+        $data['x_zip'] = $source->getPostcode();
+        $data['x_country'] = $source->getCountry();
+        $data['x_phone'] = $source->getPhone();
+        $data['x_email'] = $source->getEmail();
     }
 
     /**

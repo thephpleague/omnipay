@@ -33,9 +33,7 @@ class Gateway extends AbstractGateway
     public function purchase(Request $request, $source)
     {
         $request->validateRequired('amount');
-
-        $source->validateRequired(array('number', 'firstName', 'lastName', 'expiryMonth', 'expiryYear', 'cvv'));
-        $source->validateNumber();
+        $source->validate();
 
         return new Response;
     }

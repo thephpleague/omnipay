@@ -89,14 +89,14 @@ class Gateway extends AbstractGateway
         $data['bill']['amount'] = $request->amountDollars;
         $data['bill']['name'] = $request->description;
         $data['bill']['user'] = array();
-        $data['bill']['user']['first_name'] = $source->firstName;
-        $data['bill']['user']['last_name'] = $source->lastName;
-        $data['bill']['user']['email'] = $source->email;
-        $data['bill']['user']['billing_address1'] = $source->address1;
-        $data['bill']['user']['billing_address2'] = $source->address2;
-        $data['bill']['user']['billing_town'] = $source->city;
-        $data['bill']['user']['billing_county'] = $source->country;
-        $data['bill']['user']['billing_postcode'] = $source->postcode;
+        $data['bill']['user']['first_name'] = $source->getFirstName();
+        $data['bill']['user']['last_name'] = $source->getLastName();
+        $data['bill']['user']['email'] = $source->getEmail();
+        $data['bill']['user']['billing_address1'] = $source->getAddress1();
+        $data['bill']['user']['billing_address2'] = $source->getAddress2();
+        $data['bill']['user']['billing_town'] = $source->getCity();
+        $data['bill']['user']['billing_county'] = $source->getCountry();
+        $data['bill']['user']['billing_postcode'] = $source->getPostcode();
 
         $data['signature'] = $this->generateSignature($data);
 

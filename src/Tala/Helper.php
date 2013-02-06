@@ -31,6 +31,19 @@ class Helper
     }
 
     /**
+     * Normalize a year to four digits
+     */
+    public static function normalizeYear($year)
+    {
+        $year = (int) $year;
+        if ($year < 100) {
+            $year += 2000;
+        }
+
+        return $year;
+    }
+
+    /**
      * Validate a card number according to the Luhn algorithm.
      *
      * @param  string  $number The card number to validate

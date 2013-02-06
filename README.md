@@ -1,13 +1,12 @@
 # Tala Payments
 
 [![Build Status](https://secure.travis-ci.org/adrianmacneil/tala-payments.png)](http://travis-ci.org/adrianmacneil/tala-payments)
-[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=adrian@adrianmacneil.com&currency_code=USD&item_name=Tala+Payments+PHP+Library+Donation)
 
 Tala Payments is a PHP 5.3, PSR-2 and Composer compliant payment processing library.
-It has been designed based on experience using [Active Merchant](http://activemerchant.org/),
+It has been designed based on experience working with [Active Merchant](http://activemerchant.org/),
 plus experience implementing dozens of gateways for [CI Merchant](http://ci-merchant.org/).
 
-This library is currently under development, and all feedback is welcome - please raise a github issue
+This library is under active developemnt, and all feedback is welcome - please raise a github issue
 to discuss, or fork the project and send a pull request.
 
 # Package Layout
@@ -20,8 +19,8 @@ classes and consistent developer API.
 
 # Payment Gateways
 
-All payment gateways must implement [\Tala\GatewayInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/GatewayInterface.php), and usually
-extend [\Tala\AbstractGateway](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/AbstractGateway.php) for basic functionality.
+All payment gateways must implement [Tala\GatewayInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/GatewayInterface.php), and will usually
+extend [Tala\AbstractGateway](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/AbstractGateway.php) for basic functionality.
 
 The following gateways are already implemented:
 
@@ -40,14 +39,16 @@ The following gateways are already implemented:
 * Stripe
 * WorldPay
 
-Gateways are initialized like so:
+Gateways are created and initialized like so:
 
 ```php
+use Tala\GatewayFactory;
+
 $settings = array(
     'username' => 'adrian',
     'password' => '12345',
 );
-$gateway = \Tala\GatewayFactory::createGateway('PayPal\Express');
+$gateway = GatewayFactory::createGateway('PayPal_Express');
 $gateway->initialize($settings);
 ```
 
@@ -82,7 +83,7 @@ gateway (other than by the methods they support).
 
 # Credit Card / Payment Form Input
 
-User form input will be directed to a [\Tala\CreditCard](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/CreditCard.php) object. This provides a safe way to accept user input.
+User form input will be directed to a [Tala\CreditCard](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/CreditCard.php) object. This provides a safe way to accept user input.
 The `CreditCard` object has the following fields:
 
 * firstName
@@ -93,6 +94,7 @@ The `CreditCard` object has the following fields:
 * startMonth
 * startYear
 * cvv
+* issue
 * type
 * billingAddress1
 * billingAddress2
@@ -106,23 +108,32 @@ The `CreditCard` object has the following fields:
 * shippingPostcode
 * shippingState
 * shippingCountry
+* company
+* phone
+* email
 
-Some gateways will require extra fields, so the `CreditCard` object can accept any parameter names. However,
-the above parameters are standard names which most gateway are expected to use. Even off-site gateways make
-use of the `CreditCard` object, because often you need to pass the customer billing details to the gateway.
+Even off-site gateways make use of the `CreditCard` object, because often you need to pass
+customer billing or shipping details through to the gateway.
 
-Like a gateway, the `CreditCard` object can be intialized when it is created, or by calling the `initialize()` method:
+The `CreditCard` object can be intialized with untrusted user input via the constructor, or by
+calling the `fill()` method. Any fields passed to the constructor which are not recognized will
+be dropped.
 
 ```php
-$card = new CreditCard($formInput);
-$card->initialize($formInput); // you only need to use one of these methods
+$formInputData = array(
+    'firstName' => 'Bobby',
+    'lastName' => 'Tables',
+    'number' => '4111111111111111',
+);
+$card = new CreditCard($formInputData);
+$card->fill($formInputData); // you only need to use one of these methods
 ```
 
-You can also update the fields using properties:
+You can also access the fields using getters and setters:
 
 ```php
-$number = $card->number;
-$card->firstName = 'Adrian';
+$number = $card->getNumber();
+$card->setFirstName('Adrian');
 ```
 
 # Gateway Methods

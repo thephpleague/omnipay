@@ -79,15 +79,15 @@ class ExpressGateway extends ProGateway
         $data['RETURNURL'] = $request->returnUrl;
         $data['CANCELURL'] = $request->cancelUrl;
 
-        $data[$prefix.'SHIPTONAME'] = $source->name;
-        $data[$prefix.'SHIPTOSTREET'] = $source->address1;
-        $data[$prefix.'SHIPTOSTREET2'] = $source->address2;
-        $data[$prefix.'SHIPTOCITY'] = $source->city;
-        $data[$prefix.'SHIPTOSTATE'] = $source->state;
-        $data[$prefix.'SHIPTOCOUNTRYCODE'] = $source->country;
-        $data[$prefix.'SHIPTOZIP'] = $source->postcode;
-        $data[$prefix.'SHIPTOPHONENUM'] = $source->phone;
-        $data['EMAIL'] = $source->email;
+        $data[$prefix.'SHIPTONAME'] = $source->getName();
+        $data[$prefix.'SHIPTOSTREET'] = $source->getAddress1();
+        $data[$prefix.'SHIPTOSTREET2'] = $source->getAddress2();
+        $data[$prefix.'SHIPTOCITY'] = $source->getCity();
+        $data[$prefix.'SHIPTOSTATE'] = $source->getState();
+        $data[$prefix.'SHIPTOCOUNTRYCODE'] = $source->getCountry();
+        $data[$prefix.'SHIPTOZIP'] = $source->getPostcode();
+        $data[$prefix.'SHIPTOPHONENUM'] = $source->getPhone();
+        $data['EMAIL'] = $source->getEmail();
 
         return $data;
     }

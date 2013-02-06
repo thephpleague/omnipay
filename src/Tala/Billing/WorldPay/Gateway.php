@@ -76,15 +76,15 @@ class Gateway extends AbstractGateway
         $data['currency'] = $request->currency;
         $data['testMode'] = $this->testMode ? 100 : 0;
         $data['MC_callback'] = $request->returnUrl;
-        $data['name'] = $source->name;
-        $data['address1'] = $source->address1;
-        $data['address2'] = $source->address2;
-        $data['town'] = $source->city;
-        $data['region'] = $source->state;
-        $data['postcode'] = $source->postcode;
-        $data['country'] = $source->country;
-        $data['tel'] = $source->phone;
-        $data['email'] = $source->email;
+        $data['name'] = $source->getName();
+        $data['address1'] = $source->getAddress1();
+        $data['address2'] = $source->getAddress2();
+        $data['town'] = $source->getCity();
+        $data['region'] = $source->getState();
+        $data['postcode'] = $source->getPostcode();
+        $data['country'] = $source->getCountry();
+        $data['tel'] = $source->getPhone();
+        $data['email'] = $source->getEmail();
 
         if ($this->password) {
             $data['signatureFields'] = 'instId:amount:currency:cartId';

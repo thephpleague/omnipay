@@ -12,13 +12,109 @@
 namespace Tala;
 
 use Tala\Exception\InvalidCreditCardException;
-use Tala\AbstractParameterObject;
 
 /**
  * Credit Card class
  */
-class CreditCard extends AbstractParameterObject
+class CreditCard
 {
+    protected $firstName;
+    protected $lastName;
+    protected $number;
+    protected $expiryMonth;
+    protected $expiryYear;
+    protected $startMonth;
+    protected $startYear;
+    protected $cvv;
+    protected $issue;
+    protected $type;
+    protected $billingAddress1;
+    protected $billingAddress2;
+    protected $billingCity;
+    protected $billingPostcode;
+    protected $billingState;
+    protected $billingCountry;
+    protected $shippingAddress1;
+    protected $shippingAddress2;
+    protected $shippingCity;
+    protected $shippingPostcode;
+    protected $shippingState;
+    protected $shippingCountry;
+    protected $company;
+    protected $phone;
+    protected $email;
+
+    /**
+     * Create a new CreditCard object using the specified parameters
+     *
+     * @param array An array of parameters to set on the new object
+     */
+    public function __construct($parameters = array())
+    {
+        $this->fill($parameters);
+    }
+
+    /**
+     * Set all parameters. It is safe to pass untrusted user input directly to this method.
+     *
+     * @param array An array of parameters to set on this object
+     */
+    public function fill($parameters)
+    {
+        foreach ($parameters as $key => $value) {
+            $method = 'set'.ucfirst(Helper::camelCase($key));
+            if (method_exists($this, $method)) {
+                $this->$method($value);
+            }
+        }
+    }
+
+    /**
+     * Validate this credit card. If the card is invalid, InvalidCreditCardException is thrown.
+     *
+     * This method is called internally by gateways to avoid wasting time with an API call
+     * when the credit card is clearly invalid.
+     *
+     * Generally if you want to validate the credit card yourself with custom error
+     * messages, you should use your framework's validation library, not this method.
+     */
+    public function validate()
+    {
+        foreach (array('number', 'firstName', 'lastName', 'expiryMonth', 'expiryYear', 'cvv') as $key) {
+            if (empty($this->$key)) {
+                throw new InvalidCreditCardException("The $key field is required");
+            }
+        }
+
+        if ($this->getExpiryDate('Ym') < gmdate('Ym')) {
+            throw new InvalidCreditCardException('Card has expired');
+        }
+
+        if ( ! Helper::validateLuhn($this->number)) {
+            throw new InvalidCreditCardException('Card number is invalid');
+        }
+    }
+
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName($value)
+    {
+        $this->firstName = $value;
+    }
+
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName($value)
+    {
+        $this->lastName = $value;
+    }
+
     public function getName()
     {
         return trim("$this->firstName $this->lastName");
@@ -31,58 +127,224 @@ class CreditCard extends AbstractParameterObject
         $this->lastName = isset($names[1]) ? $names[1] : null;
     }
 
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
     public function setNumber($value)
     {
-        $this->parameters['number'] = preg_replace('/\D/', '', $value);
+        $this->number = preg_replace('/\D/', '', $value);
+    }
+
+    public function getExpiryMonth()
+    {
+        return $this->expiryMonth;
     }
 
     public function setExpiryMonth($value)
     {
-        $this->parameters['expiryMonth'] = (int) $value;
+        $this->expiryMonth = (int) $value;
+    }
+
+    public function getExpiryYear()
+    {
+        return $this->expiryYear;
     }
 
     public function setExpiryYear($value)
     {
-        $this->parameters['expiryYear'] = $this->normalizeYear($value);
-    }
-
-    public function setStartMonth($value)
-    {
-        $this->parameters['startMonth'] = (int) $value;
-    }
-
-    public function setStartYear($value)
-    {
-        $this->parameters['startYear'] = $this->normalizeYear($value);
+        $this->expiryYear = $value ? Helper::normalizeYear($value) : $value;
     }
 
     /**
-     * Normalize a year to four digits
+     * Get the card expiry date, using the specified date format string
+     *
+     * @param string
      */
-    protected function normalizeYear($value)
-    {
-        $value = (int) $value;
-        if ($value < 100) {
-            $value += 2000;
-        }
-
-        return $value;
-    }
-
-    /**
-     * Get the card expiry date, using the specified date format
-     */
-    public function getExpiryDate($format = 'mY')
+    public function getExpiryDate($format)
     {
         return gmdate($format, gmmktime(0, 0, 0, $this->expiryMonth, 1, $this->expiryYear));
     }
 
+    public function getStartMonth()
+    {
+        return $this->startMonth;
+    }
+
+    public function setStartMonth($value)
+    {
+        $this->startMonth = (int) $value;
+    }
+
+    public function getStartYear()
+    {
+        return $this->startYear;
+    }
+
+    public function setStartYear($value)
+    {
+        $this->startYear = Helper::normalizeYear($value);
+    }
+
     /**
-     * Get the card start date, using the specified date format
+     * Get the card start date, using the specified date format string
+     *
+     * @param string
      */
-    public function getStartDate($format = 'mY')
+    public function getStartDate($format)
     {
         return gmdate($format, gmmktime(0, 0, 0, $this->startMonth, 1, $this->startYear));
+    }
+
+    public function getCvv()
+    {
+        return $this->cvv;
+    }
+
+    public function setCvv($value)
+    {
+        $this->cvv = $value;
+    }
+
+    public function getIssue()
+    {
+        return $this->issue;
+    }
+
+    public function setIssue($value)
+    {
+        $this->issue = $value;
+    }
+
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function setType($value)
+    {
+        $this->type = $value;
+    }
+
+    public function getBillingAddress1()
+    {
+        return $this->billingAddress1;
+    }
+
+    public function setBillingAddress1($value)
+    {
+        $this->billingAddress1 = $value;
+    }
+
+    public function getBillingAddress2()
+    {
+        return $this->billingAddress2;
+    }
+
+    public function setBillingAddress2($value)
+    {
+        $this->billingAddress2 = $value;
+    }
+
+    public function getBillingCity()
+    {
+        return $this->billingCity;
+    }
+
+    public function setBillingCity($value)
+    {
+        $this->billingCity = $value;
+    }
+
+    public function getBillingPostcode()
+    {
+        return $this->billingPostcode;
+    }
+
+    public function setBillingPostcode($value)
+    {
+        $this->billingPostcode = $value;
+    }
+
+    public function getBillingState()
+    {
+        return $this->billingState;
+    }
+
+    public function setBillingState($value)
+    {
+        $this->billingState = $value;
+    }
+
+    public function getBillingCountry()
+    {
+        return $this->billingCountry;
+    }
+
+    public function setBillingCountry($value)
+    {
+        $this->billingCountry = $value;
+    }
+
+    public function getShippingAddress1()
+    {
+        return $this->shippingAddress1;
+    }
+
+    public function setShippingAddress1($value)
+    {
+        $this->shippingAddress1 = $value;
+    }
+
+    public function getShippingAddress2()
+    {
+        return $this->shippingAddress2;
+    }
+
+    public function setShippingAddress2($value)
+    {
+        $this->shippingAddress2 = $value;
+    }
+
+    public function getShippingCity()
+    {
+        return $this->shippingCity;
+    }
+
+    public function setShippingCity($value)
+    {
+        $this->shippingCity = $value;
+    }
+
+    public function getShippingPostcode()
+    {
+        return $this->shippingPostcode;
+    }
+
+    public function setShippingPostcode($value)
+    {
+        $this->shippingPostcode = $value;
+    }
+
+    public function getShippingState()
+    {
+        return $this->shippingState;
+    }
+
+    public function setShippingState($value)
+    {
+        $this->shippingState = $value;
+    }
+
+    public function getShippingCountry()
+    {
+        return $this->shippingCountry;
+    }
+
+    public function setShippingCountry($value)
+    {
+        $this->shippingCountry = $value;
     }
 
     public function getAddress1()
@@ -151,14 +413,33 @@ class CreditCard extends AbstractParameterObject
         $this->shippingCountry = $value;
     }
 
-    /**
-     * Validate the credit card number using the Luhn alogorithm. If the card number is invalid,
-     * an InvalidCreditCard exception is thrown.
-     */
-    public function validateNumber()
+    public function getCompany()
     {
-        if ( ! Helper::validateLuhn($this->number)) {
-            throw new InvalidCreditCardException("The credit card number is invalid");
-        }
+        return $this->company;
+    }
+
+    public function setCompany($value)
+    {
+        $this->company = $value;
+    }
+
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    public function setPhone($value)
+    {
+        $this->phone = $value;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function setEmail($value)
+    {
+        $this->email = $value;
     }
 }

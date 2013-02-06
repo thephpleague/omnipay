@@ -49,21 +49,20 @@ class Gateway extends AbstractGateway
         $data['ip_address'] = $this->httpRequest->getClientIp();
 
         if ($source instanceof CreditCard) {
-            $source->validateRequired(array('number', 'firstName', 'lastName', 'expiryMonth', 'expiryYear', 'cvv'));
-            $source->validateNumber();
+            $source->validate();
 
-            $data['card']['number'] = $source->number;
-            $data['card']['expiry_month'] = $source->expiryMonth;
-            $data['card']['expiry_year'] = $source->expiryYear;
-            $data['card']['cvc'] = $source->cvv;
-            $data['card']['name'] = $source->name;
-            $data['card']['address_line1'] = $source->address1;
-            $data['card']['address_line2'] = $source->address2;
-            $data['card']['address_city'] = $source->city;
-            $data['card']['address_postcode'] = $source->postcode;
-            $data['card']['address_state'] = $source->state;
-            $data['card']['address_country'] = $source->country;
-            $data['email'] = $source->email;
+            $data['card']['number'] = $source->getNumber();
+            $data['card']['expiry_month'] = $source->getExpiryMonth();
+            $data['card']['expiry_year'] = $source->getExpiryYear();
+            $data['card']['cvc'] = $source->getCvv();
+            $data['card']['name'] = $source->getName();
+            $data['card']['address_line1'] = $source->getAddress1();
+            $data['card']['address_line2'] = $source->getAddress2();
+            $data['card']['address_city'] = $source->getCity();
+            $data['card']['address_postcode'] = $source->getPostcode();
+            $data['card']['address_state'] = $source->getState();
+            $data['card']['address_country'] = $source->getCountry();
+            $data['email'] = $source->getEmail();
         } else {
             $data['card_token'] = $source;
         }

@@ -53,8 +53,7 @@ class Gateway extends AbstractGateway
     protected function buildPurchaseRequest(Request $request, $source)
     {
         $request->validateRequired(array('amount'));
-        $source->validateRequired(array('firstName', 'lastName', 'number', 'expiryMonth', 'expiryYear', 'cvv'));
-        $source->validateNumber();
+        $source->validate();
 
         $data = $this->buildRequest('CardDetailsTransaction');
         $data->PaymentMessage->MerchantAuthentication['MerchantID'] = $this->username;
@@ -64,28 +63,28 @@ class Gateway extends AbstractGateway
         $data->PaymentMessage->TransactionDetails->OrderID = $request->transactionId;
         $data->PaymentMessage->TransactionDetails->OrderDescription = $request->description;
         $data->PaymentMessage->TransactionDetails->MessageDetails['TransactionType'] = 'SALE';
-        $data->PaymentMessage->CardDetails->CardName = $source->name;
-        $data->PaymentMessage->CardDetails->CardNumber = $source->number;
+        $data->PaymentMessage->CardDetails->CardName = $source->getName();
+        $data->PaymentMessage->CardDetails->CardNumber = $source->getNumber();
         $data->PaymentMessage->CardDetails->ExpiryDate['Month'] = $source->getExpiryDate('m');
         $data->PaymentMessage->CardDetails->ExpiryDate['Year'] = $source->getExpiryDate('y');
-        $data->PaymentMessage->CardDetails->CV2 = $source->cvv;
+        $data->PaymentMessage->CardDetails->CV2 = $source->getCvv();
 
-        if ($source->issue) {
-            $data->PaymentMessage->CardDetails->IssueNumber = $source->issue;
+        if ($source->getIssue()) {
+            $data->PaymentMessage->CardDetails->IssueNumber = $source->getIssue();
         }
 
-        if ($source->startMonth && $source->startYear) {
+        if ($source->getStartMonth() && $source->getStartYear()) {
             $data->PaymentMessage->CardDetails->StartDate['Month'] = $source->getStartDate('m');
             $data->PaymentMessage->CardDetails->StartDate['Year'] = $source->getStartDate('y');
         }
 
-        $data->PaymentMessage->CustomerDetails->BillingAddress->Address1 = $source->address1;
-        $data->PaymentMessage->CustomerDetails->BillingAddress->Address2 = $source->address2;
-        $data->PaymentMessage->CustomerDetails->BillingAddress->City = $source->city;
-        $data->PaymentMessage->CustomerDetails->BillingAddress->PostCode = $source->postcode;
-        $data->PaymentMessage->CustomerDetails->BillingAddress->State = $source->state;
+        $data->PaymentMessage->CustomerDetails->BillingAddress->Address1 = $source->getAddress1();
+        $data->PaymentMessage->CustomerDetails->BillingAddress->Address2 = $source->getAddress2();
+        $data->PaymentMessage->CustomerDetails->BillingAddress->City = $source->getCity();
+        $data->PaymentMessage->CustomerDetails->BillingAddress->PostCode = $source->getPostcode();
+        $data->PaymentMessage->CustomerDetails->BillingAddress->State = $source->getState();
         // requires numeric country code
-        // $data->PaymentMessage->CustomerDetails->BillingAddress->CountryCode = $source->countryNumeric;
+        // $data->PaymentMessage->CustomerDetails->BillingAddress->CountryCode = $source->getCountry()Numeric;
         $data->PaymentMessage->CustomerDetails->CustomerIPAddress = $this->httpRequest->getClientIp();
 
         return $data;

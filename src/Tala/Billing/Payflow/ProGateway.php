@@ -67,24 +67,22 @@ class ProGateway extends AbstractGateway
     protected function buildAuthorize(Request $request, $source, $action)
     {
         $request->validateRequired('amount');
-
-        $source->validateRequired(array('number', 'firstName', 'lastName', 'expiryMonth', 'expiryYear', 'cvv'));
-        $source->validateNumber();
+        $source->validate();
 
         $data = $this->buildRequest($action);
         $data['TENDER'] = 'C';
         $data['COMMENT1'] = $request->description;
-        $data['ACCT'] = $source->number;
+        $data['ACCT'] = $source->getNumber();
         $data['AMT'] = $request->amountDollars;
         $data['EXPDATE'] = $source->getExpiryDate('my');
-        $data['CVV2'] = $source->cvv;
-        $data['BILLTOFIRSTNAME'] = $source->firstName;
-        $data['BILLTOLASTNAME'] = $source->lastName;
-        $data['BILLTOSTREET'] = $source->address1;
-        $data['BILLTOCITY'] = $source->city;
-        $data['BILLTOSTATE'] = $source->state;
-        $data['BILLTOZIP'] = $source->postcode;
-        $data['BILLTOCOUNTRY'] = $source->country;
+        $data['CVV2'] = $source->getCvv();
+        $data['BILLTOFIRSTNAME'] = $source->getFirstName();
+        $data['BILLTOLASTNAME'] = $source->getLastName();
+        $data['BILLTOSTREET'] = $source->getAddress1();
+        $data['BILLTOCITY'] = $source->getCity();
+        $data['BILLTOSTATE'] = $source->getState();
+        $data['BILLTOZIP'] = $source->getPostcode();
+        $data['BILLTOCOUNTRY'] = $source->getCountry();
 
         return $data;
     }
