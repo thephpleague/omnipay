@@ -39,6 +39,20 @@ abstract class AbstractGateway extends AbstractParameterObject implements Gatewa
     }
 
     /**
+     * Get the "Short Name" of the gateway, which is used by GatewayFactory to create new
+     * instances of this gateway.
+     */
+    public function getShortName()
+    {
+        $class = get_class($this);
+        if (0 === strpos($class, 'Tala\\Billing\\')) {
+            return str_replace('\\', '_', substr($class, 13, -7));
+        }
+
+        return '\\'.$class;
+    }
+
+    /**
      * Define gateway settings, in the following format:
      *
      * array(
