@@ -29,7 +29,7 @@ class Gateway extends AbstractGateway
     {
         return array(
             'secretKey' => '',
-            'testMode' => true,
+            'testMode' => false,
         );
     }
 

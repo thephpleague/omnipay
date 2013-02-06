@@ -26,8 +26,6 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
 
         $this->request = new Request;
         $this->request->amount = 1000;
-
-        $this->card = new CreditCard;
     }
 
     /**
@@ -39,10 +37,10 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $this->httpRequest->shouldReceive('getClientIp')->once()->andReturn('127.0.0.1');
 
         $this->httpClient->shouldReceive('post')->once()
-            ->with('https://api.pin.net.au/1/charges', m::type('array'))
+            ->with('https://api.pin.net.au/1/charges', m::type('array'), m::type('array'))
             ->andReturn('{"error":"standard_error_name","error_description":"A description of the error."}');
 
-        $this->gateway->purchase($this->request, $this->card);
+        $this->gateway->purchase($this->request, 'abc123');
     }
 
     public function testPurchaseSuccess()
@@ -50,10 +48,10 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $this->httpRequest->shouldReceive('getClientIp')->once()->andReturn('127.0.0.1');
 
         $this->httpClient->shouldReceive('post')->once()
-            ->with('https://api.pin.net.au/1/charges', m::type('array'))
+            ->with('https://api.pin.net.au/1/charges', m::type('array'), m::type('array'))
             ->andReturn('{"response":{"token":"ch_lfUYEBK14zotCTykezJkfg","status_message":"Success!"}}');
 
-        $response = $this->gateway->purchase($this->request, $this->card);
+        $response = $this->gateway->purchase($this->request, 'abc123');
 
         $this->assertEquals('ch_lfUYEBK14zotCTykezJkfg', $response->getGatewayReference());
     }
