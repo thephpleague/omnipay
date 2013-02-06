@@ -17,7 +17,7 @@ use Tala\Request;
 /**
  * PayPal Express Class
  */
-class ExpressGateway extends AbstractGateway
+class ExpressGateway extends ProGateway
 {
     public function getDefaultSettings()
     {
@@ -30,7 +30,7 @@ class ExpressGateway extends AbstractGateway
 
     public function authorize(Request $request, $source)
     {
-        $data = $this->buildAuthorize($request, $source);
+        $data = $this->buildExpressAuthorize($request, $source);
         $response = $this->send($data);
 
         return new RedirectResponse(
@@ -64,7 +64,7 @@ class ExpressGateway extends AbstractGateway
         return new Response($data);
     }
 
-    protected function buildAuthorize(Request $request, $source)
+    protected function buildExpressAuthorize(Request $request, $source)
     {
         $request->validateRequired(array('returnUrl', 'cancelUrl'));
 
