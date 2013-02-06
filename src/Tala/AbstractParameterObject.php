@@ -80,7 +80,7 @@ abstract class AbstractParameterObject
     public function getParameter($key)
     {
         // normalize parameter name to camelCase
-        $key = $this->camelCase($key);
+        $key = Helper::camelCase($key);
 
         if ($this->isValidParameter($key)) {
             // check for accessor method
@@ -102,7 +102,7 @@ abstract class AbstractParameterObject
     public function setParameter($key, $value)
     {
         // normalize parameter name to camelCase
-        $key = $this->camelCase($key);
+        $key = Helper::camelCase($key);
 
         if ($this->isValidParameter($key)) {
             // check for mutator method
@@ -114,20 +114,6 @@ abstract class AbstractParameterObject
         } else {
             throw new BadMethodCallException("Invalid parameter: $key");
         }
-    }
-
-    /**
-     * Convert an under_score string to camelCase
-     */
-    private function camelCase($str)
-    {
-        return preg_replace_callback(
-            '/_([a-z])/',
-            function ($match) {
-                return strtoupper($match[1]);
-            },
-            $str
-        );
     }
 
     /**

@@ -157,34 +157,7 @@ class CreditCard extends AbstractParameterObject
      */
     public function validateNumber()
     {
-        /*
-         * Luhn algorithm number checker - (c) 2005-2008 shaman - www.planzero.org
-         * This code has been released into the public domain, however please
-         * give credit to the original author where possible.
-         */
-
-        // Set the string length and parity
-        $number_length = strlen($this->number);
-        $parity = $number_length % 2;
-
-        // Loop through each digit and do the maths
-        $total = 0;
-        for ($i = 0; $i < $number_length; $i++) {
-            $digit = $this->number[$i];
-            // Multiply alternate digits by two
-            if ($i % 2 == $parity) {
-                $digit *= 2;
-                // If the sum is two digits, add them together (in effect)
-                if ($digit > 9) {
-                    $digit -= 9;
-                }
-            }
-            // Total up the digits
-            $total += $digit;
-        }
-
-        // If the total mod 10 does not equal 0, the number is invalid
-        if ($total % 10 != 0) {
+        if ( ! Helper::validateLuhn($this->number)) {
             throw new InvalidCreditCardException("The credit card number is invalid");
         }
     }

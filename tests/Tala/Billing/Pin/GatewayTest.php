@@ -12,7 +12,6 @@
 namespace Tala\Billing\Pin;
 
 use Mockery as m;
-use Tala\CreditCard;
 use Tala\Request;
 
 class GatewayTest extends \PHPUnit_Framework_TestCase
