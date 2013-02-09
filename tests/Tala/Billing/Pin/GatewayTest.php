@@ -12,9 +12,11 @@
 namespace Tala\Billing\Pin;
 
 use Mockery as m;
+use Tala\BaseGatewayTest;
+use Tala\CreditCard;
 use Tala\Request;
 
-class GatewayTest extends \PHPUnit_Framework_TestCase
+class GatewayTest extends BaseGatewayTest
 {
     public function setUp()
     {
@@ -23,8 +25,17 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
 
         $this->gateway = new Gateway($this->httpClient, $this->httpRequest);
 
-        $this->request = new Request;
-        $this->request->amount = 1000;
+        $this->options = array(
+            'amount' => 1000,
+            'card' => new CreditCard(array(
+                'firstName' => 'Example',
+                'lastName' => 'User',
+                'number' => '4111111111111111',
+                'expiryMonth' => '12',
+                'expiryYear' => '2016',
+                'cvv' => '123',
+            )),
+        );
     }
 
     /**
@@ -39,7 +50,7 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
             ->with('https://api.pin.net.au/1/charges', m::type('array'), m::type('array'))
             ->andReturn('{"error":"standard_error_name","error_description":"A description of the error."}');
 
-        $this->gateway->purchase($this->request, 'abc123');
+        $this->gateway->purchase($this->options);
     }
 
     public function testPurchaseSuccess()
@@ -50,7 +61,7 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
             ->with('https://api.pin.net.au/1/charges', m::type('array'), m::type('array'))
             ->andReturn('{"response":{"token":"ch_lfUYEBK14zotCTykezJkfg","status_message":"Success!"}}');
 
-        $response = $this->gateway->purchase($this->request, 'abc123');
+        $response = $this->gateway->purchase($this->options);
 
         $this->assertEquals('ch_lfUYEBK14zotCTykezJkfg', $response->getGatewayReference());
     }

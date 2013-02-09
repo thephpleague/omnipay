@@ -27,25 +27,74 @@ class Gateway extends AbstractGateway
 {
     protected $endpoint = 'https://secure.worldpay.com/wcc/purchase';
     protected $testEndpoint = 'https://secure-test.worldpay.com/wcc/purchase';
+    protected $installationId;
+    protected $secretWord;
+    protected $callbackPassword;
+    protected $testMode;
 
-    public function getDefaultSettings()
+    public function getName()
+    {
+        return 'WorldPay';
+    }
+
+    public function defineSettings()
     {
         return array(
-            'username' => '',
-            'password' => '',
+            'installationId' => '',
+            'secretWord' => '',
             'callbackPassword' => '',
             'testMode' => false,
         );
     }
 
-    public function purchase(Request $request, $source)
+    public function getInstallationId()
     {
-        $data = $this->buildPurchase($request, $source);
+        return $this->installationId;
+    }
+
+    public function setInstallationId($value)
+    {
+        $this->installationId = $value;
+    }
+
+    public function getSecretWord()
+    {
+        return $this->secretWord;
+    }
+
+    public function setSecretWord($value)
+    {
+        $this->secretWord = $value;
+    }
+
+    public function getCallbackPassword()
+    {
+        return $this->callbackPassword;
+    }
+
+    public function setCallbackPassword($value)
+    {
+        $this->callbackPassword = $value;
+    }
+
+    public function getTestMode()
+    {
+        return $this->testMode;
+    }
+
+    public function setTestMode($value)
+    {
+        $this->testMode = $value;
+    }
+
+    public function purchase($options)
+    {
+        $data = $this->buildPurchase($options);
 
         return new RedirectResponse($this->getCurrentEndpoint().'?'.http_build_query($data));
     }
 
-    public function completePurchase(Request $request)
+    public function completePurchase($options)
     {
         $callbackPW = (string) $this->httpRequest->get('callbackPW');
         if ($callbackPW != $this->callbackPassword) {
@@ -64,31 +113,36 @@ class Gateway extends AbstractGateway
         }
     }
 
-    protected function buildPurchase(Request $request, $source)
+    protected function buildPurchase($options)
     {
-        $request->validateRequired(array('amount', 'returnUrl'));
+        $request = new Request($options);
+        $request->validate(array('amount', 'returnUrl'));
 
         $data = array();
-        $data['instId'] = $this->username;
-        $data['cartId'] = $request->orderId;
-        $data['desc'] = $request->description;
-        $data['amount'] = $request->amountDollars;
-        $data['currency'] = $request->currency;
+        $data['instId'] = $this->installationId;
+        $data['cartId'] = $request->getTransactionId();
+        $data['desc'] = $request->getDescription();
+        $data['amount'] = $request->getAmountDollars();
+        $data['currency'] = $request->getCurrency();
         $data['testMode'] = $this->testMode ? 100 : 0;
-        $data['MC_callback'] = $request->returnUrl;
-        $data['name'] = $source->getName();
-        $data['address1'] = $source->getAddress1();
-        $data['address2'] = $source->getAddress2();
-        $data['town'] = $source->getCity();
-        $data['region'] = $source->getState();
-        $data['postcode'] = $source->getPostcode();
-        $data['country'] = $source->getCountry();
-        $data['tel'] = $source->getPhone();
-        $data['email'] = $source->getEmail();
+        $data['MC_callback'] = $request->getReturnUrl();
 
-        if ($this->password) {
+        $source = $request->getCard();
+        if ($source) {
+            $data['name'] = $source->getName();
+            $data['address1'] = $source->getAddress1();
+            $data['address2'] = $source->getAddress2();
+            $data['town'] = $source->getCity();
+            $data['region'] = $source->getState();
+            $data['postcode'] = $source->getPostcode();
+            $data['country'] = $source->getCountry();
+            $data['tel'] = $source->getPhone();
+            $data['email'] = $source->getEmail();
+        }
+
+        if ($this->secretWord) {
             $data['signatureFields'] = 'instId:amount:currency:cartId';
-            $signature_data = array($this->password,
+            $signature_data = array($this->secretWord,
                 $data['instId'], $data['amount'], $data['currency'], $data['cartId']);
             $data['signature'] = md5(implode(':', $signature_data));
         }

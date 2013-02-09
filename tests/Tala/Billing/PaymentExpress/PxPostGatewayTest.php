@@ -12,10 +12,11 @@
 namespace Tala\Billing\PaymentExpress;
 
 use Mockery as m;
+use Tala\BaseGatewayTest;
 use Tala\CreditCard;
 use Tala\Request;
 
-class PxPostGatewayTest extends \PHPUnit_Framework_TestCase
+class PxPostGatewayTest extends BaseGatewayTest
 {
     public function setUp()
     {
@@ -24,7 +25,7 @@ class PxPostGatewayTest extends \PHPUnit_Framework_TestCase
 
         $this->gateway = new PxPostGateway($this->httpClient, $this->httpRequest);
 
-        $this->card = new CreditCard(array(
+        $card = new CreditCard(array(
             'firstName' => 'Example',
             'lastName' => 'User',
             'number' => '4111111111111111',
@@ -33,8 +34,10 @@ class PxPostGatewayTest extends \PHPUnit_Framework_TestCase
             'cvv' => '123',
         ));
 
-        $this->request = new Request;
-        $this->request->amount = 1000;
+        $this->options = array(
+            'amount' => 1000,
+            'card' => $card,
+        );
     }
 
     public function testAuthorizeSuccess()
@@ -43,7 +46,7 @@ class PxPostGatewayTest extends \PHPUnit_Framework_TestCase
             ->with('https://sec.paymentexpress.com/pxpost.aspx', m::type('string'))->once()
             ->andReturn('<Txn><ReCo>00</ReCo><ResponseText>APPROVED</ResponseText><HelpText>Transaction Approved</HelpText><Success>1</Success><DpsTxnRef>000000030884cdc6</DpsTxnRef><TxnRef>inv1278</TxnRef></Txn>');
 
-        $response = $this->gateway->authorize($this->request, $this->card);
+        $response = $this->gateway->authorize($this->options);
 
         $this->assertInstanceOf('\Tala\Response', $response);
         $this->assertEquals('000000030884cdc6', $response->getGatewayReference());
@@ -59,7 +62,7 @@ class PxPostGatewayTest extends \PHPUnit_Framework_TestCase
             ->with('https://sec.paymentexpress.com/pxpost.aspx', m::type('string'))->once()
             ->andReturn('<Txn><HelpText>Transaction Declined</HelpText><Success>0</Success></Txn>');
 
-        $response = $this->gateway->authorize($this->request, $this->card);
+        $response = $this->gateway->authorize($this->options);
     }
 
     public function testCaptureSuccess()
@@ -68,11 +71,12 @@ class PxPostGatewayTest extends \PHPUnit_Framework_TestCase
             ->with('https://sec.paymentexpress.com/pxpost.aspx', m::type('string'))->once()
             ->andReturn('<Txn><ReCo>00</ReCo><ResponseText>APPROVED</ResponseText><HelpText>Transaction Approved</HelpText><Success>1</Success><DpsTxnRef>000000030884cdc6</DpsTxnRef><TxnRef>inv1278</TxnRef></Txn>');
 
-        $request = new Request;
-        $request->amount = 1000;
-        $request->gatewayReference = '000000030884cdc6';
+        $options = array(
+            'amount' => 1000,
+            'gatewayReference' => '000000030884cdc6',
+        );
 
-        $response = $this->gateway->capture($request);
+        $response = $this->gateway->capture($options);
 
         $this->assertInstanceOf('\Tala\Response', $response);
         $this->assertEquals('000000030884cdc6', $response->getGatewayReference());
@@ -84,7 +88,7 @@ class PxPostGatewayTest extends \PHPUnit_Framework_TestCase
             ->with('https://sec.paymentexpress.com/pxpost.aspx', m::type('string'))->once()
             ->andReturn('<Txn><ReCo>00</ReCo><ResponseText>APPROVED</ResponseText><HelpText>Transaction Approved</HelpText><Success>1</Success><DpsTxnRef>000000030884cdc6</DpsTxnRef><TxnRef>inv1278</TxnRef></Txn>');
 
-        $response = $this->gateway->purchase($this->request, $this->card);
+        $response = $this->gateway->purchase($this->options);
 
         $this->assertInstanceOf('\Tala\Response', $response);
         $this->assertEquals('000000030884cdc6', $response->getGatewayReference());
@@ -100,7 +104,7 @@ class PxPostGatewayTest extends \PHPUnit_Framework_TestCase
             ->with('https://sec.paymentexpress.com/pxpost.aspx', m::type('string'))->once()
             ->andReturn('<Txn><HelpText>Transaction Declined</HelpText><Success>0</Success></Txn>');
 
-        $response = $this->gateway->purchase($this->request, $this->card);
+        $response = $this->gateway->purchase($this->options);
     }
 
     public function testRefundSuccess()
@@ -109,11 +113,12 @@ class PxPostGatewayTest extends \PHPUnit_Framework_TestCase
             ->with('https://sec.paymentexpress.com/pxpost.aspx', m::type('string'))->once()
             ->andReturn('<Txn><ReCo>00</ReCo><ResponseText>APPROVED</ResponseText><HelpText>Transaction Approved</HelpText><Success>1</Success><DpsTxnRef>000000030884cdc6</DpsTxnRef><TxnRef>inv1278</TxnRef></Txn>');
 
-        $request = new Request;
-        $request->amount = 1000;
-        $request->gatewayReference = '000000030884cdc6';
+        $options = array(
+            'amount' => 1000,
+            'gatewayReference' => '000000030884cdc6',
+        );
 
-        $response = $this->gateway->refund($request);
+        $response = $this->gateway->refund($options);
 
         $this->assertInstanceOf('\Tala\Response', $response);
         $this->assertEquals('000000030884cdc6', $response->getGatewayReference());

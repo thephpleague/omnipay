@@ -13,9 +13,10 @@ namespace Tala\Billing\Dummy;
 
 use Mockery as m;
 use Tala\CreditCard;
+use Tala\BaseGatewayTest;
 use Tala\Request;
 
-class GatewayTest extends \PHPUnit_Framework_TestCase
+class GatewayTest extends BaseGatewayTest
 {
     public function setUp()
     {
@@ -24,7 +25,7 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
 
         $this->gateway = new Gateway($this->httpClient, $this->httpRequest);
 
-        $this->card = new CreditCard(array(
+        $card = new CreditCard(array(
             'firstName' => 'Example',
             'lastName' => 'User',
             'number' => '4111111111111111',
@@ -33,20 +34,19 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
             'cvv' => '123',
         ));
 
-        $this->request = new Request();
-        $this->request->amount = 1000;
+        $this->options = array('amount' => 1000, 'card' => $card);
     }
 
     public function testAuthorize()
     {
-        $response = $this->gateway->authorize($this->request, $this->card);
+        $response = $this->gateway->authorize($this->options);
 
         $this->assertInstanceOf('\Tala\Billing\Dummy\Response', $response);
     }
 
     public function testPurchase()
     {
-        $response = $this->gateway->purchase($this->request, $this->card);
+        $response = $this->gateway->purchase($this->options);
 
         $this->assertInstanceOf('\Tala\Billing\Dummy\Response', $response);
     }

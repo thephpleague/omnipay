@@ -17,50 +17,62 @@ class AbstractGatewayTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->gateway = m::mock("\Tala\AbstractGateway");
-        $this->card = new CreditCard;
-        $this->request = new Request;
+        $this->gateway = m::mock("\Tala\AbstractGateway[getName,defineSettings]");
     }
 
+    /**
+     * @expectedException \Tala\Exception\UnsupportedMethodException
+     */
     public function testAuthorize()
     {
-        $this->setExpectedException('BadMethodCallException');
-        $this->gateway->authorize($this->request, $this->card);
+        $this->gateway->authorize(array());
     }
 
+    /**
+     * @expectedException \Tala\Exception\UnsupportedMethodException
+     */
     public function testCompleteAuthorize()
     {
-        $this->setExpectedException('BadMethodCallException');
-        $this->gateway->completeAuthorize($this->request);
+        $this->gateway->completeAuthorize(array());
     }
 
+    /**
+     * @expectedException \Tala\Exception\UnsupportedMethodException
+     */
     public function testCapture()
     {
-        $this->setExpectedException('BadMethodCallException');
-        $this->gateway->capture($this->request);
+        $this->gateway->capture(array());
     }
 
+    /**
+     * @expectedException \Tala\Exception\UnsupportedMethodException
+     */
     public function testPurchase()
     {
-        $this->setExpectedException('BadMethodCallException');
-        $this->gateway->purchase($this->request, $this->card);
+        $this->gateway->purchase(array());
     }
 
+    /**
+     * @expectedException \Tala\Exception\UnsupportedMethodException
+     */
     public function testCompletePurchase()
     {
-        $this->setExpectedException('BadMethodCallException');
-        $this->gateway->completePurchase($this->request);
+        $this->gateway->completePurchase(array());
     }
 
+    /**
+     * @expectedException \Tala\Exception\UnsupportedMethodException
+     */
     public function testRefund()
     {
-        $this->setExpectedException('BadMethodCallException');
-        $this->gateway->refund($this->request);
+        $this->gateway->refund(array());
     }
 
+    /**
+     * @expectedException \Tala\Exception\UnsupportedMethodException
+     */
     public function testVoid()
     {
-        $this->setExpectedException('BadMethodCallException');
-        $this->gateway->void($this->request);
+        $this->gateway->void(array());
     }
 }

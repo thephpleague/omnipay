@@ -24,8 +24,15 @@ class Gateway extends AbstractGateway
 {
     protected $endpoint = 'https://api.pin.net.au/1';
     protected $testEndpoint = 'https://test-api.pin.net.au/1';
+    protected $secretKey;
+    protected $testMode;
 
-    public function getDefaultSettings()
+    public function getName()
+    {
+        return 'Pin';
+    }
+
+    public function defineSettings()
     {
         return array(
             'secretKey' => '',
@@ -33,19 +40,42 @@ class Gateway extends AbstractGateway
         );
     }
 
-    public function purchase(Request $request, $source)
+    public function getSecretKey()
     {
-        $data = $this->buildPurchase($request, $source);
+        return $this->secretKey;
+    }
+
+    public function setSecretKey($value)
+    {
+        $this->secretKey = $value;
+    }
+
+    public function getTestMode()
+    {
+        return $this->testMode;
+    }
+
+    public function setTestMode($value)
+    {
+        $this->testMode = $value;
+    }
+
+    public function purchase($options)
+    {
+        $data = $this->buildPurchase($options);
 
         return $this->send('/charges', $data);
     }
 
-    protected function buildPurchase(Request $request, $source)
+    protected function buildPurchase($options)
     {
+        $request = new Request($options);
+        $source = $request->getCard();
+
         $data = array();
-        $data['amount'] = $request->amount;
-        $data['currency'] = strtolower($request->currency);
-        $data['description'] = $request->description;
+        $data['amount'] = $request->getAmount();
+        $data['currency'] = strtolower($request->getCurrency());
+        $data['description'] = $request->getDescription();
         $data['ip_address'] = $this->httpRequest->getClientIp();
 
         if ($source instanceof CreditCard) {

@@ -23,8 +23,15 @@ use Tala\Request;
 class PxPayGateway extends AbstractGateway
 {
     protected $endpoint = 'https://sec.paymentexpress.com/pxpay/pxaccess.aspx';
+    protected $username;
+    protected $password;
 
-    public function getDefaultSettings()
+    public function getName()
+    {
+        return 'PaymentExpress PxPay';
+    }
+
+    public function defineSettings()
     {
         return array(
             'username' => '',
@@ -32,28 +39,48 @@ class PxPayGateway extends AbstractGateway
         );
     }
 
-    public function authorize(Request $request, $source)
+    public function getUsername()
     {
-        $data = $this->buildPurchase($request, $source);
+        return $this->username;
+    }
+
+    public function setUsername($value)
+    {
+        $this->username = $value;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function setPassword($value)
+    {
+        $this->password = $value;
+    }
+
+    public function authorize($options)
+    {
+        $data = $this->buildPurchase($options);
         $data->TxnType = 'Auth';
 
         return $this->sendPurchase($data);
     }
 
-    public function completeAuthorize(Request $request)
+    public function completeAuthorize($options)
     {
-        return $this->completePurchase($request);
+        return $this->completePurchase($options);
     }
 
-    public function purchase(Request $request, $source)
+    public function purchase($options)
     {
-        $data = $this->buildPurchase($request, $source);
+        $data = $this->buildPurchase($options);
         $data->TxnType = 'Purchase';
 
         return $this->sendPurchase($data);
     }
 
-    public function completePurchase(Request $request)
+    public function completePurchase($options)
     {
         $result = $this->httpRequest->get('result');
         if (empty($result)) {
@@ -69,18 +96,19 @@ class PxPayGateway extends AbstractGateway
         return $this->sendComplete($data);
     }
 
-    protected function buildPurchase(Request $request, $source)
+    protected function buildPurchase($options)
     {
-        $request->validateRequired(array('amount', 'returnUrl'));
+        $request = new Request($options);
+        $request->validate(array('amount', 'returnUrl'));
 
         $data = new SimpleXMLElement('<GenerateRequest/>');
         $data->PxPayUserId = $this->username;
         $data->PxPayKey = $this->password;
-        $data->AmountInput = $request->amountDollars;
-        $data->CurrencyInput = $request->currency;
-        $data->MerchantReference = $request->description;
-        $data->UrlSuccess = $request->returnUrl;
-        $data->UrlFail = $request->returnUrl;
+        $data->AmountInput = $request->getAmountDollars();
+        $data->CurrencyInput = $request->getCurrency();
+        $data->MerchantReference = $request->getDescription();
+        $data->UrlSuccess = $request->getReturnUrl();
+        $data->UrlFail = $request->getReturnUrl();
 
         return $data;
     }

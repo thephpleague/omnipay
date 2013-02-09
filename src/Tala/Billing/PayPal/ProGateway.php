@@ -24,8 +24,17 @@ class ProGateway extends AbstractGateway
     protected $testEndpoint = 'https://api-3t.sandbox.paypal.com/nvp';
     protected $checkoutEndpoint = 'https://www.paypal.com/webscr';
     protected $testCheckoutEndpoint = 'https://www.sandbox.paypal.com/webscr';
+    protected $username;
+    protected $password;
+    protected $signature;
+    protected $testMode;
 
-    public function getDefaultSettings()
+    public function getName()
+    {
+        return 'PayPal Pro';
+    }
+
+    public function defineSettings()
     {
         return array(
             'username' => '',
@@ -35,31 +44,71 @@ class ProGateway extends AbstractGateway
         );
     }
 
-    public function authorize(Request $request, $source)
+    public function getUsername()
     {
-        $data = $this->buildAuthorize($request, $source, 'Authorization');
+        return $this->username;
+    }
+
+    public function setUsername($value)
+    {
+        $this->username = $value;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function setPassword($value)
+    {
+        $this->password = $value;
+    }
+
+    public function getSignature()
+    {
+        return $this->signature;
+    }
+
+    public function setSignature($value)
+    {
+        $this->signature = $value;
+    }
+
+    public function getTestMode()
+    {
+        return $this->testMode;
+    }
+
+    public function setTestMode($value)
+    {
+        $this->testMode = $value;
+    }
+
+    public function authorize($options)
+    {
+        $data = $this->buildAuthorize($options, 'Authorization');
         $response = $this->send($data);
 
         return new Response($response);
     }
 
-    public function purchase(Request $request, $source)
+    public function purchase($options)
     {
-        $data = $this->buildAuthorize($request, $source, 'Sale');
+        $data = $this->buildAuthorize($options, 'Sale');
         $response = $this->send($data);
 
         return new Response($response);
     }
 
-    public function capture(Request $request)
+    public function capture($options)
     {
-        $data = $this->buildCapture($request);
+        $data = $this->buildCapture($options);
         $response = $this->send($data);
 
         return new Response($response);
     }
 
-    public function refund(Request $request)
+    public function refund($options)
     {
         $request = $this->_build_refund();
         $response = $this->send($request);
@@ -67,9 +116,11 @@ class ProGateway extends AbstractGateway
         return new Response($response);
     }
 
-    protected function buildAuthorize($request, $source, $action)
+    protected function buildAuthorize($options, $action)
     {
-        $request->validateRequired('amount');
+        $request = new Request($options);
+        $request->validate(array('amount'));
+        $source = $request->getCard();
         $source->validate();
 
         $data = $this->buildPaymentRequest($request, 'DoDirectPayment', $action);
@@ -95,25 +146,27 @@ class ProGateway extends AbstractGateway
         return $data;
     }
 
-    protected function buildCapture(Request $request)
+    protected function buildCapture($options)
     {
-        $request->validateRequired(array('gatewayReference', 'amount'));
+        $request = new Request($options);
+        $request->validate(array('gatewayReference', 'amount'));
 
         $data = $this->buildRequest('DoCapture');
-        $data['AMT'] = $request->amountDollars;
-        $data['CURRENCYCODE'] = $request->currency;
-        $data['AUTHORIZATIONID'] = $request->gatewayReference;
+        $data['AMT'] = $request->getAmountDollars();
+        $data['CURRENCYCODE'] = $request->getCurrency();
+        $data['AUTHORIZATIONID'] = $request->getGatewayReference();
         $data['COMPLETETYPE'] = 'Complete';
 
         return $data;
     }
 
-    protected function buildRefund(Request $request)
+    protected function buildRefund($options)
     {
-        $request->validateRequired(array('gatewayReference'));
+        $request = new Request($options);
+        $request->validate(array('gatewayReference'));
 
         $data = $this->buildRequest('RefundTransaction');
-        $data['TRANSACTIONID'] = $request->gatewayReference;
+        $data['TRANSACTIONID'] = $request->getGatewayReference();
         $data['REFUNDTYPE'] = 'Full';
 
         return $data;
@@ -136,9 +189,9 @@ class ProGateway extends AbstractGateway
         $data = $this->buildRequest($method);
 
         $data[$prefix.'PAYMENTACTION'] = $action;
-        $data[$prefix.'AMT'] = $request->amountDollars;
-        $data[$prefix.'CURRENCYCODE'] = $request->currency;
-        $data[$prefix.'DESC'] = $request->description;
+        $data[$prefix.'AMT'] = $request->getAmountDollars();
+        $data[$prefix.'CURRENCYCODE'] = $request->getCurrency();
+        $data[$prefix.'DESC'] = $request->getDescription();
 
         return $data;
     }

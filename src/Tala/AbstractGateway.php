@@ -11,16 +11,15 @@
 
 namespace Tala;
 
-use BadMethodCallException;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
-use Tala\AbstractParameterObject;
+use Tala\Exception\UnsupportedMethodException;
 use Tala\HttpClient\HttpClientInterface;
 use Tala\Request;
 
 /**
  * Base payment gateway class
  */
-abstract class AbstractGateway extends AbstractParameterObject implements GatewayInterface
+abstract class AbstractGateway implements GatewayInterface
 {
     protected $httpClient;
     protected $httpRequest;
@@ -35,12 +34,68 @@ abstract class AbstractGateway extends AbstractParameterObject implements Gatewa
     {
         $this->httpClient = $httpClient;
         $this->httpRequest = $httpRequest;
-        $this->setDefaultSettings();
+
+        $this->loadSettings();
     }
 
     /**
-     * Get the "Short Name" of the gateway, which is used by GatewayFactory to create new
-     * instances of this gateway.
+     * Get gateway display name
+     *
+     * This can be used by carts to get the display name for each gateway.
+     */
+    abstract public function getName();
+
+    /**
+     * Define gateway settings, in the following format:
+     *
+     * array(
+     *     'username' => '', // string variable
+     *     'testMode' => false, // boolean variable
+     *     'landingPage' => array('billing', 'login'), // enum variable, first item is default
+     * );
+     */
+    abstract public function defineSettings();
+
+    public function authorize($options)
+    {
+        throw new UnsupportedMethodException;
+    }
+
+    public function completeAuthorize($options)
+    {
+        throw new UnsupportedMethodException;
+    }
+
+    public function capture($options)
+    {
+        throw new UnsupportedMethodException;
+    }
+
+    public function purchase($options)
+    {
+        throw new UnsupportedMethodException;
+    }
+
+    public function completePurchase($options)
+    {
+        throw new UnsupportedMethodException;
+    }
+
+    public function refund($options)
+    {
+        throw new UnsupportedMethodException;
+    }
+
+    public function void($options)
+    {
+        throw new UnsupportedMethodException;
+    }
+
+    /**
+     * Get gateway short name
+     *
+     * This name can be used with GatewayFactory as an alias of the gateway class,
+     * to create new instances of this gateway.
      */
     public function getShortName()
     {
@@ -53,92 +108,21 @@ abstract class AbstractGateway extends AbstractParameterObject implements Gatewa
     }
 
     /**
-     * Define gateway settings, in the following format:
-     *
-     * array(
-     *     'username' => '', // string variable
-     *     'testMode' => false, // boolean variable
-     *     'landingPage' => array('billing', 'login'), // enum variable, first item is default
-     * );
+     * Initialize gateway parameters
      */
-    public function getDefaultSettings()
+    public function initialize($parameters)
     {
-        return array();
+        Helper::initialize($this, $parameters);
     }
 
-    public function setDefaultSettings()
+    private function loadSettings()
     {
-        foreach ($this->getDefaultSettings() as $key => $value) {
+        foreach ($this->defineSettings() as $key => $value) {
             if (is_array($value)) {
                 $this->$key = reset($value);
             } else {
                 $this->$key = $value;
             }
         }
-    }
-
-    public function getValidParameters()
-    {
-        return array_keys($this->getDefaultSettings());
-    }
-
-    /**
-     * Authorizes a new payment.
-     */
-    public function authorize(Request $request, $source)
-    {
-        throw new BadMethodCallException();
-    }
-
-    /**
-     * Handles return from an authorization.
-     */
-    public function completeAuthorize(Request $request)
-    {
-        throw new BadMethodCallException();
-    }
-
-    /**
-     * Capture an authorized payment.
-     */
-    public function capture(Request $request)
-    {
-        throw new BadMethodCallException();
-    }
-
-    /**
-     * Creates a new charge.
-     */
-    public function purchase(Request $request, $source)
-    {
-        throw new BadMethodCallException();
-    }
-
-    /**
-     * Handle return from a purchase.
-     */
-    public function completePurchase(Request $request)
-    {
-        throw new BadMethodCallException();
-    }
-
-    /**
-     * Refund an existing transaction.
-     * Generally this will refund a transaction which has been already submitted for processing,
-     * and may be called up to 30 days after submitting the transaction.
-     */
-    public function refund(Request $request)
-    {
-        throw new BadMethodCallException();
-    }
-
-    /**
-     * Void an existing transaction.
-     * Generally this will prevent the transaction from being submitted for processing,
-     * and can only be called up to 24 hours after submitting the transaction.
-     */
-    public function void(Request $request)
-    {
-        throw new BadMethodCallException();
     }
 }

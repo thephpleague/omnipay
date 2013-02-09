@@ -25,8 +25,16 @@ use Tala\Response;
 class Gateway extends AbstractGateway
 {
     protected $endpoint = 'https://www.2checkout.com/checkout/purchase';
+    protected $username;
+    protected $password;
+    protected $testMode;
 
-    public function getDefaultSettings()
+    public function getName()
+    {
+        return '2Checkout';
+    }
+
+    public function defineSettings()
     {
         return array(
             'username' => '',
@@ -35,15 +43,46 @@ class Gateway extends AbstractGateway
         );
     }
 
-    public function purchase(Request $request, $source)
+    public function getUsername()
     {
-        $data = $this->buildPurchase($request, $source);
+        return $this->username;
+    }
+
+    public function setUsername($value)
+    {
+        $this->username = $value;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function setPassword($value)
+    {
+        $this->password = $value;
+    }
+
+    public function getTestMode()
+    {
+        return $this->testMode;
+    }
+
+    public function setTestMode($value)
+    {
+        $this->testMode = $value;
+    }
+
+    public function purchase($options)
+    {
+        $data = $this->buildPurchase($options);
 
         return new RedirectResponse($this->endpoint.'?'.http_build_query($data));
     }
 
-    public function completePurchase(Request $request)
+    public function completePurchase($options)
     {
+        $request = new Request($options);
         $orderNo = $this->httpRequest->get('order_number');
 
         // strange exception specified by 2Checkout
@@ -51,7 +90,7 @@ class Gateway extends AbstractGateway
             $orderNo = '1';
         }
 
-        $key = strtoupper(md5($this->password.$this->username.$orderNo.$request->amountDollars));
+        $key = strtoupper(md5($this->password.$this->username.$orderNo.$request->getAmountDollars()));
         if ($key != $this->httpRequest->get('key')) {
             throw new InvalidResponseException;
         }
@@ -59,28 +98,32 @@ class Gateway extends AbstractGateway
         return new Response($orderNo);
     }
 
-    protected function buildPurchase(Request $request, $source)
+    protected function buildPurchase($options)
     {
-        $request->validateRequired(array('amount', 'returnUrl'));
+        $request = new Request($options);
+        $request->validate(array('amount', 'returnUrl'));
+        $source = $request->getCard();
 
         $data = array();
         $data['sid'] = $this->username;
-        $data['cart_order_id'] = $request->invoiceId;
-        $data['total'] = $request->amountDollars;
-        $data['tco_currency'] = $request->currency;
+        $data['cart_order_id'] = $request->getTransactionId();
+        $data['total'] = $request->getAmountDollars();
+        $data['tco_currency'] = $request->getCurrency();
         $data['fixed'] = 'Y';
         $data['skip_landing'] = 1;
-        $data['x_receipt_link_url'] = $request->returnUrl;
+        $data['x_receipt_link_url'] = $request->getReturnUrl();
 
-        $data['card_holder_name'] = $source->getName();
-        $data['street_address'] = $source->getAddress1();
-        $data['street_address2'] = $source->getAddress2();
-        $data['city'] = $source->getCity();
-        $data['state'] = $source->getState();
-        $data['zip'] = $source->getPostcode();
-        $data['country'] = $source->getCountry();
-        $data['phone'] = $source->getPhone();
-        $data['email'] = $source->getEmail();
+        if ($source) {
+            $data['card_holder_name'] = $source->getName();
+            $data['street_address'] = $source->getAddress1();
+            $data['street_address2'] = $source->getAddress2();
+            $data['city'] = $source->getCity();
+            $data['state'] = $source->getState();
+            $data['zip'] = $source->getPostcode();
+            $data['country'] = $source->getCountry();
+            $data['phone'] = $source->getPhone();
+            $data['email'] = $source->getEmail();
+        }
 
         if ($this->testMode) {
             $data['demo'] = 'Y';

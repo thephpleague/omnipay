@@ -12,9 +12,10 @@
 namespace Tala\Billing\Stripe;
 
 use Mockery as m;
+use Tala\BaseGatewayTest;
 use Tala\Request;
 
-class GatewayTest extends \PHPUnit_Framework_TestCase
+class GatewayTest extends BaseGatewayTest
 {
     public function setUp()
     {
@@ -22,6 +23,10 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
 
         $this->gateway = new Gateway($this->httpClient, $this->httpRequest);
+
+        $this->options = array(
+            'amount' => 1000,
+        );
     }
 
     /**
@@ -30,26 +35,20 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
      */
     public function testPurchaseError()
     {
-        $request = new Request;
-        $request->amount = 1000;
-
         $this->httpClient->shouldReceive('post')->once()
             ->with('https://api.stripe.com/v1/charges', m::type('array'))
             ->andReturn('{"error":{"message":"Your card number is incorrect"}}');
 
-        $this->gateway->purchase($request, 'abc123');
+        $this->gateway->purchase($this->options);
     }
 
     public function testPurchaseSuccess()
     {
-        $request = new Request();
-        $request->amount = 1000;
-
         $this->httpClient->shouldReceive('post')->once()
             ->with('https://api.stripe.com/v1/charges', m::type('array'))
             ->andReturn('{"id":"ch_12RgN9L7XhO9mI"}');
 
-        $response = $this->gateway->purchase($request, 'abc123');
+        $response = $this->gateway->purchase($this->options);
 
         $this->assertEquals('ch_12RgN9L7XhO9mI', $response->getGatewayReference());
     }
@@ -60,28 +59,20 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
      */
     public function testRefundError()
     {
-        $request = new Request();
-        $request->amount = 1000;
-        $request->gatewayReference = 'ch_12RgN9L7XhO9mI';
-
         $this->httpClient->shouldReceive('post')->once()
             ->with('https://api.stripe.com/v1/charges/ch_12RgN9L7XhO9mI/refund', m::type('array'))
             ->andReturn('{"error":{"message":"Charge ch_12RgN9L7XhO9mI has already been refunded."}}');
 
-        $this->gateway->refund($request);
+        $this->gateway->refund(array('amount' => 1000, 'gatewayReference' => 'ch_12RgN9L7XhO9mI'));
     }
 
     public function testRefundSuccess()
     {
-        $request = new Request();
-        $request->amount = 1000;
-        $request->gatewayReference = 'ch_12RgN9L7XhO9mI';
-
         $this->httpClient->shouldReceive('post')->once()
             ->with('https://api.stripe.com/v1/charges/ch_12RgN9L7XhO9mI/refund', m::type('array'))
             ->andReturn('{"id":"ch_12RgN9L7XhO9mI"}');
 
-        $response = $this->gateway->refund($request);
+        $response = $this->gateway->refund(array('amount' => 1000, 'gatewayReference' => 'ch_12RgN9L7XhO9mI'));
 
         $this->assertEquals('ch_12RgN9L7XhO9mI', $response->getGatewayReference());
     }

@@ -2,17 +2,51 @@
 
 [![Build Status](https://secure.travis-ci.org/adrianmacneil/tala-payments.png)](http://travis-ci.org/adrianmacneil/tala-payments)
 
-Tala Payments is a PHP 5.3, PSR-2 and Composer compliant payment processing library.
-It has been designed based on experience working with [Active Merchant](http://activemerchant.org/),
+Tala Payments is a PHP 5.3+, PSR-2 and Composer compliant payment processing library.
+It has been designed based on experience using [Active Merchant](http://activemerchant.org/),
 plus experience implementing dozens of gateways for [CI Merchant](http://ci-merchant.org/).
 
 This library is under active developemnt, and all feedback is welcome - please raise a github issue
 to discuss, or fork the project and send a pull request.
 
+**Why use Tala instead of a gateway's official PHP package?**
+
+* Because you can learn one API and use it across multiple sites using different gateways
+* Because if you need to change payment gateways you won't need to rewrite your code
+* Because most official PHP payment gateway libraries are a mess
+* Because most payment gateways have exceptionally poor documentation
+* Because you are writing a shopping cart and need to support multiple gateways
+
+# TL;DR
+
+Just want to see some code?
+
+```php
+use Tala\CreditCard;
+use Tala\GatewayFactory;
+
+$gateway = GatewayFactory::createGateway('Stripe');
+$gateway->setApiKey('abc123');
+
+try {
+    $card = new CreditCard(['number' => '4111111111111111', 'expiryMonth' => 6, 'expiryYear' => 2016]);
+    $request = $gateway->purchase(['amount' => 1000, 'card' => $card]);
+    // payment was successful: update database
+    print_r($request);
+} catch (Exception $e) {
+    // payment failed: display message to customer
+    exit($e->getMessage());
+}
+```
+
+As you can see, Tala Payments has a consistent, well thought out API. We try to abstract as much
+as possible the differences between the various payments gateways.
+
 # Package Layout
 
-Tala Payments is a single package which provides abstract base classes and implementations
-for all officially supported gateways. Unsupported gateways can either be added by forking
+Tala Payments is a single package which provides abstract base classes and implementations for all
+officially supported gateways. There are no dependencies on official payment gateway PHP packages -
+we prefer to work with the HTTP API directly. Unsupported gateways can either be added by forking
 this package and submitting a pull request (unit tests and tidy code required), or by
 distributing a separate library which depends on this package and makes use of the base
 classes and consistent developer API.
@@ -39,31 +73,24 @@ The following gateways are already implemented:
 * Stripe
 * WorldPay
 
+More are coming soon! [All of these](https://github.com/expressodev/ci-merchant/tree/develop/libraries/merchant)
+will be implemented before we reach 1.0.
+
 Gateways are created and initialized like so:
 
 ```php
 use Tala\GatewayFactory;
 
-$settings = array(
-    'username' => 'adrian',
-    'password' => '12345',
-);
 $gateway = GatewayFactory::createGateway('PayPal_Express');
-$gateway->initialize($settings);
-```
-
-Where `$settings` is an array of gateway-specific options. Gateway settings can be changed
-individually using getters and setters:
-
-```php
 $gateway->setUsername('adrian');
-$username = $gateway->getUsername();
+$gateway->setPassword('12345');
 ```
 
-Most settings are gateway specific. To get an array of available gateway settings, call `getDefaultSettings()`:
+Most settings are gateway specific. If you need to query a gateway to get a list
+of available settings, you can call `defineSettings()`:
 
 ```php
-$settings = $gateway->getDefaultSettings();
+$settings = $gateway->defineSettings();
 // default settings array format:
 array(
     'username' => '', // string variable
@@ -72,7 +99,7 @@ array(
 );
 ```
 
-Generally most payment gateways can be classed as one of two main types:
+Generally most payment gateways can be classified as one of two types:
 
 * Off-site gateways such as PayPal Express, where the customer is redirected to a third party site to enter payment details
 * On-site (merchant-hosted) gateways such as PayPal Pro, where the customer enters their credit card details on your site
@@ -83,7 +110,9 @@ gateway (other than by the methods they support).
 
 # Credit Card / Payment Form Input
 
-User form input will be directed to a [Tala\CreditCard](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/CreditCard.php) object. This provides a safe way to accept user input.
+User form input is directed to a [Tala\CreditCard](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/CreditCard.php)
+object. This provides a safe way to accept user input.
+
 The `CreditCard` object has the following fields:
 
 * firstName
@@ -115,9 +144,8 @@ The `CreditCard` object has the following fields:
 Even off-site gateways make use of the `CreditCard` object, because often you need to pass
 customer billing or shipping details through to the gateway.
 
-The `CreditCard` object can be intialized with untrusted user input via the constructor, or by
-calling the `fill()` method. Any fields passed to the constructor which are not recognized will
-be dropped.
+The `CreditCard` object can be intialized with untrusted user input via the constructor.
+Any fields passed to the constructor which are not recognized will be ignored.
 
 ```php
 $formInputData = array(
@@ -126,7 +154,6 @@ $formInputData = array(
     'number' => '4111111111111111',
 );
 $card = new CreditCard($formInputData);
-$card->fill($formInputData); // you only need to use one of these methods
 ```
 
 You can also access the fields using getters and setters:
@@ -140,47 +167,61 @@ $card->setFirstName('Adrian');
 
 The main methods implemented by gateways are:
 
-* `authorize($request, $source)` - authorize an amount on the customer's card
-* `completeAuthorize($request)` - handle return from off-site gateways after authorization
-* `capture($request)` - capture an amount you have previously authorized
-* `purchase($request, $source)` - authorize and immediately capture an amount on the customer's card
-* `completePurchase($request)` - handle return from off-site gateways after purchase
-* `refund($request)` - refund an already processed transaction
-* `void($request)` - generally can only be called up to 24 hours after submitting a transaction
+* `authorize($options)` - authorize an amount on the customer's card
+* `completeAuthorize($options)` - handle return from off-site gateways after authorization
+* `capture($options)` - capture an amount you have previously authorized
+* `purchase($options)` - authorize and immediately capture an amount on the customer's card
+* `completePurchase($options)` - handle return from off-site gateways after purchase
+* `refund($options)` - refund an already processed transaction
+* `void($options)` - generally can only be called up to 24 hours after submitting a transaction
 
 On-site gateways do not need to implement the `completeAuthorize` and `completePurchase` methods. If any gateway does not support
-certain features (such as refunds), it will throw a `BadMethodCallException`.
+certain features (such as refunds), it will throw `Tala\Exception\UnsupportedMethodException`.
 
-All gateway methods take a [\Tala\Request](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Request.php)
-object. The request object holds various details about the transaction (each gateway requires different parameters):
+All gateway methods take an `$options` array as an argument. Each gateway differs in which
+parameters are required, and the gateway will throw `Tala\Exception\InvalidRequestException` if you
+omit any required parameters. All gateways will accept a subset of these options:
+
+* card
+* token
+* amount
+* currency
+* description
+* transactionId
+* clientIp
+* returnUrl
+* cancelUrl
+
+Pass the options through to the method like so:
 
 ```php
-$source = new CreditCard();
-$request = new Request();
-$request->amount = 1000; // we will authorize $10.00
-$request->returnUrl = 'https://example.com/payment/complete';
-$response = $gateway->authorize($request, $source);
+$card = new CreditCard($formData);
+$response = $gateway->authorize([
+    'amount' => 1000, // this represents $10.00
+    'card' => $card,
+    'returnUrl' => 'https://www.example.com/return',
+]);
 ```
 
-The `$source` variable can be either a `CreditCard` object, or a string token which has been
-stored from a previous transaction for certain gateways (see the Token Billing section below).
+For most transactions, either the `card` or `token` parameter is required. For more information on
+using tokens, see the Token Billing section below.
 
 When calling the `completeAuthorize` or `completePurchase` methods, the exact same arguments should be provided as
 when you made the initial `authorize` or `purchase` call (some gateways will need to verify for example the actual
-amount paid equals the amount requested).
+amount paid equals the amount requested). The only parameter you can omit is `card`.
 
-At this point, you may be wondering the difference between gateway `$settings`, `CreditCard` fields, and `Request` fields:
+To summarize the various parameters you have available to you:
 
-* Gateway `$settings` are settings which apply to all payments (like the gateway username and password). Generally you will store these in a configuration file or in the database.
-* CreditCard fields are data which the user supplies. For example, you want the user to specify their `firstName` and `billingCountry`, but you don't want a user to specify the payment `currency` or `returnUrl`.
-* Request fields are used for any payment-specific options, which are not set by the customer. For example, the payment `amount`, `currency`, `transactionId` and `returnUrl`.
+* Gateway settings (e.g. username and password) are set directly on the gateway. These settings apply to all payments, and generally you will store these in a configuration file or in the database.
+* Method options are used for any payment-specific options, which are not set by the customer. For example, the payment `amount`, `currency`, `transactionId` and `returnUrl`.
+* CreditCard parameters are data which the user supplies. For example, you want the user to specify their `firstName` and `billingCountry`, but you don't want a user to specify the payment `currency` or `returnUrl`.
 
 # The Payment Response
 
 The payment response must implement [\Tala\ResponseInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/ResponseInterface.php). There are two main types of response:
 
 * Payment was successful (standard response)
-* Website must redirect to off-site payment form (redirect response)
+* Website requires redirect to off-site payment form (redirect response)
 
 ## Successful Response
 
@@ -237,23 +278,19 @@ try {
 
 # Token Billing
 
-I'm still working on functions for token billing. Most likely gateways will be able to implement the following methods:
+Token billing is still under development. Most likely gateways will be able to implement the
+following methods:
 
-* `store($card)` - returns a response object which includes a `token`, which can be used for future transactions
-* `unstore($token)` - remove a stored card, not all gateways support this method
-
-Feel free to suggest better names for these methods.
+* `store($options)` - returns a response object which includes a `token`, which can be used for future transactions
+* `unstore($options)` - remove a stored card, not all gateways support this method
 
 # Recurring Billing
 
-At this stage, I don't think there will be support for automatic recurring payments functionality (aside from token billing).
-This is because there is likely far too many differences between how each gateway handles recurring billing profiles.
-Also in most cases token billing will cover your needs. I'm open to suggestions on this.
-
-# I18n
-
-I'm not sure what the best option for cross-framework localization is. What do most generic Composer packages use these days?
-Perhaps it is easier if it's not part of this library?
+At this stage, automatic recurring payments functionality is out of scope for this library.
+This is because there is likely far too many differences between how each gateway handles
+recurring billing profiles. Also in most cases token billing will cover your needs, as you can
+store a credit card then charge it on whatever schedule you like. Feel free to get in touch if
+you really think this should be a core feature and worth the effort.
 
 # Feedback
 

@@ -13,9 +13,10 @@ namespace Tala\Billing\Payflow;
 
 use Mockery as m;
 use Tala\CreditCard;
+use Tala\BaseGatewayTest;
 use Tala\Request;
 
-class ProGatewayTest extends \PHPUnit_Framework_TestCase
+class ProGatewayTest extends BaseGatewayTest
 {
     public function setUp()
     {
@@ -24,17 +25,17 @@ class ProGatewayTest extends \PHPUnit_Framework_TestCase
 
         $this->gateway = new ProGateway($this->httpClient, $this->httpRequest);
 
-        $this->card = new CreditCard(array(
-            'firstName' => 'Example',
-            'lastName' => 'User',
-            'number' => '4111111111111111',
-            'expiryMonth' => '12',
-            'expiryYear' => '2016',
-            'cvv' => '123',
-        ));
-
-        $this->request = new Request();
-        $this->request->amount = 1000;
+        $this->options = array(
+            'amount' => 1000,
+            'card' => new CreditCard(array(
+                'firstName' => 'Example',
+                'lastName' => 'User',
+                'number' => '4111111111111111',
+                'expiryMonth' => '12',
+                'expiryYear' => '2016',
+                'cvv' => '123',
+            )),
+        );
     }
 
     public function testAuthorizeSuccess()
@@ -43,7 +44,7 @@ class ProGatewayTest extends \PHPUnit_Framework_TestCase
             ->with('https://payflowpro.paypal.com', m::type('array'))
             ->andReturn('RESULT=0&PNREF=V19R3EF62FBE&RESPMSG=Approved&AUTHCODE=048747&CVV2MATCH=Y');
 
-        $response = $this->gateway->authorize($this->request, $this->card);
+        $response = $this->gateway->authorize($this->options);
 
         $this->assertEquals('V19R3EF62FBE', $response->getGatewayReference());
     }
@@ -58,20 +59,21 @@ class ProGatewayTest extends \PHPUnit_Framework_TestCase
             ->with('https://payflowpro.paypal.com', m::type('array'))
             ->andReturn('RESULT=1&RESPMSG=User authentication failed');
 
-        $response = $this->gateway->authorize($this->request, $this->card);
+        $response = $this->gateway->authorize($this->options);
     }
 
     public function testCapture()
     {
-        $request = new Request();
-        $request->amount = 1000;
-        $request->gatewayReference = 'abc123';
+        $options = array(
+            'amount' => 1000,
+            'gatewayReference' => 'abc123',
+        );
 
         $this->httpClient->shouldReceive('post')->once()
             ->with('https://payflowpro.paypal.com', m::type('array'))
             ->andReturn('RESULT=0&PNREF=V19R3EF62FBE&RESPMSG=Approved&AUTHCODE=048747&CVV2MATCH=Y');
 
-        $response = $this->gateway->capture($request);
+        $response = $this->gateway->capture($options);
 
         $this->assertEquals('V19R3EF62FBE', $response->getGatewayReference());
     }
@@ -82,7 +84,7 @@ class ProGatewayTest extends \PHPUnit_Framework_TestCase
             ->with('https://payflowpro.paypal.com', m::type('array'))
             ->andReturn('RESULT=0&PNREF=V19R3EF62FBE&RESPMSG=Approved&AUTHCODE=048747&CVV2MATCH=Y');
 
-        $response = $this->gateway->purchase($this->request, $this->card);
+        $response = $this->gateway->purchase($this->options);
 
         $this->assertEquals('V19R3EF62FBE', $response->getGatewayReference());
     }
@@ -97,20 +99,21 @@ class ProGatewayTest extends \PHPUnit_Framework_TestCase
             ->with('https://payflowpro.paypal.com', m::type('array'))
             ->andReturn('RESULT=1&RESPMSG=User authentication failed');
 
-        $response = $this->gateway->purchase($this->request, $this->card);
+        $response = $this->gateway->purchase($this->options);
     }
 
     public function testRefund()
     {
-        $request = new Request();
-        $request->amount = 1000;
-        $request->gatewayReference = 'abc123';
+        $options = array(
+            'amount' => 1000,
+            'gatewayReference' => 'abc123',
+        );
 
         $this->httpClient->shouldReceive('post')->once()
             ->with('https://payflowpro.paypal.com', m::type('array'))
             ->andReturn('RESULT=0&PNREF=V19R3EF62FBE&RESPMSG=Approved&AUTHCODE=048747&CVV2MATCH=Y');
 
-        $response = $this->gateway->refund($request);
+        $response = $this->gateway->refund($options);
 
         $this->assertEquals('V19R3EF62FBE', $response->getGatewayReference());
     }

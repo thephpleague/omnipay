@@ -27,41 +27,71 @@ use Tala\Request;
 class Gateway extends AbstractGateway
 {
     protected $endpoint = 'https://gw1.cardsaveonlinepayments.com:4430/';
+    protected $merchantId;
+    protected $password;
 
-    public function getDefaultSettings()
+    public function getName()
+    {
+        return 'CardSave';
+    }
+
+    public function defineSettings()
     {
         return array(
-            'username' => '',
+            'merchantId' => '',
             'password' => '',
         );
     }
 
-    public function purchase(Request $request, $source)
+    public function getMerchantId()
     {
-        $data = $this->buildPurchaseRequest($request, $source);
+        return $this->merchantId;
+    }
+
+    public function setMerchantId($value)
+    {
+        $this->merchantId = $value;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function setPassword($value)
+    {
+        $this->password = $value;
+    }
+
+    public function purchase($options)
+    {
+        $request = new Request($options);
+        $data = $this->buildPurchaseRequest($request);
 
         return $this->send($data, $request);
     }
 
-    public function completePurchase(Request $request)
+    public function completePurchase($options)
     {
+        $request = new Request($options);
         $data = $this->build3DAuthRequest();
 
         return $this->send($data, $request);
     }
 
-    protected function buildPurchaseRequest(Request $request, $source)
+    protected function buildPurchaseRequest(Request $request)
     {
-        $request->validateRequired(array('amount'));
+        $request->validate(array('amount'));
+        $source = $request->getCard();
         $source->validate();
 
         $data = $this->buildRequest('CardDetailsTransaction');
-        $data->PaymentMessage->MerchantAuthentication['MerchantID'] = $this->username;
+        $data->PaymentMessage->MerchantAuthentication['MerchantID'] = $this->merchantId;
         $data->PaymentMessage->MerchantAuthentication['Password'] = $this->password;
-        $data->PaymentMessage->TransactionDetails['Amount'] = $request->amount;
-        $data->PaymentMessage->TransactionDetails['CurrencyCode'] = $request->currencyNumeric;
-        $data->PaymentMessage->TransactionDetails->OrderID = $request->transactionId;
-        $data->PaymentMessage->TransactionDetails->OrderDescription = $request->description;
+        $data->PaymentMessage->TransactionDetails['Amount'] = $request->getAmount();
+        $data->PaymentMessage->TransactionDetails['CurrencyCode'] = $request->getCurrencyNumeric();
+        $data->PaymentMessage->TransactionDetails->OrderID = $request->getTransactionId();
+        $data->PaymentMessage->TransactionDetails->OrderDescription = $request->getDescription();
         $data->PaymentMessage->TransactionDetails->MessageDetails['TransactionType'] = 'SALE';
         $data->PaymentMessage->CardDetails->CardName = $source->getName();
         $data->PaymentMessage->CardDetails->CardNumber = $source->getNumber();
@@ -84,7 +114,7 @@ class Gateway extends AbstractGateway
         $data->PaymentMessage->CustomerDetails->BillingAddress->PostCode = $source->getPostcode();
         $data->PaymentMessage->CustomerDetails->BillingAddress->State = $source->getState();
         // requires numeric country code
-        // $data->PaymentMessage->CustomerDetails->BillingAddress->CountryCode = $source->getCountry()Numeric;
+        // $data->PaymentMessage->CustomerDetails->BillingAddress->CountryCode = $source->getCountryNumeric;
         $data->PaymentMessage->CustomerDetails->CustomerIPAddress = $this->httpRequest->getClientIp();
 
         return $data;
@@ -99,7 +129,7 @@ class Gateway extends AbstractGateway
         }
 
         $data = $this->buildRequest('ThreeDSecureAuthentication');
-        $data->ThreeDSecureMessage->MerchantAuthentication['MerchantID'] = $this->username;
+        $data->ThreeDSecureMessage->MerchantAuthentication['MerchantID'] = $this->merchantId;
         $data->ThreeDSecureMessage->MerchantAuthentication['Password'] = $this->password;
         $data->ThreeDSecureMessage->ThreeDSecureInputData['CrossReference'] = $md;
         $data->ThreeDSecureMessage->ThreeDSecureInputData->PaRES = $paRes;
@@ -118,7 +148,7 @@ class Gateway extends AbstractGateway
     protected function send($data, Request $request)
     {
         // the PHP SOAP library sucks, and SimpleXML can't append element trees
-        // TODO: find PSR0 SOAP library
+        // TODO: find PSR-0 SOAP library
         $document = new DOMDocument('1.0', 'utf-8');
         $envelope = $document->appendChild(
             $document->createElementNS('http://schemas.xmlsoap.org/soap/envelope/', 'soap:Envelope')
@@ -154,7 +184,7 @@ class Gateway extends AbstractGateway
                 $redirectUrl = (string) $response->TransactionOutputData->ThreeDSecureOutputData->ACSURL;
                 $redirectData = array(
                     'PaReq' => (string) $response->TransactionOutputData->ThreeDSecureOutputData->PaREQ,
-                    'TermUrl' => $request->returnUrl,
+                    'TermUrl' => $request->getReturnUrl(),
                     'MD' => (string) $response->TransactionOutputData['CrossReference'],
                 );
 

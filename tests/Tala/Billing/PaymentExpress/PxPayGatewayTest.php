@@ -12,9 +12,10 @@
 namespace Tala\Billing\PaymentExpress;
 
 use Mockery as m;
+use Tala\BaseGatewayTest;
 use Tala\Request;
 
-class PxPayGatewayTest extends \PHPUnit_Framework_TestCase
+class PxPayGatewayTest extends BaseGatewayTest
 {
     public function setUp()
     {
@@ -23,9 +24,10 @@ class PxPayGatewayTest extends \PHPUnit_Framework_TestCase
 
         $this->gateway = new PxPayGateway($this->httpClient, $this->httpRequest);
 
-        $this->request = new Request;
-        $this->request->amount = 1000;
-        $this->request->returnUrl = 'https://www.example.com/complete';
+        $this->options = array(
+            'amount' => 1000,
+            'returnUrl' => 'https://www.example.com/return',
+        );
     }
 
     public function testAuthorizeSuccess()
@@ -34,7 +36,7 @@ class PxPayGatewayTest extends \PHPUnit_Framework_TestCase
             ->with('https://sec.paymentexpress.com/pxpay/pxaccess.aspx', m::type('string'))->once()
             ->andReturn('<Response valid="1"><URI>https://www.example.com/redirect</URI></Response>');
 
-        $response = $this->gateway->authorize($this->request, null);
+        $response = $this->gateway->authorize($this->options);
 
         $this->assertInstanceOf('\Tala\RedirectResponse', $response);
         $this->assertEquals('https://www.example.com/redirect', $response->getRedirectUrl());
@@ -49,7 +51,7 @@ class PxPayGatewayTest extends \PHPUnit_Framework_TestCase
             ->with('https://sec.paymentexpress.com/pxpay/pxaccess.aspx', m::type('string'))->once()
             ->andReturn('<Response valid="0"><URI>https://www.example.com/redirect</URI></Response>');
 
-        $response = $this->gateway->authorize($this->request, null);
+        $response = $this->gateway->authorize($this->options);
     }
 
     public function testCompleteAuthorizeSuccess()
@@ -61,7 +63,7 @@ class PxPayGatewayTest extends \PHPUnit_Framework_TestCase
             ->with('https://sec.paymentexpress.com/pxpay/pxaccess.aspx', m::type('string'))->once()
             ->andReturn('<Response><Success>1</Success><DpsTxnRef>5</DpsTxnRef></Response>');
 
-        $response = $this->gateway->completeAuthorize($this->request);
+        $response = $this->gateway->completeAuthorize($this->options);
 
         $this->assertInstanceOf('\Tala\Billing\PaymentExpress\Response', $response);
         $this->assertEquals(5, $response->getGatewayReference());
@@ -75,7 +77,7 @@ class PxPayGatewayTest extends \PHPUnit_Framework_TestCase
         $this->httpRequest->shouldReceive('get')->with('result')->once()
             ->andReturn(null);
 
-        $response = $this->gateway->completeAuthorize($this->request);
+        $response = $this->gateway->completeAuthorize($this->options);
     }
 
     /**
@@ -91,7 +93,7 @@ class PxPayGatewayTest extends \PHPUnit_Framework_TestCase
             ->with('https://sec.paymentexpress.com/pxpay/pxaccess.aspx', m::type('string'))->once()
             ->andReturn('<Response><Success>0</Success><ResponseText>Error processing payment</ResponseText></Response>');
 
-        $response = $this->gateway->completeAuthorize($this->request);
+        $response = $this->gateway->completeAuthorize($this->options);
     }
 
     public function testPurchaseSuccess()
@@ -100,7 +102,7 @@ class PxPayGatewayTest extends \PHPUnit_Framework_TestCase
             ->with('https://sec.paymentexpress.com/pxpay/pxaccess.aspx', m::type('string'))->once()
             ->andReturn('<Response valid="1"><URI>https://www.example.com/redirect</URI></Response>');
 
-        $response = $this->gateway->purchase($this->request, null);
+        $response = $this->gateway->purchase($this->options);
 
         $this->assertInstanceOf('\Tala\RedirectResponse', $response);
         $this->assertEquals('https://www.example.com/redirect', $response->getRedirectUrl());
@@ -115,7 +117,7 @@ class PxPayGatewayTest extends \PHPUnit_Framework_TestCase
             ->with('https://sec.paymentexpress.com/pxpay/pxaccess.aspx', m::type('string'))->once()
             ->andReturn('<Response valid="0"><URI>https://www.example.com/redirect</URI></Response>');
 
-        $response = $this->gateway->purchase($this->request, null);
+        $response = $this->gateway->purchase($this->options);
     }
 
     public function testCompletePurchaseSuccess()
@@ -127,7 +129,7 @@ class PxPayGatewayTest extends \PHPUnit_Framework_TestCase
             ->with('https://sec.paymentexpress.com/pxpay/pxaccess.aspx', m::type('string'))->once()
             ->andReturn('<Response><Success>1</Success><DpsTxnRef>5</DpsTxnRef></Response>');
 
-        $response = $this->gateway->completePurchase($this->request);
+        $response = $this->gateway->completePurchase($this->options);
 
         $this->assertInstanceOf('\Tala\Billing\PaymentExpress\Response', $response);
         $this->assertEquals(5, $response->getGatewayReference());
@@ -141,7 +143,7 @@ class PxPayGatewayTest extends \PHPUnit_Framework_TestCase
         $this->httpRequest->shouldReceive('get')->with('result')->once()
             ->andReturn(null);
 
-        $response = $this->gateway->completePurchase($this->request);
+        $response = $this->gateway->completePurchase($this->options);
     }
 
     /**
@@ -157,6 +159,6 @@ class PxPayGatewayTest extends \PHPUnit_Framework_TestCase
             ->with('https://sec.paymentexpress.com/pxpay/pxaccess.aspx', m::type('string'))->once()
             ->andReturn('<Response><Success>0</Success><ResponseText>Error processing payment</ResponseText></Response>');
 
-        $response = $this->gateway->completePurchase($this->request);
+        $response = $this->gateway->completePurchase($this->options);
     }
 }

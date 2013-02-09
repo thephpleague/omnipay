@@ -20,7 +20,7 @@ use Tala\HttpClient\BuzzHttpClient;
 
 class GatewayFactory
 {
-    public static function createGateway($type, $httpClient = null, $httpRequest = null, $parameters = array())
+    public static function createGateway($type, $httpClient = null, $httpRequest = null)
     {
         $type = static::resolveType($type);
 
@@ -37,7 +37,6 @@ class GatewayFactory
         }
 
         $gateway = new $type($httpClient, $httpRequest);
-        $gateway->initialize($parameters);
 
         return $gateway;
     }

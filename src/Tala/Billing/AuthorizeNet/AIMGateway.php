@@ -21,8 +21,17 @@ class AIMGateway extends AbstractGateway
 {
     protected $endpoint = 'https://secure.authorize.net/gateway/transact.dll';
     protected $developerEndpoint = 'https://test.authorize.net/gateway/transact.dll';
+    protected $apiLoginId;
+    protected $transactionKey;
+    protected $testMode;
+    protected $developerMode;
 
-    public function getDefaultSettings()
+    public function getName()
+    {
+        return 'Authorize.Net AIM';
+    }
+
+    public function defineSettings()
     {
         return array(
             'apiLoginId' => '',
@@ -32,30 +41,72 @@ class AIMGateway extends AbstractGateway
         );
     }
 
-    public function authorize(Request $request, $source)
+    public function getApiLoginId()
     {
-        $data = $this->buildAuthorizeOrPurchase($request, $source, 'AUTH_ONLY');
+        return $this->apiLoginId;
+    }
+
+    public function setApiLoginId($value)
+    {
+        $this->apiLoginId = $value;
+    }
+
+    public function getTransactionKey()
+    {
+        return $this->transactionKey;
+    }
+
+    public function setTransactionKey($value)
+    {
+        $this->transactionKey = $value;
+    }
+
+    public function getTestMode()
+    {
+        return $this->testMode;
+    }
+
+    public function setTestMode($value)
+    {
+        $this->testMode = $value;
+    }
+
+    public function getDeveloperMode()
+    {
+        return $this->developerMode;
+    }
+
+    public function setDeveloperMode($value)
+    {
+        $this->developerMode = $value;
+    }
+
+    public function authorize($options)
+    {
+        $data = $this->buildAuthorizeOrPurchase($options, 'AUTH_ONLY');
 
         return $this->send($data);
     }
 
-    public function capture(Request $request)
+    public function capture($options)
     {
-        $data = $this->buildCapture($request);
+        $data = $this->buildCapture($options);
 
         return $this->send($data);
     }
 
-    public function purchase(Request $request, $source)
+    public function purchase($options)
     {
-        $data = $this->buildAuthorizeOrPurchase($request, $source, 'AUTH_CAPTURE');
+        $data = $this->buildAuthorizeOrPurchase($options, 'AUTH_CAPTURE');
 
         return $this->send($data);
     }
 
-    protected function buildAuthorizeOrPurchase($request, $source, $method)
+    protected function buildAuthorizeOrPurchase($options, $method)
     {
-        $request->validateRequired('amount');
+        $request = new Request($options);
+        $request->validate(array('amount', 'card'));
+        $source = $request->getCard();
         $source->validate();
 
         $data = $this->buildRequest($method);
@@ -73,13 +124,14 @@ class AIMGateway extends AbstractGateway
         return $data;
     }
 
-    protected function buildCapture($request)
+    protected function buildCapture($options)
     {
-        $request->validateRequired(array('gatewayReference', 'amount'));
+        $request = new Request($options);
+        $request->validate(array('amount', 'gatewayReference'));
 
         $data = $this->buildRequest('PRIOR_AUTH_CAPTURE');
-        $data['x_amount'] = $request->amountDollars;
-        $data['x_trans_id'] = $request->gatewayReference;
+        $data['x_amount'] = $request->getAmountDollars();
+        $data['x_trans_id'] = $request->getGatewayReference();
 
         return $data;
     }
@@ -99,21 +151,24 @@ class AIMGateway extends AbstractGateway
         return $data;
     }
 
-    protected function addBillingDetails($request, $source, &$data)
+    protected function addBillingDetails(Request $request, $source, &$data)
     {
-        $data['x_amount'] = $request->amountDollars;
-        $data['x_invoice_num'] = $request->invoiceId;
-        $data['x_description'] = $request->description;
-        $data['x_first_name'] = $source->getFirstName();
-        $data['x_last_name'] = $source->getLastName();
-        $data['x_company'] = $source->getCompany();
-        $data['x_address'] = trim($source->getAddress1()." \n".$source->getAddress2());
-        $data['x_city'] = $source->getCity();
-        $data['x_state'] = $source->getState();
-        $data['x_zip'] = $source->getPostcode();
-        $data['x_country'] = $source->getCountry();
-        $data['x_phone'] = $source->getPhone();
-        $data['x_email'] = $source->getEmail();
+        $data['x_amount'] = $request->getAmountDollars();
+        $data['x_invoice_num'] = $request->getTransactionId();
+        $data['x_description'] = $request->getDescription();
+
+        if ($source) {
+            $data['x_first_name'] = $source->getFirstName();
+            $data['x_last_name'] = $source->getLastName();
+            $data['x_company'] = $source->getCompany();
+            $data['x_address'] = trim($source->getAddress1()." \n".$source->getAddress2());
+            $data['x_city'] = $source->getCity();
+            $data['x_state'] = $source->getState();
+            $data['x_zip'] = $source->getPostcode();
+            $data['x_country'] = $source->getCountry();
+            $data['x_phone'] = $source->getPhone();
+            $data['x_email'] = $source->getEmail();
+        }
     }
 
     /**

@@ -27,23 +27,61 @@ class Gateway extends AbstractGateway
 {
     protected $endpoint = 'https://epayment.bbs.no';
     protected $testEndpoint = 'https://epayment-test.bbs.no';
+    protected $merchantId;
+    protected $token;
+    protected $testMode;
 
-    public function getDefaultSettings()
+    public function getName()
+    {
+        return 'Netaxept';
+    }
+
+    public function defineSettings()
     {
         return array(
-            'username' => '',
-            'password' => '',
+            'merchantId' => '',
+            'token' => '',
             'testMode' => false,
         );
     }
 
-    public function purchase(Request $request, $source)
+    public function getMerchantId()
     {
-        $data = $this->buildPurchaseRequest($request, $source);
+        return $this->merchantId;
+    }
+
+    public function setMerchantId($value)
+    {
+        $this->merchantId = $value;
+    }
+
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    public function setToken($value)
+    {
+        $this->token = $value;
+    }
+
+    public function getTestMode()
+    {
+        return $this->testMode;
+    }
+
+    public function setTestMode($value)
+    {
+        $this->testMode = $value;
+    }
+
+    public function purchase($options)
+    {
+        $data = $this->buildPurchaseRequest($options);
         $response = $this->send('/Netaxept/Register.aspx', $data);
 
         $redirectData = array(
-            'merchantId' => $this->username,
+            'merchantId' => $this->merchantId,
             'transactionId' => (string) $response->TransactionId,
         );
 
@@ -52,7 +90,7 @@ class Gateway extends AbstractGateway
         );
     }
 
-    public function completePurchase(Request $request)
+    public function completePurchase($options)
     {
         $responseCode = $this->httpRequest->get('responseCode');
         if (empty($responseCode)) {
@@ -62,8 +100,8 @@ class Gateway extends AbstractGateway
         }
 
         $data = array(
-            'merchantId' => $this->username,
-            'token' => $this->password,
+            'merchantId' => $this->merchantId,
+            'token' => $this->token,
             'transactionId' => $this->httpRequest->get('transactionId'),
             'operation' => 'AUTH',
         );
@@ -73,27 +111,32 @@ class Gateway extends AbstractGateway
         return new Response($response);
     }
 
-    protected function buildPurchaseRequest(Request $request, $source)
+    protected function buildPurchaseRequest($options)
     {
-        $request->validateRequired(array('amount', 'returnUrl'));
+        $request = new Request($options);
+        $request->validate(array('amount', 'returnUrl'));
 
         $data = array();
-        $data['merchantId'] = $this->username;
-        $data['token'] = $this->password;
+        $data['merchantId'] = $this->merchantId;
+        $data['token'] = $this->token;
         $data['serviceType'] = 'B';
-        $data['orderNumber'] = $request->orderId;
-        $data['currencyCode'] = $request->currency;
-        $data['amount'] = $request->amount;
-        $data['redirectUrl'] = $request->returnUrl;
-        $data['customerFirstName'] = $source->getFirstName();
-        $data['customerLastName'] = $source->getLastName();
-        $data['customerEmail'] = $source->getEmail();
-        $data['customerPhoneNumber'] = $source->getPhone();
-        $data['customerAddress1'] = $source->getAddress1();
-        $data['customerAddress2'] = $source->getAddress2();
-        $data['customerPostcode'] = $source->getPostcode();
-        $data['customerTown'] = $source->getCity();
-        $data['customerCountry'] = $source->getCountry();
+        $data['orderNumber'] = $request->getTransactionId();
+        $data['currencyCode'] = $request->getCurrency();
+        $data['amount'] = $request->getAmount();
+        $data['redirectUrl'] = $request->getReturnUrl();
+
+        $source = $request->getCard();
+        if ($source) {
+            $data['customerFirstName'] = $source->getFirstName();
+            $data['customerLastName'] = $source->getLastName();
+            $data['customerEmail'] = $source->getEmail();
+            $data['customerPhoneNumber'] = $source->getPhone();
+            $data['customerAddress1'] = $source->getAddress1();
+            $data['customerAddress2'] = $source->getAddress2();
+            $data['customerPostcode'] = $source->getPostcode();
+            $data['customerTown'] = $source->getCity();
+            $data['customerCountry'] = $source->getCountry();
+        }
 
         return $data;
     }

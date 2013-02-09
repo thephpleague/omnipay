@@ -12,10 +12,10 @@
 namespace Tala\Billing\PayPal;
 
 use Mockery as m;
-use Tala\CreditCard;
+use Tala\BaseGatewayTest;
 use Tala\Request;
 
-class ExpressGatewayTest extends \PHPUnit_Framework_TestCase
+class ExpressGatewayTest extends BaseGatewayTest
 {
     public function setUp()
     {
@@ -24,12 +24,11 @@ class ExpressGatewayTest extends \PHPUnit_Framework_TestCase
 
         $this->gateway = new ExpressGateway($this->httpClient, $this->httpRequest);
 
-        $this->card = new CreditCard;
-
-        $this->request = new Request;
-        $this->request->amount = 1000;
-        $this->request->cancelUrl = 'https://www.example.com/checkout';
-        $this->request->returnUrl = 'https://www.example.com/complete';
+        $this->options = array(
+            'amount' => 1000,
+            'returnUrl' => 'https://www.example.com/return',
+            'cancelUrl' => 'https://www.example.com/cancel',
+        );
     }
 
     public function testAuthorize()
@@ -38,7 +37,7 @@ class ExpressGatewayTest extends \PHPUnit_Framework_TestCase
             ->with(m::type('string'))->once()
             ->andReturn('TOKEN=EC%2d5BV04722RH241693H&TIMESTAMP=2013%2d01%2d11T18%3a50%3a23Z&CORRELATIONID=43cb1f2bec8db&ACK=Success&VERSION=85%2e0&BUILD=4181146');
 
-        $response = $this->gateway->authorize($this->request, $this->card);
+        $response = $this->gateway->authorize($this->options);
 
         $this->assertInstanceOf('\Tala\RedirectResponse', $response);
         $this->assertEquals('https://www.paypal.com/webscr?cmd=_express-checkout&useraction=commit&token=EC-5BV04722RH241693H', $response->getRedirectUrl());
@@ -50,7 +49,7 @@ class ExpressGatewayTest extends \PHPUnit_Framework_TestCase
             ->with(m::type('string'))->once()
             ->andReturn('TOKEN=EC%2d5BV04722RH241693H&TIMESTAMP=2013%2d01%2d11T18%3a50%3a23Z&CORRELATIONID=43cb1f2bec8db&ACK=Success&VERSION=85%2e0&BUILD=4181146');
 
-        $response = $this->gateway->purchase($this->request, $this->card);
+        $response = $this->gateway->purchase($this->options);
 
         $this->assertInstanceOf('\Tala\RedirectResponse', $response);
         $this->assertEquals('https://www.paypal.com/webscr?cmd=_express-checkout&useraction=commit&token=EC-5BV04722RH241693H', $response->getRedirectUrl());

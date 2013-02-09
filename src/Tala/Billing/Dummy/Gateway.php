@@ -25,14 +25,26 @@ use Tala\Request;
  */
 class Gateway extends AbstractGateway
 {
-    public function authorize(Request $request, $source)
+    public function getName()
     {
-        return $this->purchase($request, $source);
+        return 'Dummy';
     }
 
-    public function purchase(Request $request, $source)
+    public function defineSettings()
     {
-        $request->validateRequired('amount');
+        return array();
+    }
+
+    public function authorize($options)
+    {
+        return $this->purchase($options);
+    }
+
+    public function purchase($options)
+    {
+        $request = new Request($options);
+        $request->validate(array('amount'));
+        $source = $request->getCard();
         $source->validate();
 
         return new Response;

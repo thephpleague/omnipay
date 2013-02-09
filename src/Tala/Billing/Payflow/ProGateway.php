@@ -23,8 +23,18 @@ class ProGateway extends AbstractGateway
 {
     protected $endpoint = 'https://payflowpro.paypal.com';
     protected $testEndpoint = 'https://pilot-payflowpro.paypal.com';
+    protected $username;
+    protected $password;
+    protected $vendor;
+    protected $partner;
+    protected $testMode;
 
-    public function getDefaultSettings()
+    public function getName()
+    {
+        return 'Payflow';
+    }
+
+    public function defineSettings()
     {
         return array(
             'username' => '',
@@ -35,45 +45,97 @@ class ProGateway extends AbstractGateway
         );
     }
 
-    public function authorize(Request $request, $source)
+    public function getUsername()
     {
-        $data = $this->buildAuthorize($request, $source, 'A');
+        return $this->username;
+    }
+
+    public function setUsername($value)
+    {
+        $this->username = $value;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function setPassword($value)
+    {
+        $this->password = $value;
+    }
+
+    public function getVendor()
+    {
+        return $this->vendor;
+    }
+
+    public function setVendor($value)
+    {
+        $this->vendor = $value;
+    }
+
+    public function getPartner()
+    {
+        return $this->partner;
+    }
+
+    public function setPartner($value)
+    {
+        $this->partner = $value;
+    }
+
+    public function getTestMode()
+    {
+        return $this->testMode;
+    }
+
+    public function setTestMode($value)
+    {
+        $this->testMode = $value;
+    }
+
+    public function authorize($options)
+    {
+        $data = $this->buildAuthorize($options, 'A');
 
         return $this->send($data);
     }
 
-    public function capture(Request $request)
+    public function capture($options)
     {
-        $data = $this->buildCaptureOrRefund($request, 'D');
+        $data = $this->buildCaptureOrRefund($options, 'D');
 
         return $this->send($data);
     }
 
-    public function purchase(Request $request, $source)
+    public function purchase($options)
     {
-        $data = $this->buildAuthorize($request, $source, 'S');
+        $data = $this->buildAuthorize($options, 'S');
 
         return $this->send($data);
     }
 
-    public function refund(Request $request)
+    public function refund($options)
     {
 
-        $data = $this->buildCaptureOrRefund($request, 'C');
+        $data = $this->buildCaptureOrRefund($options, 'C');
 
         return $this->send($data);
     }
 
-    protected function buildAuthorize(Request $request, $source, $action)
+    protected function buildAuthorize($options, $action)
     {
-        $request->validateRequired('amount');
+        $request = new Request($options);
+        $request->validate(array('amount'));
+        $source = $request->getCard();
         $source->validate();
 
         $data = $this->buildRequest($action);
         $data['TENDER'] = 'C';
-        $data['COMMENT1'] = $request->description;
+        $data['COMMENT1'] = $request->getDescription();
         $data['ACCT'] = $source->getNumber();
-        $data['AMT'] = $request->amountDollars;
+        $data['AMT'] = $request->getAmountDollars();
         $data['EXPDATE'] = $source->getExpiryDate('my');
         $data['CVV2'] = $source->getCvv();
         $data['BILLTOFIRSTNAME'] = $source->getFirstName();
@@ -87,13 +149,14 @@ class ProGateway extends AbstractGateway
         return $data;
     }
 
-    protected function buildCaptureOrRefund(Request $request, $action)
+    protected function buildCaptureOrRefund($options, $action)
     {
-        $request->validateRequired(array('gatewayReference', 'amount'));
+        $request = new Request($options);
+        $request->validate(array('gatewayReference', 'amount'));
 
         $data = $this->buildRequest($action);
-        $data['AMT'] = $request->amountDollars;
-        $data['ORIGID'] = $request->gatewayReference;
+        $data['AMT'] = $request->getAmountDollars();
+        $data['ORIGID'] = $request->getGatewayReference();
 
         return $data;
     }

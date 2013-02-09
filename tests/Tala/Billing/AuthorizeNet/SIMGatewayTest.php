@@ -12,10 +12,10 @@
 namespace Tala\Billing\AuthorizeNet;
 
 use Mockery as m;
-use Tala\CreditCard;
+use Tala\BaseGatewayTest;
 use Tala\Request;
 
-class SIMGatewayTest extends \PHPUnit_Framework_TestCase
+class SIMGatewayTest extends BaseGatewayTest
 {
     public function setUp()
     {
@@ -24,31 +24,29 @@ class SIMGatewayTest extends \PHPUnit_Framework_TestCase
 
         $this->gateway = new SIMGateway($this->httpClient, $this->httpRequest);
 
-        $this->card = new CreditCard(array(
-            'firstName' => 'Example',
-            'lastName' => 'User',
-        ));
-
-        $this->request = new Request();
-        $this->request->amount = 1000;
-        $this->request->returnUrl = 'https://www.example.com/checkout/complete';
+        $this->options = array(
+            'amount' => 1000,
+            'returnUrl' => 'https://www.example.com/return',
+        );
     }
 
+    /**
+     * @expectedException \Tala\Exception\InvalidRequestException
+     * @expectedExceptionMessage The amount parameter is required
+     */
     public function testAuthorizeRequiresAmount()
     {
-        $this->setExpectedException('\Tala\Exception\MissingParameterException', 'The amount parameter is required');
-
-        $this->request->amount = 0;
-        $response = $this->gateway->authorize($this->request, $this->card);
+        $this->options['amount'] = 0;
+        $response = $this->gateway->authorize($this->options);
     }
 
     public function testAuthorize()
     {
-        $response = $this->gateway->authorize($this->request, $this->card);
+        $response = $this->gateway->authorize($this->options);
         $this->assertInstanceOf('\Tala\FormRedirectResponse', $response);
         $this->assertNotEmpty($response->getRedirectUrl());
 
         $formData = $response->getFormData();
-        $this->assertEquals('https://www.example.com/checkout/complete', $formData['x_relay_url']);
+        $this->assertEquals('https://www.example.com/return', $formData['x_relay_url']);
     }
 }

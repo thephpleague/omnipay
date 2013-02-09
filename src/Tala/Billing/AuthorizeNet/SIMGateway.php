@@ -21,15 +21,21 @@ use Tala\Request;
  */
 class SIMGateway extends AIMGateway
 {
-    public function authorize(Request $request, $source)
+    public function getName()
     {
-        $data = $this->buildAuthorizeOrPurchase($request, $source, 'AUTH_ONLY');
+        return 'Authorize.Net SIM';
+    }
+
+    public function authorize($options)
+    {
+        $data = $this->buildAuthorizeOrPurchase($options, 'AUTH_ONLY');
 
         return new FormRedirectResponse($this->getCurrentEndpoint(), $data);
     }
 
-    public function completeAuthorize(Request $request)
+    public function completeAuthorize($options)
     {
+        $request = new Request($options);
         if ( ! $this->validateReturnHash($request)) {
             throw new InvalidResponseException();
         }
@@ -45,21 +51,23 @@ class SIMGateway extends AIMGateway
         throw new Exception($message);
     }
 
-    public function purchase(Request $request, $source)
+    public function purchase($options)
     {
-        $data = $this->buildAuthorizeOrPurchase($request, $source, 'AUTH_CAPTURE');
+        $data = $this->buildAuthorizeOrPurchase($options, 'AUTH_CAPTURE');
 
         return new FormRedirectResponse($this->getCurrentEndpoint(), $data);
     }
 
-    public function completePurchase(Request $request)
+    public function completePurchase($options)
     {
         return $this->completeAuthorize($request);
     }
 
-    protected function buildAuthorizeOrPurchase($request, $source, $method)
+    protected function buildAuthorizeOrPurchase($options, $method)
     {
-        $request->validateRequired(array('amount', 'returnUrl'));
+        $request = new Request($options);
+        $request->validate(array('amount', 'returnUrl'));
+        $source = $request->getCard();
 
         $data = array();
         $data['x_login'] = $this->apiLoginId;
@@ -69,8 +77,8 @@ class SIMGateway extends AIMGateway
         $data['x_delim_data'] = 'FALSE';
         $data['x_show_form'] = 'PAYMENT_FORM';
         $data['x_relay_response'] = 'TRUE';
-        $data['x_relay_url'] = $request->returnUrl;
-        $data['x_cancel_url'] = $request->cancelUrl;
+        $data['x_relay_url'] = $request->getReturnUrl();
+        $data['x_cancel_url'] = $request->getCancelUrl();
 
         if ($this->testMode) {
             $data['x_test_request'] = 'TRUE';
@@ -100,7 +108,7 @@ class SIMGateway extends AIMGateway
 
     protected function validateReturnHash($request)
     {
-        $expected = strtoupper(md5($this->apiLoginId.$request->transactionId.$request->amountDollars));
+        $expected = strtoupper(md5($this->apiLoginId.$request->getTransactionId().$request->getAmountDollars()));
         $actual = isset($_POST['x_MD5_Hash']) ? strtoupper($_POST['x_MD5_Hash']) : '';
 
         return $expected == $actual;

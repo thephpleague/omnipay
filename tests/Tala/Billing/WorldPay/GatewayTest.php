@@ -12,10 +12,10 @@
 namespace Tala\Billing\WorldPay;
 
 use Mockery as m;
-use Tala\CreditCard;
+use Tala\BaseGatewayTest;
 use Tala\Request;
 
-class GatewayTest extends \PHPUnit_Framework_TestCase
+class GatewayTest extends BaseGatewayTest
 {
     public function setUp()
     {
@@ -23,20 +23,17 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
 
         $this->gateway = new Gateway($this->httpClient, $this->httpRequest);
-        $this->gateway->initialize(array(
-            'callbackPassword' => 'bar123',
-        ));
+        $this->gateway->setCallbackPassword('bar123');
 
-        $this->request = new Request;
-        $this->request->amount = 1000;
-        $this->request->returnUrl = 'https://www.example.com/complete';
-
-        $this->card = new CreditCard;
+        $this->options = array(
+            'amount' => 1000,
+            'returnUrl' => 'https://www.example.com/return',
+        );
     }
 
     public function testPurchase()
     {
-        $response = $this->gateway->purchase($this->request, $this->card);
+        $response = $this->gateway->purchase($this->options);
 
         $this->assertInstanceOf('\Tala\RedirectResponse', $response);
         $this->assertContains('https://secure.worldpay.com/wcc/purchase?', $response->getRedirectUrl());
@@ -48,7 +45,7 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $this->httpRequest->shouldReceive('get')->with('transStatus')->once()->andReturn('Y');
         $this->httpRequest->shouldReceive('get')->with('transId')->once()->andReturn('abc123');
 
-        $response = $this->gateway->completePurchase($this->request, $this->card);
+        $response = $this->gateway->completePurchase($this->options);
 
         $this->assertInstanceOf('\Tala\Response', $response);
         $this->assertEquals('abc123', $response->getGatewayReference());
@@ -61,7 +58,7 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
     {
         $this->httpRequest->shouldReceive('get')->with('callbackPW')->once()->andReturn('bar321');
 
-        $response = $this->gateway->completePurchase($this->request, $this->card);
+        $response = $this->gateway->completePurchase($this->options);
     }
 
     /**
@@ -74,6 +71,6 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $this->httpRequest->shouldReceive('get')->with('transStatus')->once()->andReturn('N');
         $this->httpRequest->shouldReceive('get')->with('rawAuthMessage')->once()->andReturn('Declined');
 
-        $response = $this->gateway->completePurchase($this->request, $this->card);
+        $response = $this->gateway->completePurchase($this->options);
     }
 }

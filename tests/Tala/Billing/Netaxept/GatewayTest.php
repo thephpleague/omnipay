@@ -12,10 +12,10 @@
 namespace Tala\Billing\Netaxept;
 
 use Mockery as m;
-use Tala\CreditCard;
+use Tala\BaseGatewayTest;
 use Tala\Request;
 
-class GatewayTest extends \PHPUnit_Framework_TestCase
+class GatewayTest extends BaseGatewayTest
 {
     public function setUp()
     {
@@ -23,16 +23,13 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
 
         $this->gateway = new Gateway($this->httpClient, $this->httpRequest);
-        $this->gateway->initialize(array(
-            'username' => 'foo',
-            'password' => 'bar',
-        ));
+        $this->gateway->setMerchantId('foo');
+        $this->gateway->setToken('bar');
 
-        $this->request = new Request;
-        $this->request->amount = 1000;
-        $this->request->returnUrl = 'https://www.example.com/complete';
-
-        $this->card = new CreditCard;
+        $this->options = array(
+            'amount' => 1000,
+            'returnUrl' => 'https://www.example.com/return',
+        );
     }
 
     public function testPurchaseSuccess()
@@ -40,7 +37,7 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $this->httpClient->shouldReceive('get')->with(m::type('string'))->once()
             ->andReturn('<Response><ResponseCode>OK</ResponseCode><TransactionId>abc123</TransactionId></Response>');
 
-        $response = $this->gateway->purchase($this->request, $this->card);
+        $response = $this->gateway->purchase($this->options);
 
         $this->assertInstanceOf('\Tala\RedirectResponse', $response);
         $this->assertEquals('https://epayment.bbs.no/Terminal/Default.aspx?merchantId=foo&transactionId=abc123', $response->getRedirectUrl());
@@ -55,7 +52,7 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $this->httpClient->shouldReceive('get')->with(m::type('string'))->once()
             ->andReturn('<Response><Error><Message>Authentication Error</Message></Error></Response>');
 
-        $response = $this->gateway->purchase($this->request, $this->card);
+        $response = $this->gateway->purchase($this->options);
     }
 
     public function testCompletePurchaseSuccess()
@@ -66,7 +63,7 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $this->httpClient->shouldReceive('get')->with(m::type('string'))->once()
             ->andReturn('<Response><ResponseCode>OK</ResponseCode><TransactionId>abc123</TransactionId></Response>');
 
-        $response = $this->gateway->completePurchase($this->request);
+        $response = $this->gateway->completePurchase($this->options);
 
         $this->assertInstanceOf('\Tala\Billing\Netaxept\Response', $response);
         $this->assertEquals('abc123', $response->getGatewayReference());
@@ -80,7 +77,7 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
     {
         $this->httpRequest->shouldReceive('get')->with('responseCode')->once()->andReturn(null);
 
-        $response = $this->gateway->completePurchase($this->request);
+        $response = $this->gateway->completePurchase($this->options);
     }
 
     /**
@@ -91,6 +88,6 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
     {
         $this->httpRequest->shouldReceive('get')->with('responseCode')->once()->andReturn('FAILURE');
 
-        $response = $this->gateway->completePurchase($this->request);
+        $response = $this->gateway->completePurchase($this->options);
     }
 }

@@ -19,51 +19,64 @@ use Tala\Request;
 interface GatewayInterface
 {
     /**
-     * Initialize the gateway with an associative array of settings.
+     * Authorize a new payment.
+     *
+     * @param array An array of options
+     * @return Tala\ResponseInterface
      */
-    public function initialize($settings);
+    public function authorize($options);
 
     /**
-     * Get settings which can be displayed for user configuration.
+     * Handle return from an off-site authorization request.
+     *
+     * @param array An array of options
+     * @return Tala\ResponseInterface
      */
-    public function getDefaultSettings();
-
-    /**
-     * Authorizes a new payment.
-     */
-    public function authorize(Request $request, $source);
-
-    /**
-     * Handles return from an authorization.
-     */
-    public function completeAuthorize(Request $request);
+    public function completeAuthorize($options);
 
     /**
      * Capture an authorized payment.
+     *
+     * @param array An array of options
+     * @return Tala\ResponseInterface
      */
-    public function capture(Request $request);
+    public function capture($options);
 
     /**
-     * Creates a new charge (combined authorize + capture).
+     * Create a new charge (combined authorize + capture).
+     *
+     * @param array An array of options
+     * @return Tala\ResponseInterface
      */
-    public function purchase(Request $request, $source);
+    public function purchase($options);
 
     /**
-     * Handle return from a purchase.
+     * Handle return from an off-site purchase request.
+     *
+     * @param array An array of options
+     * @return Tala\ResponseInterface
      */
-    public function completePurchase(Request $request);
+    public function completePurchase($options);
 
     /**
      * Refund an existing transaction.
-     * Generally this will refund a transaction which has been already submitted for processing,
-     * and may be called up to 30 days after submitting the transaction.
+     *
+     * This will refund a transaction which has been already submitted for processing,
+     * and generally may be called up to 30 days after submitting the transaction.
+     *
+     * @param array An array of options
+     * @return Tala\ResponseInterface
      */
-    public function refund(Request $request);
+    public function refund($options);
 
     /**
      * Void an existing transaction.
-     * Generally this will prevent the transaction from being submitted for processing,
-     * and can only be called up to 24 hours after submitting the transaction.
+     *
+     * This will prevent a transaction from being submitted for processing,
+     * and can generally only be called up to 24 hours after submitting the transaction.
+     *
+     * @param array An array of options
+     * @return Tala\ResponseInterface
      */
-    public function void(Request $request);
+    public function void($options);
 }

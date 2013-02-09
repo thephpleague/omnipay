@@ -12,10 +12,11 @@
 namespace Tala\Billing\TwoCheckout;
 
 use Mockery as m;
+use Tala\BaseGatewayTest;
 use Tala\CreditCard;
 use Tala\Request;
 
-class GatewayTest extends \PHPUnit_Framework_TestCase
+class GatewayTest extends BaseGatewayTest
 {
     public function setUp()
     {
@@ -23,20 +24,19 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
 
         $this->gateway = new Gateway($this->httpClient, $this->httpRequest);
-        $this->gateway->initialize(array(
-            'username' => 'abc',
-            'password' => '123',
-        ));
+        $this->gateway->setUsername('abc');
+        $this->gateway->setPassword('123');
 
-        $this->request = new Request;
-        $this->request->amount = 1000;
-        $this->request->returnUrl = 'https://www.example.com/complete';
+        $this->options = array(
+            'amount' => 1000,
+            'returnUrl' => 'https://www.example.com/return',
+        );
     }
 
     public function testPurchase()
     {
         $source = new CreditCard;
-        $response = $this->gateway->purchase($this->request, $source);
+        $response = $this->gateway->purchase($this->options);
 
         $this->assertInstanceOf('\Tala\RedirectResponse', $response);
         $this->assertContains('https://www.2checkout.com/checkout/purchase?', $response->getRedirectUrl());
@@ -53,7 +53,7 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $this->httpRequest->shouldReceive('get')->with('key')->once()
             ->andReturn('ZZZ');
 
-        $this->gateway->completePurchase($this->request);
+        $this->gateway->completePurchase($this->options);
     }
 
     public function testCompletePurchaseSuccess()
@@ -64,6 +64,6 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $this->httpRequest->shouldReceive('get')->with('key')->once()
             ->andReturn(strtoupper(md5('123abc510.00')));
 
-        $this->gateway->completePurchase($this->request);
+        $this->gateway->completePurchase($this->options);
     }
 }

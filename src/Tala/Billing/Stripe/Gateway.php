@@ -22,36 +22,56 @@ use Tala\Request;
 class Gateway extends AbstractGateway
 {
     protected $endpoint = 'https://api.stripe.com/v1';
+    protected $apiKey;
 
-    public function getDefaultSettings()
+    public function getName()
+    {
+        return 'Stripe';
+    }
+
+    public function defineSettings()
     {
         return array(
-            'username' => '',
+            'apiKey' => '',
         );
     }
 
-    public function purchase(Request $request, $source)
+    public function getApiKey()
     {
-        $data = $this->buildPurchase($request, $source);
+        return $this->apiKey;
+    }
+
+    public function setApiKey($value)
+    {
+        $this->apiKey = $value;
+    }
+
+    public function purchase($options)
+    {
+        $data = $this->buildPurchase($options);
 
         return $this->send('/charges', $data);
     }
 
-    public function refund(Request $request)
+    public function refund($options)
     {
-        $request->validateRequired(array('gatewayReference', 'amount'));
-        $data = array('amount' => $request->amount);
+        $request = new Request($options);
+        $request->validate(array('gatewayReference', 'amount'));
+        $data = array('amount' => $request->getAmount());
 
-        return $this->send('/charges/'.$request->gatewayReference.'/refund', $data);
+        return $this->send('/charges/'.$request->getGatewayReference().'/refund', $data);
     }
 
-    protected function buildPurchase(Request $request, $source)
+    protected function buildPurchase($options)
     {
+        $request = new Request($options);
+        $source = $request->getCard();
+
         $data = array();
-        $data['amount'] = $request->amount;
+        $data['amount'] = $request->getAmount();
         $data['card'] = $source;
-        $data['currency'] = strtolower($request->currency);
-        $data['description'] = $request->description;
+        $data['currency'] = strtolower($request->getCurrency());
+        $data['description'] = $request->getDescription();
 
         return $data;
     }

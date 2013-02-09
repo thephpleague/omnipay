@@ -25,28 +25,88 @@ class Gateway extends AbstractGateway
 {
     protected $endpoint = 'https://gocardless.com';
     protected $testEndpoint = 'https://sandbox.gocardless.com';
+    protected $appId;
+    protected $appSecret;
+    protected $merchantId;
+    protected $accessToken;
+    protected $testMode;
 
-    public function getDefaultSettings()
+    public function getName()
+    {
+        return 'GoCardless';
+    }
+
+    public function defineSettings()
     {
         return array(
-            'username' => '',
-            'password' => '',
+            'appId' => '',
+            'appSecret' => '',
             'merchantId' => '',
             'accessToken' => '',
             'testMode' => false,
         );
     }
 
-    public function purchase(Request $request, $source)
+    public function getAppId()
     {
-        $data = $this->buildPurchase($request, $source);
+        return $this->appId;
+    }
+
+    public function setAppId($value)
+    {
+        $this->appId = $value;
+    }
+
+    public function getAppSecret()
+    {
+        return $this->appSecret;
+    }
+
+    public function setAppSecret($value)
+    {
+        $this->appSecret = $value;
+    }
+
+    public function getMerchantId()
+    {
+        return $this->merchantId;
+    }
+
+    public function setMerchantId($value)
+    {
+        $this->merchantId = $value;
+    }
+
+    public function getAccessToken()
+    {
+        return $this->accessToken;
+    }
+
+    public function setAccessToken($value)
+    {
+        $this->accessToken = $value;
+    }
+
+    public function getTestMode()
+    {
+        return $this->testMode;
+    }
+
+    public function setTestMode($value)
+    {
+        $this->testMode = $value;
+    }
+
+    public function purchase($options)
+    {
+        $data = $this->buildPurchase($options);
 
         return new RedirectResponse(
             $this->getCurrentEndpoint().'/connect/bills/new?'.$this->generateQueryString($data)
         );
     }
 
-    public function completePurchase(Request $request)
+    public function completePurchase($options)
     {
         $data = array();
         $data['resource_uri'] = $this->httpRequest->get('resource_uri');
@@ -61,7 +121,7 @@ class Gateway extends AbstractGateway
 
         // confirm purchase
         $headers = array(
-            'Authorization: Basic '.base64_encode($this->username.':'.$this->password),
+            'Authorization: Basic '.base64_encode($this->appId.':'.$this->appSecret),
             'Accept: application/json',
         );
 
@@ -74,29 +134,34 @@ class Gateway extends AbstractGateway
         return new Response($response, $data['resource_id']);
     }
 
-    protected function buildPurchase(Request $request, $source)
+    protected function buildPurchase($options)
     {
-        $request->validateRequired(array('amount', 'returnUrl'));
+        $request = new Request($options);
+        $request->validate(array('amount', 'returnUrl'));
+        $source = $request->getCard();
 
         $data = array();
-        $data['client_id'] = $this->username;
+        $data['client_id'] = $this->appId;
         $data['nonce'] = $this->generateNonce();
         $data['timestamp'] = gmdate('Y-m-d\TH:i:s\Z');
-        $data['redirect_uri'] = $request->returnUrl;
-        $data['cancel_uri'] = $request->cancelUrl;
+        $data['redirect_uri'] = $request->getReturnUrl();
+        $data['cancel_uri'] = $request->getCancelUrl();
         $data['bill'] = array();
         $data['bill']['merchant_id'] = $this->merchantId;
-        $data['bill']['amount'] = $request->amountDollars;
-        $data['bill']['name'] = $request->description;
-        $data['bill']['user'] = array();
-        $data['bill']['user']['first_name'] = $source->getFirstName();
-        $data['bill']['user']['last_name'] = $source->getLastName();
-        $data['bill']['user']['email'] = $source->getEmail();
-        $data['bill']['user']['billing_address1'] = $source->getAddress1();
-        $data['bill']['user']['billing_address2'] = $source->getAddress2();
-        $data['bill']['user']['billing_town'] = $source->getCity();
-        $data['bill']['user']['billing_county'] = $source->getCountry();
-        $data['bill']['user']['billing_postcode'] = $source->getPostcode();
+        $data['bill']['amount'] = $request->getAmountDollars();
+        $data['bill']['name'] = $request->getDescription();
+
+        if ($source) {
+            $data['bill']['user'] = array();
+            $data['bill']['user']['first_name'] = $source->getFirstName();
+            $data['bill']['user']['last_name'] = $source->getLastName();
+            $data['bill']['user']['email'] = $source->getEmail();
+            $data['bill']['user']['billing_address1'] = $source->getAddress1();
+            $data['bill']['user']['billing_address2'] = $source->getAddress2();
+            $data['bill']['user']['billing_town'] = $source->getCity();
+            $data['bill']['user']['billing_county'] = $source->getCountry();
+            $data['bill']['user']['billing_postcode'] = $source->getPostcode();
+        }
 
         $data['signature'] = $this->generateSignature($data);
 
@@ -127,7 +192,7 @@ class Gateway extends AbstractGateway
      */
     protected function generateSignature($data)
     {
-        return hash_hmac('sha256', $this->generateQueryString($data), $this->password);
+        return hash_hmac('sha256', $this->generateQueryString($data), $this->appSecret);
     }
 
     /**

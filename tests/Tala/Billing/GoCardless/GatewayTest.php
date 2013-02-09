@@ -12,10 +12,10 @@
 namespace Tala\Billing\GoCardless;
 
 use Mockery as m;
-use Tala\CreditCard;
+use Tala\BaseGatewayTest;
 use Tala\Request;
 
-class GatewayTest extends \PHPUnit_Framework_TestCase
+class GatewayTest extends BaseGatewayTest
 {
     public function setUp()
     {
@@ -23,21 +23,18 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
 
         $this->gateway = new Gateway($this->httpClient, $this->httpRequest);
-        $this->gateway->initialize(array(
-            'username' => 'abc',
-            'password' => '123',
-        ));
+        $this->gateway->setAppId('abc');
+        $this->gateway->setAppSecret('123');
 
-        $this->request = new Request;
-        $this->request->amount = 1000;
-        $this->request->returnUrl = 'https://www.example.com/complete';
-
-        $this->card = new CreditCard;
+        $this->options = array(
+            'amount' => 1000,
+            'returnUrl' => 'https://www.example.com/return',
+        );
     }
 
     public function testPurchase()
     {
-        $response = $this->gateway->purchase($this->request, $this->card);
+        $response = $this->gateway->purchase($this->options);
 
         $this->assertInstanceOf('\Tala\RedirectResponse', $response);
         $this->assertStringStartsWith('https://gocardless.com/connect/bills/new?', $response->getRedirectUrl());
@@ -55,7 +52,7 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
             ->with('https://gocardless.com/api/v1/confirm', m::type('string'), m::type('array'))->once()
             ->andReturn('{"success":true}');
 
-        $response = $this->gateway->completePurchase($this->request);
+        $response = $this->gateway->completePurchase($this->options);
 
         $this->assertInstanceOf('Tala\Billing\GoCardless\Response', $response);
         $this->assertEquals('b', $response->getGatewayReference());
@@ -77,7 +74,7 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
             ->with('https://gocardless.com/api/v1/confirm', m::type('string'), m::type('array'))->once()
             ->andReturn('{"error":["The resource cannot be confirmed"]}');
 
-        $response = $this->gateway->completePurchase($this->request);
+        $response = $this->gateway->completePurchase($this->options);
     }
 
     /**
@@ -90,6 +87,6 @@ class GatewayTest extends \PHPUnit_Framework_TestCase
         $this->httpRequest->shouldReceive('get')->with('resource_type')->once()->andReturn('c');
         $this->httpRequest->shouldReceive('get')->with('signature')->once()->andReturn('d');
 
-        $this->gateway->completePurchase($this->request);
+        $this->gateway->completePurchase($this->options);
     }
 }

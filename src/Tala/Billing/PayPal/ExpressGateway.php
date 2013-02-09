@@ -19,18 +19,46 @@ use Tala\Request;
  */
 class ExpressGateway extends ProGateway
 {
-    public function getDefaultSettings()
+    protected $solutionType;
+    protected $landingPage;
+
+    public function getName()
     {
-        $settings = parent::getDefaultSettings();
+        return 'PayPal Express';
+    }
+
+    public function defineSettings()
+    {
+        $settings = parent::defineSettings();
         $settings['solutionType'] = array('Sole', 'Mark');
         $settings['landingPage'] = array('Billing', 'Login');
 
         return $settings;
     }
 
-    public function authorize(Request $request, $source)
+    public function getSolutionType()
     {
-        $data = $this->buildExpressAuthorize($request, $source);
+        return $this->solutionType;
+    }
+
+    public function setSolutionType($value)
+    {
+        $this->solutionType = $value;
+    }
+
+    public function getLandingPage()
+    {
+        return $this->landingPage;
+    }
+
+    public function setLandingPage($value)
+    {
+        $this->landingPage = $value;
+    }
+
+    public function authorize($options)
+    {
+        $data = $this->buildExpressAuthorize($options);
         $response = $this->send($data);
 
         return new RedirectResponse(
@@ -44,29 +72,30 @@ class ExpressGateway extends ProGateway
         );
     }
 
-    public function completeAuthorize(Request $request)
+    public function completeAuthorize($options)
     {
-        $data = $this->confirmReturn($request, 'Authorization');
+        $data = $this->confirmReturn($options, 'Authorization');
 
         return new Response($data);
     }
 
-    public function purchase(Request $request, $source)
+    public function purchase($options)
     {
         // authorize first then process as 'Sale' in DoExpressCheckoutPayment
-        return $this->authorize($request, $source);
+        return $this->authorize($options);
     }
 
-    public function completePurchase(Request $request)
+    public function completePurchase($options)
     {
-        $data = $this->confirmReturn($request, 'Sale');
+        $data = $this->confirmReturn($options, 'Sale');
 
         return new Response($data);
     }
 
-    protected function buildExpressAuthorize(Request $request, $source)
+    protected function buildExpressAuthorize($options)
     {
-        $request->validateRequired(array('returnUrl', 'cancelUrl'));
+        $request = new Request($options);
+        $request->validate(array('returnUrl', 'cancelUrl'));
 
         $prefix = 'PAYMENTREQUEST_0_';
         $data = $this->buildPaymentRequest($request, 'SetExpressCheckout', 'Authorization', $prefix);
@@ -76,25 +105,29 @@ class ExpressGateway extends ProGateway
         $data['LANDINGPAGE'] = $this->getLandingPage();
         $data['NOSHIPPING'] = 1;
         $data['ALLOWNOTE'] = 0;
-        $data['RETURNURL'] = $request->returnUrl;
-        $data['CANCELURL'] = $request->cancelUrl;
+        $data['RETURNURL'] = $request->getReturnUrl();
+        $data['CANCELURL'] = $request->getCancelUrl();
 
-        $data[$prefix.'SHIPTONAME'] = $source->getName();
-        $data[$prefix.'SHIPTOSTREET'] = $source->getAddress1();
-        $data[$prefix.'SHIPTOSTREET2'] = $source->getAddress2();
-        $data[$prefix.'SHIPTOCITY'] = $source->getCity();
-        $data[$prefix.'SHIPTOSTATE'] = $source->getState();
-        $data[$prefix.'SHIPTOCOUNTRYCODE'] = $source->getCountry();
-        $data[$prefix.'SHIPTOZIP'] = $source->getPostcode();
-        $data[$prefix.'SHIPTOPHONENUM'] = $source->getPhone();
-        $data['EMAIL'] = $source->getEmail();
+        $source = $request->getCard();
+        if ($source) {
+            $data[$prefix.'SHIPTONAME'] = $source->getName();
+            $data[$prefix.'SHIPTOSTREET'] = $source->getAddress1();
+            $data[$prefix.'SHIPTOSTREET2'] = $source->getAddress2();
+            $data[$prefix.'SHIPTOCITY'] = $source->getCity();
+            $data[$prefix.'SHIPTOSTATE'] = $source->getState();
+            $data[$prefix.'SHIPTOCOUNTRYCODE'] = $source->getCountry();
+            $data[$prefix.'SHIPTOZIP'] = $source->getPostcode();
+            $data[$prefix.'SHIPTOPHONENUM'] = $source->getPhone();
+            $data['EMAIL'] = $source->getEmail();
+        }
 
         return $data;
     }
 
-    protected function confirmReturn($request, $action)
+    protected function confirmReturn($options, $action)
     {
         $prefix = 'PAYMENTREQUEST_0_';
+        $request = new Request($options);
         $data = $this->buildPaymentRequest($request, 'DoExpressCheckoutPayment', $action, $prefix);
 
         $data['TOKEN'] = isset($_POST['token']) ? $_POST['token'] : '';
