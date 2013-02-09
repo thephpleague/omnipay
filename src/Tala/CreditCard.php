@@ -51,7 +51,7 @@ class CreditCard
      */
     public function __construct($parameters = array())
     {
-        $this->fill($parameters);
+        $this->initialize($parameters);
     }
 
     /**
@@ -59,14 +59,9 @@ class CreditCard
      *
      * @param array An array of parameters to set on this object
      */
-    public function fill($parameters)
+    public function initialize($parameters)
     {
-        foreach ($parameters as $key => $value) {
-            $method = 'set'.ucfirst(Helper::camelCase($key));
-            if (method_exists($this, $method)) {
-                $this->$method($value);
-            }
-        }
+        Helper::initialize($this, $parameters);
     }
 
     /**
@@ -82,7 +77,7 @@ class CreditCard
     {
         foreach (array('number', 'firstName', 'lastName', 'expiryMonth', 'expiryYear', 'cvv') as $key) {
             if (empty($this->$key)) {
-                throw new InvalidCreditCardException("The $key field is required");
+                throw new InvalidCreditCardException("The $key parameter is required");
             }
         }
 

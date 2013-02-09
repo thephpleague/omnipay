@@ -14,9 +14,9 @@ namespace Tala\Exception;
 use Tala\Exception;
 
 /**
- * Invalid Request exception.
+ * Invalid Request Exception
  *
- * Thrown when a gateway responded with invalid or unexpected data (for example, a security hash did not match).
+ * Thrown when a request is invalid or missing required fields.
  */
 class InvalidRequestException extends Exception
 {

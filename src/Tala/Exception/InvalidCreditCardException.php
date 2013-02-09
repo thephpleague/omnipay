@@ -14,9 +14,9 @@ namespace Tala\Exception;
 use Tala\Exception;
 
 /**
- * Invalid Credit Card exception.
+ * Invalid Credit Card Exception
  *
- * Thrown when a gateway responded with invalid or unexpected data (for example, a security hash did not match).
+ * Thrown when a credit card is invalid or missing required fields.
  */
 class InvalidCreditCardException extends Exception
 {

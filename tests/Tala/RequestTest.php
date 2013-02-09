@@ -15,56 +15,124 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->request = new Request();
+        $this->request = new Request;
     }
 
     public function testConstruct()
     {
-        $this->assertEmpty($this->request->amount);
-        $this->assertEmpty($this->request->currency);
+        $this->assertNull($this->request->getAmount());
+        $this->assertNull($this->request->getCurrency());
+    }
+
+    public function testConstructWithParams()
+    {
+        $request = new Request(array('amount' => 123));
+        $this->assertSame(123, $request->getAmount());
+    }
+
+    public function testInitializeWithParams()
+    {
+        $request = new Request;
+        $request->initialize(array('amount' => 123));
+        $this->assertSame(123, $request->getAmount());
+    }
+
+    public function testCard()
+    {
+        // no type checking on card parameter
+        $this->request->setCard('abc123');
+        $this->assertSame('abc123', $this->request->getCard());
+    }
+
+    public function testToken()
+    {
+        $this->request->setToken('12345');
+        $this->assertSame('12345', $this->request->getToken());
+    }
+
+    public function testAmount()
+    {
+        $this->request->setAmount(200);
+        $this->assertSame(200, $this->request->getAmount());
     }
 
     public function testAmountCastsToInteger()
     {
-        $this->request->amount = '6.1';
-        $this->assertEquals(6, $this->request->amount);
+        $this->request->setAmount('6.1');
+        $this->assertSame(6, $this->request->getAmount());
     }
 
     public function testAmountDollars()
     {
-        $this->request->amount = 1366;
-        $this->assertSame('13.66', $this->request->amountDollars);
+        $this->request->setAmount(1366);
+        $this->assertSame('13.66', $this->request->getAmountDollars());
     }
 
     public function testCurrency()
     {
-        $this->request->currency = 'USD';
-        $this->assertSame('USD', $this->request->currency);
+        $this->request->setCurrency('USD');
+        $this->assertSame('USD', $this->request->getCurrency());
     }
 
     public function testCurrencyLowercase()
     {
-        $this->request->currency = 'usd';
-        $this->assertSame('USD', $this->request->currency);
+        $this->request->setCurrency('usd');
+        $this->assertSame('USD', $this->request->getCurrency());
     }
 
     public function testCurrencyNotFound()
     {
-        $this->request->currency = 'XYZ';
-        $this->assertNull($this->request->currency);
-        $this->assertNull($this->request->currencyNumeric);
-        $this->assertSame(2, $this->request->currencyDecimals);
+        $this->request->setCurrency('XYZ');
+        $this->assertNull($this->request->getCurrency());
+        $this->assertNull($this->request->getCurrencyNumeric());
+        $this->assertSame(2, $this->request->getCurrencyDecimals());
     }
 
     public function testCurrencyNumeric()
     {
-        $this->request->currency = 'USD';
-        $this->assertSame('840', $this->request->currencyNumeric);
+        $this->request->setCurrency('USD');
+        $this->assertSame('840', $this->request->getCurrencyNumeric());
     }
 
     public function testCurrencyDecimals()
     {
-        $this->request->currency = 'JPY';
-        $this->assertSame(0, $this->request->currencyDecimals);
+        $this->request->setCurrency('JPY');
+        $this->assertSame(0, $this->request->getCurrencyDecimals());
+    }
+
+    public function testDescription()
+    {
+        $this->request->setDescription('Cool product');
+        $this->assertSame('Cool product', $this->request->getDescription());
+    }
+
+    public function testTransactionId()
+    {
+        $this->request->setTransactionId(87);
+        $this->assertSame(87, $this->request->getTransactionId());
+    }
+
+    public function testGatewayReference()
+    {
+        $this->request->setGatewayReference('xyz');
+        $this->assertSame('xyz', $this->request->getGatewayReference());
+    }
+
+    public function testClientIp()
+    {
+        $this->request->setClientIp('127.0.0.1');
+        $this->assertSame('127.0.0.1', $this->request->getClientIp());
+    }
+
+    public function testReturnUrl()
+    {
+        $this->request->setReturnUrl('https://www.example.com/return');
+        $this->assertSame('https://www.example.com/return', $this->request->getReturnUrl());
+    }
+
+    public function testCancelUrl()
+    {
+        $this->request->setCancelUrl('https://www.example.com/cancel');
+        $this->assertSame('https://www.example.com/cancel', $this->request->getCancelUrl());
     }
 }

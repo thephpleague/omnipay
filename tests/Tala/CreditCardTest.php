@@ -24,6 +24,19 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
         $this->card->setCvv('123');
     }
 
+    public function testConstructWithParams()
+    {
+        $card = new CreditCard(array('name' => 'Test Customer'));
+        $this->assertSame('Test Customer', $card->getName());
+    }
+
+    public function testInitializeWithParams()
+    {
+        $card = new CreditCard;
+        $card->initialize(array('name' => 'Test Customer'));
+        $this->assertSame('Test Customer', $card->getName());
+    }
+
     public function testValidateFixture()
     {
         $this->card->validate();
@@ -31,7 +44,7 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Tala\Exception\InvalidCreditCardException
-     * @expectedExceptionMessage The number field is required
+     * @expectedExceptionMessage The number parameter is required
      */
     public function testValidateNumberRequired()
     {
@@ -41,7 +54,7 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Tala\Exception\InvalidCreditCardException
-     * @expectedExceptionMessage The firstName field is required
+     * @expectedExceptionMessage The firstName parameter is required
      */
     public function testValidateFirstNameRequired()
     {
@@ -51,7 +64,7 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Tala\Exception\InvalidCreditCardException
-     * @expectedExceptionMessage The lastName field is required
+     * @expectedExceptionMessage The lastName parameter is required
      */
     public function testValidateLastNameRequired()
     {
@@ -61,7 +74,7 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Tala\Exception\InvalidCreditCardException
-     * @expectedExceptionMessage The expiryMonth field is required
+     * @expectedExceptionMessage The expiryMonth parameter is required
      */
     public function testValidateExpiryMonthRequired()
     {
@@ -71,7 +84,7 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Tala\Exception\InvalidCreditCardException
-     * @expectedExceptionMessage The expiryYear field is required
+     * @expectedExceptionMessage The expiryYear parameter is required
      */
     public function testValidateExpiryYearRequired()
     {
@@ -81,7 +94,7 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Tala\Exception\InvalidCreditCardException
-     * @expectedExceptionMessage The cvv field is required
+     * @expectedExceptionMessage The cvv parameter is required
      */
     public function testValidateCvvRequired()
     {

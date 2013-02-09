@@ -58,4 +58,23 @@ class Helper
 
         return array_sum(str_split($str)) % 10 === 0;
     }
+
+    /**
+     * Initialize an object with a given array of parameters
+     *
+     * Parameters are automatically converted to camelCase. Any parameters which do
+     * not match a setter on the target object are ignored.
+     *
+     * @param mixed The object to set parameters on
+     * @param array An array of parameters to set
+     */
+    public static function initialize(&$target, $parameters)
+    {
+        foreach ($parameters as $key => $value) {
+            $method = 'set'.ucfirst(static::camelCase($key));
+            if (method_exists($target, $method)) {
+                $target->$method($value);
+            }
+        }
+    }
 }
