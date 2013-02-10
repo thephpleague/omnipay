@@ -64,6 +64,11 @@ class CreditCard
         Helper::initialize($this, $parameters);
     }
 
+    public function toArray()
+    {
+        return get_object_vars($this);
+    }
+
     /**
      * Validate this credit card. If the card is invalid, InvalidCreditCardException is thrown.
      *

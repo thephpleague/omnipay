@@ -56,6 +56,15 @@ abstract class BaseGatewayTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testToArrayReturnsSettings()
+    {
+        $settings = $this->gateway->defineSettings();
+        $output = $this->gateway->toArray();
+        foreach ($settings as $key => $default) {
+            $this->assertArrayHasKey($key, $output);
+        }
+    }
+
     public function getValidCard()
     {
         return new CreditCard(array(

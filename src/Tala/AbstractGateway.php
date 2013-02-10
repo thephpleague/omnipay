@@ -115,6 +115,16 @@ abstract class AbstractGateway implements GatewayInterface
         Helper::initialize($this, $parameters);
     }
 
+    public function toArray()
+    {
+        $output = array();
+        foreach ($this->defineSettings() as $key => $default) {
+            $output[$key] = $this->{'get'.ucfirst($key)}();
+        }
+
+        return $output;
+    }
+
     private function loadSettings()
     {
         foreach ($this->defineSettings() as $key => $value) {

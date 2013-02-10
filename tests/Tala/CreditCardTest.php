@@ -37,6 +37,40 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('Test Customer', $card->getName());
     }
 
+    public function testToArrayKeys()
+    {
+        $card = new CreditCard;
+        $output = $card->toArray();
+        $this->assertArrayHasKey('firstName', $output);
+        $this->assertArrayHasKey('lastName', $output);
+        $this->assertArrayHasKey('number', $output);
+        $this->assertArrayHasKey('expiryMonth', $output);
+        $this->assertArrayHasKey('expiryYear', $output);
+        $this->assertArrayHasKey('cvv', $output);
+        $this->assertArrayHasKey('issue', $output);
+        $this->assertArrayHasKey('type', $output);
+        $this->assertArrayHasKey('company', $output);
+        $this->assertArrayHasKey('phone', $output);
+        $this->assertArrayHasKey('email', $output);
+    }
+
+    public function testToArrayValues()
+    {
+        $card = new CreditCard(array(
+            'name' => 'Example Customer',
+            'number' => '1234',
+            'expiryMonth' => 6,
+            'expiryYear' => 2016,
+        ));
+
+        $output = $card->toArray();
+        $this->assertSame('Example', $output['firstName']);
+        $this->assertSame('Customer', $output['lastName']);
+        $this->assertSame('1234', $output['number']);
+        $this->assertSame(6, $output['expiryMonth']);
+        $this->assertSame(2016, $output['expiryYear']);
+    }
+
     public function testValidateFixture()
     {
         $this->card->validate();
