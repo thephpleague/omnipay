@@ -25,7 +25,7 @@ Just want to see some code?
 use Tala\CreditCard;
 use Tala\GatewayFactory;
 
-$gateway = GatewayFactory::createGateway('Stripe');
+$gateway = GatewayFactory::create('Stripe');
 $gateway->setApiKey('abc123');
 
 try {
@@ -81,7 +81,7 @@ Gateways are created and initialized like so:
 ```php
 use Tala\GatewayFactory;
 
-$gateway = GatewayFactory::createGateway('PayPal_Express');
+$gateway = GatewayFactory::create('PayPal_Express');
 $gateway->setUsername('adrian');
 $gateway->setPassword('12345');
 ```
