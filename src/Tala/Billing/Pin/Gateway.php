@@ -12,7 +12,6 @@
 namespace Tala\Billing\Pin;
 
 use Tala\AbstractGateway;
-use Tala\CreditCard;
 use Tala\Request;
 
 /**
@@ -70,7 +69,7 @@ class Gateway extends AbstractGateway
     protected function buildPurchase($options)
     {
         $request = new Request($options);
-        $source = $request->getCard();
+        $request->validate(array('amount'));
 
         $data = array();
         $data['amount'] = $request->getAmount();
@@ -78,23 +77,21 @@ class Gateway extends AbstractGateway
         $data['description'] = $request->getDescription();
         $data['ip_address'] = $request->getClientIp();
 
-        if ($source instanceof CreditCard) {
-            $source->validate();
+        if ($card = $request->getCard()) {
+            $card->validate();
 
-            $data['card']['number'] = $source->getNumber();
-            $data['card']['expiry_month'] = $source->getExpiryMonth();
-            $data['card']['expiry_year'] = $source->getExpiryYear();
-            $data['card']['cvc'] = $source->getCvv();
-            $data['card']['name'] = $source->getName();
-            $data['card']['address_line1'] = $source->getAddress1();
-            $data['card']['address_line2'] = $source->getAddress2();
-            $data['card']['address_city'] = $source->getCity();
-            $data['card']['address_postcode'] = $source->getPostcode();
-            $data['card']['address_state'] = $source->getState();
-            $data['card']['address_country'] = $source->getCountry();
-            $data['email'] = $source->getEmail();
-        } else {
-            $data['card_token'] = $source;
+            $data['card']['number'] = $card->getNumber();
+            $data['card']['expiry_month'] = $card->getExpiryMonth();
+            $data['card']['expiry_year'] = $card->getExpiryYear();
+            $data['card']['cvc'] = $card->getCvv();
+            $data['card']['name'] = $card->getName();
+            $data['card']['address_line1'] = $card->getAddress1();
+            $data['card']['address_line2'] = $card->getAddress2();
+            $data['card']['address_city'] = $card->getCity();
+            $data['card']['address_postcode'] = $card->getPostcode();
+            $data['card']['address_state'] = $card->getState();
+            $data['card']['address_country'] = $card->getCountry();
+            $data['email'] = $card->getEmail();
         }
 
         return $data;
