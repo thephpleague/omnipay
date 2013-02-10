@@ -11,6 +11,7 @@
 
 namespace Tala;
 
+use ReflectionMethod;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 use Tala\Exception\UnsupportedMethodException;
 use Tala\HttpClient\HttpClientInterface;
@@ -115,6 +116,22 @@ abstract class AbstractGateway implements GatewayInterface
         Helper::initialize($this, $parameters);
     }
 
+    private function loadSettings()
+    {
+        foreach ($this->defineSettings() as $key => $value) {
+            if (is_array($value)) {
+                $this->$key = reset($value);
+            } else {
+                $this->$key = $value;
+            }
+        }
+    }
+
+    /**
+     * Return current gateway settings as an array
+     *
+     * This method is useful if you need to store settings for various gateways in your database.
+     */
     public function toArray()
     {
         $output = array();
@@ -125,14 +142,51 @@ abstract class AbstractGateway implements GatewayInterface
         return $output;
     }
 
-    private function loadSettings()
+    /**
+     * Supports Authorize
+     *
+     * @return boolean True if this gateway supports the authorize() method
+     */
+    public function supportsAuthorize()
     {
-        foreach ($this->defineSettings() as $key => $value) {
-            if (is_array($value)) {
-                $this->$key = reset($value);
-            } else {
-                $this->$key = $value;
-            }
-        }
+        $reflectionMethod = new ReflectionMethod($this, 'authorize');
+
+        return __CLASS__ !== $reflectionMethod->getDeclaringClass()->getName();
+    }
+
+    /**
+     * Supports Capture
+     *
+     * @return boolean True if this gateway supports the capture() method
+     */
+    public function supportsCapture()
+    {
+        $reflectionMethod = new ReflectionMethod($this, 'capture');
+
+        return __CLASS__ !== $reflectionMethod->getDeclaringClass()->getName();
+    }
+
+    /**
+     * Supports Refund
+     *
+     * @return boolean True if this gateway supports the refund() method
+     */
+    public function supportsRefund()
+    {
+        $reflectionMethod = new ReflectionMethod($this, 'refund');
+
+        return __CLASS__ !== $reflectionMethod->getDeclaringClass()->getName();
+    }
+
+    /**
+     * Supports Void
+     *
+     * @return boolean True if this gateway supports the void() method
+     */
+    public function supportsVoid()
+    {
+        $reflectionMethod = new ReflectionMethod($this, 'void');
+
+        return __CLASS__ !== $reflectionMethod->getDeclaringClass()->getName();
     }
 }

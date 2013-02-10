@@ -110,7 +110,7 @@ class ProGateway extends AbstractGateway
 
     public function refund($options)
     {
-        $request = $this->_build_refund();
+        $request = $this->buildRefund($options);
         $response = $this->send($request);
 
         return new Response($response);

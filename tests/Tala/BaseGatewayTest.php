@@ -20,6 +20,21 @@ abstract class BaseGatewayTest extends \PHPUnit_Framework_TestCase
 {
     protected $gateway;
 
+    /**
+     * Helper method used by gateway test classes to generate a valid test credit card
+     */
+    public function getValidCard()
+    {
+        return new CreditCard(array(
+            'firstName' => 'Example',
+            'lastName' => 'User',
+            'number' => '4111111111111111',
+            'expiryMonth' => '12',
+            'expiryYear' => '2020',
+            'cvv' => '123',
+        ));
+    }
+
     public function testGetNameNotEmpty()
     {
         $name = $this->gateway->getName();
@@ -65,15 +80,67 @@ abstract class BaseGatewayTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function getValidCard()
+    public function testSupportsAuthorize()
     {
-        return new CreditCard(array(
-            'firstName' => 'Example',
-            'lastName' => 'User',
-            'number' => '4111111111111111',
-            'expiryMonth' => '12',
-            'expiryYear' => '2016',
-            'cvv' => '123',
-        ));
+        $supportsAuthorize = $this->gateway->supportsAuthorize();
+        $this->assertInternalType('boolean', $supportsAuthorize);
+
+        if ($supportsAuthorize) {
+            // authorize method should throw InvalidRequestException
+            $this->setExpectedException('Tala\\Exception\\InvalidRequestException');
+            $this->gateway->authorize(array());
+        } else {
+            // authorize method should throw UnsupportedMethodException
+            $this->setExpectedException('Tala\\Exception\\UnsupportedMethodException');
+            $this->gateway->authorize(array());
+        }
+    }
+
+    public function testSupportsCapture()
+    {
+        $supportsCapture = $this->gateway->supportsCapture();
+        $this->assertInternalType('boolean', $supportsCapture);
+
+        if ($supportsCapture) {
+            // capture method should throw InvalidRequestException
+            $this->setExpectedException('Tala\\Exception\\InvalidRequestException');
+            $this->gateway->capture(array());
+        } else {
+            // capture method should throw UnsupportedMethodException
+            $this->setExpectedException('Tala\\Exception\\UnsupportedMethodException');
+            $this->gateway->capture(array());
+        }
+    }
+
+    public function testSupportsRefund()
+    {
+        $supportsRefund = $this->gateway->supportsRefund();
+        $this->assertInternalType('boolean', $supportsRefund);
+
+        if ($supportsRefund) {
+            // refund method should throw InvalidRequestException
+            $this->setExpectedException('Tala\\Exception\\InvalidRequestException');
+            $this->gateway->refund(array());
+        } else {
+            // refund method should throw UnsupportedMethodException
+            $this->setExpectedException('Tala\\Exception\\UnsupportedMethodException');
+            $this->gateway->refund(array());
+        }
+    }
+
+    public function testSupportsVoid()
+    {
+        $supportsVoid = $this->gateway->supportsVoid();
+        $this->assertInternalType('boolean', $supportsVoid);
+
+        if ($supportsVoid) {
+            // void method should throw InvalidRequestException
+            $this->setExpectedException('Tala\\Exception\\InvalidRequestException');
+            $this->gateway->void(array());
+        } else {
+            // void method should throw UnsupportedMethodException
+            $this->setExpectedException('Tala\\Exception\\UnsupportedMethodException');
+            $this->gateway->void(array());
+        }
     }
 }
