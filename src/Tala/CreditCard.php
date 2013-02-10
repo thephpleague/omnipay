@@ -85,7 +85,7 @@ class CreditCard
             throw new InvalidCreditCardException('Card has expired');
         }
 
-        if ( ! Helper::validateLuhn($this->number)) {
+        if (!Helper::validateLuhn($this->number)) {
             throw new InvalidCreditCardException('Card number is invalid');
         }
     }

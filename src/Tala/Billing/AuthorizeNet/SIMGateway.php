@@ -36,7 +36,7 @@ class SIMGateway extends AIMGateway
     public function completeAuthorize($options)
     {
         $request = new Request($options);
-        if ( ! $this->validateReturnHash($request)) {
+        if (!$this->validateReturnHash($request)) {
             throw new InvalidResponseException();
         }
 

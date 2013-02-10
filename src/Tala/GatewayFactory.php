@@ -24,7 +24,7 @@ class GatewayFactory
     {
         $type = static::resolveType($type);
 
-        if ( ! class_exists($type)) {
+        if (!class_exists($type)) {
             throw new GatewayNotFoundException("Class '$type' not found");
         }
 
@@ -90,7 +90,7 @@ class GatewayFactory
                 // ensure class exists and is not abstract
                 if (class_exists($class)) {
                     $reflection = new ReflectionClass($class);
-                    if ( ! $reflection->isAbstract() and $reflection->implementsInterface('\\Tala\\GatewayInterface')) {
+                    if (!$reflection->isAbstract() and $reflection->implementsInterface('\\Tala\\GatewayInterface')) {
                         $result[] = $type;
                     }
                 }

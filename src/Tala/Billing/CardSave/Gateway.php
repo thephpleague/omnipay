@@ -170,7 +170,7 @@ class Gateway extends AbstractGateway
         $response = simplexml_import_dom($responseDom->documentElement->firstChild->firstChild);
 
         $resultElement = $data->getName().'Result';
-        if ( ! isset($response->$resultElement->StatusCode)) {
+        if (!isset($response->$resultElement->StatusCode)) {
             throw new InvalidResponseException;
         }
 
