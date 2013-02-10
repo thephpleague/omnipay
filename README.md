@@ -1,13 +1,16 @@
 # Tala Payments
 
+**Easy to use, consistent payment processing for PHP 5.3+**
+
 [![Build Status](https://secure.travis-ci.org/adrianmacneil/tala-payments.png)](http://travis-ci.org/adrianmacneil/tala-payments)
 
-Tala Payments is a PHP 5.3+, PSR-2 and Composer compliant payment processing library.
-It has been designed based on experience using [Active Merchant](http://activemerchant.org/),
-plus experience implementing dozens of gateways for [CI Merchant](http://ci-merchant.org/).
+Tala Payments is a payment processing library for PHP 5.3+. It has been designed based on
+experience using [Active Merchant](http://activemerchant.org/), plus experience implementing
+dozens of gateways for [CI Merchant](http://ci-merchant.org/). It has a clear and consistent API,
+and comes with a full suite of unit tests, plus an example application for you to pull apart.
 
 This library is under active developemnt, and all feedback is welcome - please raise a github issue
-to discuss, or fork the project and send a pull request.
+to discuss ideas, or fork the project and send a pull request.
 
 **Why use Tala instead of a gateway's official PHP package?**
 
@@ -17,7 +20,7 @@ to discuss, or fork the project and send a pull request.
 * Because most payment gateways have exceptionally poor documentation
 * Because you are writing a shopping cart and need to support multiple gateways
 
-# TL;DR
+## TL;DR
 
 Just want to see some code?
 
@@ -42,16 +45,38 @@ try {
 As you can see, Tala Payments has a consistent, well thought out API. We try to abstract as much
 as possible the differences between the various payments gateways.
 
-# Package Layout
+## Package Layout
 
 Tala Payments is a single package which provides abstract base classes and implementations for all
 officially supported gateways. There are no dependencies on official payment gateway PHP packages -
-we prefer to work with the HTTP API directly. Unsupported gateways can either be added by forking
-this package and submitting a pull request (unit tests and tidy code required), or by
-distributing a separate library which depends on this package and makes use of the base
-classes and consistent developer API.
+we prefer to work with the HTTP API directly. Under the hood, we use [Buzz](https://github.com/kriswallsmith/Buzz)
+to make HTTP requests, though you are free to swap out this dependency.
 
-# Payment Gateways
+Unsupported gateways can either be added by forking this package and submitting a pull request
+(unit tests and tidy code required), or by distributing a separate library which depends on this
+package and makes use of our base classes and consistent developer API.
+
+## Installation
+
+Tala Payments is installed via [Composer](http://getcomposer.org/). To install, simply add it
+to your `composer.json` file:
+
+```json
+{
+    "require": {
+        "adrianmacneil/tala-payments": "dev-master"
+    }
+}
+```
+
+And run composer to update your dependencies:
+
+    $ curl -s http://getcomposer.org/installer | php
+    $ php composer.phar update
+
+We will make a beta release shortly - for now you can use the above code to install the latest master.
+
+## Payment Gateways
 
 All payment gateways must implement [Tala\GatewayInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/GatewayInterface.php), and will usually
 extend [Tala\AbstractGateway](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/AbstractGateway.php) for basic functionality.
@@ -108,7 +133,7 @@ However, there are some gateways such as SagePay Direct, where you take credit c
 if the customer's card supports 3D Secure authentication. Therefore, there is no point differentiating between the two types of
 gateway (other than by the methods they support).
 
-# Credit Card / Payment Form Input
+## Credit Card / Payment Form Input
 
 User form input is directed to a [Tala\CreditCard](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/CreditCard.php)
 object. This provides a safe way to accept user input.
@@ -163,7 +188,7 @@ $number = $card->getNumber();
 $card->setFirstName('Adrian');
 ```
 
-# Gateway Methods
+## Gateway Methods
 
 The main methods implemented by gateways are:
 
@@ -216,14 +241,14 @@ To summarize the various parameters you have available to you:
 * Method options are used for any payment-specific options, which are not set by the customer. For example, the payment `amount`, `currency`, `transactionId` and `returnUrl`.
 * CreditCard parameters are data which the user supplies. For example, you want the user to specify their `firstName` and `billingCountry`, but you don't want a user to specify the payment `currency` or `returnUrl`.
 
-# The Payment Response
+## The Payment Response
 
 The payment response must implement [\Tala\ResponseInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/ResponseInterface.php). There are two main types of response:
 
 * Payment was successful (standard response)
 * Website requires redirect to off-site payment form (redirect response)
 
-## Successful Response
+### Successful Response
 
 For a successful responses, a reference will normally be generated, which can be used to capture or refund the transaction
 at a later date. The following methods are always available:
@@ -235,7 +260,7 @@ $mesage = $response->getMessage();
 
 In addition, most gateways will override the response object, and provide access to any extra fields returned by the gateway.
 
-## Redirect Response
+### Redirect Response
 
 The redirect response is further broken down by whether the customer's browser must redirect using GET (RedirectResponse object), or
 POST (FormRedirectResponse). These could potentially be combined into a single response class, with a `getRedirectMethod()`.
@@ -262,7 +287,7 @@ $url = $response->getRedirectUrl();
 $data = $response->getFormData(); // associative array of fields which must be posted to the redirectUrl
 ```
 
-# Error Handling
+## Error Handling
 
 If there is an error with the payment, an Exception is thrown. Standard exceptions are provided, or gateways
 can define their own exceptions. All payments should be wrapped in a try-catch block:
@@ -276,7 +301,7 @@ try {
 }
 ```
 
-# Token Billing
+## Token Billing
 
 Token billing is still under development. Most likely gateways will be able to implement the
 following methods:
@@ -284,7 +309,7 @@ following methods:
 * `store($options)` - returns a response object which includes a `token`, which can be used for future transactions
 * `unstore($options)` - remove a stored card, not all gateways support this method
 
-# Recurring Billing
+## Recurring Billing
 
 At this stage, automatic recurring payments functionality is out of scope for this library.
 This is because there is likely far too many differences between how each gateway handles
@@ -292,7 +317,17 @@ recurring billing profiles. Also in most cases token billing will cover your nee
 store a credit card then charge it on whatever schedule you like. Feel free to get in touch if
 you really think this should be a core feature and worth the effort.
 
-# Feedback
+## Example Application
+
+An example application is provided in the `example` directory. You can run it using PHP's built in
+web server (PHP 5.4+):
+
+    $ php composer.phar update --dev
+    $ php -S localhost:8000 -t example/
+
+For more information, see the [README](https://github.com/adrianmacneil/tala-payments/blob/master/example/README.md).
+
+## Feedback
 
 **Please provide feedback!** We want to make this library useful in as many projects as possible.
 Please raise a Github issue, and point out what you do and don't like, or fork the project and make
