@@ -325,7 +325,7 @@ web server (PHP 5.4+):
     $ php composer.phar update --dev
     $ php -S localhost:8000 -t example/
 
-For more information, see the [README](https://github.com/adrianmacneil/tala-payments/blob/master/example/README.md).
+For more information, see the [example application directory](https://github.com/adrianmacneil/tala-payments/tree/master/example).
 
 ## Feedback
 
