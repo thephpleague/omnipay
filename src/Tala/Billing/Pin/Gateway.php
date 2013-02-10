@@ -76,7 +76,7 @@ class Gateway extends AbstractGateway
         $data['amount'] = $request->getAmount();
         $data['currency'] = strtolower($request->getCurrency());
         $data['description'] = $request->getDescription();
-        $data['ip_address'] = $this->httpRequest->getClientIp();
+        $data['ip_address'] = $request->getClientIp();
 
         if ($source instanceof CreditCard) {
             $source->validate();

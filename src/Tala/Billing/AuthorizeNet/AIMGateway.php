@@ -110,7 +110,7 @@ class AIMGateway extends AbstractGateway
         $source->validate();
 
         $data = $this->buildRequest($method);
-        $data['x_customer_ip'] = $this->httpRequest->getClientIp();
+        $data['x_customer_ip'] = $request->getClientIp();
         $data['x_card_num'] = $source->getNumber();
         $data['x_exp_date'] = $source->getExpiryDate('my');
         $data['x_card_code'] = $source->getCvv();

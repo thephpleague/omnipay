@@ -115,7 +115,7 @@ class Gateway extends AbstractGateway
         $data->PaymentMessage->CustomerDetails->BillingAddress->State = $source->getState();
         // requires numeric country code
         // $data->PaymentMessage->CustomerDetails->BillingAddress->CountryCode = $source->getCountryNumeric;
-        $data->PaymentMessage->CustomerDetails->CustomerIPAddress = $this->httpRequest->getClientIp();
+        $data->PaymentMessage->CustomerDetails->CustomerIPAddress = $request->getClientIp();
 
         return $data;
     }

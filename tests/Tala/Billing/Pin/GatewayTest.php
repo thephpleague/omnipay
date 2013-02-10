@@ -44,8 +44,6 @@ class GatewayTest extends BaseGatewayTest
      */
     public function testPurchaseError()
     {
-        $this->httpRequest->shouldReceive('getClientIp')->once()->andReturn('127.0.0.1');
-
         $this->httpClient->shouldReceive('post')->once()
             ->with('https://api.pin.net.au/1/charges', m::type('array'), m::type('array'))
             ->andReturn('{"error":"standard_error_name","error_description":"A description of the error."}');
@@ -55,8 +53,6 @@ class GatewayTest extends BaseGatewayTest
 
     public function testPurchaseSuccess()
     {
-        $this->httpRequest->shouldReceive('getClientIp')->once()->andReturn('127.0.0.1');
-
         $this->httpClient->shouldReceive('post')->once()
             ->with('https://api.pin.net.au/1/charges', m::type('array'), m::type('array'))
             ->andReturn('{"response":{"token":"ch_lfUYEBK14zotCTykezJkfg","status_message":"Success!"}}');
