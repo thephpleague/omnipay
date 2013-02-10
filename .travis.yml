@@ -7,4 +7,4 @@ php:
 before_script:
   - composer install --dev
 
-script: vendor/bin/phpcs --standard=PSR2 src && vendor/bin/phpunit
+script: vendor/bin/phpunit
