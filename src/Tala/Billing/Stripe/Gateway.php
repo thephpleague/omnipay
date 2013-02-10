@@ -65,20 +65,38 @@ class Gateway extends AbstractGateway
     protected function buildPurchase($options)
     {
         $request = new Request($options);
-        $source = $request->getCard();
 
         $data = array();
         $data['amount'] = $request->getAmount();
-        $data['card'] = $source;
         $data['currency'] = strtolower($request->getCurrency());
         $data['description'] = $request->getDescription();
+
+        if ($card = $request->getCard()) {
+            $card->validate();
+
+            $data['card'] = array();
+            $data['card']['number'] = $card->getNumber();
+            $data['card']['exp_month'] = $card->getExpiryMonth();
+            $data['card']['exp_year'] = $card->getExpiryYear();
+            $data['card']['cvc'] = $card->getCvv();
+            $data['card']['name'] = $card->getName();
+            $data['card']['address_line1'] = $card->getAddress1();
+            $data['card']['address_line2'] = $card->getAddress2();
+            $data['card']['address_city'] = $card->getCity();
+            $data['card']['address_zip'] = $card->getPostcode();
+            $data['card']['address_state'] = $card->getState();
+            $data['card']['address_country'] = $card->getCountry();
+        } elseif ($token = $request->getToken()) {
+            $data['card'] = $token;
+        }
 
         return $data;
     }
 
     protected function send($url, $data)
     {
-        $response = $this->httpClient->post($this->endpoint.$url, $data);
+        $headers = array('Authorization: Basic '.base64_encode($this->apiKey.':'));
+        $response = $this->httpClient->post($this->endpoint.$url, $data, $headers);
 
         return new Response($response);
     }

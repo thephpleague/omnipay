@@ -23,6 +23,7 @@ class GatewayTest extends BaseGatewayTest
         $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
 
         $this->gateway = new Gateway($this->httpClient, $this->httpRequest);
+        $this->gateway->setApiKey('abc123');
 
         $this->options = array(
             'amount' => 1000,
@@ -36,7 +37,7 @@ class GatewayTest extends BaseGatewayTest
     public function testPurchaseError()
     {
         $this->httpClient->shouldReceive('post')->once()
-            ->with('https://api.stripe.com/v1/charges', m::type('array'))
+            ->with('https://api.stripe.com/v1/charges', m::type('array'), array('Authorization: Basic YWJjMTIzOg=='))
             ->andReturn('{"error":{"message":"Your card number is incorrect"}}');
 
         $this->gateway->purchase($this->options);
@@ -45,7 +46,7 @@ class GatewayTest extends BaseGatewayTest
     public function testPurchaseSuccess()
     {
         $this->httpClient->shouldReceive('post')->once()
-            ->with('https://api.stripe.com/v1/charges', m::type('array'))
+            ->with('https://api.stripe.com/v1/charges', m::type('array'), array('Authorization: Basic YWJjMTIzOg=='))
             ->andReturn('{"id":"ch_12RgN9L7XhO9mI"}');
 
         $response = $this->gateway->purchase($this->options);
@@ -60,7 +61,7 @@ class GatewayTest extends BaseGatewayTest
     public function testRefundError()
     {
         $this->httpClient->shouldReceive('post')->once()
-            ->with('https://api.stripe.com/v1/charges/ch_12RgN9L7XhO9mI/refund', m::type('array'))
+            ->with('https://api.stripe.com/v1/charges/ch_12RgN9L7XhO9mI/refund', m::type('array'), array('Authorization: Basic YWJjMTIzOg=='))
             ->andReturn('{"error":{"message":"Charge ch_12RgN9L7XhO9mI has already been refunded."}}');
 
         $this->gateway->refund(array('amount' => 1000, 'gatewayReference' => 'ch_12RgN9L7XhO9mI'));
@@ -69,7 +70,7 @@ class GatewayTest extends BaseGatewayTest
     public function testRefundSuccess()
     {
         $this->httpClient->shouldReceive('post')->once()
-            ->with('https://api.stripe.com/v1/charges/ch_12RgN9L7XhO9mI/refund', m::type('array'))
+            ->with('https://api.stripe.com/v1/charges/ch_12RgN9L7XhO9mI/refund', m::type('array'), array('Authorization: Basic YWJjMTIzOg=='))
             ->andReturn('{"id":"ch_12RgN9L7XhO9mI"}');
 
         $response = $this->gateway->refund(array('amount' => 1000, 'gatewayReference' => 'ch_12RgN9L7XhO9mI'));
