@@ -16,7 +16,6 @@ use Tala\Exception;
 use Tala\Exception\InvalidResponseException;
 use Tala\RedirectResponse;
 use Tala\Request;
-use Tala\Response;
 
 /**
  * WorldPay Gateway
@@ -97,20 +96,17 @@ class Gateway extends AbstractGateway
     public function completePurchase($options)
     {
         $callbackPW = (string) $this->httpRequest->get('callbackPW');
-        if ($callbackPW != $this->callbackPassword) {
+        if ($callbackPW !== $this->callbackPassword) {
             throw new InvalidResponseException;
         }
 
-        $transStatus = $this->httpRequest->get('transStatus');
-        if (empty($transStatus)) {
-            throw new InvalidResponseException;
-        } elseif ($transStatus != 'Y') {
-            throw new Exception($this->httpRequest->get('rawAuthMessage'));
-        } else {
-            $gatewayReference = $this->httpRequest->get('transId');
-
-            return new Response($gatewayReference);
-        }
+        return new Response(
+            array(
+                'transStatus' => (string) $this->httpRequest->get('transStatus'),
+                'transId' => (string) $this->httpRequest->get('transId'),
+                'rawAuthMessage' => (string) $this->httpRequest->get('rawAuthMessage'),
+            )
+        );
     }
 
     protected function buildPurchase($options)

@@ -11,13 +11,32 @@
 
 namespace Tala\Billing\Dummy;
 
+use Tala\AbstractResponse;
+use Tala\Exception\InvalidResponseException;
+
 /**
  * Dummy Response
  */
-class Response extends \Tala\Response
+class Response extends AbstractResponse
 {
-    public function __construct()
+    protected $gatewayReference;
+
+    public function __construct($gatewayReference)
     {
-        $this->gatewayReference = uniqid();
+        if (empty($gatewayReference)) {
+            throw new InvalidResponseException;
+        }
+
+        $this->gatewayReference = $gatewayReference;
+    }
+
+    public function isSuccessful()
+    {
+        return true;
+    }
+
+    public function getGatewayReference()
+    {
+        return $this->gatewayReference;
     }
 }

@@ -9,38 +9,35 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Billing\Payflow;
+namespace Tala\Billing\TwoCheckout;
 
 use Tala\AbstractResponse;
 use Tala\Exception;
 use Tala\Exception\InvalidResponseException;
 
 /**
- * Payflow Response
+ * 2Checkout Response
  */
 class Response extends AbstractResponse
 {
-    public function __construct($data)
+    protected $gatewayReference;
+
+    public function __construct($gatewayReference)
     {
-        if (empty($data)) {
+        if (empty($gatewayReference)) {
             throw new InvalidResponseException;
         }
 
-        parse_str($data, $this->data);
+        $this->gatewayReference = $gatewayReference;
     }
 
     public function isSuccessful()
     {
-        return '0' === $this->data['RESULT'];
+        return true;
     }
 
     public function getGatewayReference()
     {
-        return $this->data['PNREF'];
-    }
-
-    public function getMessage()
-    {
-        return $this->data['RESPMSG'];
+        return $this->gatewayReference;
     }
 }

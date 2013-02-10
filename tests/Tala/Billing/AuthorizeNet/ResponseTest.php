@@ -13,33 +13,29 @@ namespace Tala\Billing\AuthorizeNet;
 
 class ResponseTest extends \PHPUnit_Framework_TestCase
 {
-    public function setUp()
+    /**
+     * @expectedException Tala\Exception\InvalidResponseException
+     */
+    public function testConstructEmpty()
     {
-        $fixture = '|1|,|1|,|1|,|This transaction has been approved.|,|JBFU0Z|,|Y|,|2176056642|,||,||,|11.00|,|CC|,|auth_only|,||,|Example|,|User|,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,|D2B892FCAB855C7CAD23C42840D9D922|,|P|,|2|,||,||,||,||,||,||,||,||,||,||,|XXXX0015|,|MasterCard|,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||';
-        $this->response = new Response($fixture);
-    }
-
-    public function testInvalidConstructor()
-    {
-        $this->setExpectedException('\Tala\Exception\InvalidResponseException');
         $response = new Response('');
     }
 
-    public function testErrorResponse()
+    public function testConstructSuccess()
     {
-        $this->setExpectedException('\Tala\Exception', 'The credit card number is invalid.');
-        $fixture = '|3|,|1|,|6|,|The credit card number is invalid.|,||,|P|,|0|,||,||,|11.00|,|CC|,|auth_only|,||,|Example|,|User|,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,|1FA778A21F0DA899BA8176E2E6E91C22|,||,||,||,||,||,||,||,||,||,||,||,||,|XXXX2222|,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||';
-        $response = new Response($fixture);
+        $response = new Response('|1|,|1|,|1|,|This transaction has been approved.|,|JBFU0Z|,|Y|,|2176056642|,||,||,|11.00|,|CC|,|auth_only|,||,|Example|,|User|,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,|D2B892FCAB855C7CAD23C42840D9D922|,|P|,|2|,||,||,||,||,||,||,||,||,||,||,|XXXX0015|,|MasterCard|,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||');
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame('2176056642', $response->getGatewayReference());
+        $this->assertSame('This transaction has been approved.', $response->getMessage());
     }
 
-    public function testGetMessage()
+    public function testConstructError()
     {
-        $this->assertEquals('This transaction has been approved.', $this->response->getMessage());
-    }
+        $response = new Response('|3|,|1|,|6|,|The credit card number is invalid.|,||,|P|,|0|,||,||,|11.00|,|CC|,|auth_only|,||,|Example|,|User|,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,|1FA778A21F0DA899BA8176E2E6E91C22|,||,||,||,||,||,||,||,||,||,||,||,||,|XXXX2222|,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||');
 
-    public function testGetData()
-    {
-        $data = $this->response->getData();
-        $this->assertEquals('auth_only', $data[11]);
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame('0', $response->getGatewayReference());
+        $this->assertSame('The credit card number is invalid.', $response->getMessage());
     }
 }

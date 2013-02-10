@@ -21,19 +21,19 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $response = new Response('');
     }
 
-    /**
-     * @expectedException Tala\Exception
-     * @expectedExceptionMessage User authentication failed
-     */
     public function testConstructError()
     {
         $response = new Response('RESULT=1&RESPMSG=User authentication failed');
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame('User authentication failed', $response->getMessage());
     }
 
     public function testConstructSuccess()
     {
         $response = new Response('RESULT=0&PNREF=V19R3EF62FBE&RESPMSG=Approved&AUTHCODE=048747&CVV2MATCH=Y');
 
+        $this->assertTrue($response->isSuccessful());
         $this->assertEquals('V19R3EF62FBE', $response->getGatewayReference());
         $this->assertEquals('Approved', $response->getMessage());
     }

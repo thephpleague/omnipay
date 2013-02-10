@@ -11,13 +11,14 @@
 
 namespace Tala\Billing\AuthorizeNet;
 
+use Tala\AbstractResponse;
 use Tala\Exception;
 use Tala\Exception\InvalidResponseException;
 
 /**
  * Authorize.Net Response
  */
-class Response extends \Tala\Response
+class Response extends AbstractResponse
 {
     public function __construct($data)
     {
@@ -26,12 +27,20 @@ class Response extends \Tala\Response
         if (count($this->data) < 10) {
             throw new InvalidResponseException();
         }
+    }
 
-        if ($this->data[0] != '1') {
-            throw new Exception($this->data[3]);
-        }
+    public function isSuccessful()
+    {
+        return '1' === $this->data[0];
+    }
 
-        $this->gatewayReference = $this->data[6];
-        $this->message = $this->data[3];
+    public function getGatewayReference()
+    {
+        return $this->data[6];
+    }
+
+    public function getMessage()
+    {
+        return $this->data[3];
     }
 }

@@ -11,20 +11,28 @@
 
 namespace Tala\Billing\PayPal;
 
+use Tala\AbstractResponse;
+
 /**
  * PayPal Express Class
  */
-class Response extends \Tala\Response
+class Response extends AbstractResponse
 {
-    public function __construct($responseData)
+    public function __construct($data)
     {
-        $this->data = $responseData;
+        $this->data = $data;
+    }
 
-        // find the reference
+    public function isSuccessful()
+    {
+        return true;
+    }
+
+    public function getGatewayReference()
+    {
         foreach (array('REFUNDTRANSACTIONID', 'TRANSACTIONID', 'PAYMENTINFO_0_TRANSACTIONID') as $key) {
             if (isset($this->data[$key])) {
-                $this->gatewayReference = $this->data[$key];
-                break;
+                return $this->data[$key];
             }
         }
     }

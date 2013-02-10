@@ -47,6 +47,6 @@ class Gateway extends AbstractGateway
         $source = $request->getCard();
         $source->validate();
 
-        return new Response;
+        return new Response(uniqid());
     }
 }

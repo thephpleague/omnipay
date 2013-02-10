@@ -56,7 +56,7 @@ class ProGatewayTest extends BaseGatewayTest
 
         $response = $this->gateway->authorize($this->options);
 
-        $this->assertInstanceOf('\Tala\Response', $response);
+        $this->assertTrue($response->isSuccessful());
         $this->assertEquals('7T274412RY6976239', $response->getGatewayReference());
     }
 
@@ -68,7 +68,7 @@ class ProGatewayTest extends BaseGatewayTest
 
         $response = $this->gateway->purchase($this->options);
 
-        $this->assertInstanceOf('\Tala\Response', $response);
+        $this->assertTrue($response->isSuccessful());
         $this->assertEquals('7T274412RY6976239', $response->getGatewayReference());
     }
 }

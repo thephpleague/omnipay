@@ -22,18 +22,24 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     public function testConstructRefundTransactionId()
     {
         $response = new Response(array('REFUNDTRANSACTIONID' => '11111'));
+
+        $this->assertTrue($response->isSuccessful());
         $this->assertEquals('11111', $response->getGatewayReference());
     }
 
     public function testConstructTransactionId()
     {
         $response = new Response(array('TRANSACTIONID' => '22222'));
+
+        $this->assertTrue($response->isSuccessful());
         $this->assertEquals('22222', $response->getGatewayReference());
     }
 
     public function testConstructPaymentTransactionId()
     {
         $response = new Response(array('PAYMENTINFO_0_TRANSACTIONID' => '33333'));
+
+        $this->assertTrue($response->isSuccessful());
         $this->assertEquals('33333', $response->getGatewayReference());
     }
 
@@ -41,6 +47,8 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $data = array('example' => 'value');
         $response = new Response($data);
+
+        $this->assertTrue($response->isSuccessful());
         $this->assertEquals($data, $response->getData());
     }
 }

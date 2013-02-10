@@ -21,13 +21,12 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $response = new Response("");
     }
 
-    /**
-     * @expectedException Tala\Exception
-     * @expectedExceptionMessage A description of the error.
-     */
     public function testConstructError()
     {
         $response = new Response('{"error":"standard_error_name","error_description":"A description of the error."}');
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame('A description of the error.', $response->getMessage());
     }
 
     public function testConstructSuccess()
@@ -59,6 +58,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
             }
         }');
 
+        $this->assertTrue($response->isSuccessful());
         $this->assertEquals('ch_lfUYEBK14zotCTykezJkfg', $response->getGatewayReference());
         $this->assertEquals('Success!', $response->getMessage());
     }

@@ -40,19 +40,19 @@ class GatewayTest extends BaseGatewayTest
         $response = $this->gateway->purchase($this->options);
 
         $this->assertInstanceOf('\Tala\RedirectResponse', $response);
+        $this->assertTrue($response->isRedirect());
         $this->assertEquals('https://epayment.bbs.no/Terminal/Default.aspx?merchantId=foo&transactionId=abc123', $response->getRedirectUrl());
     }
 
-    /**
-     * @expectedException \Tala\Exception
-     * @expectedExceptionMessage Authentication Error
-     */
     public function testPurchaseError()
     {
         $this->httpClient->shouldReceive('get')->with(m::type('string'))->once()
             ->andReturn('<Response><Error><Message>Authentication Error</Message></Error></Response>');
 
         $response = $this->gateway->purchase($this->options);
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame('Authentication Error', $response->getMessage());
     }
 
     public function testCompletePurchaseSuccess()
@@ -65,7 +65,7 @@ class GatewayTest extends BaseGatewayTest
 
         $response = $this->gateway->completePurchase($this->options);
 
-        $this->assertInstanceOf('\Tala\Billing\Netaxept\Response', $response);
+        $this->assertTrue($response->isSuccessful());
         $this->assertEquals('abc123', $response->getGatewayReference());
         $this->assertEquals('OK', $response->getMessage());
     }
@@ -80,14 +80,13 @@ class GatewayTest extends BaseGatewayTest
         $response = $this->gateway->completePurchase($this->options);
     }
 
-    /**
-     * @expectedException \Tala\Exception
-     * @expectedExceptionMessage FAILURE
-     */
     public function testCompletePurchaseError()
     {
         $this->httpRequest->shouldReceive('get')->with('responseCode')->once()->andReturn('FAILURE');
 
         $response = $this->gateway->completePurchase($this->options);
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame('FAILURE', $response->getMessage());
     }
 }

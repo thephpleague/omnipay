@@ -15,7 +15,6 @@ use Tala\AbstractGateway;
 use Tala\Exception\InvalidResponseException;
 use Tala\RedirectResponse;
 use Tala\Request;
-use Tala\Response;
 
 /**
  * 2Checkout Gateway

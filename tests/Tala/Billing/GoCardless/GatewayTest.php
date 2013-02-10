@@ -37,6 +37,7 @@ class GatewayTest extends BaseGatewayTest
         $response = $this->gateway->purchase($this->options);
 
         $this->assertInstanceOf('\Tala\RedirectResponse', $response);
+        $this->assertTrue($response->isRedirect());
         $this->assertStringStartsWith('https://gocardless.com/connect/bills/new?', $response->getRedirectUrl());
     }
 
@@ -54,14 +55,10 @@ class GatewayTest extends BaseGatewayTest
 
         $response = $this->gateway->completePurchase($this->options);
 
-        $this->assertInstanceOf('Tala\Billing\GoCardless\Response', $response);
+        $this->assertTrue($response->isSuccessful());
         $this->assertEquals('b', $response->getGatewayReference());
     }
 
-    /**
-     * @expectedException Tala\Exception
-     * @expectedExceptionMessage The resource cannot be confirmed
-     */
     public function testCompletePurchaseError()
     {
         $this->httpRequest->shouldReceive('get')->with('resource_uri')->once()->andReturn('a');
@@ -75,6 +72,9 @@ class GatewayTest extends BaseGatewayTest
             ->andReturn('{"error":["The resource cannot be confirmed"]}');
 
         $response = $this->gateway->completePurchase($this->options);
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame('The resource cannot be confirmed', $response->getMessage());
     }
 
     /**

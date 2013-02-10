@@ -31,14 +31,18 @@ use Tala\GatewayFactory;
 $gateway = GatewayFactory::create('Stripe');
 $gateway->setApiKey('abc123');
 
-try {
-    $card = new CreditCard(['number' => '4111111111111111', 'expiryMonth' => 6, 'expiryYear' => 2016]);
-    $request = $gateway->purchase(['amount' => 1000, 'card' => $card]);
+$card = new CreditCard(['number' => '4111111111111111', 'expiryMonth' => 6, 'expiryYear' => 2016]);
+$response = $gateway->purchase(['amount' => 1000, 'card' => $card]);
+
+if ($response->isSuccessful()) {
     // payment was successful: update database
-    print_r($request);
-} catch (Exception $e) {
-    // payment failed: display message to customer
-    exit($e->getMessage());
+    print_r($response);
+} elseif ($response->isRedirect()) {
+    // redirect to offsite payment gateway
+    $response->redirect();
+} else {
+    // payment failed, display message to customer
+    exit($response->getMessage());
 }
 ```
 
@@ -188,6 +192,22 @@ $number = $card->getNumber();
 $card->setFirstName('Adrian');
 ```
 
+If you submit credit card details which are obviously invalid (missing required fields, or a number
+which fails the Luhn check), [Tala\Exception\InvalidCreditCardException](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Exception/InvalidCreditCardException.php)
+will be thrown.  You should validate the card details using your framework's validation library
+before submitting the details to your gateway, to avoid unnecessary API calls.
+
+For on-site payment gateways, the following card fields are always required:
+
+* firstName
+* lastName
+* number
+* expiryMonth
+* expiryYear
+* cvv
+
+You can also verify the card number using the Luhn algorithm by calling `Tala\Helper::validateLuhn($number)`.
+
 ## Gateway Methods
 
 The main methods implemented by gateways are:
@@ -269,10 +289,12 @@ After processing a payment, the cart should check whether the response requires 
 
 ```php
 $response = $gateway->purchase(1000, $card);
-if ($response->isRedirect()) {
+if ($response->isSuccessful()) {
+    // payment is complete
+} elseif ($response->isRedirect()) {
     $response->redirect(); // this will automatically forward the customer
 } else {
-    // payment is complete
+    // not successful
 }
 ```
 
@@ -289,15 +311,28 @@ $data = $response->getFormData(); // associative array of fields which must be p
 
 ## Error Handling
 
-If there is an error with the payment, an Exception is thrown. Standard exceptions are provided, or gateways
-can define their own exceptions. All payments should be wrapped in a try-catch block:
+You can test for a successful response by calling `isSuccessful()` on the response object. If there
+was an error communicating with the gateway, or your request was obviously invalid, an exception
+will be thrown. In general, if the gateway does not throw an exception, but returns an unsuccessful
+response, it is a message you should display to the customer. If an exception is thrown, it is
+either a bug in your code (missing required fields), or a communication error with the gateway.
+
+You can handle both scenarios by wrapping the entire request in a try-catch block:
 
 ```php
 try {
     $response = $gateway->purchase(1000, $card);
-    // mark order as complete
-} catch (\Tala\Exception $e) {
-    // display error to the user
+    if ($response->isSuccessful()) {
+        // mark order as complete
+    } elseif ($response->isRedirect()) {
+        $response->redirect();
+    } else {
+        // display error to customer
+        exit($response->getMessage());
+    }
+} catch (\Exception $e) {
+    // internal error, log exception and display a generic message to the customer
+    exit('Sorry, there was an error processing your payment. Please try again later.');
 }
 ```
 

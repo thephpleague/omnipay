@@ -19,15 +19,26 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $response = new Response(new SimpleXmlElement('<Response><ResponseCode>OK</ResponseCode><TransactionId>abc123</TransactionId></Response>'));
 
+        $this->assertTrue($response->isSuccessful());
         $this->assertEquals('abc123', $response->getGatewayReference());
+        $this->assertSame('OK', $response->getMessage());
     }
 
-    /**
-     * @expectedException \Tala\Exception
-     * @expectedExceptionMessage FAILURE
-     */
-    public function testConstructError()
+    public function testConstructFailure()
     {
         $response = new Response(new SimpleXmlElement('<Response><ResponseCode>FAILURE</ResponseCode></Response>'));
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertNull($response->getGatewayReference());
+        $this->assertSame('FAILURE', $response->getMessage());
+    }
+
+    public function testConstructError()
+    {
+        $response = new Response(new SimpleXmlElement('<Response><Error><Message>Authentication Error</Message></Error></Response>'));
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertNull($response->getGatewayReference());
+        $this->assertSame('Authentication Error', $response->getMessage());
     }
 }

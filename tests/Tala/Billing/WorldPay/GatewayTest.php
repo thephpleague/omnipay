@@ -36,6 +36,7 @@ class GatewayTest extends BaseGatewayTest
         $response = $this->gateway->purchase($this->options);
 
         $this->assertInstanceOf('\Tala\RedirectResponse', $response);
+        $this->assertTrue($response->isRedirect());
         $this->assertContains('https://secure.worldpay.com/wcc/purchase?', $response->getRedirectUrl());
     }
 
@@ -44,10 +45,11 @@ class GatewayTest extends BaseGatewayTest
         $this->httpRequest->shouldReceive('get')->with('callbackPW')->once()->andReturn('bar123');
         $this->httpRequest->shouldReceive('get')->with('transStatus')->once()->andReturn('Y');
         $this->httpRequest->shouldReceive('get')->with('transId')->once()->andReturn('abc123');
+        $this->httpRequest->shouldReceive('get')->with('rawAuthMessage')->once()->andReturn(null);
 
         $response = $this->gateway->completePurchase($this->options);
 
-        $this->assertInstanceOf('\Tala\Response', $response);
+        $this->assertTrue($response->isSuccessful());
         $this->assertEquals('abc123', $response->getGatewayReference());
     }
 
@@ -61,16 +63,16 @@ class GatewayTest extends BaseGatewayTest
         $response = $this->gateway->completePurchase($this->options);
     }
 
-    /**
-     * @expectedException \Tala\Exception
-     * @expectedExceptionMessage Declined
-     */
     public function testCompletePurchaseError()
     {
         $this->httpRequest->shouldReceive('get')->with('callbackPW')->once()->andReturn('bar123');
         $this->httpRequest->shouldReceive('get')->with('transStatus')->once()->andReturn('N');
+        $this->httpRequest->shouldReceive('get')->with('transId')->once()->andReturn(null);
         $this->httpRequest->shouldReceive('get')->with('rawAuthMessage')->once()->andReturn('Declined');
 
         $response = $this->gateway->completePurchase($this->options);
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame('Declined', $response->getMessage());
     }
 }

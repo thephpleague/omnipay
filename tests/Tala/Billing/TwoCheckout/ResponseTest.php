@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Billing\Dummy;
+namespace Tala\Billing\TwoCheckout;
 
 class ResponseTest extends \PHPUnit_Framework_TestCase
 {

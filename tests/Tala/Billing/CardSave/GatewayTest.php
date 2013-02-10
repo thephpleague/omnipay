@@ -48,13 +48,10 @@ class GatewayTest extends BaseGatewayTest
         $response = $this->gateway->purchase($this->options);
 
         $this->assertInstanceOf('\Tala\Billing\CardSave\Response', $response);
+        $this->assertTrue($response->isSuccessful());
         $this->assertEquals('130114063233159001702222', $response->getGatewayReference());
     }
 
-    /**
-     * @expectedException \Tala\Exception
-     * @expectedExceptionMessage Input variable errors
-     */
     public function testPurchaseError()
     {
         $this->httpClient->shouldReceive('post')
@@ -62,5 +59,8 @@ class GatewayTest extends BaseGatewayTest
             ->andReturn('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><CardDetailsTransactionResponse xmlns="https://www.thepaymentgateway.net/"><CardDetailsTransactionResult AuthorisationAttempted="False"><StatusCode>30</StatusCode><Message>Input variable errors</Message><ErrorMessages><MessageDetail><Detail>Required variable (PaymentMessage.TransactionDetails.OrderID) is missing</Detail></MessageDetail></ErrorMessages></CardDetailsTransactionResult><TransactionOutputData /></CardDetailsTransactionResponse></soap:Body></soap:Envelope>');
 
         $response = $this->gateway->purchase($this->options);
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame('Input variable errors', $response->getMessage());
     }
 }

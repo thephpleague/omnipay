@@ -11,20 +11,41 @@
 
 namespace Tala\Billing\Netaxept;
 
+use Tala\AbstractResponse;
 use Tala\Exception;
 
 /**
  * Netaxept Response
  */
-class Response extends \Tala\Response
+class Response extends AbstractResponse
 {
     public function __construct($data)
     {
-        if ((string) $data->ResponseCode != 'OK') {
-            throw new Exception((string) $data->ResponseCode);
+        $this->data = $data;
+    }
+
+    public function isSuccessful()
+    {
+        if (isset($this->data->Error)) {
+            return false;
         }
 
-        $this->gatewayReference = (string) $data->TransactionId;
-        $this->message = (string) $data->ResponseCode;
+        return 'OK' === (string) $this->data->ResponseCode;
+    }
+
+    public function getGatewayReference()
+    {
+        if ($this->isSuccessful()) {
+            return (string) $this->data->TransactionId;
+        }
+    }
+
+    public function getMessage()
+    {
+        if (isset($this->data->Error)) {
+            return (string) $this->data->Error->Message;
+        } else {
+            return (string) $this->data->ResponseCode;
+        }
     }
 }

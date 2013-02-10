@@ -48,14 +48,10 @@ class PxPostGatewayTest extends BaseGatewayTest
 
         $response = $this->gateway->authorize($this->options);
 
-        $this->assertInstanceOf('\Tala\Response', $response);
+        $this->assertTrue($response->isSuccessful());
         $this->assertEquals('000000030884cdc6', $response->getGatewayReference());
     }
 
-    /**
-     * @expectedException Tala\Exception
-     * @expectedExceptionMessage Transaction Declined
-     */
     public function testAuthorizeFailure()
     {
         $this->httpClient->shouldReceive('post')
@@ -63,6 +59,9 @@ class PxPostGatewayTest extends BaseGatewayTest
             ->andReturn('<Txn><HelpText>Transaction Declined</HelpText><Success>0</Success></Txn>');
 
         $response = $this->gateway->authorize($this->options);
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame('Transaction Declined', $response->getMessage());
     }
 
     public function testCaptureSuccess()
@@ -78,7 +77,7 @@ class PxPostGatewayTest extends BaseGatewayTest
 
         $response = $this->gateway->capture($options);
 
-        $this->assertInstanceOf('\Tala\Response', $response);
+        $this->assertTrue($response->isSuccessful());
         $this->assertEquals('000000030884cdc6', $response->getGatewayReference());
     }
 
@@ -90,14 +89,10 @@ class PxPostGatewayTest extends BaseGatewayTest
 
         $response = $this->gateway->purchase($this->options);
 
-        $this->assertInstanceOf('\Tala\Response', $response);
+        $this->assertTrue($response->isSuccessful());
         $this->assertEquals('000000030884cdc6', $response->getGatewayReference());
     }
 
-    /**
-     * @expectedException Tala\Exception
-     * @expectedExceptionMessage Transaction Declined
-     */
     public function testPurchaseFailure()
     {
         $this->httpClient->shouldReceive('post')
@@ -105,6 +100,9 @@ class PxPostGatewayTest extends BaseGatewayTest
             ->andReturn('<Txn><HelpText>Transaction Declined</HelpText><Success>0</Success></Txn>');
 
         $response = $this->gateway->purchase($this->options);
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame('Transaction Declined', $response->getMessage());
     }
 
     public function testRefundSuccess()
@@ -120,7 +118,7 @@ class PxPostGatewayTest extends BaseGatewayTest
 
         $response = $this->gateway->refund($options);
 
-        $this->assertInstanceOf('\Tala\Response', $response);
+        $this->assertTrue($response->isSuccessful());
         $this->assertEquals('000000030884cdc6', $response->getGatewayReference());
     }
 }

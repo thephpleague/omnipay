@@ -46,13 +46,10 @@ class ProGatewayTest extends BaseGatewayTest
 
         $response = $this->gateway->authorize($this->options);
 
+        $this->assertTrue($response->isSuccessful());
         $this->assertEquals('V19R3EF62FBE', $response->getGatewayReference());
     }
 
-    /**
-     * @expectedException Tala\Exception
-     * @expectedExceptionMessage User authentication failed
-     */
     public function testAuthorizeError()
     {
         $this->httpClient->shouldReceive('post')->once()
@@ -60,6 +57,9 @@ class ProGatewayTest extends BaseGatewayTest
             ->andReturn('RESULT=1&RESPMSG=User authentication failed');
 
         $response = $this->gateway->authorize($this->options);
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame('User authentication failed', $response->getMessage());
     }
 
     public function testCapture()
@@ -75,6 +75,7 @@ class ProGatewayTest extends BaseGatewayTest
 
         $response = $this->gateway->capture($options);
 
+        $this->assertTrue($response->isSuccessful());
         $this->assertEquals('V19R3EF62FBE', $response->getGatewayReference());
     }
 
@@ -86,13 +87,10 @@ class ProGatewayTest extends BaseGatewayTest
 
         $response = $this->gateway->purchase($this->options);
 
+        $this->assertTrue($response->isSuccessful());
         $this->assertEquals('V19R3EF62FBE', $response->getGatewayReference());
     }
 
-    /**
-     * @expectedException Tala\Exception
-     * @expectedExceptionMessage User authentication failed
-     */
     public function testPurchaseError()
     {
         $this->httpClient->shouldReceive('post')->once()
@@ -100,6 +98,9 @@ class ProGatewayTest extends BaseGatewayTest
             ->andReturn('RESULT=1&RESPMSG=User authentication failed');
 
         $response = $this->gateway->purchase($this->options);
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame('User authentication failed', $response->getMessage());
     }
 
     public function testRefund()
@@ -115,6 +116,7 @@ class ProGatewayTest extends BaseGatewayTest
 
         $response = $this->gateway->refund($options);
 
+        $this->assertTrue($response->isSuccessful());
         $this->assertEquals('V19R3EF62FBE', $response->getGatewayReference());
     }
 }

@@ -11,26 +11,41 @@
 
 namespace Tala\Billing\GoCardless;
 
+use Tala\AbstractResponse;
 use Tala\Exception;
 use Tala\Exception\InvalidResponseException;
 
 /**
  * GoCardless Response
  */
-class Response extends \Tala\Response
+class Response extends AbstractResponse
 {
-    public function __construct($data, $resourceId)
+    protected $gatewayReference;
+
+    public function __construct($data, $gatewayReference)
     {
-        $this->data = json_decode($data);
-
-        if (empty($this->data->success)) {
-            if (isset($this->data->error)) {
-                throw new Exception(reset($this->data->error));
-            }
-
+        if (empty($data) or empty($gatewayReference)) {
             throw new InvalidResponseException;
         }
 
-        $this->gatewayReference = $resourceId;
+        $this->data = json_decode($data);
+        $this->gatewayReference = $gatewayReference;
+    }
+
+    public function isSuccessful()
+    {
+        return !isset($this->data->error);
+    }
+
+    public function getGatewayReference()
+    {
+        return $this->gatewayReference;
+    }
+
+    public function getMessage()
+    {
+        if (!$this->isSuccessful()) {
+            return reset($this->data->error);
+        }
     }
 }

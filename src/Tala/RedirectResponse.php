@@ -11,10 +11,12 @@
 
 namespace Tala;
 
+use Symfony\Component\HttpFoundation\RedirectResponse as HttpRedirectResponse;
+
 /**
  * Redirect Response class
  */
-class RedirectResponse extends Response
+class RedirectResponse extends AbstractResponse
 {
     protected $redirectUrl;
 
@@ -28,28 +30,14 @@ class RedirectResponse extends Response
         $this->redirectUrl = $url;
     }
 
-    /**
-     * Does the request require a browser redirect?
-     */
-    public function isRedirect()
-    {
-        return true;
-    }
-
-    /**
-     * Was the request successful?
-     */
     public function isSuccessful()
     {
         return false;
     }
 
-    /**
-     * Gets the response message from the payment gateway.
-     */
-    public function getMessage()
+    public function isRedirect()
     {
-        return null;
+        return true;
     }
 
     /**
@@ -63,9 +51,8 @@ class RedirectResponse extends Response
     /**
      * Perform the required redirect.
      */
-    public function redirect($httpRedirectResponseClass = '\Symfony\Component\HttpFoundation\RedirectResponse')
+    public function redirect()
     {
-        $response = new $httpRedirectResponseClass($this->redirectUrl);
-        $response->send();
+        HttpRedirectResponse::create($this->redirectUrl)->send();
     }
 }

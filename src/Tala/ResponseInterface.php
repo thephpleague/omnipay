@@ -17,22 +17,40 @@ namespace Tala;
 interface ResponseInterface
 {
     /**
-     * Does the request require a redirect?
+     * Is the response successful?
+     *
+     * @return boolean
+     */
+    public function isSuccessful();
+
+    /**
+     * Does the response require a redirect?
+     *
+     * @return boolean
      */
     public function isRedirect();
 
     /**
-     * Access raw data returned by the payment gateway.
+     * Response Data
+     *
+     * The format of this will vary from gateway to gateway. For example, some gateways
+     * will return a SimpleXMLElement, while others may return an array.
+     *
+     * @return mixed Raw data returned from the payment gateway request
      */
     public function getData();
 
     /**
-     * Gets the response message from the payment gateway.
+     * Response Message
+     *
+     * @return string A response message from the payment gateway
      */
     public function getMessage();
 
     /**
-     * Get a reference provided by the gateway for this transaction.
+     * Gateway Reference
+     *
+     * @return string A reference provided by the gateway to represent this transaction
      */
     public function getGatewayReference();
 }

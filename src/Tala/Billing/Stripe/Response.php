@@ -11,13 +11,14 @@
 
 namespace Tala\Billing\Stripe;
 
+use Tala\AbstractResponse;
 use Tala\Exception;
 use Tala\Exception\InvalidResponseException;
 
 /**
  * Stripe Response
  */
-class Response extends \Tala\Response
+class Response extends AbstractResponse
 {
     public function __construct($data)
     {
@@ -25,10 +26,23 @@ class Response extends \Tala\Response
 
         if (empty($this->data)) {
             throw new InvalidResponseException;
-        } elseif (isset($this->data->error)) {
-            throw new Exception($this->data->error->message);
         }
+    }
 
-        $this->gatewayReference = $this->data->id;
+    public function isSuccessful()
+    {
+        return !isset($this->data->error);
+    }
+
+    public function getGatewayReference()
+    {
+        return $this->data->id;
+    }
+
+    public function getMessage()
+    {
+        if (!$this->isSuccessful()) {
+            return $this->data->error->message;
+        }
     }
 }

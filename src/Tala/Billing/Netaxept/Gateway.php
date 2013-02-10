@@ -80,6 +80,10 @@ class Gateway extends AbstractGateway
         $data = $this->buildPurchaseRequest($options);
         $response = $this->send('/Netaxept/Register.aspx', $data);
 
+        if (isset($response->Error)) {
+            return new Response($response);
+        }
+
         $redirectData = array(
             'merchantId' => $this->merchantId,
             'transactionId' => (string) $response->TransactionId,
@@ -95,8 +99,9 @@ class Gateway extends AbstractGateway
         $responseCode = $this->httpRequest->get('responseCode');
         if (empty($responseCode)) {
             throw new InvalidResponseException;
-        } elseif ($responseCode != 'OK') {
-            throw new Exception($responseCode);
+        }
+        if ('OK' !== $responseCode) {
+            return new ErrorResponse($responseCode);
         }
 
         $data = array(
@@ -147,12 +152,6 @@ class Gateway extends AbstractGateway
 
         $xml = new SimpleXMLElement($response);
         if (empty($xml)) {
-            throw new InvalidResponseException;
-        }
-        if (isset($xml->Error) AND isset($xml->Error->Message)) {
-            throw new Exception((string) $xml->Error->Message);
-        }
-        if (empty($xml->TransactionId)) {
             throw new InvalidResponseException;
         }
 

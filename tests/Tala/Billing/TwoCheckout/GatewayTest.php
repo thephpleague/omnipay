@@ -53,7 +53,7 @@ class GatewayTest extends BaseGatewayTest
         $this->httpRequest->shouldReceive('get')->with('key')->once()
             ->andReturn('ZZZ');
 
-        $this->gateway->completePurchase($this->options);
+        $response = $this->gateway->completePurchase($this->options);
     }
 
     public function testCompletePurchaseSuccess()
@@ -64,6 +64,8 @@ class GatewayTest extends BaseGatewayTest
         $this->httpRequest->shouldReceive('get')->with('key')->once()
             ->andReturn(strtoupper(md5('123abc510.00')));
 
-        $this->gateway->completePurchase($this->options);
+        $response = $this->gateway->completePurchase($this->options);
+
+        $this->assertTrue($response->isSuccessful());
     }
 }

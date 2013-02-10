@@ -16,24 +16,33 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException Tala\Exception\InvalidResponseException
      */
-    public function testConstructEmpty()
+    public function testConstructEmptyData()
     {
-        $response = new Response('', '');
+        $response = new Response('', 'abc');
     }
-
     /**
-     * @expectedException Tala\Exception
-     * @expectedExceptionMessage The resource cannot be confirmed
+     * @expectedException Tala\Exception\InvalidResponseException
      */
-    public function testConstructError()
+    public function testConstructEmptyReference()
     {
-        $response = new Response('{"error":["The resource cannot be confirmed"]}', 'abc');
+        $response = new Response('{"success":true}', '');
     }
 
     public function testConstructSuccess()
     {
         $response = new Response('{"success":true}', 'abc');
 
-        $this->assertEquals('abc', $response->getGatewayReference());
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame('abc', $response->getGatewayReference());
+        $this->assertNull($response->getMessage());
+    }
+
+    public function testConstructError()
+    {
+        $response = new Response('{"error":["The resource cannot be confirmed"]}', 'abc');
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame('abc', $response->getGatewayReference());
+        $this->assertSame('The resource cannot be confirmed', $response->getMessage());
     }
 }

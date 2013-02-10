@@ -11,29 +11,41 @@
 
 namespace Tala\Billing\PaymentExpress;
 
+use SimpleXMLElement;
+use Tala\AbstractResponse;
 use Tala\Exception;
 use Tala\Exception\InvalidResponseException;
 
 /**
  * DPS PaymentExpress PxPost Response
  */
-class Response extends \Tala\Response
+class Response extends AbstractResponse
 {
     public function __construct($data)
     {
-        try {
-            $this->data = new \SimpleXMLElement($data);
-        } catch (\Exception $e) {
-            throw new InvalidResponseException($e->getMessage(), $e->getCode(), $e);
+        if (empty($data)) {
+            throw new InvalidResponseException;
         }
 
-        if ((int) $this->data->Success == 1) {
-            $this->message = (string) $this->data->HelpText;
-            $this->gatewayReference = (string) $this->data->DpsTxnRef;
-        } elseif (isset($this->data->HelpText)) {
-            throw new Exception((string) $this->data->HelpText);
+        $this->data = new SimpleXMLElement($data);
+    }
+
+    public function isSuccessful()
+    {
+        return 1 === (int) $this->data->Success;
+    }
+
+    public function getGatewayReference()
+    {
+        return (string) $this->data->DpsTxnRef;
+    }
+
+    public function getMessage()
+    {
+        if (isset($this->data->HelpText)) {
+            return (string) $this->data->HelpText;
         } else {
-            throw new Exception((string) $this->data->ResponseText);
+            return (string) $this->data->ResponseText;
         }
     }
 }

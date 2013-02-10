@@ -11,13 +11,14 @@
 
 namespace Tala\Billing\Pin;
 
+use Tala\AbstractResponse;
 use Tala\Exception;
 use Tala\Exception\InvalidResponseException;
 
 /**
  * Pin Response
  */
-class Response extends \Tala\Response
+class Response extends AbstractResponse
 {
     public function __construct($data)
     {
@@ -25,11 +26,25 @@ class Response extends \Tala\Response
 
         if (empty($this->data)) {
             throw new InvalidResponseException;
-        } elseif (isset($this->data->error)) {
-            throw new Exception($this->data->error_description);
         }
+    }
 
-        $this->message = $this->data->response->status_message;
-        $this->gatewayReference = $this->data->response->token;
+    public function isSuccessful()
+    {
+        return !isset($this->data->error);
+    }
+
+    public function getGatewayReference()
+    {
+        return $this->data->response->token;
+    }
+
+    public function getMessage()
+    {
+        if ($this->isSuccessful()) {
+            return $this->data->response->status_message;
+        } else {
+            return $this->data->error_description;
+        }
     }
 }

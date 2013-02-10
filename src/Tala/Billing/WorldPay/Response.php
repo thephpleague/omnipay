@@ -9,38 +9,38 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Billing\Payflow;
+namespace Tala\Billing\WorldPay;
 
 use Tala\AbstractResponse;
 use Tala\Exception;
 use Tala\Exception\InvalidResponseException;
 
 /**
- * Payflow Response
+ * WorldPay Response
  */
 class Response extends AbstractResponse
 {
     public function __construct($data)
     {
-        if (empty($data)) {
+        if (empty($data['transStatus'])) {
             throw new InvalidResponseException;
         }
 
-        parse_str($data, $this->data);
+        $this->data = $data;
     }
 
     public function isSuccessful()
     {
-        return '0' === $this->data['RESULT'];
+        return 'Y' === $this->data['transStatus'];
     }
 
     public function getGatewayReference()
     {
-        return $this->data['PNREF'];
+        return $this->data['transId'];
     }
 
     public function getMessage()
     {
-        return $this->data['RESPMSG'];
+        return $this->data['rawAuthMessage'];
     }
 }

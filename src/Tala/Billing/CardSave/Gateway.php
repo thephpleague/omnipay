@@ -175,23 +175,18 @@ class Gateway extends AbstractGateway
         }
 
         $status = (int) $response->$resultElement->StatusCode;
-        switch ($status) {
-            case 0:
-                // success
-                return new Response($response);
-            case 3:
-                // redirect for 3d authentication
-                $redirectUrl = (string) $response->TransactionOutputData->ThreeDSecureOutputData->ACSURL;
-                $redirectData = array(
-                    'PaReq' => (string) $response->TransactionOutputData->ThreeDSecureOutputData->PaREQ,
-                    'TermUrl' => $request->getReturnUrl(),
-                    'MD' => (string) $response->TransactionOutputData['CrossReference'],
-                );
+        if (3 === $status) {
+            // redirect for 3d authentication
+            $redirectUrl = (string) $response->TransactionOutputData->ThreeDSecureOutputData->ACSURL;
+            $redirectData = array(
+                'PaReq' => (string) $response->TransactionOutputData->ThreeDSecureOutputData->PaREQ,
+                'TermUrl' => $request->getReturnUrl(),
+                'MD' => (string) $response->TransactionOutputData['CrossReference'],
+            );
 
-                return new FormRedirectResponse($redirectUrl, $redirectData);
-            default:
-                // error
-                throw new Exception((string) $response->$resultElement->Message);
+            return new FormRedirectResponse($redirectUrl, $redirectData);
         }
+
+        return new Response($response);
     }
 }

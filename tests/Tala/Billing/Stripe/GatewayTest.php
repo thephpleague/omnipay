@@ -30,17 +30,16 @@ class GatewayTest extends BaseGatewayTest
         );
     }
 
-    /**
-     * @expectedException Tala\Exception
-     * @expectedExceptionMessage Your card number is incorrect
-     */
     public function testPurchaseError()
     {
         $this->httpClient->shouldReceive('post')->once()
             ->with('https://api.stripe.com/v1/charges', m::type('array'), array('Authorization: Basic YWJjMTIzOg=='))
             ->andReturn('{"error":{"message":"Your card number is incorrect"}}');
 
-        $this->gateway->purchase($this->options);
+        $response = $this->gateway->purchase($this->options);
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame('Your card number is incorrect', $response->getMessage());
     }
 
     public function testPurchaseSuccess()
@@ -51,20 +50,20 @@ class GatewayTest extends BaseGatewayTest
 
         $response = $this->gateway->purchase($this->options);
 
+        $this->assertTrue($response->isSuccessful());
         $this->assertEquals('ch_12RgN9L7XhO9mI', $response->getGatewayReference());
     }
 
-    /**
-     * @expectedException Tala\Exception
-     * @expectedExceptionMessage Charge ch_12RgN9L7XhO9mI has already been refunded.
-     */
     public function testRefundError()
     {
         $this->httpClient->shouldReceive('post')->once()
             ->with('https://api.stripe.com/v1/charges/ch_12RgN9L7XhO9mI/refund', m::type('array'), array('Authorization: Basic YWJjMTIzOg=='))
             ->andReturn('{"error":{"message":"Charge ch_12RgN9L7XhO9mI has already been refunded."}}');
 
-        $this->gateway->refund(array('amount' => 1000, 'gatewayReference' => 'ch_12RgN9L7XhO9mI'));
+        $response = $this->gateway->refund(array('amount' => 1000, 'gatewayReference' => 'ch_12RgN9L7XhO9mI'));
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame('Charge ch_12RgN9L7XhO9mI has already been refunded.', $response->getMessage());
     }
 
     public function testRefundSuccess()
@@ -75,6 +74,7 @@ class GatewayTest extends BaseGatewayTest
 
         $response = $this->gateway->refund(array('amount' => 1000, 'gatewayReference' => 'ch_12RgN9L7XhO9mI'));
 
+        $this->assertTrue($response->isSuccessful());
         $this->assertEquals('ch_12RgN9L7XhO9mI', $response->getGatewayReference());
     }
 }

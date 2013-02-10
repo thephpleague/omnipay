@@ -65,7 +65,7 @@ class PxPayGatewayTest extends BaseGatewayTest
 
         $response = $this->gateway->completeAuthorize($this->options);
 
-        $this->assertInstanceOf('\Tala\Billing\PaymentExpress\Response', $response);
+        $this->assertTrue($response->isSuccessful());
         $this->assertEquals(5, $response->getGatewayReference());
     }
 
@@ -80,10 +80,6 @@ class PxPayGatewayTest extends BaseGatewayTest
         $response = $this->gateway->completeAuthorize($this->options);
     }
 
-    /**
-     * @expectedException Tala\Exception
-     * @expectedExceptionMessage Error processing payment
-     */
     public function testCompleteAuthorizeError()
     {
         $this->httpRequest->shouldReceive('get')->with('result')->once()
@@ -94,6 +90,9 @@ class PxPayGatewayTest extends BaseGatewayTest
             ->andReturn('<Response><Success>0</Success><ResponseText>Error processing payment</ResponseText></Response>');
 
         $response = $this->gateway->completeAuthorize($this->options);
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame('Error processing payment', $response->getMessage());
     }
 
     public function testPurchaseSuccess()
@@ -131,7 +130,7 @@ class PxPayGatewayTest extends BaseGatewayTest
 
         $response = $this->gateway->completePurchase($this->options);
 
-        $this->assertInstanceOf('\Tala\Billing\PaymentExpress\Response', $response);
+        $this->assertTrue($response->isSuccessful());
         $this->assertEquals(5, $response->getGatewayReference());
     }
 
@@ -146,10 +145,6 @@ class PxPayGatewayTest extends BaseGatewayTest
         $response = $this->gateway->completePurchase($this->options);
     }
 
-    /**
-     * @expectedException Tala\Exception
-     * @expectedExceptionMessage Error processing payment
-     */
     public function testCompletePurchaseError()
     {
         $this->httpRequest->shouldReceive('get')->with('result')->once()
@@ -160,5 +155,8 @@ class PxPayGatewayTest extends BaseGatewayTest
             ->andReturn('<Response><Success>0</Success><ResponseText>Error processing payment</ResponseText></Response>');
 
         $response = $this->gateway->completePurchase($this->options);
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame('Error processing payment', $response->getMessage());
     }
 }

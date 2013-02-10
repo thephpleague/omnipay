@@ -21,10 +21,6 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $response = new Response("");
     }
 
-    /**
-     * @expectedException Tala\Exception
-     * @expectedExceptionMessage Your card number is incorrect
-     */
     public function testConstructError()
     {
         $response = new Response('{"error":{
@@ -32,6 +28,9 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
             "message": "Your card number is incorrect",
             "param": "number",
             "type": "card_error"}}');
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame('Your card number is incorrect', $response->getMessage());
     }
 
     public function testConstructSuccess()
@@ -79,6 +78,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
             "description": null,
             "dispute": null}');
 
+        $this->assertTrue($response->isSuccessful());
         $this->assertEquals('ch_12RgN9L7XhO9mI', $response->getGatewayReference());
     }
 }

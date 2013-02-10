@@ -42,6 +42,7 @@ class GatewayTest extends BaseGatewayTest
         $response = $this->gateway->authorize($this->options);
 
         $this->assertInstanceOf('\Tala\Billing\Dummy\Response', $response);
+        $this->assertTrue($response->isSuccessful());
     }
 
     public function testPurchase()
@@ -49,5 +50,6 @@ class GatewayTest extends BaseGatewayTest
         $response = $this->gateway->purchase($this->options);
 
         $this->assertInstanceOf('\Tala\Billing\Dummy\Response', $response);
+        $this->assertTrue($response->isSuccessful());
     }
 }

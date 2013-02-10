@@ -38,17 +38,16 @@ class GatewayTest extends BaseGatewayTest
         );
     }
 
-    /**
-     * @expectedException Tala\Exception
-     * @expectedExceptionMessage A description of the error.
-     */
     public function testPurchaseError()
     {
         $this->httpClient->shouldReceive('post')->once()
             ->with('https://api.pin.net.au/1/charges', m::type('array'), m::type('array'))
             ->andReturn('{"error":"standard_error_name","error_description":"A description of the error."}');
 
-        $this->gateway->purchase($this->options);
+        $response = $this->gateway->purchase($this->options);
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame('A description of the error.', $response->getMessage());
     }
 
     public function testPurchaseSuccess()
@@ -59,6 +58,7 @@ class GatewayTest extends BaseGatewayTest
 
         $response = $this->gateway->purchase($this->options);
 
+        $this->assertTrue($response->isSuccessful());
         $this->assertEquals('ch_lfUYEBK14zotCTykezJkfg', $response->getGatewayReference());
     }
 }
