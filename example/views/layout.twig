@@ -10,8 +10,12 @@
         <h1>{{ title }}</h1>
 
         {% set success = app.session.flash('success') %}
+        {% set error = app.session.flash('error') %}
         {% if success %}
             <div class="alert alert-success">{{ success }}</div>
+        {% endif %}
+        {% if error %}
+            <div class="alert alert-error">{{ error }}</div>
         {% endif %}
 
         {% block content %}{% endblock %}

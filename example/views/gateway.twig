@@ -9,15 +9,25 @@
     <h3>Gateway Settings</h3>
     <p><span class="label label-info">Note</span> These settings will be stored in your session and used to create test purchases.</p>
 
-    <form method="post">
+    <form method="post" class="form-horizontal">
+
         {% for key, default in gateway.defineSettings %}
-            <p>
-                <label for="{{ key }}">{{ key }}</label>
-                <input type="text" name="gateway[{{key}}]" value="{{ settings[key] }}" />
-            </p>
+
+            <div class="control-group">
+                <label class="control-label" for="gateway_{{key}}">{{ key }}</label>
+                <div class="controls">
+                    <input type="text" name="gateway[{{key}}]" id="gateway_{{key}}" value="{{settings[key]}}" />
+                </div>
+            </div>
+
         {% endfor %}
 
-        <p><input type="submit" value="Save" class="btn" /></p>
+        <div class="form-actions"><button type="submit" class="btn">Save</button></div>
     </form>
+
+    <h3>Gateway Methods</h3>
+    <ul>
+        <li><a href="/gateways/{{gateway.shortName}}/purchase">purchase()</a></li>
+    </ul>
 
 {% endblock %}

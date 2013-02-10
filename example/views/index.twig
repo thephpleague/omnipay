@@ -6,7 +6,7 @@
 
     <ul>
         {% for gateway in gateways %}
-            <li><a href="/gateways/{{ gateway }}">{{ gateway }}</a></li>
+            <li><a href="/gateways/{{ gateway.shortName }}">{{ gateway.name }}</a></li>
         {% endfor %}
     </ul>
 {% endblock %}

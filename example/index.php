@@ -31,7 +31,9 @@ $app->before( function() use ( $app ) {
 
 // root route
 $app->get('/', function() use ($app) {
-    $gateways = Tala\GatewayFactory::getAvailableGateways();
+    $gateways = array_map(function($name) {
+        return Tala\GatewayFactory::create($name);
+    }, Tala\GatewayFactory::getAvailableGateways());
 
     return $app['twig']->render('index.twig', array(
         'gateways' => $gateways,
@@ -60,7 +62,47 @@ $app->post('/gateways/{name}', function($name) use ($app) {
 
     // redirect to gateway settings page
     $app['session']->setFlash('success', 'Gateway settings updated!');
+
     return $app->redirect($app['request']->getPathInfo());
+});
+
+// start gateway purchase
+$app->get('/gateways/{name}/purchase', function($name) use ($app) {
+    $gateway = Tala\GatewayFactory::create($name);
+    $settings = $app['session']->get('gateway.'.$gateway->getShortName());
+    $gateway->initialize($settings);
+
+    $params = $app['session']->get('params', array());
+    $card = new Tala\CreditCard($app['session']->get('card'));
+
+    return $app['twig']->render('purchase.twig', array(
+        'gateway' => $gateway,
+        'params' => $params,
+        'card' => $card->toArray(),
+    ));
+});
+
+// make gateway purchase
+$app->post('/gateways/{name}/purchase', function($name) use ($app) {
+    $gateway = Tala\GatewayFactory::create($name);
+    $settings = $app['session']->get('gateway.'.$gateway->getShortName());
+    $gateway->initialize($settings);
+
+    // load POST data
+    $params = $app['request']->get('params');
+    $card = new Tala\CreditCard($app['request']->get('card'));
+
+    // save POST data into session
+    $app['session']->set('params', $params);
+    $app['session']->set('card', $card);
+
+    $params['card'] = $card;
+    $response = $gateway->purchase($params);
+
+    return $app['twig']->render('success.twig', array(
+        'gateway' => $gateway,
+        'response' => $response,
+    ));
 });
 
 $app->run();
