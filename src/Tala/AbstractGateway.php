@@ -101,7 +101,7 @@ abstract class AbstractGateway implements GatewayInterface
     {
         $class = get_class($this);
         if (0 === strpos($class, 'Tala\\Billing\\')) {
-            return str_replace('\\', '_', substr($class, 13, -7));
+            return trim(str_replace('\\', '_', substr($class, 13, -7)), '_');
         }
 
         return '\\'.$class;
