@@ -13,9 +13,9 @@ namespace Tala;
 
 class GatewayFactoryTest extends \PHPUnit_Framework_TestCase
 {
-    public function testCreateGateway()
+    public function testCreate()
     {
-        $gateway = GatewayFactory::createGateway('Stripe');
+        $gateway = GatewayFactory::create('Stripe');
         $this->assertInstanceOf('\\Tala\\Billing\\Stripe\\Gateway', $gateway);
     }
 
@@ -23,9 +23,9 @@ class GatewayFactoryTest extends \PHPUnit_Framework_TestCase
      * @expectedException \Tala\Exception\GatewayNotFoundException
      * @expectedExceptionMessage Class '\Tala\Billing\Invalid\Gateway' not found
      */
-    public function testCreateGatewayInvalid()
+    public function testCreateInvalid()
     {
-        $gateway = GatewayFactory::createGateway('Invalid');
+        $gateway = GatewayFactory::create('Invalid');
     }
 
     /**
