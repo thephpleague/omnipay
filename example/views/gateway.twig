@@ -1,0 +1,23 @@
+{% extends "layout.twig" %}
+
+{% set title = gateway.name %}
+{% block content %}
+
+    <p>You can create an instance of this gateway using:</p>
+    <pre>$gateway = GatewayFactory::create('{{ gateway.shortName }}');</pre>
+
+    <h3>Gateway Settings</h3>
+    <p><span class="label label-info">Note</span> These settings will be stored in your session and used to create test purchases.</p>
+
+    <form method="post">
+        {% for key, default in gateway.defineSettings %}
+            <p>
+                <label for="{{ key }}">{{ key }}</label>
+                <input type="text" name="gateway[{{key}}]" value="{{ settings[key] }}" />
+            </p>
+        {% endfor %}
+
+        <p><input type="submit" value="Save" class="btn" /></p>
+    </form>
+
+{% endblock %}

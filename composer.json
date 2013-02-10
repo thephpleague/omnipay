@@ -21,7 +21,9 @@
         "kriswallsmith/buzz": "0.*",
         "phpunit/phpunit": "3.7.*",
         "mockery/mockery": "0.7.*",
-        "squizlabs/php_codesniffer": "1.4.*"
+        "squizlabs/php_codesniffer": "1.4.*",
+        "silex/silex": "1.0.*@dev",
+        "twig/twig": "1.*"
     },
     "extra": {
         "branch-alias": { "dev-master": "0.1-dev" }

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{{ title }}</title>
+    <link href="/assets/bootstrap.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>{{ title }}</h1>
+
+        {% set success = app.session.flash('success') %}
+        {% if success %}
+            <div class="alert alert-success">{{ success }}</div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
