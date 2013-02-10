@@ -70,10 +70,12 @@ class Helper
      */
     public static function initialize(&$target, $parameters)
     {
-        foreach ($parameters as $key => $value) {
-            $method = 'set'.ucfirst(static::camelCase($key));
-            if (method_exists($target, $method)) {
-                $target->$method($value);
+        if (is_array($parameters)) {
+            foreach ($parameters as $key => $value) {
+                $method = 'set'.ucfirst(static::camelCase($key));
+                if (method_exists($target, $method)) {
+                    $target->$method($value);
+                }
             }
         }
     }

@@ -11,6 +11,8 @@
 
 namespace Tala;
 
+use Mockery as m;
+
 class HelperTest extends \PHPUnit_Framework_TestCase
 {
     public function testCamelCase()
@@ -41,5 +43,34 @@ class HelperTest extends \PHPUnit_Framework_TestCase
     {
         $result = Helper::validateLuhn(null);
         $this->assertTrue($result);
+    }
+
+    public function testInitializeIgnoresNull()
+    {
+        $target = m::mock();
+        Helper::initialize($target, null);
+    }
+
+    public function testInitializeIgnoresString()
+    {
+        $target = m::mock();
+        Helper::initialize($target, 'invalid');
+    }
+
+    public function testInitializeCallsSetters()
+    {
+        $target = m::mock('\Tala\CreditCard');
+        $target->shouldReceive('setName')->once()->with('adrian');
+        $target->shouldReceive('setNumber')->once()->with('1234');
+
+        Helper::initialize($target, array('name' => 'adrian', 'number' => '1234'));
+    }
+
+    public function testInitializeIgnoresInvalidParameters()
+    {
+        $target = m::mock('\Tala\CreditCard');
+        $target->shouldReceive('setName')->once()->with('adrian');
+
+        Helper::initialize($target, array('name' => 'adrian', 'extra' => 'invalid'));
     }
 }
