@@ -261,7 +261,7 @@ To summarize the various parameters you have available to you:
 
 ## The Payment Response
 
-The payment response must implement [\Omnipay\ResponseInterface](https://github.com/adrianmacneil/omnipay/blob/master/src/Omnipay/ResponseInterface.php). There are two main types of response:
+The payment response must implement [Omnipay\ResponseInterface](https://github.com/adrianmacneil/omnipay/blob/master/src/Omnipay/ResponseInterface.php). There are two main types of response:
 
 * Payment was successful (standard response)
 * Website requires redirect to off-site payment form (redirect response)
