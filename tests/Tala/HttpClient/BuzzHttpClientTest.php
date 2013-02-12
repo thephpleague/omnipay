@@ -41,6 +41,8 @@ class BuzzHttpClientTest extends \PHPUnit_Framework_TestCase
             ->with('http://www.example.com/', $headers)
             ->andReturn($browserResponse);
 
+        $browserResponse->shouldReceive('isSuccessful')->once()->andReturn(true);
+
         $response = $this->client->get('http://www.example.com/', $headers);
 
         $this->assertSame('Sample Result Data', $response);
@@ -59,6 +61,8 @@ class BuzzHttpClientTest extends \PHPUnit_Framework_TestCase
             ->with('http://www.example.com/', $headers, $data)
             ->andReturn($browserResponse);
 
+        $browserResponse->shouldReceive('isSuccessful')->once()->andReturn(true);
+
         $response = $this->client->post('http://www.example.com/', $data, $headers);
 
         $this->assertSame('Sample Result Data', $response);
@@ -76,6 +80,8 @@ class BuzzHttpClientTest extends \PHPUnit_Framework_TestCase
         $this->browser->shouldReceive('post')->once()
             ->with('http://www.example.com/', $headers, 'foo=bar%23')
             ->andReturn($browserResponse);
+
+        $browserResponse->shouldReceive('isSuccessful')->once()->andReturn(true);
 
         $response = $this->client->post('http://www.example.com/', $data, $headers);
 

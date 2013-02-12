@@ -12,6 +12,7 @@
 namespace Tala\HttpClient;
 
 use Buzz\Browser;
+use Tala\Exception\InvalidResponseException;
 
 /**
  * Buzz Http Client implementation
@@ -39,6 +40,10 @@ class BuzzHttpClient implements HttpClientInterface
     {
         $response = $this->browser->get($url, $headers);
 
+        if (!$response->isSuccessful()) {
+            throw new InvalidResponseException;
+        }
+
         return $response->getContent();
     }
 
@@ -49,6 +54,10 @@ class BuzzHttpClient implements HttpClientInterface
         }
 
         $response = $this->browser->post($url, $headers, $data);
+
+        if (!$response->isSuccessful()) {
+            throw new InvalidResponseException;
+        }
 
         return $response->getContent();
     }
