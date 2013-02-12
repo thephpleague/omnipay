@@ -76,6 +76,10 @@ class Request
 
     public function setCard($value)
     {
+        if (is_array($value)) {
+            $value = new CreditCard($value);
+        }
+
         $this->card = $value;
     }
 

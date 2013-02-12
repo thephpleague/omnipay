@@ -44,6 +44,16 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('abc123', $this->request->getCard());
     }
 
+    public function testSetCardWithArray()
+    {
+        // passing array should create CreditCard object
+        $this->request->setCard(array('number' => '1234'));
+
+        $card = $this->request->getCard();
+        $this->assertInstanceOf('\Tala\CreditCard', $card);
+        $this->assertSame('1234', $card->getNumber());
+    }
+
     public function testToken()
     {
         $this->request->setToken('12345');
