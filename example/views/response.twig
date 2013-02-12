@@ -5,6 +5,10 @@
 
     {% if response.isSuccessful() %}
         <div class="alert alert-success">Congratulations, your request was successful!</div>
+    {% elseif response.isRedirect() %}
+        <div class="alert alert-info">Your request requires redirect to an off-site payment page.</div>
+
+        <p><a href="{{ response.redirectUrl }}" class="btn btn-success">Redirect Now</a></p>
     {% else %}
         <div class="alert alert-error">Sorry, your request failed.</div>
     {% endif %}
