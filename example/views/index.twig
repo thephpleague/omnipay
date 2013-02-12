@@ -1,0 +1,12 @@
+{% extends "layout.twig" %}
+
+{% set title = "Omnipay Example" %}
+{% block content %}
+    <p>The following gateways are available:</p>
+
+    <ul>
+        {% for gateway in gateways %}
+            <li><a href="/gateways/{{ gateway.shortName }}">{{ gateway.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

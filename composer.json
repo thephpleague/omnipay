@@ -1,0 +1,34 @@
+{
+    "name": "omnipay/omnipay",
+    "type": "library",
+    "description": "Omnipay is a framework agnostic multi-gateway payment processing library",
+    "keywords": [
+        "payment", "gateway", "merchant", "tala", "authorize", "purchase", "authorize.net",
+        "auth.net", "cardsave", "gocardless", "netaxept", "payflow", "dps", "paymentexpress",
+        "paypal", "pin", "stripe", "2checkout", "twocheckout", "worldpay"],
+    "homepage": "https://github.com/adrianmacneil/omnipay",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Adrian Macneil",
+            "email": "adrian@adrianmacneil.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "Omnipay" : "src/" }
+    },
+    "require": {
+        "symfony/http-foundation": "2.*"
+    },
+    "require-dev": {
+        "kriswallsmith/buzz": "0.*",
+        "phpunit/phpunit": "3.7.*",
+        "mockery/mockery": "0.7.*",
+        "squizlabs/php_codesniffer": "1.4.*",
+        "silex/silex": "1.0.*@dev",
+        "twig/twig": "1.*"
+    },
+    "extra": {
+        "branch-alias": { "dev-master": "0.1-dev" }
+    }
+}
