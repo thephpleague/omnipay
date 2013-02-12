@@ -27,8 +27,5 @@
         "squizlabs/php_codesniffer": "1.4.*",
         "silex/silex": "1.0.*@dev",
         "twig/twig": "1.*"
-    },
-    "extra": {
-        "branch-alias": { "dev-master": "0.1-dev" }
     }
 }
