@@ -9,10 +9,7 @@ ideas from [Active Merchant](http://activemerchant.org/), plus experience implem
 dozens of gateways for [CI Merchant](http://ci-merchant.org/). It has a clear and consistent API,
 is fully unit tested, and even comes with an example application to get you started.
 
-This library is under active developemnt, and all feedback is welcome - please raise a github issue
-to discuss ideas, or fork the project and send a pull request.
-
-**Why use Omnipay instead of a gateway's official PHP package?**
+**Why use Omnipay instead of a gateway's official PHP package/example code?**
 
 * Because you can learn one API and use it in multiple projects using different payment gateways
 * Because if you need to change payment gateways you won't need to rewrite your code
@@ -139,7 +136,7 @@ gateway (other than by the methods they support).
 
 ## Credit Card / Payment Form Input
 
-User form input is directed to a [Omnipay\CreditCard](https://github.com/adrianmacneil/omnipay/blob/master/src/Omnipay/CreditCard.php)
+User form input is directed to an [Omnipay\CreditCard](https://github.com/adrianmacneil/omnipay/blob/master/src/Omnipay/CreditCard.php)
 object. This provides a safe way to accept user input.
 
 The `CreditCard` object has the following fields:
@@ -185,7 +182,10 @@ $formInputData = array(
 $card = new CreditCard($formInputData);
 ```
 
-You can also access the fields using getters and setters:
+You can also just pass the form data array directly to the gateway, and a `CreditCard` object
+will be created for you.
+
+CreditCard fields can be accessed using getters and setters:
 
 ```php
 $number = $card->getNumber();
