@@ -29,7 +29,9 @@ class GatewayFactory
         }
 
         if (null === $httpClient) {
-            $httpClient = new BuzzHttpClient(new \Buzz\Browser(new \Buzz\Client\Curl));
+            $curl = new \Buzz\Client\Curl;
+            $curl->setTimeout(60);
+            $httpClient = new BuzzHttpClient(new \Buzz\Browser($curl));
         }
 
         if (null === $httpRequest) {
