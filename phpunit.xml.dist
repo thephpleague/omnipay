@@ -10,7 +10,7 @@
          stopOnFailure="false"
          syntaxCheck="false">
     <testsuites>
-        <testsuite name="Tala Payments Test Suite">
+        <testsuite name="Omnipay Test Suite">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>

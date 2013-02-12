@@ -1,13 +1,12 @@
-# Tala Payments: Example Application
+# Omnipay: Example Application
 
-This is an example web application built using the [Silex](http://silex.sensiolabs.org/)
-micro-framework. It demonstrates using Tala Payments to process payments using all supported
-payment gateways.
+This is an example web application built using the [Silex micro-framework](http://silex.sensiolabs.org/).
+It demonstrates using Omnipay to process payments using all supported payment gateways.
 
 ## Getting Started
 
 To run the example application, you must first install the development dependencies via composer.
-From the root `tala-payments` directory, run:
+From the root `omnipay` directory, run:
 
     $ php composer.phar update --dev
 

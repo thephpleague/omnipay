@@ -1,9 +1,12 @@
 {
-    "name": "adrianmacneil/tala-payments",
+    "name": "omnipay/omnipay",
     "type": "library",
-    "description": "Tala Payments is a framework agnostic multi-gateway payment processing library",
-    "keywords": ["payment", "merchant", "gateway", "paypal", "authorize.net", "dps", "paymentexpress"],
-    "homepage": "https://github.com/adrianmacneil/tala-payments",
+    "description": "Omnipay is a framework agnostic multi-gateway payment processing library",
+    "keywords": [
+        "payment", "gateway", "merchant", "tala", "authorize", "purchase", "authorize.net",
+        "auth.net", "cardsave", "gocardless", "netaxept", "payflow", "dps", "paymentexpress",
+        "paypal", "pin", "stripe", "2checkout", "twocheckout", "worldpay"],
+    "homepage": "https://github.com/adrianmacneil/omnipay",
     "license": "MIT",
     "authors": [
         {
@@ -12,7 +15,7 @@
         }
     ],
     "autoload": {
-        "psr-0": { "Tala" : "src/" }
+        "psr-0": { "Omnipay" : "src/" }
     },
     "require": {
         "symfony/http-foundation": "2.*"

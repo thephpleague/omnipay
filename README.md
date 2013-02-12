@@ -1,20 +1,20 @@
-# Tala Payments
+# Omnipay
 
-**Easy to use, consistent payment processing for PHP 5.3+**
+**An easy to use, consistent payment processing for PHP 5.3+**
 
-[![Build Status](https://secure.travis-ci.org/adrianmacneil/tala-payments.png)](http://travis-ci.org/adrianmacneil/tala-payments)
+[![Build Status](https://secure.travis-ci.org/adrianmacneil/omnipay.png)](http://travis-ci.org/adrianmacneil/omnipay)
 
-Tala Payments is a payment processing library for PHP 5.3+. It has been designed based on
-experience using [Active Merchant](http://activemerchant.org/), plus experience implementing
+Omnipay is a payment processing library for PHP. It has been designed based on
+ideas from [Active Merchant](http://activemerchant.org/), plus experience implementing
 dozens of gateways for [CI Merchant](http://ci-merchant.org/). It has a clear and consistent API,
-and comes with a full suite of unit tests, plus an example application for you to pull apart.
+is fully unit tested, and even comes with an example application to get you started.
 
 This library is under active developemnt, and all feedback is welcome - please raise a github issue
 to discuss ideas, or fork the project and send a pull request.
 
-**Why use Tala instead of a gateway's official PHP package?**
+**Why use Omnipay instead of a gateway's official PHP package?**
 
-* Because you can learn one API and use it across multiple sites using different gateways
+* Because you can learn one API and use it in multiple projects using different payment gateways
 * Because if you need to change payment gateways you won't need to rewrite your code
 * Because most official PHP payment gateway libraries are a mess
 * Because most payment gateways have exceptionally poor documentation
@@ -25,14 +25,14 @@ to discuss ideas, or fork the project and send a pull request.
 Just want to see some code?
 
 ```php
-use Tala\CreditCard;
-use Tala\GatewayFactory;
+use Omnipay\CreditCard;
+use Omnipay\GatewayFactory;
 
 $gateway = GatewayFactory::create('Stripe');
 $gateway->setApiKey('abc123');
 
-$card = new CreditCard(['number' => '4111111111111111', 'expiryMonth' => 6, 'expiryYear' => 2016]);
-$response = $gateway->purchase(['amount' => 1000, 'card' => $card]);
+$formData = ['number' => '4111111111111111', 'expiryMonth' => 6, 'expiryYear' => 2016];
+$response = $gateway->purchase(['amount' => 1000, 'card' => $formData]);
 
 if ($response->isSuccessful()) {
     // payment was successful: update database
@@ -41,17 +41,17 @@ if ($response->isSuccessful()) {
     // redirect to offsite payment gateway
     $response->redirect();
 } else {
-    // payment failed, display message to customer
+    // payment failed: display message to customer
     exit($response->getMessage());
 }
 ```
 
-As you can see, Tala Payments has a consistent, well thought out API. We try to abstract as much
+As you can see, Omnipay has a consistent, well thought out API. We try to abstract as much
 as possible the differences between the various payments gateways.
 
 ## Package Layout
 
-Tala Payments is a single package which provides abstract base classes and implementations for all
+Omnipay is a single package which provides abstract base classes and implementations for all
 officially supported gateways. There are no dependencies on official payment gateway PHP packages -
 we prefer to work with the HTTP API directly. Under the hood, we use [Buzz](https://github.com/kriswallsmith/Buzz)
 to make HTTP requests, though you are free to swap out this dependency.
@@ -62,13 +62,13 @@ package and makes use of our base classes and consistent developer API.
 
 ## Installation
 
-Tala Payments is installed via [Composer](http://getcomposer.org/). To install, simply add it
+Omnipay is installed via [Composer](http://getcomposer.org/). To install, simply add it
 to your `composer.json` file:
 
 ```json
 {
     "require": {
-        "adrianmacneil/tala-payments": "dev-master"
+        "omnipay/omnipay": "dev-master"
     }
 }
 ```
@@ -82,8 +82,8 @@ We will make a beta release shortly - for now you can use the above code to inst
 
 ## Payment Gateways
 
-All payment gateways must implement [Tala\GatewayInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/GatewayInterface.php), and will usually
-extend [Tala\AbstractGateway](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/AbstractGateway.php) for basic functionality.
+All payment gateways must implement [Omnipay\GatewayInterface](https://github.com/adrianmacneil/omnipay/blob/master/src/Omnipay/GatewayInterface.php), and will usually
+extend [Omnipay\AbstractGateway](https://github.com/adrianmacneil/omnipay/blob/master/src/Omnipay/AbstractGateway.php) for basic functionality.
 
 The following gateways are already implemented:
 
@@ -108,7 +108,7 @@ will be implemented before we reach 1.0.
 Gateways are created and initialized like so:
 
 ```php
-use Tala\GatewayFactory;
+use Omnipay\GatewayFactory;
 
 $gateway = GatewayFactory::create('PayPal_Express');
 $gateway->setUsername('adrian');
@@ -139,7 +139,7 @@ gateway (other than by the methods they support).
 
 ## Credit Card / Payment Form Input
 
-User form input is directed to a [Tala\CreditCard](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/CreditCard.php)
+User form input is directed to a [Omnipay\CreditCard](https://github.com/adrianmacneil/omnipay/blob/master/src/Omnipay/CreditCard.php)
 object. This provides a safe way to accept user input.
 
 The `CreditCard` object has the following fields:
@@ -193,7 +193,7 @@ $card->setFirstName('Adrian');
 ```
 
 If you submit credit card details which are obviously invalid (missing required fields, or a number
-which fails the Luhn check), [Tala\Exception\InvalidCreditCardException](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/Exception/InvalidCreditCardException.php)
+which fails the Luhn check), [Omnipay\Exception\InvalidCreditCardException](https://github.com/adrianmacneil/omnipay/blob/master/src/Omnipay/Exception/InvalidCreditCardException.php)
 will be thrown.  You should validate the card details using your framework's validation library
 before submitting the details to your gateway, to avoid unnecessary API calls.
 
@@ -206,7 +206,7 @@ For on-site payment gateways, the following card fields are always required:
 * expiryYear
 * cvv
 
-You can also verify the card number using the Luhn algorithm by calling `Tala\Helper::validateLuhn($number)`.
+You can also verify the card number using the Luhn algorithm by calling `Omnipay\Helper::validateLuhn($number)`.
 
 ## Gateway Methods
 
@@ -221,10 +221,10 @@ The main methods implemented by gateways are:
 * `void($options)` - generally can only be called up to 24 hours after submitting a transaction
 
 On-site gateways do not need to implement the `completeAuthorize` and `completePurchase` methods. If any gateway does not support
-certain features (such as refunds), it will throw `Tala\Exception\UnsupportedMethodException`.
+certain features (such as refunds), it will throw `Omnipay\Exception\UnsupportedMethodException`.
 
 All gateway methods take an `$options` array as an argument. Each gateway differs in which
-parameters are required, and the gateway will throw `Tala\Exception\InvalidRequestException` if you
+parameters are required, and the gateway will throw `Omnipay\Exception\InvalidRequestException` if you
 omit any required parameters. All gateways will accept a subset of these options:
 
 * card
@@ -263,7 +263,7 @@ To summarize the various parameters you have available to you:
 
 ## The Payment Response
 
-The payment response must implement [\Tala\ResponseInterface](https://github.com/adrianmacneil/tala-payments/blob/master/src/Tala/ResponseInterface.php). There are two main types of response:
+The payment response must implement [\Omnipay\ResponseInterface](https://github.com/adrianmacneil/omnipay/blob/master/src/Omnipay/ResponseInterface.php). There are two main types of response:
 
 * Payment was successful (standard response)
 * Website requires redirect to off-site payment form (redirect response)
@@ -364,7 +364,7 @@ web server (PHP 5.4+):
     $ php composer.phar update --dev
     $ php -S localhost:8000 -t example/
 
-For more information, see the [example application directory](https://github.com/adrianmacneil/tala-payments/tree/master/example).
+For more information, see the [example application directory](https://github.com/adrianmacneil/omnipay/tree/master/example).
 
 ## Feedback
 

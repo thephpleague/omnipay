@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Tala Payments package.
+ * This file is part of the Omnipay package.
  *
  * (c) Adrian Macneil <adrian@adrianmacneil.com>
  *
@@ -32,8 +32,8 @@ $app->before( function() use ( $app ) {
 // root route
 $app->get('/', function() use ($app) {
     $gateways = array_map(function($name) {
-        return Tala\GatewayFactory::create($name);
-    }, Tala\GatewayFactory::getAvailableGateways());
+        return Omnipay\GatewayFactory::create($name);
+    }, Omnipay\GatewayFactory::getAvailableGateways());
 
     return $app['twig']->render('index.twig', array(
         'gateways' => $gateways,
@@ -42,7 +42,7 @@ $app->get('/', function() use ($app) {
 
 // gateway settings
 $app->get('/gateways/{name}', function($name) use ($app) {
-    $gateway = Tala\GatewayFactory::create($name);
+    $gateway = Omnipay\GatewayFactory::create($name);
     $settings = $app['session']->get('gateway.'.$gateway->getShortName());
     $gateway->initialize($settings);
 
@@ -55,7 +55,7 @@ $app->get('/gateways/{name}', function($name) use ($app) {
 // save gateway settings
 $app->post('/gateways/{name}', function($name) use ($app) {
     // store gateway settings in session
-    $gateway = Tala\GatewayFactory::create($name);
+    $gateway = Omnipay\GatewayFactory::create($name);
     $settings = $app['request']->get('gateway');
     $gateway->initialize($settings);
     $app['session']->set('gateway.'.$gateway->getShortName(), $gateway->toArray());
@@ -68,12 +68,12 @@ $app->post('/gateways/{name}', function($name) use ($app) {
 
 // start gateway purchase
 $app->get('/gateways/{name}/purchase', function($name) use ($app) {
-    $gateway = Tala\GatewayFactory::create($name);
+    $gateway = Omnipay\GatewayFactory::create($name);
     $settings = $app['session']->get('gateway.'.$gateway->getShortName());
     $gateway->initialize($settings);
 
     $params = $app['session']->get('params', array());
-    $card = new Tala\CreditCard($app['session']->get('card'));
+    $card = new Omnipay\CreditCard($app['session']->get('card'));
 
     return $app['twig']->render('purchase.twig', array(
         'gateway' => $gateway,
@@ -84,13 +84,13 @@ $app->get('/gateways/{name}/purchase', function($name) use ($app) {
 
 // make gateway purchase
 $app->post('/gateways/{name}/purchase', function($name) use ($app) {
-    $gateway = Tala\GatewayFactory::create($name);
+    $gateway = Omnipay\GatewayFactory::create($name);
     $settings = $app['session']->get('gateway.'.$gateway->getShortName());
     $gateway->initialize($settings);
 
     // load POST data
     $params = $app['request']->get('params');
-    $card = new Tala\CreditCard($app['request']->get('card'));
+    $card = new Omnipay\CreditCard($app['request']->get('card'));
 
     // save POST data into session
     $app['session']->set('params', $params);
