@@ -75,8 +75,6 @@ And run composer to update your dependencies:
     $ curl -s http://getcomposer.org/installer | php
     $ php composer.phar update
 
-We will make a beta release shortly - for now you can use the above code to install the latest master.
-
 ## Payment Gateways
 
 All payment gateways must implement [Omnipay\GatewayInterface](https://github.com/adrianmacneil/omnipay/blob/master/src/Omnipay/GatewayInterface.php), and will usually
