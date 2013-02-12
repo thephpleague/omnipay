@@ -5,7 +5,7 @@
     "keywords": [
         "payment", "gateway", "merchant", "tala", "authorize", "purchase", "authorize.net",
         "auth.net", "cardsave", "gocardless", "netaxept", "payflow", "dps", "paymentexpress",
-        "paypal", "pin", "stripe", "2checkout", "twocheckout", "worldpay"],
+        "paypal", "pin", "stripe", "2checkout", "twocheckout", "worldpay", "tala-payments"],
     "homepage": "https://github.com/adrianmacneil/omnipay",
     "license": "MIT",
     "authors": [
