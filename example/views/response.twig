@@ -1,0 +1,29 @@
+{% extends "layout.twig" %}
+
+{% set title = gateway.name~": Response" %}
+{% block content %}
+
+    {% if response.isSuccessful() %}
+        <div class="alert alert-success">Congratulations, your request was successful!</div>
+    {% else %}
+        <div class="alert alert-error">Sorry, your request failed.</div>
+    {% endif %}
+
+    <p>The response object had the following to say:</p>
+
+    <p><b>$request->isSuccessful()</b></p>
+    <pre>{{ response.isSuccessful() ? "true" : "false" }}</pre>
+
+    <p><b>$request->isRedirect()</b></p>
+    <pre>{{ response.isRedirect() ? "true" : "false" }}</pre>
+
+    <p><b>$request->getMessage()</b></p>
+    <pre>{{ response.message }}</pre>
+
+    <p><b>$request->getGatewayReference()</b></p>
+    <pre>{{ response.gatewayReference }}</pre>
+
+    <p><b>$request->getData()</b></p>
+    <pre>{{ dump(response.data) }}</pre>
+
+{% endblock %}

@@ -99,7 +99,7 @@ $app->post('/gateways/{name}/purchase', function($name) use ($app) {
     $params['card'] = $card;
     $response = $gateway->purchase($params);
 
-    return $app['twig']->render('success.twig', array(
+    return $app['twig']->render('response.twig', array(
         'gateway' => $gateway,
         'response' => $response,
     ));

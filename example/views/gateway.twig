@@ -26,8 +26,21 @@
     </form>
 
     <h3>Gateway Methods</h3>
+    <p>Click on a method to generate a test request.</p>
     <ul>
+        {% if gateway.supportsAuthorize() %}
+            <li>authorize()</li>
+        {% endif %}
         <li><a href="/gateways/{{gateway.shortName}}/purchase">purchase()</a></li>
+        {% if gateway.supportsCapture() %}
+            <li>capture()</li>
+        {% endif %}
+        {% if gateway.supportsRefund() %}
+            <li>refund()</li>
+        {% endif %}
+        {% if gateway.supportsVoid() %}
+            <li>void()</li>
+        {% endif %}
     </ul>
 
 {% endblock %}
