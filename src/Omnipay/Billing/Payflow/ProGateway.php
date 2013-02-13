@@ -135,7 +135,7 @@ class ProGateway extends AbstractGateway
         $data['TENDER'] = 'C';
         $data['COMMENT1'] = $request->getDescription();
         $data['ACCT'] = $source->getNumber();
-        $data['AMT'] = $request->getAmountDollars();
+        $data['AMT'] = $request->getAmountDecimal();
         $data['EXPDATE'] = $source->getExpiryDate('my');
         $data['CVV2'] = $source->getCvv();
         $data['BILLTOFIRSTNAME'] = $source->getFirstName();
@@ -155,7 +155,7 @@ class ProGateway extends AbstractGateway
         $request->validate(array('gatewayReference', 'amount'));
 
         $data = $this->buildRequest($action);
-        $data['AMT'] = $request->getAmountDollars();
+        $data['AMT'] = $request->getAmountDecimal();
         $data['ORIGID'] = $request->getGatewayReference();
 
         return $data;

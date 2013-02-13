@@ -148,7 +148,7 @@ class Gateway extends AbstractGateway
         $data['cancel_uri'] = $request->getCancelUrl();
         $data['bill'] = array();
         $data['bill']['merchant_id'] = $this->merchantId;
-        $data['bill']['amount'] = $request->getAmountDollars();
+        $data['bill']['amount'] = $request->getAmountDecimal();
         $data['bill']['name'] = $request->getDescription();
 
         if ($source) {

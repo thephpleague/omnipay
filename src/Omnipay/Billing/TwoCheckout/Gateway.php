@@ -89,7 +89,7 @@ class Gateway extends AbstractGateway
             $orderNo = '1';
         }
 
-        $key = strtoupper(md5($this->password.$this->username.$orderNo.$request->getAmountDollars()));
+        $key = strtoupper(md5($this->password.$this->username.$orderNo.$request->getAmountDecimal()));
         if ($key != $this->httpRequest->get('key')) {
             throw new InvalidResponseException;
         }
@@ -106,7 +106,7 @@ class Gateway extends AbstractGateway
         $data = array();
         $data['sid'] = $this->username;
         $data['cart_order_id'] = $request->getTransactionId();
-        $data['total'] = $request->getAmountDollars();
+        $data['total'] = $request->getAmountDecimal();
         $data['tco_currency'] = $request->getCurrency();
         $data['fixed'] = 'Y';
         $data['skip_landing'] = 1;

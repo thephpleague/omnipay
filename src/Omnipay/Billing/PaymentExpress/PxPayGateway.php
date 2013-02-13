@@ -104,7 +104,7 @@ class PxPayGateway extends AbstractGateway
         $data = new SimpleXMLElement('<GenerateRequest/>');
         $data->PxPayUserId = $this->username;
         $data->PxPayKey = $this->password;
-        $data->AmountInput = $request->getAmountDollars();
+        $data->AmountInput = $request->getAmountDecimal();
         $data->CurrencyInput = $request->getCurrency();
         $data->MerchantReference = $request->getDescription();
         $data->UrlSuccess = $request->getReturnUrl();

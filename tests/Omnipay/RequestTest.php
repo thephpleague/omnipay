@@ -72,10 +72,17 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(6, $this->request->getAmount());
     }
 
-    public function testAmountDollars()
+    public function testGetAmountDecimal()
     {
         $this->request->setAmount(1366);
-        $this->assertSame('13.66', $this->request->getAmountDollars());
+        $this->assertSame('13.66', $this->request->getAmountDecimal());
+    }
+
+    public function testGetAmountDecimalNoDecimals()
+    {
+        $this->request->setCurrency('JPY');
+        $this->request->setAmount(1366);
+        $this->assertSame('1366', $this->request->getAmountDecimal());
     }
 
     public function testCurrency()
@@ -95,7 +102,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $this->request->setCurrency('XYZ');
         $this->assertNull($this->request->getCurrency());
         $this->assertNull($this->request->getCurrencyNumeric());
-        $this->assertSame(2, $this->request->getCurrencyDecimals());
+        $this->assertSame(2, $this->request->getCurrencyDecimalPlaces());
     }
 
     public function testCurrencyNumeric()
@@ -107,7 +114,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     public function testCurrencyDecimals()
     {
         $this->request->setCurrency('JPY');
-        $this->assertSame(0, $this->request->getCurrencyDecimals());
+        $this->assertSame(0, $this->request->getCurrencyDecimalPlaces());
     }
 
     public function testDescription()

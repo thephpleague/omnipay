@@ -118,7 +118,7 @@ class Gateway extends AbstractGateway
         $data['instId'] = $this->installationId;
         $data['cartId'] = $request->getTransactionId();
         $data['desc'] = $request->getDescription();
-        $data['amount'] = $request->getAmountDollars();
+        $data['amount'] = $request->getAmountDecimal();
         $data['currency'] = $request->getCurrency();
         $data['testMode'] = $this->testMode ? 100 : 0;
         $data['MC_callback'] = $request->getReturnUrl();

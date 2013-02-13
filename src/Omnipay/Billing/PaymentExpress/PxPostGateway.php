@@ -97,7 +97,7 @@ class PxPostGateway extends AbstractGateway
         $data->TxnType = $method;
         $data->CardNumber = $source->getNumber();
         $data->CardHolderName = $source->getName();
-        $data->Amount = $request->getAmountDollars();
+        $data->Amount = $request->getAmountDecimal();
         $data->DateExpiry = $source->getExpiryDate('my');
         $data->Cvc2 = $source->getCvv();
         $data->InputCurrency = $request->getCurrency();
@@ -116,7 +116,7 @@ class PxPostGateway extends AbstractGateway
         $data->PostPassword = $this->password;
         $data->TxnType = $method;
         $data->DpsTxnRef = $request->getGatewayReference();
-        $data->Amount = $request->getAmountDollars();
+        $data->Amount = $request->getAmountDecimal();
 
         return $data;
     }

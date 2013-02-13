@@ -100,12 +100,12 @@ class Request
 
     public function setAmount($value)
     {
-        $this->amount = (int) round($value);
+        $this->amount = (int) $value;
     }
 
-    public function getAmountDollars()
+    public function getAmountDecimal()
     {
-        return number_format($this->amount / 100, $this->getCurrencyDecimals(), '.', '');
+        return number_format($this->amount / $this->getCurrencyDecimalFactor(), $this->getCurrencyDecimalPlaces(), '.', '');
     }
 
     public function getCurrency()
@@ -123,9 +123,14 @@ class Request
         return $this->currency ? $this->currency->getNumeric() : null;
     }
 
-    public function getCurrencyDecimals()
+    public function getCurrencyDecimalPlaces()
     {
         return $this->currency ? $this->currency->getDecimals() : 2;
+    }
+
+    private function getCurrencyDecimalFactor()
+    {
+        return pow(10, $this->getCurrencyDecimalPlaces());
     }
 
     public function getDescription()

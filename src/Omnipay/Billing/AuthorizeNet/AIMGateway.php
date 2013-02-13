@@ -130,7 +130,7 @@ class AIMGateway extends AbstractGateway
         $request->validate(array('amount', 'gatewayReference'));
 
         $data = $this->buildRequest('PRIOR_AUTH_CAPTURE');
-        $data['x_amount'] = $request->getAmountDollars();
+        $data['x_amount'] = $request->getAmountDecimal();
         $data['x_trans_id'] = $request->getGatewayReference();
 
         return $data;
@@ -153,7 +153,7 @@ class AIMGateway extends AbstractGateway
 
     protected function addBillingDetails(Request $request, $source, &$data)
     {
-        $data['x_amount'] = $request->getAmountDollars();
+        $data['x_amount'] = $request->getAmountDecimal();
         $data['x_invoice_num'] = $request->getTransactionId();
         $data['x_description'] = $request->getDescription();
 

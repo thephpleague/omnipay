@@ -108,7 +108,7 @@ class SIMGateway extends AIMGateway
 
     protected function validateReturnHash($request)
     {
-        $expected = strtoupper(md5($this->apiLoginId.$request->getTransactionId().$request->getAmountDollars()));
+        $expected = strtoupper(md5($this->apiLoginId.$request->getTransactionId().$request->getAmountDecimal()));
         $actual = isset($_POST['x_MD5_Hash']) ? strtoupper($_POST['x_MD5_Hash']) : '';
 
         return $expected == $actual;

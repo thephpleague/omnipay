@@ -152,7 +152,7 @@ class ProGateway extends AbstractGateway
         $request->validate(array('gatewayReference', 'amount'));
 
         $data = $this->buildRequest('DoCapture');
-        $data['AMT'] = $request->getAmountDollars();
+        $data['AMT'] = $request->getAmountDecimal();
         $data['CURRENCYCODE'] = $request->getCurrency();
         $data['AUTHORIZATIONID'] = $request->getGatewayReference();
         $data['COMPLETETYPE'] = 'Complete';
@@ -189,7 +189,7 @@ class ProGateway extends AbstractGateway
         $data = $this->buildRequest($method);
 
         $data[$prefix.'PAYMENTACTION'] = $action;
-        $data[$prefix.'AMT'] = $request->getAmountDollars();
+        $data[$prefix.'AMT'] = $request->getAmountDecimal();
         $data[$prefix.'CURRENCYCODE'] = $request->getCurrency();
         $data[$prefix.'DESC'] = $request->getDescription();
 
