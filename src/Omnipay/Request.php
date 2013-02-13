@@ -33,7 +33,7 @@ class Request
     /**
      * Create a new Request
      *
-     * @param array an array of initial paramters
+     * @param array an array of initial parameters
      */
     public function __construct($parameters = array())
     {
@@ -45,7 +45,7 @@ class Request
      *
      * If any unknown parameters passed, they will be ignored.
      *
-     * @param array An associative array of parmaters
+     * @param array An associative array of parameters
      */
     public function initialize($parameters)
     {

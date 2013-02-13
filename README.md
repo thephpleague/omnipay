@@ -168,7 +168,7 @@ The `CreditCard` object has the following fields:
 Even off-site gateways make use of the `CreditCard` object, because often you need to pass
 customer billing or shipping details through to the gateway.
 
-The `CreditCard` object can be intialized with untrusted user input via the constructor.
+The `CreditCard` object can be initialized with untrusted user input via the constructor.
 Any fields passed to the constructor which are not recognized will be ignored.
 
 ```php
