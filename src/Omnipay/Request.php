@@ -105,7 +105,12 @@ class Request
 
     public function getAmountDecimal()
     {
-        return number_format($this->amount / $this->getCurrencyDecimalFactor(), $this->getCurrencyDecimalPlaces(), '.', '');
+        return number_format(
+            $this->amount / $this->getCurrencyDecimalFactor(),
+            $this->getCurrencyDecimalPlaces(),
+            '.',
+            ''
+        );
     }
 
     public function getCurrency()

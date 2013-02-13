@@ -92,7 +92,8 @@ class GatewayFactory
                 // ensure class exists and is not abstract
                 if (class_exists($class)) {
                     $reflection = new ReflectionClass($class);
-                    if (!$reflection->isAbstract() and $reflection->implementsInterface('\\Omnipay\\GatewayInterface')) {
+                    if (!$reflection->isAbstract() and
+                        $reflection->implementsInterface('\\Omnipay\\GatewayInterface')) {
                         $result[] = $type;
                     }
                 }

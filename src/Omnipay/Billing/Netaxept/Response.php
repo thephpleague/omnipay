@@ -12,7 +12,6 @@
 namespace Omnipay\Billing\Netaxept;
 
 use Omnipay\AbstractResponse;
-use Omnipay\Exception;
 
 /**
  * Netaxept Response
