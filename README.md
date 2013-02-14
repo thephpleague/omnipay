@@ -1,6 +1,6 @@
 # Omnipay
 
-**An easy to use, consistent payment processing for PHP 5.3+**
+**An easy to use, consistent payment processing library for PHP 5.3+**
 
 [![Build Status](https://travis-ci.org/adrianmacneil/omnipay.png)](https://travis-ci.org/adrianmacneil/omnipay)
 
