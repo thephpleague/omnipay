@@ -26,7 +26,7 @@ class CreditCard
     protected $startMonth;
     protected $startYear;
     protected $cvv;
-    protected $issue;
+    protected $issueNumber;
     protected $type;
     protected $billingAddress1;
     protected $billingAddress2;
@@ -207,14 +207,14 @@ class CreditCard
         $this->cvv = $value;
     }
 
-    public function getIssue()
+    public function getIssueNumber()
     {
-        return $this->issue;
+        return $this->issueNumber;
     }
 
-    public function setIssue($value)
+    public function setIssueNumber($value)
     {
-        $this->issue = $value;
+        $this->issueNumber = $value;
     }
 
     public function getType()

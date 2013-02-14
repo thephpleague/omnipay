@@ -147,7 +147,7 @@ The `CreditCard` object has the following fields:
 * startMonth
 * startYear
 * cvv
-* issue
+* issueNumber
 * type
 * billingAddress1
 * billingAddress2

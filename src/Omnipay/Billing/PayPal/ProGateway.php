@@ -131,7 +131,7 @@ class ProGateway extends AbstractGateway
         $data['EXPDATE'] = $source->getExpiryMonth().$source->getExpiryYear();
         $data['STARTDATE'] = $source->getStartMonth().$source->getStartYear();
         $data['CVV2'] = $source->getCvv();
-        $data['ISSUENUMBER'] = $source->getIssue();
+        $data['ISSUENUMBER'] = $source->getIssueNumber();
         $data['IPADDRESS'] = '';
         $data['FIRSTNAME'] = $source->getFirstName();
         $data['LASTNAME'] = $source->getLastName();

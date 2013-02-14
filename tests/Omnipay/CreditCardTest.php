@@ -47,7 +47,7 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('expiryMonth', $output);
         $this->assertArrayHasKey('expiryYear', $output);
         $this->assertArrayHasKey('cvv', $output);
-        $this->assertArrayHasKey('issue', $output);
+        $this->assertArrayHasKey('issueNumber', $output);
         $this->assertArrayHasKey('type', $output);
         $this->assertArrayHasKey('company', $output);
         $this->assertArrayHasKey('phone', $output);
@@ -260,6 +260,12 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
     {
         $this->card->setCvv('456');
         $this->assertEquals('456', $this->card->getCvv());
+    }
+
+    public function testIssueNumber()
+    {
+        $this->card->setIssueNumber('12');
+        $this->assertSame('12', $this->card->getIssueNumber());
     }
 
     public function testType()

@@ -99,8 +99,8 @@ class Gateway extends AbstractGateway
         $data->PaymentMessage->CardDetails->ExpiryDate['Year'] = $source->getExpiryDate('y');
         $data->PaymentMessage->CardDetails->CV2 = $source->getCvv();
 
-        if ($source->getIssue()) {
-            $data->PaymentMessage->CardDetails->IssueNumber = $source->getIssue();
+        if ($source->getIssueNumber()) {
+            $data->PaymentMessage->CardDetails->IssueNumber = $source->getIssueNumber();
         }
 
         if ($source->getStartMonth() && $source->getStartYear()) {
