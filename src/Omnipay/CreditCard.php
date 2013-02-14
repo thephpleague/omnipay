@@ -47,7 +47,7 @@ class CreditCard
     /**
      * Create a new CreditCard object using the specified parameters
      *
-     * @param array An array of parameters to set on the new object
+     * @param array $parameters An array of parameters to set on the new object
      */
     public function __construct($parameters = array())
     {
@@ -57,7 +57,7 @@ class CreditCard
     /**
      * Set all parameters. It is safe to pass untrusted user input directly to this method.
      *
-     * @param array An array of parameters to set on this object
+     * @param array $parameters An array of parameters to set on this object
      */
     public function initialize($parameters)
     {
