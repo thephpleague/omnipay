@@ -155,14 +155,15 @@ The `CreditCard` object has the following fields:
 * billingPostcode
 * billingState
 * billingCountry
+* billingPhone
 * shippingAddress1
 * shippingAddress2
 * shippingCity
 * shippingPostcode
 * shippingState
 * shippingCountry
+* shippingPhone
 * company
-* phone
 * email
 
 Even off-site gateways make use of the `CreditCard` object, because often you need to pass

@@ -34,14 +34,15 @@ class CreditCard
     protected $billingPostcode;
     protected $billingState;
     protected $billingCountry;
+    protected $billingPhone;
     protected $shippingAddress1;
     protected $shippingAddress2;
     protected $shippingCity;
     protected $shippingPostcode;
     protected $shippingState;
     protected $shippingCountry;
+    protected $shippingPhone;
     protected $company;
-    protected $phone;
     protected $email;
 
     /**
@@ -287,6 +288,16 @@ class CreditCard
         $this->billingCountry = $value;
     }
 
+    public function getBillingPhone()
+    {
+        return $this->billingPhone;
+    }
+
+    public function setBillingPhone($value)
+    {
+        $this->billingPhone = $value;
+    }
+
     public function getShippingAddress1()
     {
         return $this->shippingAddress1;
@@ -345,6 +356,16 @@ class CreditCard
     public function setShippingCountry($value)
     {
         $this->shippingCountry = $value;
+    }
+
+    public function getShippingPhone()
+    {
+        return $this->shippingPhone;
+    }
+
+    public function setShippingPhone($value)
+    {
+        $this->shippingPhone = $value;
     }
 
     public function getAddress1()
@@ -413,6 +434,17 @@ class CreditCard
         $this->shippingCountry = $value;
     }
 
+    public function getPhone()
+    {
+        return $this->billingPhone;
+    }
+
+    public function setPhone($value)
+    {
+        $this->billingPhone = $value;
+        $this->shippingPhone = $value;
+    }
+
     public function getCompany()
     {
         return $this->company;
@@ -421,16 +453,6 @@ class CreditCard
     public function setCompany($value)
     {
         $this->company = $value;
-    }
-
-    public function getPhone()
-    {
-        return $this->phone;
-    }
-
-    public function setPhone($value)
-    {
-        $this->phone = $value;
     }
 
     public function getEmail()

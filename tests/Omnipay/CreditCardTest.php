@@ -50,7 +50,6 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('issueNumber', $output);
         $this->assertArrayHasKey('type', $output);
         $this->assertArrayHasKey('company', $output);
-        $this->assertArrayHasKey('phone', $output);
         $this->assertArrayHasKey('email', $output);
     }
 
@@ -316,6 +315,13 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('US', $this->card->getCountry());
     }
 
+    public function testBillingPhone()
+    {
+        $this->card->setBillingPhone('12345');
+        $this->assertSame('12345', $this->card->getBillingPhone());
+        $this->assertSame('12345', $this->card->getPhone());
+    }
+
     public function testShippingAddress1()
     {
         $this->card->setShippingAddress1('31 Spooner St');
@@ -350,6 +356,12 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
     {
         $this->card->setShippingCountry('US');
         $this->assertEquals('US', $this->card->getShippingCountry());
+    }
+
+    public function testShippingPhone()
+    {
+        $this->card->setShippingPhone('12345');
+        $this->assertEquals('12345', $this->card->getShippingPhone());
     }
 
     public function testAddress1()
@@ -404,6 +416,8 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
     {
         $this->card->setPhone('12345');
         $this->assertEquals('12345', $this->card->getPhone());
+        $this->assertEquals('12345', $this->card->getBillingPhone());
+        $this->assertEquals('12345', $this->card->getShippingPhone());
     }
 
     public function testEmail()
