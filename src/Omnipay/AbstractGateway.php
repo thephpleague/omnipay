@@ -189,4 +189,24 @@ abstract class AbstractGateway implements GatewayInterface
 
         return __CLASS__ !== $reflectionMethod->getDeclaringClass()->getName();
     }
+
+    public function getHttpClient()
+    {
+        return $this->httpClient;
+    }
+
+    public function setHttpClient(HttpClientInterface $httpClient)
+    {
+        $this->httpClient = $httpClient;
+    }
+
+    public function getHttpRequest()
+    {
+        return $this->httpRequest;
+    }
+
+    public function setHttpRequest(HttpRequest $httpRequest)
+    {
+        $this->httpRequest = $httpRequest;
+    }
 }

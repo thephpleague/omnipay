@@ -85,4 +85,20 @@ class AbstractGatewayTest extends \PHPUnit_Framework_TestCase
         $gateway = GatewayFactory::create('Stripe');
         $this->assertSame('Stripe', $gateway->getShortName());
     }
+
+    public function testHttpClient()
+    {
+        $mockHttpClient = m::mock('\Omnipay\HttpClient\HttpClientInterface');
+
+        $this->gateway->setHttpClient($mockHttpClient);
+        $this->assertSame($mockHttpClient, $this->gateway->getHttpClient());
+    }
+
+    public function testHttpRequest()
+    {
+        $mockHttpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
+
+        $this->gateway->setHttpRequest($mockHttpRequest);
+        $this->assertSame($mockHttpRequest, $this->gateway->getHttpRequest());
+    }
 }
