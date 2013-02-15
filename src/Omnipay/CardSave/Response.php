@@ -18,11 +18,6 @@ use Omnipay\Common\AbstractResponse;
  */
 class Response extends AbstractResponse
 {
-    public function __construct($data)
-    {
-        $this->data = $data;
-    }
-
     public function getResultElement()
     {
         $resultElement = preg_replace('/Response$/', 'Result', $this->data->getName());

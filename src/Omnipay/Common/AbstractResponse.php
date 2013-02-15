@@ -18,6 +18,11 @@ abstract class AbstractResponse implements ResponseInterface
 {
     protected $data;
 
+    public function __construct($data)
+    {
+        $this->data = $data;
+    }
+
     abstract public function isSuccessful();
 
     public function isRedirect()

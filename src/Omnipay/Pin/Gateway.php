@@ -103,7 +103,7 @@ class Gateway extends AbstractGateway
         // don't throw exceptions for 422 errors
         $this->httpClient->getEventDispatcher()->addListener(
             'request.error',
-            function (Event $event) {
+            function ($event) {
                 if ($event['response']->getStatusCode() == 422) {
                     $event->stopPropagation();
                 }
