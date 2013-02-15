@@ -74,4 +74,73 @@ class HelperTest extends TestCase
 
         Helper::initialize($target, array('name' => 'adrian', 'extra' => 'invalid'));
     }
+
+    public function testGetGatewayShortNameSimple()
+    {
+        $shortName = Helper::getGatewayShortName('Omnipay\\Stripe\\Gateway');
+        $this->assertSame('Stripe', $shortName);
+    }
+
+    public function testGetGatewayShortNameSimpleLeadingSlash()
+    {
+        $shortName = Helper::getGatewayShortName('\\Omnipay\\Stripe\\Gateway');
+        $this->assertSame('Stripe', $shortName);
+    }
+
+    public function testGetGatewayShortNameUnderscore()
+    {
+        $shortName = Helper::getGatewayShortName('Omnipay\\PayPal\\ExpressGateway');
+        $this->assertSame('PayPal_Express', $shortName);
+    }
+
+    public function testGetGatewayShortNameUnderscoreLeadingSlash()
+    {
+        $shortName = Helper::getGatewayShortName('\\Omnipay\\PayPal\\ExpressGateway');
+        $this->assertSame('PayPal_Express', $shortName);
+    }
+
+    public function testGetGatewayShortNameCustomGateway()
+    {
+        $shortName = Helper::getGatewayShortName('\\Custom\\Gateway');
+        $this->assertSame('\\Custom\\Gateway', $shortName);
+    }
+
+    /**
+     * Type with namespace should simply be returned as is
+     */
+    public function testGetGatewayClassNameExistingNamespace()
+    {
+        $class = Helper::getGatewayClassName('\\Custom\\Gateway');
+        $this->assertEquals('\\Custom\\Gateway', $class);
+    }
+
+    /**
+     * Type with namespace marker should be left intact, even if it contains an underscore
+     */
+    public function testGetGatewayClassNameExistingNamespaceUnderscore()
+    {
+        $class = Helper::getGatewayClassName('\\Custom_Gateway');
+        $this->assertEquals('\\Custom_Gateway', $class);
+    }
+
+    public function testGetGatewayClassNameSimple()
+    {
+        $class = Helper::getGatewayClassName('Stripe');
+        $this->assertEquals('\\Omnipay\\Stripe\\Gateway', $class);
+    }
+
+    public function testGetGatewayClassNamePartialNamespace()
+    {
+        $class = Helper::getGatewayClassName('PayPal\\Express');
+        $this->assertEquals('\\Omnipay\\PayPal\\ExpressGateway', $class);
+    }
+
+    /**
+     * Underscored types should be resolved in a PSR-0 fashion
+     */
+    public function testGetGatewayClassNameUnderscoreNamespace()
+    {
+        $class = Helper::getGatewayClassName('PayPal_Express');
+        $this->assertEquals('\\Omnipay\\PayPal\\ExpressGateway', $class);
+    }
 }

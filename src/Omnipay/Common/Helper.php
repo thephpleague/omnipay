@@ -79,4 +79,50 @@ class Helper
             }
         }
     }
+
+    /**
+     * Resolve a gateway class to a short name.
+     *
+     * The short name can be used with GatewayFactory as an alias of the gateway class,
+     * to create new instances of a gateway.
+     */
+    public static function getGatewayShortName($className)
+    {
+        if (0 === strpos($className, '\\')) {
+            $className = substr($className, 1);
+        }
+
+        if (0 === strpos($className, 'Omnipay\\')) {
+            return trim(str_replace('\\', '_', substr($className, 8, -7)), '_');
+        }
+
+        return '\\'.$className;
+    }
+
+    /**
+     * Resolve a short gateway name to a full namespaced gateway class.
+     *
+     * Class names beginning with a namespace marker (\) are left intact.
+     * Non-namespaced classes are expected to be in the \Omnipay namespace, e.g.:
+     *
+     *      \Custom\Gateway     => \Custom\Gateway
+     *      \Custom_Gateway     => \Custom_Gateway
+     *      Stripe              => \Omnipay\Stripe\Gateway
+     *      PayPal\Express      => \Omnipay\PayPal\ExpressGateway
+     *      PayPal_Express      => \Omnipay\PayPal\ExpressGateway
+     */
+    public static function getGatewayClassName($shortName)
+    {
+        if (0 === strpos($shortName, '\\')) {
+            return $shortName;
+        }
+
+        // replace underscores with namespace marker, PSR-0 style
+        $shortName = str_replace('_', '\\', $shortName);
+        if (false === strpos($shortName, '\\')) {
+            $shortName .= '\\';
+        }
+
+        return '\\Omnipay\\'.$shortName.'Gateway';
+    }
 }
