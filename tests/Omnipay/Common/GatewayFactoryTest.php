@@ -30,48 +30,9 @@ class GatewayFactoryTest extends TestCase
         $gateway = GatewayFactory::create('Invalid');
     }
 
-    /**
-     * Type with namespace should simply be returned as is
-     */
-    public function testResolveTypeExistingNamespace()
+    public function testFind()
     {
-        $class = GatewayFactory::resolveType('\\Custom\\Gateway');
-        $this->assertEquals('\\Custom\\Gateway', $class);
-    }
-
-    /**
-     * Type with namespace marker should be left intact, even if it contains an underscore
-     */
-    public function testResolveTypeExistingNamespaceUnderscore()
-    {
-        $class = GatewayFactory::resolveType('\\Custom_Gateway');
-        $this->assertEquals('\\Custom_Gateway', $class);
-    }
-
-    public function testResolveSimple()
-    {
-        $class = GatewayFactory::resolveType('Stripe');
-        $this->assertEquals('\\Omnipay\\Stripe\\Gateway', $class);
-    }
-
-    public function testResolvePartialNamespace()
-    {
-        $class = GatewayFactory::resolveType('PayPal\\Express');
-        $this->assertEquals('\\Omnipay\\PayPal\\ExpressGateway', $class);
-    }
-
-    /**
-     * Underscored types should be resolved in a PSR-0 fashion
-     */
-    public function testResolveUnderscoreNamespace()
-    {
-        $class = GatewayFactory::resolveType('PayPal_Express');
-        $this->assertEquals('\\Omnipay\\PayPal\\ExpressGateway', $class);
-    }
-
-    public function testGetAvailableGateways()
-    {
-        $gateways = GatewayFactory::getAvailableGateways();
+        $gateways = GatewayFactory::find();
         $this->assertContains('PayPal_Express', $gateways);
         $this->assertContains('Stripe', $gateways);
     }

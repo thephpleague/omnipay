@@ -23,7 +23,7 @@ class GatewayFactory
 {
     public static function create($type, ClientInterface $httpClient = null, HttpRequest $httpRequest = null)
     {
-        $type = static::resolveType($type);
+        $type = Helper::getGatewayClassName($type);
 
         if (!class_exists($type)) {
             throw new GatewayNotFoundException("Class '$type' not found");
@@ -35,36 +35,9 @@ class GatewayFactory
     }
 
     /**
-     * Resolve a short gateway name to a full namespaced gateway class.
-     *
-     * Class names beginning with a namespace marker (\) are left intact.
-     * Non-namespaced classes are expected to be in the \Omnipay namespace, e.g.:
-     *
-     *      \Custom\Gateway     => \Custom\Gateway
-     *      \Custom_Gateway     => \Custom_Gateway
-     *      Stripe              => \Omnipay\Stripe\Gateway
-     *      PayPal\Express      => \Omnipay\PayPal\ExpressGateway
-     *      PayPal_Express      => \Omnipay\PayPal\ExpressGateway
-     */
-    public static function resolveType($type)
-    {
-        if (0 === strpos($type, '\\')) {
-            return $type;
-        }
-
-        // replace underscores with namespace marker, PSR-0 style
-        $type = str_replace('_', '\\', $type);
-        if (false === strpos($type, '\\')) {
-            $type .= '\\';
-        }
-
-        return '\\Omnipay\\'.$type.'Gateway';
-    }
-
-    /**
      * Get a list of supported gateways, in friendly format (e.g. PayPal_Express)
      */
-    public static function getAvailableGateways($directory = null)
+    public static function find($directory = null)
     {
         $result = array();
 
@@ -78,7 +51,7 @@ class GatewayFactory
                 $type = substr($filepath, 0, -11);
                 $type = str_replace(array($directory, DIRECTORY_SEPARATOR), array('', '_'), $type);
                 $type = trim($type, '_');
-                $class = static::resolveType($type);
+                $class = Helper::getGatewayClassName($type);
 
                 // ensure class exists and is not abstract
                 if (class_exists($class)) {

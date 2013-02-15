@@ -100,12 +100,7 @@ abstract class AbstractGateway implements GatewayInterface
      */
     public function getShortName()
     {
-        $class = get_class($this);
-        if (0 === strpos($class, 'Omnipay\\')) {
-            return trim(str_replace('\\', '_', substr($class, 8, -7)), '_');
-        }
-
-        return '\\'.$class;
+        return Helper::getGatewayShortName(get_class($this));
     }
 
     /**
