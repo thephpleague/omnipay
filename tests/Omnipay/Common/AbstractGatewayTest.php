@@ -88,20 +88,4 @@ class AbstractGatewayTest extends TestCase
         $gateway = GatewayFactory::create('Stripe');
         $this->assertSame('Stripe', $gateway->getShortName());
     }
-
-    public function testHttpClient()
-    {
-        $newHttpClient = new HttpClient;
-
-        $this->gateway->setHttpClient($newHttpClient);
-        $this->assertSame($newHttpClient, $this->gateway->getHttpClient());
-    }
-
-    public function testHttpRequest()
-    {
-        $newHttpRequest = new HttpRequest;
-
-        $this->gateway->setHttpRequest($newHttpRequest);
-        $this->assertSame($newHttpRequest, $this->gateway->getHttpRequest());
-    }
 }
