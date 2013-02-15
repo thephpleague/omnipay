@@ -29,19 +29,6 @@ class GatewayFactory
             throw new GatewayNotFoundException("Class '$type' not found");
         }
 
-        if (null === $httpClient) {
-            $httpClient = new HttpClient(
-                '',
-                array(
-                    'curl.options' => array(CURLOPT_CONNECTTIMEOUT => 60),
-                )
-            );
-        }
-
-        if (null === $httpRequest) {
-            $httpRequest = HttpRequest::createFromGlobals();
-        }
-
         $gateway = new $type($httpClient, $httpRequest);
 
         return $gateway;

@@ -46,6 +46,16 @@ abstract class GatewayTestCase extends TestCase
         ));
     }
 
+    public function testConstructWithoutParameters()
+    {
+        // constructor should initialize default http client and request
+        $class = get_class($this->gateway);
+        $newGateway = new $class();
+
+        $this->assertInstanceOf('Guzzle\Http\ClientInterface', $newGateway->getHttpClient());
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Request', $newGateway->getHttpRequest());
+    }
+
     public function testGetNameNotEmpty()
     {
         $name = $this->gateway->getName();
@@ -153,5 +163,37 @@ abstract class GatewayTestCase extends TestCase
             $this->setExpectedException('Omnipay\\Common\\Exception\\UnsupportedMethodException');
             $this->gateway->void(array());
         }
+    }
+
+    public function testHttpClient()
+    {
+        $newHttpClient = new HttpClient;
+
+        $this->gateway->setHttpClient($newHttpClient);
+        $this->assertSame($newHttpClient, $this->gateway->getHttpClient());
+    }
+
+    public function testGetDefaultHttpClient()
+    {
+        $client = $this->gateway->getDefaultHttpClient();
+        $curlOptions = $client->getConfig('curl.options');
+
+        $this->assertInstanceOf('Guzzle\Http\Client', $client);
+        $this->assertArrayHasKey(CURLOPT_CONNECTTIMEOUT, $curlOptions);
+    }
+
+    public function testHttpRequest()
+    {
+        $newHttpRequest = new HttpRequest;
+
+        $this->gateway->setHttpRequest($newHttpRequest);
+        $this->assertSame($newHttpRequest, $this->gateway->getHttpRequest());
+    }
+
+    public function testGetDefaultHttpRequest()
+    {
+        $request = $this->gateway->getDefaultHttpRequest();
+
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Request', $request);
     }
 }
