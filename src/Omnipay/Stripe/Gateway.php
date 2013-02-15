@@ -95,10 +95,20 @@ class Gateway extends AbstractGateway
 
     protected function send($url, $data)
     {
+        // don't throw exceptions for 402 errors
+        $this->httpClient->getEventDispatcher()->addListener(
+            'request.error',
+            function ($event) {
+                if ($event['response']->getStatusCode() == 402) {
+                    $event->stopPropagation();
+                }
+            }
+        );
+
         $httpResponse = $this->httpClient->post($this->endpoint.$url, null, $data)
             ->setHeader('Authorization', 'Basic '.base64_encode($this->apiKey.':'))
             ->send();
 
-        return new Response($httpResponse->getBody());
+        return new Response($httpResponse->json());
     }
 }

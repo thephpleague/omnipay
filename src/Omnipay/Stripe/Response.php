@@ -20,29 +20,24 @@ use Omnipay\Common\Exception\InvalidResponseException;
  */
 class Response extends AbstractResponse
 {
-    public function __construct($data)
-    {
-        $this->data = json_decode($data);
-
-        if (empty($this->data)) {
-            throw new InvalidResponseException;
-        }
-    }
-
     public function isSuccessful()
     {
-        return !isset($this->data->error);
+        return !isset($this->data['error']);
     }
 
     public function getGatewayReference()
     {
-        return $this->data->id;
+        if ($this->isSuccessful()) {
+            return $this->data['id'];
+        }
+
+        return $this->data['error']['charge'];
     }
 
     public function getMessage()
     {
         if (!$this->isSuccessful()) {
-            return $this->data->error->message;
+            return $this->data['error']['message'];
         }
     }
 }

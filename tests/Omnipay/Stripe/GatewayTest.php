@@ -34,7 +34,8 @@ class GatewayTest extends GatewayTestCase
         $response = $this->gateway->purchase($this->options);
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertSame('Your card number is incorrect', $response->getMessage());
+        $this->assertSame('Your card was declined', $response->getMessage());
+        $this->assertSame('ch_1IUAZQWFYrPooM', $response->getGatewayReference());
     }
 
     public function testPurchaseSuccess()
@@ -44,7 +45,8 @@ class GatewayTest extends GatewayTestCase
         $response = $this->gateway->purchase($this->options);
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('ch_12RgN9L7XhO9mI', $response->getGatewayReference());
+        $this->assertSame('ch_1IU9gcUiNASROd', $response->getGatewayReference());
+        $this->assertNull($response->getMessage());
     }
 
     public function testRefundError()
