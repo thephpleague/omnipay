@@ -15,42 +15,52 @@ use Omnipay\TestCase;
 
 class ResponseTest extends TestCase
 {
-    public function testConstructEmpty()
+    public function testConstruct()
     {
-        $response = new Response(array());
+        // response should decode URL format data
+        $response = new Response('example=value&foo=bar');
+        $this->assertEquals(array('example' => 'value', 'foo' => 'bar'), $response->getData());
+    }
+
+    public function testExpressPurchaseSuccess()
+    {
+        $httpResponse = $this->getMockResponse('ExpressPurchaseSuccess.txt');
+        $response = new Response($httpResponse->getBody());
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame('EC-42721413K79637829', $response->getExpressRedirectToken());
         $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getMessage());
     }
 
-    public function testConstructRefundTransactionId()
+    public function testExpressPurchaseFailure()
     {
-        $response = new Response(array('REFUNDTRANSACTIONID' => '11111'));
+        $httpResponse = $this->getMockResponse('ExpressPurchaseFailure.txt');
+        $response = new Response($httpResponse->getBody());
 
-        $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('11111', $response->getGatewayReference());
+        $this->assertFalse($response->isSuccessful());
+        $this->assertNull($response->getExpressRedirectToken());
+        $this->assertNull($response->getGatewayReference());
+        $this->assertSame('This transaction cannot be processed. The amount to be charged is zero.', $response->getMessage());
     }
 
-    public function testConstructTransactionId()
+    public function testProPurchaseSuccess()
     {
-        $response = new Response(array('TRANSACTIONID' => '22222'));
+        $httpResponse = $this->getMockResponse('ProPurchaseSuccess.txt');
+        $response = new Response($httpResponse->getBody());
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('22222', $response->getGatewayReference());
+        $this->assertSame('96U93778BD657313D', $response->getGatewayReference());
+        $this->assertNull($response->getMessage());
     }
 
-    public function testConstructPaymentTransactionId()
+    public function testProPurchaseFailure()
     {
-        $response = new Response(array('PAYMENTINFO_0_TRANSACTIONID' => '33333'));
+        $httpResponse = $this->getMockResponse('ProPurchaseFailure.txt');
+        $response = new Response($httpResponse->getBody());
 
-        $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('33333', $response->getGatewayReference());
-    }
-
-    public function testConstructData()
-    {
-        $data = array('example' => 'value');
-        $response = new Response($data);
-
-        $this->assertTrue($response->isSuccessful());
-        $this->assertEquals($data, $response->getData());
+        $this->assertFalse($response->isSuccessful());
+        $this->assertNull($response->getGatewayReference());
+        $this->assertSame('This transaction cannot be processed. Please enter a valid credit card expiration year.', $response->getMessage());
     }
 }

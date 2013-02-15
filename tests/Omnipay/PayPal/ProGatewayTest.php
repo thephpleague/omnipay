@@ -35,16 +35,6 @@ class ProGatewayTest extends GatewayTestCase
         );
     }
 
-    /**
-     * @expectedException \Omnipay\Common\Exception\InvalidRequestException
-     * @expectedExceptionMessage The amount parameter is required
-     */
-    public function testAuthorizeRequiresAmount()
-    {
-        $this->options['amount'] = 0;
-        $response = $this->gateway->authorize($this->options);
-    }
-
     public function testAuthorize()
     {
         $this->setMockResponse($this->httpClient, 'ProPurchaseSuccess.txt');
@@ -52,7 +42,8 @@ class ProGatewayTest extends GatewayTestCase
         $response = $this->gateway->authorize($this->options);
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('7T274412RY6976239', $response->getGatewayReference());
+        $this->assertEquals('96U93778BD657313D', $response->getGatewayReference());
+        $this->assertNull($response->getMessage());
     }
 
     public function testPurchase()
@@ -62,6 +53,7 @@ class ProGatewayTest extends GatewayTestCase
         $response = $this->gateway->purchase($this->options);
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('7T274412RY6976239', $response->getGatewayReference());
+        $this->assertEquals('96U93778BD657313D', $response->getGatewayReference());
+        $this->assertNull($response->getMessage());
     }
 }

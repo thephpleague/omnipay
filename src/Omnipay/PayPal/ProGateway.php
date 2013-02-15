@@ -87,33 +87,29 @@ class ProGateway extends AbstractGateway
     public function authorize($options)
     {
         $data = $this->buildAuthorize($options, 'Authorization');
-        $response = $this->send($data);
 
-        return new Response($response);
+        return $this->send($data);
     }
 
     public function purchase($options)
     {
         $data = $this->buildAuthorize($options, 'Sale');
-        $response = $this->send($data);
 
-        return new Response($response);
+        return $this->send($data);
     }
 
     public function capture($options)
     {
         $data = $this->buildCapture($options);
-        $response = $this->send($data);
 
-        return new Response($response);
+        return $this->send($data);
     }
 
     public function refund($options)
     {
         $request = $this->buildRefund($options);
-        $response = $this->send($request);
 
-        return new Response($response);
+        return $this->send($data);
     }
 
     protected function buildAuthorize($options, $action)
@@ -204,16 +200,7 @@ class ProGateway extends AbstractGateway
         // send and decode response
         $httpResponse = $this->httpClient->get($this->getCurrentEndpoint().'?'.http_build_query($data))->send();
 
-        parse_str($httpResponse->getBody(), $response_vars);
-
-        // check whether response was successful
-        if (isset($response_vars['ACK']) and in_array($response_vars['ACK'], array('Success', 'SuccessWithWarning'))) {
-            return $response_vars;
-        } elseif (isset($response_vars['L_LONGMESSAGE0'])) {
-            throw new Exception($response_vars);
-        }
-
-        throw new InvalidResponseException();
+        return new Response($httpResponse->getBody());
     }
 
     protected function getCurrentEndpoint()

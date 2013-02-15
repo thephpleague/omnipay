@@ -1,0 +1,8 @@
+HTTP/1.1 200 OK
+Date: Fri, 15 Feb 2013 19:21:05 GMT
+Server: Apache
+Content-Length: 292
+Connection: close
+Content-Type: text/plain; charset=utf-8
+
+TIMESTAMP=2013%2d02%2d15T19%3a21%3a06Z&CORRELATIONID=2b58be2b8e60e&ACK=Failure&VERSION=85%2e0&BUILD=5060305&L_ERRORCODE0=10525&L_SHORTMESSAGE0=Invalid%20Data&L_LONGMESSAGE0=This%20transaction%20cannot%20be%20processed%2e%20The%20amount%20to%20be%20charged%20is%20zero%2e&L_SEVERITYCODE0=Error

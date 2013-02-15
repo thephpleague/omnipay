@@ -61,12 +61,16 @@ class ExpressGateway extends ProGateway
         $data = $this->buildExpressAuthorize($options);
         $response = $this->send($data);
 
+        if (!$response->isSuccessful()) {
+            return $response;
+        }
+
         return new RedirectResponse(
             $this->getCurrentCheckoutEndpoint().'?'.http_build_query(
                 array(
                     'cmd' => '_express-checkout',
                     'useraction' => 'commit',
-                    'token' => $response['TOKEN'],
+                    'token' => $response->getExpressRedirectToken(),
                 )
             )
         );
@@ -74,9 +78,9 @@ class ExpressGateway extends ProGateway
 
     public function completeAuthorize($options)
     {
-        $data = $this->confirmReturn($options, 'Authorization');
+        $data = $this->buildCompleteAuthorizeOrPurchase($options, 'Authorization');
 
-        return new Response($data);
+        return $this->send($data);
     }
 
     public function purchase($options)
@@ -87,9 +91,9 @@ class ExpressGateway extends ProGateway
 
     public function completePurchase($options)
     {
-        $data = $this->confirmReturn($options, 'Sale');
+        $data = $this->buildCompleteAuthorizeOrPurchase($options, 'Sale');
 
-        return new Response($data);
+        return $this->send($data);
     }
 
     protected function buildExpressAuthorize($options)
@@ -124,7 +128,7 @@ class ExpressGateway extends ProGateway
         return $data;
     }
 
-    protected function confirmReturn($options, $action)
+    protected function buildCompleteAuthorizeOrPurchase($options, $action)
     {
         $prefix = 'PAYMENTREQUEST_0_';
         $request = new Request($options);
@@ -133,6 +137,6 @@ class ExpressGateway extends ProGateway
         $data['TOKEN'] = isset($_POST['token']) ? $_POST['token'] : '';
         $data['PAYERID'] = isset($_POST['PayerID']) ? $_POST['PayerID'] : '';
 
-        return $this->send($data);
+        return $data;
     }
 }

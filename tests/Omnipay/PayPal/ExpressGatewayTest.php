@@ -28,23 +28,51 @@ class ExpressGatewayTest extends GatewayTestCase
         );
     }
 
-    public function testAuthorize()
+    public function testAuthorizeSuccess()
     {
         $this->setMockResponse($this->httpClient, 'ExpressPurchaseSuccess.txt');
 
         $response = $this->gateway->authorize($this->options);
 
         $this->assertInstanceOf('\Omnipay\Common\RedirectResponse', $response);
-        $this->assertEquals('https://www.paypal.com/webscr?cmd=_express-checkout&useraction=commit&token=EC-5BV04722RH241693H', $response->getRedirectUrl());
+        $this->assertFalse($response->isSuccessful());
+        $this->assertTrue($response->isRedirect());
+        $this->assertEquals('https://www.paypal.com/webscr?cmd=_express-checkout&useraction=commit&token=EC-42721413K79637829', $response->getRedirectUrl());
     }
 
-    public function testPurchase()
+    public function testAuthorizeFailure()
+    {
+        $this->setMockResponse($this->httpClient, 'ExpressPurchaseFailure.txt');
+
+        $response = $this->gateway->authorize($this->options);
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getGatewayReference());
+        $this->assertSame('This transaction cannot be processed. The amount to be charged is zero.', $response->getMessage());
+    }
+
+    public function testPurchaseSuccess()
     {
         $this->setMockResponse($this->httpClient, 'ExpressPurchaseSuccess.txt');
 
         $response = $this->gateway->purchase($this->options);
 
         $this->assertInstanceOf('\Omnipay\Common\RedirectResponse', $response);
-        $this->assertEquals('https://www.paypal.com/webscr?cmd=_express-checkout&useraction=commit&token=EC-5BV04722RH241693H', $response->getRedirectUrl());
+        $this->assertFalse($response->isSuccessful());
+        $this->assertTrue($response->isRedirect());
+        $this->assertEquals('https://www.paypal.com/webscr?cmd=_express-checkout&useraction=commit&token=EC-42721413K79637829', $response->getRedirectUrl());
+    }
+
+    public function testPurchaseFailure()
+    {
+        $this->setMockResponse($this->httpClient, 'ExpressPurchaseFailure.txt');
+
+        $response = $this->gateway->purchase($this->options);
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getGatewayReference());
+        $this->assertSame('This transaction cannot be processed. The amount to be charged is zero.', $response->getMessage());
     }
 }

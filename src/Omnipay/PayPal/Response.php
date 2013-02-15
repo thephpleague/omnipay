@@ -18,9 +18,14 @@ use Omnipay\Common\AbstractResponse;
  */
 class Response extends AbstractResponse
 {
+    public function __construct($data)
+    {
+        parse_str($data, $this->data);
+    }
+
     public function isSuccessful()
     {
-        return true;
+        return isset($this->data['ACK']) && in_array($this->data['ACK'], array('Success', 'SuccessWithWarning'));
     }
 
     public function getGatewayReference()
@@ -30,5 +35,15 @@ class Response extends AbstractResponse
                 return $this->data[$key];
             }
         }
+    }
+
+    public function getMessage()
+    {
+        return isset($this->data['L_LONGMESSAGE0']) ? $this->data['L_LONGMESSAGE0'] : null;
+    }
+
+    public function getExpressRedirectToken()
+    {
+        return isset($this->data['TOKEN']) ? $this->data['TOKEN'] : null;
     }
 }
