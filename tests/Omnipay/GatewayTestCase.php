@@ -98,11 +98,11 @@ abstract class GatewayTestCase extends TestCase
 
         if ($supportsAuthorize) {
             // authorize method should throw InvalidRequestException
-            $this->setExpectedException('Omnipay\\Exception\\InvalidRequestException');
+            $this->setExpectedException('Omnipay\\Common\\Exception\\InvalidRequestException');
             $this->gateway->authorize(array());
         } else {
             // authorize method should throw UnsupportedMethodException
-            $this->setExpectedException('Omnipay\\Exception\\UnsupportedMethodException');
+            $this->setExpectedException('Omnipay\\Common\\Exception\\UnsupportedMethodException');
             $this->gateway->authorize(array());
         }
     }
@@ -114,11 +114,11 @@ abstract class GatewayTestCase extends TestCase
 
         if ($supportsCapture) {
             // capture method should throw InvalidRequestException
-            $this->setExpectedException('Omnipay\\Exception\\InvalidRequestException');
+            $this->setExpectedException('Omnipay\\Common\\Exception\\InvalidRequestException');
             $this->gateway->capture(array());
         } else {
             // capture method should throw UnsupportedMethodException
-            $this->setExpectedException('Omnipay\\Exception\\UnsupportedMethodException');
+            $this->setExpectedException('Omnipay\\Common\\Exception\\UnsupportedMethodException');
             $this->gateway->capture(array());
         }
     }
@@ -130,11 +130,11 @@ abstract class GatewayTestCase extends TestCase
 
         if ($supportsRefund) {
             // refund method should throw InvalidRequestException
-            $this->setExpectedException('Omnipay\\Exception\\InvalidRequestException');
+            $this->setExpectedException('Omnipay\\Common\\Exception\\InvalidRequestException');
             $this->gateway->refund(array());
         } else {
             // refund method should throw UnsupportedMethodException
-            $this->setExpectedException('Omnipay\\Exception\\UnsupportedMethodException');
+            $this->setExpectedException('Omnipay\\Common\\Exception\\UnsupportedMethodException');
             $this->gateway->refund(array());
         }
     }
@@ -146,11 +146,11 @@ abstract class GatewayTestCase extends TestCase
 
         if ($supportsVoid) {
             // void method should throw InvalidRequestException
-            $this->setExpectedException('Omnipay\\Exception\\InvalidRequestException');
+            $this->setExpectedException('Omnipay\\Common\\Exception\\InvalidRequestException');
             $this->gateway->void(array());
         } else {
             // void method should throw UnsupportedMethodException
-            $this->setExpectedException('Omnipay\\Exception\\UnsupportedMethodException');
+            $this->setExpectedException('Omnipay\\Common\\Exception\\UnsupportedMethodException');
             $this->gateway->void(array());
         }
     }

@@ -22,8 +22,8 @@ is fully unit tested, and even comes with an example application to get you star
 Just want to see some code?
 
 ```php
-use Omnipay\CreditCard;
-use Omnipay\GatewayFactory;
+use Omnipay\Common\CreditCard;
+use Omnipay\Common\GatewayFactory;
 
 $gateway = GatewayFactory::create('Stripe');
 $gateway->setApiKey('abc123');
@@ -78,7 +78,7 @@ And run composer to update your dependencies:
 ## Payment Gateways
 
 All payment gateways must implement [Omnipay\GatewayInterface](https://github.com/adrianmacneil/omnipay/blob/master/src/Omnipay/GatewayInterface.php), and will usually
-extend [Omnipay\AbstractGateway](https://github.com/adrianmacneil/omnipay/blob/master/src/Omnipay/AbstractGateway.php) for basic functionality.
+extend [Omnipay\Common\AbstractGateway](https://github.com/adrianmacneil/omnipay/blob/master/src/Omnipay/AbstractGateway.php) for basic functionality.
 
 The following gateways are already implemented:
 
@@ -103,7 +103,7 @@ will be implemented before we reach 1.0.
 Gateways are created and initialized like so:
 
 ```php
-use Omnipay\GatewayFactory;
+use Omnipay\Common\GatewayFactory;
 
 $gateway = GatewayFactory::create('PayPal_Express');
 $gateway->setUsername('adrian');
@@ -134,7 +134,7 @@ gateway (other than by the methods they support).
 
 ## Credit Card / Payment Form Input
 
-User form input is directed to an [Omnipay\CreditCard](https://github.com/adrianmacneil/omnipay/blob/master/src/Omnipay/CreditCard.php)
+User form input is directed to an [Omnipay\Common\CreditCard](https://github.com/adrianmacneil/omnipay/blob/master/src/Omnipay/CreditCard.php)
 object. This provides a safe way to accept user input.
 
 The `CreditCard` object has the following fields:
@@ -192,7 +192,7 @@ $card->setFirstName('Adrian');
 ```
 
 If you submit credit card details which are obviously invalid (missing required fields, or a number
-which fails the Luhn check), [Omnipay\Exception\InvalidCreditCardException](https://github.com/adrianmacneil/omnipay/blob/master/src/Omnipay/Exception/InvalidCreditCardException.php)
+which fails the Luhn check), [Omnipay\Common\Exception\InvalidCreditCardException](https://github.com/adrianmacneil/omnipay/blob/master/src/Omnipay/Exception/InvalidCreditCardException.php)
 will be thrown.  You should validate the card details using your framework's validation library
 before submitting the details to your gateway, to avoid unnecessary API calls.
 
@@ -205,7 +205,7 @@ For on-site payment gateways, the following card fields are always required:
 * expiryYear
 * cvv
 
-You can also verify the card number using the Luhn algorithm by calling `Omnipay\Helper::validateLuhn($number)`.
+You can also verify the card number using the Luhn algorithm by calling `Omnipay\Common\Helper::validateLuhn($number)`.
 
 ## Gateway Methods
 
@@ -220,10 +220,10 @@ The main methods implemented by gateways are:
 * `void($options)` - generally can only be called up to 24 hours after submitting a transaction
 
 On-site gateways do not need to implement the `completeAuthorize` and `completePurchase` methods. If any gateway does not support
-certain features (such as refunds), it will throw `Omnipay\Exception\UnsupportedMethodException`.
+certain features (such as refunds), it will throw `Omnipay\Common\Exception\UnsupportedMethodException`.
 
 All gateway methods take an `$options` array as an argument. Each gateway differs in which
-parameters are required, and the gateway will throw `Omnipay\Exception\InvalidRequestException` if you
+parameters are required, and the gateway will throw `Omnipay\Common\Exception\InvalidRequestException` if you
 omit any required parameters. All gateways will accept a subset of these options:
 
 * card
