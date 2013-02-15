@@ -1,0 +1,3 @@
+HTTP/1.1 200 OK
+
+<Response><ResponseCode>OK</ResponseCode><TransactionId>abc123</TransactionId></Response>

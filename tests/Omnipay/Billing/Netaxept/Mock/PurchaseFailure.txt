@@ -1,0 +1,3 @@
+HTTP/1.1 200 OK
+
+<Response><Error><Message>Authentication Error</Message></Error></Response>

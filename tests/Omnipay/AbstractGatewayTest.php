@@ -12,8 +12,10 @@
 namespace Omnipay;
 
 use Mockery as m;
+use Guzzle\Http\Client as HttpClient;
+use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
-class AbstractGatewayTest extends \PHPUnit_Framework_TestCase
+class AbstractGatewayTest extends TestCase
 {
     public function setUp()
     {
@@ -88,17 +90,17 @@ class AbstractGatewayTest extends \PHPUnit_Framework_TestCase
 
     public function testHttpClient()
     {
-        $mockHttpClient = m::mock('\Omnipay\HttpClient\HttpClientInterface');
+        $newHttpClient = new HttpClient;
 
-        $this->gateway->setHttpClient($mockHttpClient);
-        $this->assertSame($mockHttpClient, $this->gateway->getHttpClient());
+        $this->gateway->setHttpClient($newHttpClient);
+        $this->assertSame($newHttpClient, $this->gateway->getHttpClient());
     }
 
     public function testHttpRequest()
     {
-        $mockHttpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
+        $newHttpRequest = new HttpRequest;
 
-        $this->gateway->setHttpRequest($mockHttpRequest);
-        $this->assertSame($mockHttpRequest, $this->gateway->getHttpRequest());
+        $this->gateway->setHttpRequest($newHttpRequest);
+        $this->assertSame($newHttpRequest, $this->gateway->getHttpRequest());
     }
 }

@@ -148,9 +148,9 @@ class Gateway extends AbstractGateway
 
     protected function send($url, $data)
     {
-        $response = $this->httpClient->get($this->getCurrentEndpoint().$url.'?'.http_build_query($data));
+        $httpResponse = $this->httpClient->get($this->getCurrentEndpoint().$url.'?'.http_build_query($data))->send();
 
-        $xml = new SimpleXMLElement($response);
+        $xml = new SimpleXMLElement($httpResponse->getBody());
         if (empty($xml)) {
             throw new InvalidResponseException;
         }

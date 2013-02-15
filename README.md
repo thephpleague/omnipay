@@ -50,10 +50,10 @@ as possible the differences between the various payments gateways.
 
 Omnipay is a single package which provides abstract base classes and implementations for all
 officially supported gateways. There are no dependencies on official payment gateway PHP packages -
-we prefer to work with the HTTP API directly. Under the hood, we use [Buzz](https://github.com/kriswallsmith/Buzz)
-to make HTTP requests, though you are free to swap out this dependency.
+we prefer to work with the HTTP API directly. Under the hood, we use the popular and powerful
+[Guzzle](http://guzzlephp.org/) library to make HTTP requests.
 
-Unsupported gateways can either be added by forking this package and submitting a pull request
+New gateways can either be added by forking this package and submitting a pull request
 (unit tests and tidy code required), or by distributing a separate library which depends on this
 package and makes use of our base classes and consistent developer API.
 

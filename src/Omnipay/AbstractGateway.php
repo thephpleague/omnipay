@@ -12,10 +12,10 @@
 namespace Omnipay;
 
 use ReflectionMethod;
-use Symfony\Component\HttpFoundation\Request as HttpRequest;
+use Guzzle\Http\ClientInterface;
 use Omnipay\Exception\UnsupportedMethodException;
-use Omnipay\HttpClient\HttpClientInterface;
 use Omnipay\Request;
+use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 /**
  * Base payment gateway class
@@ -28,10 +28,10 @@ abstract class AbstractGateway implements GatewayInterface
     /**
      * Create a new gateway instance
      *
-     * @param HttpClientInterface $httpClient  An HTTP client to make API calls with
-     * @param HttpRequest         $httpRequest A Symfony HTTP request object
+     * @param ClientInterface $httpClient  A Guzzle client to make API calls with
+     * @param HttpRequest     $httpRequest A Symfony HTTP request object
      */
-    public function __construct(HttpClientInterface $httpClient, HttpRequest $httpRequest)
+    public function __construct(ClientInterface $httpClient, HttpRequest $httpRequest)
     {
         $this->httpClient = $httpClient;
         $this->httpRequest = $httpRequest;
@@ -195,7 +195,7 @@ abstract class AbstractGateway implements GatewayInterface
         return $this->httpClient;
     }
 
-    public function setHttpClient(HttpClientInterface $httpClient)
+    public function setHttpClient(ClientInterface $httpClient)
     {
         $this->httpClient = $httpClient;
     }

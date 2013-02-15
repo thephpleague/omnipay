@@ -11,14 +11,25 @@
 
 namespace Omnipay;
 
+use Mockery as m;
+use Guzzle\Http\Client as HttpClient;
+use Symfony\Component\HttpFoundation\Request as HttpRequest;
+
 /**
  * Base Gateway Test class
  *
  * Ensures all gateways conform to consistent standards
  */
-abstract class BaseGatewayTest extends \PHPUnit_Framework_TestCase
+abstract class GatewayTestCase extends TestCase
 {
-    protected $gateway;
+    protected $httpClient;
+    protected $httpRequest;
+
+    public function setUp()
+    {
+        $this->httpClient = new HttpClient;
+        $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
+    }
 
     /**
      * Helper method used by gateway test classes to generate a valid test credit card

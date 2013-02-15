@@ -11,9 +11,7 @@
 
 namespace Omnipay;
 
-use Mockery as m;
-
-class RedirectResponseTest extends \PHPUnit_Framework_TestCase
+class RedirectResponseTest extends TestCase
 {
     public function setUp()
     {

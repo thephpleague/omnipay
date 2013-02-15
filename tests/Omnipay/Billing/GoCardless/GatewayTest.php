@@ -11,16 +11,13 @@
 
 namespace Omnipay\Billing\GoCardless;
 
-use Mockery as m;
-use Omnipay\BaseGatewayTest;
-use Omnipay\Request;
+use Omnipay\GatewayTestCase;
 
-class GatewayTest extends BaseGatewayTest
+class GatewayTest extends GatewayTestCase
 {
     public function setUp()
     {
-        $this->httpClient = m::mock('\Omnipay\HttpClient\HttpClientInterface');
-        $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
+        parent::setUp();
 
         $this->gateway = new Gateway($this->httpClient, $this->httpRequest);
         $this->gateway->setAppId('abc');
@@ -49,9 +46,7 @@ class GatewayTest extends BaseGatewayTest
         $this->httpRequest->shouldReceive('get')->with('signature')->once()
             ->andReturn('416f52e7d287dab49fa8445c1cd0957ca8ddf1c04a6300e00117dc0bedabc7d7');
 
-        $this->httpClient->shouldReceive('post')
-            ->with('https://gocardless.com/api/v1/confirm', m::type('string'), m::type('array'))->once()
-            ->andReturn('{"success":true}');
+        $this->setMockResponse($this->httpClient, 'CompletePurchaseSuccess.txt');
 
         $response = $this->gateway->completePurchase($this->options);
 
@@ -67,9 +62,7 @@ class GatewayTest extends BaseGatewayTest
         $this->httpRequest->shouldReceive('get')->with('signature')->once()
             ->andReturn('416f52e7d287dab49fa8445c1cd0957ca8ddf1c04a6300e00117dc0bedabc7d7');
 
-        $this->httpClient->shouldReceive('post')
-            ->with('https://gocardless.com/api/v1/confirm', m::type('string'), m::type('array'))->once()
-            ->andReturn('{"error":["The resource cannot be confirmed"]}');
+        $this->setMockResponse($this->httpClient, 'CompletePurchaseFailure.txt');
 
         $response = $this->gateway->completePurchase($this->options);
 

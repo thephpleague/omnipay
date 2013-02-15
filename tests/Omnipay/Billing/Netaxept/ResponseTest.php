@@ -12,8 +12,9 @@
 namespace Omnipay\Billing\Netaxept;
 
 use SimpleXmlElement;
+use Omnipay\TestCase;
 
-class ResponseTest extends \PHPUnit_Framework_TestCase
+class ResponseTest extends TestCase
 {
     public function testConstructSuccess()
     {

@@ -18,14 +18,15 @@
         "psr-0": { "Omnipay" : "src/" }
     },
     "require": {
+        "guzzle/http": "3.*",
         "symfony/http-foundation": "2.*"
     },
     "require-dev": {
-        "kriswallsmith/buzz": "0.*",
-        "phpunit/phpunit": "3.7.*",
+        "guzzle/plugin-mock": "3.*",
         "mockery/mockery": "0.7.*",
-        "squizlabs/php_codesniffer": "1.4.*",
+        "phpunit/phpunit": "3.7.*",
         "silex/silex": "1.0.*@dev",
+        "squizlabs/php_codesniffer": "1.4.*",
         "twig/twig": "1.*"
     }
 }

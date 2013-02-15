@@ -160,13 +160,13 @@ class Gateway extends AbstractGateway
 
         // post to Cardsave
         $headers = array(
-            'Content-Type: text/xml; charset=utf-8',
-            'SOAPAction: https://www.thepaymentgateway.net/'.$data->getName());
-        $responseString = $this->httpClient->post($this->endpoint, $document->saveXML(), $headers);
+            'Content-Type' => 'text/xml; charset=utf-8',
+            'SOAPAction' => 'https://www.thepaymentgateway.net/'.$data->getName());
+        $httpResponse = $this->httpClient->post($this->endpoint, $headers, $document->saveXML())->send();
 
         // we only care about the content of the soap:Body element
         $responseDom = new DOMDocument;
-        $responseDom->loadXML($responseString);
+        $responseDom->loadXML($httpResponse->getBody());
         $response = simplexml_import_dom($responseDom->documentElement->firstChild->firstChild);
 
         $resultElement = $data->getName().'Result';

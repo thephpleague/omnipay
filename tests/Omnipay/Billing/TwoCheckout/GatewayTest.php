@@ -11,17 +11,14 @@
 
 namespace Omnipay\Billing\TwoCheckout;
 
-use Mockery as m;
-use Omnipay\BaseGatewayTest;
+use Omnipay\GatewayTestCase;
 use Omnipay\CreditCard;
-use Omnipay\Request;
 
-class GatewayTest extends BaseGatewayTest
+class GatewayTest extends GatewayTestCase
 {
     public function setUp()
     {
-        $this->httpClient = m::mock('\Omnipay\HttpClient\HttpClientInterface');
-        $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
+        parent::setUp();
 
         $this->gateway = new Gateway($this->httpClient, $this->httpRequest);
         $this->gateway->setUsername('abc');

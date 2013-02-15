@@ -1,0 +1,3 @@
+HTTP/1.1 200 OK
+
+<Response valid="0"><URI>https://www.example.com/redirect</URI></Response>

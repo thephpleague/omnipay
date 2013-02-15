@@ -13,7 +13,7 @@ namespace Omnipay;
 
 use Mockery as m;
 
-class AbstractResponseTest extends \PHPUnit_Framework_TestCase
+class AbstractResponseTest extends TestCase
 {
     public function testDefaultMethods()
     {

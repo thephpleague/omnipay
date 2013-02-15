@@ -13,7 +13,6 @@ namespace Omnipay\Billing\Pin;
 
 use Omnipay\AbstractResponse;
 use Omnipay\Exception;
-use Omnipay\Exception\InvalidResponseException;
 
 /**
  * Pin Response
@@ -22,29 +21,27 @@ class Response extends AbstractResponse
 {
     public function __construct($data)
     {
-        $this->data = json_decode($data);
-
-        if (empty($this->data)) {
-            throw new InvalidResponseException;
-        }
+        $this->data = $data;
     }
 
     public function isSuccessful()
     {
-        return !isset($this->data->error);
+        return !isset($this->data['error']);
     }
 
     public function getGatewayReference()
     {
-        return $this->data->response->token;
+        if (isset($this->data['response']['token'])) {
+            return $this->data['response']['token'];
+        }
     }
 
     public function getMessage()
     {
         if ($this->isSuccessful()) {
-            return $this->data->response->status_message;
+            return $this->data['response']['status_message'];
         } else {
-            return $this->data->error_description;
+            return $this->data['error_description'];
         }
     }
 }

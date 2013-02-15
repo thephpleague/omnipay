@@ -202,10 +202,9 @@ class ProGateway extends AbstractGateway
     protected function send($data)
     {
         // send and decode response
-        $response = $this->httpClient->get($this->getCurrentEndpoint().'?'.http_build_query($data));
+        $httpResponse = $this->httpClient->get($this->getCurrentEndpoint().'?'.http_build_query($data))->send();
 
-        $response_vars = array();
-        parse_str($response, $response_vars);
+        parse_str($httpResponse->getBody(), $response_vars);
 
         // check whether response was successful
         if (isset($response_vars['ACK']) and in_array($response_vars['ACK'], array('Success', 'SuccessWithWarning'))) {

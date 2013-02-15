@@ -11,16 +11,13 @@
 
 namespace Omnipay\Billing\PaymentExpress;
 
-use Mockery as m;
-use Omnipay\BaseGatewayTest;
-use Omnipay\Request;
+use Omnipay\GatewayTestCase;
 
-class PxPayGatewayTest extends BaseGatewayTest
+class PxPayGatewayTest extends GatewayTestCase
 {
     public function setUp()
     {
-        $this->httpClient = m::mock('\Omnipay\HttpClient\HttpClientInterface');
-        $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
+        parent::setUp();
 
         $this->gateway = new PxPayGateway($this->httpClient, $this->httpRequest);
 
@@ -32,9 +29,7 @@ class PxPayGatewayTest extends BaseGatewayTest
 
     public function testAuthorizeSuccess()
     {
-        $this->httpClient->shouldReceive('post')
-            ->with('https://sec.paymentexpress.com/pxpay/pxaccess.aspx', m::type('string'))->once()
-            ->andReturn('<Response valid="1"><URI>https://www.example.com/redirect</URI></Response>');
+        $this->setMockResponse($this->httpClient, 'PxPayPurchaseSuccess.txt');
 
         $response = $this->gateway->authorize($this->options);
 
@@ -47,9 +42,7 @@ class PxPayGatewayTest extends BaseGatewayTest
      */
     public function testAuthorizeError()
     {
-        $this->httpClient->shouldReceive('post')
-            ->with('https://sec.paymentexpress.com/pxpay/pxaccess.aspx', m::type('string'))->once()
-            ->andReturn('<Response valid="0"><URI>https://www.example.com/redirect</URI></Response>');
+        $this->setMockResponse($this->httpClient, 'PxPayPurchaseFailure.txt');
 
         $response = $this->gateway->authorize($this->options);
     }
@@ -59,9 +52,7 @@ class PxPayGatewayTest extends BaseGatewayTest
         $this->httpRequest->shouldReceive('get')->with('result')->once()
             ->andReturn('abc123');
 
-        $this->httpClient->shouldReceive('post')
-            ->with('https://sec.paymentexpress.com/pxpay/pxaccess.aspx', m::type('string'))->once()
-            ->andReturn('<Response><Success>1</Success><DpsTxnRef>5</DpsTxnRef></Response>');
+        $this->setMockResponse($this->httpClient, 'PxPayCompletePurchaseSuccess.txt');
 
         $response = $this->gateway->completeAuthorize($this->options);
 
@@ -85,9 +76,7 @@ class PxPayGatewayTest extends BaseGatewayTest
         $this->httpRequest->shouldReceive('get')->with('result')->once()
             ->andReturn('abc123');
 
-        $this->httpClient->shouldReceive('post')
-            ->with('https://sec.paymentexpress.com/pxpay/pxaccess.aspx', m::type('string'))->once()
-            ->andReturn('<Response><Success>0</Success><ResponseText>Error processing payment</ResponseText></Response>');
+        $this->setMockResponse($this->httpClient, 'PxPayCompletePurchaseFailure.txt');
 
         $response = $this->gateway->completeAuthorize($this->options);
 
@@ -97,9 +86,7 @@ class PxPayGatewayTest extends BaseGatewayTest
 
     public function testPurchaseSuccess()
     {
-        $this->httpClient->shouldReceive('post')
-            ->with('https://sec.paymentexpress.com/pxpay/pxaccess.aspx', m::type('string'))->once()
-            ->andReturn('<Response valid="1"><URI>https://www.example.com/redirect</URI></Response>');
+        $this->setMockResponse($this->httpClient, 'PxPayPurchaseSuccess.txt');
 
         $response = $this->gateway->purchase($this->options);
 
@@ -112,9 +99,7 @@ class PxPayGatewayTest extends BaseGatewayTest
      */
     public function testPurchaseError()
     {
-        $this->httpClient->shouldReceive('post')
-            ->with('https://sec.paymentexpress.com/pxpay/pxaccess.aspx', m::type('string'))->once()
-            ->andReturn('<Response valid="0"><URI>https://www.example.com/redirect</URI></Response>');
+        $this->setMockResponse($this->httpClient, 'PxPayPurchaseFailure.txt');
 
         $response = $this->gateway->purchase($this->options);
     }
@@ -124,9 +109,7 @@ class PxPayGatewayTest extends BaseGatewayTest
         $this->httpRequest->shouldReceive('get')->with('result')->once()
             ->andReturn('abc123');
 
-        $this->httpClient->shouldReceive('post')
-            ->with('https://sec.paymentexpress.com/pxpay/pxaccess.aspx', m::type('string'))->once()
-            ->andReturn('<Response><Success>1</Success><DpsTxnRef>5</DpsTxnRef></Response>');
+        $this->setMockResponse($this->httpClient, 'PxPayCompletePurchaseSuccess.txt');
 
         $response = $this->gateway->completePurchase($this->options);
 
@@ -150,9 +133,7 @@ class PxPayGatewayTest extends BaseGatewayTest
         $this->httpRequest->shouldReceive('get')->with('result')->once()
             ->andReturn('abc123');
 
-        $this->httpClient->shouldReceive('post')
-            ->with('https://sec.paymentexpress.com/pxpay/pxaccess.aspx', m::type('string'))->once()
-            ->andReturn('<Response><Success>0</Success><ResponseText>Error processing payment</ResponseText></Response>');
+        $this->setMockResponse($this->httpClient, 'PxPayCompletePurchaseFailure.txt');
 
         $response = $this->gateway->completePurchase($this->options);
 

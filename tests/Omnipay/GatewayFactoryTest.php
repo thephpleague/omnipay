@@ -11,7 +11,7 @@
 
 namespace Omnipay;
 
-class GatewayFactoryTest extends \PHPUnit_Framework_TestCase
+class GatewayFactoryTest extends TestCase
 {
     public function testCreate()
     {

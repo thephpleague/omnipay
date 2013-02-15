@@ -11,17 +11,14 @@
 
 namespace Omnipay\Billing\PaymentExpress;
 
-use Mockery as m;
-use Omnipay\BaseGatewayTest;
+use Omnipay\GatewayTestCase;
 use Omnipay\CreditCard;
-use Omnipay\Request;
 
-class PxPostGatewayTest extends BaseGatewayTest
+class PxPostGatewayTest extends GatewayTestCase
 {
     public function setUp()
     {
-        $this->httpClient = m::mock('\Omnipay\HttpClient\HttpClientInterface');
-        $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
+        parent::setUp();
 
         $this->gateway = new PxPostGateway($this->httpClient, $this->httpRequest);
 
@@ -42,9 +39,7 @@ class PxPostGatewayTest extends BaseGatewayTest
 
     public function testAuthorizeSuccess()
     {
-        $this->httpClient->shouldReceive('post')
-            ->with('https://sec.paymentexpress.com/pxpost.aspx', m::type('string'))->once()
-            ->andReturn('<Txn><ReCo>00</ReCo><ResponseText>APPROVED</ResponseText><HelpText>Transaction Approved</HelpText><Success>1</Success><DpsTxnRef>000000030884cdc6</DpsTxnRef><TxnRef>inv1278</TxnRef></Txn>');
+        $this->setMockResponse($this->httpClient, 'PxPostPurchaseSuccess.txt');
 
         $response = $this->gateway->authorize($this->options);
 
@@ -54,9 +49,7 @@ class PxPostGatewayTest extends BaseGatewayTest
 
     public function testAuthorizeFailure()
     {
-        $this->httpClient->shouldReceive('post')
-            ->with('https://sec.paymentexpress.com/pxpost.aspx', m::type('string'))->once()
-            ->andReturn('<Txn><HelpText>Transaction Declined</HelpText><Success>0</Success></Txn>');
+        $this->setMockResponse($this->httpClient, 'PxPostPurchaseFailure.txt');
 
         $response = $this->gateway->authorize($this->options);
 
@@ -66,9 +59,7 @@ class PxPostGatewayTest extends BaseGatewayTest
 
     public function testCaptureSuccess()
     {
-        $this->httpClient->shouldReceive('post')
-            ->with('https://sec.paymentexpress.com/pxpost.aspx', m::type('string'))->once()
-            ->andReturn('<Txn><ReCo>00</ReCo><ResponseText>APPROVED</ResponseText><HelpText>Transaction Approved</HelpText><Success>1</Success><DpsTxnRef>000000030884cdc6</DpsTxnRef><TxnRef>inv1278</TxnRef></Txn>');
+        $this->setMockResponse($this->httpClient, 'PxPostPurchaseSuccess.txt');
 
         $options = array(
             'amount' => 1000,
@@ -83,9 +74,7 @@ class PxPostGatewayTest extends BaseGatewayTest
 
     public function testPurchaseSuccess()
     {
-        $this->httpClient->shouldReceive('post')
-            ->with('https://sec.paymentexpress.com/pxpost.aspx', m::type('string'))->once()
-            ->andReturn('<Txn><ReCo>00</ReCo><ResponseText>APPROVED</ResponseText><HelpText>Transaction Approved</HelpText><Success>1</Success><DpsTxnRef>000000030884cdc6</DpsTxnRef><TxnRef>inv1278</TxnRef></Txn>');
+        $this->setMockResponse($this->httpClient, 'PxPostPurchaseSuccess.txt');
 
         $response = $this->gateway->purchase($this->options);
 
@@ -95,9 +84,7 @@ class PxPostGatewayTest extends BaseGatewayTest
 
     public function testPurchaseFailure()
     {
-        $this->httpClient->shouldReceive('post')
-            ->with('https://sec.paymentexpress.com/pxpost.aspx', m::type('string'))->once()
-            ->andReturn('<Txn><HelpText>Transaction Declined</HelpText><Success>0</Success></Txn>');
+        $this->setMockResponse($this->httpClient, 'PxPostPurchaseFailure.txt');
 
         $response = $this->gateway->purchase($this->options);
 
@@ -107,9 +94,7 @@ class PxPostGatewayTest extends BaseGatewayTest
 
     public function testRefundSuccess()
     {
-        $this->httpClient->shouldReceive('post')
-            ->with('https://sec.paymentexpress.com/pxpost.aspx', m::type('string'))->once()
-            ->andReturn('<Txn><ReCo>00</ReCo><ResponseText>APPROVED</ResponseText><HelpText>Transaction Approved</HelpText><Success>1</Success><DpsTxnRef>000000030884cdc6</DpsTxnRef><TxnRef>inv1278</TxnRef></Txn>');
+        $this->setMockResponse($this->httpClient, 'PxPostPurchaseSuccess.txt');
 
         $options = array(
             'amount' => 1000,

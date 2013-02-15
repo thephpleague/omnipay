@@ -11,7 +11,7 @@
 
 namespace Omnipay;
 
-class CreditCardTest extends \PHPUnit_Framework_TestCase
+class CreditCardTest extends TestCase
 {
     public function setUp()
     {

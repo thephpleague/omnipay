@@ -11,7 +11,9 @@
 
 namespace Omnipay\Billing\PayPal;
 
-class ResponseTest extends \PHPUnit_Framework_TestCase
+use Omnipay\TestCase;
+
+class ResponseTest extends TestCase
 {
     public function testConstructEmpty()
     {

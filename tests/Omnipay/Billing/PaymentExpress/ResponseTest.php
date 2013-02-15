@@ -11,7 +11,9 @@
 
 namespace Omnipay\Billing\PaymentExpress;
 
-class ResponseTest extends \PHPUnit_Framework_TestCase
+use Omnipay\TestCase;
+
+class ResponseTest extends TestCase
 {
     /**
      * @expectedException Omnipay\Exception\InvalidResponseException

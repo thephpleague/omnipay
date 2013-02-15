@@ -11,16 +11,13 @@
 
 namespace Omnipay\Billing\Netaxept;
 
-use Mockery as m;
-use Omnipay\BaseGatewayTest;
-use Omnipay\Request;
+use Omnipay\GatewayTestCase;
 
-class GatewayTest extends BaseGatewayTest
+class GatewayTest extends GatewayTestCase
 {
     public function setUp()
     {
-        $this->httpClient = m::mock('\Omnipay\HttpClient\HttpClientInterface');
-        $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
+        parent::setUp();
 
         $this->gateway = new Gateway($this->httpClient, $this->httpRequest);
         $this->gateway->setMerchantId('foo');
@@ -34,8 +31,7 @@ class GatewayTest extends BaseGatewayTest
 
     public function testPurchaseSuccess()
     {
-        $this->httpClient->shouldReceive('get')->with(m::type('string'))->once()
-            ->andReturn('<Response><ResponseCode>OK</ResponseCode><TransactionId>abc123</TransactionId></Response>');
+        $this->setMockResponse($this->httpClient, 'PurchaseSuccess.txt');
 
         $response = $this->gateway->purchase($this->options);
 
@@ -46,8 +42,7 @@ class GatewayTest extends BaseGatewayTest
 
     public function testPurchaseError()
     {
-        $this->httpClient->shouldReceive('get')->with(m::type('string'))->once()
-            ->andReturn('<Response><Error><Message>Authentication Error</Message></Error></Response>');
+        $this->setMockResponse($this->httpClient, 'PurchaseFailure.txt');
 
         $response = $this->gateway->purchase($this->options);
 
@@ -60,8 +55,7 @@ class GatewayTest extends BaseGatewayTest
         $this->httpRequest->shouldReceive('get')->with('responseCode')->once()->andReturn('OK');
         $this->httpRequest->shouldReceive('get')->with('transactionId')->once()->andReturn('abc123');
 
-        $this->httpClient->shouldReceive('get')->with(m::type('string'))->once()
-            ->andReturn('<Response><ResponseCode>OK</ResponseCode><TransactionId>abc123</TransactionId></Response>');
+        $this->setMockResponse($this->httpClient, 'CompletePurchaseSuccess.txt');
 
         $response = $this->gateway->completePurchase($this->options);
 

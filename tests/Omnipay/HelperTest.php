@@ -13,7 +13,7 @@ namespace Omnipay;
 
 use Mockery as m;
 
-class HelperTest extends \PHPUnit_Framework_TestCase
+class HelperTest extends TestCase
 {
     public function testCamelCase()
     {

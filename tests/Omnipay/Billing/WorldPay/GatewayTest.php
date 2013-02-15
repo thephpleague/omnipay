@@ -11,16 +11,13 @@
 
 namespace Omnipay\Billing\WorldPay;
 
-use Mockery as m;
-use Omnipay\BaseGatewayTest;
-use Omnipay\Request;
+use Omnipay\GatewayTestCase;
 
-class GatewayTest extends BaseGatewayTest
+class GatewayTest extends GatewayTestCase
 {
     public function setUp()
     {
-        $this->httpClient = m::mock('\Omnipay\HttpClient\HttpClientInterface');
-        $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
+        parent::setUp();
 
         $this->gateway = new Gateway($this->httpClient, $this->httpRequest);
         $this->gateway->setCallbackPassword('bar123');

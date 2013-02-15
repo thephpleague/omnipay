@@ -11,17 +11,14 @@
 
 namespace Omnipay\Billing\CardSave;
 
-use Mockery as m;
 use Omnipay\CreditCard;
-use Omnipay\BaseGatewayTest;
-use Omnipay\Request;
+use Omnipay\GatewayTestCase;
 
-class GatewayTest extends BaseGatewayTest
+class GatewayTest extends GatewayTestCase
 {
     public function setUp()
     {
-        $this->httpClient = m::mock('\Omnipay\HttpClient\HttpClientInterface');
-        $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
+        parent::setUp();
 
         $this->gateway = new Gateway($this->httpClient, $this->httpRequest);
 
@@ -41,22 +38,18 @@ class GatewayTest extends BaseGatewayTest
 
     public function testPurchase()
     {
-        $this->httpClient->shouldReceive('post')
-            ->with('https://gw1.cardsaveonlinepayments.com:4430/', m::type('string'), m::type('array'))->once()
-            ->andReturn('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><CardDetailsTransactionResponse xmlns="https://www.thepaymentgateway.net/"><CardDetailsTransactionResult AuthorisationAttempted="True"><StatusCode>0</StatusCode><Message>AuthCode: 971112</Message></CardDetailsTransactionResult><TransactionOutputData CrossReference="130114063233159001702222"><AuthCode>971112</AuthCode><ThreeDSecureAuthenticationCheckResult>NOT_ENROLLED</ThreeDSecureAuthenticationCheckResult><GatewayEntryPoints><GatewayEntryPoint EntryPointURL="https://gw1.cardsaveonlinepayments.com:4430/" Metric="100" /><GatewayEntryPoint EntryPointURL="https://gw2.cardsaveonlinepayments.com:4430/" Metric="200" /></GatewayEntryPoints></TransactionOutputData></CardDetailsTransactionResponse></soap:Body></soap:Envelope>');
+        $this->setMockResponse($this->httpClient, 'PurchaseSuccess.txt');
 
         $response = $this->gateway->purchase($this->options);
 
         $this->assertInstanceOf('\Omnipay\Billing\CardSave\Response', $response);
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('130114063233159001702222', $response->getGatewayReference());
+        $this->assertEquals('130215141054377801316798', $response->getGatewayReference());
     }
 
     public function testPurchaseError()
     {
-        $this->httpClient->shouldReceive('post')
-            ->with('https://gw1.cardsaveonlinepayments.com:4430/', m::type('string'), m::type('array'))->once()
-            ->andReturn('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><CardDetailsTransactionResponse xmlns="https://www.thepaymentgateway.net/"><CardDetailsTransactionResult AuthorisationAttempted="False"><StatusCode>30</StatusCode><Message>Input variable errors</Message><ErrorMessages><MessageDetail><Detail>Required variable (PaymentMessage.TransactionDetails.OrderID) is missing</Detail></MessageDetail></ErrorMessages></CardDetailsTransactionResult><TransactionOutputData /></CardDetailsTransactionResponse></soap:Body></soap:Envelope>');
+        $this->setMockResponse($this->httpClient, 'PurchaseFailure.txt');
 
         $response = $this->gateway->purchase($this->options);
 

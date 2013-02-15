@@ -11,17 +11,14 @@
 
 namespace Omnipay\Billing\Pin;
 
-use Mockery as m;
-use Omnipay\BaseGatewayTest;
+use Omnipay\GatewayTestCase;
 use Omnipay\CreditCard;
-use Omnipay\Request;
 
-class GatewayTest extends BaseGatewayTest
+class GatewayTest extends GatewayTestCase
 {
     public function setUp()
     {
-        $this->httpClient = m::mock('\Omnipay\HttpClient\HttpClientInterface');
-        $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
+        parent::setUp();
 
         $this->gateway = new Gateway($this->httpClient, $this->httpRequest);
 
@@ -40,25 +37,21 @@ class GatewayTest extends BaseGatewayTest
 
     public function testPurchaseError()
     {
-        $this->httpClient->shouldReceive('post')->once()
-            ->with('https://api.pin.net.au/1/charges', m::type('array'), m::type('array'))
-            ->andReturn('{"error":"standard_error_name","error_description":"A description of the error."}');
+        $this->setMockResponse($this->httpClient, 'PurchaseFailure.txt');
 
         $response = $this->gateway->purchase($this->options);
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertSame('A description of the error.', $response->getMessage());
+        $this->assertSame('The current resource was deemed invalid.', $response->getMessage());
     }
 
     public function testPurchaseSuccess()
     {
-        $this->httpClient->shouldReceive('post')->once()
-            ->with('https://api.pin.net.au/1/charges', m::type('array'), m::type('array'))
-            ->andReturn('{"response":{"token":"ch_lfUYEBK14zotCTykezJkfg","status_message":"Success!"}}');
+        $this->setMockResponse($this->httpClient, 'PurchaseSuccess.txt');
 
         $response = $this->gateway->purchase($this->options);
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('ch_lfUYEBK14zotCTykezJkfg', $response->getGatewayReference());
+        $this->assertEquals('ch_fXIxWf0gj1yFHJcV1W-d-w', $response->getGatewayReference());
     }
 }

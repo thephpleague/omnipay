@@ -120,18 +120,13 @@ class Gateway extends AbstractGateway
         unset($data['resource_uri']);
 
         // confirm purchase
-        $headers = array(
-            'Authorization: Basic '.base64_encode($this->appId.':'.$this->appSecret),
-            'Accept: application/json',
-        );
-
-        $response = $this->httpClient->post(
+        $httpResponse = $this->httpClient->post(
             $this->getCurrentEndpoint().'/api/v1/confirm',
-            $this->generateQueryString($data),
-            $headers
-        );
+            array('Accept' => 'application/json'),
+            $this->generateQueryString($data)
+        )->setAuth($this->appId, $this->appSecret)->send();
 
-        return new Response($response, $data['resource_id']);
+        return new Response($httpResponse->getBody(), $data['resource_id']);
     }
 
     protected function buildPurchase($options)

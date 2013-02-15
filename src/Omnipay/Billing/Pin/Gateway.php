@@ -11,6 +11,7 @@
 
 namespace Omnipay\Billing\Pin;
 
+use Guzzle\Common\Event;
 use Omnipay\AbstractGateway;
 use Omnipay\Request;
 
@@ -99,10 +100,21 @@ class Gateway extends AbstractGateway
 
     protected function send($url, $data)
     {
-        $headers = array('Authorization: Basic '.base64_encode($this->secretKey.':'));
-        $response = $this->httpClient->post($this->getCurrentEndpoint().$url, $data, $headers);
+        // don't throw exceptions for 422 errors
+        $this->httpClient->getEventDispatcher()->addListener(
+            'request.error',
+            function (Event $event) {
+                if ($event['response']->getStatusCode() == 422) {
+                    $event->stopPropagation();
+                }
+            }
+        );
 
-        return new Response($response);
+        $httpResponse = $this->httpClient->post($this->getCurrentEndpoint().$url, null, $data)
+            ->setHeader('Authorization', 'Basic '.base64_encode($this->secretKey.':'))
+            ->send();
+
+        return new Response($httpResponse->json());
     }
 
     protected function getCurrentEndpoint()

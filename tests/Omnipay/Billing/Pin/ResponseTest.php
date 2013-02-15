@@ -11,55 +11,27 @@
 
 namespace Omnipay\Billing\Pin;
 
-class ResponseTest extends \PHPUnit_Framework_TestCase
-{
-    /**
-     * @expectedException Omnipay\Exception\InvalidResponseException
-     */
-    public function testConstructEmpty()
-    {
-        $response = new Response("");
-    }
+use Omnipay\TestCase;
 
+class ResponseTest extends TestCase
+{
     public function testConstructError()
     {
-        $response = new Response('{"error":"standard_error_name","error_description":"A description of the error."}');
+        $httpResponse = $this->getMockResponse('PurchaseFailure.txt');
+        $response = new Response($httpResponse->json());
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertSame('A description of the error.', $response->getMessage());
+        $this->assertNull($response->getGatewayReference());
+        $this->assertSame('The current resource was deemed invalid.', $response->getMessage());
     }
 
     public function testConstructSuccess()
     {
-        $response = new Response('{
-            "response": {
-                "token": "ch_lfUYEBK14zotCTykezJkfg",
-                "success": true,
-                "amount": 400,
-                "currency": null,
-                "description": "test charge",
-                "email": "roland@pin.net.au",
-                "ip_address": "203.192.1.172",
-                "created_at": "2012-06-20T03:10:49Z",
-                "status_message": "Success!",
-                "error_message": null,
-                "card": {
-                    "token": "card_nytGw7koRg23EEp9NTmz9w",
-                    "display_number": "XXXX-XXXX-XXXX-0000",
-                    "scheme": "master",
-                    "address_line1": "42 Sevenoaks St",
-                    "address_line2": null,
-                    "address_city": "Lathlain",
-                    "address_postcode": "6454",
-                    "address_state": "WA",
-                    "address_country": "Australia"
-                },
-                "transfer": null
-            }
-        }');
+        $httpResponse = $this->getMockResponse('PurchaseSuccess.txt');
+        $response = new Response($httpResponse->json());
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('ch_lfUYEBK14zotCTykezJkfg', $response->getGatewayReference());
-        $this->assertEquals('Success!', $response->getMessage());
+        $this->assertSame('ch_fXIxWf0gj1yFHJcV1W-d-w', $response->getGatewayReference());
+        $this->assertSame('Success!', $response->getMessage());
     }
 }

@@ -11,16 +11,13 @@
 
 namespace Omnipay\Billing\AuthorizeNet;
 
-use Mockery as m;
-use Omnipay\BaseGatewayTest;
-use Omnipay\Request;
+use Omnipay\GatewayTestCase;
 
-class SIMGatewayTest extends BaseGatewayTest
+class SIMGatewayTest extends GatewayTestCase
 {
     public function setUp()
     {
-        $this->httpClient = m::mock('\Omnipay\HttpClient\HttpClientInterface');
-        $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
+        parent::setUp();
 
         $this->gateway = new SIMGateway($this->httpClient, $this->httpRequest);
 

@@ -13,7 +13,7 @@ namespace Omnipay;
 
 use Omnipay\Currency;
 
-class CurrencyTest extends \PHPUnit_Framework_TestCase
+class CurrencyTest extends TestCase
 {
     public function testFind()
     {

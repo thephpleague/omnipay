@@ -95,9 +95,10 @@ class Gateway extends AbstractGateway
 
     protected function send($url, $data)
     {
-        $headers = array('Authorization: Basic '.base64_encode($this->apiKey.':'));
-        $response = $this->httpClient->post($this->endpoint.$url, $data, $headers);
+        $httpResponse = $this->httpClient->post($this->endpoint.$url, null, $data)
+            ->setHeader('Authorization', 'Basic '.base64_encode($this->apiKey.':'))
+            ->send();
 
-        return new Response($response);
+        return new Response($httpResponse->getBody());
     }
 }

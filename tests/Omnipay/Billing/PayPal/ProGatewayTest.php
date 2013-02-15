@@ -11,17 +11,14 @@
 
 namespace Omnipay\Billing\PayPal;
 
-use Mockery as m;
-use Omnipay\BaseGatewayTest;
+use Omnipay\GatewayTestCase;
 use Omnipay\CreditCard;
-use Omnipay\Request;
 
-class ProGatewayTest extends BaseGatewayTest
+class ProGatewayTest extends GatewayTestCase
 {
     public function setUp()
     {
-        $this->httpClient = m::mock('\Omnipay\HttpClient\HttpClientInterface');
-        $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
+        parent::setUp();
 
         $this->gateway = new ProGateway($this->httpClient, $this->httpRequest);
 
@@ -50,9 +47,7 @@ class ProGatewayTest extends BaseGatewayTest
 
     public function testAuthorize()
     {
-        $this->httpClient->shouldReceive('get')
-            ->with(m::type('string'))->once()
-            ->andReturn('TIMESTAMP=2012%2d09%2d06T06%3a34%3a46Z&CORRELATIONID=1a0e1b3ba661b&ACK=Success&VERSION=85%2e0&BUILD=3587318&AMT=11%2e00&CURRENCYCODE=USD&AVSCODE=X&CVV2MATCH=M&TRANSACTIONID=7T274412RY6976239');
+        $this->setMockResponse($this->httpClient, 'ProPurchaseSuccess.txt');
 
         $response = $this->gateway->authorize($this->options);
 
@@ -62,9 +57,7 @@ class ProGatewayTest extends BaseGatewayTest
 
     public function testPurchase()
     {
-        $this->httpClient->shouldReceive('get')
-            ->with(m::type('string'))->once()
-            ->andReturn('TIMESTAMP=2012%2d09%2d06T06%3a34%3a46Z&CORRELATIONID=1a0e1b3ba661b&ACK=Success&VERSION=85%2e0&BUILD=3587318&AMT=11%2e00&CURRENCYCODE=USD&AVSCODE=X&CVV2MATCH=M&TRANSACTIONID=7T274412RY6976239');
+        $this->setMockResponse($this->httpClient, 'ProPurchaseSuccess.txt');
 
         $response = $this->gateway->purchase($this->options);
 

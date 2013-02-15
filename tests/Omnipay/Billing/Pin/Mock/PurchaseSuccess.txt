@@ -1,0 +1,18 @@
+HTTP/1.1 200 OK
+Cache-Control: max-age=0, private, must-revalidate
+Content-Type: application/json; charset=utf-8
+Date: Fri, 15 Feb 2013 15:42:42 GMT
+ETag: "e0b6339dc44a19a2901de1447ec94ebb"
+Server: Apache/2.2.20 (Ubuntu)
+Status: 200
+Strict-Transport-Security: max-age=31536000
+Vary: User-Agent
+X-Powered-By: Phusion Passenger (mod_rails/mod_rack) 3.0.11
+X-Rack-Cache: invalidate, pass
+X-Request-Id: 6444d2d9467ed2a7ace471522f2d439b
+X-Runtime: 0.245244
+X-UA-Compatible: IE=Edge,chrome=1
+Content-Length: 584
+Connection: keep-alive
+
+{"response":{"token":"ch_fXIxWf0gj1yFHJcV1W-d-w","success":true,"amount":1000,"currency":"USD","description":"first purchase","email":"fads","ip_address":"","created_at":"2013-02-15T15:42:42Z","status_message":"Success!","error_message":null,"card":{"token":"card_vRGOXvw3NSGR59-TSzVEiw","display_number":"XXXX-XXXX-XXXX-0000","scheme":"visa","address_line1":"jkl","address_line2":"jkl","address_city":"jkl","address_postcode":"jkl","address_state":"jkl","address_country":"jkl"},"transfer":[],"amount_refunded":0,"total_fees":null,"merchant_entitlement":null,"refund_pending":false}}

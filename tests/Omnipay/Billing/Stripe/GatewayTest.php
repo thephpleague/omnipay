@@ -11,16 +11,13 @@
 
 namespace Omnipay\Billing\Stripe;
 
-use Mockery as m;
-use Omnipay\BaseGatewayTest;
-use Omnipay\Request;
+use Omnipay\GatewayTestCase;
 
-class GatewayTest extends BaseGatewayTest
+class GatewayTest extends GatewayTestCase
 {
     public function setUp()
     {
-        $this->httpClient = m::mock('\Omnipay\HttpClient\HttpClientInterface');
-        $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
+        parent::setUp();
 
         $this->gateway = new Gateway($this->httpClient, $this->httpRequest);
         $this->gateway->setApiKey('abc123');
@@ -32,9 +29,7 @@ class GatewayTest extends BaseGatewayTest
 
     public function testPurchaseError()
     {
-        $this->httpClient->shouldReceive('post')->once()
-            ->with('https://api.stripe.com/v1/charges', m::type('array'), array('Authorization: Basic YWJjMTIzOg=='))
-            ->andReturn('{"error":{"message":"Your card number is incorrect"}}');
+        $this->setMockResponse($this->httpClient, 'PurchaseFailure.txt');
 
         $response = $this->gateway->purchase($this->options);
 
@@ -44,9 +39,7 @@ class GatewayTest extends BaseGatewayTest
 
     public function testPurchaseSuccess()
     {
-        $this->httpClient->shouldReceive('post')->once()
-            ->with('https://api.stripe.com/v1/charges', m::type('array'), array('Authorization: Basic YWJjMTIzOg=='))
-            ->andReturn('{"id":"ch_12RgN9L7XhO9mI"}');
+        $this->setMockResponse($this->httpClient, 'PurchaseSuccess.txt');
 
         $response = $this->gateway->purchase($this->options);
 
@@ -56,9 +49,7 @@ class GatewayTest extends BaseGatewayTest
 
     public function testRefundError()
     {
-        $this->httpClient->shouldReceive('post')->once()
-            ->with('https://api.stripe.com/v1/charges/ch_12RgN9L7XhO9mI/refund', m::type('array'), array('Authorization: Basic YWJjMTIzOg=='))
-            ->andReturn('{"error":{"message":"Charge ch_12RgN9L7XhO9mI has already been refunded."}}');
+        $this->setMockResponse($this->httpClient, 'RefundFailure.txt');
 
         $response = $this->gateway->refund(array('amount' => 1000, 'gatewayReference' => 'ch_12RgN9L7XhO9mI'));
 
@@ -68,9 +59,7 @@ class GatewayTest extends BaseGatewayTest
 
     public function testRefundSuccess()
     {
-        $this->httpClient->shouldReceive('post')->once()
-            ->with('https://api.stripe.com/v1/charges/ch_12RgN9L7XhO9mI/refund', m::type('array'), array('Authorization: Basic YWJjMTIzOg=='))
-            ->andReturn('{"id":"ch_12RgN9L7XhO9mI"}');
+        $this->setMockResponse($this->httpClient, 'RefundSuccess.txt');
 
         $response = $this->gateway->refund(array('amount' => 1000, 'gatewayReference' => 'ch_12RgN9L7XhO9mI'));
 

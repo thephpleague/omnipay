@@ -11,17 +11,14 @@
 
 namespace Omnipay\Billing\Payflow;
 
-use Mockery as m;
 use Omnipay\CreditCard;
-use Omnipay\BaseGatewayTest;
-use Omnipay\Request;
+use Omnipay\GatewayTestCase;
 
-class ProGatewayTest extends BaseGatewayTest
+class ProGatewayTest extends GatewayTestCase
 {
     public function setUp()
     {
-        $this->httpClient = m::mock('\Omnipay\HttpClient\HttpClientInterface');
-        $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
+        parent::setUp();
 
         $this->gateway = new ProGateway($this->httpClient, $this->httpRequest);
 
@@ -40,9 +37,7 @@ class ProGatewayTest extends BaseGatewayTest
 
     public function testAuthorizeSuccess()
     {
-        $this->httpClient->shouldReceive('post')->once()
-            ->with('https://payflowpro.paypal.com', m::type('array'))
-            ->andReturn('RESULT=0&PNREF=V19R3EF62FBE&RESPMSG=Approved&AUTHCODE=048747&CVV2MATCH=Y');
+        $this->setMockResponse($this->httpClient, 'PurchaseSuccess.txt');
 
         $response = $this->gateway->authorize($this->options);
 
@@ -52,9 +47,7 @@ class ProGatewayTest extends BaseGatewayTest
 
     public function testAuthorizeError()
     {
-        $this->httpClient->shouldReceive('post')->once()
-            ->with('https://payflowpro.paypal.com', m::type('array'))
-            ->andReturn('RESULT=1&RESPMSG=User authentication failed');
+        $this->setMockResponse($this->httpClient, 'PurchaseFailure.txt');
 
         $response = $this->gateway->authorize($this->options);
 
@@ -69,9 +62,7 @@ class ProGatewayTest extends BaseGatewayTest
             'gatewayReference' => 'abc123',
         );
 
-        $this->httpClient->shouldReceive('post')->once()
-            ->with('https://payflowpro.paypal.com', m::type('array'))
-            ->andReturn('RESULT=0&PNREF=V19R3EF62FBE&RESPMSG=Approved&AUTHCODE=048747&CVV2MATCH=Y');
+        $this->setMockResponse($this->httpClient, 'PurchaseSuccess.txt');
 
         $response = $this->gateway->capture($options);
 
@@ -81,9 +72,7 @@ class ProGatewayTest extends BaseGatewayTest
 
     public function testPurchaseSuccess()
     {
-        $this->httpClient->shouldReceive('post')->once()
-            ->with('https://payflowpro.paypal.com', m::type('array'))
-            ->andReturn('RESULT=0&PNREF=V19R3EF62FBE&RESPMSG=Approved&AUTHCODE=048747&CVV2MATCH=Y');
+        $this->setMockResponse($this->httpClient, 'PurchaseSuccess.txt');
 
         $response = $this->gateway->purchase($this->options);
 
@@ -93,9 +82,7 @@ class ProGatewayTest extends BaseGatewayTest
 
     public function testPurchaseError()
     {
-        $this->httpClient->shouldReceive('post')->once()
-            ->with('https://payflowpro.paypal.com', m::type('array'))
-            ->andReturn('RESULT=1&RESPMSG=User authentication failed');
+        $this->setMockResponse($this->httpClient, 'PurchaseFailure.txt');
 
         $response = $this->gateway->purchase($this->options);
 
@@ -110,9 +97,7 @@ class ProGatewayTest extends BaseGatewayTest
             'gatewayReference' => 'abc123',
         );
 
-        $this->httpClient->shouldReceive('post')->once()
-            ->with('https://payflowpro.paypal.com', m::type('array'))
-            ->andReturn('RESULT=0&PNREF=V19R3EF62FBE&RESPMSG=Approved&AUTHCODE=048747&CVV2MATCH=Y');
+        $this->setMockResponse($this->httpClient, 'PurchaseSuccess.txt');
 
         $response = $this->gateway->refund($options);
 

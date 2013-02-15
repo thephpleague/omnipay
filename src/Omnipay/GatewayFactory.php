@@ -14,13 +14,14 @@ namespace Omnipay;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ReflectionClass;
-use Symfony\Component\HttpFoundation\Request as HttpRequest;
+use Guzzle\Http\ClientInterface;
+use Guzzle\Http\Client as HttpClient;
 use Omnipay\Exception\GatewayNotFoundException;
-use Omnipay\HttpClient\BuzzHttpClient;
+use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 class GatewayFactory
 {
-    public static function create($type, $httpClient = null, $httpRequest = null)
+    public static function create($type, ClientInterface $httpClient = null, HttpRequest $httpRequest = null)
     {
         $type = static::resolveType($type);
 
@@ -29,9 +30,12 @@ class GatewayFactory
         }
 
         if (null === $httpClient) {
-            $curl = new \Buzz\Client\Curl;
-            $curl->setTimeout(60);
-            $httpClient = new BuzzHttpClient(new \Buzz\Browser($curl));
+            $httpClient = new HttpClient(
+                '',
+                array(
+                    'curl.options' => array(CURLOPT_CONNECTTIMEOUT => 60),
+                )
+            );
         }
 
         if (null === $httpRequest) {
