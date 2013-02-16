@@ -43,8 +43,8 @@ $app->get('/', function() use ($app) {
 // gateway settings
 $app->get('/gateways/{name}', function($name) use ($app) {
     $gateway = Omnipay\Common\GatewayFactory::create($name);
-    $settings = $app['session']->get('gateway.'.$gateway->getShortName());
-    $gateway->initialize($settings);
+    $sessionVar = 'omnipay.'.$gateway->getShortName();
+    $gateway->initialize($app['session']->get($sessionVar));
 
     return $app['twig']->render('gateway.twig', array(
         'gateway' => $gateway,
@@ -54,13 +54,14 @@ $app->get('/gateways/{name}', function($name) use ($app) {
 
 // save gateway settings
 $app->post('/gateways/{name}', function($name) use ($app) {
-    // store gateway settings in session
     $gateway = Omnipay\Common\GatewayFactory::create($name);
-    $settings = $app['request']->get('gateway');
-    $gateway->initialize($settings);
-    $app['session']->set('gateway.'.$gateway->getShortName(), $gateway->toArray());
+    $sessionVar = 'omnipay.'.$gateway->getShortName();
+    $gateway->initialize($app['request']->get('gateway'));
 
-    // redirect to gateway settings page
+    // save gateway settings in session
+    $app['session']->set($sessionVar, $gateway->toArray());
+
+    // redirect back to gateway settings page
     $app['session']->setFlash('success', 'Gateway settings updated!');
 
     return $app->redirect($app['request']->getPathInfo());
@@ -69,13 +70,13 @@ $app->post('/gateways/{name}', function($name) use ($app) {
 // create gateway authorize
 $app->get('/gateways/{name}/authorize', function($name) use ($app) {
     $gateway = Omnipay\Common\GatewayFactory::create($name);
-    $settings = $app['session']->get('gateway.'.$gateway->getShortName());
-    $gateway->initialize($settings);
+    $sessionVar = 'omnipay.'.$gateway->getShortName();
+    $gateway->initialize($app['session']->get($sessionVar));
 
-    $params = $app['session']->get('params', array());
-    $card = new Omnipay\Common\CreditCard($app['session']->get('card'));
+    $params = $app['session']->get($sessionVar.'.authorize', array());
+    $card = new Omnipay\Common\CreditCard($app['session']->get($sessionVar.'.card'));
 
-    return $app['twig']->render('purchase.twig', array(
+    return $app['twig']->render('request.twig', array(
         'gateway' => $gateway,
         'method' => 'authorize',
         'params' => $params,
@@ -86,16 +87,16 @@ $app->get('/gateways/{name}/authorize', function($name) use ($app) {
 // submit gateway authorize
 $app->post('/gateways/{name}/authorize', function($name) use ($app) {
     $gateway = Omnipay\Common\GatewayFactory::create($name);
-    $settings = $app['session']->get('gateway.'.$gateway->getShortName());
-    $gateway->initialize($settings);
+    $sessionVar = 'omnipay.'.$gateway->getShortName();
+    $gateway->initialize($app['session']->get($sessionVar));
 
     // load POST data
     $params = $app['request']->get('params');
-    $card = new Omnipay\Common\CreditCard($app['request']->get('card'));
+    $card = $app['request']->get('card');
 
     // save POST data into session
-    $app['session']->set('params', $params);
-    $app['session']->set('card', $card);
+    $app['session']->set($sessionVar.'.authorize', $params);
+    $app['session']->set($sessionVar.'.card', $card);
 
     $params['card'] = $card;
     $response = $gateway->authorize($params);
@@ -106,16 +107,51 @@ $app->post('/gateways/{name}/authorize', function($name) use ($app) {
     ));
 });
 
+// create gateway capture
+$app->get('/gateways/{name}/capture', function($name) use ($app) {
+    $gateway = Omnipay\Common\GatewayFactory::create($name);
+    $sessionVar = 'omnipay.'.$gateway->getShortName();
+    $gateway->initialize($app['session']->get($sessionVar));
+
+    $params = $app['session']->get($sessionVar.'.capture', array());
+
+    return $app['twig']->render('request.twig', array(
+        'gateway' => $gateway,
+        'method' => 'capture',
+        'params' => $params,
+    ));
+});
+
+// submit gateway capture
+$app->post('/gateways/{name}/capture', function($name) use ($app) {
+    $gateway = Omnipay\Common\GatewayFactory::create($name);
+    $sessionVar = 'omnipay.'.$gateway->getShortName();
+    $gateway->initialize($app['session']->get($sessionVar));
+
+    // load POST data
+    $params = $app['request']->get('params');
+
+    // save POST data into session
+    $app['session']->set($sessionVar.'.capture', $params);
+
+    $response = $gateway->capture($params);
+
+    return $app['twig']->render('response.twig', array(
+        'gateway' => $gateway,
+        'response' => $response,
+    ));
+});
+
 // create gateway purchase
 $app->get('/gateways/{name}/purchase', function($name) use ($app) {
     $gateway = Omnipay\Common\GatewayFactory::create($name);
-    $settings = $app['session']->get('gateway.'.$gateway->getShortName());
-    $gateway->initialize($settings);
+    $sessionVar = 'omnipay.'.$gateway->getShortName();
+    $gateway->initialize($app['session']->get($sessionVar));
 
-    $params = $app['session']->get('params', array());
-    $card = new Omnipay\Common\CreditCard($app['session']->get('card'));
+    $params = $app['session']->get($sessionVar.'.purchase', array());
+    $card = new Omnipay\Common\CreditCard($app['session']->get($sessionVar.'.card'));
 
-    return $app['twig']->render('purchase.twig', array(
+    return $app['twig']->render('request.twig', array(
         'gateway' => $gateway,
         'method' => 'purchase',
         'params' => $params,
@@ -126,16 +162,16 @@ $app->get('/gateways/{name}/purchase', function($name) use ($app) {
 // submit gateway purchase
 $app->post('/gateways/{name}/purchase', function($name) use ($app) {
     $gateway = Omnipay\Common\GatewayFactory::create($name);
-    $settings = $app['session']->get('gateway.'.$gateway->getShortName());
-    $gateway->initialize($settings);
+    $sessionVar = 'omnipay.'.$gateway->getShortName();
+    $gateway->initialize($app['session']->get($sessionVar));
 
     // load POST data
     $params = $app['request']->get('params');
-    $card = new Omnipay\Common\CreditCard($app['request']->get('card'));
+    $card = $app['request']->get('card');
 
     // save POST data into session
-    $app['session']->set('params', $params);
-    $app['session']->set('card', $card);
+    $app['session']->set($sessionVar.'.purchase', $params);
+    $app['session']->set($sessionVar.'.card', $card);
 
     $params['card'] = $card;
     $response = $gateway->purchase($params);

@@ -33,7 +33,7 @@
         {% endif %}
         <li><a href="/gateways/{{gateway.shortName}}/purchase">purchase()</a></li>
         {% if gateway.supportsCapture() %}
-            <li>capture()</li>
+            <li><a href="/gateways/{{gateway.shortName}}/capture">capture()</a></li>
         {% endif %}
         {% if gateway.supportsRefund() %}
             <li>refund()</li>
