@@ -1,0 +1,13 @@
+HTTP/1.1 200 OK
+Date: Sat, 16 Feb 2013 08:21:41 GMT
+Server: Microsoft-IIS/6.0
+P3P: CP="CUR"
+X-Powered-By: ASP.NET
+Content-Length: 129
+Content-Type: Text/Plain
+Set-Cookie: ASPSESSIONIDSEHSCTTR=NNBHGPBDLOMKKPGPNDDJFBAB; secure; path=/
+Cache-control: private
+
+VPSProtocol=2.23
+Status=INVALID
+StatusDetail=You are trying to RELEASE a transaction that has already been RELEASEd or ABORTed.

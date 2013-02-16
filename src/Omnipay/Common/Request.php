@@ -60,7 +60,7 @@ class Request
      *
      * @param array an array of required parameters
      */
-    public function validate($required)
+    public function validate(array $required)
     {
         foreach ($required as $key) {
             if (empty($this->$key)) {

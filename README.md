@@ -94,6 +94,8 @@ The following gateways are already implemented:
 * PayPal Express Checkout
 * PayPal Payments Pro
 * Pin Payments
+* Sage Pay Direct
+* Sage Pay Server
 * Stripe
 * WorldPay
 
