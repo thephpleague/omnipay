@@ -20,8 +20,6 @@ class SIMGatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
-        $this->httpRequest = new HttpRequest;
-
         $this->gateway = new SIMGateway($this->httpClient, $this->httpRequest);
         $this->gateway->setApiLoginId('example');
 

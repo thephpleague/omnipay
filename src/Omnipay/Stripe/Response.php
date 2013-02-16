@@ -12,7 +12,6 @@
 namespace Omnipay\Stripe;
 
 use Omnipay\Common\AbstractResponse;
-use Omnipay\Exception;
 
 /**
  * Stripe Response

@@ -40,11 +40,14 @@ class GatewayTest extends GatewayTestCase
 
     public function testCompletePurchaseSuccess()
     {
-        $this->httpRequest->shouldReceive('get')->with('resource_uri')->once()->andReturn('a');
-        $this->httpRequest->shouldReceive('get')->with('resource_id')->once()->andReturn('b');
-        $this->httpRequest->shouldReceive('get')->with('resource_type')->once()->andReturn('c');
-        $this->httpRequest->shouldReceive('get')->with('signature')->once()
-            ->andReturn('416f52e7d287dab49fa8445c1cd0957ca8ddf1c04a6300e00117dc0bedabc7d7');
+        $this->httpRequest->request->replace(
+            array(
+                'resource_uri' => 'a',
+                'resource_id' => 'b',
+                'resource_type' => 'c',
+                'signature' => '416f52e7d287dab49fa8445c1cd0957ca8ddf1c04a6300e00117dc0bedabc7d7',
+            )
+        );
 
         $this->setMockResponse($this->httpClient, 'CompletePurchaseSuccess.txt');
 
@@ -56,11 +59,14 @@ class GatewayTest extends GatewayTestCase
 
     public function testCompletePurchaseError()
     {
-        $this->httpRequest->shouldReceive('get')->with('resource_uri')->once()->andReturn('a');
-        $this->httpRequest->shouldReceive('get')->with('resource_id')->once()->andReturn('b');
-        $this->httpRequest->shouldReceive('get')->with('resource_type')->once()->andReturn('c');
-        $this->httpRequest->shouldReceive('get')->with('signature')->once()
-            ->andReturn('416f52e7d287dab49fa8445c1cd0957ca8ddf1c04a6300e00117dc0bedabc7d7');
+        $this->httpRequest->request->replace(
+            array(
+                'resource_uri' => 'a',
+                'resource_id' => 'b',
+                'resource_type' => 'c',
+                'signature' => '416f52e7d287dab49fa8445c1cd0957ca8ddf1c04a6300e00117dc0bedabc7d7',
+            )
+        );
 
         $this->setMockResponse($this->httpClient, 'CompletePurchaseFailure.txt');
 
@@ -75,10 +81,14 @@ class GatewayTest extends GatewayTestCase
      */
     public function testCompletePurchaseInvalid()
     {
-        $this->httpRequest->shouldReceive('get')->with('resource_uri')->once()->andReturn('a');
-        $this->httpRequest->shouldReceive('get')->with('resource_id')->once()->andReturn('b');
-        $this->httpRequest->shouldReceive('get')->with('resource_type')->once()->andReturn('c');
-        $this->httpRequest->shouldReceive('get')->with('signature')->once()->andReturn('d');
+        $this->httpRequest->request->replace(
+            array(
+                'resource_uri' => 'a',
+                'resource_id' => 'b',
+                'resource_type' => 'c',
+                'signature' => 'd',
+            )
+        );
 
         $this->gateway->completePurchase($this->options);
     }

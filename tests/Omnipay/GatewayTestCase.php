@@ -11,7 +11,6 @@
 
 namespace Omnipay;
 
-use Mockery as m;
 use Guzzle\Http\Client as HttpClient;
 use Omnipay\Common\CreditCard;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
@@ -29,7 +28,7 @@ abstract class GatewayTestCase extends TestCase
     public function setUp()
     {
         $this->httpClient = new HttpClient;
-        $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
+        $this->httpRequest = new HttpRequest;
     }
 
     /**

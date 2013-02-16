@@ -44,22 +44,19 @@ class GatewayTest extends GatewayTestCase
      */
     public function testCompletePurchaseError()
     {
-        $this->httpRequest->shouldReceive('get')->with('order_number')->once()
-            ->andReturn(5);
-
-        $this->httpRequest->shouldReceive('get')->with('key')->once()
-            ->andReturn('ZZZ');
+        $this->httpRequest->request->replace(array('order_number' => '5', 'key' => 'ZZZ'));
 
         $response = $this->gateway->completePurchase($this->options);
     }
 
     public function testCompletePurchaseSuccess()
     {
-        $this->httpRequest->shouldReceive('get')->with('order_number')->once()
-            ->andReturn(5);
-
-        $this->httpRequest->shouldReceive('get')->with('key')->once()
-            ->andReturn(strtoupper(md5('123abc510.00')));
+        $this->httpRequest->request->replace(
+            array(
+                'order_number' => '5',
+                'key' => md5('123abc510.00'),
+            )
+        );
 
         $response = $this->gateway->completePurchase($this->options);
 

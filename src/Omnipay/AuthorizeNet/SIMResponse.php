@@ -12,7 +12,6 @@
 namespace Omnipay\AuthorizeNet;
 
 use Omnipay\Common\AbstractResponse;
-use Omnipay\Exception;
 
 /**
  * Authorize.Net Response

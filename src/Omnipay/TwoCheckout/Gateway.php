@@ -89,8 +89,8 @@ class Gateway extends AbstractGateway
             $orderNo = '1';
         }
 
-        $key = strtoupper(md5($this->password.$this->username.$orderNo.$request->getAmountDecimal()));
-        if ($key != $this->httpRequest->get('key')) {
+        $key = md5($this->password.$this->username.$orderNo.$request->getAmountDecimal());
+        if (strtoupper($key) !== strtoupper($this->httpRequest->get('key'))) {
             throw new InvalidResponseException;
         }
 

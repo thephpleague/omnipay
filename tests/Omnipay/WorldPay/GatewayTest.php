@@ -39,10 +39,14 @@ class GatewayTest extends GatewayTestCase
 
     public function testCompletePurchaseSuccess()
     {
-        $this->httpRequest->shouldReceive('get')->with('callbackPW')->once()->andReturn('bar123');
-        $this->httpRequest->shouldReceive('get')->with('transStatus')->once()->andReturn('Y');
-        $this->httpRequest->shouldReceive('get')->with('transId')->once()->andReturn('abc123');
-        $this->httpRequest->shouldReceive('get')->with('rawAuthMessage')->once()->andReturn(null);
+        $this->httpRequest->request->replace(
+            array(
+                'callbackPW' => 'bar123',
+                'transStatus' => 'Y',
+                'transId' => 'abc123',
+                'rawAuthMessage' => '',
+            )
+        );
 
         $response = $this->gateway->completePurchase($this->options);
 
@@ -55,17 +59,25 @@ class GatewayTest extends GatewayTestCase
      */
     public function testCompletePurchaseInvalidCallbackPassword()
     {
-        $this->httpRequest->shouldReceive('get')->with('callbackPW')->once()->andReturn('bar321');
+        $this->httpRequest->request->replace(
+            array(
+                'callbackPW' => 'fake',
+            )
+        );
 
         $response = $this->gateway->completePurchase($this->options);
     }
 
     public function testCompletePurchaseError()
     {
-        $this->httpRequest->shouldReceive('get')->with('callbackPW')->once()->andReturn('bar123');
-        $this->httpRequest->shouldReceive('get')->with('transStatus')->once()->andReturn('N');
-        $this->httpRequest->shouldReceive('get')->with('transId')->once()->andReturn(null);
-        $this->httpRequest->shouldReceive('get')->with('rawAuthMessage')->once()->andReturn('Declined');
+        $this->httpRequest->request->replace(
+            array(
+                'callbackPW' => 'bar123',
+                'transStatus' => 'N',
+                'transId' => '',
+                'rawAuthMessage' => 'Declined',
+            )
+        );
 
         $response = $this->gateway->completePurchase($this->options);
 

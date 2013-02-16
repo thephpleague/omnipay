@@ -49,8 +49,7 @@ class PxPayGatewayTest extends GatewayTestCase
 
     public function testCompleteAuthorizeSuccess()
     {
-        $this->httpRequest->shouldReceive('get')->with('result')->once()
-            ->andReturn('abc123');
+        $this->httpRequest->query->replace(array('result' => 'abc123'));
 
         $this->setMockResponse($this->httpClient, 'PxPayCompletePurchaseSuccess.txt');
 
@@ -65,16 +64,14 @@ class PxPayGatewayTest extends GatewayTestCase
      */
     public function testCompleteAuthorizeInvalid()
     {
-        $this->httpRequest->shouldReceive('get')->with('result')->once()
-            ->andReturn(null);
+        $this->httpRequest->query->replace(array('result' => ''));
 
         $response = $this->gateway->completeAuthorize($this->options);
     }
 
     public function testCompleteAuthorizeError()
     {
-        $this->httpRequest->shouldReceive('get')->with('result')->once()
-            ->andReturn('abc123');
+        $this->httpRequest->query->replace(array('result' => 'abc123'));
 
         $this->setMockResponse($this->httpClient, 'PxPayCompletePurchaseFailure.txt');
 
@@ -106,8 +103,7 @@ class PxPayGatewayTest extends GatewayTestCase
 
     public function testCompletePurchaseSuccess()
     {
-        $this->httpRequest->shouldReceive('get')->with('result')->once()
-            ->andReturn('abc123');
+        $this->httpRequest->query->replace(array('result' => 'abc123'));
 
         $this->setMockResponse($this->httpClient, 'PxPayCompletePurchaseSuccess.txt');
 
@@ -122,16 +118,14 @@ class PxPayGatewayTest extends GatewayTestCase
      */
     public function testCompletePurchaseInvalid()
     {
-        $this->httpRequest->shouldReceive('get')->with('result')->once()
-            ->andReturn(null);
+        $this->httpRequest->query->replace(array('result' => ''));
 
         $response = $this->gateway->completePurchase($this->options);
     }
 
     public function testCompletePurchaseError()
     {
-        $this->httpRequest->shouldReceive('get')->with('result')->once()
-            ->andReturn('abc123');
+        $this->httpRequest->query->replace(array('result' => 'abc123'));
 
         $this->setMockResponse($this->httpClient, 'PxPayCompletePurchaseFailure.txt');
 
