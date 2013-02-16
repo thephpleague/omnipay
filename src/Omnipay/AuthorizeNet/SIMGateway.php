@@ -36,19 +36,11 @@ class SIMGateway extends AIMGateway
     public function completeAuthorize($options)
     {
         $request = new Request($options);
-        if (!$this->validateReturnHash($request)) {
+        if (!$this->validateReturnHash($request, $this->httpRequest->request->get('x_MD5_Hash'))) {
             throw new InvalidResponseException();
         }
 
-        $responseCode = isset($_POST['x_response_code']) ? $_POST['x_response_code'] : '';
-        $message = isset($_POST['x_response_reason_text']) ? $_POST['x_response_reason_text'] : '';
-        $reference = isset($_POST['x_trans_id']) ? $_POST['x_trans_id'] : '';
-
-        if ($responseCode == '1') {
-            return new Response($reference, $message);
-        }
-
-        throw new Exception($message);
+        return new SIMResponse($this->httpRequest->request->all());
     }
 
     public function purchase($options)
@@ -60,7 +52,7 @@ class SIMGateway extends AIMGateway
 
     public function completePurchase($options)
     {
-        return $this->completeAuthorize($request);
+        return $this->completeAuthorize($options);
     }
 
     protected function buildAuthorizeOrPurchase($options, $method)
@@ -106,11 +98,10 @@ class SIMGateway extends AIMGateway
         return hash_hmac('md5', $fingerprint, $this->transactionKey);
     }
 
-    protected function validateReturnHash($request)
+    protected function validateReturnHash($request, $hash)
     {
         $expected = strtoupper(md5($this->apiLoginId.$request->getTransactionId().$request->getAmountDecimal()));
-        $actual = isset($_POST['x_MD5_Hash']) ? strtoupper($_POST['x_MD5_Hash']) : '';
 
-        return $expected == $actual;
+        return $expected === strtoupper($hash);
     }
 }

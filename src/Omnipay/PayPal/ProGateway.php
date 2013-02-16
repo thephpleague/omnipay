@@ -12,7 +12,6 @@
 namespace Omnipay\PayPal;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Exception\InvalidResponseException;
 use Omnipay\Common\Request;
 
 /**

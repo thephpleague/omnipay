@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+Connection: close
+Date: Sat, 16 Feb 2013 04:00:03 GMT
+Server: Microsoft-IIS/6.0
+X-Powered-By: ASP.NET
+Content-Type: text/html
+Content-Length: 347
+Cache-Control: private, must-revalidate, max-age=0
+Expires: Tue, 01 Jan 1980 00:00:00 GMT
+
+|1|,|1|,|1|,|This transaction has been approved.|,|JE6JM1|,|Y|,|2184492509|,|12345|,|first purchase|,|1.00|,|CC|,|auth_capture|,||,|fds|,|fds|,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,|35951A3F0A91940575132EA09CA1DC31|,|P|,|2|,||,||,||,||,||,||,||,||,||,||,|XXXX1111|,|Visa|,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||

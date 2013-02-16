@@ -178,7 +178,7 @@ class AIMGateway extends AbstractGateway
     {
         $httpResponse = $this->httpClient->post($this->getCurrentEndpoint(), null, $data)->send();
 
-        return new Response($httpResponse->getBody());
+        return new AIMResponse($httpResponse->getBody());
     }
 
     protected function getCurrentEndpoint()

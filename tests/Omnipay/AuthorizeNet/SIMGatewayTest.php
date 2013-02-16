@@ -12,6 +12,7 @@
 namespace Omnipay\AuthorizeNet;
 
 use Omnipay\GatewayTestCase;
+use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 class SIMGatewayTest extends GatewayTestCase
 {
@@ -19,31 +20,73 @@ class SIMGatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
+        $this->httpRequest = new HttpRequest;
+
         $this->gateway = new SIMGateway($this->httpClient, $this->httpRequest);
+        $this->gateway->setApiLoginId('example');
 
         $this->options = array(
             'amount' => 1000,
+            'transactionId' => '99',
             'returnUrl' => 'https://www.example.com/return',
         );
-    }
-
-    /**
-     * @expectedException \Omnipay\Common\Exception\InvalidRequestException
-     * @expectedExceptionMessage The amount parameter is required
-     */
-    public function testAuthorizeRequiresAmount()
-    {
-        $this->options['amount'] = 0;
-        $response = $this->gateway->authorize($this->options);
     }
 
     public function testAuthorize()
     {
         $response = $this->gateway->authorize($this->options);
-        $this->assertInstanceOf('\Omnipay\Common\FormRedirectResponse', $response);
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertTrue($response->isRedirect());
         $this->assertNotEmpty($response->getRedirectUrl());
 
         $formData = $response->getFormData();
-        $this->assertEquals('https://www.example.com/return', $formData['x_relay_url']);
+        $this->assertSame('https://www.example.com/return', $formData['x_relay_url']);
+    }
+
+    public function testCompleteAuthorize()
+    {
+        $this->httpRequest->request->replace(
+            array(
+                'x_response_code' => '1',
+                'x_trans_id' => '12345',
+                'x_MD5_Hash' => md5('example9910.00'),
+            )
+        );
+
+        $response = $this->gateway->completeAuthorize($this->options);
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame('12345', $response->getGatewayReference());
+        $this->assertNull($response->getMessage());
+    }
+
+    public function testPurchase()
+    {
+        $response = $this->gateway->purchase($this->options);
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertTrue($response->isRedirect());
+        $this->assertNotEmpty($response->getRedirectUrl());
+
+        $formData = $response->getFormData();
+        $this->assertSame('https://www.example.com/return', $formData['x_relay_url']);
+    }
+
+    public function testCompletePurchase()
+    {
+        $this->httpRequest->request->replace(
+            array(
+                'x_response_code' => '1',
+                'x_trans_id' => '12345',
+                'x_MD5_Hash' => md5('example9910.00'),
+            )
+        );
+
+        $response = $this->gateway->completePurchase($this->options);
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame('12345', $response->getGatewayReference());
+        $this->assertNull($response->getMessage());
     }
 }

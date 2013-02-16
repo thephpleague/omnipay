@@ -13,7 +13,6 @@ namespace Omnipay\Stripe;
 
 use Omnipay\Common\AbstractResponse;
 use Omnipay\Exception;
-use Omnipay\Common\Exception\InvalidResponseException;
 
 /**
  * Stripe Response

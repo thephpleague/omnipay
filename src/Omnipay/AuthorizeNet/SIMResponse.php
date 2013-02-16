@@ -13,34 +13,24 @@ namespace Omnipay\AuthorizeNet;
 
 use Omnipay\Common\AbstractResponse;
 use Omnipay\Exception;
-use Omnipay\Common\Exception\InvalidResponseException;
 
 /**
  * Authorize.Net Response
  */
-class Response extends AbstractResponse
+class SIMResponse extends AbstractResponse
 {
-    public function __construct($data)
-    {
-        $this->data = explode('|,|', substr($data, 1, -1));
-
-        if (count($this->data) < 10) {
-            throw new InvalidResponseException();
-        }
-    }
-
     public function isSuccessful()
     {
-        return '1' === $this->data[0];
+        return isset($this->data['x_response_code']) && '1' === $this->data['x_response_code'];
     }
 
     public function getGatewayReference()
     {
-        return $this->data[6];
+        return isset($this->data['x_trans_id']) ? $this->data['x_trans_id'] : null;
     }
 
     public function getMessage()
     {
-        return $this->data[3];
+        return isset($this->data['x_response_reason_text']) ? $this->data['x_response_reason_text'] : null;
     }
 }
