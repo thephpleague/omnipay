@@ -29,7 +29,7 @@
     <p>Click on a method to generate a test request.</p>
     <ul>
         {% if gateway.supportsAuthorize() %}
-            <li>authorize()</li>
+            <li><a href="/gateways/{{gateway.shortName}}/authorize">authorize()</a></li>
         {% endif %}
         <li><a href="/gateways/{{gateway.shortName}}/purchase">purchase()</a></li>
         {% if gateway.supportsCapture() %}

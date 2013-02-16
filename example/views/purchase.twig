@@ -1,11 +1,11 @@
 {% extends "layout.twig" %}
 
-{% set title = gateway.name~": Purchase" %}
+{% set title = gateway.name~": "~method~"()" %}
 {% block content %}
 
     <p>The charge will be created like so:</p>
     <pre>$gateway = GatewayFactory::create('{{ gateway.shortName }}');
-$response = $gateway->purchase($options);</pre>
+$response = $gateway->{{ method }}($options);</pre>
 
     <form method="post" class="form-horizontal">
 
