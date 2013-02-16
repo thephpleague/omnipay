@@ -5,8 +5,8 @@
     "keywords": [
         "payment", "gateway", "merchant", "authorize", "purchase", "authorize.net",
         "auth.net", "cardsave", "gocardless", "netaxept", "payflow", "dps", "paymentexpress",
-        "paypal", "pin", "sagepay", "sage pay", "stripe", "2checkout", "twocheckout", "worldpay",
-        "tala", "tala-payments"],
+        "paypal", "pin", "sagepay", "sage pay", "stripe", "2co", "2checkout", "twocheckout",
+        "worldpay", "tala", "tala-payments"],
     "homepage": "https://github.com/adrianmacneil/omnipay",
     "license": "MIT",
     "authors": [
