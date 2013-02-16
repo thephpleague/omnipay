@@ -21,6 +21,16 @@
     <p><b>$request->isRedirect()</b></p>
     <pre>{{ response.isRedirect() ? "true" : "false" }}</pre>
 
+    {% if response.redirectUrl is defined %}
+        <p><b>$request->getRedirectUrl()</b></p>
+        <pre>{{ response.redirectUrl }}</pre>
+    {% endif %}
+
+    {% if response.formData is defined %}
+        <p><b>$request->getFormData()</b></p>
+        <pre>{{ dump(response.formData) }}</pre>
+    {% endif %}
+
     <p><b>$request->getMessage()</b></p>
     <pre>{{ response.message }}</pre>
 
