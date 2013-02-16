@@ -12,9 +12,7 @@
 namespace Omnipay\Common;
 
 use Mockery as m;
-use Guzzle\Http\Client as HttpClient;
 use Omnipay\TestCase;
-use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 class AbstractGatewayTest extends TestCase
 {

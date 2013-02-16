@@ -13,6 +13,7 @@ namespace Omnipay;
 
 use Mockery as m;
 use Guzzle\Http\Client as HttpClient;
+use Omnipay\Common\CreditCard;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 /**
