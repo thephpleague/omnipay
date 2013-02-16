@@ -16,19 +16,18 @@ namespace Omnipay\Common;
  */
 class FormRedirectResponse extends RedirectResponse
 {
-    protected $redirectUrl;
-    protected $formData;
+    protected $redirectData;
 
     /**
      * Constructor.
      *
-     * @param string $url      The URL to redirect to
-     * @param array  $formData Optional form POST data
+     * @param string The URL to redirect to
+     * @param array  Optional form POST data
      */
-    public function __construct($url, $formData = array())
+    public function __construct($url, $redirectData = array())
     {
         $this->redirectUrl = $url;
-        $this->formData = $formData;
+        $this->redirectData = $redirectData;
     }
 
     /**
@@ -36,9 +35,9 @@ class FormRedirectResponse extends RedirectResponse
      *
      * @return array The form POST data
      */
-    public function getFormData()
+    public function getRedirectData()
     {
-        return $this->formData;
+        return $this->redirectData;
     }
 
     /**
@@ -47,7 +46,7 @@ class FormRedirectResponse extends RedirectResponse
     public function redirect($httpResponseClass = '\Symfony\Component\HttpFoundation\Response')
     {
         $hiddenFields = '';
-        foreach ($this->formData as $name => $value) {
+        foreach ($this->redirectData as $name => $value) {
             $hiddenFields .= sprintf(
                 '<input type="hidden" name="%1$s" value="%2$s" />',
                 htmlspecialchars($name, ENT_QUOTES, 'UTF-8'),

@@ -38,8 +38,8 @@ class SIMGatewayTest extends GatewayTestCase
         $this->assertTrue($response->isRedirect());
         $this->assertNotEmpty($response->getRedirectUrl());
 
-        $formData = $response->getFormData();
-        $this->assertSame('https://www.example.com/return', $formData['x_relay_url']);
+        $redirectData = $response->getRedirectData();
+        $this->assertSame('https://www.example.com/return', $redirectData['x_relay_url']);
     }
 
     public function testCompleteAuthorize()
@@ -67,8 +67,8 @@ class SIMGatewayTest extends GatewayTestCase
         $this->assertTrue($response->isRedirect());
         $this->assertNotEmpty($response->getRedirectUrl());
 
-        $formData = $response->getFormData();
-        $this->assertSame('https://www.example.com/return', $formData['x_relay_url']);
+        $redirectData = $response->getRedirectData();
+        $this->assertSame('https://www.example.com/return', $redirectData['x_relay_url']);
     }
 
     public function testCompletePurchase()

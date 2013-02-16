@@ -70,10 +70,10 @@ class DirectGatewayTest extends GatewayTestCase
         $this->assertNull($response->getMessage());
         $this->assertSame('https://test.sagepay.com/Simulator/3DAuthPage.asp', $response->getRedirectUrl());
 
-        $formData = $response->getFormData();
-        $this->assertSame('065379457749061954', $formData['MD']);
-        $this->assertSame('BSkaFwYFFTYAGyFbAB0LFRYWBwsBZw0EGwECEX9YRGFWc08pJCVVKgAANS0KADoZCCAMBnIeOxcWRg0LERdOOTQRDFRdVHNYUgwTMBsBCxABJw4DJHE+ERgPCi8MVC0HIAROCAAfBUk4ER89DD0IWDkvMQ1VdFwoUFgwXVYvbHgvMkdBXXNbQGIjdl1ZUEc1XSwqAAgUUicYBDYcB3I2AjYjIzsn', $formData['PaReq']);
-        $this->assertSame('https://www.example.com/return', $formData['TermUrl']);
+        $redirectData = $response->getRedirectData();
+        $this->assertSame('065379457749061954', $redirectData['MD']);
+        $this->assertSame('BSkaFwYFFTYAGyFbAB0LFRYWBwsBZw0EGwECEX9YRGFWc08pJCVVKgAANS0KADoZCCAMBnIeOxcWRg0LERdOOTQRDFRdVHNYUgwTMBsBCxABJw4DJHE+ERgPCi8MVC0HIAROCAAfBUk4ER89DD0IWDkvMQ1VdFwoUFgwXVYvbHgvMkdBXXNbQGIjdl1ZUEc1XSwqAAgUUicYBDYcB3I2AjYjIzsn', $redirectData['PaReq']);
+        $this->assertSame('https://www.example.com/return', $redirectData['TermUrl']);
     }
 
     public function testPurchaseSuccess()
@@ -112,10 +112,10 @@ class DirectGatewayTest extends GatewayTestCase
         $this->assertNull($response->getMessage());
         $this->assertSame('https://test.sagepay.com/Simulator/3DAuthPage.asp', $response->getRedirectUrl());
 
-        $formData = $response->getFormData();
-        $this->assertSame('065379457749061954', $formData['MD']);
-        $this->assertSame('BSkaFwYFFTYAGyFbAB0LFRYWBwsBZw0EGwECEX9YRGFWc08pJCVVKgAANS0KADoZCCAMBnIeOxcWRg0LERdOOTQRDFRdVHNYUgwTMBsBCxABJw4DJHE+ERgPCi8MVC0HIAROCAAfBUk4ER89DD0IWDkvMQ1VdFwoUFgwXVYvbHgvMkdBXXNbQGIjdl1ZUEc1XSwqAAgUUicYBDYcB3I2AjYjIzsn', $formData['PaReq']);
-        $this->assertSame('https://www.example.com/return', $formData['TermUrl']);
+        $redirectData = $response->getRedirectData();
+        $this->assertSame('065379457749061954', $redirectData['MD']);
+        $this->assertSame('BSkaFwYFFTYAGyFbAB0LFRYWBwsBZw0EGwECEX9YRGFWc08pJCVVKgAANS0KADoZCCAMBnIeOxcWRg0LERdOOTQRDFRdVHNYUgwTMBsBCxABJw4DJHE+ERgPCi8MVC0HIAROCAAfBUk4ER89DD0IWDkvMQ1VdFwoUFgwXVYvbHgvMkdBXXNbQGIjdl1ZUEc1XSwqAAgUUicYBDYcB3I2AjYjIzsn', $redirectData['PaReq']);
+        $this->assertSame('https://www.example.com/return', $redirectData['TermUrl']);
     }
 
     public function testCaptureSuccess()

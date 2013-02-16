@@ -311,7 +311,7 @@ To display your own redirect page, simply call `getRedirectUrl()` on the respons
 ```php
 $url = $response->getRedirectUrl();
 // for a form redirect, you can also call the following method:
-$data = $response->getFormData(); // associative array of fields which must be posted to the redirectUrl
+$data = $response->getRedirectData(); // associative array of fields which must be posted to the redirectUrl
 ```
 
 ## Error Handling
