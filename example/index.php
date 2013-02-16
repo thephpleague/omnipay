@@ -33,7 +33,7 @@ $app->before( function() use ( $app ) {
 $app->get('/', function() use ($app) {
     $gateways = array_map(function($name) {
         return Omnipay\Common\GatewayFactory::create($name);
-    }, Omnipay\Common\GatewayFactory::getAvailableGateways());
+    }, Omnipay\Common\GatewayFactory::find());
 
     return $app['twig']->render('index.twig', array(
         'gateways' => $gateways,
