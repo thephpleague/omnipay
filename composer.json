@@ -3,9 +3,10 @@
     "type": "library",
     "description": "Omnipay is a framework agnostic multi-gateway payment processing library",
     "keywords": [
-        "payment", "gateway", "merchant", "tala", "authorize", "purchase", "authorize.net",
+        "payment", "gateway", "merchant", "authorize", "purchase", "authorize.net",
         "auth.net", "cardsave", "gocardless", "netaxept", "payflow", "dps", "paymentexpress",
-        "paypal", "pin", "stripe", "2checkout", "twocheckout", "worldpay", "tala-payments"],
+        "paypal", "pin", "sagepay", "sage pay", "stripe", "2checkout", "twocheckout", "worldpay",
+        "tala", "tala-payments"],
     "homepage": "https://github.com/adrianmacneil/omnipay",
     "license": "MIT",
     "authors": [
