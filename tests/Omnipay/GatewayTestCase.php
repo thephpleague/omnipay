@@ -28,7 +28,6 @@ abstract class GatewayTestCase extends TestCase
     public function setUp()
     {
         $this->httpClient = new HttpClient;
-        $this->httpRequest = new HttpRequest;
     }
 
     /**
@@ -53,7 +52,6 @@ abstract class GatewayTestCase extends TestCase
         $newGateway = new $class();
 
         $this->assertInstanceOf('Guzzle\Http\ClientInterface', $newGateway->getHttpClient());
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Request', $newGateway->getHttpRequest());
     }
 
     public function testGetNameNotEmpty()
@@ -107,13 +105,12 @@ abstract class GatewayTestCase extends TestCase
         $this->assertInternalType('boolean', $supportsAuthorize);
 
         if ($supportsAuthorize) {
-            // authorize method should throw InvalidRequestException
-            $this->setExpectedException('Omnipay\\Common\\Exception\\InvalidRequestException');
-            $this->gateway->authorize(array());
+            // authorize method should return RequestInterface
+            $this->assertInstanceOf('Omnipay\\Common\\RequestInterface', $this->gateway->authorize());
         } else {
-            // authorize method should throw UnsupportedMethodException
-            $this->setExpectedException('Omnipay\\Common\\Exception\\UnsupportedMethodException');
-            $this->gateway->authorize(array());
+            // authorize method should throw BadMethodCallException
+            $this->setExpectedException('Omnipay\\Common\\Exception\\BadMethodCallException');
+            $this->gateway->authorize();
         }
     }
 
@@ -123,12 +120,11 @@ abstract class GatewayTestCase extends TestCase
         $this->assertInternalType('boolean', $supportsCapture);
 
         if ($supportsCapture) {
-            // capture method should throw InvalidRequestException
-            $this->setExpectedException('Omnipay\\Common\\Exception\\InvalidRequestException');
-            $this->gateway->capture(array());
+            // capture method should return RequestInterface
+            $this->assertInstanceOf('Omnipay\\Common\\RequestInterface', $this->gateway->capture());
         } else {
-            // capture method should throw UnsupportedMethodException
-            $this->setExpectedException('Omnipay\\Common\\Exception\\UnsupportedMethodException');
+            // capture method should throw BadMethodCallException
+            $this->setExpectedException('Omnipay\\Common\\Exception\\BadMethodCallException');
             $this->gateway->capture(array());
         }
     }
@@ -139,12 +135,11 @@ abstract class GatewayTestCase extends TestCase
         $this->assertInternalType('boolean', $supportsRefund);
 
         if ($supportsRefund) {
-            // refund method should throw InvalidRequestException
-            $this->setExpectedException('Omnipay\\Common\\Exception\\InvalidRequestException');
-            $this->gateway->refund(array());
+            // refund method should return RequestInterface
+            $this->assertInstanceOf('Omnipay\\Common\\RequestInterface', $this->gateway->refund());
         } else {
-            // refund method should throw UnsupportedMethodException
-            $this->setExpectedException('Omnipay\\Common\\Exception\\UnsupportedMethodException');
+            // refund method should throw BadMethodCallException
+            $this->setExpectedException('Omnipay\\Common\\Exception\\BadMethodCallException');
             $this->gateway->refund(array());
         }
     }
@@ -159,8 +154,8 @@ abstract class GatewayTestCase extends TestCase
             $this->setExpectedException('Omnipay\\Common\\Exception\\InvalidRequestException');
             $this->gateway->void(array());
         } else {
-            // void method should throw UnsupportedMethodException
-            $this->setExpectedException('Omnipay\\Common\\Exception\\UnsupportedMethodException');
+            // void method should throw BadMethodCallException
+            $this->setExpectedException('Omnipay\\Common\\Exception\\BadMethodCallException');
             $this->gateway->void(array());
         }
     }
@@ -169,7 +164,7 @@ abstract class GatewayTestCase extends TestCase
     {
         $newHttpClient = new HttpClient;
 
-        $this->gateway->setHttpClient($newHttpClient);
+        $this->assertSame($this->gateway, $this->gateway->setHttpClient($newHttpClient));
         $this->assertSame($newHttpClient, $this->gateway->getHttpClient());
     }
 
@@ -180,20 +175,5 @@ abstract class GatewayTestCase extends TestCase
 
         $this->assertInstanceOf('Guzzle\Http\Client', $client);
         $this->assertArrayHasKey(CURLOPT_CONNECTTIMEOUT, $curlOptions);
-    }
-
-    public function testHttpRequest()
-    {
-        $newHttpRequest = new HttpRequest;
-
-        $this->gateway->setHttpRequest($newHttpRequest);
-        $this->assertSame($newHttpRequest, $this->gateway->getHttpRequest());
-    }
-
-    public function testGetDefaultHttpRequest()
-    {
-        $request = $this->gateway->getDefaultHttpRequest();
-
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Request', $request);
     }
 }

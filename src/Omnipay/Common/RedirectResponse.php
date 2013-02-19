@@ -11,14 +11,13 @@
 
 namespace Omnipay\Common;
 
-use Symfony\Component\HttpFoundation\RedirectResponse as HttpRedirectResponse;
-
 /**
  * Redirect Response class
  */
-class RedirectResponse extends AbstractResponse
+class RedirectResponse extends AbstractResponse implements RedirectResponseInterface
 {
     protected $redirectUrl;
+    protected $redirectData;
 
     /**
      * Constructor.
@@ -40,19 +39,23 @@ class RedirectResponse extends AbstractResponse
         return true;
     }
 
-    /**
-     * Gets the redirect target url.
-     */
     public function getRedirectUrl()
     {
         return $this->redirectUrl;
     }
 
-    /**
-     * Perform the required redirect.
-     */
+    public function getRedirectMethod()
+    {
+        return 'GET';
+    }
+
+    public function getRedirectData()
+    {
+        return $this->redirectData;
+    }
+
     public function redirect()
     {
-        HttpRedirectResponse::create($this->redirectUrl)->send();
+        Helper::performRedirect($this);
     }
 }

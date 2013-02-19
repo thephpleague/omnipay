@@ -14,7 +14,7 @@ namespace Omnipay\Common;
 use ReflectionMethod;
 use Guzzle\Http\ClientInterface;
 use Guzzle\Http\Client as HttpClient;
-use Omnipay\Common\Exception\UnsupportedMethodException;
+use Omnipay\Common\Exception\BadMethodCallException;
 use Omnipay\Common\Request;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
@@ -24,7 +24,6 @@ use Symfony\Component\HttpFoundation\Request as HttpRequest;
 abstract class AbstractGateway implements GatewayInterface
 {
     protected $httpClient;
-    protected $httpRequest;
 
     /**
      * Create a new gateway instance
@@ -32,10 +31,9 @@ abstract class AbstractGateway implements GatewayInterface
      * @param ClientInterface $httpClient  A Guzzle client to make API calls with
      * @param HttpRequest     $httpRequest A Symfony HTTP request object
      */
-    public function __construct(ClientInterface $httpClient = null, HttpRequest $httpRequest = null)
+    public function __construct(ClientInterface $httpClient = null)
     {
         $this->httpClient = $httpClient ?: $this->getDefaultHttpClient();
-        $this->httpRequest = $httpRequest ?: $this->getDefaultHttpRequest();
         $this->loadSettings();
     }
 
@@ -57,39 +55,39 @@ abstract class AbstractGateway implements GatewayInterface
      */
     abstract public function defineSettings();
 
-    public function authorize($options)
+    public function authorize($options = null)
     {
-        throw new UnsupportedMethodException;
+        throw new BadMethodCallException;
     }
 
-    public function completeAuthorize($options)
+    public function completeAuthorize($options = null)
     {
-        throw new UnsupportedMethodException;
+        throw new BadMethodCallException;
     }
 
-    public function capture($options)
+    public function capture($options = null)
     {
-        throw new UnsupportedMethodException;
+        throw new BadMethodCallException;
     }
 
-    public function purchase($options)
+    public function purchase($options = null)
     {
-        throw new UnsupportedMethodException;
+        throw new BadMethodCallException;
     }
 
-    public function completePurchase($options)
+    public function completePurchase($options = null)
     {
-        throw new UnsupportedMethodException;
+        throw new BadMethodCallException;
     }
 
-    public function refund($options)
+    public function refund($options = null)
     {
-        throw new UnsupportedMethodException;
+        throw new BadMethodCallException;
     }
 
-    public function void($options)
+    public function void($options = null)
     {
-        throw new UnsupportedMethodException;
+        throw new BadMethodCallException;
     }
 
     /**
@@ -193,6 +191,8 @@ abstract class AbstractGateway implements GatewayInterface
     public function setHttpClient(ClientInterface $httpClient)
     {
         $this->httpClient = $httpClient;
+
+        return $this;
     }
 
     public function getDefaultHttpClient()
@@ -205,18 +205,17 @@ abstract class AbstractGateway implements GatewayInterface
         );
     }
 
-    public function getHttpRequest()
-    {
-        return $this->httpRequest;
-    }
+    abstract public function send(RequestInterface $request);
 
-    public function setHttpRequest(HttpRequest $httpRequest)
+    public function createResponse(RequestInterface $request, $responseData)
     {
-        $this->httpRequest = $httpRequest;
-    }
+        // request object knows which class its response should be
+        $response = $request->createResponse($responseData)
+            ->setGateway($this)
+            ->setRequest($request);
 
-    public function getDefaultHttpRequest()
-    {
-        return HttpRequest::createFromGlobals();
+        $request->setResponse($response);
+
+        return $response;
     }
 }
