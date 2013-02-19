@@ -14,7 +14,7 @@ namespace Omnipay\PayPal;
 use Omnipay\Common\AbstractResponse;
 
 /**
- * PayPal Express Class
+ * PayPal Response
  */
 class Response extends AbstractResponse
 {
@@ -40,10 +40,5 @@ class Response extends AbstractResponse
     public function getMessage()
     {
         return isset($this->data['L_LONGMESSAGE0']) ? $this->data['L_LONGMESSAGE0'] : null;
-    }
-
-    public function getExpressRedirectToken()
-    {
-        return isset($this->data['TOKEN']) ? $this->data['TOKEN'] : null;
     }
 }

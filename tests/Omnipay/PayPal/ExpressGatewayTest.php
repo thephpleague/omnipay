@@ -32,9 +32,9 @@ class ExpressGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'ExpressPurchaseSuccess.txt');
 
-        $response = $this->gateway->authorize($this->options);
+        $response = $this->gateway->authorize($this->options)->send();
 
-        $this->assertInstanceOf('\Omnipay\Common\RedirectResponse', $response);
+        $this->assertInstanceOf('\Omnipay\PayPal\ExpressAuthorizeResponse', $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
         $this->assertEquals('https://www.paypal.com/webscr?cmd=_express-checkout&useraction=commit&token=EC-42721413K79637829', $response->getRedirectUrl());
@@ -44,7 +44,7 @@ class ExpressGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'ExpressPurchaseFailure.txt');
 
-        $response = $this->gateway->authorize($this->options);
+        $response = $this->gateway->authorize($this->options)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -56,9 +56,9 @@ class ExpressGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'ExpressPurchaseSuccess.txt');
 
-        $response = $this->gateway->purchase($this->options);
+        $response = $this->gateway->purchase($this->options)->send();
 
-        $this->assertInstanceOf('\Omnipay\Common\RedirectResponse', $response);
+        $this->assertInstanceOf('\Omnipay\PayPal\ExpressAuthorizeResponse', $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
         $this->assertEquals('https://www.paypal.com/webscr?cmd=_express-checkout&useraction=commit&token=EC-42721413K79637829', $response->getRedirectUrl());
@@ -68,7 +68,7 @@ class ExpressGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'ExpressPurchaseFailure.txt');
 
-        $response = $this->gateway->purchase($this->options);
+        $response = $this->gateway->purchase($this->options)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());

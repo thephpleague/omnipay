@@ -39,7 +39,7 @@ class ProGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'ProPurchaseSuccess.txt');
 
-        $response = $this->gateway->authorize($this->options);
+        $response = $this->gateway->authorize($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals('96U93778BD657313D', $response->getGatewayReference());
@@ -50,7 +50,7 @@ class ProGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'ProPurchaseSuccess.txt');
 
-        $response = $this->gateway->purchase($this->options);
+        $response = $this->gateway->purchase($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals('96U93778BD657313D', $response->getGatewayReference());

@@ -99,7 +99,7 @@ $app->post('/gateways/{name}/authorize', function($name) use ($app) {
     $app['session']->set($sessionVar.'.card', $card);
 
     $params['card'] = $card;
-    $response = $gateway->authorize($params);
+    $response = $gateway->authorize($params)->send();
 
     return $app['twig']->render('response.twig', array(
         'gateway' => $gateway,
@@ -134,7 +134,7 @@ $app->post('/gateways/{name}/capture', function($name) use ($app) {
     // save POST data into session
     $app['session']->set($sessionVar.'.capture', $params);
 
-    $response = $gateway->capture($params);
+    $response = $gateway->capture($params)->send();
 
     return $app['twig']->render('response.twig', array(
         'gateway' => $gateway,
@@ -174,7 +174,7 @@ $app->post('/gateways/{name}/purchase', function($name) use ($app) {
     $app['session']->set($sessionVar.'.card', $card);
 
     $params['card'] = $card;
-    $response = $gateway->purchase($params);
+    $response = $gateway->purchase($params)->send();
 
     return $app['twig']->render('response.twig', array(
         'gateway' => $gateway,

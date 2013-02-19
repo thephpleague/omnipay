@@ -13,12 +13,15 @@ namespace Omnipay\Common;
 
 use Omnipay\Common\Helper;
 use Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\Common\Exception\RuntimeException;
+use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 /**
  * Request
  */
-class Request
+class Request implements RequestInterface
 {
+    protected $httpRequest;
     protected $card;
     protected $token;
     protected $amount;
@@ -29,15 +32,18 @@ class Request
     protected $clientIp;
     protected $returnUrl;
     protected $cancelUrl;
+    protected $gateway;
+    protected $response;
 
     /**
      * Create a new Request
      *
      * @param array an array of initial parameters
      */
-    public function __construct($parameters = array())
+    public function __construct($options, HttpRequest $httpRequest = null)
     {
-        $this->initialize($parameters);
+        $this->initialize($options);
+        $this->httpRequest = $httpRequest ?: $this->getDefaultHttpRequest();
     }
 
     /**
@@ -47,9 +53,9 @@ class Request
      *
      * @param array An associative array of parameters
      */
-    public function initialize($parameters)
+    public function initialize($options)
     {
-        Helper::initialize($this, $parameters);
+        Helper::initialize($this, $options);
     }
 
     /**
@@ -69,6 +75,21 @@ class Request
         }
     }
 
+    public function getHttpRequest()
+    {
+        return $this->httpRequest;
+    }
+
+    public function setHttpRequest(HttpRequest $httpRequest)
+    {
+        $this->httpRequest = $httpRequest;
+    }
+
+    public function getDefaultHttpRequest()
+    {
+        return HttpRequest::createFromGlobals();
+    }
+
     public function getCard()
     {
         return $this->card;
@@ -81,6 +102,8 @@ class Request
         }
 
         $this->card = $value;
+
+        return $this;
     }
 
     public function getToken()
@@ -91,6 +114,8 @@ class Request
     public function setToken($value)
     {
         $this->token = $value;
+
+        return $this;
     }
 
     public function getAmount()
@@ -101,6 +126,8 @@ class Request
     public function setAmount($value)
     {
         $this->amount = (int) $value;
+
+        return $this;
     }
 
     public function getAmountDecimal()
@@ -121,6 +148,8 @@ class Request
     public function setCurrency($value)
     {
         $this->currency = Currency::find($value);
+
+        return $this;
     }
 
     public function getCurrencyNumeric()
@@ -146,6 +175,8 @@ class Request
     public function setDescription($value)
     {
         $this->description = $value;
+
+        return $this;
     }
 
     public function getTransactionId()
@@ -156,6 +187,8 @@ class Request
     public function setTransactionId($value)
     {
         $this->transactionId = $value;
+
+        return $this;
     }
 
     public function getGatewayReference()
@@ -166,6 +199,8 @@ class Request
     public function setGatewayReference($value)
     {
         $this->gatewayReference = $value;
+
+        return $this;
     }
 
     public function getClientIp()
@@ -176,6 +211,8 @@ class Request
     public function setClientIp($value)
     {
         $this->clientIp = $value;
+
+        return $this;
     }
 
     public function getReturnUrl()
@@ -186,6 +223,8 @@ class Request
     public function setReturnUrl($value)
     {
         $this->returnUrl = $value;
+
+        return $this;
     }
 
     public function getCancelUrl()
@@ -196,5 +235,45 @@ class Request
     public function setCancelUrl($value)
     {
         $this->cancelUrl = $value;
+
+        return $this;
+    }
+
+    public function getGateway()
+    {
+        return $this->gateway;
+    }
+
+    public function setGateway(GatewayInterface $gateway)
+    {
+        $this->gateway = $gateway;
+
+        return $this;
+    }
+
+    public function getResponse()
+    {
+        return $this->response;
+    }
+
+    public function setResponse(ResponseInterface $response)
+    {
+        $this->response = $response;
+
+        return $this;
+    }
+
+    public function createResponse($data)
+    {
+        throw new \BadMethodCallException;
+    }
+
+    public function send()
+    {
+        if (!$this->getGateway()) {
+            throw new RuntimeException('A gateway must be set on the request');
+        }
+
+        return $this->getGateway()->send($this);
     }
 }

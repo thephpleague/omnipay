@@ -11,7 +11,6 @@
 
 namespace Omnipay\PayPal;
 
-use Omnipay\Common\RedirectResponse;
 use Omnipay\Common\Request;
 
 /**
@@ -44,6 +43,8 @@ class ExpressGateway extends ProGateway
     public function setSolutionType($value)
     {
         $this->solutionType = $value;
+
+        return $this;
     }
 
     public function getLandingPage()
@@ -54,89 +55,31 @@ class ExpressGateway extends ProGateway
     public function setLandingPage($value)
     {
         $this->landingPage = $value;
+
+        return $this;
     }
 
-    public function authorize($options)
+    public function authorize($options = null)
     {
-        $data = $this->buildExpressAuthorize($options);
-        $response = $this->send($data);
+        $request = new ExpressAuthorizeRequest(array_merge($this->toArray(), (array) $options));
 
-        if (!$response->isSuccessful()) {
-            return $response;
-        }
-
-        return new RedirectResponse(
-            $this->getCurrentCheckoutEndpoint().'?'.http_build_query(
-                array(
-                    'cmd' => '_express-checkout',
-                    'useraction' => 'commit',
-                    'token' => $response->getExpressRedirectToken(),
-                )
-            )
-        );
+        return $request->setGateway($this);
     }
 
-    public function completeAuthorize($options)
+    public function completeAuthorize($options = null, $action = 'Authorization')
     {
-        $data = $this->buildCompleteAuthorizeOrPurchase($options, 'Authorization');
+        $request = new ExpressCompleteAuthorizeRequest(array_merge($this->toArray(), (array) $options));
 
-        return $this->send($data);
+        return $request->setGateway($this)->setPaymentAction($action);
     }
 
-    public function purchase($options)
+    public function purchase($options = null)
     {
-        // authorize first then process as 'Sale' in DoExpressCheckoutPayment
         return $this->authorize($options);
     }
 
-    public function completePurchase($options)
+    public function completePurchase($options = null)
     {
-        $data = $this->buildCompleteAuthorizeOrPurchase($options, 'Sale');
-
-        return $this->send($data);
-    }
-
-    protected function buildExpressAuthorize($options)
-    {
-        $request = new Request($options);
-        $request->validate(array('returnUrl', 'cancelUrl'));
-
-        $prefix = 'PAYMENTREQUEST_0_';
-        $data = $this->buildPaymentRequest($request, 'SetExpressCheckout', 'Authorization', $prefix);
-
-        // pp express specific fields
-        $data['SOLUTIONTYPE'] = $this->getSolutionType();
-        $data['LANDINGPAGE'] = $this->getLandingPage();
-        $data['NOSHIPPING'] = 1;
-        $data['ALLOWNOTE'] = 0;
-        $data['RETURNURL'] = $request->getReturnUrl();
-        $data['CANCELURL'] = $request->getCancelUrl();
-
-        $source = $request->getCard();
-        if ($source) {
-            $data[$prefix.'SHIPTONAME'] = $source->getName();
-            $data[$prefix.'SHIPTOSTREET'] = $source->getAddress1();
-            $data[$prefix.'SHIPTOSTREET2'] = $source->getAddress2();
-            $data[$prefix.'SHIPTOCITY'] = $source->getCity();
-            $data[$prefix.'SHIPTOSTATE'] = $source->getState();
-            $data[$prefix.'SHIPTOCOUNTRYCODE'] = $source->getCountry();
-            $data[$prefix.'SHIPTOZIP'] = $source->getPostcode();
-            $data[$prefix.'SHIPTOPHONENUM'] = $source->getPhone();
-            $data['EMAIL'] = $source->getEmail();
-        }
-
-        return $data;
-    }
-
-    protected function buildCompleteAuthorizeOrPurchase($options, $action)
-    {
-        $prefix = 'PAYMENTREQUEST_0_';
-        $request = new Request($options);
-        $data = $this->buildPaymentRequest($request, 'DoExpressCheckoutPayment', $action, $prefix);
-
-        $data['TOKEN'] = isset($_POST['token']) ? $_POST['token'] : '';
-        $data['PAYERID'] = isset($_POST['PayerID']) ? $_POST['PayerID'] : '';
-
-        return $data;
+        return $this->completeAuthorize($options, 'Sale');
     }
 }

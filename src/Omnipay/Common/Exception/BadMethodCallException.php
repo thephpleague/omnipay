@@ -12,8 +12,8 @@
 namespace Omnipay\Common\Exception;
 
 /**
- * Unsupported Method Exception.
+ * Bad Method Call Exception
  */
-class UnsupportedMethodException extends \Exception implements OmnipayException
+class BadMethodCallException extends \BadMethodCallException implements OmnipayException
 {
 }

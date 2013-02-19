@@ -13,16 +13,15 @@ namespace Omnipay\PayPal;
 
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Request;
+use Omnipay\Common\RequestInterface;
 
 /**
  * PayPal Pro Class
  */
 class ProGateway extends AbstractGateway
 {
-    protected $endpoint = 'https://api-3t.paypal.com/nvp';
+    protected $liveEndpoint = 'https://api-3t.paypal.com/nvp';
     protected $testEndpoint = 'https://api-3t.sandbox.paypal.com/nvp';
-    protected $checkoutEndpoint = 'https://www.paypal.com/webscr';
-    protected $testCheckoutEndpoint = 'https://www.sandbox.paypal.com/webscr';
     protected $username;
     protected $password;
     protected $signature;
@@ -51,6 +50,8 @@ class ProGateway extends AbstractGateway
     public function setUsername($value)
     {
         $this->username = $value;
+
+        return $this;
     }
 
     public function getPassword()
@@ -61,6 +62,8 @@ class ProGateway extends AbstractGateway
     public function setPassword($value)
     {
         $this->password = $value;
+
+        return $this;
     }
 
     public function getSignature()
@@ -71,6 +74,8 @@ class ProGateway extends AbstractGateway
     public function setSignature($value)
     {
         $this->signature = $value;
+
+        return $this;
     }
 
     public function getTestMode()
@@ -81,134 +86,48 @@ class ProGateway extends AbstractGateway
     public function setTestMode($value)
     {
         $this->testMode = $value;
+
+        return $this;
     }
 
-    public function authorize($options)
+    public function authorize($options = null)
     {
-        $data = $this->buildAuthorize($options, 'Authorization');
+        $request = new AuthorizeRequest(array_merge($this->toArray(), (array) $options));
 
-        return $this->send($data);
+        return $request->setGateway($this)->setPaymentAction('Authorization');
     }
 
-    public function purchase($options)
+    public function purchase($options = null)
     {
-        $data = $this->buildAuthorize($options, 'Sale');
+        $request = new AuthorizeRequest(array_merge($this->toArray(), (array) $options));
 
-        return $this->send($data);
+        return $request->setGateway($this)->setPaymentAction('Sale');
     }
 
-    public function capture($options)
+    public function capture($options = null)
     {
-        $data = $this->buildCapture($options);
+        $request = new CaptureRequest(array_merge($this->toArray(), (array) $options));
 
-        return $this->send($data);
+        return $request->setGateway($this);
     }
 
-    public function refund($options)
+    public function refund($options = null)
     {
-        $request = $this->buildRefund($options);
+        $request = new RefundRequest(array_merge($this->toArray(), (array) $options));
 
-        return $this->send($data);
+        return $request->setGateway($this);
     }
 
-    protected function buildAuthorize($options, $action)
+    public function send(RequestInterface $request)
     {
-        $request = new Request($options);
-        $request->validate(array('amount'));
-        $source = $request->getCard();
-        $source->validate();
+        $url = $this->getEndpoint().'?'.http_build_query($request->getData());
+        $httpResponse = $this->httpClient->get($url)->send();
 
-        $data = $this->buildPaymentRequest($request, 'DoDirectPayment', $action);
-
-        // add credit card details
-        $data['CREDITCARDTYPE'] = $source->getType();
-        $data['ACCT'] = $source->getNumber();
-        $data['EXPDATE'] = $source->getExpiryMonth().$source->getExpiryYear();
-        $data['STARTDATE'] = $source->getStartMonth().$source->getStartYear();
-        $data['CVV2'] = $source->getCvv();
-        $data['ISSUENUMBER'] = $source->getIssueNumber();
-        $data['IPADDRESS'] = '';
-        $data['FIRSTNAME'] = $source->getFirstName();
-        $data['LASTNAME'] = $source->getLastName();
-        $data['EMAIL'] = $source->getEmail();
-        $data['STREET'] = $source->getAddress1();
-        $data['STREET2'] = $source->getAddress2();
-        $data['CITY'] = $source->getCity();
-        $data['STATE'] = $source->getState();
-        $data['ZIP'] = $source->getPostcode();
-        $data['COUNTRYCODE'] = strtoupper($source->getCountry());
-
-        return $data;
+        return $this->createResponse($request, $httpResponse->getBody());
     }
 
-    protected function buildCapture($options)
+    protected function getEndpoint()
     {
-        $request = new Request($options);
-        $request->validate(array('gatewayReference', 'amount'));
-
-        $data = $this->buildRequest('DoCapture');
-        $data['AMT'] = $request->getAmountDecimal();
-        $data['CURRENCYCODE'] = $request->getCurrency();
-        $data['AUTHORIZATIONID'] = $request->getGatewayReference();
-        $data['COMPLETETYPE'] = 'Complete';
-
-        return $data;
-    }
-
-    protected function buildRefund($options)
-    {
-        $request = new Request($options);
-        $request->validate(array('gatewayReference'));
-
-        $data = $this->buildRequest('RefundTransaction');
-        $data['TRANSACTIONID'] = $request->getGatewayReference();
-        $data['REFUNDTYPE'] = 'Full';
-
-        return $data;
-    }
-
-    protected function buildRequest($method)
-    {
-        $data = array();
-        $data['METHOD'] = $method;
-        $data['VERSION'] = '85.0';
-        $data['USER'] = $this->getUsername();
-        $data['PWD'] = $this->getPassword();
-        $data['SIGNATURE'] = $this->getSignature();
-
-        return $data;
-    }
-
-    protected function buildPaymentRequest($request, $method, $action, $prefix = '')
-    {
-        $data = $this->buildRequest($method);
-
-        $data[$prefix.'PAYMENTACTION'] = $action;
-        $data[$prefix.'AMT'] = $request->getAmountDecimal();
-        $data[$prefix.'CURRENCYCODE'] = $request->getCurrency();
-        $data[$prefix.'DESC'] = $request->getDescription();
-
-        return $data;
-    }
-
-    /**
-     * Post a request to the PayPal API and decode the response
-     */
-    protected function send($data)
-    {
-        // send and decode response
-        $httpResponse = $this->httpClient->get($this->getCurrentEndpoint().'?'.http_build_query($data))->send();
-
-        return new Response($httpResponse->getBody());
-    }
-
-    protected function getCurrentEndpoint()
-    {
-        return $this->getTestMode() ? $this->testEndpoint : $this->endpoint;
-    }
-
-    protected function getCurrentCheckoutEndpoint()
-    {
-        return $this->getTestMode() ? $this->testCheckoutEndpoint : $this->checkoutEndpoint;
+        return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }
 }

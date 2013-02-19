@@ -22,7 +22,7 @@ class AbstractGatewayTest extends TestCase
     }
 
     /**
-     * @expectedException \Omnipay\Common\Exception\UnsupportedMethodException
+     * @expectedException \Omnipay\Common\Exception\BadMethodCallException
      */
     public function testAuthorize()
     {
@@ -30,7 +30,7 @@ class AbstractGatewayTest extends TestCase
     }
 
     /**
-     * @expectedException \Omnipay\Common\Exception\UnsupportedMethodException
+     * @expectedException \Omnipay\Common\Exception\BadMethodCallException
      */
     public function testCompleteAuthorize()
     {
@@ -38,7 +38,7 @@ class AbstractGatewayTest extends TestCase
     }
 
     /**
-     * @expectedException \Omnipay\Common\Exception\UnsupportedMethodException
+     * @expectedException \Omnipay\Common\Exception\BadMethodCallException
      */
     public function testCapture()
     {
@@ -46,7 +46,7 @@ class AbstractGatewayTest extends TestCase
     }
 
     /**
-     * @expectedException \Omnipay\Common\Exception\UnsupportedMethodException
+     * @expectedException \Omnipay\Common\Exception\BadMethodCallException
      */
     public function testPurchase()
     {
@@ -54,7 +54,7 @@ class AbstractGatewayTest extends TestCase
     }
 
     /**
-     * @expectedException \Omnipay\Common\Exception\UnsupportedMethodException
+     * @expectedException \Omnipay\Common\Exception\BadMethodCallException
      */
     public function testCompletePurchase()
     {
@@ -62,7 +62,7 @@ class AbstractGatewayTest extends TestCase
     }
 
     /**
-     * @expectedException \Omnipay\Common\Exception\UnsupportedMethodException
+     * @expectedException \Omnipay\Common\Exception\BadMethodCallException
      */
     public function testRefund()
     {
@@ -70,7 +70,7 @@ class AbstractGatewayTest extends TestCase
     }
 
     /**
-     * @expectedException \Omnipay\Common\Exception\UnsupportedMethodException
+     * @expectedException \Omnipay\Common\Exception\BadMethodCallException
      */
     public function testVoid()
     {

@@ -29,7 +29,7 @@ $gateway = GatewayFactory::create('Stripe');
 $gateway->setApiKey('abc123');
 
 $formData = ['number' => '4111111111111111', 'expiryMonth' => 6, 'expiryYear' => 2016];
-$response = $gateway->purchase(['amount' => 1000, 'card' => $formData]);
+$response = $gateway->purchase(['amount' => 1000, 'card' => $formData])->send();
 
 if ($response->isSuccessful()) {
     // payment was successful: update database
@@ -222,7 +222,7 @@ The main methods implemented by gateways are:
 * `void($options)` - generally can only be called up to 24 hours after submitting a transaction
 
 On-site gateways do not need to implement the `completeAuthorize` and `completePurchase` methods. If any gateway does not support
-certain features (such as refunds), it will throw `UnsupportedMethodException`.
+certain features (such as refunds), it will throw `BadMethodCallException`.
 
 All gateway methods take an `$options` array as an argument. Each gateway differs in which
 parameters are required, and the gateway will throw `InvalidRequestException` if you
@@ -242,7 +242,7 @@ Pass the options through to the method like so:
 
 ```php
 $card = new CreditCard($formData);
-$response = $gateway->authorize([
+$request = $gateway->authorize([
     'amount' => 1000, // this represents $10.00
     'card' => $card,
     'returnUrl' => 'https://www.example.com/return',
@@ -275,7 +275,7 @@ For a successful responses, a reference will normally be generated, which can be
 at a later date. The following methods are always available:
 
 ```php
-$response = $gateway->purchase(['amount' => 1000, 'card' => $card]);
+$response = $gateway->purchase(['amount' => 1000, 'card' => $card])->send();
 
 $response->isSuccessful(); // is the response successful?
 $response->isRedirect(); // is the response a redirect?
@@ -293,7 +293,7 @@ POST (FormRedirectResponse). These could potentially be combined into a single r
 After processing a payment, the cart should check whether the response requires a redirect, and if so, redirect accordingly:
 
 ```php
-$response = $gateway->purchase(['amount' => 1000, 'card' => $card]);
+$response = $gateway->purchase(['amount' => 1000, 'card' => $card])->send();
 if ($response->isSuccessful()) {
     // payment is complete
 } elseif ($response->isRedirect()) {
@@ -326,7 +326,7 @@ You can handle both scenarios by wrapping the entire request in a try-catch bloc
 
 ```php
 try {
-    $response = $gateway->purchase(1000, $card);
+    $response = $gateway->purchase(['amount' => 1000, 'card' => $card])->send();
     if ($response->isSuccessful()) {
         // mark order as complete
     } elseif ($response->isRedirect()) {

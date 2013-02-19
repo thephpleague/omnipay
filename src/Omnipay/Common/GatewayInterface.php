@@ -24,7 +24,7 @@ interface GatewayInterface
      * @param array An array of options
      * @return Omnipay\ResponseInterface
      */
-    public function authorize($options);
+    public function authorize($options = null);
 
     /**
      * Handle return from an off-site authorization request.
@@ -32,7 +32,7 @@ interface GatewayInterface
      * @param array An array of options
      * @return Omnipay\ResponseInterface
      */
-    public function completeAuthorize($options);
+    public function completeAuthorize($options = null);
 
     /**
      * Capture an authorized payment.
@@ -40,7 +40,7 @@ interface GatewayInterface
      * @param array An array of options
      * @return Omnipay\ResponseInterface
      */
-    public function capture($options);
+    public function capture($options = null);
 
     /**
      * Create a new charge (combined authorize + capture).
@@ -48,7 +48,7 @@ interface GatewayInterface
      * @param array An array of options
      * @return Omnipay\ResponseInterface
      */
-    public function purchase($options);
+    public function purchase($options = null);
 
     /**
      * Handle return from an off-site purchase request.
@@ -56,7 +56,7 @@ interface GatewayInterface
      * @param array An array of options
      * @return Omnipay\ResponseInterface
      */
-    public function completePurchase($options);
+    public function completePurchase($options = null);
 
     /**
      * Refund an existing transaction.
@@ -67,7 +67,7 @@ interface GatewayInterface
      * @param array An array of options
      * @return Omnipay\ResponseInterface
      */
-    public function refund($options);
+    public function refund($options = null);
 
     /**
      * Void an existing transaction.
@@ -78,5 +78,7 @@ interface GatewayInterface
      * @param array An array of options
      * @return Omnipay\ResponseInterface
      */
-    public function void($options);
+    public function void($options = null);
+
+    public function send(RequestInterface $request);
 }
