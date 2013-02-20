@@ -14,8 +14,9 @@ namespace Omnipay\WorldPay;
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Exception;
 use Omnipay\Common\Exception\InvalidResponseException;
-use Omnipay\Common\RedirectResponse;
-use Omnipay\Common\Request;
+use Omnipay\Common\Message\RedirectResponse;
+use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Common\Message\RequestInterface;
 
 /**
  * WorldPay Gateway
@@ -86,14 +87,14 @@ class Gateway extends AbstractGateway
         $this->testMode = $value;
     }
 
-    public function purchase($options)
+    public function purchase($options = null)
     {
         $data = $this->buildPurchase($options);
 
         return new RedirectResponse($this->getCurrentEndpoint().'?'.http_build_query($data));
     }
 
-    public function completePurchase($options)
+    public function completePurchase($options = null)
     {
         $callbackPW = (string) $this->httpRequest->get('callbackPW');
         if ($callbackPW !== $this->callbackPassword) {
@@ -107,6 +108,11 @@ class Gateway extends AbstractGateway
                 'rawAuthMessage' => (string) $this->httpRequest->get('rawAuthMessage'),
             )
         );
+    }
+
+    public function send(RequestInterface $request)
+    {
+        throw new \BadMethodCallException('fixme');
     }
 
     protected function buildPurchase($options)

@@ -9,14 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\PayPal;
-
-use Omnipay\Common\Request;
+namespace Omnipay\PayPal\Message;
 
 /**
  * PayPal Abstract Request
  */
-abstract class AbstractRequest extends Request
+abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
     protected $username;
     protected $password;

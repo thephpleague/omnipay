@@ -33,7 +33,7 @@ class PxPayGatewayTest extends GatewayTestCase
 
         $response = $this->gateway->authorize($this->options);
 
-        $this->assertInstanceOf('\Omnipay\Common\RedirectResponse', $response);
+        $this->assertInstanceOf('\Omnipay\Common\Message\RedirectResponse', $response);
         $this->assertEquals('https://www.example.com/redirect', $response->getRedirectUrl());
     }
 
@@ -87,7 +87,7 @@ class PxPayGatewayTest extends GatewayTestCase
 
         $response = $this->gateway->purchase($this->options);
 
-        $this->assertInstanceOf('\Omnipay\Common\RedirectResponse', $response);
+        $this->assertInstanceOf('\Omnipay\Common\Message\RedirectResponse', $response);
         $this->assertEquals('https://www.example.com/redirect', $response->getRedirectUrl());
     }
 

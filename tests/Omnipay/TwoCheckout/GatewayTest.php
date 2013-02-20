@@ -35,7 +35,7 @@ class GatewayTest extends GatewayTestCase
         $source = new CreditCard;
         $response = $this->gateway->purchase($this->options);
 
-        $this->assertInstanceOf('\Omnipay\Common\RedirectResponse', $response);
+        $this->assertInstanceOf('\Omnipay\Common\Message\RedirectResponse', $response);
         $this->assertContains('https://www.2checkout.com/checkout/purchase?', $response->getRedirectUrl());
     }
 

@@ -12,7 +12,8 @@
 namespace Omnipay\Stripe;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Request;
+use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Common\Message\RequestInterface;
 
 /**
  * Stripe Gateway
@@ -46,14 +47,14 @@ class Gateway extends AbstractGateway
         $this->apiKey = $value;
     }
 
-    public function purchase($options)
+    public function purchase($options = null)
     {
         $data = $this->buildPurchase($options);
 
         return $this->send('/charges', $data);
     }
 
-    public function refund($options)
+    public function refund($options = null)
     {
         $request = new Request($options);
         $request->validate(array('gatewayReference', 'amount'));
@@ -93,7 +94,12 @@ class Gateway extends AbstractGateway
         return $data;
     }
 
-    protected function send($url, $data)
+    public function send(RequestInterface $request)
+    {
+        throw new \BadMethodCallException('fixme');
+    }
+
+    protected function oldSend($url, $data)
     {
         // don't throw exceptions for 402 errors
         $this->httpClient->getEventDispatcher()->addListener(

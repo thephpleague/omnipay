@@ -12,7 +12,8 @@
 namespace Omnipay\SagePay;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Request;
+use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Common\Message\RequestInterface;
 
 /**
  * Sage Pay Direct Gateway
@@ -71,7 +72,7 @@ class DirectGateway extends AbstractGateway
         $this->simulatorMode = $value;
     }
 
-    public function authorize($options)
+    public function authorize($options = null)
     {
         $request = new Request($options);
         $data = $this->buildDirectAuthorizeOrPurchase($request, 'DEFERRED');
@@ -79,7 +80,7 @@ class DirectGateway extends AbstractGateway
         return $this->send('DEFERRED', $data, $request);
     }
 
-    public function completeAuthorize($options)
+    public function completeAuthorize($options = null)
     {
         $request = new Request($options);
         $data = $this->buildCompleteDirect3D($request);
@@ -87,7 +88,7 @@ class DirectGateway extends AbstractGateway
         return $this->send('direct3dcallback', $data, $request);
     }
 
-    public function capture($options)
+    public function capture($options = null)
     {
         $request = new Request($options);
         $data = $this->buildCapture($request);
@@ -95,7 +96,7 @@ class DirectGateway extends AbstractGateway
         return $this->send('RELEASE', $data, $request);
     }
 
-    public function purchase($options)
+    public function purchase($options = null)
     {
         $request = new Request($options);
         $data = $this->buildDirectAuthorizeOrPurchase($request, 'PAYMENT');
@@ -106,7 +107,7 @@ class DirectGateway extends AbstractGateway
     /**
      * Only used for returning from Direct 3D Authentication
      */
-    public function completePurchase($options)
+    public function completePurchase($options = null)
     {
         $request = new Request($options);
         $data = $this->buildCompleteDirect3D($request);
@@ -114,7 +115,7 @@ class DirectGateway extends AbstractGateway
         return $this->send('direct3dcallback', $data, $request);
     }
 
-    public function refund($options)
+    public function refund($options = null)
     {
         $request = new Request($options);
         $data = $this->buildRefund($request);
@@ -245,7 +246,12 @@ class DirectGateway extends AbstractGateway
         return $data;
     }
 
-    protected function send($service, $data, Request $request)
+    public function send(RequestInterface $request)
+    {
+        throw new \BadMethodCallException('fixme');
+    }
+
+    protected function oldSend($service, $data, Request $request)
     {
         $url = $this->getCurrentEndpoint($service);
         $httpResponse = $this->httpClient->post($url, null, $data)->send();

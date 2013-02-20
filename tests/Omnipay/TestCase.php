@@ -66,8 +66,14 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         }
 
         $ref = new ReflectionObject($this);
+        $dir = dirname($ref->getFileName());
 
-        return MockPlugin::getMockFile(dirname($ref->getFileName()).'/Mock/'.$path);
+        // if mock file doesn't exist, check parent directory
+        if (!file_exists($dir.'/Mock/'.$path) && file_exists($dir.'/../Mock/'.$path)) {
+            return MockPlugin::getMockFile($dir.'/../Mock/'.$path);
+        }
+
+        return MockPlugin::getMockFile($dir.'/Mock/'.$path);
     }
 
     /**

@@ -13,8 +13,9 @@ namespace Omnipay\GoCardless;
 
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Exception\InvalidResponseException;
-use Omnipay\Common\RedirectResponse;
-use Omnipay\Common\Request;
+use Omnipay\Common\Message\RedirectResponse;
+use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Common\Message\RequestInterface;
 
 /**
  * GoCardless Gateway
@@ -97,7 +98,7 @@ class Gateway extends AbstractGateway
         $this->testMode = $value;
     }
 
-    public function purchase($options)
+    public function purchase($options = null)
     {
         $data = $this->buildPurchase($options);
 
@@ -106,7 +107,7 @@ class Gateway extends AbstractGateway
         );
     }
 
-    public function completePurchase($options)
+    public function completePurchase($options = null)
     {
         $data = array();
         $data['resource_uri'] = $this->httpRequest->get('resource_uri');
@@ -127,6 +128,11 @@ class Gateway extends AbstractGateway
         )->setAuth($this->appId, $this->appSecret)->send();
 
         return new Response($httpResponse->getBody(), $data['resource_id']);
+    }
+
+    public function send(RequestInterface $request)
+    {
+        throw new \BadMethodCallException('fixme');
     }
 
     protected function buildPurchase($options)

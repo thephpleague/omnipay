@@ -11,7 +11,7 @@
 
 namespace Omnipay\TwoCheckout;
 
-use Omnipay\Common\AbstractResponse;
+use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Exception;
 use Omnipay\Common\Exception\InvalidResponseException;
 

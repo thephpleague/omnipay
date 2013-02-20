@@ -182,4 +182,22 @@ $app->post('/gateways/{name}/purchase', function($name) use ($app) {
     ));
 });
 
+// gateway purchase return
+// this won't work for gateways which require an internet-accessible URL (yet)
+$app->match('/gateways/{name}/purchaseReturn', function($name) use ($app) {
+    $gateway = Omnipay\Common\GatewayFactory::create($name);
+    $sessionVar = 'omnipay.'.$gateway->getShortName();
+    $gateway->initialize($app['session']->get($sessionVar));
+
+    // load request data from session
+    $params = $app['session']->get($sessionVar.'.purchase', array());
+
+    $response = $gateway->completePurchase($params)->send();
+
+    return $app['twig']->render('response.twig', array(
+        'gateway' => $gateway,
+        'response' => $response,
+    ));
+});
+
 $app->run();

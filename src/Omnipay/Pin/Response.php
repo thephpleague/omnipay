@@ -11,7 +11,7 @@
 
 namespace Omnipay\Pin;
 
-use Omnipay\Common\AbstractResponse;
+use Omnipay\Common\Message\AbstractResponse;
 
 /**
  * Pin Response

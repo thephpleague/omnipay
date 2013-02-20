@@ -12,7 +12,8 @@
 namespace Omnipay\PaymentExpress;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Request;
+use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Common\Message\RequestInterface;
 
 /**
  * DPS PaymentExpress PxPost Gateway
@@ -56,28 +57,28 @@ class PxPostGateway extends AbstractGateway
         $this->password = $value;
     }
 
-    public function authorize($options)
+    public function authorize($options = null)
     {
         $data = $this->buildAuthorizeOrPurchase($options, 'Auth');
 
         return $this->send($data);
     }
 
-    public function capture($options)
+    public function capture($options = null)
     {
         $data = $this->buildCaptureOrRefund($options, 'Complete');
 
         return $this->send($data);
     }
 
-    public function purchase($options)
+    public function purchase($options = null)
     {
         $data = $this->buildAuthorizeOrPurchase($options, 'Purchase');
 
         return $this->send($data);
     }
 
-    public function refund($options)
+    public function refund($options = null)
     {
         $data = $this->buildCaptureOrRefund($options, 'Refund');
 
@@ -121,7 +122,12 @@ class PxPostGateway extends AbstractGateway
         return $data;
     }
 
-    protected function send($data)
+    public function send(RequestInterface $request)
+    {
+        throw new \BadMethodCallException('fixme');
+    }
+
+    protected function oldSend($data)
     {
         $httpResponse = $this->httpClient->post($this->endpoint, null, $data->asXML())->send();
 

@@ -9,15 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\Common;
+namespace Omnipay\Common\Message;
 
+use Mockery as m;
 use Omnipay\TestCase;
 
-class RequestTest extends TestCase
+class AbstractRequestTest extends TestCase
 {
     public function setUp()
     {
-        $this->request = new Request;
+        $this->request = m::mock('\Omnipay\Common\Message\AbstractRequest[createResponse]');
     }
 
     public function testConstruct()
@@ -26,17 +27,10 @@ class RequestTest extends TestCase
         $this->assertNull($this->request->getCurrency());
     }
 
-    public function testConstructWithParams()
-    {
-        $request = new Request(array('amount' => 123));
-        $this->assertSame(123, $request->getAmount());
-    }
-
     public function testInitializeWithParams()
     {
-        $request = new Request;
-        $request->initialize(array('amount' => 123));
-        $this->assertSame(123, $request->getAmount());
+        $this->request->initialize(array('amount' => 123));
+        $this->assertSame(123, $this->request->getAmount());
     }
 
     public function testCard()

@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\PayPal;
+namespace Omnipay\PayPal\Message;
 
-use Omnipay\Common\RedirectResponseInterface;
+use Omnipay\Common\Message\RedirectResponseInterface;
 
 /**
  * PayPal Express Authorize Response

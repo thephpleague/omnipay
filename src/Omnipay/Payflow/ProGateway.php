@@ -12,7 +12,8 @@
 namespace Omnipay\Payflow;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Request;
+use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Common\Message\RequestInterface;
 
 /**
  * Payflow Pro Class
@@ -95,28 +96,28 @@ class ProGateway extends AbstractGateway
         $this->testMode = $value;
     }
 
-    public function authorize($options)
+    public function authorize($options = null)
     {
         $data = $this->buildAuthorize($options, 'A');
 
         return $this->send($data);
     }
 
-    public function capture($options)
+    public function capture($options = null)
     {
         $data = $this->buildCaptureOrRefund($options, 'D');
 
         return $this->send($data);
     }
 
-    public function purchase($options)
+    public function purchase($options = null)
     {
         $data = $this->buildAuthorize($options, 'S');
 
         return $this->send($data);
     }
 
-    public function refund($options)
+    public function refund($options = null)
     {
 
         $data = $this->buildCaptureOrRefund($options, 'C');
@@ -173,10 +174,15 @@ class ProGateway extends AbstractGateway
         return $request;
     }
 
+    public function send(RequestInterface $request)
+    {
+        throw new \BadMethodCallException('fixme');
+    }
+
     /**
      * Post a request to the Payflow API and decode the response
      */
-    protected function send($data)
+    protected function oldSend($data)
     {
         $httpResponse = $this->httpClient->post($this->getCurrentEndpoint(), null, $data)->send();
 

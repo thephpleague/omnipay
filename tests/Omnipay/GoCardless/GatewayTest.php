@@ -33,7 +33,7 @@ class GatewayTest extends GatewayTestCase
     {
         $response = $this->gateway->purchase($this->options);
 
-        $this->assertInstanceOf('\Omnipay\Common\RedirectResponse', $response);
+        $this->assertInstanceOf('\Omnipay\Common\Message\RedirectResponse', $response);
         $this->assertTrue($response->isRedirect());
         $this->assertStringStartsWith('https://gocardless.com/connect/bills/new?', $response->getRedirectUrl());
     }

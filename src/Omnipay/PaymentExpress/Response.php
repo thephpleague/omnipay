@@ -12,7 +12,7 @@
 namespace Omnipay\PaymentExpress;
 
 use SimpleXMLElement;
-use Omnipay\Common\AbstractResponse;
+use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Exception;
 use Omnipay\Common\Exception\InvalidResponseException;
 

@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\PayPal;
+namespace Omnipay\PayPal\Message;
 
-use Omnipay\Common\AbstractResponse;
+use Omnipay\Common\Message\AbstractResponse;
 
 /**
  * PayPal Response

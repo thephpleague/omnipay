@@ -15,8 +15,9 @@ use SimpleXMLElement;
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Exception;
 use Omnipay\Common\Exception\InvalidResponseException;
-use Omnipay\Common\RedirectResponse;
-use Omnipay\Common\Request;
+use Omnipay\Common\Message\RedirectResponse;
+use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Common\Message\RequestInterface;
 
 /**
  * CardSave Gateway
@@ -75,7 +76,7 @@ class Gateway extends AbstractGateway
         $this->testMode = $value;
     }
 
-    public function purchase($options)
+    public function purchase($options = null)
     {
         $data = $this->buildPurchaseRequest($options);
         $response = $this->send('/Netaxept/Register.aspx', $data);
@@ -94,7 +95,7 @@ class Gateway extends AbstractGateway
         );
     }
 
-    public function completePurchase($options)
+    public function completePurchase($options = null)
     {
         $responseCode = $this->httpRequest->get('responseCode');
         if (empty($responseCode)) {
@@ -146,7 +147,12 @@ class Gateway extends AbstractGateway
         return $data;
     }
 
-    protected function send($url, $data)
+    public function send(RequestInterface $request)
+    {
+        throw new \BadMethodCallException('fixme');
+    }
+
+    protected function oldSend($url, $data)
     {
         $httpResponse = $this->httpClient->get($this->getCurrentEndpoint().$url.'?'.http_build_query($data))->send();
 

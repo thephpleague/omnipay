@@ -12,7 +12,7 @@
 namespace Omnipay\SagePay;
 
 use Omnipay\Common\Exception\InvalidResponseException;
-use Omnipay\Common\Request;
+use Omnipay\Common\Message\AbstractRequest;
 
 /**
  * Sage Pay Server Gateway
@@ -24,7 +24,7 @@ class ServerGateway extends DirectGateway
         return 'Sage Pay Server';
     }
 
-    public function authorize($options)
+    public function authorize($options = null)
     {
         $request = new Request($options);
         $data = $this->buildServerAuthorizeOrPurchase($request, 'DEFERRED');
@@ -32,12 +32,12 @@ class ServerGateway extends DirectGateway
         return $this->send('DEFERRED', $data, $request);
     }
 
-    public function completeAuthorize($options)
+    public function completeAuthorize($options = null)
     {
         return $this->completePurchase($options);
     }
 
-    public function purchase($options)
+    public function purchase($options = null)
     {
         $request = new Request($options);
         $data = $this->buildServerAuthorizeOrPurchase($request, 'PAYMENT');
@@ -45,7 +45,7 @@ class ServerGateway extends DirectGateway
         return $this->send('PAYMENT', $data, $request);
     }
 
-    public function completePurchase($options)
+    public function completePurchase($options = null)
     {
         $request = new Request($options);
         $request->validate(array('transactionId', 'gatewayReference'));

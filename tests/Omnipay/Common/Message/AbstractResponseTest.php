@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\Common;
+namespace Omnipay\Common\Message;
 
 use Mockery as m;
 use Omnipay\TestCase;
@@ -18,7 +18,7 @@ class AbstractResponseTest extends TestCase
 {
     public function testDefaultMethods()
     {
-        $response = m::mock('\Omnipay\Common\AbstractResponse[isSuccessful]');
+        $response = m::mock('\Omnipay\Common\Message\AbstractResponse[isSuccessful]');
 
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getData());

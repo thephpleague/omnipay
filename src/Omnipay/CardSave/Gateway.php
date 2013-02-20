@@ -16,8 +16,9 @@ use DOMDocument;
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Exception;
 use Omnipay\Common\Exception\InvalidResponseException;
-use Omnipay\Common\FormRedirectResponse;
-use Omnipay\Common\Request;
+use Omnipay\Common\Message\FormRedirectResponse;
+use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Common\Message\RequestInterface;
 
 /**
  * CardSave Gateway
@@ -63,7 +64,7 @@ class Gateway extends AbstractGateway
         $this->password = $value;
     }
 
-    public function purchase($options)
+    public function purchase($options = null)
     {
         $request = new Request($options);
         $data = $this->buildPurchaseRequest($request);
@@ -71,7 +72,7 @@ class Gateway extends AbstractGateway
         return $this->send($data, $request);
     }
 
-    public function completePurchase($options)
+    public function completePurchase($options = null)
     {
         $request = new Request($options);
         $data = $this->build3DAuthRequest();
@@ -145,7 +146,12 @@ class Gateway extends AbstractGateway
         return $data;
     }
 
-    protected function send($data, Request $request)
+    public function send(RequestInterface $request)
+    {
+        throw new \BadMethodCallException('fixme');
+    }
+
+    protected function oldSend($data, Request $request)
     {
         // the PHP SOAP library sucks, and SimpleXML can't append element trees
         // TODO: find PSR-0 SOAP library

@@ -11,7 +11,6 @@
 
 namespace Omnipay\Dummy;
 
-use Omnipay\Common\CreditCard;
 use Omnipay\GatewayTestCase;
 
 class GatewayTest extends GatewayTestCase
@@ -22,31 +21,25 @@ class GatewayTest extends GatewayTestCase
 
         $this->gateway = new Gateway($this->httpClient, $this->httpRequest);
 
-        $card = new CreditCard(array(
-            'firstName' => 'Example',
-            'lastName' => 'User',
-            'number' => '4111111111111111',
-            'expiryMonth' => '12',
-            'expiryYear' => '2016',
-            'cvv' => '123',
-        ));
-
-        $this->options = array('amount' => 1000, 'card' => $card);
+        $this->options = array(
+            'amount' => 1000,
+            'card' => $this->getValidCard(),
+        );
     }
 
     public function testAuthorize()
     {
-        $response = $this->gateway->authorize($this->options);
+        $response = $this->gateway->authorize($this->options)->send();
 
-        $this->assertInstanceOf('\Omnipay\Dummy\Response', $response);
+        $this->assertInstanceOf('\Omnipay\Dummy\Message\Response', $response);
         $this->assertTrue($response->isSuccessful());
     }
 
     public function testPurchase()
     {
-        $response = $this->gateway->purchase($this->options);
+        $response = $this->gateway->purchase($this->options)->send();
 
-        $this->assertInstanceOf('\Omnipay\Dummy\Response', $response);
+        $this->assertInstanceOf('\Omnipay\Dummy\Message\Response', $response);
         $this->assertTrue($response->isSuccessful());
     }
 }

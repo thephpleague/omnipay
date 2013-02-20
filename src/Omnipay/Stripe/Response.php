@@ -11,7 +11,7 @@
 
 namespace Omnipay\Stripe;
 
-use Omnipay\Common\AbstractResponse;
+use Omnipay\Common\Message\AbstractResponse;
 
 /**
  * Stripe Response

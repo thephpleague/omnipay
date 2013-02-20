@@ -11,7 +11,7 @@
 
 namespace Omnipay\SagePay;
 
-use Omnipay\Common\Request;
+use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\TestCase;
 
 class ResponseTest extends TestCase

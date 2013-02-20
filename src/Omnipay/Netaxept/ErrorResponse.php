@@ -11,7 +11,7 @@
 
 namespace Omnipay\Netaxept;
 
-use Omnipay\Common\AbstractResponse;
+use Omnipay\Common\Message\AbstractResponse;
 
 /**
  * Netaxept Response

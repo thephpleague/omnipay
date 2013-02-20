@@ -13,8 +13,8 @@ namespace Omnipay\AuthorizeNet;
 
 use Omnipay\Exception;
 use Omnipay\Common\Exception\InvalidResponseException;
-use Omnipay\Common\FormRedirectResponse;
-use Omnipay\Common\Request;
+use Omnipay\Common\Message\FormRedirectResponse;
+use Omnipay\Common\Message\AbstractRequest;
 
 /**
  * Authorize.Net SIM Class
@@ -26,14 +26,14 @@ class SIMGateway extends AIMGateway
         return 'Authorize.Net SIM';
     }
 
-    public function authorize($options)
+    public function authorize($options = null)
     {
         $data = $this->buildAuthorizeOrPurchase($options, 'AUTH_ONLY');
 
         return new FormRedirectResponse($this->getCurrentEndpoint(), $data);
     }
 
-    public function completeAuthorize($options)
+    public function completeAuthorize($options = null)
     {
         $request = new Request($options);
         if (!$this->validateReturnHash($request, $this->httpRequest->request->get('x_MD5_Hash'))) {
@@ -43,14 +43,14 @@ class SIMGateway extends AIMGateway
         return new SIMResponse($this->httpRequest->request->all());
     }
 
-    public function purchase($options)
+    public function purchase($options = null)
     {
         $data = $this->buildAuthorizeOrPurchase($options, 'AUTH_CAPTURE');
 
         return new FormRedirectResponse($this->getCurrentEndpoint(), $data);
     }
 
-    public function completePurchase($options)
+    public function completePurchase($options = null)
     {
         return $this->completeAuthorize($options);
     }

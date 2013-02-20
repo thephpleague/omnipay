@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\PayPal;
+namespace Omnipay\PayPal\Message;
 
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
@@ -43,8 +43,8 @@ class ExpressCompleteAuthorizeRequest extends AuthorizeRequest
         $data['PAYMENTREQUEST_0_CURRENCYCODE'] = $this->getCurrency();
         $data['PAYMENTREQUEST_0_DESC'] = $this->getDescription();
 
-        $data['TOKEN'] = $this->httpRequest isset($_POST['token']) ? $_POST['token'] : '';
-        $data['PAYERID'] = isset($_POST['PayerID']) ? $_POST['PayerID'] : '';
+        $data['TOKEN'] = $this->httpRequest->query->get('token');
+        $data['PAYERID'] = $this->httpRequest->query->get('PayerID');
 
         return $data;
     }

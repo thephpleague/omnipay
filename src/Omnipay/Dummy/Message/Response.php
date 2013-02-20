@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\Dummy;
+namespace Omnipay\Dummy\Message;
 
-use Omnipay\Common\AbstractResponse;
+use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Exception\InvalidResponseException;
 
 /**

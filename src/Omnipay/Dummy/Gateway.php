@@ -12,7 +12,10 @@
 namespace Omnipay\Dummy;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Request;
+use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Common\Message\RequestInterface;
+use Omnipay\Dummy\Message\AuthorizeRequest;
+use Omnipay\Dummy\Message\Response;
 
 /**
  * Dummy Gateway
@@ -35,18 +38,20 @@ class Gateway extends AbstractGateway
         return array();
     }
 
-    public function authorize($options)
+    public function authorize($options = null)
     {
-        return $this->purchase($options);
+        $request = new AuthorizeRequest($options);
+
+        return $request->setGateway($this);
     }
 
-    public function purchase($options)
+    public function purchase($options = null)
     {
-        $request = new Request($options);
-        $request->validate(array('amount'));
-        $source = $request->getCard();
-        $source->validate();
+        return $this->authorize($options);
+    }
 
-        return new Response(uniqid());
+    public function send(RequestInterface $request)
+    {
+        return $this->createResponse($request, uniqid());
     }
 }

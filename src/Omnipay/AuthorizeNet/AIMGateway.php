@@ -12,7 +12,8 @@
 namespace Omnipay\AuthorizeNet;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Request;
+use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Common\Message\RequestInterface;
 
 /**
  * Authorize.Net AIM Class
@@ -81,21 +82,21 @@ class AIMGateway extends AbstractGateway
         $this->developerMode = $value;
     }
 
-    public function authorize($options)
+    public function authorize($options = null)
     {
         $data = $this->buildAuthorizeOrPurchase($options, 'AUTH_ONLY');
 
         return $this->send($data);
     }
 
-    public function capture($options)
+    public function capture($options = null)
     {
         $data = $this->buildCapture($options);
 
         return $this->send($data);
     }
 
-    public function purchase($options)
+    public function purchase($options = null)
     {
         $data = $this->buildAuthorizeOrPurchase($options, 'AUTH_CAPTURE');
 
@@ -171,10 +172,15 @@ class AIMGateway extends AbstractGateway
         }
     }
 
+    public function send(RequestInterface $request)
+    {
+        throw new \BadMethodCallException('fixme');
+    }
+
     /**
      * Post a request to Authorize.Net
      */
-    protected function send($data)
+    protected function oldSend($data)
     {
         $httpResponse = $this->httpClient->post($this->getCurrentEndpoint(), null, $data)->send();
 

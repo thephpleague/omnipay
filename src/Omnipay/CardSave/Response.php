@@ -11,7 +11,7 @@
 
 namespace Omnipay\CardSave;
 
-use Omnipay\Common\AbstractResponse;
+use Omnipay\Common\Message\AbstractResponse;
 
 /**
  * CardSave Response

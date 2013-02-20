@@ -14,8 +14,9 @@ namespace Omnipay\PaymentExpress;
 use SimpleXMLElement;
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Exception\InvalidResponseException;
-use Omnipay\Common\RedirectResponse;
-use Omnipay\Common\Request;
+use Omnipay\Common\Message\RedirectResponse;
+use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Common\Message\RequestInterface;
 
 /**
  * DPS PaymentExpress PxPay Gateway
@@ -59,7 +60,7 @@ class PxPayGateway extends AbstractGateway
         $this->password = $value;
     }
 
-    public function authorize($options)
+    public function authorize($options = null)
     {
         $data = $this->buildPurchase($options);
         $data->TxnType = 'Auth';
@@ -67,12 +68,12 @@ class PxPayGateway extends AbstractGateway
         return $this->sendPurchase($data);
     }
 
-    public function completeAuthorize($options)
+    public function completeAuthorize($options = null)
     {
         return $this->completePurchase($options);
     }
 
-    public function purchase($options)
+    public function purchase($options = null)
     {
         $data = $this->buildPurchase($options);
         $data->TxnType = 'Purchase';
@@ -80,7 +81,7 @@ class PxPayGateway extends AbstractGateway
         return $this->sendPurchase($data);
     }
 
-    public function completePurchase($options)
+    public function completePurchase($options = null)
     {
         $result = $this->httpRequest->get('result');
         if (empty($result)) {
@@ -94,6 +95,11 @@ class PxPayGateway extends AbstractGateway
         $data->Response = $result;
 
         return $this->sendComplete($data);
+    }
+
+    public function send(RequestInterface $request)
+    {
+        throw new \BadMethodCallException('fixme');
     }
 
     protected function buildPurchase($options)

@@ -12,8 +12,11 @@
 namespace Omnipay\PayPal;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Request;
-use Omnipay\Common\RequestInterface;
+use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Common\Message\RequestInterface;
+use Omnipay\PayPal\Message\AuthorizeRequest;
+use Omnipay\PayPal\Message\CaptureRequest;
+use Omnipay\PayPal\Message\RefundRequest;
 
 /**
  * PayPal Pro Class

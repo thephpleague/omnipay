@@ -11,10 +11,10 @@
 
 namespace Omnipay\SagePay;
 
-use Omnipay\Common\AbstractResponse;
-use Omnipay\Common\FormRedirectResponse;
-use Omnipay\Common\RedirectResponse;
-use Omnipay\Common\Request;
+use Omnipay\Common\Message\AbstractResponse;
+use Omnipay\Common\Message\FormRedirectResponse;
+use Omnipay\Common\Message\RedirectResponse;
+use Omnipay\Common\Message\AbstractRequest;
 
 /**
  * Sage Pay Response

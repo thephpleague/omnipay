@@ -13,8 +13,9 @@ namespace Omnipay\TwoCheckout;
 
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Exception\InvalidResponseException;
-use Omnipay\Common\RedirectResponse;
-use Omnipay\Common\Request;
+use Omnipay\Common\Message\RedirectResponse;
+use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Common\Message\RequestInterface;
 
 /**
  * 2Checkout Gateway
@@ -72,14 +73,14 @@ class Gateway extends AbstractGateway
         $this->testMode = $value;
     }
 
-    public function purchase($options)
+    public function purchase($options = null)
     {
         $data = $this->buildPurchase($options);
 
         return new RedirectResponse($this->endpoint.'?'.http_build_query($data));
     }
 
-    public function completePurchase($options)
+    public function completePurchase($options = null)
     {
         $request = new Request($options);
         $orderNo = $this->httpRequest->get('order_number');
@@ -95,6 +96,11 @@ class Gateway extends AbstractGateway
         }
 
         return new Response($orderNo);
+    }
+
+    public function send(RequestInterface $request)
+    {
+        throw new \BadMethodCallException('fixme');
     }
 
     protected function buildPurchase($options)

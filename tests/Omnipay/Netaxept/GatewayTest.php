@@ -35,7 +35,7 @@ class GatewayTest extends GatewayTestCase
 
         $response = $this->gateway->purchase($this->options);
 
-        $this->assertInstanceOf('\Omnipay\Common\RedirectResponse', $response);
+        $this->assertInstanceOf('\Omnipay\Common\Message\RedirectResponse', $response);
         $this->assertTrue($response->isRedirect());
         $this->assertEquals('https://epayment.bbs.no/Terminal/Default.aspx?merchantId=foo&transactionId=abc123', $response->getRedirectUrl());
     }

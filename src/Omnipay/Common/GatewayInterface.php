@@ -11,7 +11,7 @@
 
 namespace Omnipay\Common;
 
-use Omnipay\Common\Request;
+use Omnipay\Common\Message\RequestInterface;
 
 /**
  * Payment gateway interface

@@ -11,7 +11,7 @@
 
 namespace Omnipay\AuthorizeNet;
 
-use Omnipay\Common\AbstractResponse;
+use Omnipay\Common\Message\AbstractResponse;
 
 /**
  * Authorize.Net Response

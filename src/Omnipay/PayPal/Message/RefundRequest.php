@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\PayPal;
+namespace Omnipay\PayPal\Message;
 
 /**
  * PayPal Refund Request

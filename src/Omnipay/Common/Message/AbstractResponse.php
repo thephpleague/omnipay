@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\Common;
+namespace Omnipay\Common\Message;
 
 use Omnipay\Common\Exception\RuntimeException;
-use Symfony\Component\HttpFoundation\Request as HttpRequest;
+use Omnipay\Common\GatewayInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse as HttpRedirectResponse;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
