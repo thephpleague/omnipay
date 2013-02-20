@@ -134,8 +134,8 @@ class ExpressGateway extends ProGateway
         $request = new Request($options);
         $data = $this->buildPaymentRequest($request, 'DoExpressCheckoutPayment', $action, $prefix);
 
-        $data['TOKEN'] = isset($_POST['token']) ? $_POST['token'] : '';
-        $data['PAYERID'] = isset($_POST['PayerID']) ? $_POST['PayerID'] : '';
+        $data['TOKEN'] = $this->httpRequest->query->get('token');
+        $data['PAYERID'] = $this->httpRequest->query->get('PayerID');
 
         return $data;
     }
