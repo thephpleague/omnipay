@@ -15,7 +15,7 @@ use ReflectionMethod;
 use Guzzle\Http\ClientInterface;
 use Guzzle\Http\Client as HttpClient;
 use Omnipay\Common\Exception\BadMethodCallException;
-use Omnipay\Common\Request;
+use Omnipay\Common\Message\RequestInterface;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 /**

@@ -106,10 +106,10 @@ abstract class GatewayTestCase extends TestCase
 
         if ($supportsAuthorize) {
             // authorize method should return RequestInterface
-            $this->assertInstanceOf('Omnipay\\Common\\RequestInterface', $this->gateway->authorize());
+            $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->authorize());
         } else {
             // authorize method should throw BadMethodCallException
-            $this->setExpectedException('Omnipay\\Common\\Exception\\BadMethodCallException');
+            $this->setExpectedException('Omnipay\Common\Exception\BadMethodCallException');
             $this->gateway->authorize();
         }
     }
@@ -121,10 +121,10 @@ abstract class GatewayTestCase extends TestCase
 
         if ($supportsCapture) {
             // capture method should return RequestInterface
-            $this->assertInstanceOf('Omnipay\\Common\\RequestInterface', $this->gateway->capture());
+            $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->capture());
         } else {
             // capture method should throw BadMethodCallException
-            $this->setExpectedException('Omnipay\\Common\\Exception\\BadMethodCallException');
+            $this->setExpectedException('Omnipay\Common\Exception\BadMethodCallException');
             $this->gateway->capture(array());
         }
     }
@@ -136,10 +136,10 @@ abstract class GatewayTestCase extends TestCase
 
         if ($supportsRefund) {
             // refund method should return RequestInterface
-            $this->assertInstanceOf('Omnipay\\Common\\RequestInterface', $this->gateway->refund());
+            $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->refund());
         } else {
             // refund method should throw BadMethodCallException
-            $this->setExpectedException('Omnipay\\Common\\Exception\\BadMethodCallException');
+            $this->setExpectedException('Omnipay\Common\Exception\BadMethodCallException');
             $this->gateway->refund(array());
         }
     }
@@ -151,11 +151,11 @@ abstract class GatewayTestCase extends TestCase
 
         if ($supportsVoid) {
             // void method should throw InvalidRequestException
-            $this->setExpectedException('Omnipay\\Common\\Exception\\InvalidRequestException');
+            $this->setExpectedException('Omnipay\Common\Exception\InvalidRequestException');
             $this->gateway->void(array());
         } else {
             // void method should throw BadMethodCallException
-            $this->setExpectedException('Omnipay\\Common\\Exception\\BadMethodCallException');
+            $this->setExpectedException('Omnipay\Common\Exception\BadMethodCallException');
             $this->gateway->void(array());
         }
     }

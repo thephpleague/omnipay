@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\Common;
+namespace Omnipay\Common\Message;
 
 /**
  * Form Redirect Response class

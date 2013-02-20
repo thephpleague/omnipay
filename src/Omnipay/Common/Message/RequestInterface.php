@@ -9,7 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\Common;
+namespace Omnipay\Common\Message;
+
+use Omnipay\Common\GatewayInterface;
 
 /**
  * Request Interface

@@ -9,17 +9,20 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\Common;
+namespace Omnipay\Common\Message;
 
-use Omnipay\Common\Helper;
+use Omnipay\Common\CreditCard;
+use Omnipay\Common\Currency;
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\Exception\RuntimeException;
+use Omnipay\Common\GatewayInterface;
+use Omnipay\Common\Helper;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 /**
  * Request
  */
-class Request implements RequestInterface
+abstract class AbstractRequest implements RequestInterface
 {
     protected $httpRequest;
     protected $card;
@@ -40,7 +43,7 @@ class Request implements RequestInterface
      *
      * @param array an array of initial parameters
      */
-    public function __construct($options, HttpRequest $httpRequest = null)
+    public function __construct($options = null, HttpRequest $httpRequest = null)
     {
         $this->initialize($options);
         $this->httpRequest = $httpRequest ?: $this->getDefaultHttpRequest();
@@ -263,10 +266,7 @@ class Request implements RequestInterface
         return $this;
     }
 
-    public function createResponse($data)
-    {
-        throw new \BadMethodCallException;
-    }
+    abstract public function createResponse($data);
 
     public function send()
     {
