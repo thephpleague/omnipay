@@ -28,6 +28,7 @@ abstract class GatewayTestCase extends TestCase
     public function setUp()
     {
         $this->httpClient = new HttpClient;
+        $this->httpRequest = new HttpRequest;
     }
 
     /**
