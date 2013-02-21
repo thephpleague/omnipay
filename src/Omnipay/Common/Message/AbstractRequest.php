@@ -84,6 +84,8 @@ abstract class AbstractRequest extends AbstractMessage implements RequestInterfa
     public function setHttpRequest(HttpRequest $httpRequest)
     {
         $this->httpRequest = $httpRequest;
+
+        return $this;
     }
 
     public function getDefaultHttpRequest()

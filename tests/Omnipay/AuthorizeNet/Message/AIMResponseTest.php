@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\AuthorizeNet;
+namespace Omnipay\AuthorizeNet\Message;
 
 use Omnipay\TestCase;
 

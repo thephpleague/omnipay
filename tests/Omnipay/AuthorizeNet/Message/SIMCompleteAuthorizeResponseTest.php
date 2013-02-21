@@ -9,15 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\AuthorizeNet;
+namespace Omnipay\AuthorizeNet\Message;
 
 use Omnipay\TestCase;
 
-class SIMResponseTest extends TestCase
+class SIMCompleteAuthorizeResponseTest extends TestCase
 {
     public function testSuccess()
     {
-        $response = new SIMResponse(array('x_response_code' => '1', 'x_trans_id' => '12345'));
+        $response = new SIMCompleteAuthorizeResponse(array('x_response_code' => '1', 'x_trans_id' => '12345'));
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('12345', $response->getGatewayReference());
@@ -26,7 +26,7 @@ class SIMResponseTest extends TestCase
 
     public function testFailure()
     {
-        $response = new SIMResponse(array('x_response_code' => '0', 'x_response_reason_text' => 'Declined'));
+        $response = new SIMCompleteAuthorizeResponse(array('x_response_code' => '0', 'x_response_reason_text' => 'Declined'));
 
         $this->assertFalse($response->isSuccessful());
         $this->assertNull($response->getGatewayReference());

@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\AuthorizeNet;
+namespace Omnipay\AuthorizeNet\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 
 /**
- * Authorize.Net Response
+ * Authorize.Net SIM Complete Authorize Response
  */
-class SIMResponse extends AbstractResponse
+class SIMCompleteAuthorizeResponse extends AbstractResponse
 {
     public function isSuccessful()
     {

@@ -11,10 +11,11 @@
 
 namespace Omnipay\AuthorizeNet;
 
-use Omnipay\Exception;
+use Omnipay\AuthorizeNet\Message\SIMAuthorizeRequest;
+use Omnipay\AuthorizeNet\Message\SIMAuthorizeResponse;
+use Omnipay\AuthorizeNet\Message\SIMCompleteAuthorizeRequest;
 use Omnipay\Common\Exception\InvalidResponseException;
-use Omnipay\Common\Message\FormRedirectResponse;
-use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Common\Message\RequestInterface;
 
 /**
  * Authorize.Net SIM Class
@@ -28,13 +29,17 @@ class SIMGateway extends AIMGateway
 
     public function authorize($options = null)
     {
-        $data = $this->buildAuthorizeOrPurchase($options, 'AUTH_ONLY');
+        $request = new SIMAuthorizeRequest(array_merge($this->toArray(), (array) $options));
 
-        return new FormRedirectResponse($this->getCurrentEndpoint(), $data);
+        return $request->setGateway($this)->setMethod('AUTH_ONLY');
     }
 
     public function completeAuthorize($options = null)
     {
+        $request = new SIMCompleteAuthorizeRequest(array_merge($this->toArray(), (array) $options));
+
+        return $request->setGateway($this);
+
         $request = new Request($options);
         if (!$this->validateReturnHash($request, $this->httpRequest->request->get('x_MD5_Hash'))) {
             throw new InvalidResponseException();
@@ -45,9 +50,9 @@ class SIMGateway extends AIMGateway
 
     public function purchase($options = null)
     {
-        $data = $this->buildAuthorizeOrPurchase($options, 'AUTH_CAPTURE');
+        $request = new SIMAuthorizeRequest(array_merge($this->toArray(), (array) $options));
 
-        return new FormRedirectResponse($this->getCurrentEndpoint(), $data);
+        return $request->setGateway($this)->setMethod('AUTH_CAPTURE');
     }
 
     public function completePurchase($options = null)
@@ -55,53 +60,14 @@ class SIMGateway extends AIMGateway
         return $this->completeAuthorize($options);
     }
 
-    protected function buildAuthorizeOrPurchase($options, $method)
+    public function send(RequestInterface $request)
     {
-        $request = new Request($options);
-        $request->validate(array('amount', 'returnUrl'));
-        $source = $request->getCard();
+        $response = $this->createResponse($request, $request->getData());
 
-        $data = array();
-        $data['x_login'] = $this->apiLoginId;
-        $data['x_type'] = $method;
-        $data['x_fp_sequence'] = mt_rand();
-        $data['x_fp_timestamp'] = time();
-        $data['x_delim_data'] = 'FALSE';
-        $data['x_show_form'] = 'PAYMENT_FORM';
-        $data['x_relay_response'] = 'TRUE';
-        $data['x_relay_url'] = $request->getReturnUrl();
-        $data['x_cancel_url'] = $request->getCancelUrl();
-
-        if ($this->testMode) {
-            $data['x_test_request'] = 'TRUE';
+        if ($response instanceof SIMAuthorizeResponse) {
+            $response->setRedirectUrl($this->getEndpoint());
         }
 
-        $this->addBillingDetails($request, $source, $data);
-
-        $data['x_fp_hash'] = $this->generateHash($data);
-
-        return $data;
-    }
-
-    protected function generateHash($data)
-    {
-        $fingerprint = implode(
-            '^',
-            array(
-                $this->apiLoginId,
-                $data['x_fp_sequence'],
-                $data['x_fp_timestamp'],
-                $data['x_amount']
-            )
-        ).'^';
-
-        return hash_hmac('md5', $fingerprint, $this->transactionKey);
-    }
-
-    protected function validateReturnHash($request, $hash)
-    {
-        $expected = strtoupper(md5($this->apiLoginId.$request->getTransactionId().$request->getAmountDecimal()));
-
-        return $expected === strtoupper($hash);
+        return $response;
     }
 }

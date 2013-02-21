@@ -36,7 +36,7 @@ class AIMGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'AIMAuthorizeSuccess.txt');
 
-        $response = $this->gateway->authorize($this->purchaseOptions);
+        $response = $this->gateway->authorize($this->purchaseOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('2184493132', $response->getGatewayReference());
@@ -47,7 +47,7 @@ class AIMGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'AIMAuthorizeFailure.txt');
 
-        $response = $this->gateway->authorize($this->purchaseOptions);
+        $response = $this->gateway->authorize($this->purchaseOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('0', $response->getGatewayReference());
@@ -58,7 +58,7 @@ class AIMGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'AIMCaptureSuccess.txt');
 
-        $response = $this->gateway->capture($this->captureOptions);
+        $response = $this->gateway->capture($this->captureOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('2184494531', $response->getGatewayReference());
@@ -69,7 +69,7 @@ class AIMGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'AIMCaptureFailure.txt');
 
-        $response = $this->gateway->capture($this->captureOptions);
+        $response = $this->gateway->capture($this->captureOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('0', $response->getGatewayReference());
@@ -80,7 +80,7 @@ class AIMGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'AIMPurchaseSuccess.txt');
 
-        $response = $this->gateway->purchase($this->purchaseOptions);
+        $response = $this->gateway->purchase($this->purchaseOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('2184492509', $response->getGatewayReference());
@@ -91,7 +91,7 @@ class AIMGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'AIMPurchaseFailure.txt');
 
-        $response = $this->gateway->purchase($this->purchaseOptions);
+        $response = $this->gateway->purchase($this->purchaseOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('0', $response->getGatewayReference());

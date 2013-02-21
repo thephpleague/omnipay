@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\AuthorizeNet;
+namespace Omnipay\AuthorizeNet\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Exception;
 use Omnipay\Common\Exception\InvalidResponseException;
 
 /**
- * Authorize.Net Response
+ * Authorize.Net AIM Response
  */
 class AIMResponse extends AbstractResponse
 {
