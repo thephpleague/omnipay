@@ -19,18 +19,18 @@ use Omnipay\Common\Exception\InvalidCreditCardException;
  */
 class CreditCard
 {
-	const C_VISA = 'visa';
-	const C_MASTER = 'mastercard';
-	const C_DISCOVER = 'discover';
-	const C_AMEX = 'americanexpress';
-	const C_DINERSCLUB = 'diners_club';
-	const C_JCB = 'jcb';
-	const C_SWITCH = 'switch';
-	const C_SOLO = 'solo';
-	const C_DANKORT = 'dankort';
-	const C_MAESTRO = 'maestro';
-	const C_FORBRUGS = 'forbrugsforeningen';
-	const C_LASER = 'laser';
+    const C_VISA = 'visa';
+    const C_MASTER = 'mastercard';
+    const C_DISCOVER = 'discover';
+    const C_AMEX = 'americanexpress';
+    const C_DINERSCLUB = 'diners_club';
+    const C_JCB = 'jcb';
+    const C_SWITCH = 'switch';
+    const C_SOLO = 'solo';
+    const C_DANKORT = 'dankort';
+    const C_MAESTRO = 'maestro';
+    const C_FORBRUGS = 'forbrugsforeningen';
+    const C_LASER = 'laser';
 
     protected $firstName;
     protected $lastName;
@@ -57,32 +57,32 @@ class CreditCard
     protected $shippingPhone;
     protected $company;
     protected $email;
-	protected $brand;
-	
-	/**
-	 * The brand to fall back to if no brand is detected
-	 */
-	protected $defaultBrand = CreditCard::C_VISA;
-	
-	/**
-	 * Supported card brands and the regular expressions used to detect/validate them
-	 */
-	protected $supportedBrands = array(
-		CreditCard::C_VISA => '/^4\d{12}(\d{3})?$/',
-		CreditCard::C_MASTER => '/^(5[1-5]\d{4}|677189)\d{10}$/',
-		CreditCard::C_DISCOVER => '/^(6011|65\d{2}|64[4-9]\d)\d{12}|(62\d{14})$/',
-		CreditCard::C_AMEX => '/^3[47]\d{13}$/',
-		CreditCard::C_DINERSCLUB => '/^3(0[0-5]|[68]\d)\d{11}$/',
-		CreditCard::C_JCB => '/^35(28|29|[3-8]\d)\d{12}$/',
-		CreditCard::C_SWITCH => '/^6759\d{12}(\d{2,3})?$/',
-		CreditCard::C_SOLO => '/^6767\d{12}(\d{2,3})?$/',
-		CreditCard::C_DANKORT => '/^5019\d{12}$/',
-		CreditCard::C_MAESTRO => '/^(5[06-8]|6\d)\d{10,17}$/',
-		CreditCard::C_FORBRUGS => '/^600722\d{10}$/',
-		CreditCard::C_LASER => '/^(6304|6706|6709|6771(?!89))\d{8}(\d{4}|\d{6,7})?$/'
-	}
-	
-	/**
+    protected $brand;
+
+    /**
+     * The brand to fall back to if no brand is detected
+     */
+    protected $defaultBrand = CreditCard::C_VISA;
+
+    /**
+     * Supported card brands and the regular expressions used to detect/validate them
+     */
+    protected $supportedBrands = array(
+        CreditCard::C_VISA => '/^4\d{12}(\d{3})?$/',
+        CreditCard::C_MASTER => '/^(5[1-5]\d{4}|677189)\d{10}$/',
+        CreditCard::C_DISCOVER => '/^(6011|65\d{2}|64[4-9]\d)\d{12}|(62\d{14})$/',
+        CreditCard::C_AMEX => '/^3[47]\d{13}$/',
+        CreditCard::C_DINERSCLUB => '/^3(0[0-5]|[68]\d)\d{11}$/',
+        CreditCard::C_JCB => '/^35(28|29|[3-8]\d)\d{12}$/',
+        CreditCard::C_SWITCH => '/^6759\d{12}(\d{2,3})?$/',
+        CreditCard::C_SOLO => '/^6767\d{12}(\d{2,3})?$/',
+        CreditCard::C_DANKORT => '/^5019\d{12}$/',
+        CreditCard::C_MAESTRO => '/^(5[06-8]|6\d)\d{10,17}$/',
+        CreditCard::C_FORBRUGS => '/^600722\d{10}$/',
+        CreditCard::C_LASER => '/^(6304|6706|6709|6771(?!89))\d{8}(\d{4}|\d{6,7})?$/'
+    }
+
+    /**
      * Create a new CreditCard object using the specified parameters
      *
      * @param array $parameters An array of parameters to set on the new object
@@ -106,83 +106,79 @@ class CreditCard
     {
         return get_object_vars($this);
     }
-	
-	public function getSupportedBrands()
-	{
-		return $this->supportedBrands;
-	}
-	
-	public function setSupportedBrands(array $brands)
-	{
-		$this->supportedBrands = $brands;
-	}
-	
-	/**
-	 * Iterate through known card patterns to determine the brand of card
-	 *
-	 * @return string The brand of card determined, or a fallback in the event of no determination
-	 */
-	public function getBrand()
-	{
-		if ($this->brand)
-		{
-			return $this->brand;
-		}
-		
-		foreach ($this->supportedBrands as $brand => $val)
-		{
-			$result = $val instanceOf Closure ? $val($this->number) : (bool) preg_match($val, $this->number);
-		
-			if ($result === true)
-			{
-				break;
-			}
-		}
-		
-		return $result ? $brand : $this->defaultBrand;
-	}
-	
-	/**
-	 * Determine if a card number belongs to a particular brand
-	 *
-	 * @param string $brand The brand to match against
-	 * @param string $number Optionally specify a different card number to that stored in $this->number
-	 * @return bool True if the card number belongs to the brand specified
-	 */
-	public function isBrand($brand, $number = null)
-	{
-		$number or $number = $this->number;
-	
-		if (array_key_exists($brand, $this->supportedBrands))
-		{
-			$result = $this->supportedBrands[$brand] instanceOf Closure
-				? $this->supportedBrands[$brand]($number)
-				: (bool) preg_match($this->supportedBrands[$brand], $number);
-		}
-		
-		return isset($result) ? (bool) $result : false;
-	}
-	
-	/**
-	 * Used to add additional card brands and validation Closures to the CreditCard object
-	 *
-	 * @param string $brand Name of credit card brand, e.g. visa
-	 * @param Closure|string $validationMethod A Closure or regex pattern which compares the card number against the given brand
-	 */
-	public function addBrand($brand, Closure $validationMethod)
-	{
-		$this->supportedBrands[$brand] = $validationMethod;
-	}
-	
-	public function getDefaultBrand()
-	{
-		return $this->defaultBrand;
-	}
 
-	public function setDefaultBrand($value)
-	{
-		$this->defaultBrand = $value;
-	}
+    public function getSupportedBrands()
+    {
+        return $this->supportedBrands;
+    }
+
+    public function setSupportedBrands(array $brands)
+    {
+        $this->supportedBrands = $brands;
+    }
+
+    /**
+     * Iterate through known card patterns to determine the brand of card
+     *
+     * @return string The brand of card determined, or a fallback in the event of no determination
+     */
+    public function getBrand()
+    {
+        if ($this->brand) {
+            return $this->brand;
+        }
+
+        foreach ($this->supportedBrands as $brand => $val) {
+            $result = $val instanceOf Closure ? $val($this->number) : (bool) preg_match($val, $this->number);
+
+            if ($result === true) {
+                break;
+            }
+        }
+
+        return $result ? $brand : $this->defaultBrand;
+    }
+
+    /**
+     * Determine if a card number belongs to a particular brand
+     *
+     * @param  string $brand  The brand to match against
+     * @param  string $number Optionally specify a different card number to that stored in $this->number
+     * @return bool   True if the card number belongs to the brand specified
+     */
+    public function isBrand($brand, $number = null)
+    {
+        $number or $number = $this->number;
+
+        if (array_key_exists($brand, $this->supportedBrands)) {
+            $result = $this->supportedBrands[$brand] instanceOf Closure
+                ? $this->supportedBrands[$brand]($number)
+                : (bool) preg_match($this->supportedBrands[$brand], $number);
+        }
+
+        return isset($result) ? (bool) $result : false;
+    }
+
+    /**
+     * Used to add additional card brands and validation Closures to the CreditCard object
+     *
+     * @param string         $brand            Name of credit card brand, e.g. visa
+     * @param Closure|string $validationMethod A Closure or regex pattern which compares the card number against the given brand
+     */
+    public function addBrand($brand, Closure $validationMethod)
+    {
+        $this->supportedBrands[$brand] = $validationMethod;
+    }
+
+    public function getDefaultBrand()
+    {
+        return $this->defaultBrand;
+    }
+
+    public function setDefaultBrand($value)
+    {
+        $this->defaultBrand = $value;
+    }
 
     /**
      * Validate this credit card. If the card is invalid, InvalidCreditCardException is thrown.
