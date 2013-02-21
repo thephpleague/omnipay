@@ -15,14 +15,13 @@ use Omnipay\Common\CreditCard;
 use Omnipay\Common\Currency;
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\Exception\RuntimeException;
-use Omnipay\Common\GatewayInterface;
 use Omnipay\Common\Helper;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 /**
- * Request
+ * Abstract Request
  */
-abstract class AbstractRequest implements RequestInterface
+abstract class AbstractRequest extends AbstractMessage implements RequestInterface
 {
     protected $httpRequest;
     protected $card;
@@ -35,7 +34,6 @@ abstract class AbstractRequest implements RequestInterface
     protected $clientIp;
     protected $returnUrl;
     protected $cancelUrl;
-    protected $gateway;
     protected $response;
 
     /**
@@ -238,18 +236,6 @@ abstract class AbstractRequest implements RequestInterface
     public function setCancelUrl($value)
     {
         $this->cancelUrl = $value;
-
-        return $this;
-    }
-
-    public function getGateway()
-    {
-        return $this->gateway;
-    }
-
-    public function setGateway(GatewayInterface $gateway)
-    {
-        $this->gateway = $gateway;
 
         return $this;
     }

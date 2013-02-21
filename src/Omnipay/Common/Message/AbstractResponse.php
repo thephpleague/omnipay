@@ -17,9 +17,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse as HttpRedirectResponse;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 /**
- * Base Response class
+ * Abstract Response
  */
-abstract class AbstractResponse implements ResponseInterface
+abstract class AbstractResponse extends AbstractMessage implements ResponseInterface
 {
     protected $data;
 

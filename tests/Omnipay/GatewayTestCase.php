@@ -85,7 +85,8 @@ abstract class GatewayTestCase extends TestCase
             $this->assertTrue(method_exists($this->gateway, $getter), "Gateway must implement $getter()");
             $this->assertTrue(method_exists($this->gateway, $setter), "Gateway must implement $setter()");
 
-            $this->gateway->$setter($value);
+            // setter must return instance
+            $this->assertSame($this->gateway, $this->gateway->$setter($value));
             $this->assertSame($value, $this->gateway->$getter());
         }
     }
