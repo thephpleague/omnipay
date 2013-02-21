@@ -44,6 +44,8 @@ class CreditCard
     protected $shippingPhone;
     protected $company;
     protected $email;
+	protected $cardTypes;
+	protected $fallbackCardType = 'Visa';
 
     /**
      * Create a new CreditCard object using the specified parameters
@@ -227,6 +229,142 @@ class CreditCard
     {
         $this->type = $value;
     }
+	
+	/**
+	 * Get a list of all card types
+	 *
+	 * @return array An array of all card types known to the CreditCard object
+	 */
+	private function allCardTypes()
+	{
+		return array_merge(array(
+			'Visa'				=> 'isVisa',
+			'Mastercard'		=> 'isMastercard',
+			'American Express'	=> 'isAmericanExpress',
+			'Diners Club'		=> 'isDinersClub',
+			'Discover'			=> 'isDiscover',
+			'JCB'				=> 'isJcb'
+		), $this->cardTypes);
+	}
+	
+	/**
+	 * Used to add additional card types and validation Closures to the CreditCard object
+	 *
+	 * @param string $type Name of credit card type, e.g. Visa
+	 * @param Closure $validationMethod A Closure which compares the card number against a pattern for the given type
+	 */
+	public function addCardType($type, Closure $validationMethod)
+	{
+		$this->cardTypes[$type] = $validationMethod;
+	}
+	
+	public function getFallbackCardType()
+    {
+        return $this->fallbackCardType;
+    }
+
+    public function setFallbackCardType($value)
+    {
+        $this->fallbackCardType = $value;
+    }
+	
+	/**
+	 * Iterate through known card patterns to determine the type of card
+	 *
+	 * @param string $number Optionally enter a card number instead of comparing to $this->number
+	 * @return string The type of card determined, or a fallback in the event of no determination
+	 */
+	public function determineType($number = null)
+	{
+		$number or $number = $this->number;
+	
+		foreach($this->allCardTypes() as $type => $method)
+		{
+			if (method_exists($this, $method))
+			{
+				if ($this->$method($number) === true)
+				{
+					return $type;
+				}
+			}
+			
+			if ($method instanceOf Closure)
+			{
+				if ($method($number) === true)
+				{
+					return $type;
+				}
+			}
+		}
+		
+		return $this->fallbackCardType;
+	}
+	
+	/**
+	 * Determine whether or not the card number is a Visa
+	 *
+	 * @param string $number Card number to compare against
+	 * @return boolean True if the card number is a Visa
+	 */
+	public function isVisa($number = null)
+	{
+		return preg_match('^4[0-9]{12}(?:[0-9]{3})?$^', $number?: $this->number);
+	}
+	
+	/**
+	 * Determine whether or not the card number is a Mastercard
+	 *
+	 * @param string $number Card number to compare against
+	 * @return boolean True if the card number is a Mastercard
+	 */
+	public function isMastercard($number = null)
+	{
+		return preg_match('^5[1-5][0-9]{14}$^', $number?: $this->number);
+	}
+	
+	/**
+	 * Determine whether or not the card number is an American Express
+	 *
+	 * @param string $number Card number to compare against
+	 * @return boolean True if the card number is an American Express
+	 */
+	public function isAmericanExpress($number = null)
+	{
+		return preg_match('^3[47][0-9]{13}$^', $number?: $this->number);
+	}
+	
+	/**
+	 * Determine whether or not the card number is a Diners Club
+	 *
+	 * @param string $number Card number to compare against
+	 * @return boolean True if the card number is a Diners Club
+	 */
+	public function isDinersClub($number = null)
+	{
+		return preg_match('^3(?:0[0-5]|[68][0-9])[0-9]{11}$^' $number?: $this->number);
+	}
+	
+	/**
+	 * Determine whether or not the card number is a Discover
+	 *
+	 * @param string $number Card number to compare against
+	 * @return boolean True if the card number is a Discover
+	 */
+	public function isDiscover($number = null)
+	{
+		return preg_match('^6(?:011|5[0-9]{2})[0-9]{12}$^' $number?: $this->number);
+	}
+	
+	/**
+	 * Determine whether or not the card number is a JCB
+	 *
+	 * @param string $number Card number to compare against
+	 * @return boolean True if the card number is a JCB
+	 */
+	public function isJcb($number = null)
+	{
+		return preg_match('^(?:2131|1800|35\d{3})\d{11}$^' $number?: $this->number);
+	}
 
     public function getBillingAddress1()
     {
