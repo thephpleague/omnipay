@@ -244,7 +244,7 @@ class CreditCard
 			'Diners Club'		=> 'isDinersClub',
 			'Discover'			=> 'isDiscover',
 			'JCB'				=> 'isJcb'
-		), $this->cardTypes);
+		), (array) $this->cardTypes);
 	}
 	
 	/**
