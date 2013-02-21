@@ -341,7 +341,7 @@ class CreditCard
 	 */
 	public function isDinersClub($number = null)
 	{
-		return preg_match('^3(?:0[0-5]|[68][0-9])[0-9]{11}$^' $number?: $this->number);
+		return preg_match('^3(?:0[0-5]|[68][0-9])[0-9]{11}$^', $number?: $this->number);
 	}
 	
 	/**
@@ -352,7 +352,7 @@ class CreditCard
 	 */
 	public function isDiscover($number = null)
 	{
-		return preg_match('^6(?:011|5[0-9]{2})[0-9]{12}$^' $number?: $this->number);
+		return preg_match('^6(?:011|5[0-9]{2})[0-9]{12}$^', $number?: $this->number);
 	}
 	
 	/**
@@ -363,7 +363,7 @@ class CreditCard
 	 */
 	public function isJcb($number = null)
 	{
-		return preg_match('^(?:2131|1800|35\d{3})\d{11}$^' $number?: $this->number);
+		return preg_match('^(?:2131|1800|35\d{3})\d{11}$^', $number?: $this->number);
 	}
 
     public function getBillingAddress1()
