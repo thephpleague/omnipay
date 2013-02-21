@@ -11,17 +11,11 @@
 
 namespace Omnipay\Common\Message;
 
-use Omnipay\Common\GatewayInterface;
-
 /**
  * Request Interface
  */
-interface RequestInterface
+interface RequestInterface extends MessageInterface
 {
-    public function getGateway();
-
-    public function setGateway(GatewayInterface $gateway);
-
     public function getResponse();
 
     public function setResponse(ResponseInterface $response);

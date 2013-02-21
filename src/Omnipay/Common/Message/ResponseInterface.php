@@ -14,7 +14,7 @@ namespace Omnipay\Common\Message;
 /**
  * Response interface
  */
-interface ResponseInterface
+interface ResponseInterface extends MessageInterface
 {
     /**
      * Is the response successful?
@@ -29,16 +29,6 @@ interface ResponseInterface
      * @return boolean
      */
     public function isRedirect();
-
-    /**
-     * Response Data
-     *
-     * The format of this will vary from gateway to gateway. For example, some gateways
-     * will return a SimpleXMLElement, while others may return an array.
-     *
-     * @return mixed Raw data returned from the payment gateway request
-     */
-    public function getData();
 
     /**
      * Response Message
