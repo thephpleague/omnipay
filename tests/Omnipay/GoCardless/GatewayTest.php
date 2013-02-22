@@ -31,9 +31,9 @@ class GatewayTest extends GatewayTestCase
 
     public function testPurchase()
     {
-        $response = $this->gateway->purchase($this->options);
+        $response = $this->gateway->purchase($this->options)->send();
 
-        $this->assertInstanceOf('\Omnipay\Common\Message\RedirectResponse', $response);
+        $this->assertInstanceOf('\Omnipay\GoCardless\Message\PurchaseResponse', $response);
         $this->assertTrue($response->isRedirect());
         $this->assertStringStartsWith('https://gocardless.com/connect/bills/new?', $response->getRedirectUrl());
     }
@@ -51,7 +51,9 @@ class GatewayTest extends GatewayTestCase
 
         $this->setMockResponse($this->httpClient, 'CompletePurchaseSuccess.txt');
 
-        $response = $this->gateway->completePurchase($this->options);
+        $response = $this->gateway->completePurchase($this->options)
+            ->setHttpRequest($this->httpRequest)
+            ->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals('b', $response->getGatewayReference());
@@ -70,7 +72,9 @@ class GatewayTest extends GatewayTestCase
 
         $this->setMockResponse($this->httpClient, 'CompletePurchaseFailure.txt');
 
-        $response = $this->gateway->completePurchase($this->options);
+        $response = $this->gateway->completePurchase($this->options)
+            ->setHttpRequest($this->httpRequest)
+            ->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('The resource cannot be confirmed', $response->getMessage());
@@ -90,6 +94,8 @@ class GatewayTest extends GatewayTestCase
             )
         );
 
-        $this->gateway->completePurchase($this->options);
+        $response = $this->gateway->completePurchase($this->options)
+            ->setHttpRequest($this->httpRequest)
+            ->send();
     }
 }

@@ -22,6 +22,7 @@ use Symfony\Component\HttpFoundation\Response as HttpResponse;
 abstract class AbstractResponse extends AbstractMessage implements ResponseInterface
 {
     protected $data;
+    protected $request;
 
     public function __construct($data = null)
     {

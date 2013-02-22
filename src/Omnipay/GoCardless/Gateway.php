@@ -12,10 +12,9 @@
 namespace Omnipay\GoCardless;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Exception\InvalidResponseException;
-use Omnipay\Common\Message\RedirectResponse;
-use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\Common\Message\RequestInterface;
+use Omnipay\GoCardless\Message\PurchaseRequest;
+use Omnipay\GoCardless\Message\CompletePurchaseRequest;
 
 /**
  * GoCardless Gateway
@@ -24,7 +23,7 @@ use Omnipay\Common\Message\RequestInterface;
  */
 class Gateway extends AbstractGateway
 {
-    protected $endpoint = 'https://gocardless.com';
+    protected $liveEndpoint = 'https://gocardless.com';
     protected $testEndpoint = 'https://sandbox.gocardless.com';
     protected $appId;
     protected $appSecret;
@@ -56,6 +55,8 @@ class Gateway extends AbstractGateway
     public function setAppId($value)
     {
         $this->appId = $value;
+
+        return $this;
     }
 
     public function getAppSecret()
@@ -66,6 +67,8 @@ class Gateway extends AbstractGateway
     public function setAppSecret($value)
     {
         $this->appSecret = $value;
+
+        return $this;
     }
 
     public function getMerchantId()
@@ -76,6 +79,8 @@ class Gateway extends AbstractGateway
     public function setMerchantId($value)
     {
         $this->merchantId = $value;
+
+        return $this;
     }
 
     public function getAccessToken()
@@ -86,6 +91,8 @@ class Gateway extends AbstractGateway
     public function setAccessToken($value)
     {
         $this->accessToken = $value;
+
+        return $this;
     }
 
     public function getTestMode()
@@ -96,117 +103,52 @@ class Gateway extends AbstractGateway
     public function setTestMode($value)
     {
         $this->testMode = $value;
+
+        return $this;
     }
 
     public function purchase($options = null)
     {
-        $data = $this->buildPurchase($options);
+        $request = new PurchaseRequest(array_merge($this->toArray(), (array) $options));
 
-        return new RedirectResponse(
-            $this->getCurrentEndpoint().'/connect/bills/new?'.$this->generateQueryString($data)
-        );
+        return $request->setGateway($this);
     }
 
     public function completePurchase($options = null)
     {
-        $data = array();
-        $data['resource_uri'] = $this->httpRequest->get('resource_uri');
-        $data['resource_id'] = $this->httpRequest->get('resource_id');
-        $data['resource_type'] = $this->httpRequest->get('resource_type');
+        $request = new CompletePurchaseRequest(array_merge($this->toArray(), (array) $options));
 
-        if ($this->generateSignature($data) !== $this->httpRequest->get('signature')) {
-            throw new InvalidResponseException;
-        }
-
-        unset($data['resource_uri']);
-
-        // confirm purchase
-        $httpResponse = $this->httpClient->post(
-            $this->getCurrentEndpoint().'/api/v1/confirm',
-            array('Accept' => 'application/json'),
-            $this->generateQueryString($data)
-        )->setAuth($this->appId, $this->appSecret)->send();
-
-        return new Response($httpResponse->getBody(), $data['resource_id']);
+        return $request->setGateway($this);
     }
 
     public function send(RequestInterface $request)
     {
-        throw new \BadMethodCallException('fixme');
-    }
-
-    protected function buildPurchase($options)
-    {
-        $request = new Request($options);
-        $request->validate(array('amount', 'returnUrl'));
-        $source = $request->getCard();
-
-        $data = array();
-        $data['client_id'] = $this->appId;
-        $data['nonce'] = $this->generateNonce();
-        $data['timestamp'] = gmdate('Y-m-d\TH:i:s\Z');
-        $data['redirect_uri'] = $request->getReturnUrl();
-        $data['cancel_uri'] = $request->getCancelUrl();
-        $data['bill'] = array();
-        $data['bill']['merchant_id'] = $this->merchantId;
-        $data['bill']['amount'] = $request->getAmountDecimal();
-        $data['bill']['name'] = $request->getDescription();
-
-        if ($source) {
-            $data['bill']['user'] = array();
-            $data['bill']['user']['first_name'] = $source->getFirstName();
-            $data['bill']['user']['last_name'] = $source->getLastName();
-            $data['bill']['user']['email'] = $source->getEmail();
-            $data['bill']['user']['billing_address1'] = $source->getAddress1();
-            $data['bill']['user']['billing_address2'] = $source->getAddress2();
-            $data['bill']['user']['billing_town'] = $source->getCity();
-            $data['bill']['user']['billing_county'] = $source->getCountry();
-            $data['bill']['user']['billing_postcode'] = $source->getPostcode();
+        if ($request instanceof PurchaseRequest) {
+            return $this->createResponse($request, $request->getData())->setEndpoint($this->getEndpoint());
         }
 
-        $data['signature'] = $this->generateSignature($data);
+        $httpResponse = $this->httpClient->post(
+            $this->getEndpoint().'/api/v1/confirm',
+            array('Accept' => 'application/json'),
+            static::generateQueryString($request->getData())
+        )->setAuth($this->appId, $this->appSecret)->send();
 
-        return $data;
-    }
-
-    protected function getCurrentEndpoint()
-    {
-        return $this->testMode ? $this->testEndpoint : $this->endpoint;
-    }
-
-    /**
-     * Generate a nonce for each request
-     */
-    protected function generateNonce()
-    {
-        $nonce = '';
-        for ($i = 0; $i < 64; $i++) {
-            // append random ASCII character
-            $nonce .= chr(mt_rand(33, 126));
-        }
-
-        return base64_encode($nonce);
+        return $this->createResponse($request, $httpResponse->json());
     }
 
     /**
-     * Generate a signature for the data array
+     * Generate a query string for the data array (this is some kind of sick joke)
+     *
+     * @link https://github.com/gocardless/gocardless-php/blob/v0.3.3/lib/GoCardless/Utils.php#L39
      */
-    protected function generateSignature($data)
+    public static function generateQueryString($data, &$pairs = array(), $namespace = null)
     {
-        return hash_hmac('sha256', $this->generateQueryString($data), $this->appSecret);
-    }
-
-    /**
-     * Generate a query string for the data array (seriously?)
-     */
-    protected function generateQueryString($params, &$pairs = array(), $namespace = null)
-    {
-        if (is_array($params)) {
-            foreach ($params as $k => $v) {
+        if (is_array($data)) {
+            foreach ($data as $k => $v) {
                 if (is_int($k)) {
-                    $this->generateQueryString($v, $pairs, $namespace.'[]');
+                    static::generateQueryString($v, $pairs, $namespace.'[]');
                 } else {
-                    $this->generateQueryString($v, $pairs, $namespace !== null ? $namespace."[$k]" : $k);
+                    static::generateQueryString($v, $pairs, $namespace !== null ? $namespace."[$k]" : $k);
                 }
             }
 
@@ -223,7 +165,12 @@ class Gateway extends AbstractGateway
 
             return implode('&', $strs);
         } else {
-            $pairs[] = array(rawurlencode($namespace), rawurlencode($params));
+            $pairs[] = array(rawurlencode($namespace), rawurlencode($data));
         }
+    }
+
+    protected function getEndpoint()
+    {
+        return $this->testMode ? $this->testEndpoint : $this->liveEndpoint;
     }
 }

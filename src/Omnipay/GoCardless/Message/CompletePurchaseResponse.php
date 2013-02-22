@@ -9,32 +9,21 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\GoCardless;
+namespace Omnipay\GoCardless\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Exception;
-use Omnipay\Common\Exception\InvalidResponseException;
 
 /**
- * GoCardless Response
+ * GoCardless Complete Purchase Response
  */
-class Response extends AbstractResponse
+class CompletePurchaseResponse extends AbstractResponse
 {
     protected $gatewayReference;
 
-    public function __construct($data, $gatewayReference)
-    {
-        if (empty($data) or empty($gatewayReference)) {
-            throw new InvalidResponseException;
-        }
-
-        $this->data = json_decode($data);
-        $this->gatewayReference = $gatewayReference;
-    }
-
     public function isSuccessful()
     {
-        return !isset($this->data->error);
+        return !isset($this->data['error']);
     }
 
     public function getGatewayReference()
@@ -42,10 +31,17 @@ class Response extends AbstractResponse
         return $this->gatewayReference;
     }
 
+    public function setGatewayReference($value)
+    {
+        $this->gatewayReference = $value;
+
+        return $this;
+    }
+
     public function getMessage()
     {
         if (!$this->isSuccessful()) {
-            return reset($this->data->error);
+            return reset($this->data['error']);
         }
     }
 }
