@@ -20,9 +20,9 @@ class AuthorizeRequest extends AbstractRequest
 {
     public function getData()
     {
-        $this->validate(array('amount'));
+        $this->validate(array('amount', 'card'));
 
-        $this->card && $this->card->validate();
+        $this->card->validate();
 
         return array('amount' => $this->amount);
     }

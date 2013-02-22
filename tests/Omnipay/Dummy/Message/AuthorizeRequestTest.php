@@ -17,7 +17,10 @@ class AuthorizeRequestTest extends TestCase
 {
     public function setUp()
     {
-        $this->request = new AuthorizeRequest(array('amount' => 1000));
+        $this->request = new AuthorizeRequest(array(
+            'amount' => 1000,
+            'card' => $this->getValidCard(),
+        ));
     }
 
     public function testGetData()
