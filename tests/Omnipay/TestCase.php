@@ -18,6 +18,7 @@ use Guzzle\Http\Client as HttpClient;
 use Guzzle\Http\Message\Response;
 use Guzzle\Http\Message\RequestInterface as GuzzleRequestInterface;
 use Guzzle\Plugin\Mock\MockPlugin;
+use Omnipay\Common\CreditCard;
 
 /**
  * Base class for all Omnipay tests
@@ -105,5 +106,20 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         $client->getEventDispatcher()->addSubscriber($mock);
 
         return $mock;
+    }
+
+    /**
+     * Helper method used by gateway test classes to generate a valid test credit card
+     */
+    public function getValidCard()
+    {
+        return new CreditCard(array(
+            'firstName' => 'Example',
+            'lastName' => 'User',
+            'number' => '4111111111111111',
+            'expiryMonth' => '12',
+            'expiryYear' => '2020',
+            'cvv' => '123',
+        ));
     }
 }
