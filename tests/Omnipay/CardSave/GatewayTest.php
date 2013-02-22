@@ -40,9 +40,9 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'PurchaseSuccess.txt');
 
-        $response = $this->gateway->purchase($this->options);
+        $response = $this->gateway->purchase($this->options)->send();
 
-        $this->assertInstanceOf('\Omnipay\CardSave\Response', $response);
+        $this->assertInstanceOf('\Omnipay\CardSave\Message\Response', $response);
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals('130215141054377801316798', $response->getGatewayReference());
     }
@@ -51,7 +51,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'PurchaseFailure.txt');
 
-        $response = $this->gateway->purchase($this->options);
+        $response = $this->gateway->purchase($this->options)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('Input variable errors', $response->getMessage());
