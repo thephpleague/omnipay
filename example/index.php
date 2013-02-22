@@ -184,7 +184,7 @@ $app->post('/gateways/{name}/purchase', function($name) use ($app) {
 
 // gateway purchase return
 // this won't work for gateways which require an internet-accessible URL (yet)
-$app->match('/gateways/{name}/purchaseReturn', function($name) use ($app) {
+$app->match('/gateways/{name}/completePurchase', function($name) use ($app) {
     $gateway = Omnipay\Common\GatewayFactory::create($name);
     $sessionVar = 'omnipay.'.$gateway->getShortName();
     $gateway->initialize($app['session']->get($sessionVar));
