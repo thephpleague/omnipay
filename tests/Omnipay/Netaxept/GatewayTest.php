@@ -25,6 +25,8 @@ class GatewayTest extends GatewayTestCase
 
         $this->options = array(
             'amount' => 1000,
+            'currency' => 'NOK',
+            'transactionId' => '123',
             'returnUrl' => 'https://www.example.com/return',
         );
     }
@@ -33,26 +35,30 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'PurchaseSuccess.txt');
 
-        $response = $this->gateway->purchase($this->options);
+        $response = $this->gateway->purchase($this->options)->send();
 
-        $this->assertInstanceOf('\Omnipay\Common\Message\RedirectResponse', $response);
+        $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
-        $this->assertEquals('https://epayment.bbs.no/Terminal/Default.aspx?merchantId=foo&transactionId=abc123', $response->getRedirectUrl());
+        $this->assertEquals('f3d94dd5c0f743a788fc943402757c58', $response->getGatewayReference());
+        $this->assertSame('GET', $response->getRedirectMethod());
+        $this->assertSame('https://epayment.bbs.no/Terminal/Default.aspx?merchantId=foo&transactionId=f3d94dd5c0f743a788fc943402757c58', $response->getRedirectUrl());
     }
 
-    public function testPurchaseError()
+    public function testPurchaseFailure()
     {
         $this->setMockResponse($this->httpClient, 'PurchaseFailure.txt');
 
-        $response = $this->gateway->purchase($this->options);
+        $response = $this->gateway->purchase($this->options)->send();
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertSame('Authentication Error', $response->getMessage());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getGatewayReference());
+        $this->assertSame("Missing parameter: 'Order Number'", $response->getMessage());
     }
 
     public function testCompletePurchaseSuccess()
     {
-        $this->httpRequest->request->replace(
+        $this->httpRequest->query->replace(
             array(
                 'responseCode' => 'OK',
                 'transactionId' => 'abc123',
@@ -61,38 +67,53 @@ class GatewayTest extends GatewayTestCase
 
         $this->setMockResponse($this->httpClient, 'CompletePurchaseSuccess.txt');
 
-        $response = $this->gateway->completePurchase($this->options);
+        $response = $this->gateway->completePurchase($this->options)
+            ->setHttpRequest($this->httpRequest)
+            ->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('abc123', $response->getGatewayReference());
-        $this->assertEquals('OK', $response->getMessage());
+        $this->assertFalse($response->isRedirect());
+        $this->assertEquals('8a88d40cab5b47fab25e24d6228180a7', $response->getGatewayReference());
+        $this->assertSame('OK', $response->getMessage());
     }
 
-    /**
-     * @expectedException \Omnipay\Common\Exception\InvalidResponseException
-     */
-    public function testCompletePurchaseInvalid()
+    public function testCompletePurchaseCancel()
     {
-        $this->httpRequest->request->replace(
+        $this->httpRequest->query->replace(
             array(
-                'responseCode' => '',
+                'transactionId' => '1de59458487344759832716abf48109b',
+                'responseCode' => 'Cancel',
             )
         );
 
-        $response = $this->gateway->completePurchase($this->options);
-    }
-
-    public function testCompletePurchaseError()
-    {
-        $this->httpRequest->request->replace(
-            array(
-                'responseCode' => 'FAILURE',
-            )
-        );
-
-        $response = $this->gateway->completePurchase($this->options);
+        $response = $this->gateway->completePurchase($this->options)
+            ->setHttpRequest($this->httpRequest)
+            ->send();
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertSame('FAILURE', $response->getMessage());
+        $this->assertFalse($response->isRedirect());
+        $this->assertEquals('1de59458487344759832716abf48109b', $response->getGatewayReference());
+        $this->assertEquals('Cancel', $response->getMessage());
+    }
+
+    public function testCompletePurchaseFailure()
+    {
+        $this->httpRequest->query->replace(
+            array(
+                'responseCode' => 'OK',
+                'transactionId' => 'abc123',
+            )
+        );
+
+        $this->setMockResponse($this->httpClient, 'CompletePurchaseFailure.txt');
+
+        $response = $this->gateway->completePurchase($this->options)
+            ->setHttpRequest($this->httpRequest)
+            ->send();
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getGatewayReference());
+        $this->assertSame('Unable to find transaction', $response->getMessage());
     }
 }

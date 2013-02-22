@@ -4,12 +4,12 @@ Content-Type: text/xml
 Server: Microsoft-IIS/7.5
 X-AspNet-Version: 4.0.30319
 X-Powered-By: ASP.NET
-Date: Fri, 22 Feb 2013 15:53:42 GMT
-Content-Length: 259
+Date: Fri, 22 Feb 2013 16:55:41 GMT
+Content-Length: 245
 
 <?xml version="1.0"?>
 <Exception xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Error xsi:type="ValidationException">
-    <Message>Missing parameter: 'Order Number'</Message>
+  <Error xsi:type="GenericError">
+    <Message>Unable to find transaction</Message>
   </Error>
 </Exception>

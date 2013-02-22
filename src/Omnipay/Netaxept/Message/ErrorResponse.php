@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\Netaxept;
+namespace Omnipay\Netaxept\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 
@@ -18,18 +18,18 @@ use Omnipay\Common\Message\AbstractResponse;
  */
 class ErrorResponse extends AbstractResponse
 {
-    public function __construct($message)
-    {
-        $this->data = $message;
-    }
-
     public function isSuccessful()
     {
         return false;
     }
 
+    public function getGatewayReference()
+    {
+        return $this->data['transactionId'];
+    }
+
     public function getMessage()
     {
-        return $this->data;
+        return $this->data['responseCode'];
     }
 }

@@ -12,7 +12,6 @@
 namespace Omnipay;
 
 use Guzzle\Http\Client as HttpClient;
-use Omnipay\Common\CreditCard;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 /**
@@ -29,21 +28,6 @@ abstract class GatewayTestCase extends TestCase
     {
         $this->httpClient = new HttpClient;
         $this->httpRequest = new HttpRequest;
-    }
-
-    /**
-     * Helper method used by gateway test classes to generate a valid test credit card
-     */
-    public function getValidCard()
-    {
-        return new CreditCard(array(
-            'firstName' => 'Example',
-            'lastName' => 'User',
-            'number' => '4111111111111111',
-            'expiryMonth' => '12',
-            'expiryYear' => '2020',
-            'cvv' => '123',
-        ));
     }
 
     public function testConstructWithoutParameters()
@@ -127,7 +111,7 @@ abstract class GatewayTestCase extends TestCase
         } else {
             // capture method should throw BadMethodCallException
             $this->setExpectedException('Omnipay\Common\Exception\BadMethodCallException');
-            $this->gateway->capture(array());
+            $this->gateway->capture();
         }
     }
 
@@ -142,7 +126,7 @@ abstract class GatewayTestCase extends TestCase
         } else {
             // refund method should throw BadMethodCallException
             $this->setExpectedException('Omnipay\Common\Exception\BadMethodCallException');
-            $this->gateway->refund(array());
+            $this->gateway->refund();
         }
     }
 
@@ -154,11 +138,11 @@ abstract class GatewayTestCase extends TestCase
         if ($supportsVoid) {
             // void method should throw InvalidRequestException
             $this->setExpectedException('Omnipay\Common\Exception\InvalidRequestException');
-            $this->gateway->void(array());
+            $this->gateway->void();
         } else {
             // void method should throw BadMethodCallException
             $this->setExpectedException('Omnipay\Common\Exception\BadMethodCallException');
-            $this->gateway->void(array());
+            $this->gateway->void();
         }
     }
 
