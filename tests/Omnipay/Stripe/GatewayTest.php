@@ -22,8 +22,13 @@ class GatewayTest extends GatewayTestCase
         $this->gateway = new Gateway($this->httpClient, $this->httpRequest);
         $this->gateway->setApiKey('abc123');
 
-        $this->options = array(
+        $this->purchaseOptions = array(
             'amount' => 1000,
+        );
+
+        $this->refundOptions = array(
+            'amount' => 1000,
+            'gatewayReference' => 'ch_12RgN9L7XhO9mI',
         );
     }
 
@@ -31,7 +36,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'PurchaseFailure.txt');
 
-        $response = $this->gateway->purchase($this->options);
+        $response = $this->gateway->purchase($this->purchaseOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('Your card was declined', $response->getMessage());
@@ -42,7 +47,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'PurchaseSuccess.txt');
 
-        $response = $this->gateway->purchase($this->options);
+        $response = $this->gateway->purchase($this->purchaseOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('ch_1IU9gcUiNASROd', $response->getGatewayReference());
@@ -53,7 +58,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'RefundFailure.txt');
 
-        $response = $this->gateway->refund(array('amount' => 1000, 'gatewayReference' => 'ch_12RgN9L7XhO9mI'));
+        $response = $this->gateway->refund($this->refundOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('Charge ch_12RgN9L7XhO9mI has already been refunded.', $response->getMessage());
@@ -63,7 +68,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'RefundSuccess.txt');
 
-        $response = $this->gateway->refund(array('amount' => 1000, 'gatewayReference' => 'ch_12RgN9L7XhO9mI'));
+        $response = $this->gateway->refund($this->refundOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals('ch_12RgN9L7XhO9mI', $response->getGatewayReference());

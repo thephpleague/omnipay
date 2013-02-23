@@ -12,7 +12,6 @@
 namespace Omnipay\Pin;
 
 use Omnipay\GatewayTestCase;
-use Omnipay\Common\CreditCard;
 
 class GatewayTest extends GatewayTestCase
 {
@@ -24,34 +23,31 @@ class GatewayTest extends GatewayTestCase
 
         $this->options = array(
             'amount' => 1000,
-            'card' => new CreditCard(array(
-                'firstName' => 'Example',
-                'lastName' => 'User',
-                'number' => '4111111111111111',
-                'expiryMonth' => '12',
-                'expiryYear' => '2016',
-                'cvv' => '123',
-            )),
+            'card' => $this->getValidCard(),
         );
-    }
-
-    public function testPurchaseError()
-    {
-        $this->setMockResponse($this->httpClient, 'PurchaseFailure.txt');
-
-        $response = $this->gateway->purchase($this->options);
-
-        $this->assertFalse($response->isSuccessful());
-        $this->assertSame('The current resource was deemed invalid.', $response->getMessage());
     }
 
     public function testPurchaseSuccess()
     {
         $this->setMockResponse($this->httpClient, 'PurchaseSuccess.txt');
 
-        $response = $this->gateway->purchase($this->options);
+        $response = $this->gateway->purchase($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
         $this->assertEquals('ch_fXIxWf0gj1yFHJcV1W-d-w', $response->getGatewayReference());
+        $this->assertSame('Success!', $response->getMessage());
+    }
+
+    public function testPurchaseError()
+    {
+        $this->setMockResponse($this->httpClient, 'PurchaseFailure.txt');
+
+        $response = $this->gateway->purchase($this->options)->send();
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getGatewayReference());
+        $this->assertSame('The current resource was deemed invalid.', $response->getMessage());
     }
 }

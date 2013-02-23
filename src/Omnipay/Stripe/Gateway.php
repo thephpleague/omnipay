@@ -12,8 +12,9 @@
 namespace Omnipay\Stripe;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\Common\Message\RequestInterface;
+use Omnipay\Stripe\Message\PurchaseRequest;
+use Omnipay\Stripe\Message\RefundRequest;
 
 /**
  * Stripe Gateway
@@ -45,61 +46,25 @@ class Gateway extends AbstractGateway
     public function setApiKey($value)
     {
         $this->apiKey = $value;
+
+        return $this;
     }
 
     public function purchase($options = null)
     {
-        $data = $this->buildPurchase($options);
+        $request = new PurchaseRequest(array_merge($this->toArray(), (array) $options));
 
-        return $this->send('/charges', $data);
+        return $request->setGateway($this);
     }
 
     public function refund($options = null)
     {
-        $request = new Request($options);
-        $request->validate(array('gatewayReference', 'amount'));
-        $data = array('amount' => $request->getAmount());
+        $request = new RefundRequest(array_merge($this->toArray(), (array) $options));
 
-        return $this->send('/charges/'.$request->getGatewayReference().'/refund', $data);
-    }
-
-    protected function buildPurchase($options)
-    {
-        $request = new Request($options);
-
-        $data = array();
-        $data['amount'] = $request->getAmount();
-        $data['currency'] = strtolower($request->getCurrency());
-        $data['description'] = $request->getDescription();
-
-        if ($card = $request->getCard()) {
-            $card->validate();
-
-            $data['card'] = array();
-            $data['card']['number'] = $card->getNumber();
-            $data['card']['exp_month'] = $card->getExpiryMonth();
-            $data['card']['exp_year'] = $card->getExpiryYear();
-            $data['card']['cvc'] = $card->getCvv();
-            $data['card']['name'] = $card->getName();
-            $data['card']['address_line1'] = $card->getAddress1();
-            $data['card']['address_line2'] = $card->getAddress2();
-            $data['card']['address_city'] = $card->getCity();
-            $data['card']['address_zip'] = $card->getPostcode();
-            $data['card']['address_state'] = $card->getState();
-            $data['card']['address_country'] = $card->getCountry();
-        } elseif ($token = $request->getToken()) {
-            $data['card'] = $token;
-        }
-
-        return $data;
+        return $request->setGateway($this);
     }
 
     public function send(RequestInterface $request)
-    {
-        throw new \BadMethodCallException('fixme');
-    }
-
-    protected function oldSend($url, $data)
     {
         // don't throw exceptions for 402 errors
         $this->httpClient->getEventDispatcher()->addListener(
@@ -111,10 +76,10 @@ class Gateway extends AbstractGateway
             }
         );
 
-        $httpResponse = $this->httpClient->post($this->endpoint.$url, null, $data)
+        $httpResponse = $this->httpClient->post($this->endpoint.$request->getUrl(), null, $request->getData())
             ->setHeader('Authorization', 'Basic '.base64_encode($this->apiKey.':'))
             ->send();
 
-        return new Response($httpResponse->json());
+        return $this->createResponse($request, $httpResponse->json());
     }
 }

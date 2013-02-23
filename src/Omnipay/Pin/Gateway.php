@@ -13,8 +13,8 @@ namespace Omnipay\Pin;
 
 use Guzzle\Common\Event;
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\Common\Message\RequestInterface;
+use Omnipay\Pin\Message\PurchaseRequest;
 
 /**
  * Pin Gateway
@@ -23,7 +23,7 @@ use Omnipay\Common\Message\RequestInterface;
  */
 class Gateway extends AbstractGateway
 {
-    protected $endpoint = 'https://api.pin.net.au/1';
+    protected $liveEndpoint = 'https://api.pin.net.au/1';
     protected $testEndpoint = 'https://test-api.pin.net.au/1';
     protected $secretKey;
     protected $testMode;
@@ -49,6 +49,8 @@ class Gateway extends AbstractGateway
     public function setSecretKey($value)
     {
         $this->secretKey = $value;
+
+        return $this;
     }
 
     public function getTestMode()
@@ -59,52 +61,18 @@ class Gateway extends AbstractGateway
     public function setTestMode($value)
     {
         $this->testMode = $value;
+
+        return $this;
     }
 
     public function purchase($options = null)
     {
-        $data = $this->buildPurchase($options);
+        $request = new PurchaseRequest(array_merge($this->toArray(), (array) $options));
 
-        return $this->send('/charges', $data);
-    }
-
-    protected function buildPurchase($options)
-    {
-        $request = new Request($options);
-        $request->validate(array('amount'));
-
-        $data = array();
-        $data['amount'] = $request->getAmount();
-        $data['currency'] = strtolower($request->getCurrency());
-        $data['description'] = $request->getDescription();
-        $data['ip_address'] = $request->getClientIp();
-
-        if ($card = $request->getCard()) {
-            $card->validate();
-
-            $data['card']['number'] = $card->getNumber();
-            $data['card']['expiry_month'] = $card->getExpiryMonth();
-            $data['card']['expiry_year'] = $card->getExpiryYear();
-            $data['card']['cvc'] = $card->getCvv();
-            $data['card']['name'] = $card->getName();
-            $data['card']['address_line1'] = $card->getAddress1();
-            $data['card']['address_line2'] = $card->getAddress2();
-            $data['card']['address_city'] = $card->getCity();
-            $data['card']['address_postcode'] = $card->getPostcode();
-            $data['card']['address_state'] = $card->getState();
-            $data['card']['address_country'] = $card->getCountry();
-            $data['email'] = $card->getEmail();
-        }
-
-        return $data;
+        return $request->setGateway($this);
     }
 
     public function send(RequestInterface $request)
-    {
-        throw new \BadMethodCallException('fixme');
-    }
-
-    protected function oldSend($url, $data)
     {
         // don't throw exceptions for 422 errors
         $this->httpClient->getEventDispatcher()->addListener(
@@ -116,15 +84,15 @@ class Gateway extends AbstractGateway
             }
         );
 
-        $httpResponse = $this->httpClient->post($this->getCurrentEndpoint().$url, null, $data)
+        $httpResponse = $this->httpClient->post($this->getEndpoint().'/charges', null, $request->getData())
             ->setHeader('Authorization', 'Basic '.base64_encode($this->secretKey.':'))
             ->send();
 
-        return new Response($httpResponse->json());
+        return $this->createResponse($request, $httpResponse->json());
     }
 
-    protected function getCurrentEndpoint()
+    protected function getEndpoint()
     {
-        return $this->testMode ? $this->testEndpoint : $this->endpoint;
+        return $this->testMode ? $this->testEndpoint : $this->liveEndpoint;
     }
 }

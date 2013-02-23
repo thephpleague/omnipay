@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\Pin;
+namespace Omnipay\Stripe\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 
 /**
- * Pin Response
+ * Stripe Response
  */
 class Response extends AbstractResponse
 {
@@ -25,17 +25,17 @@ class Response extends AbstractResponse
 
     public function getGatewayReference()
     {
-        if (isset($this->data['response']['token'])) {
-            return $this->data['response']['token'];
+        if ($this->isSuccessful()) {
+            return $this->data['id'];
         }
+
+        return $this->data['error']['charge'];
     }
 
     public function getMessage()
     {
-        if ($this->isSuccessful()) {
-            return $this->data['response']['status_message'];
-        } else {
-            return $this->data['error_description'];
+        if (!$this->isSuccessful()) {
+            return $this->data['error']['message'];
         }
     }
 }

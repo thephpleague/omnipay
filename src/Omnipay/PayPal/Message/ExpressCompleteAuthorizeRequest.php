@@ -11,8 +11,6 @@
 
 namespace Omnipay\PayPal\Message;
 
-use Symfony\Component\HttpFoundation\Request as HttpRequest;
-
 /**
  * PayPal Express Complete Authorize Request
  */
