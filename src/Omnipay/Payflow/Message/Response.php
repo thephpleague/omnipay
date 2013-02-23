@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\Payflow;
+namespace Omnipay\Payflow\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Exception;
@@ -31,16 +31,16 @@ class Response extends AbstractResponse
 
     public function isSuccessful()
     {
-        return '0' === $this->data['RESULT'];
+        return isset($this->data['RESULT']) && '0' === $this->data['RESULT'];
     }
 
     public function getGatewayReference()
     {
-        return $this->data['PNREF'];
+        return isset($this->data['PNREF']) ? $this->data['PNREF'] : null;
     }
 
     public function getMessage()
     {
-        return $this->data['RESPMSG'];
+        return isset($this->data['RESPMSG']) ? $this->data['RESPMSG'] : null;
     }
 }

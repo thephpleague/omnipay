@@ -39,7 +39,7 @@ class ProGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'PurchaseSuccess.txt');
 
-        $response = $this->gateway->authorize($this->options);
+        $response = $this->gateway->authorize($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals('V19R3EF62FBE', $response->getGatewayReference());
@@ -49,7 +49,7 @@ class ProGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'PurchaseFailure.txt');
 
-        $response = $this->gateway->authorize($this->options);
+        $response = $this->gateway->authorize($this->options)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('User authentication failed', $response->getMessage());
@@ -64,7 +64,7 @@ class ProGatewayTest extends GatewayTestCase
 
         $this->setMockResponse($this->httpClient, 'PurchaseSuccess.txt');
 
-        $response = $this->gateway->capture($options);
+        $response = $this->gateway->capture($options)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals('V19R3EF62FBE', $response->getGatewayReference());
@@ -74,7 +74,7 @@ class ProGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'PurchaseSuccess.txt');
 
-        $response = $this->gateway->purchase($this->options);
+        $response = $this->gateway->purchase($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals('V19R3EF62FBE', $response->getGatewayReference());
@@ -84,7 +84,7 @@ class ProGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'PurchaseFailure.txt');
 
-        $response = $this->gateway->purchase($this->options);
+        $response = $this->gateway->purchase($this->options)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('User authentication failed', $response->getMessage());
@@ -99,7 +99,7 @@ class ProGatewayTest extends GatewayTestCase
 
         $this->setMockResponse($this->httpClient, 'PurchaseSuccess.txt');
 
-        $response = $this->gateway->refund($options);
+        $response = $this->gateway->refund($options)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals('V19R3EF62FBE', $response->getGatewayReference());

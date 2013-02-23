@@ -12,8 +12,11 @@
 namespace Omnipay\Payflow;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\Common\Message\RequestInterface;
+use Omnipay\Payflow\Message\AuthorizeRequest;
+use Omnipay\Payflow\Message\CaptureRequest;
+use Omnipay\Payflow\Message\PurchaseRequest;
+use Omnipay\Payflow\Message\RefundRequest;
 
 /**
  * Payflow Pro Class
@@ -22,7 +25,7 @@ use Omnipay\Common\Message\RequestInterface;
  */
 class ProGateway extends AbstractGateway
 {
-    protected $endpoint = 'https://payflowpro.paypal.com';
+    protected $liveEndpoint = 'https://payflowpro.paypal.com';
     protected $testEndpoint = 'https://pilot-payflowpro.paypal.com';
     protected $username;
     protected $password;
@@ -54,6 +57,8 @@ class ProGateway extends AbstractGateway
     public function setUsername($value)
     {
         $this->username = $value;
+
+        return $this;
     }
 
     public function getPassword()
@@ -64,6 +69,8 @@ class ProGateway extends AbstractGateway
     public function setPassword($value)
     {
         $this->password = $value;
+
+        return $this;
     }
 
     public function getVendor()
@@ -74,6 +81,8 @@ class ProGateway extends AbstractGateway
     public function setVendor($value)
     {
         $this->vendor = $value;
+
+        return $this;
     }
 
     public function getPartner()
@@ -84,6 +93,8 @@ class ProGateway extends AbstractGateway
     public function setPartner($value)
     {
         $this->partner = $value;
+
+        return $this;
     }
 
     public function getTestMode()
@@ -94,103 +105,47 @@ class ProGateway extends AbstractGateway
     public function setTestMode($value)
     {
         $this->testMode = $value;
+
+        return $this;
     }
 
     public function authorize($options = null)
     {
-        $data = $this->buildAuthorize($options, 'A');
+        $request = new AuthorizeRequest(array_merge($this->toArray(), (array) $options));
 
-        return $this->send($data);
+        return $request->setGateway($this);
     }
 
     public function capture($options = null)
     {
-        $data = $this->buildCaptureOrRefund($options, 'D');
+        $request = new CaptureRequest(array_merge($this->toArray(), (array) $options));
 
-        return $this->send($data);
+        return $request->setGateway($this);
     }
 
     public function purchase($options = null)
     {
-        $data = $this->buildAuthorize($options, 'S');
+        $request = new PurchaseRequest(array_merge($this->toArray(), (array) $options));
 
-        return $this->send($data);
+        return $request->setGateway($this);
     }
 
     public function refund($options = null)
     {
+        $request = new RefundRequest(array_merge($this->toArray(), (array) $options));
 
-        $data = $this->buildCaptureOrRefund($options, 'C');
-
-        return $this->send($data);
-    }
-
-    protected function buildAuthorize($options, $action)
-    {
-        $request = new Request($options);
-        $request->validate(array('amount'));
-        $source = $request->getCard();
-        $source->validate();
-
-        $data = $this->buildRequest($action);
-        $data['TENDER'] = 'C';
-        $data['COMMENT1'] = $request->getDescription();
-        $data['ACCT'] = $source->getNumber();
-        $data['AMT'] = $request->getAmountDecimal();
-        $data['EXPDATE'] = $source->getExpiryDate('my');
-        $data['CVV2'] = $source->getCvv();
-        $data['BILLTOFIRSTNAME'] = $source->getFirstName();
-        $data['BILLTOLASTNAME'] = $source->getLastName();
-        $data['BILLTOSTREET'] = $source->getAddress1();
-        $data['BILLTOCITY'] = $source->getCity();
-        $data['BILLTOSTATE'] = $source->getState();
-        $data['BILLTOZIP'] = $source->getPostcode();
-        $data['BILLTOCOUNTRY'] = $source->getCountry();
-
-        return $data;
-    }
-
-    protected function buildCaptureOrRefund($options, $action)
-    {
-        $request = new Request($options);
-        $request->validate(array('gatewayReference', 'amount'));
-
-        $data = $this->buildRequest($action);
-        $data['AMT'] = $request->getAmountDecimal();
-        $data['ORIGID'] = $request->getGatewayReference();
-
-        return $data;
-    }
-
-    protected function buildRequest($action)
-    {
-        $request = array();
-        $request['TRXTYPE'] = $action;
-        $request['USER'] = $this->username;
-        $request['PWD'] = $this->password;
-        $request['VENDOR'] = $this->vendor;
-        $request['PARTNER'] = $this->partner;
-
-        return $request;
+        return $request->setGateway($this);
     }
 
     public function send(RequestInterface $request)
     {
-        throw new \BadMethodCallException('fixme');
+        $httpResponse = $this->httpClient->post($this->getEndpoint(), null, $request->getData())->send();
+
+        return $this->createResponse($request, $httpResponse->getBody());
     }
 
-    /**
-     * Post a request to the Payflow API and decode the response
-     */
-    protected function oldSend($data)
+    protected function getEndpoint()
     {
-        $httpResponse = $this->httpClient->post($this->getCurrentEndpoint(), null, $data)->send();
-
-        return new Response($httpResponse->getBody());
-    }
-
-    protected function getCurrentEndpoint()
-    {
-        return $this->testMode ? $this->testEndpoint : $this->endpoint;
+        return $this->testMode ? $this->testEndpoint : $this->liveEndpoint;
     }
 }
