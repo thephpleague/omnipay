@@ -11,12 +11,11 @@
 
 namespace Omnipay\PaymentExpress;
 
-use SimpleXMLElement;
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Exception\InvalidResponseException;
-use Omnipay\Common\Message\RedirectResponse;
-use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\Common\Message\RequestInterface;
+use Omnipay\PaymentExpress\Message\PxPayAuthorizeRequest;
+use Omnipay\PaymentExpress\Message\PxPayCompleteAuthorizeRequest;
+use Omnipay\PaymentExpress\Message\PxPayPurchaseRequest;
 
 /**
  * DPS PaymentExpress PxPay Gateway
@@ -48,6 +47,8 @@ class PxPayGateway extends AbstractGateway
     public function setUsername($value)
     {
         $this->username = $value;
+
+        return $this;
     }
 
     public function getPassword()
@@ -58,83 +59,40 @@ class PxPayGateway extends AbstractGateway
     public function setPassword($value)
     {
         $this->password = $value;
+
+        return $this;
     }
 
     public function authorize($options = null)
     {
-        $data = $this->buildPurchase($options);
-        $data->TxnType = 'Auth';
+        $request = new PxPayAuthorizeRequest(array_merge($this->toArray(), (array) $options));
 
-        return $this->sendPurchase($data);
+        return $request->setGateway($this);
     }
 
     public function completeAuthorize($options = null)
     {
-        return $this->completePurchase($options);
+        $request = new PxPayCompleteAuthorizeRequest(array_merge($this->toArray(), (array) $options));
+
+        return $request->setGateway($this);
     }
 
     public function purchase($options = null)
     {
-        $data = $this->buildPurchase($options);
-        $data->TxnType = 'Purchase';
+        $request = new PxPayPurchaseRequest(array_merge($this->toArray(), (array) $options));
 
-        return $this->sendPurchase($data);
+        return $request->setGateway($this);
     }
 
     public function completePurchase($options = null)
     {
-        $result = $this->httpRequest->get('result');
-        if (empty($result)) {
-            throw new InvalidResponseException;
-        }
-
-        // validate dps response
-        $data = new SimpleXMLElement('<ProcessResponse/>');
-        $data->PxPayUserId = $this->username;
-        $data->PxPayKey = $this->password;
-        $data->Response = $result;
-
-        return $this->sendComplete($data);
+        return $this->completeAuthorize();
     }
 
     public function send(RequestInterface $request)
     {
-        throw new \BadMethodCallException('fixme');
-    }
+        $httpResponse = $this->httpClient->post($this->endpoint, null, $request->getData()->asXML())->send();
 
-    protected function buildPurchase($options)
-    {
-        $request = new Request($options);
-        $request->validate(array('amount', 'returnUrl'));
-
-        $data = new SimpleXMLElement('<GenerateRequest/>');
-        $data->PxPayUserId = $this->username;
-        $data->PxPayKey = $this->password;
-        $data->AmountInput = $request->getAmountDecimal();
-        $data->CurrencyInput = $request->getCurrency();
-        $data->MerchantReference = $request->getDescription();
-        $data->UrlSuccess = $request->getReturnUrl();
-        $data->UrlFail = $request->getReturnUrl();
-
-        return $data;
-    }
-
-    protected function sendPurchase($data)
-    {
-        $httpResponse = $this->httpClient->post($this->endpoint, null, $data->asXML())->send();
-        $xml = new SimpleXMLElement($httpResponse->getBody());
-
-        if ((string) $xml['valid'] == '1') {
-            return new RedirectResponse((string) $xml->URI);
-        } else {
-            throw new InvalidResponseException;
-        }
-    }
-
-    protected function sendComplete($data)
-    {
-        $httpResponse = $this->httpClient->post($this->endpoint, null, $data->asXML())->send();
-
-        return new Response($httpResponse->getBody());
+        return $this->createResponse($request, $httpResponse->xml());
     }
 }

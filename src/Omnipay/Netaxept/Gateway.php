@@ -12,7 +12,6 @@
 namespace Omnipay\Netaxept;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Exception;
 use Omnipay\Common\Message\RequestInterface;
 use Omnipay\Netaxept\Message\PurchaseRequest;
 use Omnipay\Netaxept\Message\CompletePurchaseRequest;

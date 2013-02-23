@@ -12,7 +12,6 @@
 namespace Omnipay\PaymentExpress;
 
 use Omnipay\GatewayTestCase;
-use Omnipay\Common\CreditCard;
 
 class PxPostGatewayTest extends GatewayTestCase
 {
@@ -22,18 +21,9 @@ class PxPostGatewayTest extends GatewayTestCase
 
         $this->gateway = new PxPostGateway($this->httpClient, $this->httpRequest);
 
-        $card = new CreditCard(array(
-            'firstName' => 'Example',
-            'lastName' => 'User',
-            'number' => '4111111111111111',
-            'expiryMonth' => '12',
-            'expiryYear' => '2016',
-            'cvv' => '123',
-        ));
-
         $this->options = array(
             'amount' => 1000,
-            'card' => $card,
+            'card' => $this->getValidCard(),
         );
     }
 
@@ -41,20 +31,24 @@ class PxPostGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'PxPostPurchaseSuccess.txt');
 
-        $response = $this->gateway->authorize($this->options);
+        $response = $this->gateway->authorize($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('000000030884cdc6', $response->getGatewayReference());
+        $this->assertFalse($response->isRedirect());
+        $this->assertSame('000000030884cdc6', $response->getGatewayReference());
+        $this->assertSame('Transaction Approved', $response->getMessage());
     }
 
     public function testAuthorizeFailure()
     {
         $this->setMockResponse($this->httpClient, 'PxPostPurchaseFailure.txt');
 
-        $response = $this->gateway->authorize($this->options);
+        $response = $this->gateway->authorize($this->options)->send();
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertSame('Transaction Declined', $response->getMessage());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getGatewayReference());
+        $this->assertSame('The transaction was Declined (U5)', $response->getMessage());
     }
 
     public function testCaptureSuccess()
@@ -66,7 +60,7 @@ class PxPostGatewayTest extends GatewayTestCase
             'gatewayReference' => '000000030884cdc6',
         );
 
-        $response = $this->gateway->capture($options);
+        $response = $this->gateway->capture($options)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals('000000030884cdc6', $response->getGatewayReference());
@@ -76,20 +70,24 @@ class PxPostGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'PxPostPurchaseSuccess.txt');
 
-        $response = $this->gateway->purchase($this->options);
+        $response = $this->gateway->purchase($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('000000030884cdc6', $response->getGatewayReference());
+        $this->assertFalse($response->isRedirect());
+        $this->assertSame('000000030884cdc6', $response->getGatewayReference());
+        $this->assertSame('Transaction Approved', $response->getMessage());
     }
 
     public function testPurchaseFailure()
     {
         $this->setMockResponse($this->httpClient, 'PxPostPurchaseFailure.txt');
 
-        $response = $this->gateway->purchase($this->options);
+        $response = $this->gateway->purchase($this->options)->send();
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertSame('Transaction Declined', $response->getMessage());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getGatewayReference());
+        $this->assertSame('The transaction was Declined (U5)', $response->getMessage());
     }
 
     public function testRefundSuccess()
@@ -101,7 +99,7 @@ class PxPostGatewayTest extends GatewayTestCase
             'gatewayReference' => '000000030884cdc6',
         );
 
-        $response = $this->gateway->refund($options);
+        $response = $this->gateway->refund($options)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals('000000030884cdc6', $response->getGatewayReference());

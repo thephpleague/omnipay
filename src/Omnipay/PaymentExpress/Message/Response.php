@@ -9,27 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\PaymentExpress;
+namespace Omnipay\PaymentExpress\Message;
 
-use SimpleXMLElement;
 use Omnipay\Common\Message\AbstractResponse;
-use Omnipay\Exception;
-use Omnipay\Common\Exception\InvalidResponseException;
 
 /**
- * DPS PaymentExpress PxPost Response
+ * PaymentExpress Response
  */
 class Response extends AbstractResponse
 {
-    public function __construct($data)
-    {
-        if (empty($data)) {
-            throw new InvalidResponseException;
-        }
-
-        $this->data = new SimpleXMLElement($data);
-    }
-
     public function isSuccessful()
     {
         return 1 === (int) $this->data->Success;
@@ -37,7 +25,7 @@ class Response extends AbstractResponse
 
     public function getGatewayReference()
     {
-        return (string) $this->data->DpsTxnRef;
+        return empty($this->data->DpsTxnRef) ? null : (string) $this->data->DpsTxnRef;
     }
 
     public function getMessage()

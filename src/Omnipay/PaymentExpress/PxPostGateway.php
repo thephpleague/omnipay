@@ -12,8 +12,11 @@
 namespace Omnipay\PaymentExpress;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\Common\Message\RequestInterface;
+use Omnipay\PaymentExpress\Message\PxPostAuthorizeRequest;
+use Omnipay\PaymentExpress\Message\PxPostCaptureRequest;
+use Omnipay\PaymentExpress\Message\PxPostPurchaseRequest;
+use Omnipay\PaymentExpress\Message\PxPostRefundRequest;
 
 /**
  * DPS PaymentExpress PxPost Gateway
@@ -45,6 +48,8 @@ class PxPostGateway extends AbstractGateway
     public function setUsername($value)
     {
         $this->username = $value;
+
+        return $this;
     }
 
     public function getPassword()
@@ -55,82 +60,42 @@ class PxPostGateway extends AbstractGateway
     public function setPassword($value)
     {
         $this->password = $value;
+
+        return $this;
     }
 
     public function authorize($options = null)
     {
-        $data = $this->buildAuthorizeOrPurchase($options, 'Auth');
+        $request = new PxPostAuthorizeRequest(array_merge($this->toArray(), (array) $options));
 
-        return $this->send($data);
+        return $request->setGateway($this);
     }
 
     public function capture($options = null)
     {
-        $data = $this->buildCaptureOrRefund($options, 'Complete');
+        $request = new PxPostCaptureRequest(array_merge($this->toArray(), (array) $options));
 
-        return $this->send($data);
+        return $request->setGateway($this);
     }
 
     public function purchase($options = null)
     {
-        $data = $this->buildAuthorizeOrPurchase($options, 'Purchase');
+        $request = new PxPostPurchaseRequest(array_merge($this->toArray(), (array) $options));
 
-        return $this->send($data);
+        return $request->setGateway($this);
     }
 
     public function refund($options = null)
     {
-        $data = $this->buildCaptureOrRefund($options, 'Refund');
+        $request = new PxPostRefundRequest(array_merge($this->toArray(), (array) $options));
 
-        return $this->send($data);
-    }
-
-    protected function buildAuthorizeOrPurchase($options, $method)
-    {
-        $request = new Request($options);
-        $request->validate(array('amount'));
-        $source = $request->getCard();
-        $source->validate();
-
-        $data = new \SimpleXMLElement('<Txn />');
-        $data->PostUsername = $this->username;
-        $data->PostPassword = $this->password;
-        $data->TxnType = $method;
-        $data->CardNumber = $source->getNumber();
-        $data->CardHolderName = $source->getName();
-        $data->Amount = $request->getAmountDecimal();
-        $data->DateExpiry = $source->getExpiryDate('my');
-        $data->Cvc2 = $source->getCvv();
-        $data->InputCurrency = $request->getCurrency();
-        $data->MerchantReference = $request->getDescription();
-
-        return $data;
-    }
-
-    protected function buildCaptureOrRefund($options, $method)
-    {
-        $request = new Request($options);
-        $request->validate(array('gatewayReference', 'amount'));
-
-        $data = new \SimpleXMLElement('<Txn />');
-        $data->PostUsername = $this->username;
-        $data->PostPassword = $this->password;
-        $data->TxnType = $method;
-        $data->DpsTxnRef = $request->getGatewayReference();
-        $data->Amount = $request->getAmountDecimal();
-
-        return $data;
+        return $request->setGateway($this);
     }
 
     public function send(RequestInterface $request)
     {
-        throw new \BadMethodCallException('fixme');
-    }
+        $httpResponse = $this->httpClient->post($this->endpoint, null, $request->getData()->asXML())->send();
 
-    protected function oldSend($data)
-    {
-        $httpResponse = $this->httpClient->post($this->endpoint, null, $data->asXML())->send();
-
-        return new Response($httpResponse->getBody());
+        return $this->createResponse($request, $httpResponse->xml());
     }
 }

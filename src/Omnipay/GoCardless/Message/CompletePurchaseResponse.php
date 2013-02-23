@@ -12,7 +12,6 @@
 namespace Omnipay\GoCardless\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
-use Omnipay\Exception;
 
 /**
  * GoCardless Complete Purchase Response

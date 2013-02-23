@@ -12,7 +12,6 @@
 namespace Omnipay\AuthorizeNet\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
-use Omnipay\Exception;
 use Omnipay\Common\Exception\InvalidResponseException;
 
 /**
