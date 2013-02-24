@@ -61,7 +61,7 @@ class Gateway extends AbstractGateway
         return $this;
     }
 
-    public function purchase($options = null)
+    public function purchase(array $options = null)
     {
         $request = new PurchaseRequest($this->httpClient, $this->httpRequest);
 

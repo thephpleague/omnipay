@@ -62,28 +62,28 @@ class PxPostGateway extends AbstractGateway
         return $this;
     }
 
-    public function authorize($options = null)
+    public function authorize(array $options = null)
     {
         $request = new PxPostAuthorizeRequest($this->httpClient, $this->httpRequest);
 
         return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
-    public function capture($options = null)
+    public function capture(array $options = null)
     {
         $request = new PxPostCaptureRequest($this->httpClient, $this->httpRequest);
 
         return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
-    public function purchase($options = null)
+    public function purchase(array $options = null)
     {
         $request = new PxPostPurchaseRequest($this->httpClient, $this->httpRequest);
 
         return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
-    public function refund($options = null)
+    public function refund(array $options = null)
     {
         $request = new PxPostRefundRequest($this->httpClient, $this->httpRequest);
 

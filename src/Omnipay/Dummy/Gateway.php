@@ -35,14 +35,14 @@ class Gateway extends AbstractGateway
         return array();
     }
 
-    public function authorize($options = null)
+    public function authorize(array $options = null)
     {
         $request = new AuthorizeRequest($this->httpClient, $this->httpRequest);
 
         return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
-    public function purchase($options = null)
+    public function purchase(array $options = null)
     {
         return $this->authorize($options);
     }

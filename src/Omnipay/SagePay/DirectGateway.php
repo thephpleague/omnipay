@@ -76,28 +76,28 @@ class DirectGateway extends AbstractGateway
         return $this;
     }
 
-    public function authorize($options = null)
+    public function authorize(array $options = null)
     {
         $request = new DirectAuthorizeRequest($this->httpClient, $this->httpRequest);
 
         return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
-    public function completeAuthorize($options = null)
+    public function completeAuthorize(array $options = null)
     {
         $request = new DirectAuthorizeRequest($this->httpClient, $this->httpRequest);
 
         return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
-    public function capture($options = null)
+    public function capture(array $options = null)
     {
         $request = new CaptureRequest($this->httpClient, $this->httpRequest);
 
         return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
-    public function purchase($options = null)
+    public function purchase(array $options = null)
     {
         $request = new DirectPurchaseRequest($this->httpClient, $this->httpRequest);
 
@@ -107,12 +107,12 @@ class DirectGateway extends AbstractGateway
     /**
      * Only used for returning from Direct 3D Authentication
      */
-    public function completePurchase($options = null)
+    public function completePurchase(array $options = null)
     {
         return $this->completeAuthorize($options);
     }
 
-    public function refund($options = null)
+    public function refund(array $options = null)
     {
         $request = new RefundRequest($this->httpClient, $this->httpRequest);
 

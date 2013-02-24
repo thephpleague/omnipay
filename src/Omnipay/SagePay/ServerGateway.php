@@ -25,28 +25,28 @@ class ServerGateway extends DirectGateway
         return 'Sage Pay Server';
     }
 
-    public function authorize($options = null)
+    public function authorize(array $options = null)
     {
         $request = new ServerAuthorizeRequest($this->httpClient, $this->httpRequest);
 
         return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
-    public function completeAuthorize($options = null)
+    public function completeAuthorize(array $options = null)
     {
         $request = new ServerCompleteAuthorizeRequest($this->httpClient, $this->httpRequest);
 
         return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
-    public function purchase($options = null)
+    public function purchase(array $options = null)
     {
         $request = new ServerPurchaseRequest($this->httpClient, $this->httpRequest);
 
         return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
-    public function completePurchase($options = null)
+    public function completePurchase(array $options = null)
     {
         return $this->completeAuthorize($options);
     }

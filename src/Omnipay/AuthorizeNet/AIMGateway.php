@@ -89,21 +89,21 @@ class AIMGateway extends AbstractGateway
         return $this;
     }
 
-    public function authorize($options = null)
+    public function authorize(array $options = null)
     {
         $request = new AIMAuthorizeRequest($this->httpClient, $this->httpRequest);
 
         return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
-    public function capture($options = null)
+    public function capture(array $options = null)
     {
         $request = new CaptureRequest($this->httpClient, $this->httpRequest);
 
         return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
-    public function purchase($options = null)
+    public function purchase(array $options = null)
     {
         $request = new AIMPurchaseRequest($this->httpClient, $this->httpRequest);
 
