@@ -19,6 +19,7 @@
         "psr-0": { "Omnipay" : "src/" }
     },
     "require": {
+        "php": ">=5.3.3",
         "guzzle/http": "3.*",
         "symfony/http-foundation": "2.*"
     },
