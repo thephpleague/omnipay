@@ -9,25 +9,19 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\TwoCheckout;
+namespace Omnipay\TwoCheckout\Message;
 
 use Omnipay\TestCase;
 
-class ResponseTest extends TestCase
+class CompletePurchaseResponseTest extends TestCase
 {
-    /**
-     * @expectedException Omnipay\Common\Exception\InvalidResponseException
-     */
-    public function testConstructEmpty()
-    {
-        $response = new Response('');
-    }
-
     public function testConstruct()
     {
-        $response = new Response('abc123');
+        $response = new CompletePurchaseResponse(array('order_number' => 'abc123'));
 
         $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
         $this->assertSame('abc123', $response->getGatewayReference());
+        $this->assertNull($response->getMessage());
     }
 }

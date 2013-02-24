@@ -12,7 +12,6 @@
 namespace Omnipay\PayPal;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\Common\Message\RequestInterface;
 use Omnipay\PayPal\Message\AuthorizeRequest;
 use Omnipay\PayPal\Message\CaptureRequest;

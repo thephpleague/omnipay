@@ -12,10 +12,8 @@
 namespace Omnipay\Dummy;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\Common\Message\RequestInterface;
 use Omnipay\Dummy\Message\AuthorizeRequest;
-use Omnipay\Dummy\Message\Response;
 
 /**
  * Dummy Gateway

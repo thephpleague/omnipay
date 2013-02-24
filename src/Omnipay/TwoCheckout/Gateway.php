@@ -12,10 +12,9 @@
 namespace Omnipay\TwoCheckout;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Exception\InvalidResponseException;
-use Omnipay\Common\Message\RedirectResponse;
-use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\Common\Message\RequestInterface;
+use Omnipay\TwoCheckout\Message\CompletePurchaseRequest;
+use Omnipay\TwoCheckout\Message\PurchaseRequest;
 
 /**
  * 2Checkout Gateway
@@ -24,9 +23,8 @@ use Omnipay\Common\Message\RequestInterface;
  */
 class Gateway extends AbstractGateway
 {
-    protected $endpoint = 'https://www.2checkout.com/checkout/purchase';
-    protected $username;
-    protected $password;
+    protected $accountNumber;
+    protected $secretWord;
     protected $testMode;
 
     public function getName()
@@ -37,30 +35,34 @@ class Gateway extends AbstractGateway
     public function defineSettings()
     {
         return array(
-            'username' => '',
-            'password' => '',
+            'accountNumber' => '',
+            'secretWord' => '',
             'testMode' => false,
         );
     }
 
-    public function getUsername()
+    public function getAccountNumber()
     {
-        return $this->username;
+        return $this->accountNumber;
     }
 
-    public function setUsername($value)
+    public function setAccountNumber($value)
     {
-        $this->username = $value;
+        $this->accountNumber = $value;
+
+        return $this;
     }
 
-    public function getPassword()
+    public function getSecretWord()
     {
-        return $this->password;
+        return $this->secretWord;
     }
 
-    public function setPassword($value)
+    public function setSecretWord($value)
     {
-        $this->password = $value;
+        $this->secretWord = $value;
+
+        return $this;
     }
 
     public function getTestMode()
@@ -71,69 +73,26 @@ class Gateway extends AbstractGateway
     public function setTestMode($value)
     {
         $this->testMode = $value;
+
+        return $this;
     }
 
     public function purchase($options = null)
     {
-        $data = $this->buildPurchase($options);
+        $request = new PurchaseRequest(array_merge($this->toArray(), (array) $options));
 
-        return new RedirectResponse($this->endpoint.'?'.http_build_query($data));
+        return $request->setGateway($this);
     }
 
     public function completePurchase($options = null)
     {
-        $request = new Request($options);
-        $orderNo = $this->httpRequest->get('order_number');
+        $request = new CompletePurchaseRequest(array_merge($this->toArray(), (array) $options));
 
-        // strange exception specified by 2Checkout
-        if ($this->testMode) {
-            $orderNo = '1';
-        }
-
-        $key = md5($this->password.$this->username.$orderNo.$request->getAmountDecimal());
-        if (strtoupper($key) !== strtoupper($this->httpRequest->get('key'))) {
-            throw new InvalidResponseException;
-        }
-
-        return new Response($orderNo);
+        return $request->setGateway($this);
     }
 
     public function send(RequestInterface $request)
     {
-        throw new \BadMethodCallException('fixme');
-    }
-
-    protected function buildPurchase($options)
-    {
-        $request = new Request($options);
-        $request->validate(array('amount', 'returnUrl'));
-        $source = $request->getCard();
-
-        $data = array();
-        $data['sid'] = $this->username;
-        $data['cart_order_id'] = $request->getTransactionId();
-        $data['total'] = $request->getAmountDecimal();
-        $data['tco_currency'] = $request->getCurrency();
-        $data['fixed'] = 'Y';
-        $data['skip_landing'] = 1;
-        $data['x_receipt_link_url'] = $request->getReturnUrl();
-
-        if ($source) {
-            $data['card_holder_name'] = $source->getName();
-            $data['street_address'] = $source->getAddress1();
-            $data['street_address2'] = $source->getAddress2();
-            $data['city'] = $source->getCity();
-            $data['state'] = $source->getState();
-            $data['zip'] = $source->getPostcode();
-            $data['country'] = $source->getCountry();
-            $data['phone'] = $source->getPhone();
-            $data['email'] = $source->getEmail();
-        }
-
-        if ($this->testMode) {
-            $data['demo'] = 'Y';
-        }
-
-        return $data;
+        return $this->createResponse($request, $request->getData());
     }
 }
