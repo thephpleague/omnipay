@@ -29,8 +29,6 @@ abstract class AbstractResponse extends AbstractMessage implements ResponseInter
         $this->data = $data;
     }
 
-    abstract public function isSuccessful();
-
     public function isRedirect()
     {
         return false;

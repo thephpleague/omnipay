@@ -18,6 +18,25 @@ use Omnipay\Common\Message\RequestInterface;
  */
 interface GatewayInterface
 {
+
+    /**
+     * Get gateway display name
+     *
+     * This can be used by carts to get the display name for each gateway.
+     */
+    public function getName();
+
+    /**
+     * Define gateway settings, in the following format:
+     *
+     * array(
+     *     'username' => '', // string variable
+     *     'testMode' => false, // boolean variable
+     *     'landingPage' => array('billing', 'login'), // enum variable, first item is default
+     * );
+     */
+    public function defineSettings();
+
     /**
      * Authorize a new payment.
      *
