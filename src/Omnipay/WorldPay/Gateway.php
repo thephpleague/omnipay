@@ -12,11 +12,9 @@
 namespace Omnipay\WorldPay;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Exception;
-use Omnipay\Common\Exception\InvalidResponseException;
-use Omnipay\Common\Message\RedirectResponse;
-use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\Common\Message\RequestInterface;
+use Omnipay\WorldPay\Message\CompletePurchaseRequest;
+use Omnipay\WorldPay\Message\PurchaseRequest;
 
 /**
  * WorldPay Gateway
@@ -25,8 +23,6 @@ use Omnipay\Common\Message\RequestInterface;
  */
 class Gateway extends AbstractGateway
 {
-    protected $endpoint = 'https://secure.worldpay.com/wcc/purchase';
-    protected $testEndpoint = 'https://secure-test.worldpay.com/wcc/purchase';
     protected $installationId;
     protected $secretWord;
     protected $callbackPassword;
@@ -55,6 +51,8 @@ class Gateway extends AbstractGateway
     public function setInstallationId($value)
     {
         $this->installationId = $value;
+
+        return $this;
     }
 
     public function getSecretWord()
@@ -65,6 +63,8 @@ class Gateway extends AbstractGateway
     public function setSecretWord($value)
     {
         $this->secretWord = $value;
+
+        return $this;
     }
 
     public function getCallbackPassword()
@@ -75,6 +75,8 @@ class Gateway extends AbstractGateway
     public function setCallbackPassword($value)
     {
         $this->callbackPassword = $value;
+
+        return $this;
     }
 
     public function getTestMode()
@@ -85,75 +87,26 @@ class Gateway extends AbstractGateway
     public function setTestMode($value)
     {
         $this->testMode = $value;
+
+        return $this;
     }
 
     public function purchase($options = null)
     {
-        $data = $this->buildPurchase($options);
+        $request = new PurchaseRequest(array_merge($this->toArray(), (array) $options));
 
-        return new RedirectResponse($this->getCurrentEndpoint().'?'.http_build_query($data));
+        return $request->setGateway($this);
     }
 
     public function completePurchase($options = null)
     {
-        $callbackPW = (string) $this->httpRequest->get('callbackPW');
-        if ($callbackPW !== $this->callbackPassword) {
-            throw new InvalidResponseException;
-        }
+        $request = new CompletePurchaseRequest(array_merge($this->toArray(), (array) $options));
 
-        return new Response(
-            array(
-                'transStatus' => (string) $this->httpRequest->get('transStatus'),
-                'transId' => (string) $this->httpRequest->get('transId'),
-                'rawAuthMessage' => (string) $this->httpRequest->get('rawAuthMessage'),
-            )
-        );
+        return $request->setGateway($this);
     }
 
     public function send(RequestInterface $request)
     {
-        throw new \BadMethodCallException('fixme');
-    }
-
-    protected function buildPurchase($options)
-    {
-        $request = new Request($options);
-        $request->validate(array('amount', 'returnUrl'));
-
-        $data = array();
-        $data['instId'] = $this->installationId;
-        $data['cartId'] = $request->getTransactionId();
-        $data['desc'] = $request->getDescription();
-        $data['amount'] = $request->getAmountDecimal();
-        $data['currency'] = $request->getCurrency();
-        $data['testMode'] = $this->testMode ? 100 : 0;
-        $data['MC_callback'] = $request->getReturnUrl();
-
-        $source = $request->getCard();
-        if ($source) {
-            $data['name'] = $source->getName();
-            $data['address1'] = $source->getAddress1();
-            $data['address2'] = $source->getAddress2();
-            $data['town'] = $source->getCity();
-            $data['region'] = $source->getState();
-            $data['postcode'] = $source->getPostcode();
-            $data['country'] = $source->getCountry();
-            $data['tel'] = $source->getPhone();
-            $data['email'] = $source->getEmail();
-        }
-
-        if ($this->secretWord) {
-            $data['signatureFields'] = 'instId:amount:currency:cartId';
-            $signature_data = array($this->secretWord,
-                $data['instId'], $data['amount'], $data['currency'], $data['cartId']);
-            $data['signature'] = md5(implode(':', $signature_data));
-        }
-
-        return $data;
-    }
-
-    protected function getCurrentEndpoint()
-    {
-        return $this->testMode ? $this->testEndpoint : $this->endpoint;
+        return $this->createResponse($request, $request->getData());
     }
 }

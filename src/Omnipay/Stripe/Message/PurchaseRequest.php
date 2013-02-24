@@ -68,8 +68,8 @@ class PurchaseRequest extends AbstractRequest
         return '/charges';
     }
 
-    public function createResponse($gatewayReference)
+    public function createResponse($data)
     {
-        return new Response($gatewayReference);
+        return new Response($data);
     }
 }

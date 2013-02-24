@@ -9,43 +9,47 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\WorldPay;
+namespace Omnipay\WorldPay\Message;
 
 use Omnipay\TestCase;
 
-class ResponseTest extends TestCase
+class CompletePurchaseResponseTest extends TestCase
 {
-    /**
-     * @expectedException Omnipay\Common\Exception\InvalidResponseException
-     */
-    public function testConstructEmpty()
+    public function testCompletePurchaseSuccess()
     {
-        $response = new Response('');
-    }
-
-    public function testConstructSuccess()
-    {
-        $response = new Response(array(
+        $response = new CompletePurchaseResponse(array(
             'transStatus' => 'Y',
             'transId' => 'abc123',
             'rawAuthMessage' => 'Success Message'
         ));
 
         $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
         $this->assertSame('abc123', $response->getGatewayReference());
         $this->assertSame('Success Message', $response->getMessage());
     }
 
-    public function testConstructError()
+    public function testCompletePurchaseFailure()
     {
-        $response = new Response(array(
+        $response = new CompletePurchaseResponse(array(
             'transStatus' => 'N',
             'transId' => null,
             'rawAuthMessage' => 'Declined'
         ));
 
         $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getGatewayReference());
         $this->assertSame('Declined', $response->getMessage());
+    }
+
+    public function testCompletePurchaseInvalid()
+    {
+        $response = new CompletePurchaseResponse(array());
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getMessage());
     }
 }

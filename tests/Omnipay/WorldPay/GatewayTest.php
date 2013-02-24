@@ -30,10 +30,11 @@ class GatewayTest extends GatewayTestCase
 
     public function testPurchase()
     {
-        $response = $this->gateway->purchase($this->options);
+        $response = $this->gateway->purchase($this->options)->send();
 
-        $this->assertInstanceOf('\Omnipay\Common\Message\RedirectResponse', $response);
+        $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
+        $this->assertNull($response->getGatewayReference());
         $this->assertContains('https://secure.worldpay.com/wcc/purchase?', $response->getRedirectUrl());
     }
 
@@ -44,14 +45,18 @@ class GatewayTest extends GatewayTestCase
                 'callbackPW' => 'bar123',
                 'transStatus' => 'Y',
                 'transId' => 'abc123',
-                'rawAuthMessage' => '',
+                'rawAuthMessage' => 'hello',
             )
         );
 
-        $response = $this->gateway->completePurchase($this->options);
+        $response = $this->gateway->completePurchase($this->options)
+            ->setHttpRequest($this->httpRequest)
+            ->send();
 
         $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
         $this->assertEquals('abc123', $response->getGatewayReference());
+        $this->assertSame('hello', $response->getMessage());
     }
 
     /**
@@ -65,7 +70,9 @@ class GatewayTest extends GatewayTestCase
             )
         );
 
-        $response = $this->gateway->completePurchase($this->options);
+        $response = $this->gateway->completePurchase($this->options)
+            ->setHttpRequest($this->httpRequest)
+            ->send();
     }
 
     public function testCompletePurchaseError()
@@ -74,14 +81,17 @@ class GatewayTest extends GatewayTestCase
             array(
                 'callbackPW' => 'bar123',
                 'transStatus' => 'N',
-                'transId' => '',
                 'rawAuthMessage' => 'Declined',
             )
         );
 
-        $response = $this->gateway->completePurchase($this->options);
+        $response = $this->gateway->completePurchase($this->options)
+            ->setHttpRequest($this->httpRequest)
+            ->send();
 
         $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getGatewayReference());
         $this->assertSame('Declined', $response->getMessage());
     }
 }

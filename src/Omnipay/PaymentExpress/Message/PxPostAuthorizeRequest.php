@@ -74,8 +74,8 @@ class PxPostAuthorizeRequest extends AbstractRequest
         return $data;
     }
 
-    public function createResponse($gatewayReference)
+    public function createResponse($data)
     {
-        return new Response($gatewayReference);
+        return new Response($data);
     }
 }
