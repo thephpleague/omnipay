@@ -38,37 +38,37 @@ abstract class AbstractGateway implements GatewayInterface
         $this->loadSettings();
     }
 
-    public function authorize($options = null)
+    public function authorize(array $options = null)
     {
         throw new BadMethodCallException;
     }
 
-    public function completeAuthorize($options = null)
+    public function completeAuthorize(array $options = null)
     {
         throw new BadMethodCallException;
     }
 
-    public function capture($options = null)
+    public function capture(array $options = null)
     {
         throw new BadMethodCallException;
     }
 
-    public function purchase($options = null)
+    public function purchase(array $options = null)
     {
         throw new BadMethodCallException;
     }
 
-    public function completePurchase($options = null)
+    public function completePurchase(array $options = null)
     {
         throw new BadMethodCallException;
     }
 
-    public function refund($options = null)
+    public function refund(array $options = null)
     {
         throw new BadMethodCallException;
     }
 
-    public function void($options = null)
+    public function void(array $options = null)
     {
         throw new BadMethodCallException;
     }
