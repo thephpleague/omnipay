@@ -20,9 +20,9 @@ class RefundRequest extends AbstractRequest
     {
         $data = $this->getBaseData('RefundTransaction');
 
-        $request->validate(array('gatewayReference'));
+        $this->validate(array('gatewayReference'));
 
-        $data['TRANSACTIONID'] = $request->getGatewayReference();
+        $data['TRANSACTIONID'] = $this->getGatewayReference();
         $data['REFUNDTYPE'] = 'Full';
 
         return $data;

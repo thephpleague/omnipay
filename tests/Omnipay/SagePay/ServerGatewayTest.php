@@ -45,12 +45,12 @@ class ServerGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'ServerPurchaseSuccess.txt');
 
-        $response = $this->gateway->authorize($this->purchaseOptions);
+        $response = $this->gateway->authorize($this->purchaseOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
         $this->assertNull($response->getGatewayReference());
-        $this->assertNull($response->getMessage());
+        $this->assertSame('Server transaction registered successfully.', $response->getMessage());
         $this->assertSame('https://test.sagepay.com/Simulator/VSPServerPaymentPage.asp?TransactionID={1E7D9C70-DBE2-4726-88EA-D369810D801D}', $response->getRedirectUrl());
     }
 
@@ -58,7 +58,7 @@ class ServerGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'ServerPurchaseFailure.txt');
 
-        $response = $this->gateway->authorize($this->purchaseOptions);
+        $response = $this->gateway->authorize($this->purchaseOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -87,7 +87,9 @@ class ServerGatewayTest extends GatewayTestCase
             )
         );
 
-        $response = $this->gateway->completeAuthorize($this->completePurchaseOptions);
+        $response = $this->gateway->completeAuthorize($this->completePurchaseOptions)
+            ->setHttpRequest($this->httpRequest)
+            ->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('{"SecurityKey":"JEUPDN1N7E","TxAuthNo":"b","VPSTxId":"{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}","VendorTxCode":"123"}', $response->getGatewayReference());
@@ -99,19 +101,19 @@ class ServerGatewayTest extends GatewayTestCase
      */
     public function testCompleteAuthorizeInvalid()
     {
-        $response = $this->gateway->completeAuthorize($this->completePurchaseOptions);
+        $response = $this->gateway->completeAuthorize($this->completePurchaseOptions)->send();
     }
 
     public function testPurchaseSuccess()
     {
         $this->setMockResponse($this->httpClient, 'ServerPurchaseSuccess.txt');
 
-        $response = $this->gateway->purchase($this->purchaseOptions);
+        $response = $this->gateway->purchase($this->purchaseOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
         $this->assertNull($response->getGatewayReference());
-        $this->assertNull($response->getMessage());
+        $this->assertSame('Server transaction registered successfully.', $response->getMessage());
         $this->assertSame('https://test.sagepay.com/Simulator/VSPServerPaymentPage.asp?TransactionID={1E7D9C70-DBE2-4726-88EA-D369810D801D}', $response->getRedirectUrl());
     }
 
@@ -119,7 +121,7 @@ class ServerGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'ServerPurchaseFailure.txt');
 
-        $response = $this->gateway->purchase($this->purchaseOptions);
+        $response = $this->gateway->purchase($this->purchaseOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -148,7 +150,9 @@ class ServerGatewayTest extends GatewayTestCase
             )
         );
 
-        $response = $this->gateway->completePurchase($this->completePurchaseOptions);
+        $response = $this->gateway->completePurchase($this->completePurchaseOptions)
+            ->setHttpRequest($this->httpRequest)
+            ->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('{"SecurityKey":"JEUPDN1N7E","TxAuthNo":"b","VPSTxId":"{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}","VendorTxCode":"123"}', $response->getGatewayReference());
@@ -160,6 +164,6 @@ class ServerGatewayTest extends GatewayTestCase
      */
     public function testCompletePurchaseInvalid()
     {
-        $response = $this->gateway->completePurchase($this->completePurchaseOptions);
+        $response = $this->gateway->completePurchase($this->completePurchaseOptions)->send();
     }
 }

@@ -86,7 +86,7 @@ class PxPayGateway extends AbstractGateway
 
     public function completePurchase($options = null)
     {
-        return $this->completeAuthorize();
+        return $this->completeAuthorize($options);
     }
 
     public function send(RequestInterface $request)

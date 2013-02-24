@@ -22,9 +22,9 @@ class CaptureRequest extends AbstractRequest
 
         $this->validate(array('gatewayReference', 'amount'));
 
-        $data['AMT'] = $request->getAmountDecimal();
-        $data['CURRENCYCODE'] = $request->getCurrency();
-        $data['AUTHORIZATIONID'] = $request->getGatewayReference();
+        $data['AMT'] = $this->getAmountDecimal();
+        $data['CURRENCYCODE'] = $this->getCurrency();
+        $data['AUTHORIZATIONID'] = $this->getGatewayReference();
         $data['COMPLETETYPE'] = 'Complete';
 
         return $data;

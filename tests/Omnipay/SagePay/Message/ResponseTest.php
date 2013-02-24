@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\SagePay;
+namespace Omnipay\SagePay\Message;
 
 use Omnipay\TestCase;
 
@@ -17,35 +17,29 @@ class ResponseTest extends TestCase
 {
     public function setUp()
     {
-        $this->purchaseRequest = new Request(
-            array(
-                'transactionId' => '123',
-                'returnUrl' => 'https://www.example.com/return',
-            )
-        );
-
-        $this->captureRequest = new Request(
-            array(
-                'gatewayReference' => '{"SecurityKey":"JEUPDN1N7E","TxAuthNo":"4255","VPSTxId":"{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}","VendorTxCode":"438791"}',
-            )
-        );
+        $this->request = new DirectAuthorizeRequest(array(
+            'transactionId' => '123456',
+            'returnUrl' => 'https://www.example.com/return',
+        ));
     }
 
     public function testDirectPurchaseSuccess()
     {
         $httpResponse = $this->getMockResponse('DirectPurchaseSuccess.txt');
-        $response = Response::create($httpResponse->getBody(), $this->purchaseRequest);
+        $response = new Response($httpResponse->getBody());
+        $response->setRequest($this->request);
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertSame('{"SecurityKey":"OUWLNYQTVT","TxAuthNo":"9962","VPSTxId":"{5A1BC414-5409-48DD-9B8B-DCDF096CE0BE}","VendorTxCode":"123"}', $response->getGatewayReference());
+        $this->assertSame('{"SecurityKey":"OUWLNYQTVT","TxAuthNo":"9962","VPSTxId":"{5A1BC414-5409-48DD-9B8B-DCDF096CE0BE}","VendorTxCode":"123456"}', $response->getGatewayReference());
         $this->assertSame('Direct transaction from Simulator.', $response->getMessage());
     }
 
     public function testDirectPurchaseFailure()
     {
         $httpResponse = $this->getMockResponse('DirectPurchaseFailure.txt');
-        $response = Response::create($httpResponse->getBody(), $this->purchaseRequest);
+        $response = new Response($httpResponse->getBody());
+        $response->setRequest($this->request);
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -56,7 +50,8 @@ class ResponseTest extends TestCase
     public function testDirectPurchase3dSecure()
     {
         $httpResponse = $this->getMockResponse('DirectPurchase3dSecure.txt');
-        $response = Response::create($httpResponse->getBody(), $this->purchaseRequest);
+        $response = new Response($httpResponse->getBody());
+        $response->setRequest($this->request);
 
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
@@ -73,7 +68,8 @@ class ResponseTest extends TestCase
     public function testCaptureSuccess()
     {
         $httpResponse = $this->getMockResponse('CaptureSuccess.txt');
-        $response = Response::create($httpResponse->getBody(), $this->captureRequest);
+        $response = new Response($httpResponse->getBody());
+        $response->setRequest($this->request);
 
         $this->assertTrue($response->isSuccessful());
         $this->assertNull($response->getGatewayReference());
@@ -83,33 +79,11 @@ class ResponseTest extends TestCase
     public function testCaptureFailure()
     {
         $httpResponse = $this->getMockResponse('CaptureFailure.txt');
-        $response = Response::create($httpResponse->getBody(), $this->captureRequest);
+        $response = new Response($httpResponse->getBody());
+        $response->setRequest($this->request);
 
         $this->assertFalse($response->isSuccessful());
         $this->assertNull($response->getGatewayReference());
         $this->assertSame('You are trying to RELEASE a transaction that has already been RELEASEd or ABORTed.', $response->getMessage());
-    }
-
-    public function testServerPurchaseSuccess()
-    {
-        $httpResponse = $this->getMockResponse('ServerPurchaseSuccess.txt');
-        $response = Response::create($httpResponse->getBody(), $this->purchaseRequest);
-
-        $this->assertFalse($response->isSuccessful());
-        $this->assertTrue($response->isRedirect());
-        $this->assertNull($response->getGatewayReference());
-        $this->assertNull($response->getMessage());
-        $this->assertSame('https://test.sagepay.com/Simulator/VSPServerPaymentPage.asp?TransactionID={1E7D9C70-DBE2-4726-88EA-D369810D801D}', $response->getRedirectUrl());
-    }
-
-    public function testServerPurchaseFailure()
-    {
-        $httpResponse = $this->getMockResponse('ServerPurchaseFailure.txt');
-        $response = Response::create($httpResponse->getBody(), $this->purchaseRequest);
-
-        $this->assertFalse($response->isSuccessful());
-        $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getGatewayReference());
-        $this->assertSame('The Description field should be between 1 and 100 characters long.', $response->getMessage());
     }
 }

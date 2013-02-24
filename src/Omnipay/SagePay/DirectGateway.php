@@ -12,18 +12,21 @@
 namespace Omnipay\SagePay;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\Common\Message\RequestInterface;
+use Omnipay\SagePay\Message\CaptureRequest;
+use Omnipay\SagePay\Message\DirectAuthorizeRequest;
+use Omnipay\SagePay\Message\DirectPurchaseRequest;
+use Omnipay\SagePay\Message\RefundRequest;
+use Omnipay\SagePay\Message\ServerCompleteAuthorizeRequest;
 
 /**
  * Sage Pay Direct Gateway
  */
 class DirectGateway extends AbstractGateway
 {
-    protected $endpoint = 'https://live.sagepay.com/gateway/service';
+    protected $liveEndpoint = 'https://live.sagepay.com/gateway/service';
     protected $testEndpoint = 'https://test.sagepay.com/gateway/service';
     protected $simulatorEndpoint = 'https://test.sagepay.com/Simulator';
-
     protected $vendor;
     protected $testMode;
     protected $simulatorMode;
@@ -50,6 +53,8 @@ class DirectGateway extends AbstractGateway
     public function setVendor($value)
     {
         $this->vendor = $value;
+
+        return $this;
     }
 
     public function getTestMode()
@@ -60,6 +65,8 @@ class DirectGateway extends AbstractGateway
     public function setTestMode($value)
     {
         $this->testMode = $value;
+
+        return $this;
     }
 
     public function getSimulatorMode()
@@ -70,38 +77,36 @@ class DirectGateway extends AbstractGateway
     public function setSimulatorMode($value)
     {
         $this->simulatorMode = $value;
+
+        return $this;
     }
 
     public function authorize($options = null)
     {
-        $request = new Request($options);
-        $data = $this->buildDirectAuthorizeOrPurchase($request, 'DEFERRED');
+        $request = new DirectAuthorizeRequest(array_merge($this->toArray(), (array) $options));
 
-        return $this->send('DEFERRED', $data, $request);
+        return $request->setGateway($this);
     }
 
     public function completeAuthorize($options = null)
     {
-        $request = new Request($options);
-        $data = $this->buildCompleteDirect3D($request);
+        $request = new DirectAuthorizeRequest(array_merge($this->toArray(), (array) $options));
 
-        return $this->send('direct3dcallback', $data, $request);
+        return $request->setGateway($this);
     }
 
     public function capture($options = null)
     {
-        $request = new Request($options);
-        $data = $this->buildCapture($request);
+        $request = new CaptureRequest(array_merge($this->toArray(), (array) $options));
 
-        return $this->send('RELEASE', $data, $request);
+        return $request->setGateway($this);
     }
 
     public function purchase($options = null)
     {
-        $request = new Request($options);
-        $data = $this->buildDirectAuthorizeOrPurchase($request, 'PAYMENT');
+        $request = new DirectPurchaseRequest(array_merge($this->toArray(), (array) $options));
 
-        return $this->send('PAYMENT', $data, $request);
+        return $request->setGateway($this);
     }
 
     /**
@@ -109,157 +114,29 @@ class DirectGateway extends AbstractGateway
      */
     public function completePurchase($options = null)
     {
-        $request = new Request($options);
-        $data = $this->buildCompleteDirect3D($request);
-
-        return $this->send('direct3dcallback', $data, $request);
+        return $this->completeAuthorize($options);
     }
 
     public function refund($options = null)
     {
-        $request = new Request($options);
-        $data = $this->buildRefund($request);
+        $request = new RefundRequest(array_merge($this->toArray(), (array) $options));
 
-        return $this->send('REFUND', $data, $request);
-    }
-
-    protected function buildAuthorizeOrPurchase(Request $request, $method)
-    {
-        $request->validate(array('transactionId', 'card'));
-
-        $data = array();
-        $data['VPSProtocol'] = '2.23';
-        $data['TxType'] = $method;
-        $data['Vendor'] = $this->vendor;
-        $data['Description'] = $request->getDescription();
-        $data['Amount'] = $request->getAmountDecimal();
-        $data['Currency'] = $request->getCurrency();
-        $data['VendorTxCode'] = $request->getTransactionId();
-        $data['ClientIPAddress'] = $request->getClientIp();
-        $data['ApplyAVSCV2'] = 0; // use account setting
-        $data['Apply3DSecure'] = 0; // use account setting
-
-        // billing details
-        $card = $request->getCard();
-        $data['BillingFirstnames'] = $card->getFirstName();
-        $data['BillingSurname'] = $card->getLastName();
-        $data['BillingAddress1'] = $card->getBillingAddress1();
-        $data['BillingAddress2'] = $card->getBillingAddress2();
-        $data['BillingCity'] = $card->getBillingCity();
-        $data['BillingPostCode'] = $card->getBillingPostcode();
-        $data['BillingState'] = $card->getBillingState();
-        $data['BillingCountry'] = $card->getBillingCountry();
-        $data['BillingPhone'] = $card->getBillingPhone();
-
-        $data['DeliveryFirstnames'] = $card->getFirstName();
-        $data['DeliverySurname'] = $card->getLastName();
-        $data['DeliveryAddress1'] = $card->getShippingAddress1();
-        $data['DeliveryAddress2'] = $card->getShippingAddress2();
-        $data['DeliveryCity'] = $card->getShippingCity();
-        $data['DeliveryPostCode'] = $card->getShippingPostcode();
-        $data['DeliveryState'] = $card->getShippingState();
-        $data['DeliveryCountry'] = $card->getShippingCountry();
-        $data['DeliveryPhone'] = $card->getShippingPhone();
-        $data['CustomerEMail'] = $card->getEmail();
-
-        return $data;
-    }
-
-    protected function buildDirectAuthorizeOrPurchase(Request $request, $method)
-    {
-        $request->validate(array('amount', 'card'));
-
-        $card = $request->getCard();
-        $card->validate();
-
-        $data = $this->buildAuthorizeOrPurchase($request, $method);
-
-        $data['CardHolder'] = $card->getName();
-        $data['CardNumber'] = $card->getNumber();
-        $data['CV2'] = $card->getCvv();
-        $data['ExpiryDate'] = $card->getExpiryDate('my');
-        $data['CardType'] = $card->getType();
-
-        if ($card->getStartMonth() and $card->getStartYear()) {
-            $data['StartDate'] = $card->getStartDate('my');
-        }
-
-        if ($card->getIssueNumber()) {
-            $data['IssueNumber'] = $card->getIssueNumber();
-        }
-
-        return $data;
-    }
-
-    protected function buildCompleteDirect3D(Request $request)
-    {
-        $data = array(
-            'MD' => $this->httpRequest->request->get('MD'),
-            'PARes' => $this->httpRequest->request->get('PaRes'), // inconsistent caps are intentional
-        );
-
-        if (empty($data['MD']) OR empty($data['PARes'])) {
-            throw new InvalidResponseException;
-        }
-
-        return $data;
-    }
-
-    protected function buildCapture(Request $request)
-    {
-        $request->validate(array('amount', 'gatewayReference'));
-        $reference = json_decode($request->getGatewayReference(), true);
-
-        $data = array();
-        $data['TxType'] = 'RELEASE';
-        $data['VPSProtocol'] = '2.23';
-        $data['Vendor'] = $this->vendor;
-        $data['ReleaseAmount'] = $request->getAmountDecimal();
-        $data['VendorTxCode'] = $reference['VendorTxCode'];
-        $data['VPSTxId'] = $reference['VPSTxId'];
-        $data['SecurityKey'] = $reference['SecurityKey'];
-        $data['TxAuthNo'] = $reference['TxAuthNo'];
-
-        return $data;
-    }
-
-    protected function buildRefund(Request $request)
-    {
-        $request->validate(array('amount', 'gatewayReference'));
-        $reference = json_decode($request->getGatewayReference(), true);
-
-        $data = array();
-        $data['TxType'] = 'REFUND';
-        $data['VPSProtocol'] = '2.23';
-        $data['Vendor'] = $this->vendor;
-        $data['Amount'] = $request->getAmountDecimal();
-        $data['Currency'] = $request->getCurrency();
-        $data['Description'] = $request->getDescription();
-        $data['RelatedVendorTxCode'] = $reference['VendorTxCode'];
-        $data['RelatedVPSTxId'] = $reference['VPSTxId'];
-        $data['RelatedSecurityKey'] = $reference['SecurityKey'];
-        $data['RelatedTxAuthNo'] = $reference['TxAuthNo'];
-
-        // VendorTxCode must be unique for the refund
-        $data['VendorTxCode'] = $request->getTransactionId();
-
-        return $data;
+        return $request->setGateway($this);
     }
 
     public function send(RequestInterface $request)
     {
-        throw new \BadMethodCallException('fixme');
+        if ($request instanceof ServerCompleteAuthorizeRequest) {
+            return $this->createResponse($request, $request->getData());
+        }
+
+        $url = $this->getEndpoint($request->getService());
+        $httpResponse = $this->httpClient->post($url, null, $request->getData())->send();
+
+        return $this->createResponse($request, $httpResponse->getBody());
     }
 
-    protected function oldSend($service, $data, Request $request)
-    {
-        $url = $this->getCurrentEndpoint($service);
-        $httpResponse = $this->httpClient->post($url, null, $data)->send();
-
-        return Response::create($httpResponse->getBody(), $request);
-    }
-
-    protected function getCurrentEndpoint($service)
+    protected function getEndpoint($service)
     {
         $service = strtolower($service);
         if ($service == 'payment' || $service == 'deferred') {
@@ -283,6 +160,6 @@ class DirectGateway extends AbstractGateway
             return $this->testEndpoint."/$service.vsp";
         }
 
-        return $this->endpoint."/$service.vsp";
+        return $this->liveEndpoint."/$service.vsp";
     }
 }

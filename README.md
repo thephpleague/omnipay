@@ -130,7 +130,7 @@ Generally most payment gateways can be classified as one of two types:
 * Off-site gateways such as PayPal Express, where the customer is redirected to a third party site to enter payment details
 * On-site (merchant-hosted) gateways such as PayPal Pro, where the customer enters their credit card details on your site
 
-However, there are some gateways such as SagePay Direct, where you take credit card details on site, then optionally redirect
+However, there are some gateways such as Sage Pay Direct, where you take credit card details on site, then optionally redirect
 if the customer's card supports 3D Secure authentication. Therefore, there is no point differentiating between the two types of
 gateway (other than by the methods they support).
 

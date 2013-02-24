@@ -38,7 +38,7 @@ class DirectGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'DirectPurchaseSuccess.txt');
 
-        $response = $this->gateway->authorize($this->purchaseOptions);
+        $response = $this->gateway->authorize($this->purchaseOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -50,7 +50,7 @@ class DirectGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'DirectPurchaseFailure.txt');
 
-        $response = $this->gateway->authorize($this->purchaseOptions);
+        $response = $this->gateway->authorize($this->purchaseOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -62,7 +62,7 @@ class DirectGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'DirectPurchase3dSecure.txt');
 
-        $response = $this->gateway->authorize($this->purchaseOptions);
+        $response = $this->gateway->authorize($this->purchaseOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
@@ -80,7 +80,7 @@ class DirectGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'DirectPurchaseSuccess.txt');
 
-        $response = $this->gateway->purchase($this->purchaseOptions);
+        $response = $this->gateway->purchase($this->purchaseOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -92,7 +92,7 @@ class DirectGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'DirectPurchaseFailure.txt');
 
-        $response = $this->gateway->purchase($this->purchaseOptions);
+        $response = $this->gateway->purchase($this->purchaseOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -104,7 +104,7 @@ class DirectGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'DirectPurchase3dSecure.txt');
 
-        $response = $this->gateway->purchase($this->purchaseOptions);
+        $response = $this->gateway->purchase($this->purchaseOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
@@ -122,7 +122,7 @@ class DirectGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'CaptureSuccess.txt');
 
-        $response = $this->gateway->capture($this->captureOptions);
+        $response = $this->gateway->capture($this->captureOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertNull($response->getGatewayReference());
@@ -133,7 +133,7 @@ class DirectGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'CaptureFailure.txt');
 
-        $response = $this->gateway->capture($this->captureOptions);
+        $response = $this->gateway->capture($this->captureOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertNull($response->getGatewayReference());
@@ -144,7 +144,7 @@ class DirectGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'CaptureSuccess.txt');
 
-        $response = $this->gateway->refund($this->captureOptions);
+        $response = $this->gateway->refund($this->captureOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertNull($response->getGatewayReference());
@@ -155,7 +155,7 @@ class DirectGatewayTest extends GatewayTestCase
     {
         $this->setMockResponse($this->httpClient, 'CaptureFailure.txt');
 
-        $response = $this->gateway->refund($this->captureOptions);
+        $response = $this->gateway->refund($this->captureOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertNull($response->getGatewayReference());
