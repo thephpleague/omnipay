@@ -11,6 +11,7 @@
 
 namespace Omnipay\Common\Message;
 
+use Guzzle\Http\ClientInterface;
 use Omnipay\Common\CreditCard;
 use Omnipay\Common\Currency;
 use Omnipay\Common\Exception\InvalidRequestException;
@@ -21,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request as HttpRequest;
 /**
  * Abstract Request
  */
-abstract class AbstractRequest extends AbstractMessage implements RequestInterface
+abstract class AbstractRequest implements RequestInterface
 {
     protected $httpRequest;
     protected $card;
@@ -39,12 +40,13 @@ abstract class AbstractRequest extends AbstractMessage implements RequestInterfa
     /**
      * Create a new Request
      *
-     * @param array an array of initial parameters
+     * @param ClientInterface $httpClient  A Guzzle client to make API calls with
+     * @param HttpRequest     $httpRequest A Symfony HTTP request object
      */
-    public function __construct($options = null, HttpRequest $httpRequest = null)
+    public function __construct(ClientInterface $httpClient, HttpRequest $httpRequest)
     {
-        $this->initialize($options);
-        $this->httpRequest = $httpRequest ?: $this->getDefaultHttpRequest();
+        $this->httpClient = $httpClient;
+        $this->httpRequest = $httpRequest;
     }
 
     /**
@@ -57,6 +59,8 @@ abstract class AbstractRequest extends AbstractMessage implements RequestInterfa
     public function initialize($options)
     {
         Helper::initialize($this, $options);
+
+        return $this;
     }
 
     /**
@@ -76,6 +80,18 @@ abstract class AbstractRequest extends AbstractMessage implements RequestInterfa
         }
     }
 
+    public function getHttpClient()
+    {
+        return $this->httpClient;
+    }
+
+    public function setHttpClient(ClientInterface $httpClient)
+    {
+        $this->httpClient = $httpClient;
+
+        return $this;
+    }
+
     public function getHttpRequest()
     {
         return $this->httpRequest;
@@ -86,11 +102,6 @@ abstract class AbstractRequest extends AbstractMessage implements RequestInterfa
         $this->httpRequest = $httpRequest;
 
         return $this;
-    }
-
-    public function getDefaultHttpRequest()
-    {
-        return HttpRequest::createFromGlobals();
     }
 
     public function getCard()
@@ -242,24 +253,17 @@ abstract class AbstractRequest extends AbstractMessage implements RequestInterfa
         return $this;
     }
 
-    public function getResponse()
-    {
-        return $this->response;
-    }
-
-    public function setResponse(ResponseInterface $response)
-    {
-        $this->response = $response;
-
-        return $this;
-    }
-
     public function send()
     {
-        if (!$this->getGateway()) {
-            throw new RuntimeException('A gateway must be set on the request');
+        throw new RuntimeException('FIXME');
+    }
+
+    public function getResponse()
+    {
+        if (null === $this->response) {
+            throw new RuntimeException('You must call send() before accessing the Response!');
         }
 
-        return $this->getGateway()->send($this);
+        return $this->response;
     }
 }

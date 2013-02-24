@@ -12,21 +12,27 @@
 namespace Omnipay\Common\Message;
 
 use Omnipay\Common\Exception\RuntimeException;
-use Omnipay\Common\GatewayInterface;
+use Omnipay\Common\Message\RequestInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse as HttpRedirectResponse;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 /**
  * Abstract Response
  */
-abstract class AbstractResponse extends AbstractMessage implements ResponseInterface
+abstract class AbstractResponse implements ResponseInterface
 {
-    protected $data;
     protected $request;
+    protected $data;
 
-    public function __construct($data = null)
+    public function __construct(RequestInterface $request, $data)
     {
+        $this->request = $request;
         $this->data = $data;
+    }
+
+    public function getRequest()
+    {
+        return $this->request;
     }
 
     public function isRedirect()
@@ -37,30 +43,6 @@ abstract class AbstractResponse extends AbstractMessage implements ResponseInter
     public function getData()
     {
         return $this->data;
-    }
-
-    public function getRequest()
-    {
-        return $this->request;
-    }
-
-    public function setRequest(RequestInterface $request)
-    {
-        $this->request = $request;
-
-        return $this;
-    }
-
-    public function getGateway()
-    {
-        return $this->gateway;
-    }
-
-    public function setGateway(GatewayInterface $gateway)
-    {
-        $this->gateway = $gateway;
-
-        return $this;
     }
 
     public function getMessage()
