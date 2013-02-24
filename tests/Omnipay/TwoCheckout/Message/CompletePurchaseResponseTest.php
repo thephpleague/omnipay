@@ -17,7 +17,7 @@ class CompletePurchaseResponseTest extends TestCase
 {
     public function testConstruct()
     {
-        $response = new CompletePurchaseResponse(array('order_number' => 'abc123'));
+        $response = new CompletePurchaseresponse($this->getMockRequest(), array('order_number' => 'abc123'));
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());

@@ -17,7 +17,7 @@ class SIMCompleteAuthorizeResponseTest extends TestCase
 {
     public function testSuccess()
     {
-        $response = new SIMCompleteAuthorizeResponse(array('x_response_code' => '1', 'x_trans_id' => '12345'));
+        $response = new SIMCompleteAuthorizeResponse($this->getMockRequest(), array('x_response_code' => '1', 'x_trans_id' => '12345'));
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('12345', $response->getGatewayReference());
@@ -26,7 +26,7 @@ class SIMCompleteAuthorizeResponseTest extends TestCase
 
     public function testFailure()
     {
-        $response = new SIMCompleteAuthorizeResponse(array('x_response_code' => '0', 'x_response_reason_text' => 'Declined'));
+        $response = new SIMCompleteAuthorizeResponse($this->getMockRequest(), array('x_response_code' => '0', 'x_response_reason_text' => 'Declined'));
 
         $this->assertFalse($response->isSuccessful());
         $this->assertNull($response->getGatewayReference());

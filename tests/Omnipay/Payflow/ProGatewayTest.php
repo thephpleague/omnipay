@@ -20,7 +20,7 @@ class ProGatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
-        $this->gateway = new ProGateway($this->httpClient, $this->httpRequest);
+        $this->gateway = new ProGateway($this->getHttpClient(), $this->getHttpRequest());
 
         $this->options = array(
             'amount' => 1000,
@@ -37,7 +37,7 @@ class ProGatewayTest extends GatewayTestCase
 
     public function testAuthorizeSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'PurchaseSuccess.txt');
+        $this->setMockHttpResponse('PurchaseSuccess.txt');
 
         $response = $this->gateway->authorize($this->options)->send();
 
@@ -47,7 +47,7 @@ class ProGatewayTest extends GatewayTestCase
 
     public function testAuthorizeError()
     {
-        $this->setMockResponse($this->httpClient, 'PurchaseFailure.txt');
+        $this->setMockHttpResponse('PurchaseFailure.txt');
 
         $response = $this->gateway->authorize($this->options)->send();
 
@@ -62,7 +62,7 @@ class ProGatewayTest extends GatewayTestCase
             'gatewayReference' => 'abc123',
         );
 
-        $this->setMockResponse($this->httpClient, 'PurchaseSuccess.txt');
+        $this->setMockHttpResponse('PurchaseSuccess.txt');
 
         $response = $this->gateway->capture($options)->send();
 
@@ -72,7 +72,7 @@ class ProGatewayTest extends GatewayTestCase
 
     public function testPurchaseSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'PurchaseSuccess.txt');
+        $this->setMockHttpResponse('PurchaseSuccess.txt');
 
         $response = $this->gateway->purchase($this->options)->send();
 
@@ -82,7 +82,7 @@ class ProGatewayTest extends GatewayTestCase
 
     public function testPurchaseError()
     {
-        $this->setMockResponse($this->httpClient, 'PurchaseFailure.txt');
+        $this->setMockHttpResponse('PurchaseFailure.txt');
 
         $response = $this->gateway->purchase($this->options)->send();
 
@@ -97,7 +97,7 @@ class ProGatewayTest extends GatewayTestCase
             'gatewayReference' => 'abc123',
         );
 
-        $this->setMockResponse($this->httpClient, 'PurchaseSuccess.txt');
+        $this->setMockHttpResponse('PurchaseSuccess.txt');
 
         $response = $this->gateway->refund($options)->send();
 

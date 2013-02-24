@@ -19,7 +19,7 @@ class GatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
-        $this->gateway = new Gateway($this->httpClient, $this->httpRequest);
+        $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
 
         $this->options = array(
             'amount' => 1000,
@@ -29,7 +29,7 @@ class GatewayTest extends GatewayTestCase
 
     public function testPurchaseSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'PurchaseSuccess.txt');
+        $this->setMockHttpResponse('PurchaseSuccess.txt');
 
         $response = $this->gateway->purchase($this->options)->send();
 
@@ -41,7 +41,7 @@ class GatewayTest extends GatewayTestCase
 
     public function testPurchaseError()
     {
-        $this->setMockResponse($this->httpClient, 'PurchaseFailure.txt');
+        $this->setMockHttpResponse('PurchaseFailure.txt');
 
         $response = $this->gateway->purchase($this->options)->send();
 

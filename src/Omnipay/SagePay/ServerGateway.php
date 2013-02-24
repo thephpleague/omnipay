@@ -27,37 +27,27 @@ class ServerGateway extends DirectGateway
 
     public function authorize($options = null)
     {
-        $request = new ServerAuthorizeRequest(array_merge($this->toArray(), (array) $options));
+        $request = new ServerAuthorizeRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
     public function completeAuthorize($options = null)
     {
-        $request = new ServerCompleteAuthorizeRequest(array_merge($this->toArray(), (array) $options));
+        $request = new ServerCompleteAuthorizeRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
     public function purchase($options = null)
     {
-        $request = new ServerPurchaseRequest(array_merge($this->toArray(), (array) $options));
+        $request = new ServerPurchaseRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
     public function completePurchase($options = null)
     {
         return $this->completeAuthorize($options);
-    }
-
-    protected function getEndpoint($service)
-    {
-        $service = strtolower($service);
-        if ($service == 'payment' || $service == 'deferred') {
-            $service = 'vspserver-register';
-        }
-
-        return parent::getEndpoint($service);
     }
 }

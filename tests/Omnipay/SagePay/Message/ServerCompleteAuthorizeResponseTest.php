@@ -18,6 +18,7 @@ class ServerCompleteAuthorizeResponseTest extends TestCase
     public function testServerCompleteAuthorizeResponseSuccess()
     {
         $response = new ServerCompleteAuthorizeResponse(
+            $this->getMockRequest(),
             array(
                 'Status' => 'OK',
                 'TxAuthNo' => 'b',
@@ -34,10 +35,9 @@ class ServerCompleteAuthorizeResponseTest extends TestCase
                 'Last4Digits' => 'm',
             )
         );
-        $response->setRequest(new ServerCompleteAuthorizeRequest(array(
-            'transactionId' => '123',
-            'gatewayReference' => '{"SecurityKey":"JEUPDN1N7E","TxAuthNo":"4255","VPSTxId":"{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}","VendorTxCode":"438791"}',
-        )));
+
+        $this->getMockRequest()->shouldReceive('getTransactionId')->once()->andReturn('123');
+        $this->getMockRequest()->shouldReceive('getGatewayReference')->once()->andReturn('{"SecurityKey":"JEUPDN1N7E","TxAuthNo":"4255","VPSTxId":"{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}","VendorTxCode":"438791"}');
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -47,7 +47,7 @@ class ServerCompleteAuthorizeResponseTest extends TestCase
 
     public function testServerCompleteAuthorizeResponseFailure()
     {
-        $response = new ServerCompleteAuthorizeResponse(array('Status' => 'INVALID'));
+        $response = new ServerCompleteAuthorizeresponse($this->getMockRequest(), array('Status' => 'INVALID'));
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());

@@ -26,13 +26,8 @@ class RefundRequest extends PurchaseRequest
         return $data;
     }
 
-    public function getUrl()
+    public function getEndpoint()
     {
-        return '/charges/'.$this->getGatewayReference().'/refund';
-    }
-
-    public function createResponse($data)
-    {
-        return new Response($data);
+        return $this->endpoint.'/charges/'.$this->getGatewayReference().'/refund';
     }
 }

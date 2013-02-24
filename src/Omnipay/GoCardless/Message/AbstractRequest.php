@@ -18,6 +18,8 @@ use Omnipay\GoCardless\Gateway;
  */
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
+    protected $liveEndpoint = 'https://gocardless.com';
+    protected $testEndpoint = 'https://sandbox.gocardless.com';
     protected $appId;
     protected $appSecret;
     protected $merchantId;
@@ -90,5 +92,10 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function generateSignature($data)
     {
         return hash_hmac('sha256', Gateway::generateQueryString($data), $this->appSecret);
+    }
+
+    public function getEndpoint()
+    {
+        return $this->testMode ? $this->testEndpoint : $this->liveEndpoint;
     }
 }

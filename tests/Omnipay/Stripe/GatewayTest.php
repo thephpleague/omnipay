@@ -19,7 +19,7 @@ class GatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
-        $this->gateway = new Gateway($this->httpClient, $this->httpRequest);
+        $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
         $this->gateway->setApiKey('abc123');
 
         $this->purchaseOptions = array(
@@ -34,7 +34,7 @@ class GatewayTest extends GatewayTestCase
 
     public function testPurchaseError()
     {
-        $this->setMockResponse($this->httpClient, 'PurchaseFailure.txt');
+        $this->setMockHttpResponse('PurchaseFailure.txt');
 
         $response = $this->gateway->purchase($this->purchaseOptions)->send();
 
@@ -45,7 +45,7 @@ class GatewayTest extends GatewayTestCase
 
     public function testPurchaseSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'PurchaseSuccess.txt');
+        $this->setMockHttpResponse('PurchaseSuccess.txt');
 
         $response = $this->gateway->purchase($this->purchaseOptions)->send();
 
@@ -56,7 +56,7 @@ class GatewayTest extends GatewayTestCase
 
     public function testRefundError()
     {
-        $this->setMockResponse($this->httpClient, 'RefundFailure.txt');
+        $this->setMockHttpResponse('RefundFailure.txt');
 
         $response = $this->gateway->refund($this->refundOptions)->send();
 
@@ -66,7 +66,7 @@ class GatewayTest extends GatewayTestCase
 
     public function testRefundSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'RefundSuccess.txt');
+        $this->setMockHttpResponse('RefundSuccess.txt');
 
         $response = $this->gateway->refund($this->refundOptions)->send();
 

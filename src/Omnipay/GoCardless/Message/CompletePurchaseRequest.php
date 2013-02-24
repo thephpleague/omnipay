@@ -12,6 +12,7 @@
 namespace Omnipay\GoCardless\Message;
 
 use Omnipay\Common\Exception\InvalidResponseException;
+use Omnipay\GoCardless\Gateway;
 
 /**
  * GoCardless Complete Purchase Request
@@ -34,10 +35,19 @@ class CompletePurchaseRequest extends AbstractRequest
         return $data;
     }
 
-    public function createResponse($data)
+    public function send()
     {
-        $response = new CompletePurchaseResponse($data);
+        $httpRequest = $this->httpClient->post(
+            $this->getEndpoint().'/api/v1/confirm',
+            array('Accept' => 'application/json'),
+            Gateway::generateQueryString($this->getData())
+        );
+        $httpResponse = $httpRequest->setAuth($this->appId, $this->appSecret)->send();
 
-        return $response->setGatewayReference($this->httpRequest->get('resource_id'));
+        return $this->response = new CompletePurchaseResponse(
+            $this,
+            $httpResponse->json(),
+            $this->httpRequest->get('resource_id')
+        );
     }
 }

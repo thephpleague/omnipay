@@ -11,10 +11,9 @@
 
 namespace Omnipay\CardSave;
 
-use DOMDocument;
+use Omnipay\CardSave\Message\CompletePurchaseRequest;
 use Omnipay\CardSave\Message\PurchaseRequest;
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Message\RequestInterface;
 
 /**
  * CardSave Gateway
@@ -23,7 +22,6 @@ use Omnipay\Common\Message\RequestInterface;
  */
 class Gateway extends AbstractGateway
 {
-    protected $endpoint = 'https://gw1.cardsaveonlinepayments.com:4430/';
     protected $merchantId;
     protected $password;
 
@@ -66,39 +64,15 @@ class Gateway extends AbstractGateway
 
     public function purchase($options = null)
     {
-        $request = new PurchaseRequest(array_merge($this->toArray(), (array) $options));
+        $request = new PurchaseRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
     public function completePurchase($options = null)
     {
-        $request = new Request($options);
-        $data = $this->build3DAuthRequest();
+        $request = new CompletePurchaseRequest($this->httpClient, $this->httpRequest);
 
-        return $this->send($data, $request);
-    }
-
-    public function send(RequestInterface $request)
-    {
-        // the PHP SOAP library sucks, and SimpleXML can't append element trees
-        // TODO: find PSR-0 SOAP library
-        $document = new DOMDocument('1.0', 'utf-8');
-        $envelope = $document->appendChild(
-            $document->createElementNS('http://schemas.xmlsoap.org/soap/envelope/', 'soap:Envelope')
-        );
-        $envelope->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $envelope->setAttribute('xmlns:xsd', 'http://www.w3.org/2001/XMLSchema');
-        $body = $envelope->appendChild($document->createElement('soap:Body'));
-        $body->appendChild($document->importNode(dom_import_simplexml($request->getData()), true));
-
-        // post to Cardsave
-        $rootElement = $request->getData()->getName();
-        $headers = array(
-            'Content-Type' => 'text/xml; charset=utf-8',
-            'SOAPAction' => 'https://www.thepaymentgateway.net/'.$rootElement);
-        $httpResponse = $this->httpClient->post($this->endpoint, $headers, $document->saveXML())->send();
-
-        return $this->createResponse($request, $httpResponse->getBody());
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 }

@@ -16,19 +16,7 @@ namespace Omnipay\PayPal\Message;
  */
 class ExpressCompleteAuthorizeRequest extends AuthorizeRequest
 {
-    protected $paymentAction;
-
-    public function getPaymentAction()
-    {
-        return $this->paymentAction;
-    }
-
-    public function setPaymentAction($value)
-    {
-        $this->paymentAction = $value;
-
-        return $this;
-    }
+    protected $action = 'Authorization';
 
     public function getData()
     {
@@ -36,7 +24,7 @@ class ExpressCompleteAuthorizeRequest extends AuthorizeRequest
 
         $this->validate(array('amount'));
 
-        $data['PAYMENTREQUEST_0_PAYMENTACTION'] = $this->getPaymentAction();
+        $data['PAYMENTREQUEST_0_PAYMENTACTION'] = $this->action;
         $data['PAYMENTREQUEST_0_AMT'] = $this->getAmountDecimal();
         $data['PAYMENTREQUEST_0_CURRENCYCODE'] = $this->getCurrency();
         $data['PAYMENTREQUEST_0_DESC'] = $this->getDescription();

@@ -19,7 +19,7 @@ class ExpressGatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
-        $this->gateway = new ExpressGateway($this->httpClient, $this->httpRequest);
+        $this->gateway = new ExpressGateway($this->getHttpClient(), $this->getHttpRequest());
 
         $this->options = array(
             'amount' => 1000,
@@ -30,7 +30,7 @@ class ExpressGatewayTest extends GatewayTestCase
 
     public function testAuthorizeSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'ExpressPurchaseSuccess.txt');
+        $this->setMockHttpResponse('ExpressPurchaseSuccess.txt');
 
         $response = $this->gateway->authorize($this->options)->send();
 
@@ -42,7 +42,7 @@ class ExpressGatewayTest extends GatewayTestCase
 
     public function testAuthorizeFailure()
     {
-        $this->setMockResponse($this->httpClient, 'ExpressPurchaseFailure.txt');
+        $this->setMockHttpResponse('ExpressPurchaseFailure.txt');
 
         $response = $this->gateway->authorize($this->options)->send();
 
@@ -54,7 +54,7 @@ class ExpressGatewayTest extends GatewayTestCase
 
     public function testPurchaseSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'ExpressPurchaseSuccess.txt');
+        $this->setMockHttpResponse('ExpressPurchaseSuccess.txt');
 
         $response = $this->gateway->purchase($this->options)->send();
 
@@ -66,7 +66,7 @@ class ExpressGatewayTest extends GatewayTestCase
 
     public function testPurchaseFailure()
     {
-        $this->setMockResponse($this->httpClient, 'ExpressPurchaseFailure.txt');
+        $this->setMockHttpResponse('ExpressPurchaseFailure.txt');
 
         $response = $this->gateway->purchase($this->options)->send();
 

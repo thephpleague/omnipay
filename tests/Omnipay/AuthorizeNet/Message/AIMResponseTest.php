@@ -20,13 +20,13 @@ class AIMResponseTest extends TestCase
      */
     public function testConstructEmpty()
     {
-        $response = new AIMResponse('');
+        $response = new AIMResponse($this->getMockRequest(), '');
     }
 
     public function testAuthorizeSuccess()
     {
-        $httpResponse = $this->getMockResponse('AIMAuthorizeSuccess.txt');
-        $response = new AIMResponse($httpResponse->getBody());
+        $httpResponse = $this->getMockHttpResponse('AIMAuthorizeSuccess.txt');
+        $response = new AIMResponse($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('2184493132', $response->getGatewayReference());
@@ -35,8 +35,8 @@ class AIMResponseTest extends TestCase
 
     public function testAuthorizeFailure()
     {
-        $httpResponse = $this->getMockResponse('AIMAuthorizeFailure.txt');
-        $response = new AIMResponse($httpResponse->getBody());
+        $httpResponse = $this->getMockHttpResponse('AIMAuthorizeFailure.txt');
+        $response = new AIMResponse($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('0', $response->getGatewayReference());
@@ -45,8 +45,8 @@ class AIMResponseTest extends TestCase
 
     public function testCaptureSuccess()
     {
-        $httpResponse = $this->getMockResponse('AIMCaptureSuccess.txt');
-        $response = new AIMResponse($httpResponse->getBody());
+        $httpResponse = $this->getMockHttpResponse('AIMCaptureSuccess.txt');
+        $response = new AIMResponse($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('2184494531', $response->getGatewayReference());
@@ -55,8 +55,8 @@ class AIMResponseTest extends TestCase
 
     public function testCaptureFailure()
     {
-        $httpResponse = $this->getMockResponse('AIMCaptureFailure.txt');
-        $response = new AIMResponse($httpResponse->getBody());
+        $httpResponse = $this->getMockHttpResponse('AIMCaptureFailure.txt');
+        $response = new AIMResponse($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('0', $response->getGatewayReference());
@@ -65,8 +65,8 @@ class AIMResponseTest extends TestCase
 
     public function testPurchaseSuccess()
     {
-        $httpResponse = $this->getMockResponse('AIMPurchaseSuccess.txt');
-        $response = new AIMResponse($httpResponse->getBody());
+        $httpResponse = $this->getMockHttpResponse('AIMPurchaseSuccess.txt');
+        $response = new AIMResponse($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('2184492509', $response->getGatewayReference());
@@ -75,8 +75,8 @@ class AIMResponseTest extends TestCase
 
     public function testPurchaseFailure()
     {
-        $httpResponse = $this->getMockResponse('AIMPurchaseFailure.txt');
-        $response = new AIMResponse($httpResponse->getBody());
+        $httpResponse = $this->getMockHttpResponse('AIMPurchaseFailure.txt');
+        $response = new AIMResponse($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('0', $response->getGatewayReference());

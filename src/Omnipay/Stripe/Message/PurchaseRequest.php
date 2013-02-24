@@ -18,6 +18,7 @@ use Omnipay\Common\Message\AbstractRequest;
  */
 class PurchaseRequest extends AbstractRequest
 {
+    protected $endpoint = 'https://api.stripe.com/v1';
     protected $apiKey;
 
     public function getApiKey()
@@ -63,13 +64,32 @@ class PurchaseRequest extends AbstractRequest
         return $data;
     }
 
-    public function getUrl()
+    public function getEndpoint()
     {
-        return '/charges';
+        return $this->endpoint.'/charges';
     }
 
     public function createResponse($data)
     {
         return new Response($data);
+    }
+
+    public function send()
+    {
+        // don't throw exceptions for 402 errors
+        $this->httpClient->getEventDispatcher()->addListener(
+            'request.error',
+            function ($event) {
+                if ($event['response']->getStatusCode() == 402) {
+                    $event->stopPropagation();
+                }
+            }
+        );
+
+        $httpResponse = $this->httpClient->post($this->getEndpoint(), null, $this->getData())
+            ->setHeader('Authorization', 'Basic '.base64_encode($this->apiKey.':'))
+            ->send();
+
+        return $this->response = new Response($this, $httpResponse->json());
     }
 }

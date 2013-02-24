@@ -16,13 +16,15 @@ namespace Omnipay\AuthorizeNet\Message;
  */
 class SIMAuthorizeRequest extends AbstractRequest
 {
+    protected $action = 'AUTH_ONLY';
+
     public function getData()
     {
         $this->validate(array('amount', 'returnUrl'));
 
         $data = array();
         $data['x_login'] = $this->apiLoginId;
-        $data['x_type'] = $this->method;
+        $data['x_type'] = $this->action;
         $data['x_fp_sequence'] = mt_rand();
         $data['x_fp_timestamp'] = time();
         $data['x_delim_data'] = 'FALSE';
@@ -56,8 +58,8 @@ class SIMAuthorizeRequest extends AbstractRequest
         return hash_hmac('md5', $fingerprint, $this->transactionKey);
     }
 
-    public function createResponse($data)
+    public function send()
     {
-        return new SIMAuthorizeResponse($data);
+        return $this->response = new SIMAuthorizeResponse($this, $this->getData(), $this->getEndpoint());
     }
 }

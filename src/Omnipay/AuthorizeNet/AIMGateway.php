@@ -12,17 +12,15 @@
 namespace Omnipay\AuthorizeNet;
 
 use Omnipay\AuthorizeNet\Message\AIMAuthorizeRequest;
+use Omnipay\AuthorizeNet\Message\AIMPurchaseRequest;
 use Omnipay\AuthorizeNet\Message\CaptureRequest;
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Message\RequestInterface;
 
 /**
  * Authorize.Net AIM Class
  */
 class AIMGateway extends AbstractGateway
 {
-    protected $liveEndpoint = 'https://secure.authorize.net/gateway/transact.dll';
-    protected $developerEndpoint = 'https://test.authorize.net/gateway/transact.dll';
     protected $apiLoginId;
     protected $transactionKey;
     protected $testMode;
@@ -93,34 +91,22 @@ class AIMGateway extends AbstractGateway
 
     public function authorize($options = null)
     {
-        $request = new AIMAuthorizeRequest(array_merge($this->toArray(), (array) $options));
+        $request = new AIMAuthorizeRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this)->setMethod('AUTH_ONLY');
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
     public function capture($options = null)
     {
-        $request = new CaptureRequest(array_merge($this->toArray(), (array) $options));
+        $request = new CaptureRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
     public function purchase($options = null)
     {
-        $request = new AIMAuthorizeRequest(array_merge($this->toArray(), (array) $options));
+        $request = new AIMPurchaseRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this)->setMethod('AUTH_CAPTURE');
-    }
-
-    public function send(RequestInterface $request)
-    {
-        $httpResponse = $this->httpClient->get($this->getEndpoint(), null, $request->getData())->send();
-
-        return $this->createResponse($request, $httpResponse->getBody());
-    }
-
-    public function getEndpoint()
-    {
-        return $this->developerMode ? $this->developerEndpoint : $this->liveEndpoint;
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 }

@@ -17,11 +17,14 @@ class CompletePurchaseResponseTest extends TestCase
 {
     public function testCompletePurchaseSuccess()
     {
-        $response = new CompletePurchaseResponse(array(
-            'transStatus' => 'Y',
-            'transId' => 'abc123',
-            'rawAuthMessage' => 'Success Message'
-        ));
+        $response = new CompletePurchaseresponse(
+            $this->getMockRequest(),
+            array(
+                'transStatus' => 'Y',
+                'transId' => 'abc123',
+                'rawAuthMessage' => 'Success Message'
+            )
+        );
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -31,11 +34,14 @@ class CompletePurchaseResponseTest extends TestCase
 
     public function testCompletePurchaseFailure()
     {
-        $response = new CompletePurchaseResponse(array(
-            'transStatus' => 'N',
-            'transId' => null,
-            'rawAuthMessage' => 'Declined'
-        ));
+        $response = new CompletePurchaseresponse(
+            $this->getMockRequest(),
+            array(
+                'transStatus' => 'N',
+                'transId' => null,
+                'rawAuthMessage' => 'Declined'
+            )
+        );
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -45,7 +51,7 @@ class CompletePurchaseResponseTest extends TestCase
 
     public function testCompletePurchaseInvalid()
     {
-        $response = new CompletePurchaseResponse(array());
+        $response = new CompletePurchaseresponse($this->getMockRequest(), array());
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());

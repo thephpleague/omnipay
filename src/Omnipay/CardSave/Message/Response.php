@@ -15,14 +15,17 @@ use DOMDocument;
 use Omnipay\Common\Exception\InvalidResponseException;
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RedirectResponseInterface;
+use Omnipay\Common\Message\RequestInterface;
 
 /**
  * CardSave Response
  */
 class Response extends AbstractResponse implements RedirectResponseInterface
 {
-    public function __construct($data)
+    public function __construct(RequestInterface $request, $data)
     {
+        $this->request = $request;
+
         // we only care about the content of the soap:Body element
         $responseDom = new DOMDocument;
         $responseDom->loadXML($data);

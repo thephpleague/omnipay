@@ -17,8 +17,8 @@ class ResponseTest extends TestCase
 {
     public function testPurchaseSuccess()
     {
-        $httpResponse = $this->getMockResponse('PxPostPurchaseSuccess.txt');
-        $response = new Response($httpResponse->xml());
+        $httpResponse = $this->getMockHttpResponse('PxPostPurchaseSuccess.txt');
+        $response = new Response($this->getMockRequest(), $httpResponse->xml());
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -28,8 +28,8 @@ class ResponseTest extends TestCase
 
     public function testPurchaseFailure()
     {
-        $httpResponse = $this->getMockResponse('PxPostPurchaseFailure.txt');
-        $response = new Response($httpResponse->xml());
+        $httpResponse = $this->getMockHttpResponse('PxPostPurchaseFailure.txt');
+        $response = new Response($this->getMockRequest(), $httpResponse->xml());
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -39,8 +39,8 @@ class ResponseTest extends TestCase
 
     public function testCompletePurchaseSuccess()
     {
-        $httpResponse = $this->getMockResponse('PxPayCompletePurchaseSuccess.txt');
-        $response = new Response($httpResponse->xml());
+        $httpResponse = $this->getMockHttpResponse('PxPayCompletePurchaseSuccess.txt');
+        $response = new Response($this->getMockRequest(), $httpResponse->xml());
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -50,8 +50,8 @@ class ResponseTest extends TestCase
 
     public function testCompletePurchaseFailure()
     {
-        $httpResponse = $this->getMockResponse('PxPayCompletePurchaseFailure.txt');
-        $response = new Response($httpResponse->xml());
+        $httpResponse = $this->getMockHttpResponse('PxPayCompletePurchaseFailure.txt');
+        $response = new Response($this->getMockRequest(), $httpResponse->xml());
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());

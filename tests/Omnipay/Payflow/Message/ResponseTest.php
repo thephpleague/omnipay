@@ -20,13 +20,13 @@ class ResponseTest extends TestCase
      */
     public function testConstructEmpty()
     {
-        $response = new Response('');
+        $response = new Response($this->getMockRequest(), '');
     }
 
     public function testPurchaseSuccess()
     {
-        $httpResponse = $this->getMockResponse('PurchaseSuccess.txt');
-        $response = new Response($httpResponse->getBody());
+        $httpResponse = $this->getMockHttpResponse('PurchaseSuccess.txt');
+        $response = new Response($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -36,8 +36,8 @@ class ResponseTest extends TestCase
 
     public function testPurchaseFailure()
     {
-        $httpResponse = $this->getMockResponse('PurchaseFailure.txt');
-        $response = new Response($httpResponse->getBody());
+        $httpResponse = $this->getMockHttpResponse('PurchaseFailure.txt');
+        $response = new Response($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());

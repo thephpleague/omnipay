@@ -11,16 +11,34 @@
 
 namespace Omnipay\Common\Message;
 
+use Guzzle\Http\ClientInterface;
+use Omnipay\Common\Message\RequestInterface;
+use Symfony\Component\HttpFoundation\Request as HttpRequest;
+
 /**
  * Request Interface
  */
 interface RequestInterface extends MessageInterface
 {
+    public function getHttpClient();
+
+    public function setHttpClient(ClientInterface $value);
+
+    public function getHttpRequest();
+
+    public function setHttpRequest(HttpRequest $value);
+
+    /**
+     * Get the response to this request (if the request has been sent)
+     *
+     * @return ResponseInterface
+     */
     public function getResponse();
 
-    public function setResponse(ResponseInterface $response);
-
-    public function createResponse($data);
-
+    /**
+     * Send the request
+     *
+     * @return ResponseInterface
+     */
     public function send();
 }

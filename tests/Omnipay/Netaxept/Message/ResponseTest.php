@@ -17,8 +17,8 @@ class ResponseTest extends TestCase
 {
     public function testPurchaseSuccess()
     {
-        $httpResponse = $this->getMockResponse('PurchaseSuccess.txt');
-        $response = new Response($httpResponse->xml());
+        $httpResponse = $this->getMockHttpResponse('PurchaseSuccess.txt');
+        $response = new Response($this->getMockRequest(), $httpResponse->xml());
 
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
@@ -28,8 +28,8 @@ class ResponseTest extends TestCase
 
     public function testPurchaseFailure()
     {
-        $httpResponse = $this->getMockResponse('PurchaseFailure.txt');
-        $response = new Response($httpResponse->xml());
+        $httpResponse = $this->getMockHttpResponse('PurchaseFailure.txt');
+        $response = new Response($this->getMockRequest(), $httpResponse->xml());
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -39,8 +39,8 @@ class ResponseTest extends TestCase
 
     public function testCompletePurchaseSuccess()
     {
-        $httpResponse = $this->getMockResponse('CompletePurchaseSuccess.txt');
-        $response = new Response($httpResponse->xml());
+        $httpResponse = $this->getMockHttpResponse('CompletePurchaseSuccess.txt');
+        $response = new Response($this->getMockRequest(), $httpResponse->xml());
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -50,8 +50,8 @@ class ResponseTest extends TestCase
 
     public function testCompletePurchaseFailure()
     {
-        $httpResponse = $this->getMockResponse('CompletePurchaseFailure.txt');
-        $response = new Response($httpResponse->xml());
+        $httpResponse = $this->getMockHttpResponse('CompletePurchaseFailure.txt');
+        $response = new Response($this->getMockRequest(), $httpResponse->xml());
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());

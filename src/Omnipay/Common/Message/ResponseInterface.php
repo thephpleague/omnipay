@@ -17,6 +17,13 @@ namespace Omnipay\Common\Message;
 interface ResponseInterface extends MessageInterface
 {
     /**
+     * Get the original request which generated this response
+     *
+     * @return RequestInterface
+     */
+    public function getRequest();
+
+    /**
      * Is the response successful?
      *
      * @return boolean

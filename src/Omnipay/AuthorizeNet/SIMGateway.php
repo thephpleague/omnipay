@@ -12,10 +12,7 @@
 namespace Omnipay\AuthorizeNet;
 
 use Omnipay\AuthorizeNet\Message\SIMAuthorizeRequest;
-use Omnipay\AuthorizeNet\Message\SIMAuthorizeResponse;
 use Omnipay\AuthorizeNet\Message\SIMCompleteAuthorizeRequest;
-use Omnipay\Common\Exception\InvalidResponseException;
-use Omnipay\Common\Message\RequestInterface;
 
 /**
  * Authorize.Net SIM Class
@@ -29,45 +26,27 @@ class SIMGateway extends AIMGateway
 
     public function authorize($options = null)
     {
-        $request = new SIMAuthorizeRequest(array_merge($this->toArray(), (array) $options));
+        $request = new SIMAuthorizeRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this)->setMethod('AUTH_ONLY');
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
     public function completeAuthorize($options = null)
     {
-        $request = new SIMCompleteAuthorizeRequest(array_merge($this->toArray(), (array) $options));
+        $request = new SIMCompleteAuthorizeRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
-
-        $request = new Request($options);
-        if (!$this->validateReturnHash($request, $this->httpRequest->request->get('x_MD5_Hash'))) {
-            throw new InvalidResponseException();
-        }
-
-        return new SIMResponse($this->httpRequest->request->all());
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
     public function purchase($options = null)
     {
-        $request = new SIMAuthorizeRequest(array_merge($this->toArray(), (array) $options));
+        $request = new SIMAuthorizeRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this)->setMethod('AUTH_CAPTURE');
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
     public function completePurchase($options = null)
     {
         return $this->completeAuthorize($options);
-    }
-
-    public function send(RequestInterface $request)
-    {
-        $response = $this->createResponse($request, $request->getData());
-
-        if ($response instanceof SIMAuthorizeResponse) {
-            $response->setRedirectUrl($this->getEndpoint());
-        }
-
-        return $response;
     }
 }

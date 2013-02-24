@@ -12,7 +12,6 @@
 namespace Omnipay\GoCardless;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Message\RequestInterface;
 use Omnipay\GoCardless\Message\PurchaseRequest;
 use Omnipay\GoCardless\Message\CompletePurchaseRequest;
 
@@ -23,8 +22,6 @@ use Omnipay\GoCardless\Message\CompletePurchaseRequest;
  */
 class Gateway extends AbstractGateway
 {
-    protected $liveEndpoint = 'https://gocardless.com';
-    protected $testEndpoint = 'https://sandbox.gocardless.com';
     protected $appId;
     protected $appSecret;
     protected $merchantId;
@@ -109,31 +106,16 @@ class Gateway extends AbstractGateway
 
     public function purchase($options = null)
     {
-        $request = new PurchaseRequest(array_merge($this->toArray(), (array) $options));
+        $request = new PurchaseRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
     public function completePurchase($options = null)
     {
-        $request = new CompletePurchaseRequest(array_merge($this->toArray(), (array) $options));
+        $request = new CompletePurchaseRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
-    }
-
-    public function send(RequestInterface $request)
-    {
-        if ($request instanceof PurchaseRequest) {
-            return $this->createResponse($request, $request->getData())->setEndpoint($this->getEndpoint());
-        }
-
-        $httpResponse = $this->httpClient->post(
-            $this->getEndpoint().'/api/v1/confirm',
-            array('Accept' => 'application/json'),
-            static::generateQueryString($request->getData())
-        )->setAuth($this->appId, $this->appSecret)->send();
-
-        return $this->createResponse($request, $httpResponse->json());
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
     /**
@@ -167,10 +149,5 @@ class Gateway extends AbstractGateway
         } else {
             $pairs[] = array(rawurlencode($namespace), rawurlencode($data));
         }
-    }
-
-    protected function getEndpoint()
-    {
-        return $this->testMode ? $this->testEndpoint : $this->liveEndpoint;
     }
 }

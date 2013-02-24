@@ -19,7 +19,7 @@ class GatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
-        $this->gateway = new Gateway($this->httpClient, $this->httpRequest);
+        $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
         $this->gateway->setMerchantId('foo');
         $this->gateway->setToken('bar');
 
@@ -33,7 +33,7 @@ class GatewayTest extends GatewayTestCase
 
     public function testPurchaseSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'PurchaseSuccess.txt');
+        $this->setMockHttpResponse('PurchaseSuccess.txt');
 
         $response = $this->gateway->purchase($this->options)->send();
 
@@ -46,7 +46,7 @@ class GatewayTest extends GatewayTestCase
 
     public function testPurchaseFailure()
     {
-        $this->setMockResponse($this->httpClient, 'PurchaseFailure.txt');
+        $this->setMockHttpResponse('PurchaseFailure.txt');
 
         $response = $this->gateway->purchase($this->options)->send();
 
@@ -58,17 +58,17 @@ class GatewayTest extends GatewayTestCase
 
     public function testCompletePurchaseSuccess()
     {
-        $this->httpRequest->query->replace(
+        $this->getHttpRequest()->query->replace(
             array(
                 'responseCode' => 'OK',
                 'transactionId' => 'abc123',
             )
         );
 
-        $this->setMockResponse($this->httpClient, 'CompletePurchaseSuccess.txt');
+        $this->setMockHttpResponse('CompletePurchaseSuccess.txt');
 
         $response = $this->gateway->completePurchase($this->options)
-            ->setHttpRequest($this->httpRequest)
+            ->setHttpRequest($this->getHttpRequest())
             ->send();
 
         $this->assertTrue($response->isSuccessful());
@@ -79,7 +79,7 @@ class GatewayTest extends GatewayTestCase
 
     public function testCompletePurchaseCancel()
     {
-        $this->httpRequest->query->replace(
+        $this->getHttpRequest()->query->replace(
             array(
                 'transactionId' => '1de59458487344759832716abf48109b',
                 'responseCode' => 'Cancel',
@@ -87,7 +87,7 @@ class GatewayTest extends GatewayTestCase
         );
 
         $response = $this->gateway->completePurchase($this->options)
-            ->setHttpRequest($this->httpRequest)
+            ->setHttpRequest($this->getHttpRequest())
             ->send();
 
         $this->assertFalse($response->isSuccessful());
@@ -98,17 +98,17 @@ class GatewayTest extends GatewayTestCase
 
     public function testCompletePurchaseFailure()
     {
-        $this->httpRequest->query->replace(
+        $this->getHttpRequest()->query->replace(
             array(
                 'responseCode' => 'OK',
                 'transactionId' => 'abc123',
             )
         );
 
-        $this->setMockResponse($this->httpClient, 'CompletePurchaseFailure.txt');
+        $this->setMockHttpResponse('CompletePurchaseFailure.txt');
 
         $response = $this->gateway->completePurchase($this->options)
-            ->setHttpRequest($this->httpRequest)
+            ->setHttpRequest($this->getHttpRequest())
             ->send();
 
         $this->assertFalse($response->isSuccessful());

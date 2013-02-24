@@ -67,6 +67,11 @@ class PurchaseRequest extends AbstractRequest
         return new PurchaseResponse($data);
     }
 
+    public function send()
+    {
+        return $this->response = new PurchaseResponse($this, $this->getData());
+    }
+
     /**
      * Generate a nonce for each request
      */

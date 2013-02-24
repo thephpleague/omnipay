@@ -20,7 +20,7 @@ class ProGatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
-        $this->gateway = new ProGateway($this->httpClient, $this->httpRequest);
+        $this->gateway = new ProGateway($this->getHttpClient(), $this->getHttpRequest());
 
         $this->options = array(
             'amount' => 1000,
@@ -37,7 +37,7 @@ class ProGatewayTest extends GatewayTestCase
 
     public function testAuthorize()
     {
-        $this->setMockResponse($this->httpClient, 'ProPurchaseSuccess.txt');
+        $this->setMockHttpResponse('ProPurchaseSuccess.txt');
 
         $response = $this->gateway->authorize($this->options)->send();
 
@@ -48,7 +48,7 @@ class ProGatewayTest extends GatewayTestCase
 
     public function testPurchase()
     {
-        $this->setMockResponse($this->httpClient, 'ProPurchaseSuccess.txt');
+        $this->setMockHttpResponse('ProPurchaseSuccess.txt');
 
         $response = $this->gateway->purchase($this->options)->send();
 

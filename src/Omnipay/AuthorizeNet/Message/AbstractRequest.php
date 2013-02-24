@@ -16,11 +16,13 @@ namespace Omnipay\AuthorizeNet\Message;
  */
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
+    protected $liveEndpoint = 'https://secure.authorize.net/gateway/transact.dll';
+    protected $developerEndpoint = 'https://test.authorize.net/gateway/transact.dll';
+    protected $action;
     protected $apiLoginId;
     protected $transactionKey;
     protected $testMode;
     protected $developerMode;
-    protected $method;
 
     public function getApiLoginId()
     {
@@ -70,24 +72,12 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this;
     }
 
-    public function getMethod()
-    {
-        return $this->method;
-    }
-
-    public function setMethod($value)
-    {
-        $this->method = $value;
-
-        return $this;
-    }
-
     protected function getBaseData()
     {
         $data = array();
         $data['x_login'] = $this->apiLoginId;
         $data['x_tran_key'] = $this->transactionKey;
-        $data['x_type'] = $this->method;
+        $data['x_type'] = $this->action;
         $data['x_version'] = '3.1';
         $data['x_delim_data'] = 'TRUE';
         $data['x_delim_char'] = ',';
@@ -123,5 +113,17 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function createResponse($data)
     {
         return new AIMResponse($data);
+    }
+
+    public function send()
+    {
+        $httpResponse = $this->httpClient->get($this->getEndpoint(), null, $this->getData())->send();
+
+        return $this->response = new AIMResponse($this, $httpResponse->getBody());
+    }
+
+    public function getEndpoint()
+    {
+        return $this->developerMode ? $this->developerEndpoint : $this->liveEndpoint;
     }
 }

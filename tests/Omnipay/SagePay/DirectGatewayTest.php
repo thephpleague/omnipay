@@ -19,7 +19,7 @@ class DirectGatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
-        $this->gateway = new DirectGateway($this->httpClient, $this->httpRequest);
+        $this->gateway = new DirectGateway($this->getHttpClient(), $this->getHttpRequest());
 
         $this->purchaseOptions = array(
             'amount' => 1000,
@@ -36,7 +36,7 @@ class DirectGatewayTest extends GatewayTestCase
 
     public function testAuthorizeFailureSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'DirectPurchaseSuccess.txt');
+        $this->setMockHttpResponse('DirectPurchaseSuccess.txt');
 
         $response = $this->gateway->authorize($this->purchaseOptions)->send();
 
@@ -48,7 +48,7 @@ class DirectGatewayTest extends GatewayTestCase
 
     public function testAuthorizeFailure()
     {
-        $this->setMockResponse($this->httpClient, 'DirectPurchaseFailure.txt');
+        $this->setMockHttpResponse('DirectPurchaseFailure.txt');
 
         $response = $this->gateway->authorize($this->purchaseOptions)->send();
 
@@ -60,7 +60,7 @@ class DirectGatewayTest extends GatewayTestCase
 
     public function testAuthorize3dSecure()
     {
-        $this->setMockResponse($this->httpClient, 'DirectPurchase3dSecure.txt');
+        $this->setMockHttpResponse('DirectPurchase3dSecure.txt');
 
         $response = $this->gateway->authorize($this->purchaseOptions)->send();
 
@@ -78,7 +78,7 @@ class DirectGatewayTest extends GatewayTestCase
 
     public function testPurchaseSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'DirectPurchaseSuccess.txt');
+        $this->setMockHttpResponse('DirectPurchaseSuccess.txt');
 
         $response = $this->gateway->purchase($this->purchaseOptions)->send();
 
@@ -90,7 +90,7 @@ class DirectGatewayTest extends GatewayTestCase
 
     public function testPurchaseFailure()
     {
-        $this->setMockResponse($this->httpClient, 'DirectPurchaseFailure.txt');
+        $this->setMockHttpResponse('DirectPurchaseFailure.txt');
 
         $response = $this->gateway->purchase($this->purchaseOptions)->send();
 
@@ -102,7 +102,7 @@ class DirectGatewayTest extends GatewayTestCase
 
     public function testPurchase3dSecure()
     {
-        $this->setMockResponse($this->httpClient, 'DirectPurchase3dSecure.txt');
+        $this->setMockHttpResponse('DirectPurchase3dSecure.txt');
 
         $response = $this->gateway->purchase($this->purchaseOptions)->send();
 
@@ -120,7 +120,7 @@ class DirectGatewayTest extends GatewayTestCase
 
     public function testCaptureSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'CaptureSuccess.txt');
+        $this->setMockHttpResponse('CaptureSuccess.txt');
 
         $response = $this->gateway->capture($this->captureOptions)->send();
 
@@ -131,7 +131,7 @@ class DirectGatewayTest extends GatewayTestCase
 
     public function testCaptureFailure()
     {
-        $this->setMockResponse($this->httpClient, 'CaptureFailure.txt');
+        $this->setMockHttpResponse('CaptureFailure.txt');
 
         $response = $this->gateway->capture($this->captureOptions)->send();
 
@@ -142,7 +142,7 @@ class DirectGatewayTest extends GatewayTestCase
 
     public function testRefundSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'CaptureSuccess.txt');
+        $this->setMockHttpResponse('CaptureSuccess.txt');
 
         $response = $this->gateway->refund($this->captureOptions)->send();
 
@@ -153,7 +153,7 @@ class DirectGatewayTest extends GatewayTestCase
 
     public function testRefundFailure()
     {
-        $this->setMockResponse($this->httpClient, 'CaptureFailure.txt');
+        $this->setMockHttpResponse('CaptureFailure.txt');
 
         $response = $this->gateway->refund($this->captureOptions)->send();
 

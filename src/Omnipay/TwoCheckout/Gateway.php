@@ -12,7 +12,6 @@
 namespace Omnipay\TwoCheckout;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Message\RequestInterface;
 use Omnipay\TwoCheckout\Message\CompletePurchaseRequest;
 use Omnipay\TwoCheckout\Message\PurchaseRequest;
 
@@ -79,20 +78,15 @@ class Gateway extends AbstractGateway
 
     public function purchase($options = null)
     {
-        $request = new PurchaseRequest(array_merge($this->toArray(), (array) $options));
+        $request = new PurchaseRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
     public function completePurchase($options = null)
     {
-        $request = new CompletePurchaseRequest(array_merge($this->toArray(), (array) $options));
+        $request = new CompletePurchaseRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
-    }
-
-    public function send(RequestInterface $request)
-    {
-        return $this->createResponse($request, $request->getData());
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 }

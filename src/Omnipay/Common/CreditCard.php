@@ -63,6 +63,8 @@ class CreditCard
     public function initialize($parameters)
     {
         Helper::initialize($this, $parameters);
+
+        return $this;
     }
 
     public function toArray()

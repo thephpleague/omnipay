@@ -12,7 +12,6 @@
 namespace Omnipay;
 
 use Guzzle\Http\Client as HttpClient;
-use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 /**
  * Base Gateway Test class
@@ -21,15 +20,6 @@ use Symfony\Component\HttpFoundation\Request as HttpRequest;
  */
 abstract class GatewayTestCase extends TestCase
 {
-    protected $httpClient;
-    protected $httpRequest;
-
-    public function setUp()
-    {
-        $this->httpClient = new HttpClient;
-        $this->httpRequest = new HttpRequest;
-    }
-
     public function testConstructWithoutParameters()
     {
         // constructor should initialize default http client and request

@@ -13,14 +13,16 @@ namespace Omnipay\SagePay\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RedirectResponseInterface;
+use Omnipay\Common\Message\RequestInterface;
 
 /**
  * Sage Pay Response
  */
 class Response extends AbstractResponse implements RedirectResponseInterface
 {
-    public function __construct($data)
+    public function __construct(RequestInterface $request, $data)
     {
+        $this->request = $request;
         $this->data = $this->decode($data);
     }
 

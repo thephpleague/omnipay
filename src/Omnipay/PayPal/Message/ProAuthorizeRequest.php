@@ -12,23 +12,11 @@
 namespace Omnipay\PayPal\Message;
 
 /**
- * PayPal Authorize Request
+ * PayPal Pro Authorize Request
  */
-class AuthorizeRequest extends AbstractRequest
+class ProAuthorizeRequest extends AbstractRequest
 {
-    protected $paymentAction;
-
-    public function getPaymentAction()
-    {
-        return $this->paymentAction;
-    }
-
-    public function setPaymentAction($value)
-    {
-        $this->paymentAction = $value;
-
-        return $this;
-    }
+    protected $action = 'Authorization';
 
     public function getData()
     {
@@ -38,7 +26,7 @@ class AuthorizeRequest extends AbstractRequest
         $this->card->validate();
 
         $prefix = '';
-        $data[$prefix.'PAYMENTACTION'] = $this->paymentAction;
+        $data[$prefix.'PAYMENTACTION'] = $this->action;
         $data[$prefix.'AMT'] = $this->getAmountDecimal();
         $data[$prefix.'CURRENCYCODE'] = $this->getCurrency();
         $data[$prefix.'DESC'] = $this->getDescription();

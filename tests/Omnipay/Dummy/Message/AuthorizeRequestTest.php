@@ -17,7 +17,8 @@ class AuthorizeRequestTest extends TestCase
 {
     public function setUp()
     {
-        $this->request = new AuthorizeRequest(array(
+        $this->request = new AuthorizeRequest($this->getHttpClient(), $this->getHttpRequest());
+        $this->request->initialize(array(
             'amount' => 1000,
             'card' => $this->getValidCard(),
         ));
@@ -27,13 +28,5 @@ class AuthorizeRequestTest extends TestCase
     {
         $data = $this->request->getData();
         $this->assertSame(1000, $data['amount']);
-    }
-
-    public function testCreateResponse()
-    {
-        $response = $this->request->createResponse('12345');
-
-        $this->assertInstanceOf('\Omnipay\Dummy\Message\Response', $response);
-        $this->assertSame('12345', $response->getGatewayReference());
     }
 }

@@ -19,7 +19,7 @@ class PxPostGatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
-        $this->gateway = new PxPostGateway($this->httpClient, $this->httpRequest);
+        $this->gateway = new PxPostGateway($this->getHttpClient(), $this->getHttpRequest());
 
         $this->options = array(
             'amount' => 1000,
@@ -29,7 +29,7 @@ class PxPostGatewayTest extends GatewayTestCase
 
     public function testAuthorizeSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'PxPostPurchaseSuccess.txt');
+        $this->setMockHttpResponse('PxPostPurchaseSuccess.txt');
 
         $response = $this->gateway->authorize($this->options)->send();
 
@@ -41,7 +41,7 @@ class PxPostGatewayTest extends GatewayTestCase
 
     public function testAuthorizeFailure()
     {
-        $this->setMockResponse($this->httpClient, 'PxPostPurchaseFailure.txt');
+        $this->setMockHttpResponse('PxPostPurchaseFailure.txt');
 
         $response = $this->gateway->authorize($this->options)->send();
 
@@ -53,7 +53,7 @@ class PxPostGatewayTest extends GatewayTestCase
 
     public function testCaptureSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'PxPostPurchaseSuccess.txt');
+        $this->setMockHttpResponse('PxPostPurchaseSuccess.txt');
 
         $options = array(
             'amount' => 1000,
@@ -68,7 +68,7 @@ class PxPostGatewayTest extends GatewayTestCase
 
     public function testPurchaseSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'PxPostPurchaseSuccess.txt');
+        $this->setMockHttpResponse('PxPostPurchaseSuccess.txt');
 
         $response = $this->gateway->purchase($this->options)->send();
 
@@ -80,7 +80,7 @@ class PxPostGatewayTest extends GatewayTestCase
 
     public function testPurchaseFailure()
     {
-        $this->setMockResponse($this->httpClient, 'PxPostPurchaseFailure.txt');
+        $this->setMockHttpResponse('PxPostPurchaseFailure.txt');
 
         $response = $this->gateway->purchase($this->options)->send();
 
@@ -92,7 +92,7 @@ class PxPostGatewayTest extends GatewayTestCase
 
     public function testRefundSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'PxPostPurchaseSuccess.txt');
+        $this->setMockHttpResponse('PxPostPurchaseSuccess.txt');
 
         $options = array(
             'amount' => 1000,

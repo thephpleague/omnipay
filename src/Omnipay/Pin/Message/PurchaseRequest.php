@@ -18,6 +18,8 @@ use Omnipay\Common\Message\AbstractRequest;
  */
 class PurchaseRequest extends AbstractRequest
 {
+    protected $liveEndpoint = 'https://api.pin.net.au/1';
+    protected $testEndpoint = 'https://test-api.pin.net.au/1';
     protected $secretKey;
     protected $testMode;
 
@@ -75,8 +77,27 @@ class PurchaseRequest extends AbstractRequest
         return $data;
     }
 
-    public function createResponse($data)
+    public function send()
     {
-        return new Response($data);
+        // don't throw exceptions for 422 errors
+        $this->httpClient->getEventDispatcher()->addListener(
+            'request.error',
+            function ($event) {
+                if ($event['response']->getStatusCode() == 422) {
+                    $event->stopPropagation();
+                }
+            }
+        );
+
+        $httpResponse = $this->httpClient->post($this->getEndpoint().'/charges', null, $this->getData())
+            ->setHeader('Authorization', 'Basic '.base64_encode($this->secretKey.':'))
+            ->send();
+
+        return $this->response = new Response($this, $httpResponse->json());
+    }
+
+    public function getEndpoint()
+    {
+        return $this->testMode ? $this->testEndpoint : $this->liveEndpoint;
     }
 }

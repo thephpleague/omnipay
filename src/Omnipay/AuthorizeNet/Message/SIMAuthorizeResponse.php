@@ -12,6 +12,7 @@
 namespace Omnipay\AuthorizeNet\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
+use Omnipay\Common\Message\RequestInterface;
 
 /**
  * Authorize.Net SIM Authorize Response
@@ -19,6 +20,13 @@ use Omnipay\Common\Message\AbstractResponse;
 class SIMAuthorizeResponse extends AbstractResponse
 {
     protected $redirectUrl;
+
+    public function __construct(RequestInterface $request, $data, $redirectUrl)
+    {
+        $this->request = $request;
+        $this->data = $data;
+        $this->redirectUrl = $redirectUrl;
+    }
 
     public function isSuccessful()
     {
@@ -33,13 +41,6 @@ class SIMAuthorizeResponse extends AbstractResponse
     public function getRedirectUrl()
     {
         return $this->redirectUrl;
-    }
-
-    public function setRedirectUrl($value)
-    {
-        $this->redirectUrl = $value;
-
-        return $this;
     }
 
     public function getRedirectMethod()

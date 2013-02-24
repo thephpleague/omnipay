@@ -12,6 +12,7 @@
 namespace Omnipay\GoCardless\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
+use Omnipay\Common\Message\RequestInterface;
 
 /**
  * GoCardless Complete Purchase Response
@@ -19,6 +20,12 @@ use Omnipay\Common\Message\AbstractResponse;
 class CompletePurchaseResponse extends AbstractResponse
 {
     protected $gatewayReference;
+
+    public function __construct(RequestInterface $request, $data, $gatewayReference)
+    {
+        parent::__construct($request, $data);
+        $this->gatewayReference = $gatewayReference;
+    }
 
     public function isSuccessful()
     {
@@ -28,13 +35,6 @@ class CompletePurchaseResponse extends AbstractResponse
     public function getGatewayReference()
     {
         return $this->gatewayReference;
-    }
-
-    public function setGatewayReference($value)
-    {
-        $this->gatewayReference = $value;
-
-        return $this;
     }
 
     public function getMessage()

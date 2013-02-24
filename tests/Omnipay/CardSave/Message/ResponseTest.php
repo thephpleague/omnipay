@@ -17,8 +17,8 @@ class ResponseTest extends TestCase
 {
     public function testPurchaseSuccess()
     {
-        $httpResponse = $this->getMockResponse('PurchaseSuccess.txt');
-        $response = new Response($httpResponse->getBody());
+        $httpResponse = $this->getMockHttpResponse('PurchaseSuccess.txt');
+        $response = new Response($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals('130215141054377801316798', $response->getGatewayReference());
@@ -27,8 +27,8 @@ class ResponseTest extends TestCase
 
     public function testPurchaseFailure()
     {
-        $httpResponse = $this->getMockResponse('PurchaseFailure.txt');
-        $response = new Response($httpResponse->getBody());
+        $httpResponse = $this->getMockHttpResponse('PurchaseFailure.txt');
+        $response = new Response($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('', $response->getGatewayReference());

@@ -12,11 +12,11 @@
 namespace Omnipay\AuthorizeNet\Message;
 
 /**
- * Authorize.Net AIM Authorize Request
+ * Authorize.Net AIM Purchase Request
  */
-class AIMAuthorizeRequest extends AbstractRequest
+class AIMPurchaseRequest extends AIMAuthorizeRequest
 {
-    protected $action = 'AUTH_ONLY';
+    protected $action = 'AUTH_CAPTURE';
 
     public function getData()
     {

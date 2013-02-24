@@ -19,7 +19,7 @@ class GatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
-        $this->gateway = new Gateway($this->httpClient, $this->httpRequest);
+        $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
         $this->gateway->setAppId('abc');
         $this->gateway->setAppSecret('123');
 
@@ -40,7 +40,7 @@ class GatewayTest extends GatewayTestCase
 
     public function testCompletePurchaseSuccess()
     {
-        $this->httpRequest->request->replace(
+        $this->getHttpRequest()->request->replace(
             array(
                 'resource_uri' => 'a',
                 'resource_id' => 'b',
@@ -49,10 +49,10 @@ class GatewayTest extends GatewayTestCase
             )
         );
 
-        $this->setMockResponse($this->httpClient, 'CompletePurchaseSuccess.txt');
+        $this->setMockHttpResponse('CompletePurchaseSuccess.txt');
 
         $response = $this->gateway->completePurchase($this->options)
-            ->setHttpRequest($this->httpRequest)
+            ->setHttpRequest($this->getHttpRequest())
             ->send();
 
         $this->assertTrue($response->isSuccessful());
@@ -61,7 +61,7 @@ class GatewayTest extends GatewayTestCase
 
     public function testCompletePurchaseError()
     {
-        $this->httpRequest->request->replace(
+        $this->getHttpRequest()->request->replace(
             array(
                 'resource_uri' => 'a',
                 'resource_id' => 'b',
@@ -70,10 +70,10 @@ class GatewayTest extends GatewayTestCase
             )
         );
 
-        $this->setMockResponse($this->httpClient, 'CompletePurchaseFailure.txt');
+        $this->setMockHttpResponse('CompletePurchaseFailure.txt');
 
         $response = $this->gateway->completePurchase($this->options)
-            ->setHttpRequest($this->httpRequest)
+            ->setHttpRequest($this->getHttpRequest())
             ->send();
 
         $this->assertFalse($response->isSuccessful());
@@ -85,7 +85,7 @@ class GatewayTest extends GatewayTestCase
      */
     public function testCompletePurchaseInvalid()
     {
-        $this->httpRequest->request->replace(
+        $this->getHttpRequest()->request->replace(
             array(
                 'resource_uri' => 'a',
                 'resource_id' => 'b',
@@ -95,7 +95,7 @@ class GatewayTest extends GatewayTestCase
         );
 
         $response = $this->gateway->completePurchase($this->options)
-            ->setHttpRequest($this->httpRequest)
+            ->setHttpRequest($this->getHttpRequest())
             ->send();
     }
 }

@@ -18,6 +18,8 @@ use Omnipay\Common\Message\AbstractRequest;
  */
 class AuthorizeRequest extends AbstractRequest
 {
+    protected $liveEndpoint = 'https://payflowpro.paypal.com';
+    protected $testEndpoint = 'https://pilot-payflowpro.paypal.com';
     protected $action = 'A';
     protected $username;
     protected $password;
@@ -121,8 +123,15 @@ class AuthorizeRequest extends AbstractRequest
         return $data;
     }
 
-    public function createResponse($data)
+    public function send()
     {
-        return new Response($data);
+        $httpResponse = $this->httpClient->post($this->getEndpoint(), null, $this->getData())->send();
+
+        return $this->response = new Response($this, $httpResponse->getBody());
+    }
+
+    protected function getEndpoint()
+    {
+        return $this->testMode ? $this->testEndpoint : $this->liveEndpoint;
     }
 }

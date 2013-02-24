@@ -34,12 +34,17 @@ class CompletePurchaseRequest extends PurchaseRequest
         return $data;
     }
 
-    public function createResponse($data)
+    public function send()
     {
-        if (isset($data['responseCode']) && 'OK' !== $data['responseCode']) {
-            return new ErrorResponse($data);
+        $data = $this->getData();
+
+        if ('OK' !== $data['responseCode']) {
+            return $this->response = new ErrorResponse($this, $data);
         }
 
-        return new Response($data);
+        $url = $this->getEndpoint().'/Netaxept/Process.aspx?';
+        $httpResponse = $this->httpClient->get($url.http_build_query($this->getData()))->send();
+
+        return $this->response = new Response($this, $httpResponse->xml());
     }
 }

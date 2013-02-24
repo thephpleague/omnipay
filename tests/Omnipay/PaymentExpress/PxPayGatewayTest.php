@@ -19,7 +19,7 @@ class PxPayGatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
-        $this->gateway = new PxPayGateway($this->httpClient, $this->httpRequest);
+        $this->gateway = new PxPayGateway($this->getHttpClient(), $this->getHttpRequest());
 
         $this->options = array(
             'amount' => 1000,
@@ -29,7 +29,7 @@ class PxPayGatewayTest extends GatewayTestCase
 
     public function testAuthorizeSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'PxPayPurchaseSuccess.txt');
+        $this->setMockHttpResponse('PxPayPurchaseSuccess.txt');
 
         $response = $this->gateway->authorize($this->options)->send();
 
@@ -43,7 +43,7 @@ class PxPayGatewayTest extends GatewayTestCase
 
     public function testAuthorizeFailure()
     {
-        $this->setMockResponse($this->httpClient, 'PxPayPurchaseFailure.txt');
+        $this->setMockHttpResponse('PxPayPurchaseFailure.txt');
 
         $response = $this->gateway->authorize($this->options)->send();
 
@@ -55,7 +55,7 @@ class PxPayGatewayTest extends GatewayTestCase
 
     public function testPurchaseSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'PxPayPurchaseSuccess.txt');
+        $this->setMockHttpResponse('PxPayPurchaseSuccess.txt');
 
         $response = $this->gateway->purchase($this->options)->send();
 
@@ -69,7 +69,7 @@ class PxPayGatewayTest extends GatewayTestCase
 
     public function testPurchaseFailure()
     {
-        $this->setMockResponse($this->httpClient, 'PxPayPurchaseFailure.txt');
+        $this->setMockHttpResponse('PxPayPurchaseFailure.txt');
 
         $response = $this->gateway->purchase($this->options)->send();
 
@@ -81,12 +81,12 @@ class PxPayGatewayTest extends GatewayTestCase
 
     public function testCompleteAuthorizeSuccess()
     {
-        $this->httpRequest->query->replace(array('result' => 'abc123'));
+        $this->getHttpRequest()->query->replace(array('result' => 'abc123'));
 
-        $this->setMockResponse($this->httpClient, 'PxPayCompletePurchaseSuccess.txt');
+        $this->setMockHttpResponse('PxPayCompletePurchaseSuccess.txt');
 
         $response = $this->gateway->completeAuthorize($this->options)
-            ->setHttpRequest($this->httpRequest)
+            ->setHttpRequest($this->getHttpRequest())
             ->send();
 
         $this->assertTrue($response->isSuccessful());
@@ -97,12 +97,12 @@ class PxPayGatewayTest extends GatewayTestCase
 
     public function testCompleteAuthorizeFailure()
     {
-        $this->httpRequest->query->replace(array('result' => 'abc123'));
+        $this->getHttpRequest()->query->replace(array('result' => 'abc123'));
 
-        $this->setMockResponse($this->httpClient, 'PxPayCompletePurchaseFailure.txt');
+        $this->setMockHttpResponse('PxPayCompletePurchaseFailure.txt');
 
         $response = $this->gateway->completeAuthorize($this->options)
-            ->setHttpRequest($this->httpRequest)
+            ->setHttpRequest($this->getHttpRequest())
             ->send();
 
         $this->assertFalse($response->isSuccessful());
@@ -116,21 +116,21 @@ class PxPayGatewayTest extends GatewayTestCase
      */
     public function testCompleteAuthorizeInvalid()
     {
-        $this->httpRequest->query->replace(array());
+        $this->getHttpRequest()->query->replace(array());
 
         $response = $this->gateway->completeAuthorize($this->options)
-            ->setHttpRequest($this->httpRequest)
+            ->setHttpRequest($this->getHttpRequest())
             ->send();
     }
 
     public function testCompletePurchaseSuccess()
     {
-        $this->httpRequest->query->replace(array('result' => 'abc123'));
+        $this->getHttpRequest()->query->replace(array('result' => 'abc123'));
 
-        $this->setMockResponse($this->httpClient, 'PxPayCompletePurchaseSuccess.txt');
+        $this->setMockHttpResponse('PxPayCompletePurchaseSuccess.txt');
 
         $response = $this->gateway->completePurchase($this->options)
-            ->setHttpRequest($this->httpRequest)
+            ->setHttpRequest($this->getHttpRequest())
             ->send();
 
         $this->assertTrue($response->isSuccessful());
@@ -141,12 +141,12 @@ class PxPayGatewayTest extends GatewayTestCase
 
     public function testCompletePurchaseFailure()
     {
-        $this->httpRequest->query->replace(array('result' => 'abc123'));
+        $this->getHttpRequest()->query->replace(array('result' => 'abc123'));
 
-        $this->setMockResponse($this->httpClient, 'PxPayCompletePurchaseFailure.txt');
+        $this->setMockHttpResponse('PxPayCompletePurchaseFailure.txt');
 
         $response = $this->gateway->completePurchase($this->options)
-            ->setHttpRequest($this->httpRequest)
+            ->setHttpRequest($this->getHttpRequest())
             ->send();
 
         $this->assertFalse($response->isSuccessful());
@@ -160,10 +160,10 @@ class PxPayGatewayTest extends GatewayTestCase
      */
     public function testCompletePurchaseInvalid()
     {
-        $this->httpRequest->query->replace(array());
+        $this->getHttpRequest()->query->replace(array());
 
         $response = $this->gateway->completePurchase($this->options)
-            ->setHttpRequest($this->httpRequest)
+            ->setHttpRequest($this->getHttpRequest())
             ->send();
     }
 }

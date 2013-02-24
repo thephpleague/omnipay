@@ -24,11 +24,18 @@ class AuthorizeRequest extends AbstractRequest
 
         $this->card->validate();
 
-        return array('amount' => $this->amount);
+        $data = array();
+        $data['amount'] = $this->amount;
+        $data['card'] = $this->card;
+
+        return $data;
     }
 
-    public function createResponse($data)
+    public function send()
     {
-        return new Response($data);
+        $data = $this->getData();
+        $data['reference'] = uniqid();
+
+        return $this->response = new Response($this, $data);
     }
 }

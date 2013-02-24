@@ -16,7 +16,7 @@ namespace Omnipay\AuthorizeNet\Message;
  */
 class CaptureRequest extends AbstractRequest
 {
-    protected $method = 'PRIOR_AUTH_CAPTURE';
+    protected $action = 'PRIOR_AUTH_CAPTURE';
 
     public function getData()
     {

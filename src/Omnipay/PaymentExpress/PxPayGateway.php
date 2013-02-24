@@ -12,7 +12,6 @@
 namespace Omnipay\PaymentExpress;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Message\RequestInterface;
 use Omnipay\PaymentExpress\Message\PxPayAuthorizeRequest;
 use Omnipay\PaymentExpress\Message\PxPayCompleteAuthorizeRequest;
 use Omnipay\PaymentExpress\Message\PxPayPurchaseRequest;
@@ -22,7 +21,6 @@ use Omnipay\PaymentExpress\Message\PxPayPurchaseRequest;
  */
 class PxPayGateway extends AbstractGateway
 {
-    protected $endpoint = 'https://sec.paymentexpress.com/pxpay/pxaccess.aspx';
     protected $username;
     protected $password;
 
@@ -65,34 +63,27 @@ class PxPayGateway extends AbstractGateway
 
     public function authorize($options = null)
     {
-        $request = new PxPayAuthorizeRequest(array_merge($this->toArray(), (array) $options));
+        $request = new PxPayAuthorizeRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
     public function completeAuthorize($options = null)
     {
-        $request = new PxPayCompleteAuthorizeRequest(array_merge($this->toArray(), (array) $options));
+        $request = new PxPayCompleteAuthorizeRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
     public function purchase($options = null)
     {
-        $request = new PxPayPurchaseRequest(array_merge($this->toArray(), (array) $options));
+        $request = new PxPayPurchaseRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
     public function completePurchase($options = null)
     {
         return $this->completeAuthorize($options);
-    }
-
-    public function send(RequestInterface $request)
-    {
-        $httpResponse = $this->httpClient->post($this->endpoint, null, $request->getData()->asXML())->send();
-
-        return $this->createResponse($request, $httpResponse->xml());
     }
 }

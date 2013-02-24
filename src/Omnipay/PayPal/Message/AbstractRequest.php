@@ -16,6 +16,8 @@ namespace Omnipay\PayPal\Message;
  */
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
+    protected $liveEndpoint = 'https://api-3t.paypal.com/nvp';
+    protected $testEndpoint = 'https://api-3t.sandbox.paypal.com/nvp';
     protected $username;
     protected $password;
     protected $signature;
@@ -81,8 +83,21 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $data;
     }
 
-    public function createResponse($data)
+    public function send()
     {
-        return new Response($data);
+        $url = $this->getEndpoint().'?'.http_build_query($this->getData());
+        $httpResponse = $this->httpClient->get($url)->send();
+
+        return $this->createResponse($httpResponse->getBody());
+    }
+
+    protected function getEndpoint()
+    {
+        return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
+    }
+
+    protected function createResponse($data)
+    {
+        return $this->response = new Response($this, $data);
     }
 }

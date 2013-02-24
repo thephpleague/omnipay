@@ -78,4 +78,9 @@ class DirectAuthorizeRequest extends AbstractRequest
 
         return $data;
     }
+
+    public function getService()
+    {
+        return 'vspdirect-register';
+    }
 }

@@ -17,8 +17,8 @@ class ServerAuthorizeResponseTest extends TestCase
 {
     public function testServerPurchaseSuccess()
     {
-        $httpResponse = $this->getMockResponse('ServerPurchaseSuccess.txt');
-        $response = new ServerAuthorizeResponse($httpResponse->getBody());
+        $httpResponse = $this->getMockHttpResponse('ServerPurchaseSuccess.txt');
+        $response = new ServerAuthorizeResponse($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
@@ -29,8 +29,8 @@ class ServerAuthorizeResponseTest extends TestCase
 
     public function testServerPurchaseFailure()
     {
-        $httpResponse = $this->getMockResponse('ServerPurchaseFailure.txt');
-        $response = new ServerAuthorizeResponse($httpResponse->getBody());
+        $httpResponse = $this->getMockHttpResponse('ServerPurchaseFailure.txt');
+        $response = new ServerAuthorizeResponse($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());

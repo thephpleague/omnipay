@@ -12,7 +12,6 @@
 namespace Omnipay\Payflow;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Message\RequestInterface;
 use Omnipay\Payflow\Message\AuthorizeRequest;
 use Omnipay\Payflow\Message\CaptureRequest;
 use Omnipay\Payflow\Message\PurchaseRequest;
@@ -25,8 +24,6 @@ use Omnipay\Payflow\Message\RefundRequest;
  */
 class ProGateway extends AbstractGateway
 {
-    protected $liveEndpoint = 'https://payflowpro.paypal.com';
-    protected $testEndpoint = 'https://pilot-payflowpro.paypal.com';
     protected $username;
     protected $password;
     protected $vendor;
@@ -111,41 +108,29 @@ class ProGateway extends AbstractGateway
 
     public function authorize($options = null)
     {
-        $request = new AuthorizeRequest(array_merge($this->toArray(), (array) $options));
+        $request = new AuthorizeRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
     public function capture($options = null)
     {
-        $request = new CaptureRequest(array_merge($this->toArray(), (array) $options));
+        $request = new CaptureRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
     public function purchase($options = null)
     {
-        $request = new PurchaseRequest(array_merge($this->toArray(), (array) $options));
+        $request = new PurchaseRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
     public function refund($options = null)
     {
-        $request = new RefundRequest(array_merge($this->toArray(), (array) $options));
+        $request = new RefundRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
-    }
-
-    public function send(RequestInterface $request)
-    {
-        $httpResponse = $this->httpClient->post($this->getEndpoint(), null, $request->getData())->send();
-
-        return $this->createResponse($request, $httpResponse->getBody());
-    }
-
-    protected function getEndpoint()
-    {
-        return $this->testMode ? $this->testEndpoint : $this->liveEndpoint;
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 }

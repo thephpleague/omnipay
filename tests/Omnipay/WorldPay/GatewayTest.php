@@ -19,7 +19,7 @@ class GatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
-        $this->gateway = new Gateway($this->httpClient, $this->httpRequest);
+        $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
         $this->gateway->setCallbackPassword('bar123');
 
         $this->options = array(
@@ -40,7 +40,7 @@ class GatewayTest extends GatewayTestCase
 
     public function testCompletePurchaseSuccess()
     {
-        $this->httpRequest->request->replace(
+        $this->getHttpRequest()->request->replace(
             array(
                 'callbackPW' => 'bar123',
                 'transStatus' => 'Y',
@@ -50,7 +50,7 @@ class GatewayTest extends GatewayTestCase
         );
 
         $response = $this->gateway->completePurchase($this->options)
-            ->setHttpRequest($this->httpRequest)
+            ->setHttpRequest($this->getHttpRequest())
             ->send();
 
         $this->assertTrue($response->isSuccessful());
@@ -64,20 +64,20 @@ class GatewayTest extends GatewayTestCase
      */
     public function testCompletePurchaseInvalidCallbackPassword()
     {
-        $this->httpRequest->request->replace(
+        $this->getHttpRequest()->request->replace(
             array(
                 'callbackPW' => 'fake',
             )
         );
 
         $response = $this->gateway->completePurchase($this->options)
-            ->setHttpRequest($this->httpRequest)
+            ->setHttpRequest($this->getHttpRequest())
             ->send();
     }
 
     public function testCompletePurchaseError()
     {
-        $this->httpRequest->request->replace(
+        $this->getHttpRequest()->request->replace(
             array(
                 'callbackPW' => 'bar123',
                 'transStatus' => 'N',
@@ -86,7 +86,7 @@ class GatewayTest extends GatewayTestCase
         );
 
         $response = $this->gateway->completePurchase($this->options)
-            ->setHttpRequest($this->httpRequest)
+            ->setHttpRequest($this->getHttpRequest())
             ->send();
 
         $this->assertFalse($response->isSuccessful());

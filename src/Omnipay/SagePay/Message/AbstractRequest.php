@@ -16,6 +16,9 @@ namespace Omnipay\SagePay\Message;
  */
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
+    protected $liveEndpoint = 'https://live.sagepay.com/gateway/service';
+    protected $testEndpoint = 'https://test.sagepay.com/gateway/service';
+    protected $simulatorEndpoint = 'https://test.sagepay.com/Simulator';
     protected $action;
     protected $vendor;
     protected $testMode;
@@ -57,11 +60,6 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this;
     }
 
-    public function createResponse($data)
-    {
-        return new Response($data);
-    }
-
     public function getService()
     {
         return $this->action;
@@ -75,5 +73,41 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $data['Vendor'] = $this->vendor;
 
         return $data;
+    }
+
+    public function send()
+    {
+        $httpResponse = $this->httpClient->post($this->getEndpoint(), null, $this->getData())->send();
+
+        return $this->createResponse($httpResponse->getBody());
+    }
+
+    public function getEndpoint()
+    {
+        $service = strtolower($this->getService());
+
+        if ($this->simulatorMode) {
+            // hooray for consistency
+            if ($service == 'vspdirect-register') {
+                return $this->simulatorEndpoint.'/VSPDirectGateway.asp';
+            } elseif ($service == 'vspserver-register') {
+                return $this->simulatorEndpoint.'/VSPServerGateway.asp?Service=VendorRegisterTx';
+            } elseif ($service == 'direct3dcallback') {
+                return $this->simulatorEndpoint.'/VSPDirectCallback.asp';
+            }
+
+            return $this->simulatorEndpoint.'/VSPServerGateway.asp?Service=Vendor'.ucfirst($service).'Tx';
+        }
+
+        if ($this->testMode) {
+            return $this->testEndpoint."/$service.vsp";
+        }
+
+        return $this->liveEndpoint."/$service.vsp";
+    }
+
+    protected function createResponse($data)
+    {
+        return $this->response = new Response($this, $data);
     }
 }

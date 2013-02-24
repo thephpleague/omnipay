@@ -12,7 +12,6 @@
 namespace Omnipay\Netaxept;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Message\RequestInterface;
 use Omnipay\Netaxept\Message\PurchaseRequest;
 use Omnipay\Netaxept\Message\CompletePurchaseRequest;
 
@@ -23,8 +22,6 @@ use Omnipay\Netaxept\Message\CompletePurchaseRequest;
  */
 class Gateway extends AbstractGateway
 {
-    protected $liveEndpoint = 'https://epayment.bbs.no';
-    protected $testEndpoint = 'https://epayment-test.bbs.no';
     protected $merchantId;
     protected $token;
     protected $testMode;
@@ -81,40 +78,15 @@ class Gateway extends AbstractGateway
 
     public function purchase($options = null)
     {
-        $request = new PurchaseRequest(array_merge($this->toArray(), (array) $options));
+        $request = new PurchaseRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
     public function completePurchase($options = null)
     {
-        $request = new CompletePurchaseRequest(array_merge($this->toArray(), (array) $options));
+        $request = new CompletePurchaseRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
-    }
-
-    public function send(RequestInterface $request)
-    {
-        $url = $this->getEndpoint();
-        $data = $request->getData();
-
-        if ($request instanceof CompletePurchaseRequest) {
-            $url .= '/Netaxept/Process.aspx';
-
-            if ('OK' !== $data['responseCode']) {
-                return $this->createResponse($request, $data);
-            }
-        } else {
-            $url .= '/Netaxept/Register.aspx';
-        }
-
-        $httpResponse = $this->httpClient->get($url.'?'.http_build_query($request->getData()))->send();
-
-        return $this->createResponse($request, $httpResponse->xml());
-    }
-
-    public function getEndpoint()
-    {
-        return $this->testMode ? $this->testEndpoint : $this->liveEndpoint;
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 }

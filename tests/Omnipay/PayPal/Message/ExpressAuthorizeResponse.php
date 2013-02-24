@@ -24,8 +24,8 @@ class ExpressAuthorizeResponseTest extends TestCase
 
     public function testExpressPurchaseSuccess()
     {
-        $httpResponse = $this->getMockResponse('ExpressPurchaseSuccess.txt');
-        $response = new ExpressAuthorizeResponse($httpResponse->getBody());
+        $httpResponse = $this->getMockHttpResponse('ExpressPurchaseSuccess.txt');
+        $response = new ExpressAuthorizeResponse($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('EC-42721413K79637829', $response->getExpressRedirectToken());
@@ -35,8 +35,8 @@ class ExpressAuthorizeResponseTest extends TestCase
 
     public function testExpressPurchaseFailure()
     {
-        $httpResponse = $this->getMockResponse('ExpressPurchaseFailure.txt');
-        $response = new ExpressAuthorizeResponse($httpResponse->getBody());
+        $httpResponse = $this->getMockHttpResponse('ExpressPurchaseFailure.txt');
+        $response = new ExpressAuthorizeResponse($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertFalse($response->isSuccessful());
         $this->assertNull($response->getExpressRedirectToken());

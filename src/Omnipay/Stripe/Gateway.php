@@ -12,7 +12,6 @@
 namespace Omnipay\Stripe;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Message\RequestInterface;
 use Omnipay\Stripe\Message\PurchaseRequest;
 use Omnipay\Stripe\Message\RefundRequest;
 
@@ -23,7 +22,6 @@ use Omnipay\Stripe\Message\RefundRequest;
  */
 class Gateway extends AbstractGateway
 {
-    protected $endpoint = 'https://api.stripe.com/v1';
     protected $apiKey;
 
     public function getName()
@@ -52,34 +50,15 @@ class Gateway extends AbstractGateway
 
     public function purchase($options = null)
     {
-        $request = new PurchaseRequest(array_merge($this->toArray(), (array) $options));
+        $request = new PurchaseRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
     public function refund($options = null)
     {
-        $request = new RefundRequest(array_merge($this->toArray(), (array) $options));
+        $request = new RefundRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
-    }
-
-    public function send(RequestInterface $request)
-    {
-        // don't throw exceptions for 402 errors
-        $this->httpClient->getEventDispatcher()->addListener(
-            'request.error',
-            function ($event) {
-                if ($event['response']->getStatusCode() == 402) {
-                    $event->stopPropagation();
-                }
-            }
-        );
-
-        $httpResponse = $this->httpClient->post($this->endpoint.$request->getUrl(), null, $request->getData())
-            ->setHeader('Authorization', 'Basic '.base64_encode($this->apiKey.':'))
-            ->send();
-
-        return $this->createResponse($request, $httpResponse->json());
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 }

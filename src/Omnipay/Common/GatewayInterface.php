@@ -11,7 +11,8 @@
 
 namespace Omnipay\Common;
 
-use Omnipay\Common\Message\RequestInterface;
+use Guzzle\Http\ClientInterface;
+use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 /**
  * Payment gateway interface
@@ -36,6 +37,14 @@ interface GatewayInterface
      * );
      */
     public function defineSettings();
+
+    public function getHttpClient();
+
+    public function setHttpClient(ClientInterface $value);
+
+    public function getHttpRequest();
+
+    public function setHttpRequest(HttpRequest $value);
 
     /**
      * Authorize a new payment.
@@ -98,6 +107,4 @@ interface GatewayInterface
      * @return Omnipay\ResponseInterface
      */
     public function void($options = null);
-
-    public function send(RequestInterface $request);
 }

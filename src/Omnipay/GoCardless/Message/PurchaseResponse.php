@@ -20,20 +20,6 @@ use Omnipay\GoCardless\Gateway;
  */
 class PurchaseResponse extends AbstractResponse implements RedirectResponseInterface
 {
-    protected $endpoint;
-
-    public function getEndpoint()
-    {
-        return $this->endpoint;
-    }
-
-    public function setEndpoint($value)
-    {
-        $this->endpoint = $value;
-
-        return $this;
-    }
-
     public function isSuccessful()
     {
         return false;
@@ -46,7 +32,7 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
 
     public function getRedirectUrl()
     {
-        return $this->getEndpoint().'/connect/bills/new?'.Gateway::generateQueryString($this->data);
+        return $this->getRequest()->getEndpoint().'/connect/bills/new?'.Gateway::generateQueryString($this->data);
     }
 
     public function getRedirectMethod()

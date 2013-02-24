@@ -19,9 +19,6 @@ use Omnipay\Common\Message\RedirectResponseInterface;
  */
 class Response extends AbstractResponse implements RedirectResponseInterface
 {
-    protected $endpoint;
-    protected $merchantId;
-
     public function isSuccessful()
     {
         return isset($this->data->ResponseCode) && 'OK' === (string) $this->data->ResponseCode;
@@ -50,11 +47,11 @@ class Response extends AbstractResponse implements RedirectResponseInterface
     {
         if ($this->isRedirect()) {
             $data = array(
-                'merchantId' => $this->merchantId,
+                'merchantId' => $this->getRequest()->getMerchantId(),
                 'transactionId' => $this->getGatewayReference(),
             );
 
-            return $this->endpoint.'/Terminal/Default.aspx?'.http_build_query($data);
+            return $this->getRequest()->getEndpoint().'/Terminal/Default.aspx?'.http_build_query($data);
         }
     }
 
@@ -66,29 +63,5 @@ class Response extends AbstractResponse implements RedirectResponseInterface
     public function getRedirectData()
     {
         return null;
-    }
-
-    public function getEndpoint()
-    {
-        return $this->endpoint;
-    }
-
-    public function setEndpoint($value)
-    {
-        $this->endpoint = $value;
-
-        return $this;
-    }
-
-    public function getMerchantId()
-    {
-        return $this->merchantId;
-    }
-
-    public function setMerchantId($value)
-    {
-        $this->merchantId = $value;
-
-        return $this;
     }
 }

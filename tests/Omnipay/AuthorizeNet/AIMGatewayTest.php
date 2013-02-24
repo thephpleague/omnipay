@@ -19,7 +19,7 @@ class AIMGatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
-        $this->gateway = new AIMGateway($this->httpClient, $this->httpRequest);
+        $this->gateway = new AIMGateway($this->getHttpClient(), $this->getHttpRequest());
 
         $this->purchaseOptions = array(
             'amount' => 1000,
@@ -34,7 +34,7 @@ class AIMGatewayTest extends GatewayTestCase
 
     public function testAuthorizeSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'AIMAuthorizeSuccess.txt');
+        $this->setMockHttpResponse('AIMAuthorizeSuccess.txt');
 
         $response = $this->gateway->authorize($this->purchaseOptions)->send();
 
@@ -45,7 +45,7 @@ class AIMGatewayTest extends GatewayTestCase
 
     public function testAuthorizeFailure()
     {
-        $this->setMockResponse($this->httpClient, 'AIMAuthorizeFailure.txt');
+        $this->setMockHttpResponse('AIMAuthorizeFailure.txt');
 
         $response = $this->gateway->authorize($this->purchaseOptions)->send();
 
@@ -56,7 +56,7 @@ class AIMGatewayTest extends GatewayTestCase
 
     public function testCaptureSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'AIMCaptureSuccess.txt');
+        $this->setMockHttpResponse('AIMCaptureSuccess.txt');
 
         $response = $this->gateway->capture($this->captureOptions)->send();
 
@@ -67,7 +67,7 @@ class AIMGatewayTest extends GatewayTestCase
 
     public function testCaptureFailure()
     {
-        $this->setMockResponse($this->httpClient, 'AIMCaptureFailure.txt');
+        $this->setMockHttpResponse('AIMCaptureFailure.txt');
 
         $response = $this->gateway->capture($this->captureOptions)->send();
 
@@ -78,7 +78,7 @@ class AIMGatewayTest extends GatewayTestCase
 
     public function testPurchaseSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'AIMPurchaseSuccess.txt');
+        $this->setMockHttpResponse('AIMPurchaseSuccess.txt');
 
         $response = $this->gateway->purchase($this->purchaseOptions)->send();
 
@@ -89,7 +89,7 @@ class AIMGatewayTest extends GatewayTestCase
 
     public function testPurchaseFailure()
     {
-        $this->setMockResponse($this->httpClient, 'AIMPurchaseFailure.txt');
+        $this->setMockHttpResponse('AIMPurchaseFailure.txt');
 
         $response = $this->gateway->purchase($this->purchaseOptions)->send();
 

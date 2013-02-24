@@ -90,8 +90,8 @@ class PurchaseRequest extends AbstractRequest
         return $data;
     }
 
-    public function createResponse($data)
+    public function send()
     {
-        return new PurchaseResponse($data);
+        return $this->response = new PurchaseResponse($this, $this->getData());
     }
 }

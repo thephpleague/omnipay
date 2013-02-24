@@ -26,8 +26,13 @@ class ServerAuthorizeRequest extends DirectAuthorizeRequest
         return $data;
     }
 
-    public function createResponse($data)
+    public function getService()
     {
-        return new ServerAuthorizeResponse($data);
+        return 'vspserver-register';
+    }
+
+    protected function createResponse($data)
+    {
+        return $this->response = new ServerAuthorizeResponse($this, $data);
     }
 }

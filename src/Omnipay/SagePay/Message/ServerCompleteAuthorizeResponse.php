@@ -11,13 +11,16 @@
 
 namespace Omnipay\SagePay\Message;
 
+use Omnipay\Common\Message\RequestInterface;
+
 /**
  * Sage Pay Server Complete Authorize Response
  */
 class ServerCompleteAuthorizeResponse extends Response
 {
-    public function __construct($data)
+    public function __construct(RequestInterface $request, $data)
     {
+        $this->request = $request;
         $this->data = $data;
     }
 

@@ -15,17 +15,9 @@ use Omnipay\TestCase;
 
 class ResponseTest extends TestCase
 {
-    /**
-     * @expectedException Omnipay\Common\Exception\InvalidResponseException
-     */
-    public function testConstructEmpty()
-    {
-        $response = new Response('');
-    }
-
     public function testConstruct()
     {
-        $response = new Response('abc123');
+        $response = new Response($this->getMockRequest(), array('reference' => 'abc123'));
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('abc123', $response->getGatewayReference());

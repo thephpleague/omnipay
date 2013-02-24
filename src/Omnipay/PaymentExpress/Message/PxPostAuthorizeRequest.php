@@ -18,6 +18,7 @@ use Omnipay\Common\Message\AbstractRequest;
  */
 class PxPostAuthorizeRequest extends AbstractRequest
 {
+    protected $endpoint = 'https://sec.paymentexpress.com/pxpost.aspx';
     protected $action = 'Auth';
     protected $username;
     protected $password;
@@ -74,8 +75,10 @@ class PxPostAuthorizeRequest extends AbstractRequest
         return $data;
     }
 
-    public function createResponse($data)
+    public function send()
     {
-        return new Response($data);
+        $httpResponse = $this->httpClient->post($this->endpoint, null, $this->getData()->asXML())->send();
+
+        return $this->response = new Response($this, $httpResponse->xml());
     }
 }

@@ -15,19 +15,12 @@ use Omnipay\TestCase;
 
 class ResponseTest extends TestCase
 {
-    public function setUp()
-    {
-        $this->request = new DirectAuthorizeRequest(array(
-            'transactionId' => '123456',
-            'returnUrl' => 'https://www.example.com/return',
-        ));
-    }
-
     public function testDirectPurchaseSuccess()
     {
-        $httpResponse = $this->getMockResponse('DirectPurchaseSuccess.txt');
-        $response = new Response($httpResponse->getBody());
-        $response->setRequest($this->request);
+        $httpResponse = $this->getMockHttpResponse('DirectPurchaseSuccess.txt');
+        $response = new Response($this->getMockRequest(), $httpResponse->getBody());
+
+        $this->getMockRequest()->shouldReceive('getTransactionId')->once()->andReturn('123456');
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -37,9 +30,8 @@ class ResponseTest extends TestCase
 
     public function testDirectPurchaseFailure()
     {
-        $httpResponse = $this->getMockResponse('DirectPurchaseFailure.txt');
-        $response = new Response($httpResponse->getBody());
-        $response->setRequest($this->request);
+        $httpResponse = $this->getMockHttpResponse('DirectPurchaseFailure.txt');
+        $response = new Response($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -49,9 +41,10 @@ class ResponseTest extends TestCase
 
     public function testDirectPurchase3dSecure()
     {
-        $httpResponse = $this->getMockResponse('DirectPurchase3dSecure.txt');
-        $response = new Response($httpResponse->getBody());
-        $response->setRequest($this->request);
+        $httpResponse = $this->getMockHttpResponse('DirectPurchase3dSecure.txt');
+        $response = new Response($this->getMockRequest(), $httpResponse->getBody());
+
+        $this->getMockRequest()->shouldReceive('getReturnUrl')->once()->andReturn('https://www.example.com/return');
 
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
@@ -67,9 +60,8 @@ class ResponseTest extends TestCase
 
     public function testCaptureSuccess()
     {
-        $httpResponse = $this->getMockResponse('CaptureSuccess.txt');
-        $response = new Response($httpResponse->getBody());
-        $response->setRequest($this->request);
+        $httpResponse = $this->getMockHttpResponse('CaptureSuccess.txt');
+        $response = new Response($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertTrue($response->isSuccessful());
         $this->assertNull($response->getGatewayReference());
@@ -78,9 +70,8 @@ class ResponseTest extends TestCase
 
     public function testCaptureFailure()
     {
-        $httpResponse = $this->getMockResponse('CaptureFailure.txt');
-        $response = new Response($httpResponse->getBody());
-        $response->setRequest($this->request);
+        $httpResponse = $this->getMockHttpResponse('CaptureFailure.txt');
+        $response = new Response($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertFalse($response->isSuccessful());
         $this->assertNull($response->getGatewayReference());

@@ -77,8 +77,8 @@ class ExpressAuthorizeRequest extends AbstractRequest
         return $data;
     }
 
-    public function createResponse($data)
+    protected function createResponse($data)
     {
-        return new ExpressAuthorizeResponse($data);
+        return $this->response = new ExpressAuthorizeResponse($this, $data);
     }
 }

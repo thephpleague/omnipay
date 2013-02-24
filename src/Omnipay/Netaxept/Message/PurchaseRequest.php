@@ -18,6 +18,8 @@ use Omnipay\Common\Message\AbstractRequest;
  */
 class PurchaseRequest extends AbstractRequest
 {
+    protected $liveEndpoint = 'https://epayment.bbs.no';
+    protected $testEndpoint = 'https://epayment-test.bbs.no';
     protected $merchantId;
     protected $token;
     protected $testMode;
@@ -86,12 +88,16 @@ class PurchaseRequest extends AbstractRequest
         return $data;
     }
 
-    public function createResponse($data)
+    public function send()
     {
-        $response = new Response($data);
-        $response->setEndpoint($this->getGateway()->getEndpoint());
-        $response->setMerchantId($this->merchantId);
+        $url = $this->getEndpoint().'/Netaxept/Register.aspx?';
+        $httpResponse = $this->httpClient->get($url.http_build_query($this->getData()))->send();
 
-        return $response;
+        return $this->response = new Response($this, $httpResponse->xml());
+    }
+
+    public function getEndpoint()
+    {
+        return $this->testMode ? $this->testEndpoint : $this->liveEndpoint;
     }
 }

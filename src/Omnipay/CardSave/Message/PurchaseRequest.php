@@ -11,6 +11,7 @@
 
 namespace Omnipay\CardSave\Message;
 
+use DOMDocument;
 use SimpleXMLElement;
 use Omnipay\Common\Message\AbstractRequest;
 
@@ -19,6 +20,7 @@ use Omnipay\Common\Message\AbstractRequest;
  */
 class PurchaseRequest extends AbstractRequest
 {
+    protected $endpoint = 'https://gw1.cardsaveonlinepayments.com:4430/';
     protected $namespace = 'https://www.thepaymentgateway.net/';
     protected $merchantId;
     protected $password;
@@ -90,8 +92,28 @@ class PurchaseRequest extends AbstractRequest
         return $data;
     }
 
-    public function createResponse($data)
+    public function send()
     {
-        return new Response($data);
+        $data = $this->getData();
+
+        // the PHP SOAP library sucks, and SimpleXML can't append element trees
+        // TODO: find PSR-0 SOAP library
+        $document = new DOMDocument('1.0', 'utf-8');
+        $envelope = $document->appendChild(
+            $document->createElementNS('http://schemas.xmlsoap.org/soap/envelope/', 'soap:Envelope')
+        );
+        $envelope->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+        $envelope->setAttribute('xmlns:xsd', 'http://www.w3.org/2001/XMLSchema');
+        $body = $envelope->appendChild($document->createElement('soap:Body'));
+        $body->appendChild($document->importNode(dom_import_simplexml($data), true));
+
+        // post to Cardsave
+        $headers = array(
+            'Content-Type' => 'text/xml; charset=utf-8',
+            'SOAPAction' => $this->namespace.$data->getName());
+
+        $httpResponse = $this->httpClient->post($this->endpoint, $headers, $document->saveXML())->send();
+
+        return $this->response = new Response($this, $httpResponse->getBody());
     }
 }

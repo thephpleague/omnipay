@@ -20,7 +20,7 @@ class GatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
-        $this->gateway = new Gateway($this->httpClient, $this->httpRequest);
+        $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
         $this->gateway->setAccountNumber('123456');
         $this->gateway->setSecretWord('secret');
 
@@ -49,16 +49,16 @@ class GatewayTest extends GatewayTestCase
      */
     public function testCompletePurchaseError()
     {
-        $this->httpRequest->request->replace(array('order_number' => '5', 'key' => 'ZZZ'));
+        $this->getHttpRequest()->request->replace(array('order_number' => '5', 'key' => 'ZZZ'));
 
         $response = $this->gateway->completePurchase($this->options)
-            ->setHttpRequest($this->httpRequest)
+            ->setHttpRequest($this->getHttpRequest())
             ->send();
     }
 
     public function testCompletePurchaseSuccess()
     {
-        $this->httpRequest->request->replace(
+        $this->getHttpRequest()->request->replace(
             array(
                 'order_number' => '5',
                 'key' => md5('secret123456510.00'),
@@ -66,7 +66,7 @@ class GatewayTest extends GatewayTestCase
         );
 
         $response = $this->gateway->completePurchase($this->options)
-            ->setHttpRequest($this->httpRequest)
+            ->setHttpRequest($this->getHttpRequest())
             ->send();
 
         $this->assertTrue($response->isSuccessful());

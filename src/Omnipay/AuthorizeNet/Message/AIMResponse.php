@@ -12,6 +12,7 @@
 namespace Omnipay\AuthorizeNet\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
+use Omnipay\Common\Message\RequestInterface;
 use Omnipay\Common\Exception\InvalidResponseException;
 
 /**
@@ -19,8 +20,9 @@ use Omnipay\Common\Exception\InvalidResponseException;
  */
 class AIMResponse extends AbstractResponse
 {
-    public function __construct($data)
+    public function __construct(RequestInterface $request, $data)
     {
+        $this->request = $request;
         $this->data = explode('|,|', substr($data, 1, -1));
 
         if (count($this->data) < 10) {

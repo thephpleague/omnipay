@@ -21,15 +21,15 @@ use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 class GatewayFactory
 {
-    public static function create($type, ClientInterface $httpClient = null, HttpRequest $httpRequest = null)
+    public static function create($class, ClientInterface $httpClient = null, HttpRequest $httpRequest = null)
     {
-        $type = Helper::getGatewayClassName($type);
+        $class = Helper::getGatewayClassName($class);
 
-        if (!class_exists($type)) {
-            throw new GatewayNotFoundException("Class '$type' not found");
+        if (!class_exists($class)) {
+            throw new GatewayNotFoundException("Class '$class' not found");
         }
 
-        $gateway = new $type($httpClient, $httpRequest);
+        $gateway = new $class($httpClient, $httpRequest);
 
         return $gateway;
     }

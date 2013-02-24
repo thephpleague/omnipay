@@ -19,7 +19,7 @@ class ServerGatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
-        $this->gateway = new ServerGateway($this->httpClient, $this->httpRequest);
+        $this->gateway = new ServerGateway($this->getHttpClient(), $this->getHttpRequest());
         $this->gateway->setVendor('example');
 
         $this->purchaseOptions = array(
@@ -43,7 +43,7 @@ class ServerGatewayTest extends GatewayTestCase
 
     public function testAuthorizeSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'ServerPurchaseSuccess.txt');
+        $this->setMockHttpResponse('ServerPurchaseSuccess.txt');
 
         $response = $this->gateway->authorize($this->purchaseOptions)->send();
 
@@ -56,7 +56,7 @@ class ServerGatewayTest extends GatewayTestCase
 
     public function testAuthorizeFailure()
     {
-        $this->setMockResponse($this->httpClient, 'ServerPurchaseFailure.txt');
+        $this->setMockHttpResponse('ServerPurchaseFailure.txt');
 
         $response = $this->gateway->authorize($this->purchaseOptions)->send();
 
@@ -68,7 +68,7 @@ class ServerGatewayTest extends GatewayTestCase
 
     public function testCompleteAuthorizeSuccess()
     {
-        $this->httpRequest->request->replace(
+        $this->getHttpRequest()->request->replace(
             array(
                 'Status' => 'OK',
                 'TxAuthNo' => 'b',
@@ -88,7 +88,7 @@ class ServerGatewayTest extends GatewayTestCase
         );
 
         $response = $this->gateway->completeAuthorize($this->completePurchaseOptions)
-            ->setHttpRequest($this->httpRequest)
+            ->setHttpRequest($this->getHttpRequest())
             ->send();
 
         $this->assertTrue($response->isSuccessful());
@@ -106,7 +106,7 @@ class ServerGatewayTest extends GatewayTestCase
 
     public function testPurchaseSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'ServerPurchaseSuccess.txt');
+        $this->setMockHttpResponse('ServerPurchaseSuccess.txt');
 
         $response = $this->gateway->purchase($this->purchaseOptions)->send();
 
@@ -119,7 +119,7 @@ class ServerGatewayTest extends GatewayTestCase
 
     public function testPurchaseFailure()
     {
-        $this->setMockResponse($this->httpClient, 'ServerPurchaseFailure.txt');
+        $this->setMockHttpResponse('ServerPurchaseFailure.txt');
 
         $response = $this->gateway->purchase($this->purchaseOptions)->send();
 
@@ -131,7 +131,7 @@ class ServerGatewayTest extends GatewayTestCase
 
     public function testCompletePurchaseSuccess()
     {
-        $this->httpRequest->request->replace(
+        $this->getHttpRequest()->request->replace(
             array(
                 'Status' => 'OK',
                 'TxAuthNo' => 'b',
@@ -151,7 +151,7 @@ class ServerGatewayTest extends GatewayTestCase
         );
 
         $response = $this->gateway->completePurchase($this->completePurchaseOptions)
-            ->setHttpRequest($this->httpRequest)
+            ->setHttpRequest($this->getHttpRequest())
             ->send();
 
         $this->assertTrue($response->isSuccessful());

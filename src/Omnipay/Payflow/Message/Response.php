@@ -12,6 +12,7 @@
 namespace Omnipay\Payflow\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
+use Omnipay\Common\Message\RequestInterface;
 use Omnipay\Common\Exception\InvalidResponseException;
 
 /**
@@ -19,8 +20,10 @@ use Omnipay\Common\Exception\InvalidResponseException;
  */
 class Response extends AbstractResponse
 {
-    public function __construct($data)
+    public function __construct(RequestInterface $request, $data)
     {
+        $this->request = $request;
+
         if (empty($data)) {
             throw new InvalidResponseException;
         }

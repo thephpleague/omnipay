@@ -108,14 +108,12 @@ class PurchaseRequest extends AbstractRequest
         return $data;
     }
 
-    public function createResponse($data)
+    public function send()
     {
-        $response = new PurchaseResponse($data);
-
-        return $response->setEndpoint($this->getEndpoint());
+        return $this->response = new PurchaseResponse($this, $this->getData());
     }
 
-    protected function getEndpoint()
+    public function getEndpoint()
     {
         return $this->testMode ? $this->testEndpoint : $this->liveEndpoint;
     }

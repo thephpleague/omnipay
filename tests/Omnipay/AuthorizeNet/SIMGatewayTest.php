@@ -12,7 +12,6 @@
 namespace Omnipay\AuthorizeNet;
 
 use Omnipay\GatewayTestCase;
-use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 class SIMGatewayTest extends GatewayTestCase
 {
@@ -20,7 +19,7 @@ class SIMGatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
-        $this->gateway = new SIMGateway($this->httpClient, $this->httpRequest);
+        $this->gateway = new SIMGateway($this->getHttpClient(), $this->getHttpRequest());
         $this->gateway->setApiLoginId('example');
 
         $this->options = array(
@@ -44,7 +43,7 @@ class SIMGatewayTest extends GatewayTestCase
 
     public function testCompleteAuthorize()
     {
-        $this->httpRequest->request->replace(
+        $this->getHttpRequest()->request->replace(
             array(
                 'x_response_code' => '1',
                 'x_trans_id' => '12345',
@@ -53,7 +52,7 @@ class SIMGatewayTest extends GatewayTestCase
         );
 
         $response = $this->gateway->completeAuthorize($this->options)
-            ->setHttpRequest($this->httpRequest)
+            ->setHttpRequest($this->getHttpRequest())
             ->send();
 
         $this->assertTrue($response->isSuccessful());
@@ -75,7 +74,7 @@ class SIMGatewayTest extends GatewayTestCase
 
     public function testCompletePurchase()
     {
-        $this->httpRequest->request->replace(
+        $this->getHttpRequest()->request->replace(
             array(
                 'x_response_code' => '1',
                 'x_trans_id' => '12345',
@@ -84,7 +83,7 @@ class SIMGatewayTest extends GatewayTestCase
         );
 
         $response = $this->gateway->completePurchase($this->options)
-            ->setHttpRequest($this->httpRequest)
+            ->setHttpRequest($this->getHttpRequest())
             ->send();
 
         $this->assertTrue($response->isSuccessful());

@@ -12,14 +12,16 @@
 namespace Omnipay\PayPal\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
+use Omnipay\Common\Message\RequestInterface;
 
 /**
  * PayPal Response
  */
 class Response extends AbstractResponse
 {
-    public function __construct($data)
+    public function __construct(RequestInterface $request, $data)
     {
+        $this->request = $request;
         parse_str($data, $this->data);
     }
 

@@ -17,7 +17,7 @@ class PurchaseResponseTest extends TestCase
 {
     public function testConstruct()
     {
-        $response = new PurchaseResponse(array('sid' => '12345', 'total' => '10.00'));
+        $response = new Purchaseresponse($this->getMockRequest(), array('sid' => '12345', 'total' => '10.00'));
 
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());

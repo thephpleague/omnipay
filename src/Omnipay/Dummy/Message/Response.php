@@ -12,24 +12,12 @@
 namespace Omnipay\Dummy\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
-use Omnipay\Common\Exception\InvalidResponseException;
 
 /**
  * Dummy Response
  */
 class Response extends AbstractResponse
 {
-    protected $gatewayReference;
-
-    public function __construct($gatewayReference)
-    {
-        if (empty($gatewayReference)) {
-            throw new InvalidResponseException;
-        }
-
-        $this->gatewayReference = $gatewayReference;
-    }
-
     public function isSuccessful()
     {
         return true;
@@ -37,6 +25,6 @@ class Response extends AbstractResponse
 
     public function getGatewayReference()
     {
-        return $this->gatewayReference;
+        return isset($this->data['reference']) ? $this->data['reference'] : null;
     }
 }

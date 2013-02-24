@@ -11,9 +11,7 @@
 
 namespace Omnipay\Pin;
 
-use Guzzle\Common\Event;
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Message\RequestInterface;
 use Omnipay\Pin\Message\PurchaseRequest;
 
 /**
@@ -23,8 +21,6 @@ use Omnipay\Pin\Message\PurchaseRequest;
  */
 class Gateway extends AbstractGateway
 {
-    protected $liveEndpoint = 'https://api.pin.net.au/1';
-    protected $testEndpoint = 'https://test-api.pin.net.au/1';
     protected $secretKey;
     protected $testMode;
 
@@ -67,32 +63,8 @@ class Gateway extends AbstractGateway
 
     public function purchase($options = null)
     {
-        $request = new PurchaseRequest(array_merge($this->toArray(), (array) $options));
+        $request = new PurchaseRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
-    }
-
-    public function send(RequestInterface $request)
-    {
-        // don't throw exceptions for 422 errors
-        $this->httpClient->getEventDispatcher()->addListener(
-            'request.error',
-            function ($event) {
-                if ($event['response']->getStatusCode() == 422) {
-                    $event->stopPropagation();
-                }
-            }
-        );
-
-        $httpResponse = $this->httpClient->post($this->getEndpoint().'/charges', null, $request->getData())
-            ->setHeader('Authorization', 'Basic '.base64_encode($this->secretKey.':'))
-            ->send();
-
-        return $this->createResponse($request, $httpResponse->json());
-    }
-
-    protected function getEndpoint()
-    {
-        return $this->testMode ? $this->testEndpoint : $this->liveEndpoint;
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 }

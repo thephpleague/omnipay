@@ -17,21 +17,21 @@ class CompletePurchaseResponseTest extends TestCase
 {
     public function testCompletePurchaseSuccess()
     {
-        $httpResponse = $this->getMockResponse('CompletePurchaseSuccess.txt');
-        $response = new CompletePurchaseResponse($httpResponse->json());
+        $httpResponse = $this->getMockHttpResponse('CompletePurchaseSuccess.txt');
+        $response = new CompletePurchaseResponse($this->getMockRequest(), $httpResponse->json(), 'abc123');
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertSame('abc123', $response->getGatewayReference());
         $this->assertNull($response->getMessage());
     }
 
     public function testCompletePurchaseFailure()
     {
-        $httpResponse = $this->getMockResponse('CompletePurchaseFailure.txt');
-        $response = new CompletePurchaseResponse($httpResponse->json());
+        $httpResponse = $this->getMockHttpResponse('CompletePurchaseFailure.txt');
+        $response = new CompletePurchaseResponse($this->getMockRequest(), $httpResponse->json(), 'abc123');
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertSame('abc123', $response->getGatewayReference());
         $this->assertSame('The resource cannot be confirmed', $response->getMessage());
     }
 }

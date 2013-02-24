@@ -13,6 +13,7 @@ namespace Omnipay\PayPal;
 
 use Omnipay\PayPal\Message\ExpressAuthorizeRequest;
 use Omnipay\PayPal\Message\ExpressCompleteAuthorizeRequest;
+use Omnipay\PayPal\Message\ExpressCompletePurchaseRequest;
 
 /**
  * PayPal Express Class
@@ -62,16 +63,16 @@ class ExpressGateway extends ProGateway
 
     public function authorize($options = null)
     {
-        $request = new ExpressAuthorizeRequest(array_merge($this->toArray(), (array) $options));
+        $request = new ExpressAuthorizeRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
-    public function completeAuthorize($options = null, $action = 'Authorization')
+    public function completeAuthorize($options = null)
     {
-        $request = new ExpressCompleteAuthorizeRequest(array_merge($this->toArray(), (array) $options));
+        $request = new ExpressCompleteAuthorizeRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this)->setPaymentAction($action);
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
     public function purchase($options = null)
@@ -81,6 +82,8 @@ class ExpressGateway extends ProGateway
 
     public function completePurchase($options = null)
     {
-        return $this->completeAuthorize($options, 'Sale');
+        $request = new ExpressCompletePurchaseRequest($this->httpClient, $this->httpRequest);
+
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 }

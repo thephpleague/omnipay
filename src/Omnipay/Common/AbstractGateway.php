@@ -31,9 +31,10 @@ abstract class AbstractGateway implements GatewayInterface
      * @param ClientInterface $httpClient  A Guzzle client to make API calls with
      * @param HttpRequest     $httpRequest A Symfony HTTP request object
      */
-    public function __construct(ClientInterface $httpClient = null)
+    public function __construct(ClientInterface $httpClient = null, HttpRequest $httpRequest = null)
     {
         $this->httpClient = $httpClient ?: $this->getDefaultHttpClient();
+        $this->httpRequest = $httpRequest ?: $this->getDefaultHttpRequest();
         $this->loadSettings();
     }
 
@@ -89,6 +90,8 @@ abstract class AbstractGateway implements GatewayInterface
     public function initialize($parameters)
     {
         Helper::initialize($this, $parameters);
+
+        return $this;
     }
 
     private function loadSettings()
@@ -187,11 +190,27 @@ abstract class AbstractGateway implements GatewayInterface
         );
     }
 
+    public function getHttpRequest()
+    {
+        return $this->httpRequest;
+    }
+
+    public function setHttpRequest(HttpRequest $httpRequest)
+    {
+        $this->httpRequest = $httpRequest;
+
+        return $this;
+    }
+
+    public function getDefaultHttpRequest()
+    {
+        return HttpRequest::createFromGlobals();
+    }
+
     public function createResponse(RequestInterface $request, $responseData)
     {
         // request object knows which class its response should be
         $response = $request->createResponse($responseData)
-            ->setGateway($this)
             ->setRequest($request);
 
         $request->setResponse($response);

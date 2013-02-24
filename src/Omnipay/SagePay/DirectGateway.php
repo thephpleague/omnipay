@@ -12,21 +12,16 @@
 namespace Omnipay\SagePay;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Message\RequestInterface;
 use Omnipay\SagePay\Message\CaptureRequest;
 use Omnipay\SagePay\Message\DirectAuthorizeRequest;
 use Omnipay\SagePay\Message\DirectPurchaseRequest;
 use Omnipay\SagePay\Message\RefundRequest;
-use Omnipay\SagePay\Message\ServerCompleteAuthorizeRequest;
 
 /**
  * Sage Pay Direct Gateway
  */
 class DirectGateway extends AbstractGateway
 {
-    protected $liveEndpoint = 'https://live.sagepay.com/gateway/service';
-    protected $testEndpoint = 'https://test.sagepay.com/gateway/service';
-    protected $simulatorEndpoint = 'https://test.sagepay.com/Simulator';
     protected $vendor;
     protected $testMode;
     protected $simulatorMode;
@@ -83,30 +78,30 @@ class DirectGateway extends AbstractGateway
 
     public function authorize($options = null)
     {
-        $request = new DirectAuthorizeRequest(array_merge($this->toArray(), (array) $options));
+        $request = new DirectAuthorizeRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
     public function completeAuthorize($options = null)
     {
-        $request = new DirectAuthorizeRequest(array_merge($this->toArray(), (array) $options));
+        $request = new DirectAuthorizeRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
     public function capture($options = null)
     {
-        $request = new CaptureRequest(array_merge($this->toArray(), (array) $options));
+        $request = new CaptureRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
     public function purchase($options = null)
     {
-        $request = new DirectPurchaseRequest(array_merge($this->toArray(), (array) $options));
+        $request = new DirectPurchaseRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 
     /**
@@ -119,47 +114,8 @@ class DirectGateway extends AbstractGateway
 
     public function refund($options = null)
     {
-        $request = new RefundRequest(array_merge($this->toArray(), (array) $options));
+        $request = new RefundRequest($this->httpClient, $this->httpRequest);
 
-        return $request->setGateway($this);
-    }
-
-    public function send(RequestInterface $request)
-    {
-        if ($request instanceof ServerCompleteAuthorizeRequest) {
-            return $this->createResponse($request, $request->getData());
-        }
-
-        $url = $this->getEndpoint($request->getService());
-        $httpResponse = $this->httpClient->post($url, null, $request->getData())->send();
-
-        return $this->createResponse($request, $httpResponse->getBody());
-    }
-
-    protected function getEndpoint($service)
-    {
-        $service = strtolower($service);
-        if ($service == 'payment' || $service == 'deferred') {
-            $service = 'vspdirect-register';
-        }
-
-        if ($this->simulatorMode) {
-            // hooray for consistency
-            if ($service == 'vspdirect-register') {
-                return $this->simulatorEndpoint.'/VSPDirectGateway.asp';
-            } elseif ($service == 'vspserver-register') {
-                return $this->simulatorEndpoint.'/VSPServerGateway.asp?Service=VendorRegisterTx';
-            } elseif ($service == 'direct3dcallback') {
-                return $this->simulatorEndpoint.'/VSPDirectCallback.asp';
-            }
-
-            return $this->simulatorEndpoint.'/VSPServerGateway.asp?Service=Vendor'.ucfirst($service).'Tx';
-        }
-
-        if ($this->testMode) {
-            return $this->testEndpoint."/$service.vsp";
-        }
-
-        return $this->liveEndpoint."/$service.vsp";
+        return $request->initialize(array_merge($this->toArray(), (array) $options));
     }
 }
