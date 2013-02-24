@@ -87,13 +87,19 @@ abstract class AbstractResponse extends AbstractMessage implements ResponseInter
         if ('GET' === $this->getRedirectMethod()) {
             return HttpRedirectResponse::create($this->getRedirectUrl())->send();
         } elseif ('POST' === $this->getRedirectMethod()) {
-            $hiddenFields = implode("\n", array_map(function($name, $value) {
-                return sprintf(
-                    '<input type="hidden" name="%1$s" value="%2$s" />',
-                    htmlspecialchars($name, ENT_QUOTES, 'UTF-8'),
-                    htmlspecialchars($value, ENT_QUOTES, 'UTF-8')
-                );
-            }, $this->getRedirectData()));
+            $hiddenFields = implode(
+                "\n",
+                array_map(
+                    function ($name, $value) {
+                        return sprintf(
+                            '<input type="hidden" name="%1$s" value="%2$s" />',
+                            htmlspecialchars($name, ENT_QUOTES, 'UTF-8'),
+                            htmlspecialchars($value, ENT_QUOTES, 'UTF-8')
+                        );
+                    },
+                    $this->getRedirectData()
+                )
+            );
 
             $output = <<<EOF
 <!DOCTYPE html>
