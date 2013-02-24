@@ -254,8 +254,6 @@ abstract class AbstractRequest extends AbstractMessage implements RequestInterfa
         return $this;
     }
 
-    abstract public function createResponse($data);
-
     public function send()
     {
         if (!$this->getGateway()) {

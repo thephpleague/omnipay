@@ -81,8 +81,6 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $data;
     }
 
-    abstract public function getData();
-
     public function createResponse($data)
     {
         return new Response($data);

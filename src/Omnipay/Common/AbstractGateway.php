@@ -37,24 +37,6 @@ abstract class AbstractGateway implements GatewayInterface
         $this->loadSettings();
     }
 
-    /**
-     * Get gateway display name
-     *
-     * This can be used by carts to get the display name for each gateway.
-     */
-    abstract public function getName();
-
-    /**
-     * Define gateway settings, in the following format:
-     *
-     * array(
-     *     'username' => '', // string variable
-     *     'testMode' => false, // boolean variable
-     *     'landingPage' => array('billing', 'login'), // enum variable, first item is default
-     * );
-     */
-    abstract public function defineSettings();
-
     public function authorize($options = null)
     {
         throw new BadMethodCallException;
@@ -204,8 +186,6 @@ abstract class AbstractGateway implements GatewayInterface
             )
         );
     }
-
-    abstract public function send(RequestInterface $request);
 
     public function createResponse(RequestInterface $request, $responseData)
     {
