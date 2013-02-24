@@ -69,11 +69,6 @@ class PurchaseRequest extends AbstractRequest
         return $this->endpoint.'/charges';
     }
 
-    public function createResponse($data)
-    {
-        return new Response($data);
-    }
-
     public function send()
     {
         // don't throw exceptions for 402 errors

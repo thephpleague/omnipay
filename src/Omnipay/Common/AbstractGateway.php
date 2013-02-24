@@ -206,15 +206,4 @@ abstract class AbstractGateway implements GatewayInterface
     {
         return HttpRequest::createFromGlobals();
     }
-
-    public function createResponse(RequestInterface $request, $responseData)
-    {
-        // request object knows which class its response should be
-        $response = $request->createResponse($responseData)
-            ->setRequest($request);
-
-        $request->setResponse($response);
-
-        return $response;
-    }
 }
