@@ -24,18 +24,12 @@ use Omnipay\Payflow\Message\RefundRequest;
  */
 class ProGateway extends AbstractGateway
 {
-    protected $username;
-    protected $password;
-    protected $vendor;
-    protected $partner;
-    protected $testMode;
-
     public function getName()
     {
         return 'Payflow';
     }
 
-    public function defineSettings()
+    public function getDefaultParameters()
     {
         return array(
             'username' => '',
@@ -48,89 +42,61 @@ class ProGateway extends AbstractGateway
 
     public function getUsername()
     {
-        return $this->username;
+        return $this->getParameter('username');
     }
 
     public function setUsername($value)
     {
-        $this->username = $value;
-
-        return $this;
+        return $this->setParameter('username', $value);
     }
 
     public function getPassword()
     {
-        return $this->password;
+        return $this->getParameter('password');
     }
 
     public function setPassword($value)
     {
-        $this->password = $value;
-
-        return $this;
+        return $this->setParameter('password', $value);
     }
 
     public function getVendor()
     {
-        return $this->vendor;
+        return $this->getParameter('vendor');
     }
 
     public function setVendor($value)
     {
-        $this->vendor = $value;
-
-        return $this;
+        return $this->setParameter('vendor', $value);
     }
 
     public function getPartner()
     {
-        return $this->partner;
+        return $this->getParameter('partner');
     }
 
     public function setPartner($value)
     {
-        $this->partner = $value;
-
-        return $this;
+        return $this->setParameter('partner', $value);
     }
 
-    public function getTestMode()
+    public function authorize(array $parameters = array())
     {
-        return $this->testMode;
+        return $this->createRequest('\Omnipay\Payflow\Message\AuthorizeRequest', $parameters);
     }
 
-    public function setTestMode($value)
+    public function capture(array $parameters = array())
     {
-        $this->testMode = $value;
-
-        return $this;
+        return $this->createRequest('\Omnipay\Payflow\Message\CaptureRequest', $parameters);
     }
 
-    public function authorize(array $options = null)
+    public function purchase(array $parameters = array())
     {
-        $request = new AuthorizeRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\Payflow\Message\PurchaseRequest', $parameters);
     }
 
-    public function capture(array $options = null)
+    public function refund(array $parameters = array())
     {
-        $request = new CaptureRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
-    }
-
-    public function purchase(array $options = null)
-    {
-        $request = new PurchaseRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
-    }
-
-    public function refund(array $options = null)
-    {
-        $request = new RefundRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\Payflow\Message\RefundRequest', $parameters);
     }
 }

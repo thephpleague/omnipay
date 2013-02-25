@@ -87,9 +87,7 @@ class ServerGatewayTest extends GatewayTestCase
             )
         );
 
-        $response = $this->gateway->completeAuthorize($this->completePurchaseOptions)
-            ->setHttpRequest($this->getHttpRequest())
-            ->send();
+        $response = $this->gateway->completeAuthorize($this->completePurchaseOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('{"SecurityKey":"JEUPDN1N7E","TxAuthNo":"b","VPSTxId":"{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}","VendorTxCode":"123"}', $response->getGatewayReference());
@@ -150,9 +148,7 @@ class ServerGatewayTest extends GatewayTestCase
             )
         );
 
-        $response = $this->gateway->completePurchase($this->completePurchaseOptions)
-            ->setHttpRequest($this->getHttpRequest())
-            ->send();
+        $response = $this->gateway->completePurchase($this->completePurchaseOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('{"SecurityKey":"JEUPDN1N7E","TxAuthNo":"b","VPSTxId":"{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}","VendorTxCode":"123"}', $response->getGatewayReference());

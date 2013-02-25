@@ -30,7 +30,7 @@ class ServerCompleteAuthorizeRequest extends AbstractRequest
             $reference['VendorTxCode'].
             $this->httpRequest->request->get('Status').
             $this->httpRequest->request->get('TxAuthNo').
-            $this->vendor.
+            $this->getVendor().
             $this->httpRequest->request->get('AVSCV2').
             $reference['SecurityKey'].
             $this->httpRequest->request->get('AddressResult').

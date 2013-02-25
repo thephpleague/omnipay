@@ -11,7 +11,7 @@
 
     <form method="post" class="form-horizontal">
 
-        {% for key, default in gateway.defineSettings %}
+        {% for key, default in gateway.getDefaultParameters %}
 
             <div class="control-group">
                 <label class="control-label" for="gateway_{{key}}">{{ key }}</label>

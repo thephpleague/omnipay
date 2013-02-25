@@ -20,70 +20,45 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
     protected $liveEndpoint = 'https://gocardless.com';
     protected $testEndpoint = 'https://sandbox.gocardless.com';
-    protected $appId;
-    protected $appSecret;
-    protected $merchantId;
-    protected $accessToken;
-    protected $testMode;
 
     public function getAppId()
     {
-        return $this->appId;
+        return $this->getParameter('appId');
     }
 
     public function setAppId($value)
     {
-        $this->appId = $value;
-
-        return $this;
+        return $this->setParameter('appId', $value);
     }
 
     public function getAppSecret()
     {
-        return $this->appSecret;
+        return $this->getParameter('appSecret');
     }
 
     public function setAppSecret($value)
     {
-        $this->appSecret = $value;
-
-        return $this;
+        return $this->setParameter('appSecret', $value);
     }
 
     public function getMerchantId()
     {
-        return $this->merchantId;
+        return $this->getParameter('merchantId');
     }
 
     public function setMerchantId($value)
     {
-        $this->merchantId = $value;
-
-        return $this;
+        return $this->setParameter('merchantId', $value);
     }
 
     public function getAccessToken()
     {
-        return $this->accessToken;
+        return $this->getParameter('accessToken');
     }
 
     public function setAccessToken($value)
     {
-        $this->accessToken = $value;
-
-        return $this;
-    }
-
-    public function getTestMode()
-    {
-        return $this->testMode;
-    }
-
-    public function setTestMode($value)
-    {
-        $this->testMode = $value;
-
-        return $this;
+        return $this->setParameter('accessToken', $value);
     }
 
     /**
@@ -91,11 +66,11 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
      */
     public function generateSignature($data)
     {
-        return hash_hmac('sha256', Gateway::generateQueryString($data), $this->appSecret);
+        return hash_hmac('sha256', Gateway::generateQueryString($data), $this->getAppSecret());
     }
 
     public function getEndpoint()
     {
-        return $this->testMode ? $this->testEndpoint : $this->liveEndpoint;
+        return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }
 }

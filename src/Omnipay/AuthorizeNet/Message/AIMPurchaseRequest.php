@@ -21,15 +21,15 @@ class AIMPurchaseRequest extends AIMAuthorizeRequest
     public function getData()
     {
         $this->validate(array('amount', 'card'));
-        $this->card->validate();
+        $this->getCard()->validate();
 
         $data = $this->getBaseData();
         $data['x_customer_ip'] = $this->getClientIp();
-        $data['x_card_num'] = $this->card->getNumber();
-        $data['x_exp_date'] = $this->card->getExpiryDate('my');
-        $data['x_card_code'] = $this->card->getCvv();
+        $data['x_card_num'] = $this->getCard()->getNumber();
+        $data['x_exp_date'] = $this->getCard()->getExpiryDate('my');
+        $data['x_card_code'] = $this->getCard()->getCvv();
 
-        if ($this->testMode) {
+        if ($this->getTestMode()) {
             $data['x_test_request'] = 'TRUE';
         }
 

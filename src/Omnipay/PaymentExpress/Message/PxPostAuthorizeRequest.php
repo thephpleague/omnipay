@@ -20,38 +20,32 @@ class PxPostAuthorizeRequest extends AbstractRequest
 {
     protected $endpoint = 'https://sec.paymentexpress.com/pxpost.aspx';
     protected $action = 'Auth';
-    protected $username;
-    protected $password;
 
     public function getUsername()
     {
-        return $this->username;
+        return $this->getParameter('username');
     }
 
     public function setUsername($value)
     {
-        $this->username = $value;
-
-        return $this;
+        return $this->setParameter('username', $value);
     }
 
     public function getPassword()
     {
-        return $this->password;
+        return $this->getParameter('password');
     }
 
     public function setPassword($value)
     {
-        $this->password = $value;
-
-        return $this;
+        return $this->setParameter('password', $value);
     }
 
     protected function getBaseData()
     {
         $data = new \SimpleXMLElement('<Txn />');
-        $data->PostUsername = $this->username;
-        $data->PostPassword = $this->password;
+        $data->PostUsername = $this->getUsername();
+        $data->PostPassword = $this->getPassword();
         $data->TxnType = $this->action;
 
         return $data;
@@ -60,17 +54,17 @@ class PxPostAuthorizeRequest extends AbstractRequest
     public function getData()
     {
         $this->validate(array('amount', 'card'));
-        $this->card->validate();
+        $this->getCard()->validate();
 
         $data = $this->getBaseData();
         $data->InputCurrency = $this->getCurrency();
         $data->Amount = $this->getAmountDecimal();
         $data->MerchantReference = $this->getDescription();
 
-        $data->CardNumber = $this->card->getNumber();
-        $data->CardHolderName = $this->card->getName();
-        $data->DateExpiry = $this->card->getExpiryDate('my');
-        $data->Cvc2 = $this->card->getCvv();
+        $data->CardNumber = $this->getCard()->getNumber();
+        $data->CardHolderName = $this->getCard()->getName();
+        $data->DateExpiry = $this->getCard()->getExpiryDate('my');
+        $data->Cvc2 = $this->getCard()->getCvv();
 
         return $data;
     }

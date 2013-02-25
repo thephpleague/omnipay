@@ -51,9 +51,7 @@ class SIMGatewayTest extends GatewayTestCase
             )
         );
 
-        $response = $this->gateway->completeAuthorize($this->options)
-            ->setHttpRequest($this->getHttpRequest())
-            ->send();
+        $response = $this->gateway->completeAuthorize($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('12345', $response->getGatewayReference());
@@ -82,9 +80,7 @@ class SIMGatewayTest extends GatewayTestCase
             )
         );
 
-        $response = $this->gateway->completePurchase($this->options)
-            ->setHttpRequest($this->getHttpRequest())
-            ->send();
+        $response = $this->gateway->completePurchase($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('12345', $response->getGatewayReference());

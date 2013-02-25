@@ -24,29 +24,23 @@ class SIMGateway extends AIMGateway
         return 'Authorize.Net SIM';
     }
 
-    public function authorize(array $options = null)
+    public function authorize(array $parameters = array())
     {
-        $request = new SIMAuthorizeRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\AuthorizeNet\Message\SIMAuthorizeRequest', $parameters);
     }
 
-    public function completeAuthorize(array $options = null)
+    public function completeAuthorize(array $parameters = array())
     {
-        $request = new SIMCompleteAuthorizeRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\AuthorizeNet\Message\SIMCompleteAuthorizeRequest', $parameters);
     }
 
-    public function purchase(array $options = null)
+    public function purchase(array $parameters = array())
     {
-        $request = new SIMAuthorizeRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\AuthorizeNet\Message\SIMAuthorizeRequest', $parameters);
     }
 
-    public function completePurchase(array $options = null)
+    public function completePurchase(array $parameters = array())
     {
-        return $this->completeAuthorize($options);
+        return $this->completeAuthorize($parameters);
     }
 }

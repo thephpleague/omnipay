@@ -16,45 +16,31 @@ namespace Omnipay\GoCardless\Message;
  */
 class PurchaseRequest extends AbstractRequest
 {
-    protected $nonce;
-
-    public function getNonce()
-    {
-        return $this->nonce;
-    }
-
-    public function setNonce($value)
-    {
-        $this->nonce = $value;
-
-        return $this;
-    }
-
     public function getData()
     {
         $this->validate(array('amount', 'returnUrl'));
 
         $data = array();
-        $data['client_id'] = $this->appId;
+        $data['client_id'] = $this->getAppId();
         $data['nonce'] = $this->generateNonce();
         $data['timestamp'] = gmdate('Y-m-d\TH:i:s\Z');
         $data['redirect_uri'] = $this->getReturnUrl();
         $data['cancel_uri'] = $this->getCancelUrl();
         $data['bill'] = array();
-        $data['bill']['merchant_id'] = $this->merchantId;
+        $data['bill']['merchant_id'] = $this->getMerchantId();
         $data['bill']['amount'] = $this->getAmountDecimal();
         $data['bill']['name'] = $this->getDescription();
 
-        if ($this->card) {
+        if ($this->getCard()) {
             $data['bill']['user'] = array();
-            $data['bill']['user']['first_name'] = $this->card->getFirstName();
-            $data['bill']['user']['last_name'] = $this->card->getLastName();
-            $data['bill']['user']['email'] = $this->card->getEmail();
-            $data['bill']['user']['billing_address1'] = $this->card->getAddress1();
-            $data['bill']['user']['billing_address2'] = $this->card->getAddress2();
-            $data['bill']['user']['billing_town'] = $this->card->getCity();
-            $data['bill']['user']['billing_county'] = $this->card->getCountry();
-            $data['bill']['user']['billing_postcode'] = $this->card->getPostcode();
+            $data['bill']['user']['first_name'] = $this->getCard()->getFirstName();
+            $data['bill']['user']['last_name'] = $this->getCard()->getLastName();
+            $data['bill']['user']['email'] = $this->getCard()->getEmail();
+            $data['bill']['user']['billing_address1'] = $this->getCard()->getAddress1();
+            $data['bill']['user']['billing_address2'] = $this->getCard()->getAddress2();
+            $data['bill']['user']['billing_town'] = $this->getCard()->getCity();
+            $data['bill']['user']['billing_county'] = $this->getCard()->getCountry();
+            $data['bill']['user']['billing_postcode'] = $this->getCard()->getPostcode();
         }
 
         $data['signature'] = $this->generateSignature($data);

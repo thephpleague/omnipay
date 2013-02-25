@@ -11,9 +11,6 @@
 
 namespace Omnipay\Common;
 
-use Guzzle\Http\ClientInterface;
-use Symfony\Component\HttpFoundation\Request as HttpRequest;
-
 /**
  * Payment gateway interface
  */
@@ -28,7 +25,15 @@ interface GatewayInterface
     public function getName();
 
     /**
-     * Define gateway settings, in the following format:
+     * Get gateway short name
+     *
+     * This name can be used with GatewayFactory as an alias of the gateway class,
+     * to create new instances of this gateway.
+     */
+    public function getShortName();
+
+    /**
+     * Define gateway parameters, in the following format:
      *
      * array(
      *     'username' => '', // string variable
@@ -36,15 +41,19 @@ interface GatewayInterface
      *     'landingPage' => array('billing', 'login'), // enum variable, first item is default
      * );
      */
-    public function defineSettings();
+    public function getDefaultParameters();
 
-    public function getHttpClient();
+    /**
+     * Initialize gateway with parameters
+     */
+    public function initialize(array $paramters = array());
 
-    public function setHttpClient(ClientInterface $value);
-
-    public function getHttpRequest();
-
-    public function setHttpRequest(HttpRequest $value);
+    /**
+     * Get all gateway parameters
+     *
+     * @return array
+     */
+    public function getParameters();
 
     /**
      * Authorize a new payment.
@@ -52,7 +61,7 @@ interface GatewayInterface
      * @param array An array of options
      * @return Omnipay\ResponseInterface
      */
-    public function authorize(array $options = null);
+    public function authorize(array $parameters = array());
 
     /**
      * Handle return from an off-site authorization request.
@@ -60,7 +69,7 @@ interface GatewayInterface
      * @param array An array of options
      * @return Omnipay\ResponseInterface
      */
-    public function completeAuthorize(array $options = null);
+    public function completeAuthorize(array $parameters = array());
 
     /**
      * Capture an authorized payment.
@@ -68,7 +77,7 @@ interface GatewayInterface
      * @param array An array of options
      * @return Omnipay\ResponseInterface
      */
-    public function capture(array $options = null);
+    public function capture(array $parameters = array());
 
     /**
      * Create a new charge (combined authorize + capture).
@@ -76,7 +85,7 @@ interface GatewayInterface
      * @param array An array of options
      * @return Omnipay\ResponseInterface
      */
-    public function purchase(array $options = null);
+    public function purchase(array $parameters = array());
 
     /**
      * Handle return from an off-site purchase request.
@@ -84,7 +93,7 @@ interface GatewayInterface
      * @param array An array of options
      * @return Omnipay\ResponseInterface
      */
-    public function completePurchase(array $options = null);
+    public function completePurchase(array $parameters = array());
 
     /**
      * Refund an existing transaction.
@@ -95,7 +104,7 @@ interface GatewayInterface
      * @param array An array of options
      * @return Omnipay\ResponseInterface
      */
-    public function refund(array $options = null);
+    public function refund(array $parameters = array());
 
     /**
      * Void an existing transaction.
@@ -106,5 +115,5 @@ interface GatewayInterface
      * @param array An array of options
      * @return Omnipay\ResponseInterface
      */
-    public function void(array $options = null);
+    public function void(array $parameters = array());
 }

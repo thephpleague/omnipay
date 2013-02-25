@@ -22,16 +22,12 @@ use Omnipay\SagePay\Message\RefundRequest;
  */
 class DirectGateway extends AbstractGateway
 {
-    protected $vendor;
-    protected $testMode;
-    protected $simulatorMode;
-
     public function getName()
     {
         return 'Sage Pay Direct';
     }
 
-    public function defineSettings()
+    public function getDefaultParameters()
     {
         return array(
             'vendor' => '',
@@ -42,80 +38,51 @@ class DirectGateway extends AbstractGateway
 
     public function getVendor()
     {
-        return $this->vendor;
+        return $this->getParameter('vendor');
     }
 
     public function setVendor($value)
     {
-        $this->vendor = $value;
-
-        return $this;
-    }
-
-    public function getTestMode()
-    {
-        return $this->testMode;
-    }
-
-    public function setTestMode($value)
-    {
-        $this->testMode = $value;
-
-        return $this;
+        return $this->setParameter('vendor', $value);
     }
 
     public function getSimulatorMode()
     {
-        return $this->simulatorMode;
+        return $this->getParameter('simulatorMode');
     }
 
     public function setSimulatorMode($value)
     {
-        $this->simulatorMode = $value;
-
-        return $this;
+        return $this->setParameter('simulatorMode', $value);
     }
 
-    public function authorize(array $options = null)
+    public function authorize(array $parameters = array())
     {
-        $request = new DirectAuthorizeRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\SagePay\Message\DirectAuthorizeRequest', $parameters);
     }
 
-    public function completeAuthorize(array $options = null)
+    public function completeAuthorize(array $parameters = array())
     {
-        $request = new DirectAuthorizeRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\SagePay\Message\DirectAuthorizeRequest', $parameters);
     }
 
-    public function capture(array $options = null)
+    public function capture(array $parameters = array())
     {
-        $request = new CaptureRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\SagePay\Message\CaptureRequest', $parameters);
     }
 
-    public function purchase(array $options = null)
+    public function purchase(array $parameters = array())
     {
-        $request = new DirectPurchaseRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\SagePay\Message\DirectPurchaseRequest', $parameters);
     }
 
-    /**
-     * Only used for returning from Direct 3D Authentication
-     */
-    public function completePurchase(array $options = null)
+    public function completePurchase(array $parameters = array())
     {
-        return $this->completeAuthorize($options);
+        return $this->completeAuthorize($parameters);
     }
 
-    public function refund(array $options = null)
+    public function refund(array $parameters = array())
     {
-        $request = new RefundRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\SagePay\Message\RefundRequest', $parameters);
     }
 }

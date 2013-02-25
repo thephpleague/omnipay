@@ -23,7 +23,7 @@ class SIMAuthorizeRequest extends AbstractRequest
         $this->validate(array('amount', 'returnUrl'));
 
         $data = array();
-        $data['x_login'] = $this->apiLoginId;
+        $data['x_login'] = $this->getApiLoginId();
         $data['x_type'] = $this->action;
         $data['x_fp_sequence'] = mt_rand();
         $data['x_fp_timestamp'] = time();
@@ -33,7 +33,7 @@ class SIMAuthorizeRequest extends AbstractRequest
         $data['x_relay_url'] = $this->getReturnUrl();
         $data['x_cancel_url'] = $this->getCancelUrl();
 
-        if ($this->testMode) {
+        if ($this->getTestMode()) {
             $data['x_test_request'] = 'TRUE';
         }
 
@@ -48,14 +48,14 @@ class SIMAuthorizeRequest extends AbstractRequest
         $fingerprint = implode(
             '^',
             array(
-                $this->apiLoginId,
+                $this->getApiLoginId(),
                 $data['x_fp_sequence'],
                 $data['x_fp_timestamp'],
                 $data['x_amount']
             )
         ).'^';
 
-        return hash_hmac('md5', $fingerprint, $this->transactionKey);
+        return hash_hmac('md5', $fingerprint, $this->getTransactionKey());
     }
 
     public function send()

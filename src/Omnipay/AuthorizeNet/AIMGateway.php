@@ -21,17 +21,12 @@ use Omnipay\Common\AbstractGateway;
  */
 class AIMGateway extends AbstractGateway
 {
-    protected $apiLoginId;
-    protected $transactionKey;
-    protected $testMode;
-    protected $developerMode;
-
     public function getName()
     {
         return 'Authorize.Net AIM';
     }
 
-    public function defineSettings()
+    public function getDefaultParameters()
     {
         return array(
             'apiLoginId' => '',
@@ -43,70 +38,46 @@ class AIMGateway extends AbstractGateway
 
     public function getApiLoginId()
     {
-        return $this->apiLoginId;
+        return $this->getParameter('apiLoginId');
     }
 
     public function setApiLoginId($value)
     {
-        $this->apiLoginId = $value;
-
-        return $this;
+        return $this->setParameter('apiLoginId', $value);
     }
 
     public function getTransactionKey()
     {
-        return $this->transactionKey;
+        return $this->getParameter('transactionKey');
     }
 
     public function setTransactionKey($value)
     {
-        $this->transactionKey = $value;
-
-        return $this;
-    }
-
-    public function getTestMode()
-    {
-        return $this->testMode;
-    }
-
-    public function setTestMode($value)
-    {
-        $this->testMode = $value;
-
-        return $this;
+        return $this->setParameter('transactionKey', $value);
     }
 
     public function getDeveloperMode()
     {
-        return $this->developerMode;
+        return $this->getParameter('developerMode');
     }
 
     public function setDeveloperMode($value)
     {
-        $this->developerMode = $value;
-
-        return $this;
+        return $this->setParameter('developerMode', $value);
     }
 
-    public function authorize(array $options = null)
+    public function authorize(array $parameters = array())
     {
-        $request = new AIMAuthorizeRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\AuthorizeNet\Message\AIMAuthorizeRequest', $parameters);
     }
 
-    public function capture(array $options = null)
+    public function capture(array $parameters = array())
     {
-        $request = new CaptureRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\AuthorizeNet\Message\CaptureRequest', $parameters);
     }
 
-    public function purchase(array $options = null)
+    public function purchase(array $parameters = array())
     {
-        $request = new AIMPurchaseRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\AuthorizeNet\Message\AIMPurchaseRequest', $parameters);
     }
 }

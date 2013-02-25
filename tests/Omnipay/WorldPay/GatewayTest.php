@@ -49,9 +49,7 @@ class GatewayTest extends GatewayTestCase
             )
         );
 
-        $response = $this->gateway->completePurchase($this->options)
-            ->setHttpRequest($this->getHttpRequest())
-            ->send();
+        $response = $this->gateway->completePurchase($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -70,9 +68,7 @@ class GatewayTest extends GatewayTestCase
             )
         );
 
-        $response = $this->gateway->completePurchase($this->options)
-            ->setHttpRequest($this->getHttpRequest())
-            ->send();
+        $response = $this->gateway->completePurchase($this->options)->send();
     }
 
     public function testCompletePurchaseError()
@@ -85,9 +81,7 @@ class GatewayTest extends GatewayTestCase
             )
         );
 
-        $response = $this->gateway->completePurchase($this->options)
-            ->setHttpRequest($this->getHttpRequest())
-            ->send();
+        $response = $this->gateway->completePurchase($this->options)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());

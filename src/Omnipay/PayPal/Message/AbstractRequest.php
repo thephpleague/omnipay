@@ -18,57 +18,35 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
     protected $liveEndpoint = 'https://api-3t.paypal.com/nvp';
     protected $testEndpoint = 'https://api-3t.sandbox.paypal.com/nvp';
-    protected $username;
-    protected $password;
-    protected $signature;
-    protected $testMode;
 
     public function getUsername()
     {
-        return $this->username;
+        return $this->getParameter('username');
     }
 
     public function setUsername($value)
     {
-        $this->username = $value;
-
-        return $this;
+        return $this->setParameter('username', $value);
     }
 
     public function getPassword()
     {
-        return $this->password;
+        return $this->getParameter('password');
     }
 
     public function setPassword($value)
     {
-        $this->password = $value;
-
-        return $this;
+        return $this->setParameter('password', $value);
     }
 
     public function getSignature()
     {
-        return $this->signature;
+        return $this->getParameter('signature');
     }
 
     public function setSignature($value)
     {
-        $this->signature = $value;
-
-        return $this;
-    }
-
-    public function getTestMode()
-    {
-        return $this->testMode;
-    }
-
-    public function setTestMode($value)
-    {
-        $this->testMode = $value;
-
-        return $this;
+        return $this->setParameter('signature', $value);
     }
 
     protected function getBaseData($method)

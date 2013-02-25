@@ -23,11 +23,11 @@ class CompletePurchaseRequest extends PurchaseRequest
         $orderNo = $this->httpRequest->request->get('order_number');
 
         // strange exception specified by 2Checkout
-        if ($this->testMode) {
+        if ($this->getTestMode()) {
             $orderNo = '1';
         }
 
-        $key = md5($this->secretWord.$this->accountNumber.$orderNo.$this->getAmountDecimal());
+        $key = md5($this->getSecretWord().$this->getAccountNumber().$orderNo.$this->getAmountDecimal());
         if (strtolower($this->httpRequest->request->get('key')) !== $key) {
             throw new InvalidResponseException('Invalid key');
         }

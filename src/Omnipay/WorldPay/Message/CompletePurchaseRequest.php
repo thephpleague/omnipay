@@ -21,7 +21,7 @@ class CompletePurchaseRequest extends PurchaseRequest
     public function getData()
     {
         $callbackPW = (string) $this->httpRequest->request->get('callbackPW');
-        if ($callbackPW !== $this->callbackPassword) {
+        if ($callbackPW !== $this->getCallbackPassword()) {
             throw new InvalidResponseException("Invalid callback password");
         }
 

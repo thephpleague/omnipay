@@ -11,22 +11,24 @@
 
 namespace Omnipay\Common\Message;
 
-use Guzzle\Http\ClientInterface;
 use Omnipay\Common\Message\RequestInterface;
-use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 /**
  * Request Interface
  */
 interface RequestInterface extends MessageInterface
 {
-    public function getHttpClient();
+    /**
+     * Initialize request with parameters
+     */
+    public function initialize(array $paramters = array());
 
-    public function setHttpClient(ClientInterface $value);
-
-    public function getHttpRequest();
-
-    public function setHttpRequest(HttpRequest $value);
+    /**
+     * Get all request parameters
+     *
+     * @return array
+     */
+    public function getParameters();
 
     /**
      * Get the response to this request (if the request has been sent)

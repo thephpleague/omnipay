@@ -20,57 +20,35 @@ class PurchaseRequest extends AbstractRequest
 {
     protected $liveEndpoint = 'https://secure.worldpay.com/wcc/purchase';
     protected $testEndpoint = 'https://secure-test.worldpay.com/wcc/purchase';
-    protected $installationId;
-    protected $secretWord;
-    protected $callbackPassword;
-    protected $testMode;
 
     public function getInstallationId()
     {
-        return $this->installationId;
+        return $this->getParameter('installationId');
     }
 
     public function setInstallationId($value)
     {
-        $this->installationId = $value;
-
-        return $this;
+        return $this->setParameter('installationId', $value);
     }
 
     public function getSecretWord()
     {
-        return $this->secretWord;
+        return $this->getParameter('secretWord');
     }
 
     public function setSecretWord($value)
     {
-        $this->secretWord = $value;
-
-        return $this;
+        return $this->setParameter('secretWord', $value);
     }
 
     public function getCallbackPassword()
     {
-        return $this->callbackPassword;
+        return $this->getParameter('callbackPassword');
     }
 
     public function setCallbackPassword($value)
     {
-        $this->callbackPassword = $value;
-
-        return $this;
-    }
-
-    public function getTestMode()
-    {
-        return $this->testMode;
-    }
-
-    public function setTestMode($value)
-    {
-        $this->testMode = $value;
-
-        return $this;
+        return $this->setParameter('callbackPassword', $value);
     }
 
     public function getData()
@@ -78,29 +56,29 @@ class PurchaseRequest extends AbstractRequest
         $this->validate(array('amount', 'returnUrl'));
 
         $data = array();
-        $data['instId'] = $this->installationId;
+        $data['instId'] = $this->getInstallationId();
         $data['cartId'] = $this->getTransactionId();
         $data['desc'] = $this->getDescription();
         $data['amount'] = $this->getAmountDecimal();
         $data['currency'] = $this->getCurrency();
-        $data['testMode'] = $this->testMode ? 100 : 0;
+        $data['testMode'] = $this->getTestMode() ? 100 : 0;
         $data['MC_callback'] = $this->getReturnUrl();
 
-        if ($this->card) {
-            $data['name'] = $this->card->getName();
-            $data['address1'] = $this->card->getAddress1();
-            $data['address2'] = $this->card->getAddress2();
-            $data['town'] = $this->card->getCity();
-            $data['region'] = $this->card->getState();
-            $data['postcode'] = $this->card->getPostcode();
-            $data['country'] = $this->card->getCountry();
-            $data['tel'] = $this->card->getPhone();
-            $data['email'] = $this->card->getEmail();
+        if ($this->getCard()) {
+            $data['name'] = $this->getCard()->getName();
+            $data['address1'] = $this->getCard()->getAddress1();
+            $data['address2'] = $this->getCard()->getAddress2();
+            $data['town'] = $this->getCard()->getCity();
+            $data['region'] = $this->getCard()->getState();
+            $data['postcode'] = $this->getCard()->getPostcode();
+            $data['country'] = $this->getCard()->getCountry();
+            $data['tel'] = $this->getCard()->getPhone();
+            $data['email'] = $this->getCard()->getEmail();
         }
 
-        if ($this->secretWord) {
+        if ($this->getSecretWord()) {
             $data['signatureFields'] = 'instId:amount:currency:cartId';
-            $signature_data = array($this->secretWord,
+            $signature_data = array($this->getSecretWord(),
                 $data['instId'], $data['amount'], $data['currency'], $data['cartId']);
             $data['signature'] = md5(implode(':', $signature_data));
         }
@@ -115,6 +93,6 @@ class PurchaseRequest extends AbstractRequest
 
     public function getEndpoint()
     {
-        return $this->testMode ? $this->testEndpoint : $this->liveEndpoint;
+        return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }
 }

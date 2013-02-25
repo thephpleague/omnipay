@@ -22,17 +22,12 @@ use Omnipay\WorldPay\Message\PurchaseRequest;
  */
 class Gateway extends AbstractGateway
 {
-    protected $installationId;
-    protected $secretWord;
-    protected $callbackPassword;
-    protected $testMode;
-
     public function getName()
     {
         return 'WorldPay';
     }
 
-    public function defineSettings()
+    public function getDefaultParameters()
     {
         return array(
             'installationId' => '',
@@ -44,63 +39,41 @@ class Gateway extends AbstractGateway
 
     public function getInstallationId()
     {
-        return $this->installationId;
+        return $this->getParameter('installationId');
     }
 
     public function setInstallationId($value)
     {
-        $this->installationId = $value;
-
-        return $this;
+        return $this->setParameter('installationId', $value);
     }
 
     public function getSecretWord()
     {
-        return $this->secretWord;
+        return $this->getParameter('secretWord');
     }
 
     public function setSecretWord($value)
     {
-        $this->secretWord = $value;
-
-        return $this;
+        return $this->setParameter('secretWord', $value);
     }
 
     public function getCallbackPassword()
     {
-        return $this->callbackPassword;
+        return $this->getParameter('callbackPassword');
     }
 
     public function setCallbackPassword($value)
     {
-        $this->callbackPassword = $value;
-
-        return $this;
+        return $this->setParameter('callbackPassword', $value);
     }
 
-    public function getTestMode()
+    public function purchase(array $parameters = array())
     {
-        return $this->testMode;
+        return $this->createRequest('\Omnipay\WorldPay\Message\PurchaseRequest', $parameters);
     }
 
-    public function setTestMode($value)
+    public function completePurchase(array $parameters = array())
     {
-        $this->testMode = $value;
-
-        return $this;
-    }
-
-    public function purchase(array $options = null)
-    {
-        $request = new PurchaseRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
-    }
-
-    public function completePurchase(array $options = null)
-    {
-        $request = new CompletePurchaseRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\WorldPay\Message\CompletePurchaseRequest', $parameters);
     }
 }

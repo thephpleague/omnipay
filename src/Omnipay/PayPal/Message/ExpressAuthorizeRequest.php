@@ -16,31 +16,24 @@ namespace Omnipay\PayPal\Message;
  */
 class ExpressAuthorizeRequest extends AbstractRequest
 {
-    protected $solutionType;
-    protected $landingPage;
-
     public function getSolutionType()
     {
-        return $this->solutionType;
+        return $this->getParameter('solutionType');
     }
 
     public function setSolutionType($value)
     {
-        $this->solutionType = $value;
-
-        return $this;
+        return $this->setParameter('solutionType', $value);
     }
 
     public function getLandingPage()
     {
-        return $this->landingPage;
+        return $this->getParameter('landingPage');
     }
 
     public function setLandingPage($value)
     {
-        $this->landingPage = $value;
-
-        return $this;
+        return $this->setParameter('landingPage', $value);
     }
 
     public function getData()

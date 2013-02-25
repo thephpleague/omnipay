@@ -42,7 +42,7 @@ class CompletePurchaseRequest extends AbstractRequest
             array('Accept' => 'application/json'),
             Gateway::generateQueryString($this->getData())
         );
-        $httpResponse = $httpRequest->setAuth($this->appId, $this->appSecret)->send();
+        $httpResponse = $httpRequest->setAuth($this->getAppId(), $this->getAppSecret())->send();
 
         return $this->response = new CompletePurchaseResponse(
             $this,

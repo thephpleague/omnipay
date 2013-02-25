@@ -113,10 +113,10 @@ $gateway->setPassword('12345');
 ```
 
 Most settings are gateway specific. If you need to query a gateway to get a list
-of available settings, you can call `defineSettings()`:
+of available settings, you can call `getDefaultParameters()`:
 
 ```php
-$settings = $gateway->defineSettings();
+$settings = $gateway->getDefaultParameters();
 // default settings array format:
 array(
     'username' => '', // string variable

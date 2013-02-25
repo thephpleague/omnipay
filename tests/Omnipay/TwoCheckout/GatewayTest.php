@@ -51,9 +51,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->getHttpRequest()->request->replace(array('order_number' => '5', 'key' => 'ZZZ'));
 
-        $response = $this->gateway->completePurchase($this->options)
-            ->setHttpRequest($this->getHttpRequest())
-            ->send();
+        $response = $this->gateway->completePurchase($this->options)->send();
     }
 
     public function testCompletePurchaseSuccess()
@@ -65,9 +63,7 @@ class GatewayTest extends GatewayTestCase
             )
         );
 
-        $response = $this->gateway->completePurchase($this->options)
-            ->setHttpRequest($this->getHttpRequest())
-            ->send();
+        $response = $this->gateway->completePurchase($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());

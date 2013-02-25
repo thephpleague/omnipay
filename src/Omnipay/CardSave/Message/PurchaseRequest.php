@@ -22,71 +22,65 @@ class PurchaseRequest extends AbstractRequest
 {
     protected $endpoint = 'https://gw1.cardsaveonlinepayments.com:4430/';
     protected $namespace = 'https://www.thepaymentgateway.net/';
-    protected $merchantId;
-    protected $password;
 
     public function getMerchantId()
     {
-        return $this->merchantId;
+        return $this->getParameter('merchantId');
     }
 
     public function setMerchantId($value)
     {
-        $this->merchantId = $value;
-
-        return $this;
+        return $this->setParameter('merchantId', $value);
     }
 
     public function getPassword()
     {
-        return $this->password;
+        return $this->getParameter('password');
     }
 
     public function setPassword($value)
     {
-        $this->password = $value;
-
-        return $this;
+        return $this->setParameter('password', $value);
     }
 
     public function getData()
     {
         $this->validate(array('amount', 'card'));
-        $this->card->validate();
+        $this->getCard()->validate();
 
         $data = new SimpleXMLElement('<CardDetailsTransaction/>');
         $data->addAttribute('xmlns', $this->namespace);
 
-        $data->PaymentMessage->MerchantAuthentication['MerchantID'] = $this->merchantId;
-        $data->PaymentMessage->MerchantAuthentication['Password'] = $this->password;
+        $data->PaymentMessage->MerchantAuthentication['MerchantID'] = $this->getMerchantId();
+        $data->PaymentMessage->MerchantAuthentication['Password'] = $this->getPassword();
         $data->PaymentMessage->TransactionDetails['Amount'] = $this->getAmount();
         $data->PaymentMessage->TransactionDetails['CurrencyCode'] = $this->getCurrencyNumeric();
         $data->PaymentMessage->TransactionDetails->OrderID = $this->getTransactionId();
         $data->PaymentMessage->TransactionDetails->OrderDescription = $this->getDescription();
         $data->PaymentMessage->TransactionDetails->MessageDetails['TransactionType'] = 'SALE';
 
-        $data->PaymentMessage->CardDetails->CardName = $this->card->getName();
-        $data->PaymentMessage->CardDetails->CardNumber = $this->card->getNumber();
-        $data->PaymentMessage->CardDetails->ExpiryDate['Month'] = $this->card->getExpiryDate('m');
-        $data->PaymentMessage->CardDetails->ExpiryDate['Year'] = $this->card->getExpiryDate('y');
-        $data->PaymentMessage->CardDetails->CV2 = $this->card->getCvv();
+        $data->PaymentMessage->CardDetails->CardName = $this->getCard()->getName();
+        $data->PaymentMessage->CardDetails->CardNumber = $this->getCard()->getNumber();
+        $data->PaymentMessage->CardDetails->ExpiryDate['Month'] = $this->getCard()->getExpiryDate('m');
+        $data->PaymentMessage->CardDetails->ExpiryDate['Year'] = $this->getCard()->getExpiryDate('y');
+        $data->PaymentMessage->CardDetails->CV2 = $this->getCard()->getCvv();
 
-        if ($this->card->getIssueNumber()) {
-            $data->PaymentMessage->CardDetails->IssueNumber = $this->card->getIssueNumber();
+        if ($this->getCard()->getIssueNumber()) {
+            $data->PaymentMessage->CardDetails->IssueNumber = $this->getCard()->getIssueNumber();
         }
 
-        if ($this->card->getStartMonth() && $this->card->getStartYear()) {
-            $data->PaymentMessage->CardDetails->StartDate['Month'] = $this->card->getStartDate('m');
-            $data->PaymentMessage->CardDetails->StartDate['Year'] = $this->card->getStartDate('y');
+        if ($this->getCard()->getStartMonth() && $this->getCard()->getStartYear()) {
+            $data->PaymentMessage->CardDetails->StartDate['Month'] = $this->getCard()->getStartDate('m');
+            $data->PaymentMessage->CardDetails->StartDate['Year'] = $this->getCard()->getStartDate('y');
         }
 
-        $data->PaymentMessage->CustomerDetails->BillingAddress->Address1 = $this->card->getAddress1();
-        $data->PaymentMessage->CustomerDetails->BillingAddress->Address2 = $this->card->getAddress2();
-        $data->PaymentMessage->CustomerDetails->BillingAddress->City = $this->card->getCity();
-        $data->PaymentMessage->CustomerDetails->BillingAddress->PostCode = $this->card->getPostcode();
-        $data->PaymentMessage->CustomerDetails->BillingAddress->State = $this->card->getState();
+        $data->PaymentMessage->CustomerDetails->BillingAddress->Address1 = $this->getCard()->getAddress1();
+        $data->PaymentMessage->CustomerDetails->BillingAddress->Address2 = $this->getCard()->getAddress2();
+        $data->PaymentMessage->CustomerDetails->BillingAddress->City = $this->getCard()->getCity();
+        $data->PaymentMessage->CustomerDetails->BillingAddress->PostCode = $this->getCard()->getPostcode();
+        $data->PaymentMessage->CustomerDetails->BillingAddress->State = $this->getCard()->getState();
         // requires numeric country code
-        // $data->PaymentMessage->CustomerDetails->BillingAddress->CountryCode = $this->card->getCountryNumeric;
+        // $data->PaymentMessage->CustomerDetails->BillingAddress->CountryCode = $this->getCard()->getCountryNumeric;
         $data->PaymentMessage->CustomerDetails->CustomerIPAddress = $this->getClientIp();
 
         return $data;

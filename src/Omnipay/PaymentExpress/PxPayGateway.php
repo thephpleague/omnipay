@@ -21,15 +21,12 @@ use Omnipay\PaymentExpress\Message\PxPayPurchaseRequest;
  */
 class PxPayGateway extends AbstractGateway
 {
-    protected $username;
-    protected $password;
-
     public function getName()
     {
         return 'PaymentExpress PxPay';
     }
 
-    public function defineSettings()
+    public function getDefaultParameters()
     {
         return array(
             'username' => '',
@@ -39,51 +36,41 @@ class PxPayGateway extends AbstractGateway
 
     public function getUsername()
     {
-        return $this->username;
+        return $this->getParameter('username');
     }
 
     public function setUsername($value)
     {
-        $this->username = $value;
-
-        return $this;
+        return $this->setParameter('username', $value);
     }
 
     public function getPassword()
     {
-        return $this->password;
+        return $this->getParameter('password');
     }
 
     public function setPassword($value)
     {
-        $this->password = $value;
-
-        return $this;
+        return $this->setParameter('password', $value);
     }
 
-    public function authorize(array $options = null)
+    public function authorize(array $parameters = array())
     {
-        $request = new PxPayAuthorizeRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\PaymentExpress\Message\PxPayAuthorizeRequest', $parameters);
     }
 
-    public function completeAuthorize(array $options = null)
+    public function completeAuthorize(array $parameters = array())
     {
-        $request = new PxPayCompleteAuthorizeRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\PaymentExpress\Message\PxPayCompleteAuthorizeRequest', $parameters);
     }
 
-    public function purchase(array $options = null)
+    public function purchase(array $parameters = array())
     {
-        $request = new PxPayPurchaseRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\PaymentExpress\Message\PxPayPurchaseRequest', $parameters);
     }
 
-    public function completePurchase(array $options = null)
+    public function completePurchase(array $parameters = array())
     {
-        return $this->completeAuthorize($options);
+        return $this->completeAuthorize($parameters);
     }
 }

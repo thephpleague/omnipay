@@ -25,29 +25,23 @@ class ServerGateway extends DirectGateway
         return 'Sage Pay Server';
     }
 
-    public function authorize(array $options = null)
+    public function authorize(array $parameters = array())
     {
-        $request = new ServerAuthorizeRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\SagePay\Message\ServerAuthorizeRequest', $parameters);
     }
 
-    public function completeAuthorize(array $options = null)
+    public function completeAuthorize(array $parameters = array())
     {
-        $request = new ServerCompleteAuthorizeRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\SagePay\Message\ServerCompleteAuthorizeRequest', $parameters);
     }
 
-    public function purchase(array $options = null)
+    public function purchase(array $parameters = array())
     {
-        $request = new ServerPurchaseRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\SagePay\Message\ServerPurchaseRequest', $parameters);
     }
 
-    public function completePurchase(array $options = null)
+    public function completePurchase(array $parameters = array())
     {
-        return $this->completeAuthorize($options);
+        return $this->completeAuthorize($parameters);
     }
 }

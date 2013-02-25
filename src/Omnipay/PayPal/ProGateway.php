@@ -21,17 +21,12 @@ use Omnipay\PayPal\Message\RefundRequest;
  */
 class ProGateway extends AbstractGateway
 {
-    protected $username;
-    protected $password;
-    protected $signature;
-    protected $testMode;
-
     public function getName()
     {
         return 'PayPal Pro';
     }
 
-    public function defineSettings()
+    public function getDefaultParameters()
     {
         return array(
             'username' => '',
@@ -43,77 +38,51 @@ class ProGateway extends AbstractGateway
 
     public function getUsername()
     {
-        return $this->username;
+        return $this->getParameter('username');
     }
 
     public function setUsername($value)
     {
-        $this->username = $value;
-
-        return $this;
+        return $this->setParameter('username', $value);
     }
 
     public function getPassword()
     {
-        return $this->password;
+        return $this->getParameter('password');
     }
 
     public function setPassword($value)
     {
-        $this->password = $value;
-
-        return $this;
+        return $this->setParameter('password', $value);
     }
 
     public function getSignature()
     {
-        return $this->signature;
+        return $this->getParameter('signature');
     }
 
     public function setSignature($value)
     {
-        $this->signature = $value;
-
-        return $this;
+        return $this->setParameter('signature', $value);
     }
 
-    public function getTestMode()
+    public function authorize(array $parameters = array())
     {
-        return $this->testMode;
+        return $this->createRequest('\Omnipay\PayPal\Message\ProAuthorizeRequest', $parameters);
     }
 
-    public function setTestMode($value)
+    public function purchase(array $parameters = array())
     {
-        $this->testMode = $value;
-
-        return $this;
+        return $this->createRequest('\Omnipay\PayPal\Message\ProAuthorizeRequest', $parameters);
     }
 
-    public function authorize(array $options = null)
+    public function capture(array $parameters = array())
     {
-        $request = new ProAuthorizeRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\PayPal\Message\CaptureRequest', $parameters);
     }
 
-    public function purchase(array $options = null)
+    public function refund(array $parameters = array())
     {
-        $request = new ProAuthorizeRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
-    }
-
-    public function capture(array $options = null)
-    {
-        $request = new CaptureRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
-    }
-
-    public function refund(array $options = null)
-    {
-        $request = new RefundRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\PayPal\Message\RefundRequest', $parameters);
     }
 }

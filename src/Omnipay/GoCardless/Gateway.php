@@ -22,18 +22,12 @@ use Omnipay\GoCardless\Message\CompletePurchaseRequest;
  */
 class Gateway extends AbstractGateway
 {
-    protected $appId;
-    protected $appSecret;
-    protected $merchantId;
-    protected $accessToken;
-    protected $testMode;
-
     public function getName()
     {
         return 'GoCardless';
     }
 
-    public function defineSettings()
+    public function getDefaultParameters()
     {
         return array(
             'appId' => '',
@@ -46,76 +40,52 @@ class Gateway extends AbstractGateway
 
     public function getAppId()
     {
-        return $this->appId;
+        return $this->getParameter('appId');
     }
 
     public function setAppId($value)
     {
-        $this->appId = $value;
-
-        return $this;
+        return $this->setParameter('appId', $value);
     }
 
     public function getAppSecret()
     {
-        return $this->appSecret;
+        return $this->getParameter('appSecret');
     }
 
     public function setAppSecret($value)
     {
-        $this->appSecret = $value;
-
-        return $this;
+        return $this->setParameter('appSecret', $value);
     }
 
     public function getMerchantId()
     {
-        return $this->merchantId;
+        return $this->getParameter('merchantId');
     }
 
     public function setMerchantId($value)
     {
-        $this->merchantId = $value;
-
-        return $this;
+        return $this->setParameter('merchantId', $value);
     }
 
     public function getAccessToken()
     {
-        return $this->accessToken;
+        return $this->getParameter('accessToken');
     }
 
     public function setAccessToken($value)
     {
-        $this->accessToken = $value;
-
-        return $this;
+        return $this->setParameter('accessToken', $value);
     }
 
-    public function getTestMode()
+    public function purchase(array $parameters = array())
     {
-        return $this->testMode;
+        return $this->createRequest('\Omnipay\GoCardless\Message\PurchaseRequest', $parameters);
     }
 
-    public function setTestMode($value)
+    public function completePurchase(array $parameters = array())
     {
-        $this->testMode = $value;
-
-        return $this;
-    }
-
-    public function purchase(array $options = null)
-    {
-        $request = new PurchaseRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
-    }
-
-    public function completePurchase(array $options = null)
-    {
-        $request = new CompletePurchaseRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\GoCardless\Message\CompletePurchaseRequest', $parameters);
     }
 
     /**

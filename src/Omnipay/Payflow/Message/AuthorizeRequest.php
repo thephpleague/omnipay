@@ -21,80 +21,55 @@ class AuthorizeRequest extends AbstractRequest
     protected $liveEndpoint = 'https://payflowpro.paypal.com';
     protected $testEndpoint = 'https://pilot-payflowpro.paypal.com';
     protected $action = 'A';
-    protected $username;
-    protected $password;
-    protected $vendor;
-    protected $partner;
-    protected $testMode;
 
     public function getUsername()
     {
-        return $this->username;
+        return $this->getParameter('username');
     }
 
     public function setUsername($value)
     {
-        $this->username = $value;
-
-        return $this;
+        return $this->setParameter('username', $value);
     }
 
     public function getPassword()
     {
-        return $this->password;
+        return $this->getParameter('password');
     }
 
     public function setPassword($value)
     {
-        $this->password = $value;
-
-        return $this;
+        return $this->setParameter('password', $value);
     }
 
     public function getVendor()
     {
-        return $this->vendor;
+        return $this->getParameter('vendor');
     }
 
     public function setVendor($value)
     {
-        $this->vendor = $value;
-
-        return $this;
+        return $this->setParameter('vendor', $value);
     }
 
     public function getPartner()
     {
-        return $this->partner;
+        return $this->getParameter('partner');
     }
 
     public function setPartner($value)
     {
-        $this->partner = $value;
-
-        return $this;
-    }
-
-    public function getTestMode()
-    {
-        return $this->testMode;
-    }
-
-    public function setTestMode($value)
-    {
-        $this->testMode = $value;
-
-        return $this;
+        return $this->setParameter('partner', $value);
     }
 
     protected function getBaseData()
     {
         $data = array();
         $data['TRXTYPE'] = $this->action;
-        $data['USER'] = $this->username;
-        $data['PWD'] = $this->password;
-        $data['VENDOR'] = $this->vendor;
-        $data['PARTNER'] = $this->partner;
+        $data['USER'] = $this->getUsername();
+        $data['PWD'] = $this->getPassword();
+        $data['VENDOR'] = $this->getVendor();
+        $data['PARTNER'] = $this->getPartner();
 
         return $data;
     }
@@ -102,23 +77,23 @@ class AuthorizeRequest extends AbstractRequest
     public function getData()
     {
         $this->validate(array('amount', 'card'));
-        $this->card->validate();
+        $this->getCard()->validate();
 
         $data = $this->getBaseData();
         $data['TENDER'] = 'C';
         $data['AMT'] = $this->getAmountDecimal();
         $data['COMMENT1'] = $this->getDescription();
 
-        $data['ACCT'] = $this->card->getNumber();
-        $data['EXPDATE'] = $this->card->getExpiryDate('my');
-        $data['CVV2'] = $this->card->getCvv();
-        $data['BILLTOFIRSTNAME'] = $this->card->getFirstName();
-        $data['BILLTOLASTNAME'] = $this->card->getLastName();
-        $data['BILLTOSTREET'] = $this->card->getAddress1();
-        $data['BILLTOCITY'] = $this->card->getCity();
-        $data['BILLTOSTATE'] = $this->card->getState();
-        $data['BILLTOZIP'] = $this->card->getPostcode();
-        $data['BILLTOCOUNTRY'] = $this->card->getCountry();
+        $data['ACCT'] = $this->getCard()->getNumber();
+        $data['EXPDATE'] = $this->getCard()->getExpiryDate('my');
+        $data['CVV2'] = $this->getCard()->getCvv();
+        $data['BILLTOFIRSTNAME'] = $this->getCard()->getFirstName();
+        $data['BILLTOLASTNAME'] = $this->getCard()->getLastName();
+        $data['BILLTOSTREET'] = $this->getCard()->getAddress1();
+        $data['BILLTOCITY'] = $this->getCard()->getCity();
+        $data['BILLTOSTATE'] = $this->getCard()->getState();
+        $data['BILLTOZIP'] = $this->getCard()->getPostcode();
+        $data['BILLTOCOUNTRY'] = $this->getCard()->getCountry();
 
         return $data;
     }
@@ -132,6 +107,6 @@ class AuthorizeRequest extends AbstractRequest
 
     protected function getEndpoint()
     {
-        return $this->testMode ? $this->testEndpoint : $this->liveEndpoint;
+        return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }
 }

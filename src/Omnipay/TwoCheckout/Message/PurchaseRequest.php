@@ -18,44 +18,24 @@ use Omnipay\Common\Message\AbstractRequest;
  */
 class PurchaseRequest extends AbstractRequest
 {
-    protected $accountNumber;
-    protected $secretWord;
-    protected $testMode;
-
     public function getAccountNumber()
     {
-        return $this->accountNumber;
+        return $this->getParameter('accountNumber');
     }
 
     public function setAccountNumber($value)
     {
-        $this->accountNumber = $value;
-
-        return $this;
+        return $this->setParameter('accountNumber', $value);
     }
 
     public function getSecretWord()
     {
-        return $this->secretWord;
+        return $this->getParameter('secretWord');
     }
 
     public function setSecretWord($value)
     {
-        $this->secretWord = $value;
-
-        return $this;
-    }
-
-    public function getTestMode()
-    {
-        return $this->testMode;
-    }
-
-    public function setTestMode($value)
-    {
-        $this->testMode = $value;
-
-        return $this;
+        return $this->setParameter('secretWord', $value);
     }
 
     public function getData()
@@ -63,7 +43,7 @@ class PurchaseRequest extends AbstractRequest
         $this->validate(array('amount', 'returnUrl'));
 
         $data = array();
-        $data['sid'] = $this->accountNumber;
+        $data['sid'] = $this->getAccountNumber();
         $data['cart_order_id'] = $this->getTransactionId();
         $data['total'] = $this->getAmountDecimal();
         $data['tco_currency'] = $this->getCurrency();
@@ -71,19 +51,19 @@ class PurchaseRequest extends AbstractRequest
         $data['skip_landing'] = 1;
         $data['x_receipt_link_url'] = $this->getReturnUrl();
 
-        if ($this->card) {
-            $data['card_holder_name'] = $this->card->getName();
-            $data['street_address'] = $this->card->getAddress1();
-            $data['street_address2'] = $this->card->getAddress2();
-            $data['city'] = $this->card->getCity();
-            $data['state'] = $this->card->getState();
-            $data['zip'] = $this->card->getPostcode();
-            $data['country'] = $this->card->getCountry();
-            $data['phone'] = $this->card->getPhone();
-            $data['email'] = $this->card->getEmail();
+        if ($this->getCard()) {
+            $data['card_holder_name'] = $this->getCard()->getName();
+            $data['street_address'] = $this->getCard()->getAddress1();
+            $data['street_address2'] = $this->getCard()->getAddress2();
+            $data['city'] = $this->getCard()->getCity();
+            $data['state'] = $this->getCard()->getState();
+            $data['zip'] = $this->getCard()->getPostcode();
+            $data['country'] = $this->getCard()->getCountry();
+            $data['phone'] = $this->getCard()->getPhone();
+            $data['email'] = $this->getCard()->getEmail();
         }
 
-        if ($this->testMode) {
+        if ($this->getTestMode()) {
             $data['demo'] = 'Y';
         }
 

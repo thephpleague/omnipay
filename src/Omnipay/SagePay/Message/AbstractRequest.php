@@ -19,50 +19,30 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     protected $liveEndpoint = 'https://live.sagepay.com/gateway/service';
     protected $testEndpoint = 'https://test.sagepay.com/gateway/service';
     protected $simulatorEndpoint = 'https://test.sagepay.com/Simulator';
-    protected $action;
-    protected $vendor;
-    protected $testMode;
-    protected $simulatorMode;
 
     public function getVendor()
     {
-        return $this->vendor;
+        return $this->getParameter('vendor');
     }
 
     public function setVendor($value)
     {
-        $this->vendor = $value;
-
-        return $this;
-    }
-
-    public function getTestMode()
-    {
-        return $this->testMode;
-    }
-
-    public function setTestMode($value)
-    {
-        $this->testMode = $value;
-
-        return $this;
+        return $this->setParameter('vendor', $value);
     }
 
     public function getSimulatorMode()
     {
-        return $this->simulatorMode;
+        return $this->getParameter('simulatorMode');
     }
 
     public function setSimulatorMode($value)
     {
-        $this->simulatorMode = $value;
-
-        return $this;
+        return $this->setParameter('simulatorMode', $value);
     }
 
     public function getService()
     {
-        return $this->action;
+        return $this->getParameter('action');
     }
 
     protected function getBaseData()
@@ -70,7 +50,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $data = array();
         $data['VPSProtocol'] = '2.23';
         $data['TxType'] = $this->action;
-        $data['Vendor'] = $this->vendor;
+        $data['Vendor'] = $this->getVendor();
 
         return $data;
     }
@@ -86,7 +66,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
         $service = strtolower($this->getService());
 
-        if ($this->simulatorMode) {
+        if ($this->getSimulatorMode()) {
             // hooray for consistency
             if ($service == 'vspdirect-register') {
                 return $this->simulatorEndpoint.'/VSPDirectGateway.asp';
@@ -99,7 +79,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             return $this->simulatorEndpoint.'/VSPServerGateway.asp?Service=Vendor'.ucfirst($service).'Tx';
         }
 
-        if ($this->testMode) {
+        if ($this->getTestMode()) {
             return $this->testEndpoint."/$service.vsp";
         }
 

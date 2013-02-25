@@ -21,15 +21,12 @@ use Omnipay\Pin\Message\PurchaseRequest;
  */
 class Gateway extends AbstractGateway
 {
-    protected $secretKey;
-    protected $testMode;
-
     public function getName()
     {
         return 'Pin';
     }
 
-    public function defineSettings()
+    public function getDefaultParameters()
     {
         return array(
             'secretKey' => '',
@@ -39,32 +36,16 @@ class Gateway extends AbstractGateway
 
     public function getSecretKey()
     {
-        return $this->secretKey;
+        return $this->getParameter('secretKey');
     }
 
     public function setSecretKey($value)
     {
-        $this->secretKey = $value;
-
-        return $this;
+        return $this->setParameter('secretKey', $value);
     }
 
-    public function getTestMode()
+    public function purchase(array $parameters = array())
     {
-        return $this->testMode;
-    }
-
-    public function setTestMode($value)
-    {
-        $this->testMode = $value;
-
-        return $this;
-    }
-
-    public function purchase(array $options = null)
-    {
-        $request = new PurchaseRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\Pin\Message\PurchaseRequest', $parameters);
     }
 }

@@ -19,18 +19,15 @@ use Omnipay\Common\Message\AbstractRequest;
 class PurchaseRequest extends AbstractRequest
 {
     protected $endpoint = 'https://api.stripe.com/v1';
-    protected $apiKey;
 
     public function getApiKey()
     {
-        return $this->apiKey;
+        return $this->getParameter('apiKey');
     }
 
     public function setApiKey($value)
     {
-        $this->apiKey = $value;
-
-        return $this;
+        return $this->setParameter('apiKey', $value);
     }
 
     public function getData()
@@ -42,21 +39,21 @@ class PurchaseRequest extends AbstractRequest
         $data['currency'] = strtolower($this->getCurrency());
         $data['description'] = $this->getDescription();
 
-        if ($this->card) {
-            $this->card->validate();
+        if ($this->getCard()) {
+            $this->getCard()->validate();
 
             $data['card'] = array();
-            $data['card']['number'] = $this->card->getNumber();
-            $data['card']['exp_month'] = $this->card->getExpiryMonth();
-            $data['card']['exp_year'] = $this->card->getExpiryYear();
-            $data['card']['cvc'] = $this->card->getCvv();
-            $data['card']['name'] = $this->card->getName();
-            $data['card']['address_line1'] = $this->card->getAddress1();
-            $data['card']['address_line2'] = $this->card->getAddress2();
-            $data['card']['address_city'] = $this->card->getCity();
-            $data['card']['address_zip'] = $this->card->getPostcode();
-            $data['card']['address_state'] = $this->card->getState();
-            $data['card']['address_country'] = $this->card->getCountry();
+            $data['card']['number'] = $this->getCard()->getNumber();
+            $data['card']['exp_month'] = $this->getCard()->getExpiryMonth();
+            $data['card']['exp_year'] = $this->getCard()->getExpiryYear();
+            $data['card']['cvc'] = $this->getCard()->getCvv();
+            $data['card']['name'] = $this->getCard()->getName();
+            $data['card']['address_line1'] = $this->getCard()->getAddress1();
+            $data['card']['address_line2'] = $this->getCard()->getAddress2();
+            $data['card']['address_city'] = $this->getCard()->getCity();
+            $data['card']['address_zip'] = $this->getCard()->getPostcode();
+            $data['card']['address_state'] = $this->getCard()->getState();
+            $data['card']['address_country'] = $this->getCard()->getCountry();
         } elseif ($token = $this->getToken()) {
             $data['card'] = $token;
         }
@@ -82,7 +79,7 @@ class PurchaseRequest extends AbstractRequest
         );
 
         $httpResponse = $this->httpClient->post($this->getEndpoint(), null, $this->getData())
-            ->setHeader('Authorization', 'Basic '.base64_encode($this->apiKey.':'))
+            ->setHeader('Authorization', 'Basic '.base64_encode($this->getApiKey().':'))
             ->send();
 
         return $this->response = new Response($this, $httpResponse->json());

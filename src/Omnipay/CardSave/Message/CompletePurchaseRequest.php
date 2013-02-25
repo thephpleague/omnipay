@@ -29,8 +29,8 @@ class CompletePurchaseRequest extends PurchaseRequest
 
         $data = new SimpleXMLElement('<ThreeDSecureAuthentication/>');
         $data->addAttribute('xmlns', $this->namespace);
-        $data->ThreeDSecureMessage->MerchantAuthentication['MerchantID'] = $this->merchantId;
-        $data->ThreeDSecureMessage->MerchantAuthentication['Password'] = $this->password;
+        $data->ThreeDSecureMessage->MerchantAuthentication['MerchantID'] = $this->getMerchantId();
+        $data->ThreeDSecureMessage->MerchantAuthentication['Password'] = $this->getPassword();
         $data->ThreeDSecureMessage->ThreeDSecureInputData['CrossReference'] = $md;
         $data->ThreeDSecureMessage->ThreeDSecureInputData->PaRES = $paRes;
 

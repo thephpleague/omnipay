@@ -20,17 +20,14 @@ use Omnipay\PayPal\Message\ExpressCompletePurchaseRequest;
  */
 class ExpressGateway extends ProGateway
 {
-    protected $solutionType;
-    protected $landingPage;
-
     public function getName()
     {
         return 'PayPal Express';
     }
 
-    public function defineSettings()
+    public function getDefaultParameters()
     {
-        $settings = parent::defineSettings();
+        $settings = parent::getDefaultParameters();
         $settings['solutionType'] = array('Sole', 'Mark');
         $settings['landingPage'] = array('Billing', 'Login');
 
@@ -39,51 +36,41 @@ class ExpressGateway extends ProGateway
 
     public function getSolutionType()
     {
-        return $this->solutionType;
+        return $this->getParameter('solutionType');
     }
 
     public function setSolutionType($value)
     {
-        $this->solutionType = $value;
-
-        return $this;
+        return $this->setParameter('solutionType', $value);
     }
 
     public function getLandingPage()
     {
-        return $this->landingPage;
+        return $this->getParameter('landingPage');
     }
 
     public function setLandingPage($value)
     {
-        $this->landingPage = $value;
-
-        return $this;
+        return $this->setParameter('landingPage', $value);
     }
 
-    public function authorize(array $options = null)
+    public function authorize(array $parameters = array())
     {
-        $request = new ExpressAuthorizeRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\PayPal\Message\ExpressAuthorizeRequest', $parameters);
     }
 
-    public function completeAuthorize(array $options = null)
+    public function completeAuthorize(array $parameters = array())
     {
-        $request = new ExpressCompleteAuthorizeRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\PayPal\Message\ExpressCompleteAuthorizeRequest', $parameters);
     }
 
-    public function purchase(array $options = null)
+    public function purchase(array $parameters = array())
     {
-        return $this->authorize($options);
+        return $this->authorize($parameters);
     }
 
-    public function completePurchase(array $options = null)
+    public function completePurchase(array $parameters = array())
     {
-        $request = new ExpressCompletePurchaseRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\PayPal\Message\ExpressCompletePurchaseRequest', $parameters);
     }
 }

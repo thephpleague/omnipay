@@ -18,65 +18,42 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
     protected $liveEndpoint = 'https://secure.authorize.net/gateway/transact.dll';
     protected $developerEndpoint = 'https://test.authorize.net/gateway/transact.dll';
-    protected $action;
-    protected $apiLoginId;
-    protected $transactionKey;
-    protected $testMode;
-    protected $developerMode;
 
     public function getApiLoginId()
     {
-        return $this->apiLoginId;
+        return $this->getParameter('apiLoginId');
     }
 
     public function setApiLoginId($value)
     {
-        $this->apiLoginId = $value;
-
-        return $this;
+        return $this->setParameter('apiLoginId', $value);
     }
 
     public function getTransactionKey()
     {
-        return $this->transactionKey;
+        return $this->getParameter('transactionKey');
     }
 
     public function setTransactionKey($value)
     {
-        $this->transactionKey = $value;
-
-        return $this;
-    }
-
-    public function getTestMode()
-    {
-        return $this->testMode;
-    }
-
-    public function setTestMode($value)
-    {
-        $this->testMode = $value;
-
-        return $this;
+        return $this->setParameter('transactionKey', $value);
     }
 
     public function getDeveloperMode()
     {
-        return $this->developerMode;
+        return $this->getParameter('developerMode');
     }
 
     public function setDeveloperMode($value)
     {
-        $this->developerMode = $value;
-
-        return $this;
+        return $this->setParameter('developerMode', $value);
     }
 
     protected function getBaseData()
     {
         $data = array();
-        $data['x_login'] = $this->apiLoginId;
-        $data['x_tran_key'] = $this->transactionKey;
+        $data['x_login'] = $this->getApiLoginId();
+        $data['x_tran_key'] = $this->getTransactionKey();
         $data['x_type'] = $this->action;
         $data['x_version'] = '3.1';
         $data['x_delim_data'] = 'TRUE';
@@ -94,17 +71,17 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $data['x_invoice_num'] = $this->getTransactionId();
         $data['x_description'] = $this->getDescription();
 
-        if ($this->card) {
-            $data['x_first_name'] = $this->card->getFirstName();
-            $data['x_last_name'] = $this->card->getLastName();
-            $data['x_company'] = $this->card->getCompany();
-            $data['x_address'] = trim($this->card->getAddress1()." \n".$this->card->getAddress2());
-            $data['x_city'] = $this->card->getCity();
-            $data['x_state'] = $this->card->getState();
-            $data['x_zip'] = $this->card->getPostcode();
-            $data['x_country'] = $this->card->getCountry();
-            $data['x_phone'] = $this->card->getPhone();
-            $data['x_email'] = $this->card->getEmail();
+        if ($this->getCard()) {
+            $data['x_first_name'] = $this->getCard()->getFirstName();
+            $data['x_last_name'] = $this->getCard()->getLastName();
+            $data['x_company'] = $this->getCard()->getCompany();
+            $data['x_address'] = trim($this->getCard()->getAddress1()." \n".$this->getCard()->getAddress2());
+            $data['x_city'] = $this->getCard()->getCity();
+            $data['x_state'] = $this->getCard()->getState();
+            $data['x_zip'] = $this->getCard()->getPostcode();
+            $data['x_country'] = $this->getCard()->getCountry();
+            $data['x_phone'] = $this->getCard()->getPhone();
+            $data['x_email'] = $this->getCard()->getEmail();
         }
 
         return $data;
@@ -119,6 +96,6 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function getEndpoint()
     {
-        return $this->developerMode ? $this->developerEndpoint : $this->liveEndpoint;
+        return $this->getDeveloperMode() ? $this->developerEndpoint : $this->liveEndpoint;
     }
 }

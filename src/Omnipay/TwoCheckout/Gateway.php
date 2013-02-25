@@ -22,16 +22,12 @@ use Omnipay\TwoCheckout\Message\PurchaseRequest;
  */
 class Gateway extends AbstractGateway
 {
-    protected $accountNumber;
-    protected $secretWord;
-    protected $testMode;
-
     public function getName()
     {
         return '2Checkout';
     }
 
-    public function defineSettings()
+    public function getDefaultParameters()
     {
         return array(
             'accountNumber' => '',
@@ -42,51 +38,31 @@ class Gateway extends AbstractGateway
 
     public function getAccountNumber()
     {
-        return $this->accountNumber;
+        return $this->getParameter('accountNumber');
     }
 
     public function setAccountNumber($value)
     {
-        $this->accountNumber = $value;
-
-        return $this;
+        return $this->setParameter('accountNumber', $value);
     }
 
     public function getSecretWord()
     {
-        return $this->secretWord;
+        return $this->getParameter('secretWord');
     }
 
     public function setSecretWord($value)
     {
-        $this->secretWord = $value;
-
-        return $this;
+        return $this->setParameter('secretWord', $value);
     }
 
-    public function getTestMode()
+    public function purchase(array $parameters = array())
     {
-        return $this->testMode;
+        return $this->createRequest('\Omnipay\TwoCheckout\Message\PurchaseRequest', $parameters);
     }
 
-    public function setTestMode($value)
+    public function completePurchase(array $parameters = array())
     {
-        $this->testMode = $value;
-
-        return $this;
-    }
-
-    public function purchase(array $options = null)
-    {
-        $request = new PurchaseRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
-    }
-
-    public function completePurchase(array $options = null)
-    {
-        $request = new CompletePurchaseRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\TwoCheckout\Message\CompletePurchaseRequest', $parameters);
     }
 }

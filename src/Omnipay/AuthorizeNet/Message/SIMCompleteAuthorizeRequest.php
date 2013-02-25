@@ -11,6 +11,8 @@
 
 namespace Omnipay\AuthorizeNet\Message;
 
+use Omnipay\Common\Exception\InvalidRequestException;
+
 /**
  * Authorize.Net SIM Complete Authorize Request
  */
@@ -27,7 +29,7 @@ class SIMCompleteAuthorizeRequest extends AbstractRequest
 
     public function getHash()
     {
-        return md5($this->apiLoginId.$this->transactionId.$this->getAmountDecimal());
+        return md5($this->getApiLoginId().$this->getTransactionId().$this->getAmountDecimal());
     }
 
     public function send()

@@ -30,20 +30,18 @@ class Gateway extends AbstractGateway
         return 'Dummy';
     }
 
-    public function defineSettings()
+    public function getDefaultParameters()
     {
         return array();
     }
 
-    public function authorize(array $options = null)
+    public function authorize(array $parameters = array())
     {
-        $request = new AuthorizeRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\Dummy\Message\AuthorizeRequest', $parameters);
     }
 
-    public function purchase(array $options = null)
+    public function purchase(array $parameters = array())
     {
-        return $this->authorize($options);
+        return $this->authorize($parameters);
     }
 }

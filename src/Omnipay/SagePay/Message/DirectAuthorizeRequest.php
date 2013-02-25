@@ -32,27 +32,27 @@ class DirectAuthorizeRequest extends AbstractRequest
         $data['Apply3DSecure'] = 0; // use account setting
 
         // billing details
-        $data['BillingFirstnames'] = $this->card->getFirstName();
-        $data['BillingSurname'] = $this->card->getLastName();
-        $data['BillingAddress1'] = $this->card->getBillingAddress1();
-        $data['BillingAddress2'] = $this->card->getBillingAddress2();
-        $data['BillingCity'] = $this->card->getBillingCity();
-        $data['BillingPostCode'] = $this->card->getBillingPostcode();
-        $data['BillingState'] = $this->card->getBillingState();
-        $data['BillingCountry'] = $this->card->getBillingCountry();
-        $data['BillingPhone'] = $this->card->getBillingPhone();
+        $data['BillingFirstnames'] = $this->getCard()->getFirstName();
+        $data['BillingSurname'] = $this->getCard()->getLastName();
+        $data['BillingAddress1'] = $this->getCard()->getBillingAddress1();
+        $data['BillingAddress2'] = $this->getCard()->getBillingAddress2();
+        $data['BillingCity'] = $this->getCard()->getBillingCity();
+        $data['BillingPostCode'] = $this->getCard()->getBillingPostcode();
+        $data['BillingState'] = $this->getCard()->getBillingState();
+        $data['BillingCountry'] = $this->getCard()->getBillingCountry();
+        $data['BillingPhone'] = $this->getCard()->getBillingPhone();
 
         // shipping details
-        $data['DeliveryFirstnames'] = $this->card->getFirstName();
-        $data['DeliverySurname'] = $this->card->getLastName();
-        $data['DeliveryAddress1'] = $this->card->getShippingAddress1();
-        $data['DeliveryAddress2'] = $this->card->getShippingAddress2();
-        $data['DeliveryCity'] = $this->card->getShippingCity();
-        $data['DeliveryPostCode'] = $this->card->getShippingPostcode();
-        $data['DeliveryState'] = $this->card->getShippingState();
-        $data['DeliveryCountry'] = $this->card->getShippingCountry();
-        $data['DeliveryPhone'] = $this->card->getShippingPhone();
-        $data['CustomerEMail'] = $this->card->getEmail();
+        $data['DeliveryFirstnames'] = $this->getCard()->getFirstName();
+        $data['DeliverySurname'] = $this->getCard()->getLastName();
+        $data['DeliveryAddress1'] = $this->getCard()->getShippingAddress1();
+        $data['DeliveryAddress2'] = $this->getCard()->getShippingAddress2();
+        $data['DeliveryCity'] = $this->getCard()->getShippingCity();
+        $data['DeliveryPostCode'] = $this->getCard()->getShippingPostcode();
+        $data['DeliveryState'] = $this->getCard()->getShippingState();
+        $data['DeliveryCountry'] = $this->getCard()->getShippingCountry();
+        $data['DeliveryPhone'] = $this->getCard()->getShippingPhone();
+        $data['CustomerEMail'] = $this->getCard()->getEmail();
 
         return $data;
     }
@@ -60,20 +60,20 @@ class DirectAuthorizeRequest extends AbstractRequest
     public function getData()
     {
         $data = $this->getBaseAuthorizeData();
-        $this->card->validate();
+        $this->getCard()->validate();
 
-        $data['CardHolder'] = $this->card->getName();
-        $data['CardNumber'] = $this->card->getNumber();
-        $data['CV2'] = $this->card->getCvv();
-        $data['ExpiryDate'] = $this->card->getExpiryDate('my');
-        $data['CardType'] = $this->card->getType();
+        $data['CardHolder'] = $this->getCard()->getName();
+        $data['CardNumber'] = $this->getCard()->getNumber();
+        $data['CV2'] = $this->getCard()->getCvv();
+        $data['ExpiryDate'] = $this->getCard()->getExpiryDate('my');
+        $data['CardType'] = $this->getCard()->getType();
 
-        if ($this->card->getStartMonth() and $this->card->getStartYear()) {
-            $data['StartDate'] = $this->card->getStartDate('my');
+        if ($this->getCard()->getStartMonth() and $this->getCard()->getStartYear()) {
+            $data['StartDate'] = $this->getCard()->getStartDate('my');
         }
 
-        if ($this->card->getIssueNumber()) {
-            $data['IssueNumber'] = $this->card->getIssueNumber();
+        if ($this->getCard()->getIssueNumber()) {
+            $data['IssueNumber'] = $this->getCard()->getIssueNumber();
         }
 
         return $data;

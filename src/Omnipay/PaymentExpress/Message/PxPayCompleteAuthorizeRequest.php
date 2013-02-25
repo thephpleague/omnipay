@@ -28,8 +28,8 @@ class PxPayCompleteAuthorizeRequest extends PxPayAuthorizeRequest
 
         // validate dps response
         $data = new SimpleXMLElement('<ProcessResponse/>');
-        $data->PxPayUserId = $this->username;
-        $data->PxPayKey = $this->password;
+        $data->PxPayUserId = $this->getUsername();
+        $data->PxPayKey = $this->getPassword();
         $data->Response = $result;
 
         return $data;

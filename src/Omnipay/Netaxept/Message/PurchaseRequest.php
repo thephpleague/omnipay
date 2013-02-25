@@ -20,44 +20,25 @@ class PurchaseRequest extends AbstractRequest
 {
     protected $liveEndpoint = 'https://epayment.bbs.no';
     protected $testEndpoint = 'https://epayment-test.bbs.no';
-    protected $merchantId;
-    protected $token;
-    protected $testMode;
 
     public function getMerchantId()
     {
-        return $this->merchantId;
+        return $this->getParameter('merchantId');
     }
 
     public function setMerchantId($value)
     {
-        $this->merchantId = $value;
-
-        return $this;
+        return $this->setParameter('merchantId', $value);
     }
 
     public function getToken()
     {
-        return $this->token;
+        return $this->getParameter('token');
     }
 
     public function setToken($value)
     {
-        $this->token = $value;
-
-        return $this;
-    }
-
-    public function getTestMode()
-    {
-        return $this->testMode;
-    }
-
-    public function setTestMode($value)
-    {
-        $this->testMode = $value;
-
-        return $this;
+        return $this->setParameter('token', $value);
     }
 
     public function getData()
@@ -65,24 +46,24 @@ class PurchaseRequest extends AbstractRequest
         $this->validate(array('amount', 'currency', 'transactionId', 'returnUrl'));
 
         $data = array();
-        $data['merchantId'] = $this->merchantId;
-        $data['token'] = $this->token;
+        $data['merchantId'] = $this->getMerchantId();
+        $data['token'] = $this->getToken();
         $data['serviceType'] = 'B';
         $data['orderNumber'] = $this->getTransactionId();
         $data['currencyCode'] = $this->getCurrency();
         $data['amount'] = $this->getAmount();
         $data['redirectUrl'] = $this->getReturnUrl();
 
-        if ($this->card) {
-            $data['customerFirstName'] = $this->card->getFirstName();
-            $data['customerLastName'] = $this->card->getLastName();
-            $data['customerEmail'] = $this->card->getEmail();
-            $data['customerPhoneNumber'] = $this->card->getPhone();
-            $data['customerAddress1'] = $this->card->getAddress1();
-            $data['customerAddress2'] = $this->card->getAddress2();
-            $data['customerPostcode'] = $this->card->getPostcode();
-            $data['customerTown'] = $this->card->getCity();
-            $data['customerCountry'] = $this->card->getCountry();
+        if ($this->getCard()) {
+            $data['customerFirstName'] = $this->getCard()->getFirstName();
+            $data['customerLastName'] = $this->getCard()->getLastName();
+            $data['customerEmail'] = $this->getCard()->getEmail();
+            $data['customerPhoneNumber'] = $this->getCard()->getPhone();
+            $data['customerAddress1'] = $this->getCard()->getAddress1();
+            $data['customerAddress2'] = $this->getCard()->getAddress2();
+            $data['customerPostcode'] = $this->getCard()->getPostcode();
+            $data['customerTown'] = $this->getCard()->getCity();
+            $data['customerCountry'] = $this->getCard()->getCountry();
         }
 
         return $data;
@@ -98,6 +79,6 @@ class PurchaseRequest extends AbstractRequest
 
     public function getEndpoint()
     {
-        return $this->testMode ? $this->testEndpoint : $this->liveEndpoint;
+        return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }
 }

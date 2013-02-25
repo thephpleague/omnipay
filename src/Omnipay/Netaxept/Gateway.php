@@ -22,16 +22,12 @@ use Omnipay\Netaxept\Message\CompletePurchaseRequest;
  */
 class Gateway extends AbstractGateway
 {
-    protected $merchantId;
-    protected $token;
-    protected $testMode;
-
     public function getName()
     {
         return 'Netaxept';
     }
 
-    public function defineSettings()
+    public function getDefaultParameters()
     {
         return array(
             'merchantId' => '',
@@ -42,51 +38,31 @@ class Gateway extends AbstractGateway
 
     public function getMerchantId()
     {
-        return $this->merchantId;
+        return $this->getParameter('merchantId');
     }
 
     public function setMerchantId($value)
     {
-        $this->merchantId = $value;
-
-        return $this;
+        return $this->setParameter('merchantId', $value);
     }
 
     public function getToken()
     {
-        return $this->token;
+        return $this->getParameter('token');
     }
 
     public function setToken($value)
     {
-        $this->token = $value;
-
-        return $this;
+        return $this->setParameter('token', $value);
     }
 
-    public function getTestMode()
+    public function purchase(array $parameters = array())
     {
-        return $this->testMode;
+        return $this->createRequest('\Omnipay\Netaxept\Message\PurchaseRequest', $parameters);
     }
 
-    public function setTestMode($value)
+    public function completePurchase(array $parameters = array())
     {
-        $this->testMode = $value;
-
-        return $this;
-    }
-
-    public function purchase(array $options = null)
-    {
-        $request = new PurchaseRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
-    }
-
-    public function completePurchase(array $options = null)
-    {
-        $request = new CompletePurchaseRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\Netaxept\Message\CompletePurchaseRequest', $parameters);
     }
 }

@@ -22,11 +22,11 @@ class AuthorizeRequest extends AbstractRequest
     {
         $this->validate(array('amount', 'card'));
 
-        $this->card->validate();
+        $this->getCard()->validate();
 
         $data = array();
-        $data['amount'] = $this->amount;
-        $data['card'] = $this->card;
+        $data['amount'] = $this->getAmount();
+        $data['card'] = $this->getCard();
 
         return $data;
     }

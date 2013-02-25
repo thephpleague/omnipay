@@ -51,9 +51,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->setMockHttpResponse('CompletePurchaseSuccess.txt');
 
-        $response = $this->gateway->completePurchase($this->options)
-            ->setHttpRequest($this->getHttpRequest())
-            ->send();
+        $response = $this->gateway->completePurchase($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals('b', $response->getGatewayReference());
@@ -72,9 +70,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->setMockHttpResponse('CompletePurchaseFailure.txt');
 
-        $response = $this->gateway->completePurchase($this->options)
-            ->setHttpRequest($this->getHttpRequest())
-            ->send();
+        $response = $this->gateway->completePurchase($this->options)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('The resource cannot be confirmed', $response->getMessage());
@@ -94,8 +90,6 @@ class GatewayTest extends GatewayTestCase
             )
         );
 
-        $response = $this->gateway->completePurchase($this->options)
-            ->setHttpRequest($this->getHttpRequest())
-            ->send();
+        $response = $this->gateway->completePurchase($this->options)->send();
     }
 }

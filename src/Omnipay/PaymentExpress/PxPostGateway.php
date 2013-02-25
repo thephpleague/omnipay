@@ -22,15 +22,12 @@ use Omnipay\PaymentExpress\Message\PxPostRefundRequest;
  */
 class PxPostGateway extends AbstractGateway
 {
-    protected $username;
-    protected $password;
-
     public function getName()
     {
         return 'PaymentExpress PxPost';
     }
 
-    public function defineSettings()
+    public function getDefaultParameters()
     {
         return array(
             'username' => '',
@@ -40,53 +37,41 @@ class PxPostGateway extends AbstractGateway
 
     public function getUsername()
     {
-        return $this->username;
+        return $this->getParameter('username');
     }
 
     public function setUsername($value)
     {
-        $this->username = $value;
-
-        return $this;
+        return $this->setParameter('username', $value);
     }
 
     public function getPassword()
     {
-        return $this->password;
+        return $this->getParameter('password');
     }
 
     public function setPassword($value)
     {
-        $this->password = $value;
-
-        return $this;
+        return $this->setParameter('password', $value);
     }
 
-    public function authorize(array $options = null)
+    public function authorize(array $parameters = array())
     {
-        $request = new PxPostAuthorizeRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\PaymentExpress\Message\PxPostAuthorizeRequest', $parameters);
     }
 
-    public function capture(array $options = null)
+    public function capture(array $parameters = array())
     {
-        $request = new PxPostCaptureRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\PaymentExpress\Message\PxPostCaptureRequest', $parameters);
     }
 
-    public function purchase(array $options = null)
+    public function purchase(array $parameters = array())
     {
-        $request = new PxPostPurchaseRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\PaymentExpress\Message\PxPostPurchaseRequest', $parameters);
     }
 
-    public function refund(array $options = null)
+    public function refund(array $parameters = array())
     {
-        $request = new PxPostRefundRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\PaymentExpress\Message\PxPostRefundRequest', $parameters);
     }
 }

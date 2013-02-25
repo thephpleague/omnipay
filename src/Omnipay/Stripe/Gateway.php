@@ -22,14 +22,12 @@ use Omnipay\Stripe\Message\RefundRequest;
  */
 class Gateway extends AbstractGateway
 {
-    protected $apiKey;
-
     public function getName()
     {
         return 'Stripe';
     }
 
-    public function defineSettings()
+    public function getDefaultParameters()
     {
         return array(
             'apiKey' => '',
@@ -38,27 +36,21 @@ class Gateway extends AbstractGateway
 
     public function getApiKey()
     {
-        return $this->apiKey;
+        return $this->getParameter('apiKey');
     }
 
     public function setApiKey($value)
     {
-        $this->apiKey = $value;
-
-        return $this;
+        return $this->setParameter('apiKey', $value);
     }
 
-    public function purchase(array $options = null)
+    public function purchase(array $parameters = array())
     {
-        $request = new PurchaseRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\Stripe\Message\PurchaseRequest', $parameters);
     }
 
-    public function refund(array $options = null)
+    public function refund(array $parameters = array())
     {
-        $request = new RefundRequest($this->httpClient, $this->httpRequest);
-
-        return $request->initialize(array_merge($this->toArray(), (array) $options));
+        return $this->createRequest('\Omnipay\Stripe\Message\RefundRequest', $parameters);
     }
 }
