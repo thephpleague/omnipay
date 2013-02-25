@@ -18,7 +18,7 @@ class AbstractGatewayTest extends TestCase
 {
     public function setUp()
     {
-        $this->gateway = m::mock("\Omnipay\Common\AbstractGateway[getName,defineSettings,send]");
+        $this->gateway = m::mock("\Omnipay\Common\AbstractGateway[getName,getDefaultParameters,send]");
     }
 
     /**

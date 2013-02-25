@@ -15,7 +15,7 @@ use ReflectionMethod;
 use Guzzle\Http\ClientInterface;
 use Guzzle\Http\Client as HttpClient;
 use Omnipay\Common\Exception\BadMethodCallException;
-use Omnipay\Common\Message\RequestInterface;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 /**
@@ -23,7 +23,20 @@ use Symfony\Component\HttpFoundation\Request as HttpRequest;
  */
 abstract class AbstractGateway implements GatewayInterface
 {
+    /**
+     * @var \Symfony\Component\HttpFoundation\ParameterBag
+     */
+    protected $parameters;
+
+    /**
+     * @var \Guzzle\Http\ClientInterface
+     */
     protected $httpClient;
+
+    /**
+     * @var \Symfony\Component\HttpFoundation\Request
+     */
+    protected $httpRequest;
 
     /**
      * Create a new gateway instance
@@ -35,89 +48,92 @@ abstract class AbstractGateway implements GatewayInterface
     {
         $this->httpClient = $httpClient ?: $this->getDefaultHttpClient();
         $this->httpRequest = $httpRequest ?: $this->getDefaultHttpRequest();
-        $this->loadSettings();
+        $this->initialize();
     }
 
-    public function authorize(array $options = null)
-    {
-        throw new BadMethodCallException;
-    }
-
-    public function completeAuthorize(array $options = null)
-    {
-        throw new BadMethodCallException;
-    }
-
-    public function capture(array $options = null)
-    {
-        throw new BadMethodCallException;
-    }
-
-    public function purchase(array $options = null)
-    {
-        throw new BadMethodCallException;
-    }
-
-    public function completePurchase(array $options = null)
-    {
-        throw new BadMethodCallException;
-    }
-
-    public function refund(array $options = null)
-    {
-        throw new BadMethodCallException;
-    }
-
-    public function void(array $options = null)
-    {
-        throw new BadMethodCallException;
-    }
-
-    /**
-     * Get gateway short name
-     *
-     * This name can be used with GatewayFactory as an alias of the gateway class,
-     * to create new instances of this gateway.
-     */
     public function getShortName()
     {
         return Helper::getGatewayShortName(get_class($this));
     }
 
-    /**
-     * Initialize gateway parameters
-     */
-    public function initialize($parameters)
+    public function initialize(array $parameters = array())
     {
-        Helper::initialize($this, $parameters);
+        $this->parameters = new ParameterBag;
+
+        // set default parameters
+        foreach ($this->getDefaultParameters() as $key => $value) {
+            if (is_array($value)) {
+                $this->parameters->set($key, reset($value));
+            } else {
+                $this->parameters->set($key, $value);
+            }
+        }
+
+        $this->parameters->add($parameters);
 
         return $this;
     }
 
-    private function loadSettings()
+    public function getParameters()
     {
-        foreach ($this->defineSettings() as $key => $value) {
-            if (is_array($value)) {
-                $this->$key = reset($value);
-            } else {
-                $this->$key = $value;
-            }
-        }
+        return $this->parameters->all();
     }
 
-    /**
-     * Return current gateway settings as an array
-     *
-     * This method is useful if you need to store settings for various gateways in your database.
-     */
-    public function toArray()
+    protected function getParameter($key)
     {
-        $output = array();
-        foreach ($this->defineSettings() as $key => $default) {
-            $output[$key] = $this->{'get'.ucfirst($key)}();
-        }
+        return $this->parameters->get($key);
+    }
 
-        return $output;
+    protected function setParameter($key, $value)
+    {
+        $this->parameters->set($key, $value);
+
+        return $this;
+    }
+
+    public function getTestMode()
+    {
+        return $this->getParameter('testMode');
+    }
+
+    public function setTestMode($value)
+    {
+        return $this->setParameter('testMode', $value);
+    }
+
+    public function authorize(array $parameters = array())
+    {
+        throw new BadMethodCallException;
+    }
+
+    public function completeAuthorize(array $parameters = array())
+    {
+        throw new BadMethodCallException;
+    }
+
+    public function capture(array $parameters = array())
+    {
+        throw new BadMethodCallException;
+    }
+
+    public function purchase(array $parameters = array())
+    {
+        throw new BadMethodCallException;
+    }
+
+    public function completePurchase(array $parameters = array())
+    {
+        throw new BadMethodCallException;
+    }
+
+    public function refund(array $parameters = array())
+    {
+        throw new BadMethodCallException;
+    }
+
+    public function void(array $parameters = array())
+    {
+        throw new BadMethodCallException;
     }
 
     /**
@@ -168,19 +184,17 @@ abstract class AbstractGateway implements GatewayInterface
         return __CLASS__ !== $reflectionMethod->getDeclaringClass()->getName();
     }
 
-    public function getHttpClient()
+    /**
+     * Create and initialize a request object using existing parameters from this gateway
+     */
+    protected function createRequest($class, array $parameters)
     {
-        return $this->httpClient;
+        $obj = new $class($this->httpClient, $this->httpRequest);
+
+        return $obj->initialize(array_replace($this->getParameters(), $parameters));
     }
 
-    public function setHttpClient(ClientInterface $httpClient)
-    {
-        $this->httpClient = $httpClient;
-
-        return $this;
-    }
-
-    public function getDefaultHttpClient()
+    protected function getDefaultHttpClient()
     {
         return new HttpClient(
             '',
@@ -190,19 +204,7 @@ abstract class AbstractGateway implements GatewayInterface
         );
     }
 
-    public function getHttpRequest()
-    {
-        return $this->httpRequest;
-    }
-
-    public function setHttpRequest(HttpRequest $httpRequest)
-    {
-        $this->httpRequest = $httpRequest;
-
-        return $this;
-    }
-
-    public function getDefaultHttpRequest()
+    protected function getDefaultHttpRequest()
     {
         return HttpRequest::createFromGlobals();
     }

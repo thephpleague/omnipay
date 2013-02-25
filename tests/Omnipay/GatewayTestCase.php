@@ -11,8 +11,6 @@
 
 namespace Omnipay;
 
-use Guzzle\Http\Client as HttpClient;
-
 /**
  * Base Gateway Test class
  *
@@ -20,15 +18,6 @@ use Guzzle\Http\Client as HttpClient;
  */
 abstract class GatewayTestCase extends TestCase
 {
-    public function testConstructWithoutParameters()
-    {
-        // constructor should initialize default http client and request
-        $class = get_class($this->gateway);
-        $newGateway = new $class();
-
-        $this->assertInstanceOf('Guzzle\Http\ClientInterface', $newGateway->getHttpClient());
-    }
-
     public function testGetNameNotEmpty()
     {
         $name = $this->gateway->getName();
@@ -43,15 +32,15 @@ abstract class GatewayTestCase extends TestCase
         $this->assertInternalType('string', $shortName);
     }
 
-    public function testDefineSettingsReturnsArray()
+    public function testgetDefaultParametersReturnsArray()
     {
-        $settings = $this->gateway->defineSettings();
+        $settings = $this->gateway->getDefaultParameters();
         $this->assertInternalType('array', $settings);
     }
 
-    public function testDefineSettingsHaveMatchingProperties()
+    public function testgetDefaultParametersHaveMatchingProperties()
     {
-        $settings = $this->gateway->defineSettings();
+        $settings = $this->gateway->getDefaultParameters();
         foreach ($settings as $key => $default) {
             $getter = 'get'.ucfirst($key);
             $setter = 'set'.ucfirst($key);
@@ -63,15 +52,6 @@ abstract class GatewayTestCase extends TestCase
             // setter must return instance
             $this->assertSame($this->gateway, $this->gateway->$setter($value));
             $this->assertSame($value, $this->gateway->$getter());
-        }
-    }
-
-    public function testToArrayReturnsSettings()
-    {
-        $settings = $this->gateway->defineSettings();
-        $output = $this->gateway->toArray();
-        foreach ($settings as $key => $default) {
-            $this->assertArrayHasKey($key, $output);
         }
     }
 
@@ -134,22 +114,5 @@ abstract class GatewayTestCase extends TestCase
             $this->setExpectedException('Omnipay\Common\Exception\BadMethodCallException');
             $this->gateway->void();
         }
-    }
-
-    public function testHttpClient()
-    {
-        $newHttpClient = new HttpClient;
-
-        $this->assertSame($this->gateway, $this->gateway->setHttpClient($newHttpClient));
-        $this->assertSame($newHttpClient, $this->gateway->getHttpClient());
-    }
-
-    public function testGetDefaultHttpClient()
-    {
-        $client = $this->gateway->getDefaultHttpClient();
-        $curlOptions = $client->getConfig('curl.options');
-
-        $this->assertInstanceOf('Guzzle\Http\Client', $client);
-        $this->assertArrayHasKey(CURLOPT_CONNECTTIMEOUT, $curlOptions);
     }
 }

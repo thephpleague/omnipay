@@ -16,7 +16,7 @@ use Omnipay\Common\CreditCard;
 use Omnipay\Common\Currency;
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\Exception\RuntimeException;
-use Omnipay\Common\Helper;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 /**
@@ -24,17 +24,24 @@ use Symfony\Component\HttpFoundation\Request as HttpRequest;
  */
 abstract class AbstractRequest implements RequestInterface
 {
+    /**
+     * @var \Symfony\Component\HttpFoundation\ParameterBag
+     */
+    protected $parameters;
+
+    /**
+     * @var \Guzzle\Http\ClientInterface
+     */
+    protected $httpClient;
+
+    /**
+     * @var \Symfony\Component\HttpFoundation\Request
+     */
     protected $httpRequest;
-    protected $card;
-    protected $token;
-    protected $amount;
-    protected $currency;
-    protected $description;
-    protected $transactionId;
-    protected $gatewayReference;
-    protected $clientIp;
-    protected $returnUrl;
-    protected $cancelUrl;
+
+    /**
+     * @var ResponseInterface
+     */
     protected $response;
 
     /**
@@ -47,6 +54,7 @@ abstract class AbstractRequest implements RequestInterface
     {
         $this->httpClient = $httpClient;
         $this->httpRequest = $httpRequest;
+        $this->initialize();
     }
 
     /**
@@ -56,11 +64,47 @@ abstract class AbstractRequest implements RequestInterface
      *
      * @param array An associative array of parameters
      */
-    public function initialize($options)
+    public function initialize(array $parameters = array())
     {
-        Helper::initialize($this, $options);
+        if (null !== $this->response) {
+            throw new RuntimeException('Request cannot be modified after it has been sent!');
+        }
+
+        $this->parameters = new ParameterBag();
+        $this->parameters->replace($parameters);
 
         return $this;
+    }
+
+    public function getParameters()
+    {
+        return $this->parameters->all();
+    }
+
+    protected function getParameter($key)
+    {
+        return $this->parameters->get($key);
+    }
+
+    protected function setParameter($key, $value)
+    {
+        if (null !== $this->response) {
+            throw new RuntimeException('Request cannot be modified after it has been sent!');
+        }
+
+        $this->parameters->set($key, $value);
+
+        return $this;
+    }
+
+    public function getTestMode()
+    {
+        return $this->getParameter('testMode');
+    }
+
+    public function setTestMode($value)
+    {
+        return $this->setParameter('testMode', $value);
     }
 
     /**
@@ -74,39 +118,16 @@ abstract class AbstractRequest implements RequestInterface
     public function validate(array $required)
     {
         foreach ($required as $key) {
-            if (empty($this->$key)) {
+            $value = $this->parameters->get($key);
+            if (empty($value)) {
                 throw new InvalidRequestException("The $key parameter is required");
             }
         }
     }
 
-    public function getHttpClient()
-    {
-        return $this->httpClient;
-    }
-
-    public function setHttpClient(ClientInterface $httpClient)
-    {
-        $this->httpClient = $httpClient;
-
-        return $this;
-    }
-
-    public function getHttpRequest()
-    {
-        return $this->httpRequest;
-    }
-
-    public function setHttpRequest(HttpRequest $httpRequest)
-    {
-        $this->httpRequest = $httpRequest;
-
-        return $this;
-    }
-
     public function getCard()
     {
-        return $this->card;
+        return $this->getParameter('card');
     }
 
     public function setCard($value)
@@ -115,39 +136,33 @@ abstract class AbstractRequest implements RequestInterface
             $value = new CreditCard($value);
         }
 
-        $this->card = $value;
-
-        return $this;
+        return $this->setParameter('card', $value);
     }
 
     public function getToken()
     {
-        return $this->token;
+        return $this->getParameter('token');
     }
 
     public function setToken($value)
     {
-        $this->token = $value;
-
-        return $this;
+        return $this->setParameter('token', $value);
     }
 
     public function getAmount()
     {
-        return $this->amount;
+        return (int) $this->getParameter('amount');
     }
 
     public function setAmount($value)
     {
-        $this->amount = (int) $value;
-
-        return $this;
+        return $this->setParameter('amount', $value);
     }
 
     public function getAmountDecimal()
     {
         return number_format(
-            $this->amount / $this->getCurrencyDecimalFactor(),
+            $this->getAmount() / $this->getCurrencyDecimalFactor(),
             $this->getCurrencyDecimalPlaces(),
             '.',
             ''
@@ -156,24 +171,28 @@ abstract class AbstractRequest implements RequestInterface
 
     public function getCurrency()
     {
-        return $this->currency ? $this->currency->getCode() : null;
+        return strtoupper($this->getParameter('currency'));
     }
 
     public function setCurrency($value)
     {
-        $this->currency = Currency::find($value);
-
-        return $this;
+        return $this->setParameter('currency', $value);
     }
 
     public function getCurrencyNumeric()
     {
-        return $this->currency ? $this->currency->getNumeric() : null;
+        if ($currency = Currency::find($this->getCurrency())) {
+            return $currency->getNumeric();
+        }
     }
 
     public function getCurrencyDecimalPlaces()
     {
-        return $this->currency ? $this->currency->getDecimals() : 2;
+        if ($currency = Currency::find($this->getCurrency())) {
+            return $currency->getDecimals();
+        }
+
+        return 2;
     }
 
     private function getCurrencyDecimalFactor()
@@ -183,79 +202,62 @@ abstract class AbstractRequest implements RequestInterface
 
     public function getDescription()
     {
-        return $this->description;
+        return $this->getParameter('description');
     }
 
     public function setDescription($value)
     {
-        $this->description = $value;
-
-        return $this;
+        return $this->setParameter('description', $value);
     }
 
     public function getTransactionId()
     {
-        return $this->transactionId;
+        return $this->getParameter('transactionId');
     }
 
     public function setTransactionId($value)
     {
-        $this->transactionId = $value;
-
-        return $this;
+        return $this->setParameter('transactionId', $value);
     }
 
     public function getGatewayReference()
     {
-        return $this->gatewayReference;
+        return $this->getParameter('gatewayReference');
     }
 
     public function setGatewayReference($value)
     {
-        $this->gatewayReference = $value;
-
-        return $this;
+        return $this->setParameter('gatewayReference', $value);
     }
 
     public function getClientIp()
     {
-        return $this->clientIp;
+        return $this->getParameter('clientIp');
     }
 
     public function setClientIp($value)
     {
-        $this->clientIp = $value;
-
-        return $this;
+        return $this->setParameter('clientIp', $value);
     }
 
     public function getReturnUrl()
     {
-        return $this->returnUrl;
+        return $this->getParameter('returnUrl');
     }
 
     public function setReturnUrl($value)
     {
-        $this->returnUrl = $value;
-
-        return $this;
+        return $this->setParameter('returnUrl', $value);
     }
 
     public function getCancelUrl()
     {
-        return $this->cancelUrl;
+        return $this->getParameter('cancelUrl');
     }
 
     public function setCancelUrl($value)
     {
-        $this->cancelUrl = $value;
-
-        return $this;
-    }
-
-    public function send()
-    {
-        throw new RuntimeException('FIXME');
+        return $this->setParameter('cancelUrl', $value);
     }
 
     public function getResponse()

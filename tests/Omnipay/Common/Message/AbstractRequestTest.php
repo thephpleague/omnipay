@@ -18,13 +18,8 @@ class AbstractRequestTest extends TestCase
 {
     public function setUp()
     {
-        $this->request = m::mock('\Omnipay\Common\Message\AbstractRequest[getData]');
-    }
-
-    public function testConstruct()
-    {
-        $this->assertNull($this->request->getAmount());
-        $this->assertNull($this->request->getCurrency());
+        $this->request = m::mock('\Omnipay\Common\Message\AbstractRequest[getData,send]');
+        $this->request->initialize();
     }
 
     public function testInitializeWithParams()
@@ -91,14 +86,6 @@ class AbstractRequestTest extends TestCase
     {
         $this->request->setCurrency('usd');
         $this->assertSame('USD', $this->request->getCurrency());
-    }
-
-    public function testCurrencyNotFound()
-    {
-        $this->request->setCurrency('XYZ');
-        $this->assertNull($this->request->getCurrency());
-        $this->assertNull($this->request->getCurrencyNumeric());
-        $this->assertSame(2, $this->request->getCurrencyDecimalPlaces());
     }
 
     public function testCurrencyNumeric()
