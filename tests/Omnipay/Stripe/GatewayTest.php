@@ -24,53 +24,117 @@ class GatewayTest extends GatewayTestCase
 
         $this->purchaseOptions = array(
             'amount' => 1000,
+            'currency' => 'USD',
+            'card' => $this->getValidCard(),
         );
 
         $this->refundOptions = array(
             'amount' => 1000,
             'transactionReference' => 'ch_12RgN9L7XhO9mI',
         );
-    }
 
-    public function testPurchaseError()
-    {
-        $this->setMockHttpResponse('PurchaseFailure.txt');
+        $this->storeOptions = array(
+            'card' => $this->getValidCard(),
+        );
 
-        $response = $this->gateway->purchase($this->purchaseOptions)->send();
-
-        $this->assertFalse($response->isSuccessful());
-        $this->assertSame('Your card was declined', $response->getMessage());
-        $this->assertSame('ch_1IUAZQWFYrPooM', $response->getTransactionReference());
+        $this->unstoreOptions = array(
+            'cardReference' => 'cus_1MZSEtqSghKx99',
+        );
     }
 
     public function testPurchaseSuccess()
     {
         $this->setMockHttpResponse('PurchaseSuccess.txt');
-
         $response = $this->gateway->purchase($this->purchaseOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
         $this->assertSame('ch_1IU9gcUiNASROd', $response->getTransactionReference());
+        $this->assertNull($response->getCardReference());
+        $this->assertNull($response->getMessage());
+    }
+
+    public function testPurchaseError()
+    {
+        $this->setMockHttpResponse('PurchaseFailure.txt');
+        $response = $this->gateway->purchase($this->purchaseOptions)->send();
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getTransactionReference());
+        $this->assertNull($response->getCardReference());
+        $this->assertSame('Your card was declined', $response->getMessage());
+    }
+
+    public function testRefundSuccess()
+    {
+        $this->setMockHttpResponse('RefundSuccess.txt');
+        $response = $this->gateway->refund($this->refundOptions)->send();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertSame('ch_12RgN9L7XhO9mI', $response->getTransactionReference());
+        $this->assertNull($response->getCardReference());
         $this->assertNull($response->getMessage());
     }
 
     public function testRefundError()
     {
         $this->setMockHttpResponse('RefundFailure.txt');
-
         $response = $this->gateway->refund($this->refundOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getTransactionReference());
+        $this->assertNull($response->getCardReference());
         $this->assertSame('Charge ch_12RgN9L7XhO9mI has already been refunded.', $response->getMessage());
     }
 
-    public function testRefundSuccess()
+    public function testStoreSuccess()
     {
-        $this->setMockHttpResponse('RefundSuccess.txt');
-
-        $response = $this->gateway->refund($this->refundOptions)->send();
+        $this->setMockHttpResponse('StoreSuccess.txt');
+        $response = $this->gateway->store($this->storeOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('ch_12RgN9L7XhO9mI', $response->getTransactionReference());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getTransactionReference());
+        $this->assertSame('cus_1MZSEtqSghKx99', $response->getCardReference());
+        $this->assertNull($response->getMessage());
+    }
+
+    public function testStoreFailure()
+    {
+        $this->setMockHttpResponse('StoreFailure.txt');
+        $response = $this->gateway->store($this->storeOptions)->send();
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getTransactionReference());
+        $this->assertNull($response->getCardReference());
+        $this->assertSame('You must provide an integer value for \'exp_year\'.', $response->getMessage());
+    }
+
+    public function testUnstoreSuccess()
+    {
+        $this->setMockHttpResponse('UnstoreSuccess.txt');
+        $response = $this->gateway->unstore($this->unstoreOptions)->send();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getTransactionReference());
+        $this->assertNull($response->getCardReference());
+        $this->assertNull($response->getMessage());
+    }
+
+    public function testUnstoreFailure()
+    {
+        $this->setMockHttpResponse('UnstoreFailure.txt');
+        $response = $this->gateway->unstore($this->unstoreOptions)->send();
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getTransactionReference());
+        $this->assertNull($response->getCardReference());
+        $this->assertSame('No such customer: cus_1MZeNih5LdKxDq', $response->getMessage());
     }
 }

@@ -25,7 +25,7 @@ class AbstractRequestTest extends TestCase
 
     public function testInitializeWithParams()
     {
-        $this->request->initialize(array('amount' => 123));
+        $this->assertSame($this->request, $this->request->initialize(array('amount' => 123)));
         $this->assertSame(123, $this->request->getAmount());
     }
 
@@ -40,7 +40,7 @@ class AbstractRequestTest extends TestCase
     public function testSetCardWithArray()
     {
         // passing array should create CreditCard object
-        $this->request->setCard(array('number' => '1234'));
+        $this->assertSame($this->request, $this->request->setCard(array('number' => '1234')));
 
         $card = $this->request->getCard();
         $this->assertInstanceOf('\Omnipay\Common\CreditCard', $card);
@@ -49,92 +49,98 @@ class AbstractRequestTest extends TestCase
 
     public function testCardToken()
     {
-        $this->request->setCardToken('12345');
+        $this->assertSame($this->request, $this->request->setCardToken('12345'));
         $this->assertSame('12345', $this->request->getCardToken());
+    }
+
+    public function testCardReference()
+    {
+        $this->assertSame($this->request, $this->request->setCardReference('12345'));
+        $this->assertSame('12345', $this->request->getCardReference());
     }
 
     public function testAmount()
     {
-        $this->request->setAmount(200);
+        $this->assertSame($this->request, $this->request->setAmount(200));
         $this->assertSame(200, $this->request->getAmount());
     }
 
     public function testAmountCastsToInteger()
     {
-        $this->request->setAmount('6.1');
+        $this->assertSame($this->request, $this->request->setAmount('6.1'));
         $this->assertSame(6, $this->request->getAmount());
     }
 
     public function testGetAmountDecimal()
     {
-        $this->request->setAmount(1366);
+        $this->assertSame($this->request, $this->request->setAmount(1366));
         $this->assertSame('13.66', $this->request->getAmountDecimal());
     }
 
     public function testGetAmountDecimalNoDecimals()
     {
-        $this->request->setCurrency('JPY');
-        $this->request->setAmount(1366);
+        $this->assertSame($this->request, $this->request->setCurrency('JPY'));
+        $this->assertSame($this->request, $this->request->setAmount(1366));
         $this->assertSame('1366', $this->request->getAmountDecimal());
     }
 
     public function testCurrency()
     {
-        $this->request->setCurrency('USD');
+        $this->assertSame($this->request, $this->request->setCurrency('USD'));
         $this->assertSame('USD', $this->request->getCurrency());
     }
 
     public function testCurrencyLowercase()
     {
-        $this->request->setCurrency('usd');
+        $this->assertSame($this->request, $this->request->setCurrency('usd'));
         $this->assertSame('USD', $this->request->getCurrency());
     }
 
     public function testCurrencyNumeric()
     {
-        $this->request->setCurrency('USD');
+        $this->assertSame($this->request, $this->request->setCurrency('USD'));
         $this->assertSame('840', $this->request->getCurrencyNumeric());
     }
 
     public function testCurrencyDecimals()
     {
-        $this->request->setCurrency('JPY');
+        $this->assertSame($this->request, $this->request->setCurrency('JPY'));
         $this->assertSame(0, $this->request->getCurrencyDecimalPlaces());
     }
 
     public function testDescription()
     {
-        $this->request->setDescription('Cool product');
+        $this->assertSame($this->request, $this->request->setDescription('Cool product'));
         $this->assertSame('Cool product', $this->request->getDescription());
     }
 
     public function testTransactionId()
     {
-        $this->request->setTransactionId(87);
+        $this->assertSame($this->request, $this->request->setTransactionId(87));
         $this->assertSame(87, $this->request->getTransactionId());
     }
 
     public function testTransactionReference()
     {
-        $this->request->setTransactionReference('xyz');
+        $this->assertSame($this->request, $this->request->setTransactionReference('xyz'));
         $this->assertSame('xyz', $this->request->getTransactionReference());
     }
 
     public function testClientIp()
     {
-        $this->request->setClientIp('127.0.0.1');
+        $this->assertSame($this->request, $this->request->setClientIp('127.0.0.1'));
         $this->assertSame('127.0.0.1', $this->request->getClientIp());
     }
 
     public function testReturnUrl()
     {
-        $this->request->setReturnUrl('https://www.example.com/return');
+        $this->assertSame($this->request, $this->request->setReturnUrl('https://www.example.com/return'));
         $this->assertSame('https://www.example.com/return', $this->request->getReturnUrl());
     }
 
     public function testCancelUrl()
     {
-        $this->request->setCancelUrl('https://www.example.com/cancel');
+        $this->assertSame($this->request, $this->request->setCancelUrl('https://www.example.com/cancel'));
         $this->assertSame('https://www.example.com/cancel', $this->request->getCancelUrl());
     }
 }

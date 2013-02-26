@@ -63,11 +63,11 @@ class PurchaseRequest extends AbstractRequest
 
     public function send()
     {
-        // don't throw exceptions for 422 errors
+        // don't throw exceptions for 4xx errors
         $this->httpClient->getEventDispatcher()->addListener(
             'request.error',
             function ($event) {
-                if ($event['response']->getStatusCode() == 422) {
+                if ($event['response']->isClientError()) {
                     $event->stopPropagation();
                 }
             }

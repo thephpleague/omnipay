@@ -25,11 +25,16 @@ class Response extends AbstractResponse
 
     public function getTransactionReference()
     {
-        if ($this->isSuccessful()) {
+        if (isset($this->data['object']) && 'charge' === $this->data['object']) {
             return $this->data['id'];
         }
+    }
 
-        return $this->data['error']['charge'];
+    public function getCardReference()
+    {
+        if (isset($this->data['object']) && 'customer' === $this->data['object']) {
+            return $this->data['id'];
+        }
     }
 
     public function getMessage()

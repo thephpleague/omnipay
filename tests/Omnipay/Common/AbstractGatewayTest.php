@@ -18,63 +18,7 @@ class AbstractGatewayTest extends TestCase
 {
     public function setUp()
     {
-        $this->gateway = m::mock("\Omnipay\Common\AbstractGateway[getName,getDefaultParameters,send]");
-    }
-
-    /**
-     * @expectedException \Omnipay\Common\Exception\BadMethodCallException
-     */
-    public function testAuthorize()
-    {
-        $this->gateway->authorize(array());
-    }
-
-    /**
-     * @expectedException \Omnipay\Common\Exception\BadMethodCallException
-     */
-    public function testCompleteAuthorize()
-    {
-        $this->gateway->completeAuthorize(array());
-    }
-
-    /**
-     * @expectedException \Omnipay\Common\Exception\BadMethodCallException
-     */
-    public function testCapture()
-    {
-        $this->gateway->capture(array());
-    }
-
-    /**
-     * @expectedException \Omnipay\Common\Exception\BadMethodCallException
-     */
-    public function testPurchase()
-    {
-        $this->gateway->purchase(array());
-    }
-
-    /**
-     * @expectedException \Omnipay\Common\Exception\BadMethodCallException
-     */
-    public function testCompletePurchase()
-    {
-        $this->gateway->completePurchase(array());
-    }
-
-    /**
-     * @expectedException \Omnipay\Common\Exception\BadMethodCallException
-     */
-    public function testRefund()
-    {
-        $this->gateway->refund(array());
-    }
-
-    /**
-     * @expectedException \Omnipay\Common\Exception\BadMethodCallException
-     */
-    public function testVoid()
-    {
-        $this->gateway->void(array());
+        $this->gateway = m::mock("\Omnipay\Common\AbstractGateway[getName,getDefaultParameters,purchase]");
     }
 
     public function testGetShortName()

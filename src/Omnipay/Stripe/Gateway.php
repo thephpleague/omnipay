@@ -53,4 +53,14 @@ class Gateway extends AbstractGateway
     {
         return $this->createRequest('\Omnipay\Stripe\Message\RefundRequest', $parameters);
     }
+
+    public function store(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Stripe\Message\StoreRequest', $parameters);
+    }
+
+    public function unstore(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Stripe\Message\UnstoreRequest', $parameters);
+    }
 }

@@ -200,4 +200,79 @@ $app->match('/gateways/{name}/completePurchase', function($name) use ($app) {
     ));
 });
 
+// create gateway store
+$app->get('/gateways/{name}/store', function($name) use ($app) {
+    $gateway = Omnipay\Common\GatewayFactory::create($name);
+    $sessionVar = 'omnipay.'.$gateway->getShortName();
+    $gateway->initialize((array) $app['session']->get($sessionVar));
+
+    $params = $app['session']->get($sessionVar.'.store', array());
+    $card = new Omnipay\Common\CreditCard($app['session']->get($sessionVar.'.card'));
+
+    return $app['twig']->render('request.twig', array(
+        'gateway' => $gateway,
+        'method' => 'store',
+        'params' => $params,
+        'card' => $card->getParameters(),
+    ));
+});
+
+// submit gateway store
+$app->post('/gateways/{name}/store', function($name) use ($app) {
+    $gateway = Omnipay\Common\GatewayFactory::create($name);
+    $sessionVar = 'omnipay.'.$gateway->getShortName();
+    $gateway->initialize((array) $app['session']->get($sessionVar));
+
+    // load POST data
+    $params = $app['request']->get('params');
+    $card = $app['request']->get('card');
+
+    // save POST data into session
+    $app['session']->set($sessionVar.'.store', $params);
+    $app['session']->set($sessionVar.'.card', $card);
+
+    $params['card'] = $card;
+    $response = $gateway->store($params)->send();
+
+    return $app['twig']->render('response.twig', array(
+        'gateway' => $gateway,
+        'response' => $response,
+    ));
+});
+
+// create gateway unstore
+$app->get('/gateways/{name}/unstore', function($name) use ($app) {
+    $gateway = Omnipay\Common\GatewayFactory::create($name);
+    $sessionVar = 'omnipay.'.$gateway->getShortName();
+    $gateway->initialize((array) $app['session']->get($sessionVar));
+
+    $params = $app['session']->get($sessionVar.'.unstore', array());
+
+    return $app['twig']->render('request.twig', array(
+        'gateway' => $gateway,
+        'method' => 'unstore',
+        'params' => $params,
+    ));
+});
+
+// submit gateway unstore
+$app->post('/gateways/{name}/unstore', function($name) use ($app) {
+    $gateway = Omnipay\Common\GatewayFactory::create($name);
+    $sessionVar = 'omnipay.'.$gateway->getShortName();
+    $gateway->initialize((array) $app['session']->get($sessionVar));
+
+    // load POST data
+    $params = $app['request']->get('params');
+
+    // save POST data into session
+    $app['session']->set($sessionVar.'.unstore', $params);
+
+    $response = $gateway->unstore($params)->send();
+
+    return $app['twig']->render('response.twig', array(
+        'gateway' => $gateway,
+        'response' => $response,
+    ));
+});
+
 $app->run();

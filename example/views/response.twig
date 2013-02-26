@@ -37,6 +37,11 @@
     <p><b>$request->getTransactionReference()</b></p>
     <pre>{{ response.transactionReference }}</pre>
 
+    {% if response.cardReference is defined %}
+        <p><b>$request->getCardReference()</b></p>
+        <pre>{{ dump(response.cardReference) }}</pre>
+    {% endif %}
+
     <p><b>$request->getData()</b></p>
     <pre>{{ dump(response.data) }}</pre>
 

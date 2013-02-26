@@ -41,6 +41,12 @@
         {% if gateway.supportsVoid() %}
             <li>void()</li>
         {% endif %}
+        {% if gateway.supportsStore() %}
+            <li><a href="/gateways/{{gateway.shortName}}/store">store()</a></li>
+        {% endif %}
+        {% if gateway.supportsUnstore() %}
+            <li><a href="/gateways/{{gateway.shortName}}/unstore">unstore()</a></li>
+        {% endif %}
     </ul>
 
 {% endblock %}
