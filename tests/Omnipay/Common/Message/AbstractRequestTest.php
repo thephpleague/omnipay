@@ -12,6 +12,7 @@
 namespace Omnipay\Common\Message;
 
 use Mockery as m;
+use Omnipay\Common\CreditCard;
 use Omnipay\TestCase;
 
 class AbstractRequestTest extends TestCase
@@ -31,8 +32,9 @@ class AbstractRequestTest extends TestCase
     public function testCard()
     {
         // no type checking on card parameter
-        $this->request->setCard('abc123');
-        $this->assertSame('abc123', $this->request->getCard());
+        $card = new CreditCard;
+        $this->assertSame($this->request, $this->request->setCard($card));
+        $this->assertSame($card, $this->request->getCard());
     }
 
     public function testSetCardWithArray()

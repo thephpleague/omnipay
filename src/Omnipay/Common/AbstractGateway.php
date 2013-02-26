@@ -69,7 +69,7 @@ abstract class AbstractGateway implements GatewayInterface
             }
         }
 
-        $this->parameters->add($parameters);
+        Helper::initialize($this, $parameters);
 
         return $this;
     }

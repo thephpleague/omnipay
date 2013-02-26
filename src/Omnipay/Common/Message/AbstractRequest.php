@@ -16,6 +16,7 @@ use Omnipay\Common\CreditCard;
 use Omnipay\Common\Currency;
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\Exception\RuntimeException;
+use Omnipay\Common\Helper;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
@@ -70,8 +71,9 @@ abstract class AbstractRequest implements RequestInterface
             throw new RuntimeException('Request cannot be modified after it has been sent!');
         }
 
-        $this->parameters = new ParameterBag();
-        $this->parameters->replace($parameters);
+        $this->parameters = new ParameterBag;
+
+        Helper::initialize($this, $parameters);
 
         return $this;
     }
@@ -132,7 +134,7 @@ abstract class AbstractRequest implements RequestInterface
 
     public function setCard($value)
     {
-        if (is_array($value)) {
+        if (!$value instanceof CreditCard) {
             $value = new CreditCard($value);
         }
 
@@ -151,12 +153,12 @@ abstract class AbstractRequest implements RequestInterface
 
     public function getAmount()
     {
-        return (int) $this->getParameter('amount');
+        return $this->getParameter('amount');
     }
 
     public function setAmount($value)
     {
-        return $this->setParameter('amount', $value);
+        return $this->setParameter('amount', (int) $value);
     }
 
     public function getAmountDecimal()
@@ -171,12 +173,12 @@ abstract class AbstractRequest implements RequestInterface
 
     public function getCurrency()
     {
-        return strtoupper($this->getParameter('currency'));
+        return $this->getParameter('currency');
     }
 
     public function setCurrency($value)
     {
-        return $this->setParameter('currency', $value);
+        return $this->setParameter('currency', strtoupper($value));
     }
 
     public function getCurrencyNumeric()

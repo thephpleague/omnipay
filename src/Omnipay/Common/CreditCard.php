@@ -12,64 +12,59 @@
 namespace Omnipay\Common;
 
 use Omnipay\Common\Exception\InvalidCreditCardException;
+use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
  * Credit Card class
  */
 class CreditCard
 {
-    protected $firstName;
-    protected $lastName;
-    protected $number;
-    protected $expiryMonth;
-    protected $expiryYear;
-    protected $startMonth;
-    protected $startYear;
-    protected $cvv;
-    protected $issueNumber;
-    protected $type;
-    protected $billingAddress1;
-    protected $billingAddress2;
-    protected $billingCity;
-    protected $billingPostcode;
-    protected $billingState;
-    protected $billingCountry;
-    protected $billingPhone;
-    protected $shippingAddress1;
-    protected $shippingAddress2;
-    protected $shippingCity;
-    protected $shippingPostcode;
-    protected $shippingState;
-    protected $shippingCountry;
-    protected $shippingPhone;
-    protected $company;
-    protected $email;
+    /**
+     * @var \Symfony\Component\HttpFoundation\ParameterBag
+     */
+    protected $parameters;
 
     /**
      * Create a new CreditCard object using the specified parameters
      *
      * @param array $parameters An array of parameters to set on the new object
      */
-    public function __construct($parameters = array())
+    public function __construct($parameters = null)
     {
         $this->initialize($parameters);
     }
 
     /**
-     * Set all parameters. It is safe to pass untrusted user input directly to this method.
+     * Initialize the object with parameters.
      *
-     * @param array $parameters An array of parameters to set on this object
+     * If any unknown parameters passed, they will be ignored.
+     *
+     * @param array An associative array of parameters
      */
-    public function initialize($parameters)
+    public function initialize($parameters = null)
     {
+        $this->parameters = new ParameterBag;
+
         Helper::initialize($this, $parameters);
 
         return $this;
     }
 
-    public function toArray()
+    public function getParameters()
     {
-        return get_object_vars($this);
+        return $this->parameters->all();
+    }
+
+    protected function getParameter($key)
+    {
+        return $this->parameters->get($key);
+    }
+
+    protected function setParameter($key, $value)
+    {
+        $this->parameters->set($key, $value);
+
+        return $this;
     }
 
     /**
@@ -83,8 +78,8 @@ class CreditCard
      */
     public function validate()
     {
-        foreach (array('number', 'firstName', 'lastName', 'expiryMonth', 'expiryYear', 'cvv') as $key) {
-            if (empty($this->$key)) {
+        foreach (array('number', 'firstName', 'lastName', 'expiryMonth', 'expiryYear') as $key) {
+            if (!$this->getParameter($key)) {
                 throw new InvalidCreditCardException("The $key parameter is required");
             }
         }
@@ -93,71 +88,74 @@ class CreditCard
             throw new InvalidCreditCardException('Card has expired');
         }
 
-        if (!Helper::validateLuhn($this->number)) {
+        if (!Helper::validateLuhn($this->getNumber())) {
             throw new InvalidCreditCardException('Card number is invalid');
         }
     }
 
     public function getFirstName()
     {
-        return $this->firstName;
+        return $this->getParameter('firstName');
     }
 
     public function setFirstName($value)
     {
-        $this->firstName = $value;
+        return $this->setParameter('firstName', $value);
     }
 
     public function getLastName()
     {
-        return $this->lastName;
+        return $this->getParameter('lastName');
     }
 
     public function setLastName($value)
     {
-        $this->lastName = $value;
+        return $this->setParameter('lastName', $value);
     }
 
     public function getName()
     {
-        return trim("$this->firstName $this->lastName");
+        return trim($this->getFirstName().' '.$this->getLastName());
     }
 
     public function setName($value)
     {
         $names = explode(' ', $value, 2);
-        $this->firstName = $names[0];
-        $this->lastName = isset($names[1]) ? $names[1] : null;
+        $this->setParameter('firstName', $names[0]);
+        $this->setParameter('lastName', isset($names[1]) ? $names[1] : null);
+
+        return $this;
     }
 
     public function getNumber()
     {
-        return $this->number;
+        return $this->getParameter('number');
     }
 
     public function setNumber($value)
     {
-        $this->number = preg_replace('/\D/', '', $value);
+        // strip non-numeric characters
+        return $this->setParameter('number', preg_replace('/\D/', '', $value));
     }
 
     public function getExpiryMonth()
     {
-        return $this->expiryMonth;
+        return $this->getParameter('expiryMonth');
     }
 
     public function setExpiryMonth($value)
     {
-        $this->expiryMonth = (int) $value;
+        return $this->setParameter('expiryMonth', (int) $value);
     }
 
     public function getExpiryYear()
     {
-        return $this->expiryYear;
+        return $this->getParameter('expiryYear');
     }
 
     public function setExpiryYear($value)
     {
-        $this->expiryYear = $value ? Helper::normalizeYear($value) : $value;
+        return $this->setParameter('expiryYear', $value ? Helper::normalizeYear($value) : $value);
     }
 
     /**
@@ -167,27 +165,27 @@ class CreditCard
      */
     public function getExpiryDate($format)
     {
-        return gmdate($format, gmmktime(0, 0, 0, $this->expiryMonth, 1, $this->expiryYear));
+        return gmdate($format, gmmktime(0, 0, 0, $this->getExpiryMonth(), 1, $this->getExpiryYear()));
     }
 
     public function getStartMonth()
     {
-        return $this->startMonth;
+        return $this->getParameter('startMonth');
     }
 
     public function setStartMonth($value)
     {
-        $this->startMonth = (int) $value;
+        return $this->setParameter('startMonth', (int) $value);
     }
 
     public function getStartYear()
     {
-        return $this->startYear;
+        return $this->getParameter('startYear');
     }
 
     public function setStartYear($value)
     {
-        $this->startYear = Helper::normalizeYear($value);
+        return $this->setParameter('startYear', $value ? Helper::normalizeYear($value) : $value);
     }
 
     /**
@@ -197,273 +195,287 @@ class CreditCard
      */
     public function getStartDate($format)
     {
-        return gmdate($format, gmmktime(0, 0, 0, $this->startMonth, 1, $this->startYear));
+        return gmdate($format, gmmktime(0, 0, 0, $this->getStartMonth(), 1, $this->getStartYear()));
     }
 
     public function getCvv()
     {
-        return $this->cvv;
+        return $this->getParameter('cvv');
     }
 
     public function setCvv($value)
     {
-        $this->cvv = $value;
+        return $this->setParameter('cvv', $value);
     }
 
     public function getIssueNumber()
     {
-        return $this->issueNumber;
+        return $this->getParameter('issueNumber');
     }
 
     public function setIssueNumber($value)
     {
-        $this->issueNumber = $value;
+        return $this->setParameter('issueNumber', $value);
     }
 
     public function getType()
     {
-        return $this->type;
+        return $this->getParameter('type');
     }
 
     public function setType($value)
     {
-        $this->type = $value;
+        return $this->setParameter('type', $value);
     }
 
     public function getBillingAddress1()
     {
-        return $this->billingAddress1;
+        return $this->getParameter('billingAddress1');
     }
 
     public function setBillingAddress1($value)
     {
-        $this->billingAddress1 = $value;
+        return $this->setParameter('billingAddress1', $value);
     }
 
     public function getBillingAddress2()
     {
-        return $this->billingAddress2;
+        return $this->getParameter('billingAddress2');
     }
 
     public function setBillingAddress2($value)
     {
-        $this->billingAddress2 = $value;
+        return $this->setParameter('billingAddress2', $value);
     }
 
     public function getBillingCity()
     {
-        return $this->billingCity;
+        return $this->getParameter('billingCity');
     }
 
     public function setBillingCity($value)
     {
-        $this->billingCity = $value;
+        return $this->setParameter('billingCity', $value);
     }
 
     public function getBillingPostcode()
     {
-        return $this->billingPostcode;
+        return $this->getParameter('billingPostcode');
     }
 
     public function setBillingPostcode($value)
     {
-        $this->billingPostcode = $value;
+        return $this->setParameter('billingPostcode', $value);
     }
 
     public function getBillingState()
     {
-        return $this->billingState;
+        return $this->getParameter('billingState');
     }
 
     public function setBillingState($value)
     {
-        $this->billingState = $value;
+        return $this->setParameter('billingState', $value);
     }
 
     public function getBillingCountry()
     {
-        return $this->billingCountry;
+        return $this->getParameter('billingCountry');
     }
 
     public function setBillingCountry($value)
     {
-        $this->billingCountry = $value;
+        return $this->setParameter('billingCountry', $value);
     }
 
     public function getBillingPhone()
     {
-        return $this->billingPhone;
+        return $this->getParameter('billingPhone');
     }
 
     public function setBillingPhone($value)
     {
-        $this->billingPhone = $value;
+        return $this->setParameter('billingPhone', $value);
     }
 
     public function getShippingAddress1()
     {
-        return $this->shippingAddress1;
+        return $this->getParameter('shippingAddress1');
     }
 
     public function setShippingAddress1($value)
     {
-        $this->shippingAddress1 = $value;
+        return $this->setParameter('shippingAddress1', $value);
     }
 
     public function getShippingAddress2()
     {
-        return $this->shippingAddress2;
+        return $this->getParameter('shippingAddress2');
     }
 
     public function setShippingAddress2($value)
     {
-        $this->shippingAddress2 = $value;
+        return $this->setParameter('shippingAddress2', $value);
     }
 
     public function getShippingCity()
     {
-        return $this->shippingCity;
+        return $this->getParameter('shippingCity');
     }
 
     public function setShippingCity($value)
     {
-        $this->shippingCity = $value;
+        return $this->setParameter('shippingCity', $value);
     }
 
     public function getShippingPostcode()
     {
-        return $this->shippingPostcode;
+        return $this->getParameter('shippingPostcode');
     }
 
     public function setShippingPostcode($value)
     {
-        $this->shippingPostcode = $value;
+        return $this->setParameter('shippingPostcode', $value);
     }
 
     public function getShippingState()
     {
-        return $this->shippingState;
+        return $this->getParameter('shippingState');
     }
 
     public function setShippingState($value)
     {
-        $this->shippingState = $value;
+        return $this->setParameter('shippingState', $value);
     }
 
     public function getShippingCountry()
     {
-        return $this->shippingCountry;
+        return $this->getParameter('shippingCountry');
     }
 
     public function setShippingCountry($value)
     {
-        $this->shippingCountry = $value;
+        return $this->setParameter('shippingCountry', $value);
     }
 
     public function getShippingPhone()
     {
-        return $this->shippingPhone;
+        return $this->getParameter('shippingPhone');
     }
 
     public function setShippingPhone($value)
     {
-        $this->shippingPhone = $value;
+        return $this->setParameter('shippingPhone', $value);
     }
 
     public function getAddress1()
     {
-        return $this->billingAddress1;
+        return $this->getParameter('billingAddress1');
     }
 
     public function setAddress1($value)
     {
-        $this->billingAddress1 = $value;
-        $this->shippingAddress1 = $value;
+        $this->setParameter('billingAddress1', $value);
+        $this->setParameter('shippingAddress1', $value);
+
+        return $this;
     }
 
     public function getAddress2()
     {
-        return $this->billingAddress2;
+        return $this->getParameter('billingAddress2');
     }
 
     public function setAddress2($value)
     {
-        $this->billingAddress2 = $value;
-        $this->shippingAddress2 = $value;
+        $this->setParameter('billingAddress2', $value);
+        $this->setParameter('shippingAddress2', $value);
+
+        return $this;
     }
 
     public function getCity()
     {
-        return $this->billingCity;
+        return $this->getParameter('billingCity');
     }
 
     public function setCity($value)
     {
-        $this->billingCity = $value;
-        $this->shippingCity = $value;
+        $this->setParameter('billingCity', $value);
+        $this->setParameter('shippingCity', $value);
+
+        return $this;
     }
 
     public function getPostcode()
     {
-        return $this->billingPostcode;
+        return $this->getParameter('billingPostcode');
     }
 
     public function setPostcode($value)
     {
-        $this->billingPostcode = $value;
-        $this->shippingPostcode = $value;
+        $this->setParameter('billingPostcode', $value);
+        $this->setParameter('shippingPostcode', $value);
+
+        return $this;
     }
 
     public function getState()
     {
-        return $this->billingState;
+        return $this->getParameter('billingState');
     }
 
     public function setState($value)
     {
-        $this->billingState = $value;
-        $this->shippingState = $value;
+        $this->setParameter('billingState', $value);
+        $this->setParameter('shippingState', $value);
+
+        return $this;
     }
 
     public function getCountry()
     {
-        return $this->billingCountry;
+        return $this->getParameter('billingCountry');
     }
 
     public function setCountry($value)
     {
-        $this->billingCountry = $value;
-        $this->shippingCountry = $value;
+        $this->setParameter('billingCountry', $value);
+        $this->setParameter('shippingCountry', $value);
+
+        return $this;
     }
 
     public function getPhone()
     {
-        return $this->billingPhone;
+        return $this->getParameter('billingPhone');
     }
 
     public function setPhone($value)
     {
-        $this->billingPhone = $value;
-        $this->shippingPhone = $value;
+        $this->setParameter('billingPhone', $value);
+        $this->setParameter('shippingPhone', $value);
+
+        return $this;
     }
 
     public function getCompany()
     {
-        return $this->company;
+        return $this->getParameter('company');
     }
 
     public function setCompany($value)
     {
-        $this->company = $value;
+        return $this->setParameter('company', $value);
     }
 
     public function getEmail()
     {
-        return $this->email;
+        return $this->getParameter('email');
     }
 
     public function setEmail($value)
     {
-        $this->email = $value;
+        return $this->setParameter('email', $value);
     }
 }
