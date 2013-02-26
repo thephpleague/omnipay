@@ -16,7 +16,7 @@ use RecursiveIteratorIterator;
 use ReflectionClass;
 use Guzzle\Http\ClientInterface;
 use Guzzle\Http\Client as HttpClient;
-use Omnipay\Common\Exception\GatewayNotFoundException;
+use Omnipay\Common\Exception\RuntimeException;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 class GatewayFactory
@@ -26,7 +26,7 @@ class GatewayFactory
         $class = Helper::getGatewayClassName($class);
 
         if (!class_exists($class)) {
-            throw new GatewayNotFoundException("Class '$class' not found");
+            throw new RuntimeException("Class '$class' not found");
         }
 
         $gateway = new $class($httpClient, $httpRequest);
