@@ -24,7 +24,7 @@ class CompletePurchaseRequest extends PurchaseRequest
         $data['responseCode'] = $this->httpRequest->query->get('responseCode');
         $data['transactionId'] = $this->httpRequest->query->get('transactionId');
         $data['merchantId'] = $this->getMerchantId();
-        $data['token'] = $this->getToken();
+        $data['token'] = $this->getPassword();
         $data['operation'] = 'AUTH';
 
         if (empty($data['responseCode']) || empty($data['transactionId'])) {

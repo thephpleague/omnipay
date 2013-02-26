@@ -54,8 +54,8 @@ class PurchaseRequest extends AbstractRequest
             $data['card']['address_zip'] = $this->getCard()->getPostcode();
             $data['card']['address_state'] = $this->getCard()->getState();
             $data['card']['address_country'] = $this->getCard()->getCountry();
-        } elseif ($token = $this->getToken()) {
-            $data['card'] = $token;
+        } elseif ($this->getCardToken()) {
+            $data['card'] = $this->getCardToken();
         }
 
         return $data;

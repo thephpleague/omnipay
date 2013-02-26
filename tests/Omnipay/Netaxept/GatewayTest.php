@@ -21,7 +21,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
         $this->gateway->setMerchantId('foo');
-        $this->gateway->setToken('bar');
+        $this->gateway->setPassword('bar');
 
         $this->options = array(
             'amount' => 1000,
