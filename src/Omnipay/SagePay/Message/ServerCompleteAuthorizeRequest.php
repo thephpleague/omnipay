@@ -20,9 +20,9 @@ class ServerCompleteAuthorizeRequest extends AbstractRequest
 {
     public function getData()
     {
-        $this->validate(array('transactionId', 'gatewayReference'));
+        $this->validate(array('transactionId', 'transactionReference'));
 
-        $reference = json_decode($this->getGatewayReference(), true);
+        $reference = json_decode($this->getTransactionReference(), true);
 
         // validate VPSSignature
         $signature = md5(

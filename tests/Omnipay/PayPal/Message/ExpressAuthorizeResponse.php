@@ -29,7 +29,7 @@ class ExpressAuthorizeResponseTest extends TestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('EC-42721413K79637829', $response->getExpressRedirectToken());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertNull($response->getMessage());
     }
 
@@ -40,7 +40,7 @@ class ExpressAuthorizeResponseTest extends TestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertNull($response->getExpressRedirectToken());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertSame('This transaction cannot be processed. The amount to be charged is zero.', $response->getMessage());
     }
 }

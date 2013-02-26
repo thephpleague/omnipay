@@ -37,7 +37,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertNull($response->getMessage());
         $this->assertContains('https://www.2checkout.com/checkout/purchase?', $response->getRedirectUrl());
         $this->assertSame('GET', $response->getRedirectMethod());
@@ -67,7 +67,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertSame('5', $response->getGatewayReference());
+        $this->assertSame('5', $response->getTransactionReference());
         $this->assertNull($response->getMessage());
     }
 }

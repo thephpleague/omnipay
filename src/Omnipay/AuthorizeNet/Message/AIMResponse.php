@@ -35,7 +35,7 @@ class AIMResponse extends AbstractResponse
         return '1' === $this->data[0];
     }
 
-    public function getGatewayReference()
+    public function getTransactionReference()
     {
         return $this->data[6];
     }

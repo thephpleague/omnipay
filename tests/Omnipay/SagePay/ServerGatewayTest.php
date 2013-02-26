@@ -32,7 +32,7 @@ class ServerGatewayTest extends GatewayTestCase
         $this->completePurchaseOptions = array(
             'amount' => 1000,
             'transactionId' => '123',
-            'gatewayReference' => '{"SecurityKey":"JEUPDN1N7E","TxAuthNo":"4255","VPSTxId":"{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}","VendorTxCode":"438791"}',
+            'transactionReference' => '{"SecurityKey":"JEUPDN1N7E","TxAuthNo":"4255","VPSTxId":"{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}","VendorTxCode":"438791"}',
         );
     }
 
@@ -49,7 +49,7 @@ class ServerGatewayTest extends GatewayTestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertSame('Server transaction registered successfully.', $response->getMessage());
         $this->assertSame('https://test.sagepay.com/Simulator/VSPServerPaymentPage.asp?TransactionID={1E7D9C70-DBE2-4726-88EA-D369810D801D}', $response->getRedirectUrl());
     }
@@ -62,7 +62,7 @@ class ServerGatewayTest extends GatewayTestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertSame('The Description field should be between 1 and 100 characters long.', $response->getMessage());
     }
 
@@ -90,7 +90,7 @@ class ServerGatewayTest extends GatewayTestCase
         $response = $this->gateway->completeAuthorize($this->completePurchaseOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertSame('{"SecurityKey":"JEUPDN1N7E","TxAuthNo":"b","VPSTxId":"{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}","VendorTxCode":"123"}', $response->getGatewayReference());
+        $this->assertSame('{"SecurityKey":"JEUPDN1N7E","TxAuthNo":"b","VPSTxId":"{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}","VendorTxCode":"123"}', $response->getTransactionReference());
         $this->assertNull($response->getMessage());
     }
 
@@ -110,7 +110,7 @@ class ServerGatewayTest extends GatewayTestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertSame('Server transaction registered successfully.', $response->getMessage());
         $this->assertSame('https://test.sagepay.com/Simulator/VSPServerPaymentPage.asp?TransactionID={1E7D9C70-DBE2-4726-88EA-D369810D801D}', $response->getRedirectUrl());
     }
@@ -123,7 +123,7 @@ class ServerGatewayTest extends GatewayTestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertSame('The Description field should be between 1 and 100 characters long.', $response->getMessage());
     }
 
@@ -151,7 +151,7 @@ class ServerGatewayTest extends GatewayTestCase
         $response = $this->gateway->completePurchase($this->completePurchaseOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertSame('{"SecurityKey":"JEUPDN1N7E","TxAuthNo":"b","VPSTxId":"{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}","VendorTxCode":"123"}', $response->getGatewayReference());
+        $this->assertSame('{"SecurityKey":"JEUPDN1N7E","TxAuthNo":"b","VPSTxId":"{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}","VendorTxCode":"123"}', $response->getTransactionReference());
         $this->assertNull($response->getMessage());
     }
 

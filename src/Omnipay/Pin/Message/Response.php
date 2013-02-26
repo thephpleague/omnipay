@@ -23,7 +23,7 @@ class Response extends AbstractResponse
         return !isset($this->data['error']);
     }
 
-    public function getGatewayReference()
+    public function getTransactionReference()
     {
         if (isset($this->data['response']['token'])) {
             return $this->data['response']['token'];

@@ -37,12 +37,12 @@ class ExpressAuthorizeResponse extends Response implements RedirectResponseInter
             array(
                 'cmd' => '_express-checkout',
                 'useraction' => 'commit',
-                'token' => $this->getGatewayReference(),
+                'token' => $this->getTransactionReference(),
             )
         );
     }
 
-    public function getGatewayReference()
+    public function getTransactionReference()
     {
         return isset($this->data['TOKEN']) ? $this->data['TOKEN'] : null;
     }

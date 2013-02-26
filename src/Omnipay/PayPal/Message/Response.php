@@ -30,7 +30,7 @@ class Response extends AbstractResponse
         return isset($this->data['ACK']) && in_array($this->data['ACK'], array('Success', 'SuccessWithWarning'));
     }
 
-    public function getGatewayReference()
+    public function getTransactionReference()
     {
         foreach (array('REFUNDTRANSACTIONID', 'TRANSACTIONID', 'PAYMENTINFO_0_TRANSACTIONID') as $key) {
             if (isset($this->data[$key])) {

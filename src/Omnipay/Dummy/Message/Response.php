@@ -23,7 +23,7 @@ class Response extends AbstractResponse
         return true;
     }
 
-    public function getGatewayReference()
+    public function getTransactionReference()
     {
         return isset($this->data['reference']) ? $this->data['reference'] : null;
     }

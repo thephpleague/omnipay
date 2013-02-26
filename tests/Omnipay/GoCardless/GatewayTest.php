@@ -54,7 +54,7 @@ class GatewayTest extends GatewayTestCase
         $response = $this->gateway->completePurchase($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('b', $response->getGatewayReference());
+        $this->assertEquals('b', $response->getTransactionReference());
     }
 
     public function testCompletePurchaseError()

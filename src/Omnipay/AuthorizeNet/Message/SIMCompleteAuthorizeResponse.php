@@ -23,7 +23,7 @@ class SIMCompleteAuthorizeResponse extends AbstractResponse
         return isset($this->data['x_response_code']) && '1' === $this->data['x_response_code'];
     }
 
-    public function getGatewayReference()
+    public function getTransactionReference()
     {
         return isset($this->data['x_trans_id']) ? $this->data['x_trans_id'] : null;
     }

@@ -20,6 +20,6 @@ class ResponseTest extends TestCase
         $response = new Response($this->getMockRequest(), array('reference' => 'abc123'));
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertSame('abc123', $response->getGatewayReference());
+        $this->assertSame('abc123', $response->getTransactionReference());
     }
 }

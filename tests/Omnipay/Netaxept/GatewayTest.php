@@ -39,7 +39,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
-        $this->assertEquals('f3d94dd5c0f743a788fc943402757c58', $response->getGatewayReference());
+        $this->assertEquals('f3d94dd5c0f743a788fc943402757c58', $response->getTransactionReference());
         $this->assertSame('GET', $response->getRedirectMethod());
         $this->assertSame('https://epayment.bbs.no/Terminal/Default.aspx?merchantId=foo&transactionId=f3d94dd5c0f743a788fc943402757c58', $response->getRedirectUrl());
     }
@@ -52,7 +52,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertSame("Missing parameter: 'Order Number'", $response->getMessage());
     }
 
@@ -71,7 +71,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertEquals('8a88d40cab5b47fab25e24d6228180a7', $response->getGatewayReference());
+        $this->assertEquals('8a88d40cab5b47fab25e24d6228180a7', $response->getTransactionReference());
         $this->assertSame('OK', $response->getMessage());
     }
 
@@ -88,7 +88,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertEquals('1de59458487344759832716abf48109b', $response->getGatewayReference());
+        $this->assertEquals('1de59458487344759832716abf48109b', $response->getTransactionReference());
         $this->assertEquals('Cancel', $response->getMessage());
     }
 
@@ -107,7 +107,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertSame('Unable to find transaction', $response->getMessage());
     }
 }

@@ -28,7 +28,7 @@ class ResponseTest extends TestCase
         $response = new Response($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertSame('96U93778BD657313D', $response->getGatewayReference());
+        $this->assertSame('96U93778BD657313D', $response->getTransactionReference());
         $this->assertNull($response->getMessage());
     }
 
@@ -38,7 +38,7 @@ class ResponseTest extends TestCase
         $response = new Response($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertSame('This transaction cannot be processed. Please enter a valid credit card expiration year.', $response->getMessage());
     }
 }

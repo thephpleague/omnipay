@@ -42,7 +42,7 @@ class ProGatewayTest extends GatewayTestCase
         $response = $this->gateway->authorize($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('V19R3EF62FBE', $response->getGatewayReference());
+        $this->assertEquals('V19R3EF62FBE', $response->getTransactionReference());
     }
 
     public function testAuthorizeError()
@@ -59,7 +59,7 @@ class ProGatewayTest extends GatewayTestCase
     {
         $options = array(
             'amount' => 1000,
-            'gatewayReference' => 'abc123',
+            'transactionReference' => 'abc123',
         );
 
         $this->setMockHttpResponse('PurchaseSuccess.txt');
@@ -67,7 +67,7 @@ class ProGatewayTest extends GatewayTestCase
         $response = $this->gateway->capture($options)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('V19R3EF62FBE', $response->getGatewayReference());
+        $this->assertEquals('V19R3EF62FBE', $response->getTransactionReference());
     }
 
     public function testPurchaseSuccess()
@@ -77,7 +77,7 @@ class ProGatewayTest extends GatewayTestCase
         $response = $this->gateway->purchase($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('V19R3EF62FBE', $response->getGatewayReference());
+        $this->assertEquals('V19R3EF62FBE', $response->getTransactionReference());
     }
 
     public function testPurchaseError()
@@ -94,7 +94,7 @@ class ProGatewayTest extends GatewayTestCase
     {
         $options = array(
             'amount' => 1000,
-            'gatewayReference' => 'abc123',
+            'transactionReference' => 'abc123',
         );
 
         $this->setMockHttpResponse('PurchaseSuccess.txt');
@@ -102,6 +102,6 @@ class ProGatewayTest extends GatewayTestCase
         $response = $this->gateway->refund($options)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('V19R3EF62FBE', $response->getGatewayReference());
+        $this->assertEquals('V19R3EF62FBE', $response->getTransactionReference());
     }
 }

@@ -20,10 +20,10 @@ class PxPostCaptureRequest extends PxPostAuthorizeRequest
 
     public function getData()
     {
-        $this->validate(array('gatewayReference', 'amount'));
+        $this->validate(array('transactionReference', 'amount'));
 
         $data = $this->getBaseData();
-        $data->DpsTxnRef = $this->getGatewayReference();
+        $data->DpsTxnRef = $this->getTransactionReference();
         $data->Amount = $this->getAmountDecimal();
 
         return $data;

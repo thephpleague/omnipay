@@ -114,10 +114,10 @@ class AbstractRequestTest extends TestCase
         $this->assertSame(87, $this->request->getTransactionId());
     }
 
-    public function testGatewayReference()
+    public function testTransactionReference()
     {
-        $this->request->setGatewayReference('xyz');
-        $this->assertSame('xyz', $this->request->getGatewayReference());
+        $this->request->setTransactionReference('xyz');
+        $this->assertSame('xyz', $this->request->getTransactionReference());
     }
 
     public function testClientIp()

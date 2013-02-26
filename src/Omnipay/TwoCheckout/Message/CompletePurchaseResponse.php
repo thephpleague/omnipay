@@ -23,7 +23,7 @@ class CompletePurchaseResponse extends AbstractResponse
         return true;
     }
 
-    public function getGatewayReference()
+    public function getTransactionReference()
     {
         return isset($this->data['order_number']) ? $this->data['order_number'] : null;
     }

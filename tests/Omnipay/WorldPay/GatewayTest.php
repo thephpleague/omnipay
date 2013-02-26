@@ -34,7 +34,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertContains('https://secure.worldpay.com/wcc/purchase?', $response->getRedirectUrl());
     }
 
@@ -53,7 +53,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertEquals('abc123', $response->getGatewayReference());
+        $this->assertEquals('abc123', $response->getTransactionReference());
         $this->assertSame('hello', $response->getMessage());
     }
 
@@ -85,7 +85,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertSame('Declined', $response->getMessage());
     }
 }

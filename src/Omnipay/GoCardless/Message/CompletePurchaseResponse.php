@@ -19,12 +19,12 @@ use Omnipay\Common\Message\RequestInterface;
  */
 class CompletePurchaseResponse extends AbstractResponse
 {
-    protected $gatewayReference;
+    protected $transactionReference;
 
-    public function __construct(RequestInterface $request, $data, $gatewayReference)
+    public function __construct(RequestInterface $request, $data, $transactionReference)
     {
         parent::__construct($request, $data);
-        $this->gatewayReference = $gatewayReference;
+        $this->transactionReference = $transactionReference;
     }
 
     public function isSuccessful()
@@ -32,9 +32,9 @@ class CompletePurchaseResponse extends AbstractResponse
         return !isset($this->data['error']);
     }
 
-    public function getGatewayReference()
+    public function getTransactionReference()
     {
-        return $this->gatewayReference;
+        return $this->transactionReference;
     }
 
     public function getMessage()

@@ -20,11 +20,11 @@ class CaptureRequest extends AuthorizeRequest
 
     public function getData()
     {
-        $this->validate(array('gatewayReference', 'amount'));
+        $this->validate(array('transactionReference', 'amount'));
 
         $data = $this->getBaseData();
         $data['AMT'] = $this->getAmountDecimal();
-        $data['ORIGID'] = $this->getGatewayReference();
+        $data['ORIGID'] = $this->getTransactionReference();
 
         return $data;
     }

@@ -29,7 +29,7 @@ class PxPayAuthorizeResponse extends AbstractResponse implements RedirectRespons
         return 1 === (int) $this->data['valid'];
     }
 
-    public function getGatewayReference()
+    public function getTransactionReference()
     {
         return null;
     }

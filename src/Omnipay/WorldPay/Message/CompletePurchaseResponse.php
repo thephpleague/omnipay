@@ -23,7 +23,7 @@ class CompletePurchaseResponse extends AbstractResponse
         return isset($this->data['transStatus']) && 'Y' === $this->data['transStatus'];
     }
 
-    public function getGatewayReference()
+    public function getTransactionReference()
     {
         return isset($this->data['transId']) ? $this->data['transId'] : null;
     }

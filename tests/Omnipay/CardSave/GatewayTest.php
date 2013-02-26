@@ -44,7 +44,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertInstanceOf('\Omnipay\CardSave\Message\Response', $response);
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('130215141054377801316798', $response->getGatewayReference());
+        $this->assertEquals('130215141054377801316798', $response->getTransactionReference());
     }
 
     public function testPurchaseError()

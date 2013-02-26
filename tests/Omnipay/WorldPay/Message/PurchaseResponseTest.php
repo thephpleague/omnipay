@@ -26,7 +26,7 @@ class PurchaseResponseTest extends TestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertNull($response->getMessage());
         $this->assertSame('https://secure.worldpay.com/wcc/purchase?amount=1000&returnUrl=https%3A%2F%2Fwww.example.com%2Freturn', $response->getRedirectUrl());
         $this->assertSame('GET', $response->getRedirectMethod());

@@ -54,7 +54,7 @@ class Response extends AbstractResponse implements RedirectResponseInterface
         return 3 === (int) $this->getResultElement()->StatusCode;
     }
 
-    public function getGatewayReference()
+    public function getTransactionReference()
     {
         return (string) $this->data->TransactionOutputData['CrossReference'];
     }

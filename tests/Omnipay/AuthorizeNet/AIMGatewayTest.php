@@ -28,7 +28,7 @@ class AIMGatewayTest extends GatewayTestCase
 
         $this->captureOptions = array(
             'amount' => 1000,
-            'gatewayReference' => '12345',
+            'transactionReference' => '12345',
         );
     }
 
@@ -39,7 +39,7 @@ class AIMGatewayTest extends GatewayTestCase
         $response = $this->gateway->authorize($this->purchaseOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertSame('2184493132', $response->getGatewayReference());
+        $this->assertSame('2184493132', $response->getTransactionReference());
         $this->assertSame('This transaction has been approved.', $response->getMessage());
     }
 
@@ -50,7 +50,7 @@ class AIMGatewayTest extends GatewayTestCase
         $response = $this->gateway->authorize($this->purchaseOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertSame('0', $response->getGatewayReference());
+        $this->assertSame('0', $response->getTransactionReference());
         $this->assertSame('A valid amount is required.', $response->getMessage());
     }
 
@@ -61,7 +61,7 @@ class AIMGatewayTest extends GatewayTestCase
         $response = $this->gateway->capture($this->captureOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertSame('2184494531', $response->getGatewayReference());
+        $this->assertSame('2184494531', $response->getTransactionReference());
         $this->assertSame('This transaction has been approved.', $response->getMessage());
     }
 
@@ -72,7 +72,7 @@ class AIMGatewayTest extends GatewayTestCase
         $response = $this->gateway->capture($this->captureOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertSame('0', $response->getGatewayReference());
+        $this->assertSame('0', $response->getTransactionReference());
         $this->assertSame('The transaction cannot be found.', $response->getMessage());
     }
 
@@ -83,7 +83,7 @@ class AIMGatewayTest extends GatewayTestCase
         $response = $this->gateway->purchase($this->purchaseOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertSame('2184492509', $response->getGatewayReference());
+        $this->assertSame('2184492509', $response->getTransactionReference());
         $this->assertSame('This transaction has been approved.', $response->getMessage());
     }
 
@@ -94,7 +94,7 @@ class AIMGatewayTest extends GatewayTestCase
         $response = $this->gateway->purchase($this->purchaseOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertSame('0', $response->getGatewayReference());
+        $this->assertSame('0', $response->getTransactionReference());
         $this->assertSame('A valid amount is required.', $response->getMessage());
     }
 }

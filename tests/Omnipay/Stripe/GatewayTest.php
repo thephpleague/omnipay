@@ -28,7 +28,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->refundOptions = array(
             'amount' => 1000,
-            'gatewayReference' => 'ch_12RgN9L7XhO9mI',
+            'transactionReference' => 'ch_12RgN9L7XhO9mI',
         );
     }
 
@@ -40,7 +40,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('Your card was declined', $response->getMessage());
-        $this->assertSame('ch_1IUAZQWFYrPooM', $response->getGatewayReference());
+        $this->assertSame('ch_1IUAZQWFYrPooM', $response->getTransactionReference());
     }
 
     public function testPurchaseSuccess()
@@ -50,7 +50,7 @@ class GatewayTest extends GatewayTestCase
         $response = $this->gateway->purchase($this->purchaseOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertSame('ch_1IU9gcUiNASROd', $response->getGatewayReference());
+        $this->assertSame('ch_1IU9gcUiNASROd', $response->getTransactionReference());
         $this->assertNull($response->getMessage());
     }
 
@@ -71,6 +71,6 @@ class GatewayTest extends GatewayTestCase
         $response = $this->gateway->refund($this->refundOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('ch_12RgN9L7XhO9mI', $response->getGatewayReference());
+        $this->assertEquals('ch_12RgN9L7XhO9mI', $response->getTransactionReference());
     }
 }

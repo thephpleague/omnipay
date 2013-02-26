@@ -222,14 +222,14 @@ abstract class AbstractRequest implements RequestInterface
         return $this->setParameter('transactionId', $value);
     }
 
-    public function getGatewayReference()
+    public function getTransactionReference()
     {
-        return $this->getParameter('gatewayReference');
+        return $this->getParameter('transactionReference');
     }
 
-    public function setGatewayReference($value)
+    public function setTransactionReference($value)
     {
-        return $this->setParameter('gatewayReference', $value);
+        return $this->setParameter('transactionReference', $value);
     }
 
     public function getClientIp()

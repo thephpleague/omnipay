@@ -21,7 +21,7 @@ class ResponseTest extends TestCase
         $response = new Response($this->getMockRequest(), $httpResponse->json());
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertSame('ch_1IU9gcUiNASROd', $response->getGatewayReference());
+        $this->assertSame('ch_1IU9gcUiNASROd', $response->getTransactionReference());
         $this->assertNull($response->getMessage());
     }
 
@@ -32,6 +32,6 @@ class ResponseTest extends TestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('Your card was declined', $response->getMessage());
-        $this->assertSame('ch_1IUAZQWFYrPooM', $response->getGatewayReference());
+        $this->assertSame('ch_1IUAZQWFYrPooM', $response->getTransactionReference());
     }
 }

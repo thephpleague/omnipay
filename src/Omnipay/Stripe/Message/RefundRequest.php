@@ -18,7 +18,7 @@ class RefundRequest extends PurchaseRequest
 {
     public function getData()
     {
-        $this->validate(array('gatewayReference', 'amount'));
+        $this->validate(array('transactionReference', 'amount'));
 
         $data = array();
         $data['amount'] = $this->getAmount();
@@ -28,6 +28,6 @@ class RefundRequest extends PurchaseRequest
 
     public function getEndpoint()
     {
-        return $this->endpoint.'/charges/'.$this->getGatewayReference().'/refund';
+        return $this->endpoint.'/charges/'.$this->getTransactionReference().'/refund';
     }
 }

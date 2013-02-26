@@ -42,7 +42,7 @@ class ProGatewayTest extends GatewayTestCase
         $response = $this->gateway->authorize($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('96U93778BD657313D', $response->getGatewayReference());
+        $this->assertEquals('96U93778BD657313D', $response->getTransactionReference());
         $this->assertNull($response->getMessage());
     }
 
@@ -53,7 +53,7 @@ class ProGatewayTest extends GatewayTestCase
         $response = $this->gateway->purchase($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('96U93778BD657313D', $response->getGatewayReference());
+        $this->assertEquals('96U93778BD657313D', $response->getTransactionReference());
         $this->assertNull($response->getMessage());
     }
 }

@@ -47,7 +47,7 @@ class Response extends AbstractResponse implements RedirectResponseInterface
      *
      * We have opted to return this reference as JSON, as the keys are much more explicit.
      */
-    public function getGatewayReference()
+    public function getTransactionReference()
     {
         if (isset($this->data['SecurityKey']) && isset($this->data['TxAuthNo']) && isset($this->data['VPSTxId'])) {
             return json_encode(

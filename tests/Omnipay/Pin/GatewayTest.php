@@ -35,7 +35,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertEquals('ch_fXIxWf0gj1yFHJcV1W-d-w', $response->getGatewayReference());
+        $this->assertEquals('ch_fXIxWf0gj1yFHJcV1W-d-w', $response->getTransactionReference());
         $this->assertSame('Success!', $response->getMessage());
     }
 
@@ -47,7 +47,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertSame('The current resource was deemed invalid.', $response->getMessage());
     }
 }

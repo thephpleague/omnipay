@@ -22,7 +22,7 @@ class ResponseTest extends TestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertSame('ch_fXIxWf0gj1yFHJcV1W-d-w', $response->getGatewayReference());
+        $this->assertSame('ch_fXIxWf0gj1yFHJcV1W-d-w', $response->getTransactionReference());
         $this->assertSame('Success!', $response->getMessage());
     }
 
@@ -33,7 +33,7 @@ class ResponseTest extends TestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertSame('The current resource was deemed invalid.', $response->getMessage());
     }
 }

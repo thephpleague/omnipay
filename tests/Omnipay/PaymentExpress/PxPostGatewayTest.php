@@ -35,7 +35,7 @@ class PxPostGatewayTest extends GatewayTestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertSame('000000030884cdc6', $response->getGatewayReference());
+        $this->assertSame('000000030884cdc6', $response->getTransactionReference());
         $this->assertSame('Transaction Approved', $response->getMessage());
     }
 
@@ -47,7 +47,7 @@ class PxPostGatewayTest extends GatewayTestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertSame('The transaction was Declined (U5)', $response->getMessage());
     }
 
@@ -57,13 +57,13 @@ class PxPostGatewayTest extends GatewayTestCase
 
         $options = array(
             'amount' => 1000,
-            'gatewayReference' => '000000030884cdc6',
+            'transactionReference' => '000000030884cdc6',
         );
 
         $response = $this->gateway->capture($options)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('000000030884cdc6', $response->getGatewayReference());
+        $this->assertEquals('000000030884cdc6', $response->getTransactionReference());
     }
 
     public function testPurchaseSuccess()
@@ -74,7 +74,7 @@ class PxPostGatewayTest extends GatewayTestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertSame('000000030884cdc6', $response->getGatewayReference());
+        $this->assertSame('000000030884cdc6', $response->getTransactionReference());
         $this->assertSame('Transaction Approved', $response->getMessage());
     }
 
@@ -86,7 +86,7 @@ class PxPostGatewayTest extends GatewayTestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertSame('The transaction was Declined (U5)', $response->getMessage());
     }
 
@@ -96,12 +96,12 @@ class PxPostGatewayTest extends GatewayTestCase
 
         $options = array(
             'amount' => 1000,
-            'gatewayReference' => '000000030884cdc6',
+            'transactionReference' => '000000030884cdc6',
         );
 
         $response = $this->gateway->refund($options)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('000000030884cdc6', $response->getGatewayReference());
+        $this->assertEquals('000000030884cdc6', $response->getTransactionReference());
     }
 }

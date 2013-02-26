@@ -29,7 +29,7 @@ class AIMResponseTest extends TestCase
         $response = new AIMResponse($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertSame('2184493132', $response->getGatewayReference());
+        $this->assertSame('2184493132', $response->getTransactionReference());
         $this->assertSame('This transaction has been approved.', $response->getMessage());
     }
 
@@ -39,7 +39,7 @@ class AIMResponseTest extends TestCase
         $response = new AIMResponse($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertSame('0', $response->getGatewayReference());
+        $this->assertSame('0', $response->getTransactionReference());
         $this->assertSame('A valid amount is required.', $response->getMessage());
     }
 
@@ -49,7 +49,7 @@ class AIMResponseTest extends TestCase
         $response = new AIMResponse($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertSame('2184494531', $response->getGatewayReference());
+        $this->assertSame('2184494531', $response->getTransactionReference());
         $this->assertSame('This transaction has been approved.', $response->getMessage());
     }
 
@@ -59,7 +59,7 @@ class AIMResponseTest extends TestCase
         $response = new AIMResponse($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertSame('0', $response->getGatewayReference());
+        $this->assertSame('0', $response->getTransactionReference());
         $this->assertSame('The transaction cannot be found.', $response->getMessage());
     }
 
@@ -69,7 +69,7 @@ class AIMResponseTest extends TestCase
         $response = new AIMResponse($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertSame('2184492509', $response->getGatewayReference());
+        $this->assertSame('2184492509', $response->getTransactionReference());
         $this->assertSame('This transaction has been approved.', $response->getMessage());
     }
 
@@ -79,7 +79,7 @@ class AIMResponseTest extends TestCase
         $response = new AIMResponse($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertSame('0', $response->getGatewayReference());
+        $this->assertSame('0', $response->getTransactionReference());
         $this->assertSame('A valid amount is required.', $response->getMessage());
     }
 }

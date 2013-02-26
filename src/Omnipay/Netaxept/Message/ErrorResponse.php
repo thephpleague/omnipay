@@ -23,7 +23,7 @@ class ErrorResponse extends AbstractResponse
         return false;
     }
 
-    public function getGatewayReference()
+    public function getTransactionReference()
     {
         return $this->data['transactionId'];
     }

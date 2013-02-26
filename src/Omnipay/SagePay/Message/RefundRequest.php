@@ -20,8 +20,8 @@ class RefundRequest extends AbstractRequest
 
     public function getData()
     {
-        $this->validate(array('amount', 'gatewayReference'));
-        $reference = json_decode($this->getGatewayReference(), true);
+        $this->validate(array('amount', 'transactionReference'));
+        $reference = json_decode($this->getTransactionReference(), true);
 
         $data = $this->getBaseData();
         $data['Amount'] = $this->getAmountDecimal();

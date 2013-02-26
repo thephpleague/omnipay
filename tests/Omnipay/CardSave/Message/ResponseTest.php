@@ -21,7 +21,7 @@ class ResponseTest extends TestCase
         $response = new Response($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('130215141054377801316798', $response->getGatewayReference());
+        $this->assertEquals('130215141054377801316798', $response->getTransactionReference());
         $this->assertSame('AuthCode: 672167', $response->getMessage());
     }
 
@@ -31,7 +31,7 @@ class ResponseTest extends TestCase
         $response = new Response($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertSame('', $response->getGatewayReference());
+        $this->assertSame('', $response->getTransactionReference());
         $this->assertSame('Input variable errors', $response->getMessage());
     }
 }

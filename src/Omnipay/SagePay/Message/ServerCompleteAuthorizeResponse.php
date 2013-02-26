@@ -24,10 +24,10 @@ class ServerCompleteAuthorizeResponse extends Response
         $this->data = $data;
     }
 
-    public function getGatewayReference()
+    public function getTransactionReference()
     {
         if (isset($this->data['TxAuthNo'])) {
-            $reference = json_decode($this->getRequest()->getGatewayReference(), true);
+            $reference = json_decode($this->getRequest()->getTransactionReference(), true);
             $reference['VendorTxCode'] = $this->getRequest()->getTransactionId();
             $reference['TxAuthNo'] = $this->data['TxAuthNo'];
 

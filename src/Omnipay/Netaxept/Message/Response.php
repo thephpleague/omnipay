@@ -29,7 +29,7 @@ class Response extends AbstractResponse implements RedirectResponseInterface
         return !$this->isSuccessful() && 'RegisterResponse' === (string) $this->data->getName();
     }
 
-    public function getGatewayReference()
+    public function getTransactionReference()
     {
         return isset($this->data->TransactionId) ? (string) $this->data->TransactionId : null;
     }
@@ -48,7 +48,7 @@ class Response extends AbstractResponse implements RedirectResponseInterface
         if ($this->isRedirect()) {
             $data = array(
                 'merchantId' => $this->getRequest()->getMerchantId(),
-                'transactionId' => $this->getGatewayReference(),
+                'transactionId' => $this->getTransactionReference(),
             );
 
             return $this->getRequest()->getEndpoint().'/Terminal/Default.aspx?'.http_build_query($data);

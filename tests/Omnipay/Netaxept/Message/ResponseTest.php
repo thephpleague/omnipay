@@ -22,7 +22,7 @@ class ResponseTest extends TestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
-        $this->assertEquals('f3d94dd5c0f743a788fc943402757c58', $response->getGatewayReference());
+        $this->assertEquals('f3d94dd5c0f743a788fc943402757c58', $response->getTransactionReference());
         $this->assertNull($response->getMessage());
     }
 
@@ -33,7 +33,7 @@ class ResponseTest extends TestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertSame("Missing parameter: 'Order Number'", $response->getMessage());
     }
 
@@ -44,7 +44,7 @@ class ResponseTest extends TestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertEquals('8a88d40cab5b47fab25e24d6228180a7', $response->getGatewayReference());
+        $this->assertEquals('8a88d40cab5b47fab25e24d6228180a7', $response->getTransactionReference());
         $this->assertSame('OK', $response->getMessage());
     }
 
@@ -55,7 +55,7 @@ class ResponseTest extends TestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertSame('Unable to find transaction', $response->getMessage());
     }
 }

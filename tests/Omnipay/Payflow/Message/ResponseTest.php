@@ -30,7 +30,7 @@ class ResponseTest extends TestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertEquals('V19R3EF62FBE', $response->getGatewayReference());
+        $this->assertEquals('V19R3EF62FBE', $response->getTransactionReference());
         $this->assertEquals('Approved', $response->getMessage());
     }
 
@@ -41,7 +41,7 @@ class ResponseTest extends TestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertSame('User authentication failed', $response->getMessage());
     }
 }

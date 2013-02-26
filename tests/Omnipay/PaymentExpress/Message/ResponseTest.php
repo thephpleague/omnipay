@@ -22,7 +22,7 @@ class ResponseTest extends TestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertSame('000000030884cdc6', $response->getGatewayReference());
+        $this->assertSame('000000030884cdc6', $response->getTransactionReference());
         $this->assertSame('Transaction Approved', $response->getMessage());
     }
 
@@ -33,7 +33,7 @@ class ResponseTest extends TestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertSame('The transaction was Declined (U5)', $response->getMessage());
     }
 
@@ -44,7 +44,7 @@ class ResponseTest extends TestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertSame('0000000103f5dc65', $response->getGatewayReference());
+        $this->assertSame('0000000103f5dc65', $response->getTransactionReference());
         $this->assertSame('APPROVED', $response->getMessage());
     }
 
@@ -55,7 +55,7 @@ class ResponseTest extends TestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertSame('Length of the data to decrypt is invalid.', $response->getMessage());
     }
 }

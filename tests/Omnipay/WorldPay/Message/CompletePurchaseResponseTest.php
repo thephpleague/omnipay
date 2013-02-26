@@ -28,7 +28,7 @@ class CompletePurchaseResponseTest extends TestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertSame('abc123', $response->getGatewayReference());
+        $this->assertSame('abc123', $response->getTransactionReference());
         $this->assertSame('Success Message', $response->getMessage());
     }
 
@@ -45,7 +45,7 @@ class CompletePurchaseResponseTest extends TestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertSame('Declined', $response->getMessage());
     }
 
@@ -55,7 +55,7 @@ class CompletePurchaseResponseTest extends TestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertNull($response->getMessage());
     }
 }
