@@ -101,6 +101,16 @@ abstract class AbstractGateway implements GatewayInterface
         return $this->setParameter('testMode', $value);
     }
 
+    public function getCurrency()
+    {
+        return strtoupper($this->getParameter('currency'));
+    }
+
+    public function setCurrency($value)
+    {
+        return $this->setParameter('currency', $value);
+    }
+
     public function authorize(array $parameters = array())
     {
         throw new BadMethodCallException;
