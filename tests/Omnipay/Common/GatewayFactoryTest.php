@@ -22,7 +22,7 @@ class GatewayFactoryTest extends TestCase
     }
 
     /**
-     * @expectedException \Omnipay\Common\Exception\GatewayNotFoundException
+     * @expectedException \Omnipay\Common\Exception\RuntimeException
      * @expectedExceptionMessage Class '\Omnipay\Invalid\Gateway' not found
      */
     public function testCreateInvalid()
