@@ -32,13 +32,13 @@ abstract class GatewayTestCase extends TestCase
         $this->assertInternalType('string', $shortName);
     }
 
-    public function testgetDefaultParametersReturnsArray()
+    public function testGetDefaultParametersReturnsArray()
     {
         $settings = $this->gateway->getDefaultParameters();
         $this->assertInternalType('array', $settings);
     }
 
-    public function testgetDefaultParametersHaveMatchingProperties()
+    public function testDefaultParametersHaveMatchingMethods()
     {
         $settings = $this->gateway->getDefaultParameters();
         foreach ($settings as $key => $default) {
@@ -53,6 +53,22 @@ abstract class GatewayTestCase extends TestCase
             $this->assertSame($this->gateway, $this->gateway->$setter($value));
             $this->assertSame($value, $this->gateway->$getter());
         }
+    }
+
+    public function testTestMode()
+    {
+        $this->assertSame($this->gateway, $this->gateway->setTestMode(false));
+        $this->assertSame(false, $this->gateway->getTestMode());
+
+        $this->assertSame($this->gateway, $this->gateway->setTestMode(true));
+        $this->assertSame(true, $this->gateway->getTestMode());
+    }
+
+    public function testCurrency()
+    {
+        // currency is normalized to uppercase
+        $this->assertSame($this->gateway, $this->gateway->setCurrency('eur'));
+        $this->assertSame('EUR', $this->gateway->getCurrency());
     }
 
     public function testSupportsAuthorize()
