@@ -71,18 +71,21 @@ abstract class GatewayTestCase extends TestCase
         $this->assertSame('EUR', $this->gateway->getCurrency());
     }
 
+    public function testPurchase()
+    {
+        // all gateways must implement purchase
+        $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->purchase());
+    }
+
     public function testSupportsAuthorize()
     {
         $supportsAuthorize = $this->gateway->supportsAuthorize();
         $this->assertInternalType('boolean', $supportsAuthorize);
 
         if ($supportsAuthorize) {
-            // authorize method should return RequestInterface
             $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->authorize());
         } else {
-            // authorize method should throw BadMethodCallException
-            $this->setExpectedException('Omnipay\Common\Exception\BadMethodCallException');
-            $this->gateway->authorize();
+            $this->assertFalse(method_exists($this->gateway, 'authorize'));
         }
     }
 
@@ -92,12 +95,9 @@ abstract class GatewayTestCase extends TestCase
         $this->assertInternalType('boolean', $supportsCapture);
 
         if ($supportsCapture) {
-            // capture method should return RequestInterface
             $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->capture());
         } else {
-            // capture method should throw BadMethodCallException
-            $this->setExpectedException('Omnipay\Common\Exception\BadMethodCallException');
-            $this->gateway->capture();
+            $this->assertFalse(method_exists($this->gateway, 'capture'));
         }
     }
 
@@ -107,12 +107,9 @@ abstract class GatewayTestCase extends TestCase
         $this->assertInternalType('boolean', $supportsRefund);
 
         if ($supportsRefund) {
-            // refund method should return RequestInterface
             $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->refund());
         } else {
-            // refund method should throw BadMethodCallException
-            $this->setExpectedException('Omnipay\Common\Exception\BadMethodCallException');
-            $this->gateway->refund();
+            $this->assertFalse(method_exists($this->gateway, 'refund'));
         }
     }
 
@@ -122,13 +119,33 @@ abstract class GatewayTestCase extends TestCase
         $this->assertInternalType('boolean', $supportsVoid);
 
         if ($supportsVoid) {
-            // void method should throw InvalidRequestException
-            $this->setExpectedException('Omnipay\Common\Exception\InvalidRequestException');
-            $this->gateway->void();
+            $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->void());
         } else {
-            // void method should throw BadMethodCallException
-            $this->setExpectedException('Omnipay\Common\Exception\BadMethodCallException');
-            $this->gateway->void();
+            $this->assertFalse(method_exists($this->gateway, 'void'));
+        }
+    }
+
+    public function testSupportsStore()
+    {
+        $supportsStore = $this->gateway->supportsStore();
+        $this->assertInternalType('boolean', $supportsStore);
+
+        if ($supportsStore) {
+            $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->store());
+        } else {
+            $this->assertFalse(method_exists($this->gateway, 'store'));
+        }
+    }
+
+    public function testSupportsUnstore()
+    {
+        $supportsUnstore = $this->gateway->supportsUnstore();
+        $this->assertInternalType('boolean', $supportsUnstore);
+
+        if ($supportsUnstore) {
+            $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->unstore());
+        } else {
+            $this->assertFalse(method_exists($this->gateway, 'unstore'));
         }
     }
 }

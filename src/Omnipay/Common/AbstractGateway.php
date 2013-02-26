@@ -11,10 +11,8 @@
 
 namespace Omnipay\Common;
 
-use ReflectionMethod;
 use Guzzle\Http\ClientInterface;
 use Guzzle\Http\Client as HttpClient;
-use Omnipay\Common\Exception\BadMethodCallException;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
@@ -111,41 +109,6 @@ abstract class AbstractGateway implements GatewayInterface
         return $this->setParameter('currency', $value);
     }
 
-    public function authorize(array $parameters = array())
-    {
-        throw new BadMethodCallException;
-    }
-
-    public function completeAuthorize(array $parameters = array())
-    {
-        throw new BadMethodCallException;
-    }
-
-    public function capture(array $parameters = array())
-    {
-        throw new BadMethodCallException;
-    }
-
-    public function purchase(array $parameters = array())
-    {
-        throw new BadMethodCallException;
-    }
-
-    public function completePurchase(array $parameters = array())
-    {
-        throw new BadMethodCallException;
-    }
-
-    public function refund(array $parameters = array())
-    {
-        throw new BadMethodCallException;
-    }
-
-    public function void(array $parameters = array())
-    {
-        throw new BadMethodCallException;
-    }
-
     /**
      * Supports Authorize
      *
@@ -153,9 +116,7 @@ abstract class AbstractGateway implements GatewayInterface
      */
     public function supportsAuthorize()
     {
-        $reflectionMethod = new ReflectionMethod($this, 'authorize');
-
-        return __CLASS__ !== $reflectionMethod->getDeclaringClass()->getName();
+        return method_exists($this, 'authorize');
     }
 
     /**
@@ -165,9 +126,7 @@ abstract class AbstractGateway implements GatewayInterface
      */
     public function supportsCapture()
     {
-        $reflectionMethod = new ReflectionMethod($this, 'capture');
-
-        return __CLASS__ !== $reflectionMethod->getDeclaringClass()->getName();
+        return method_exists($this, 'capture');
     }
 
     /**
@@ -177,9 +136,7 @@ abstract class AbstractGateway implements GatewayInterface
      */
     public function supportsRefund()
     {
-        $reflectionMethod = new ReflectionMethod($this, 'refund');
-
-        return __CLASS__ !== $reflectionMethod->getDeclaringClass()->getName();
+        return method_exists($this, 'refund');
     }
 
     /**
@@ -189,9 +146,27 @@ abstract class AbstractGateway implements GatewayInterface
      */
     public function supportsVoid()
     {
-        $reflectionMethod = new ReflectionMethod($this, 'void');
+        return method_exists($this, 'void');
+    }
 
-        return __CLASS__ !== $reflectionMethod->getDeclaringClass()->getName();
+    /**
+     * Supports Store
+     *
+     * @return boolean True if this gateway supports the store() method
+     */
+    public function supportsStore()
+    {
+        return method_exists($this, 'store');
+    }
+
+    /**
+     * Supports Unstore
+     *
+     * @return boolean True if this gateway supports the unstore() method
+     */
+    public function supportsUnstore()
+    {
+        return method_exists($this, 'unstore');
     }
 
     /**
