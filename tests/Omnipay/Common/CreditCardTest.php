@@ -39,23 +39,7 @@ class CreditCardTest extends TestCase
         $this->assertSame('Test Customer', $card->getName());
     }
 
-    public function testToArrayKeys()
-    {
-        $card = new CreditCard;
-        $output = $card->toArray();
-        $this->assertArrayHasKey('firstName', $output);
-        $this->assertArrayHasKey('lastName', $output);
-        $this->assertArrayHasKey('number', $output);
-        $this->assertArrayHasKey('expiryMonth', $output);
-        $this->assertArrayHasKey('expiryYear', $output);
-        $this->assertArrayHasKey('cvv', $output);
-        $this->assertArrayHasKey('issueNumber', $output);
-        $this->assertArrayHasKey('type', $output);
-        $this->assertArrayHasKey('company', $output);
-        $this->assertArrayHasKey('email', $output);
-    }
-
-    public function testToArrayValues()
+    public function testGetParamters()
     {
         $card = new CreditCard(array(
             'name' => 'Example Customer',
@@ -64,12 +48,12 @@ class CreditCardTest extends TestCase
             'expiryYear' => 2016,
         ));
 
-        $output = $card->toArray();
-        $this->assertSame('Example', $output['firstName']);
-        $this->assertSame('Customer', $output['lastName']);
-        $this->assertSame('1234', $output['number']);
-        $this->assertSame(6, $output['expiryMonth']);
-        $this->assertSame(2016, $output['expiryYear']);
+        $parameters = $card->getParameters();
+        $this->assertSame('Example', $parameters['firstName']);
+        $this->assertSame('Customer', $parameters['lastName']);
+        $this->assertSame('1234', $parameters['number']);
+        $this->assertSame(6, $parameters['expiryMonth']);
+        $this->assertSame(2016, $parameters['expiryYear']);
     }
 
     public function testValidateFixture()
@@ -124,16 +108,6 @@ class CreditCardTest extends TestCase
     public function testValidateExpiryYearRequired()
     {
         $this->card->setExpiryYear(null);
-        $this->card->validate();
-    }
-
-    /**
-     * @expectedException \Omnipay\Common\Exception\InvalidCreditCardException
-     * @expectedExceptionMessage The cvv parameter is required
-     */
-    public function testValidateCvvRequired()
-    {
-        $this->card->setCvv(null);
         $this->card->validate();
     }
 
