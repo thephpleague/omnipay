@@ -22,7 +22,7 @@ class AbstractResponseTest extends TestCase
 
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getData());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertNull($response->getMessage());
     }
 }

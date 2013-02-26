@@ -50,7 +50,7 @@ abstract class AbstractResponse implements ResponseInterface
         return null;
     }
 
-    public function getGatewayReference()
+    public function getTransactionReference()
     {
         return null;
     }

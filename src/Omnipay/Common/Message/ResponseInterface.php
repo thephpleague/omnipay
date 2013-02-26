@@ -49,5 +49,5 @@ interface ResponseInterface extends MessageInterface
      *
      * @return string A reference provided by the gateway to represent this transaction
      */
-    public function getGatewayReference();
+    public function getTransactionReference();
 }
