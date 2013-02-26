@@ -104,4 +104,28 @@ class PxPostGatewayTest extends GatewayTestCase
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals('000000030884cdc6', $response->getTransactionReference());
     }
+
+    public function testStoreSuccess()
+    {
+        $this->setMockHttpResponse('PxPostStoreSuccess.txt');
+        $response = $this->gateway->store($this->options)->send();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertSame('00000001040c73ea', $response->getTransactionReference());
+        $this->assertSame('0000010009328404', $response->getCardReference());
+        $this->assertSame('Transaction Approved', $response->getMessage());
+    }
+
+    public function testStoreFailure()
+    {
+        $this->setMockHttpResponse('PxPostStoreFailure.txt');
+        $response = $this->gateway->store($this->options)->send();
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getTransactionReference());
+        $this->assertNull($response->getCardReference());
+        $this->assertSame('An Invalid Card Number was entered. Check the card number', $response->getMessage());
+    }
 }

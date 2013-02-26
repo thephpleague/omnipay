@@ -23,6 +23,7 @@ class ResponseTest extends TestCase
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
         $this->assertSame('000000030884cdc6', $response->getTransactionReference());
+        $this->assertNull($response->getCardReference());
         $this->assertSame('Transaction Approved', $response->getMessage());
     }
 
@@ -34,6 +35,7 @@ class ResponseTest extends TestCase
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
+        $this->assertNull($response->getCardReference());
         $this->assertSame('The transaction was Declined (U5)', $response->getMessage());
     }
 
@@ -45,6 +47,7 @@ class ResponseTest extends TestCase
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
         $this->assertSame('0000000103f5dc65', $response->getTransactionReference());
+        $this->assertNull($response->getCardReference());
         $this->assertSame('APPROVED', $response->getMessage());
     }
 
@@ -56,6 +59,31 @@ class ResponseTest extends TestCase
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
+        $this->assertNull($response->getCardReference());
         $this->assertSame('Length of the data to decrypt is invalid.', $response->getMessage());
+    }
+
+    public function testStoreSuccess()
+    {
+        $httpResponse = $this->getMockHttpResponse('PxPostStoreSuccess.txt');
+        $response = new Response($this->getMockRequest(), $httpResponse->xml());
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertSame('00000001040c73ea', $response->getTransactionReference());
+        $this->assertSame('0000010009328404', $response->getCardReference());
+        $this->assertSame('Transaction Approved', $response->getMessage());
+    }
+
+    public function testStoreFailure()
+    {
+        $httpResponse = $this->getMockHttpResponse('PxPostStoreFailure.txt');
+        $response = new Response($this->getMockRequest(), $httpResponse->xml());
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getTransactionReference());
+        $this->assertNull($response->getCardReference());
+        $this->assertSame('An Invalid Card Number was entered. Check the card number', $response->getMessage());
     }
 }

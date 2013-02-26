@@ -53,18 +53,25 @@ class PxPostAuthorizeRequest extends AbstractRequest
 
     public function getData()
     {
-        $this->validate(array('amount', 'card'));
-        $this->getCard()->validate();
+        $this->validate(array('amount'));
 
         $data = $this->getBaseData();
         $data->InputCurrency = $this->getCurrency();
         $data->Amount = $this->getAmountDecimal();
         $data->MerchantReference = $this->getDescription();
 
-        $data->CardNumber = $this->getCard()->getNumber();
-        $data->CardHolderName = $this->getCard()->getName();
-        $data->DateExpiry = $this->getCard()->getExpiryDate('my');
-        $data->Cvc2 = $this->getCard()->getCvv();
+        if ($this->getCardReference()) {
+            $data->DpsBillingId = $this->getCardReference();
+        } elseif ($this->getCard()) {
+            $this->getCard()->validate();
+            $data->CardNumber = $this->getCard()->getNumber();
+            $data->CardHolderName = $this->getCard()->getName();
+            $data->DateExpiry = $this->getCard()->getExpiryDate('my');
+            $data->Cvc2 = $this->getCard()->getCvv();
+        } else {
+            // either cardReference or card is required
+            $this->validate(array('card'));
+        }
 
         return $data;
     }
