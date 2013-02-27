@@ -19,6 +19,19 @@ use Symfony\Component\HttpFoundation\ParameterBag;
  */
 class CreditCard
 {
+    const BRAND_VISA = 'visa';
+    const BRAND_MASTERCARD = 'mastercard';
+    const BRAND_DISCOVER = 'discover';
+    const BRAND_AMEX = 'amex';
+    const BRAND_DINERS_CLUB = 'diners_club';
+    const BRAND_JCB = 'jcb';
+    const BRAND_SWITCH = 'switch';
+    const BRAND_SOLO = 'solo';
+    const BRAND_DANKORT = 'dankort';
+    const BRAND_MAESTRO = 'maestro';
+    const BRAND_FORBRUGSFORENINGEN = 'forbrugsforeningen';
+    const BRAND_LASER = 'laser';
+
     /**
      * @var \Symfony\Component\HttpFoundation\ParameterBag
      */
@@ -32,6 +45,35 @@ class CreditCard
     public function __construct($parameters = null)
     {
         $this->initialize($parameters);
+    }
+
+    /**
+     * All known/supported card brands, and a regular expression to match them.
+     *
+     * The order of the card brands is important, as some of the regular expressions overlap.
+     *
+     * Note: The fact that this class knows about a particular card brand does not imply
+     * that your gateway supports it.
+     *
+     * @return array
+     * @link https://github.com/Shopify/active_merchant/blob/master/lib/active_merchant/billing/credit_card_methods.rb
+     */
+    public function getSupportedBrands()
+    {
+        return array(
+            static::BRAND_VISA => '/^4\d{12}(\d{3})?$/',
+            static::BRAND_MASTERCARD => '/^(5[1-5]\d{4}|677189)\d{10}$/',
+            static::BRAND_DISCOVER => '/^(6011|65\d{2}|64[4-9]\d)\d{12}|(62\d{14})$/',
+            static::BRAND_AMEX => '/^3[47]\d{13}$/',
+            static::BRAND_DINERS_CLUB => '/^3(0[0-5]|[68]\d)\d{11}$/',
+            static::BRAND_JCB => '/^35(28|29|[3-8]\d)\d{12}$/',
+            static::BRAND_SWITCH => '/^6759\d{12}(\d{2,3})?$/',
+            static::BRAND_SOLO => '/^6767\d{12}(\d{2,3})?$/',
+            static::BRAND_DANKORT => '/^5019\d{12}$/',
+            static::BRAND_MAESTRO => '/^(5[06-8]|6\d)\d{10,17}$/',
+            static::BRAND_FORBRUGSFORENINGEN => '/^600722\d{10}$/',
+            static::BRAND_LASER => '/^(6304|6706|6709|6771(?!89))\d{8}(\d{4}|\d{6,7})?$/',
+        );
     }
 
     /**
@@ -138,6 +180,22 @@ class CreditCard
         return $this->setParameter('number', preg_replace('/\D/', '', $value));
     }
 
+    /**
+     * Credit Card Brand
+     *
+     * Iterates through known/supported card brands to determine the brand of this card
+     *
+     * @return string
+     */
+    public function getBrand()
+    {
+        foreach ($this->getSupportedBrands() as $brand => $val) {
+            if (preg_match($val, $this->getNumber())) {
+                return $brand;
+            }
+        }
+    }
+
     public function getExpiryMonth()
     {
         return $this->getParameter('expiryMonth');
@@ -216,16 +274,6 @@ class CreditCard
     public function setIssueNumber($value)
     {
         return $this->setParameter('issueNumber', $value);
-    }
-
-    public function getType()
-    {
-        return $this->getParameter('type');
-    }
-
-    public function setType($value)
-    {
-        return $this->setParameter('type', $value);
     }
 
     public function getBillingAddress1()
