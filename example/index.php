@@ -99,6 +99,7 @@ $app->post('/gateways/{name}/authorize', function($name) use ($app) {
     $app['session']->set($sessionVar.'.card', $card);
 
     $params['card'] = $card;
+    $params['clientIp'] = $app['request']->getClientIp();
     $response = $gateway->authorize($params)->send();
 
     return $app['twig']->render('response.twig', array(
@@ -134,6 +135,7 @@ $app->post('/gateways/{name}/capture', function($name) use ($app) {
     // save POST data into session
     $app['session']->set($sessionVar.'.capture', $params);
 
+    $params['clientIp'] = $app['request']->getClientIp();
     $response = $gateway->capture($params)->send();
 
     return $app['twig']->render('response.twig', array(
@@ -174,6 +176,7 @@ $app->post('/gateways/{name}/purchase', function($name) use ($app) {
     $app['session']->set($sessionVar.'.card', $card);
 
     $params['card'] = $card;
+    $params['clientIp'] = $app['request']->getClientIp();
     $response = $gateway->purchase($params)->send();
 
     return $app['twig']->render('response.twig', array(
@@ -192,6 +195,7 @@ $app->match('/gateways/{name}/completePurchase', function($name) use ($app) {
     // load request data from session
     $params = $app['session']->get($sessionVar.'.purchase', array());
 
+    $params['clientIp'] = $app['request']->getClientIp();
     $response = $gateway->completePurchase($params)->send();
 
     return $app['twig']->render('response.twig', array(
@@ -232,6 +236,7 @@ $app->post('/gateways/{name}/store', function($name) use ($app) {
     $app['session']->set($sessionVar.'.card', $card);
 
     $params['card'] = $card;
+    $params['clientIp'] = $app['request']->getClientIp();
     $response = $gateway->store($params)->send();
 
     return $app['twig']->render('response.twig', array(
@@ -267,6 +272,7 @@ $app->post('/gateways/{name}/unstore', function($name) use ($app) {
     // save POST data into session
     $app['session']->set($sessionVar.'.unstore', $params);
 
+    $params['clientIp'] = $app['request']->getClientIp();
     $response = $gateway->unstore($params)->send();
 
     return $app['twig']->render('response.twig', array(
