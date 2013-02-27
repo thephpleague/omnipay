@@ -65,7 +65,7 @@ to your `composer.json` file:
 ```json
 {
     "require": {
-        "omnipay/omnipay": "0.7.*"
+        "omnipay/omnipay": "0.8.*"
     }
 }
 ```
