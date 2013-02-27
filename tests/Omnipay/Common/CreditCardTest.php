@@ -39,23 +39,7 @@ class CreditCardTest extends TestCase
         $this->assertSame('Test Customer', $card->getName());
     }
 
-    public function testToArrayKeys()
-    {
-        $card = new CreditCard;
-        $output = $card->toArray();
-        $this->assertArrayHasKey('firstName', $output);
-        $this->assertArrayHasKey('lastName', $output);
-        $this->assertArrayHasKey('number', $output);
-        $this->assertArrayHasKey('expiryMonth', $output);
-        $this->assertArrayHasKey('expiryYear', $output);
-        $this->assertArrayHasKey('cvv', $output);
-        $this->assertArrayHasKey('issueNumber', $output);
-        $this->assertArrayHasKey('type', $output);
-        $this->assertArrayHasKey('company', $output);
-        $this->assertArrayHasKey('email', $output);
-    }
-
-    public function testToArrayValues()
+    public function testGetParamters()
     {
         $card = new CreditCard(array(
             'name' => 'Example Customer',
@@ -64,12 +48,12 @@ class CreditCardTest extends TestCase
             'expiryYear' => 2016,
         ));
 
-        $output = $card->toArray();
-        $this->assertSame('Example', $output['firstName']);
-        $this->assertSame('Customer', $output['lastName']);
-        $this->assertSame('1234', $output['number']);
-        $this->assertSame(6, $output['expiryMonth']);
-        $this->assertSame(2016, $output['expiryYear']);
+        $parameters = $card->getParameters();
+        $this->assertSame('Example', $parameters['firstName']);
+        $this->assertSame('Customer', $parameters['lastName']);
+        $this->assertSame('1234', $parameters['number']);
+        $this->assertSame(6, $parameters['expiryMonth']);
+        $this->assertSame(2016, $parameters['expiryYear']);
     }
 
     public function testValidateFixture()
@@ -129,16 +113,6 @@ class CreditCardTest extends TestCase
 
     /**
      * @expectedException \Omnipay\Common\Exception\InvalidCreditCardException
-     * @expectedExceptionMessage The cvv parameter is required
-     */
-    public function testValidateCvvRequired()
-    {
-        $this->card->setCvv(null);
-        $this->card->validate();
-    }
-
-    /**
-     * @expectedException \Omnipay\Common\Exception\InvalidCreditCardException
      * @expectedExceptionMessage Card has expired
      */
     public function testValidateExpiryDate()
@@ -155,6 +129,13 @@ class CreditCardTest extends TestCase
     {
         $this->card->setNumber('4111111111111110');
         $this->card->validate();
+    }
+
+    public function testGetSupportedBrands()
+    {
+        $brands = $this->card->getSupportedBrands();
+        $this->assertInternalType('array', $brands);
+        $this->assertArrayHasKey(CreditCard::BRAND_VISA, $brands);
     }
 
     public function testFirstName()
@@ -207,6 +188,48 @@ class CreditCardTest extends TestCase
     {
         $this->card->setNumber('4000 0000 00b00 0000');
         $this->assertEquals('4000000000000000', $this->card->getNumber());
+    }
+
+    public function testGetBrandDefault()
+    {
+        $card = new CreditCard;
+        $this->assertNull($card->getBrand());
+    }
+
+    public function testGetBrandVisa()
+    {
+        $card = new CreditCard(array('number' => '4242424242424242'));
+        $this->assertSame(CreditCard::BRAND_VISA, $card->getBrand());
+    }
+
+    public function testGetBrandMasterCard()
+    {
+        $card = new CreditCard(array('number' => '5555555555554444'));
+        $this->assertSame(CreditCard::BRAND_MASTERCARD, $card->getBrand());
+    }
+
+    public function testGetBrandAmex()
+    {
+        $card = new CreditCard(array('number' => '378282246310005'));
+        $this->assertSame(CreditCard::BRAND_AMEX, $card->getBrand());
+    }
+
+    public function testGetBrandDiscover()
+    {
+        $card = new CreditCard(array('number' => '6011111111111117'));
+        $this->assertSame(CreditCard::BRAND_DISCOVER, $card->getBrand());
+    }
+
+    public function testGetBrandDinersClub()
+    {
+        $card = new CreditCard(array('number' => '30569309025904'));
+        $this->assertSame(CreditCard::BRAND_DINERS_CLUB, $card->getBrand());
+    }
+
+    public function testGetBrandJcb()
+    {
+        $card = new CreditCard(array('number' => '3530111333300000'));
+        $this->assertSame(CreditCard::BRAND_JCB, $card->getBrand());
     }
 
     public function testExpiryMonth()
@@ -267,12 +290,6 @@ class CreditCardTest extends TestCase
     {
         $this->card->setIssueNumber('12');
         $this->assertSame('12', $this->card->getIssueNumber());
-    }
-
-    public function testType()
-    {
-        $this->card->setType('visa');
-        $this->assertEquals('visa', $this->card->getType());
     }
 
     public function testBillingAddress1()

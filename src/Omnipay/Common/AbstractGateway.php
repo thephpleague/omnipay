@@ -11,11 +11,9 @@
 
 namespace Omnipay\Common;
 
-use ReflectionMethod;
 use Guzzle\Http\ClientInterface;
 use Guzzle\Http\Client as HttpClient;
-use Omnipay\Common\Exception\UnsupportedMethodException;
-use Omnipay\Common\Request;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 /**
@@ -23,7 +21,19 @@ use Symfony\Component\HttpFoundation\Request as HttpRequest;
  */
 abstract class AbstractGateway implements GatewayInterface
 {
+    /**
+     * @var \Symfony\Component\HttpFoundation\ParameterBag
+     */
+    protected $parameters;
+
+    /**
+     * @var \Guzzle\Http\ClientInterface
+     */
     protected $httpClient;
+
+    /**
+     * @var \Symfony\Component\HttpFoundation\Request
+     */
     protected $httpRequest;
 
     /**
@@ -36,105 +46,67 @@ abstract class AbstractGateway implements GatewayInterface
     {
         $this->httpClient = $httpClient ?: $this->getDefaultHttpClient();
         $this->httpRequest = $httpRequest ?: $this->getDefaultHttpRequest();
-        $this->loadSettings();
+        $this->initialize();
     }
 
-    /**
-     * Get gateway display name
-     *
-     * This can be used by carts to get the display name for each gateway.
-     */
-    abstract public function getName();
-
-    /**
-     * Define gateway settings, in the following format:
-     *
-     * array(
-     *     'username' => '', // string variable
-     *     'testMode' => false, // boolean variable
-     *     'landingPage' => array('billing', 'login'), // enum variable, first item is default
-     * );
-     */
-    abstract public function defineSettings();
-
-    public function authorize($options)
-    {
-        throw new UnsupportedMethodException;
-    }
-
-    public function completeAuthorize($options)
-    {
-        throw new UnsupportedMethodException;
-    }
-
-    public function capture($options)
-    {
-        throw new UnsupportedMethodException;
-    }
-
-    public function purchase($options)
-    {
-        throw new UnsupportedMethodException;
-    }
-
-    public function completePurchase($options)
-    {
-        throw new UnsupportedMethodException;
-    }
-
-    public function refund($options)
-    {
-        throw new UnsupportedMethodException;
-    }
-
-    public function void($options)
-    {
-        throw new UnsupportedMethodException;
-    }
-
-    /**
-     * Get gateway short name
-     *
-     * This name can be used with GatewayFactory as an alias of the gateway class,
-     * to create new instances of this gateway.
-     */
     public function getShortName()
     {
         return Helper::getGatewayShortName(get_class($this));
     }
 
-    /**
-     * Initialize gateway parameters
-     */
-    public function initialize($parameters)
+    public function initialize(array $parameters = array())
     {
-        Helper::initialize($this, $parameters);
-    }
+        $this->parameters = new ParameterBag;
 
-    private function loadSettings()
-    {
-        foreach ($this->defineSettings() as $key => $value) {
+        // set default parameters
+        foreach ($this->getDefaultParameters() as $key => $value) {
             if (is_array($value)) {
-                $this->$key = reset($value);
+                $this->parameters->set($key, reset($value));
             } else {
-                $this->$key = $value;
+                $this->parameters->set($key, $value);
             }
         }
+
+        Helper::initialize($this, $parameters);
+
+        return $this;
     }
 
-    /**
-     * Return current gateway settings as an array
-     *
-     * This method is useful if you need to store settings for various gateways in your database.
-     */
-    public function toArray()
+    public function getParameters()
     {
-        $output = array();
-        foreach ($this->defineSettings() as $key => $default) {
-            $output[$key] = $this->{'get'.ucfirst($key)}();
-        }
+        return $this->parameters->all();
+    }
 
-        return $output;
+    protected function getParameter($key)
+    {
+        return $this->parameters->get($key);
+    }
+
+    protected function setParameter($key, $value)
+    {
+        $this->parameters->set($key, $value);
+
+        return $this;
+    }
+
+    public function getTestMode()
+    {
+        return $this->getParameter('testMode');
+    }
+
+    public function setTestMode($value)
+    {
+        return $this->setParameter('testMode', $value);
+    }
+
+    public function getCurrency()
+    {
+        return strtoupper($this->getParameter('currency'));
+    }
+
+    public function setCurrency($value)
+    {
+        return $this->setParameter('currency', $value);
     }
 
     /**
@@ -144,9 +116,7 @@ abstract class AbstractGateway implements GatewayInterface
      */
     public function supportsAuthorize()
     {
-        $reflectionMethod = new ReflectionMethod($this, 'authorize');
-
-        return __CLASS__ !== $reflectionMethod->getDeclaringClass()->getName();
+        return method_exists($this, 'authorize');
     }
 
     /**
@@ -156,9 +126,7 @@ abstract class AbstractGateway implements GatewayInterface
      */
     public function supportsCapture()
     {
-        $reflectionMethod = new ReflectionMethod($this, 'capture');
-
-        return __CLASS__ !== $reflectionMethod->getDeclaringClass()->getName();
+        return method_exists($this, 'capture');
     }
 
     /**
@@ -168,9 +136,7 @@ abstract class AbstractGateway implements GatewayInterface
      */
     public function supportsRefund()
     {
-        $reflectionMethod = new ReflectionMethod($this, 'refund');
-
-        return __CLASS__ !== $reflectionMethod->getDeclaringClass()->getName();
+        return method_exists($this, 'refund');
     }
 
     /**
@@ -180,22 +146,40 @@ abstract class AbstractGateway implements GatewayInterface
      */
     public function supportsVoid()
     {
-        $reflectionMethod = new ReflectionMethod($this, 'void');
-
-        return __CLASS__ !== $reflectionMethod->getDeclaringClass()->getName();
+        return method_exists($this, 'void');
     }
 
-    public function getHttpClient()
+    /**
+     * Supports Store
+     *
+     * @return boolean True if this gateway supports the store() method
+     */
+    public function supportsStore()
     {
-        return $this->httpClient;
+        return method_exists($this, 'store');
     }
 
-    public function setHttpClient(ClientInterface $httpClient)
+    /**
+     * Supports Unstore
+     *
+     * @return boolean True if this gateway supports the unstore() method
+     */
+    public function supportsUnstore()
     {
-        $this->httpClient = $httpClient;
+        return method_exists($this, 'unstore');
     }
 
-    public function getDefaultHttpClient()
+    /**
+     * Create and initialize a request object using existing parameters from this gateway
+     */
+    protected function createRequest($class, array $parameters)
+    {
+        $obj = new $class($this->httpClient, $this->httpRequest);
+
+        return $obj->initialize(array_replace($this->getParameters(), $parameters));
+    }
+
+    protected function getDefaultHttpClient()
     {
         return new HttpClient(
             '',
@@ -205,17 +189,7 @@ abstract class AbstractGateway implements GatewayInterface
         );
     }
 
-    public function getHttpRequest()
-    {
-        return $this->httpRequest;
-    }
-
-    public function setHttpRequest(HttpRequest $httpRequest)
-    {
-        $this->httpRequest = $httpRequest;
-    }
-
-    public function getDefaultHttpRequest()
+    protected function getDefaultHttpRequest()
     {
         return HttpRequest::createFromGlobals();
     }

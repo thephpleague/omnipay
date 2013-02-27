@@ -12,7 +12,7 @@
 namespace Omnipay\Dummy;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Request;
+use Omnipay\Dummy\Message\AuthorizeRequest;
 
 /**
  * Dummy Gateway
@@ -20,8 +20,11 @@ use Omnipay\Common\Request;
  * This gateway is useful for testing. It simply authorizes any payment made using a valid
  * credit card number and expiry.
  *
- * Any card number which passes the Luhn algorithm and ends in 0 is authorized
- * Any card number which passes the Luhn algorithm and ends in 1 is declined
+ * Any card number which passes the Luhn algorithm and ends in an even number is authorized,
+ * for example: 4242424242424242
+ *
+ * Any card number which passes the Luhn algorithm and ends in an odd number is declined,
+ * for example: 4111111111111111
  */
 class Gateway extends AbstractGateway
 {
@@ -30,23 +33,18 @@ class Gateway extends AbstractGateway
         return 'Dummy';
     }
 
-    public function defineSettings()
+    public function getDefaultParameters()
     {
         return array();
     }
 
-    public function authorize($options)
+    public function authorize(array $parameters = array())
     {
-        return $this->purchase($options);
+        return $this->createRequest('\Omnipay\Dummy\Message\AuthorizeRequest', $parameters);
     }
 
-    public function purchase($options)
+    public function purchase(array $parameters = array())
     {
-        $request = new Request($options);
-        $request->validate(array('amount'));
-        $source = $request->getCard();
-        $source->validate();
-
-        return new Response(uniqid());
+        return $this->authorize($parameters);
     }
 }

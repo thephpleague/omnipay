@@ -11,27 +11,22 @@
 
 namespace Omnipay\PaymentExpress;
 
-use SimpleXMLElement;
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Exception\InvalidResponseException;
-use Omnipay\Common\RedirectResponse;
-use Omnipay\Common\Request;
+use Omnipay\PaymentExpress\Message\PxPayAuthorizeRequest;
+use Omnipay\PaymentExpress\Message\PxPayCompleteAuthorizeRequest;
+use Omnipay\PaymentExpress\Message\PxPayPurchaseRequest;
 
 /**
  * DPS PaymentExpress PxPay Gateway
  */
 class PxPayGateway extends AbstractGateway
 {
-    protected $endpoint = 'https://sec.paymentexpress.com/pxpay/pxaccess.aspx';
-    protected $username;
-    protected $password;
-
     public function getName()
     {
         return 'PaymentExpress PxPay';
     }
 
-    public function defineSettings()
+    public function getDefaultParameters()
     {
         return array(
             'username' => '',
@@ -41,94 +36,41 @@ class PxPayGateway extends AbstractGateway
 
     public function getUsername()
     {
-        return $this->username;
+        return $this->getParameter('username');
     }
 
     public function setUsername($value)
     {
-        $this->username = $value;
+        return $this->setParameter('username', $value);
     }
 
     public function getPassword()
     {
-        return $this->password;
+        return $this->getParameter('password');
     }
 
     public function setPassword($value)
     {
-        $this->password = $value;
+        return $this->setParameter('password', $value);
     }
 
-    public function authorize($options)
+    public function authorize(array $parameters = array())
     {
-        $data = $this->buildPurchase($options);
-        $data->TxnType = 'Auth';
-
-        return $this->sendPurchase($data);
+        return $this->createRequest('\Omnipay\PaymentExpress\Message\PxPayAuthorizeRequest', $parameters);
     }
 
-    public function completeAuthorize($options)
+    public function completeAuthorize(array $parameters = array())
     {
-        return $this->completePurchase($options);
+        return $this->createRequest('\Omnipay\PaymentExpress\Message\PxPayCompleteAuthorizeRequest', $parameters);
     }
 
-    public function purchase($options)
+    public function purchase(array $parameters = array())
     {
-        $data = $this->buildPurchase($options);
-        $data->TxnType = 'Purchase';
-
-        return $this->sendPurchase($data);
+        return $this->createRequest('\Omnipay\PaymentExpress\Message\PxPayPurchaseRequest', $parameters);
     }
 
-    public function completePurchase($options)
+    public function completePurchase(array $parameters = array())
     {
-        $result = $this->httpRequest->get('result');
-        if (empty($result)) {
-            throw new InvalidResponseException;
-        }
-
-        // validate dps response
-        $data = new SimpleXMLElement('<ProcessResponse/>');
-        $data->PxPayUserId = $this->username;
-        $data->PxPayKey = $this->password;
-        $data->Response = $result;
-
-        return $this->sendComplete($data);
-    }
-
-    protected function buildPurchase($options)
-    {
-        $request = new Request($options);
-        $request->validate(array('amount', 'returnUrl'));
-
-        $data = new SimpleXMLElement('<GenerateRequest/>');
-        $data->PxPayUserId = $this->username;
-        $data->PxPayKey = $this->password;
-        $data->AmountInput = $request->getAmountDecimal();
-        $data->CurrencyInput = $request->getCurrency();
-        $data->MerchantReference = $request->getDescription();
-        $data->UrlSuccess = $request->getReturnUrl();
-        $data->UrlFail = $request->getReturnUrl();
-
-        return $data;
-    }
-
-    protected function sendPurchase($data)
-    {
-        $httpResponse = $this->httpClient->post($this->endpoint, null, $data->asXML())->send();
-        $xml = new SimpleXMLElement($httpResponse->getBody());
-
-        if ((string) $xml['valid'] == '1') {
-            return new RedirectResponse((string) $xml->URI);
-        } else {
-            throw new InvalidResponseException;
-        }
-    }
-
-    protected function sendComplete($data)
-    {
-        $httpResponse = $this->httpClient->post($this->endpoint, null, $data->asXML())->send();
-
-        return new Response($httpResponse->getBody());
+        return $this->completeAuthorize($parameters);
     }
 }

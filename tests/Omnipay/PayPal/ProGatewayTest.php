@@ -20,7 +20,7 @@ class ProGatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
-        $this->gateway = new ProGateway($this->httpClient, $this->httpRequest);
+        $this->gateway = new ProGateway($this->getHttpClient(), $this->getHttpRequest());
 
         $this->options = array(
             'amount' => 1000,
@@ -37,23 +37,23 @@ class ProGatewayTest extends GatewayTestCase
 
     public function testAuthorize()
     {
-        $this->setMockResponse($this->httpClient, 'ProPurchaseSuccess.txt');
+        $this->setMockHttpResponse('ProPurchaseSuccess.txt');
 
-        $response = $this->gateway->authorize($this->options);
+        $response = $this->gateway->authorize($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('96U93778BD657313D', $response->getGatewayReference());
+        $this->assertEquals('96U93778BD657313D', $response->getTransactionReference());
         $this->assertNull($response->getMessage());
     }
 
     public function testPurchase()
     {
-        $this->setMockResponse($this->httpClient, 'ProPurchaseSuccess.txt');
+        $this->setMockHttpResponse('ProPurchaseSuccess.txt');
 
-        $response = $this->gateway->purchase($this->options);
+        $response = $this->gateway->purchase($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('96U93778BD657313D', $response->getGatewayReference());
+        $this->assertEquals('96U93778BD657313D', $response->getTransactionReference());
         $this->assertNull($response->getMessage());
     }
 }

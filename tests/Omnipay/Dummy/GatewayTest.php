@@ -11,7 +11,6 @@
 
 namespace Omnipay\Dummy;
 
-use Omnipay\Common\CreditCard;
 use Omnipay\GatewayTestCase;
 
 class GatewayTest extends GatewayTestCase
@@ -20,33 +19,63 @@ class GatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
-        $this->gateway = new Gateway($this->httpClient, $this->httpRequest);
+        $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
 
-        $card = new CreditCard(array(
-            'firstName' => 'Example',
-            'lastName' => 'User',
-            'number' => '4111111111111111',
-            'expiryMonth' => '12',
-            'expiryYear' => '2016',
-            'cvv' => '123',
-        ));
-
-        $this->options = array('amount' => 1000, 'card' => $card);
+        $this->options = array(
+            'amount' => 1000,
+            'card' => $this->getValidCard(),
+        );
     }
 
-    public function testAuthorize()
+    public function testAuthorizeSuccess()
     {
-        $response = $this->gateway->authorize($this->options);
+        // card numbers ending in even number should be successful
+        $this->options['card']['number'] = '4242424242424242';
+        $response = $this->gateway->authorize($this->options)->send();
 
-        $this->assertInstanceOf('\Omnipay\Dummy\Response', $response);
+        $this->assertInstanceOf('\Omnipay\Dummy\Message\Response', $response);
         $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNotEmpty($response->getTransactionReference());
+        $this->assertSame('Success', $response->getMessage());
     }
 
-    public function testPurchase()
+    public function testAuthorizeFailure()
     {
-        $response = $this->gateway->purchase($this->options);
+        // card numbers ending in odd number should be declined
+        $this->options['card']['number'] = '4111111111111111';
+        $response = $this->gateway->authorize($this->options)->send();
 
-        $this->assertInstanceOf('\Omnipay\Dummy\Response', $response);
+        $this->assertInstanceOf('\Omnipay\Dummy\Message\Response', $response);
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNotEmpty($response->getTransactionReference());
+        $this->assertSame('Failure', $response->getMessage());
+    }
+
+    public function testPurchaseSuccess()
+    {
+        // card numbers ending in even number should be successful
+        $this->options['card']['number'] = '4242424242424242';
+        $response = $this->gateway->purchase($this->options)->send();
+
+        $this->assertInstanceOf('\Omnipay\Dummy\Message\Response', $response);
         $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNotEmpty($response->getTransactionReference());
+        $this->assertSame('Success', $response->getMessage());
+    }
+
+    public function testPurcahseFailure()
+    {
+        // card numbers ending in odd number should be declined
+        $this->options['card']['number'] = '4111111111111111';
+        $response = $this->gateway->purchase($this->options)->send();
+
+        $this->assertInstanceOf('\Omnipay\Dummy\Message\Response', $response);
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNotEmpty($response->getTransactionReference());
+        $this->assertSame('Failure', $response->getMessage());
     }
 }

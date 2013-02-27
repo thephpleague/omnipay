@@ -11,36 +11,49 @@
 
 namespace Omnipay\Common;
 
-use Omnipay\Common\Request;
-
 /**
  * Payment gateway interface
  */
 interface GatewayInterface
 {
-    /**
-     * Authorize a new payment.
-     *
-     * @param array An array of options
-     * @return Omnipay\ResponseInterface
-     */
-    public function authorize($options);
 
     /**
-     * Handle return from an off-site authorization request.
+     * Get gateway display name
      *
-     * @param array An array of options
-     * @return Omnipay\ResponseInterface
+     * This can be used by carts to get the display name for each gateway.
      */
-    public function completeAuthorize($options);
+    public function getName();
 
     /**
-     * Capture an authorized payment.
+     * Get gateway short name
      *
-     * @param array An array of options
-     * @return Omnipay\ResponseInterface
+     * This name can be used with GatewayFactory as an alias of the gateway class,
+     * to create new instances of this gateway.
      */
-    public function capture($options);
+    public function getShortName();
+
+    /**
+     * Define gateway parameters, in the following format:
+     *
+     * array(
+     *     'username' => '', // string variable
+     *     'testMode' => false, // boolean variable
+     *     'landingPage' => array('billing', 'login'), // enum variable, first item is default
+     * );
+     */
+    public function getDefaultParameters();
+
+    /**
+     * Initialize gateway with parameters
+     */
+    public function initialize(array $paramters = array());
+
+    /**
+     * Get all gateway parameters
+     *
+     * @return array
+     */
+    public function getParameters();
 
     /**
      * Create a new charge (combined authorize + capture).
@@ -48,35 +61,5 @@ interface GatewayInterface
      * @param array An array of options
      * @return Omnipay\ResponseInterface
      */
-    public function purchase($options);
-
-    /**
-     * Handle return from an off-site purchase request.
-     *
-     * @param array An array of options
-     * @return Omnipay\ResponseInterface
-     */
-    public function completePurchase($options);
-
-    /**
-     * Refund an existing transaction.
-     *
-     * This will refund a transaction which has been already submitted for processing,
-     * and generally may be called up to 30 days after submitting the transaction.
-     *
-     * @param array An array of options
-     * @return Omnipay\ResponseInterface
-     */
-    public function refund($options);
-
-    /**
-     * Void an existing transaction.
-     *
-     * This will prevent a transaction from being submitted for processing,
-     * and can generally only be called up to 24 hours after submitting the transaction.
-     *
-     * @param array An array of options
-     * @return Omnipay\ResponseInterface
-     */
-    public function void($options);
+    public function purchase(array $parameters = array());
 }

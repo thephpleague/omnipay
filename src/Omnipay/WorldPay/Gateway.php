@@ -12,10 +12,8 @@
 namespace Omnipay\WorldPay;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Exception;
-use Omnipay\Common\Exception\InvalidResponseException;
-use Omnipay\Common\RedirectResponse;
-use Omnipay\Common\Request;
+use Omnipay\WorldPay\Message\CompletePurchaseRequest;
+use Omnipay\WorldPay\Message\PurchaseRequest;
 
 /**
  * WorldPay Gateway
@@ -24,19 +22,12 @@ use Omnipay\Common\Request;
  */
 class Gateway extends AbstractGateway
 {
-    protected $endpoint = 'https://secure.worldpay.com/wcc/purchase';
-    protected $testEndpoint = 'https://secure-test.worldpay.com/wcc/purchase';
-    protected $installationId;
-    protected $secretWord;
-    protected $callbackPassword;
-    protected $testMode;
-
     public function getName()
     {
         return 'WorldPay';
     }
 
-    public function defineSettings()
+    public function getDefaultParameters()
     {
         return array(
             'installationId' => '',
@@ -48,106 +39,41 @@ class Gateway extends AbstractGateway
 
     public function getInstallationId()
     {
-        return $this->installationId;
+        return $this->getParameter('installationId');
     }
 
     public function setInstallationId($value)
     {
-        $this->installationId = $value;
+        return $this->setParameter('installationId', $value);
     }
 
     public function getSecretWord()
     {
-        return $this->secretWord;
+        return $this->getParameter('secretWord');
     }
 
     public function setSecretWord($value)
     {
-        $this->secretWord = $value;
+        return $this->setParameter('secretWord', $value);
     }
 
     public function getCallbackPassword()
     {
-        return $this->callbackPassword;
+        return $this->getParameter('callbackPassword');
     }
 
     public function setCallbackPassword($value)
     {
-        $this->callbackPassword = $value;
+        return $this->setParameter('callbackPassword', $value);
     }
 
-    public function getTestMode()
+    public function purchase(array $parameters = array())
     {
-        return $this->testMode;
+        return $this->createRequest('\Omnipay\WorldPay\Message\PurchaseRequest', $parameters);
     }
 
-    public function setTestMode($value)
+    public function completePurchase(array $parameters = array())
     {
-        $this->testMode = $value;
-    }
-
-    public function purchase($options)
-    {
-        $data = $this->buildPurchase($options);
-
-        return new RedirectResponse($this->getCurrentEndpoint().'?'.http_build_query($data));
-    }
-
-    public function completePurchase($options)
-    {
-        $callbackPW = (string) $this->httpRequest->get('callbackPW');
-        if ($callbackPW !== $this->callbackPassword) {
-            throw new InvalidResponseException;
-        }
-
-        return new Response(
-            array(
-                'transStatus' => (string) $this->httpRequest->get('transStatus'),
-                'transId' => (string) $this->httpRequest->get('transId'),
-                'rawAuthMessage' => (string) $this->httpRequest->get('rawAuthMessage'),
-            )
-        );
-    }
-
-    protected function buildPurchase($options)
-    {
-        $request = new Request($options);
-        $request->validate(array('amount', 'returnUrl'));
-
-        $data = array();
-        $data['instId'] = $this->installationId;
-        $data['cartId'] = $request->getTransactionId();
-        $data['desc'] = $request->getDescription();
-        $data['amount'] = $request->getAmountDecimal();
-        $data['currency'] = $request->getCurrency();
-        $data['testMode'] = $this->testMode ? 100 : 0;
-        $data['MC_callback'] = $request->getReturnUrl();
-
-        $source = $request->getCard();
-        if ($source) {
-            $data['name'] = $source->getName();
-            $data['address1'] = $source->getAddress1();
-            $data['address2'] = $source->getAddress2();
-            $data['town'] = $source->getCity();
-            $data['region'] = $source->getState();
-            $data['postcode'] = $source->getPostcode();
-            $data['country'] = $source->getCountry();
-            $data['tel'] = $source->getPhone();
-            $data['email'] = $source->getEmail();
-        }
-
-        if ($this->secretWord) {
-            $data['signatureFields'] = 'instId:amount:currency:cartId';
-            $signature_data = array($this->secretWord,
-                $data['instId'], $data['amount'], $data['currency'], $data['cartId']);
-            $data['signature'] = md5(implode(':', $signature_data));
-        }
-
-        return $data;
-    }
-
-    protected function getCurrentEndpoint()
-    {
-        return $this->testMode ? $this->testEndpoint : $this->endpoint;
+        return $this->createRequest('\Omnipay\WorldPay\Message\CompletePurchaseRequest', $parameters);
     }
 }

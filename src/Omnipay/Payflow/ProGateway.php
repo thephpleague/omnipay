@@ -12,7 +12,10 @@
 namespace Omnipay\Payflow;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Request;
+use Omnipay\Payflow\Message\AuthorizeRequest;
+use Omnipay\Payflow\Message\CaptureRequest;
+use Omnipay\Payflow\Message\PurchaseRequest;
+use Omnipay\Payflow\Message\RefundRequest;
 
 /**
  * Payflow Pro Class
@@ -21,20 +24,12 @@ use Omnipay\Common\Request;
  */
 class ProGateway extends AbstractGateway
 {
-    protected $endpoint = 'https://payflowpro.paypal.com';
-    protected $testEndpoint = 'https://pilot-payflowpro.paypal.com';
-    protected $username;
-    protected $password;
-    protected $vendor;
-    protected $partner;
-    protected $testMode;
-
     public function getName()
     {
         return 'Payflow';
     }
 
-    public function defineSettings()
+    public function getDefaultParameters()
     {
         return array(
             'username' => '',
@@ -47,144 +42,61 @@ class ProGateway extends AbstractGateway
 
     public function getUsername()
     {
-        return $this->username;
+        return $this->getParameter('username');
     }
 
     public function setUsername($value)
     {
-        $this->username = $value;
+        return $this->setParameter('username', $value);
     }
 
     public function getPassword()
     {
-        return $this->password;
+        return $this->getParameter('password');
     }
 
     public function setPassword($value)
     {
-        $this->password = $value;
+        return $this->setParameter('password', $value);
     }
 
     public function getVendor()
     {
-        return $this->vendor;
+        return $this->getParameter('vendor');
     }
 
     public function setVendor($value)
     {
-        $this->vendor = $value;
+        return $this->setParameter('vendor', $value);
     }
 
     public function getPartner()
     {
-        return $this->partner;
+        return $this->getParameter('partner');
     }
 
     public function setPartner($value)
     {
-        $this->partner = $value;
+        return $this->setParameter('partner', $value);
     }
 
-    public function getTestMode()
+    public function authorize(array $parameters = array())
     {
-        return $this->testMode;
+        return $this->createRequest('\Omnipay\Payflow\Message\AuthorizeRequest', $parameters);
     }
 
-    public function setTestMode($value)
+    public function capture(array $parameters = array())
     {
-        $this->testMode = $value;
+        return $this->createRequest('\Omnipay\Payflow\Message\CaptureRequest', $parameters);
     }
 
-    public function authorize($options)
+    public function purchase(array $parameters = array())
     {
-        $data = $this->buildAuthorize($options, 'A');
-
-        return $this->send($data);
+        return $this->createRequest('\Omnipay\Payflow\Message\PurchaseRequest', $parameters);
     }
 
-    public function capture($options)
+    public function refund(array $parameters = array())
     {
-        $data = $this->buildCaptureOrRefund($options, 'D');
-
-        return $this->send($data);
-    }
-
-    public function purchase($options)
-    {
-        $data = $this->buildAuthorize($options, 'S');
-
-        return $this->send($data);
-    }
-
-    public function refund($options)
-    {
-
-        $data = $this->buildCaptureOrRefund($options, 'C');
-
-        return $this->send($data);
-    }
-
-    protected function buildAuthorize($options, $action)
-    {
-        $request = new Request($options);
-        $request->validate(array('amount'));
-        $source = $request->getCard();
-        $source->validate();
-
-        $data = $this->buildRequest($action);
-        $data['TENDER'] = 'C';
-        $data['COMMENT1'] = $request->getDescription();
-        $data['ACCT'] = $source->getNumber();
-        $data['AMT'] = $request->getAmountDecimal();
-        $data['EXPDATE'] = $source->getExpiryDate('my');
-        $data['CVV2'] = $source->getCvv();
-        $data['BILLTOFIRSTNAME'] = $source->getFirstName();
-        $data['BILLTOLASTNAME'] = $source->getLastName();
-        $data['BILLTOSTREET'] = $source->getAddress1();
-        $data['BILLTOCITY'] = $source->getCity();
-        $data['BILLTOSTATE'] = $source->getState();
-        $data['BILLTOZIP'] = $source->getPostcode();
-        $data['BILLTOCOUNTRY'] = $source->getCountry();
-
-        return $data;
-    }
-
-    protected function buildCaptureOrRefund($options, $action)
-    {
-        $request = new Request($options);
-        $request->validate(array('gatewayReference', 'amount'));
-
-        $data = $this->buildRequest($action);
-        $data['AMT'] = $request->getAmountDecimal();
-        $data['ORIGID'] = $request->getGatewayReference();
-
-        return $data;
-    }
-
-    protected function buildRequest($action)
-    {
-        $request = array();
-        $request['TRXTYPE'] = $action;
-        $request['USER'] = $this->username;
-        $request['PWD'] = $this->password;
-        $request['VENDOR'] = $this->vendor;
-        $request['PARTNER'] = $this->partner;
-
-        return $request;
-    }
-
-    /**
-     * Post a request to the Payflow API and decode the response
-     */
-    protected function send($data)
-    {
-        $httpResponse = $this->httpClient->post($this->getCurrentEndpoint(), null, $data)->send();
-
-        return new Response($httpResponse->getBody());
-    }
-
-    protected function getCurrentEndpoint()
-    {
-        return $this->testMode ? $this->testEndpoint : $this->endpoint;
+        return $this->createRequest('\Omnipay\Payflow\Message\RefundRequest', $parameters);
     }
 }

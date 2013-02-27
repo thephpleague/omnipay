@@ -19,7 +19,7 @@ class GatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
-        $this->gateway = new Gateway($this->httpClient, $this->httpRequest);
+        $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
         $this->gateway->setAppId('abc');
         $this->gateway->setAppSecret('123');
 
@@ -31,16 +31,16 @@ class GatewayTest extends GatewayTestCase
 
     public function testPurchase()
     {
-        $response = $this->gateway->purchase($this->options);
+        $response = $this->gateway->purchase($this->options)->send();
 
-        $this->assertInstanceOf('\Omnipay\Common\RedirectResponse', $response);
+        $this->assertInstanceOf('\Omnipay\GoCardless\Message\PurchaseResponse', $response);
         $this->assertTrue($response->isRedirect());
         $this->assertStringStartsWith('https://gocardless.com/connect/bills/new?', $response->getRedirectUrl());
     }
 
     public function testCompletePurchaseSuccess()
     {
-        $this->httpRequest->request->replace(
+        $this->getHttpRequest()->request->replace(
             array(
                 'resource_uri' => 'a',
                 'resource_id' => 'b',
@@ -49,17 +49,17 @@ class GatewayTest extends GatewayTestCase
             )
         );
 
-        $this->setMockResponse($this->httpClient, 'CompletePurchaseSuccess.txt');
+        $this->setMockHttpResponse('CompletePurchaseSuccess.txt');
 
-        $response = $this->gateway->completePurchase($this->options);
+        $response = $this->gateway->completePurchase($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('b', $response->getGatewayReference());
+        $this->assertEquals('b', $response->getTransactionReference());
     }
 
     public function testCompletePurchaseError()
     {
-        $this->httpRequest->request->replace(
+        $this->getHttpRequest()->request->replace(
             array(
                 'resource_uri' => 'a',
                 'resource_id' => 'b',
@@ -68,9 +68,9 @@ class GatewayTest extends GatewayTestCase
             )
         );
 
-        $this->setMockResponse($this->httpClient, 'CompletePurchaseFailure.txt');
+        $this->setMockHttpResponse('CompletePurchaseFailure.txt');
 
-        $response = $this->gateway->completePurchase($this->options);
+        $response = $this->gateway->completePurchase($this->options)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('The resource cannot be confirmed', $response->getMessage());
@@ -81,7 +81,7 @@ class GatewayTest extends GatewayTestCase
      */
     public function testCompletePurchaseInvalid()
     {
-        $this->httpRequest->request->replace(
+        $this->getHttpRequest()->request->replace(
             array(
                 'resource_uri' => 'a',
                 'resource_id' => 'b',
@@ -90,6 +90,6 @@ class GatewayTest extends GatewayTestCase
             )
         );
 
-        $this->gateway->completePurchase($this->options);
+        $response = $this->gateway->completePurchase($this->options)->send();
     }
 }

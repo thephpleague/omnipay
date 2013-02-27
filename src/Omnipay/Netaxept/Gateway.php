@@ -11,155 +11,58 @@
 
 namespace Omnipay\Netaxept;
 
-use SimpleXMLElement;
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Exception;
-use Omnipay\Common\Exception\InvalidResponseException;
-use Omnipay\Common\RedirectResponse;
-use Omnipay\Common\Request;
+use Omnipay\Netaxept\Message\PurchaseRequest;
+use Omnipay\Netaxept\Message\CompletePurchaseRequest;
 
 /**
- * CardSave Gateway
+ * Netaxept Gateway
  *
- * @link http://www.cardsave.net/dev-downloads
+ * @link http://www.betalingsterminal.no/Netthandel-forside/Teknisk-veiledning/Overview/
  */
 class Gateway extends AbstractGateway
 {
-    protected $endpoint = 'https://epayment.bbs.no';
-    protected $testEndpoint = 'https://epayment-test.bbs.no';
-    protected $merchantId;
-    protected $token;
-    protected $testMode;
-
     public function getName()
     {
         return 'Netaxept';
     }
 
-    public function defineSettings()
+    public function getDefaultParameters()
     {
         return array(
             'merchantId' => '',
-            'token' => '',
+            'password' => '',
             'testMode' => false,
         );
     }
 
     public function getMerchantId()
     {
-        return $this->merchantId;
+        return $this->getParameter('merchantId');
     }
 
     public function setMerchantId($value)
     {
-        $this->merchantId = $value;
+        return $this->setParameter('merchantId', $value);
     }
 
-    public function getToken()
+    public function getPassword()
     {
-        return $this->token;
+        return $this->getParameter('password');
     }
 
-    public function setToken($value)
+    public function setPassword($value)
     {
-        $this->token = $value;
+        return $this->setParameter('password', $value);
     }
 
-    public function getTestMode()
+    public function purchase(array $parameters = array())
     {
-        return $this->testMode;
+        return $this->createRequest('\Omnipay\Netaxept\Message\PurchaseRequest', $parameters);
     }
 
-    public function setTestMode($value)
+    public function completePurchase(array $parameters = array())
     {
-        $this->testMode = $value;
-    }
-
-    public function purchase($options)
-    {
-        $data = $this->buildPurchaseRequest($options);
-        $response = $this->send('/Netaxept/Register.aspx', $data);
-
-        if (isset($response->Error)) {
-            return new Response($response);
-        }
-
-        $redirectData = array(
-            'merchantId' => $this->merchantId,
-            'transactionId' => (string) $response->TransactionId,
-        );
-
-        return new RedirectResponse(
-            $this->getCurrentEndpoint().'/Terminal/Default.aspx?'.http_build_query($redirectData)
-        );
-    }
-
-    public function completePurchase($options)
-    {
-        $responseCode = $this->httpRequest->get('responseCode');
-        if (empty($responseCode)) {
-            throw new InvalidResponseException;
-        }
-        if ('OK' !== $responseCode) {
-            return new ErrorResponse($responseCode);
-        }
-
-        $data = array(
-            'merchantId' => $this->merchantId,
-            'token' => $this->token,
-            'transactionId' => $this->httpRequest->get('transactionId'),
-            'operation' => 'AUTH',
-        );
-
-        $response = $this->send('/Netaxept/Process.aspx', $data);
-
-        return new Response($response);
-    }
-
-    protected function buildPurchaseRequest($options)
-    {
-        $request = new Request($options);
-        $request->validate(array('amount', 'returnUrl'));
-
-        $data = array();
-        $data['merchantId'] = $this->merchantId;
-        $data['token'] = $this->token;
-        $data['serviceType'] = 'B';
-        $data['orderNumber'] = $request->getTransactionId();
-        $data['currencyCode'] = $request->getCurrency();
-        $data['amount'] = $request->getAmount();
-        $data['redirectUrl'] = $request->getReturnUrl();
-
-        $source = $request->getCard();
-        if ($source) {
-            $data['customerFirstName'] = $source->getFirstName();
-            $data['customerLastName'] = $source->getLastName();
-            $data['customerEmail'] = $source->getEmail();
-            $data['customerPhoneNumber'] = $source->getPhone();
-            $data['customerAddress1'] = $source->getAddress1();
-            $data['customerAddress2'] = $source->getAddress2();
-            $data['customerPostcode'] = $source->getPostcode();
-            $data['customerTown'] = $source->getCity();
-            $data['customerCountry'] = $source->getCountry();
-        }
-
-        return $data;
-    }
-
-    protected function send($url, $data)
-    {
-        $httpResponse = $this->httpClient->get($this->getCurrentEndpoint().$url.'?'.http_build_query($data))->send();
-
-        $xml = new SimpleXMLElement($httpResponse->getBody());
-        if (empty($xml)) {
-            throw new InvalidResponseException;
-        }
-
-        return $xml;
-    }
-
-    protected function getCurrentEndpoint()
-    {
-        return $this->testMode ? $this->testEndpoint : $this->endpoint;
+        return $this->createRequest('\Omnipay\Netaxept\Message\CompletePurchaseRequest', $parameters);
     }
 }

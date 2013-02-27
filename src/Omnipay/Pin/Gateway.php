@@ -11,9 +11,8 @@
 
 namespace Omnipay\Pin;
 
-use Guzzle\Common\Event;
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Request;
+use Omnipay\Pin\Message\PurchaseRequest;
 
 /**
  * Pin Gateway
@@ -22,17 +21,12 @@ use Omnipay\Common\Request;
  */
 class Gateway extends AbstractGateway
 {
-    protected $endpoint = 'https://api.pin.net.au/1';
-    protected $testEndpoint = 'https://test-api.pin.net.au/1';
-    protected $secretKey;
-    protected $testMode;
-
     public function getName()
     {
         return 'Pin';
     }
 
-    public function defineSettings()
+    public function getDefaultParameters()
     {
         return array(
             'secretKey' => '',
@@ -42,83 +36,16 @@ class Gateway extends AbstractGateway
 
     public function getSecretKey()
     {
-        return $this->secretKey;
+        return $this->getParameter('secretKey');
     }
 
     public function setSecretKey($value)
     {
-        $this->secretKey = $value;
+        return $this->setParameter('secretKey', $value);
     }
 
-    public function getTestMode()
+    public function purchase(array $parameters = array())
     {
-        return $this->testMode;
-    }
-
-    public function setTestMode($value)
-    {
-        $this->testMode = $value;
-    }
-
-    public function purchase($options)
-    {
-        $data = $this->buildPurchase($options);
-
-        return $this->send('/charges', $data);
-    }
-
-    protected function buildPurchase($options)
-    {
-        $request = new Request($options);
-        $request->validate(array('amount'));
-
-        $data = array();
-        $data['amount'] = $request->getAmount();
-        $data['currency'] = strtolower($request->getCurrency());
-        $data['description'] = $request->getDescription();
-        $data['ip_address'] = $request->getClientIp();
-
-        if ($card = $request->getCard()) {
-            $card->validate();
-
-            $data['card']['number'] = $card->getNumber();
-            $data['card']['expiry_month'] = $card->getExpiryMonth();
-            $data['card']['expiry_year'] = $card->getExpiryYear();
-            $data['card']['cvc'] = $card->getCvv();
-            $data['card']['name'] = $card->getName();
-            $data['card']['address_line1'] = $card->getAddress1();
-            $data['card']['address_line2'] = $card->getAddress2();
-            $data['card']['address_city'] = $card->getCity();
-            $data['card']['address_postcode'] = $card->getPostcode();
-            $data['card']['address_state'] = $card->getState();
-            $data['card']['address_country'] = $card->getCountry();
-            $data['email'] = $card->getEmail();
-        }
-
-        return $data;
-    }
-
-    protected function send($url, $data)
-    {
-        // don't throw exceptions for 422 errors
-        $this->httpClient->getEventDispatcher()->addListener(
-            'request.error',
-            function ($event) {
-                if ($event['response']->getStatusCode() == 422) {
-                    $event->stopPropagation();
-                }
-            }
-        );
-
-        $httpResponse = $this->httpClient->post($this->getCurrentEndpoint().$url, null, $data)
-            ->setHeader('Authorization', 'Basic '.base64_encode($this->secretKey.':'))
-            ->send();
-
-        return new Response($httpResponse->json());
-    }
-
-    protected function getCurrentEndpoint()
-    {
-        return $this->testMode ? $this->testEndpoint : $this->endpoint;
+        return $this->createRequest('\Omnipay\Pin\Message\PurchaseRequest', $parameters);
     }
 }

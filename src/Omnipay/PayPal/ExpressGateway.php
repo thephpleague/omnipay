@@ -11,25 +11,23 @@
 
 namespace Omnipay\PayPal;
 
-use Omnipay\Common\RedirectResponse;
-use Omnipay\Common\Request;
+use Omnipay\PayPal\Message\ExpressAuthorizeRequest;
+use Omnipay\PayPal\Message\ExpressCompleteAuthorizeRequest;
+use Omnipay\PayPal\Message\ExpressCompletePurchaseRequest;
 
 /**
  * PayPal Express Class
  */
 class ExpressGateway extends ProGateway
 {
-    protected $solutionType;
-    protected $landingPage;
-
     public function getName()
     {
         return 'PayPal Express';
     }
 
-    public function defineSettings()
+    public function getDefaultParameters()
     {
-        $settings = parent::defineSettings();
+        $settings = parent::getDefaultParameters();
         $settings['solutionType'] = array('Sole', 'Mark');
         $settings['landingPage'] = array('Billing', 'Login');
 
@@ -38,105 +36,41 @@ class ExpressGateway extends ProGateway
 
     public function getSolutionType()
     {
-        return $this->solutionType;
+        return $this->getParameter('solutionType');
     }
 
     public function setSolutionType($value)
     {
-        $this->solutionType = $value;
+        return $this->setParameter('solutionType', $value);
     }
 
     public function getLandingPage()
     {
-        return $this->landingPage;
+        return $this->getParameter('landingPage');
     }
 
     public function setLandingPage($value)
     {
-        $this->landingPage = $value;
+        return $this->setParameter('landingPage', $value);
     }
 
-    public function authorize($options)
+    public function authorize(array $parameters = array())
     {
-        $data = $this->buildExpressAuthorize($options);
-        $response = $this->send($data);
-
-        if (!$response->isSuccessful()) {
-            return $response;
-        }
-
-        return new RedirectResponse(
-            $this->getCurrentCheckoutEndpoint().'?'.http_build_query(
-                array(
-                    'cmd' => '_express-checkout',
-                    'useraction' => 'commit',
-                    'token' => $response->getExpressRedirectToken(),
-                )
-            )
-        );
+        return $this->createRequest('\Omnipay\PayPal\Message\ExpressAuthorizeRequest', $parameters);
     }
 
-    public function completeAuthorize($options)
+    public function completeAuthorize(array $parameters = array())
     {
-        $data = $this->buildCompleteAuthorizeOrPurchase($options, 'Authorization');
-
-        return $this->send($data);
+        return $this->createRequest('\Omnipay\PayPal\Message\ExpressCompleteAuthorizeRequest', $parameters);
     }
 
-    public function purchase($options)
+    public function purchase(array $parameters = array())
     {
-        // authorize first then process as 'Sale' in DoExpressCheckoutPayment
-        return $this->authorize($options);
+        return $this->authorize($parameters);
     }
 
-    public function completePurchase($options)
+    public function completePurchase(array $parameters = array())
     {
-        $data = $this->buildCompleteAuthorizeOrPurchase($options, 'Sale');
-
-        return $this->send($data);
-    }
-
-    protected function buildExpressAuthorize($options)
-    {
-        $request = new Request($options);
-        $request->validate(array('returnUrl', 'cancelUrl'));
-
-        $prefix = 'PAYMENTREQUEST_0_';
-        $data = $this->buildPaymentRequest($request, 'SetExpressCheckout', 'Authorization', $prefix);
-
-        // pp express specific fields
-        $data['SOLUTIONTYPE'] = $this->getSolutionType();
-        $data['LANDINGPAGE'] = $this->getLandingPage();
-        $data['NOSHIPPING'] = 1;
-        $data['ALLOWNOTE'] = 0;
-        $data['RETURNURL'] = $request->getReturnUrl();
-        $data['CANCELURL'] = $request->getCancelUrl();
-
-        $source = $request->getCard();
-        if ($source) {
-            $data[$prefix.'SHIPTONAME'] = $source->getName();
-            $data[$prefix.'SHIPTOSTREET'] = $source->getAddress1();
-            $data[$prefix.'SHIPTOSTREET2'] = $source->getAddress2();
-            $data[$prefix.'SHIPTOCITY'] = $source->getCity();
-            $data[$prefix.'SHIPTOSTATE'] = $source->getState();
-            $data[$prefix.'SHIPTOCOUNTRYCODE'] = $source->getCountry();
-            $data[$prefix.'SHIPTOZIP'] = $source->getPostcode();
-            $data[$prefix.'SHIPTOPHONENUM'] = $source->getPhone();
-            $data['EMAIL'] = $source->getEmail();
-        }
-
-        return $data;
-    }
-
-    protected function buildCompleteAuthorizeOrPurchase($options, $action)
-    {
-        $prefix = 'PAYMENTREQUEST_0_';
-        $request = new Request($options);
-        $data = $this->buildPaymentRequest($request, 'DoExpressCheckoutPayment', $action, $prefix);
-
-        $data['TOKEN'] = $this->httpRequest->query->get('token');
-        $data['PAYERID'] = $this->httpRequest->query->get('PayerID');
-
-        return $data;
+        return $this->createRequest('\Omnipay\PayPal\Message\ExpressCompletePurchaseRequest', $parameters);
     }
 }

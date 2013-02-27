@@ -19,7 +19,7 @@ class DirectGatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
-        $this->gateway = new DirectGateway($this->httpClient, $this->httpRequest);
+        $this->gateway = new DirectGateway($this->getHttpClient(), $this->getHttpRequest());
 
         $this->purchaseOptions = array(
             'amount' => 1000,
@@ -30,43 +30,43 @@ class DirectGatewayTest extends GatewayTestCase
 
         $this->captureOptions = array(
             'amount' => 1000,
-            'gatewayReference' => '{"SecurityKey":"JEUPDN1N7E","TxAuthNo":"4255","VPSTxId":"{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}","VendorTxCode":"438791"}',
+            'transactionReference' => '{"SecurityKey":"JEUPDN1N7E","TxAuthNo":"4255","VPSTxId":"{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}","VendorTxCode":"438791"}',
         );
     }
 
     public function testAuthorizeFailureSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'DirectPurchaseSuccess.txt');
+        $this->setMockHttpResponse('DirectPurchaseSuccess.txt');
 
-        $response = $this->gateway->authorize($this->purchaseOptions);
+        $response = $this->gateway->authorize($this->purchaseOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertSame('{"SecurityKey":"OUWLNYQTVT","TxAuthNo":"9962","VPSTxId":"{5A1BC414-5409-48DD-9B8B-DCDF096CE0BE}","VendorTxCode":"123"}', $response->getGatewayReference());
+        $this->assertSame('{"SecurityKey":"OUWLNYQTVT","TxAuthNo":"9962","VPSTxId":"{5A1BC414-5409-48DD-9B8B-DCDF096CE0BE}","VendorTxCode":"123"}', $response->getTransactionReference());
         $this->assertSame('Direct transaction from Simulator.', $response->getMessage());
     }
 
     public function testAuthorizeFailure()
     {
-        $this->setMockResponse($this->httpClient, 'DirectPurchaseFailure.txt');
+        $this->setMockHttpResponse('DirectPurchaseFailure.txt');
 
-        $response = $this->gateway->authorize($this->purchaseOptions);
+        $response = $this->gateway->authorize($this->purchaseOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertSame('The VendorTxCode \'984297\' has been used before.  Each transaction you send should have a unique VendorTxCode.', $response->getMessage());
     }
 
     public function testAuthorize3dSecure()
     {
-        $this->setMockResponse($this->httpClient, 'DirectPurchase3dSecure.txt');
+        $this->setMockHttpResponse('DirectPurchase3dSecure.txt');
 
-        $response = $this->gateway->authorize($this->purchaseOptions);
+        $response = $this->gateway->authorize($this->purchaseOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertNull($response->getMessage());
         $this->assertSame('https://test.sagepay.com/Simulator/3DAuthPage.asp', $response->getRedirectUrl());
 
@@ -78,37 +78,37 @@ class DirectGatewayTest extends GatewayTestCase
 
     public function testPurchaseSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'DirectPurchaseSuccess.txt');
+        $this->setMockHttpResponse('DirectPurchaseSuccess.txt');
 
-        $response = $this->gateway->purchase($this->purchaseOptions);
+        $response = $this->gateway->purchase($this->purchaseOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertSame('{"SecurityKey":"OUWLNYQTVT","TxAuthNo":"9962","VPSTxId":"{5A1BC414-5409-48DD-9B8B-DCDF096CE0BE}","VendorTxCode":"123"}', $response->getGatewayReference());
+        $this->assertSame('{"SecurityKey":"OUWLNYQTVT","TxAuthNo":"9962","VPSTxId":"{5A1BC414-5409-48DD-9B8B-DCDF096CE0BE}","VendorTxCode":"123"}', $response->getTransactionReference());
         $this->assertSame('Direct transaction from Simulator.', $response->getMessage());
     }
 
     public function testPurchaseFailure()
     {
-        $this->setMockResponse($this->httpClient, 'DirectPurchaseFailure.txt');
+        $this->setMockHttpResponse('DirectPurchaseFailure.txt');
 
-        $response = $this->gateway->purchase($this->purchaseOptions);
+        $response = $this->gateway->purchase($this->purchaseOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertSame('The VendorTxCode \'984297\' has been used before.  Each transaction you send should have a unique VendorTxCode.', $response->getMessage());
     }
 
     public function testPurchase3dSecure()
     {
-        $this->setMockResponse($this->httpClient, 'DirectPurchase3dSecure.txt');
+        $this->setMockHttpResponse('DirectPurchase3dSecure.txt');
 
-        $response = $this->gateway->purchase($this->purchaseOptions);
+        $response = $this->gateway->purchase($this->purchaseOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertNull($response->getMessage());
         $this->assertSame('https://test.sagepay.com/Simulator/3DAuthPage.asp', $response->getRedirectUrl());
 
@@ -120,45 +120,45 @@ class DirectGatewayTest extends GatewayTestCase
 
     public function testCaptureSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'CaptureSuccess.txt');
+        $this->setMockHttpResponse('CaptureSuccess.txt');
 
-        $response = $this->gateway->capture($this->captureOptions);
+        $response = $this->gateway->capture($this->captureOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertSame('The transaction was RELEASEed successfully.', $response->getMessage());
     }
 
     public function testCaptureFailure()
     {
-        $this->setMockResponse($this->httpClient, 'CaptureFailure.txt');
+        $this->setMockHttpResponse('CaptureFailure.txt');
 
-        $response = $this->gateway->capture($this->captureOptions);
+        $response = $this->gateway->capture($this->captureOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertSame('You are trying to RELEASE a transaction that has already been RELEASEd or ABORTed.', $response->getMessage());
     }
 
     public function testRefundSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'CaptureSuccess.txt');
+        $this->setMockHttpResponse('CaptureSuccess.txt');
 
-        $response = $this->gateway->refund($this->captureOptions);
+        $response = $this->gateway->refund($this->captureOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertSame('The transaction was RELEASEed successfully.', $response->getMessage());
     }
 
     public function testRefundFailure()
     {
-        $this->setMockResponse($this->httpClient, 'CaptureFailure.txt');
+        $this->setMockHttpResponse('CaptureFailure.txt');
 
-        $response = $this->gateway->refund($this->captureOptions);
+        $response = $this->gateway->refund($this->captureOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertNull($response->getGatewayReference());
+        $this->assertNull($response->getTransactionReference());
         $this->assertSame('You are trying to RELEASE a transaction that has already been RELEASEd or ABORTed.', $response->getMessage());
     }
 }

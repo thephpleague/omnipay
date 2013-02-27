@@ -19,7 +19,7 @@ class AIMGatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
-        $this->gateway = new AIMGateway($this->httpClient, $this->httpRequest);
+        $this->gateway = new AIMGateway($this->getHttpClient(), $this->getHttpRequest());
 
         $this->purchaseOptions = array(
             'amount' => 1000,
@@ -28,73 +28,73 @@ class AIMGatewayTest extends GatewayTestCase
 
         $this->captureOptions = array(
             'amount' => 1000,
-            'gatewayReference' => '12345',
+            'transactionReference' => '12345',
         );
     }
 
     public function testAuthorizeSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'AIMAuthorizeSuccess.txt');
+        $this->setMockHttpResponse('AIMAuthorizeSuccess.txt');
 
-        $response = $this->gateway->authorize($this->purchaseOptions);
+        $response = $this->gateway->authorize($this->purchaseOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertSame('2184493132', $response->getGatewayReference());
+        $this->assertSame('2184493132', $response->getTransactionReference());
         $this->assertSame('This transaction has been approved.', $response->getMessage());
     }
 
     public function testAuthorizeFailure()
     {
-        $this->setMockResponse($this->httpClient, 'AIMAuthorizeFailure.txt');
+        $this->setMockHttpResponse('AIMAuthorizeFailure.txt');
 
-        $response = $this->gateway->authorize($this->purchaseOptions);
+        $response = $this->gateway->authorize($this->purchaseOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertSame('0', $response->getGatewayReference());
+        $this->assertSame('0', $response->getTransactionReference());
         $this->assertSame('A valid amount is required.', $response->getMessage());
     }
 
     public function testCaptureSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'AIMCaptureSuccess.txt');
+        $this->setMockHttpResponse('AIMCaptureSuccess.txt');
 
-        $response = $this->gateway->capture($this->captureOptions);
+        $response = $this->gateway->capture($this->captureOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertSame('2184494531', $response->getGatewayReference());
+        $this->assertSame('2184494531', $response->getTransactionReference());
         $this->assertSame('This transaction has been approved.', $response->getMessage());
     }
 
     public function testCaptureFailure()
     {
-        $this->setMockResponse($this->httpClient, 'AIMCaptureFailure.txt');
+        $this->setMockHttpResponse('AIMCaptureFailure.txt');
 
-        $response = $this->gateway->capture($this->captureOptions);
+        $response = $this->gateway->capture($this->captureOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertSame('0', $response->getGatewayReference());
+        $this->assertSame('0', $response->getTransactionReference());
         $this->assertSame('The transaction cannot be found.', $response->getMessage());
     }
 
     public function testPurchaseSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'AIMPurchaseSuccess.txt');
+        $this->setMockHttpResponse('AIMPurchaseSuccess.txt');
 
-        $response = $this->gateway->purchase($this->purchaseOptions);
+        $response = $this->gateway->purchase($this->purchaseOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertSame('2184492509', $response->getGatewayReference());
+        $this->assertSame('2184492509', $response->getTransactionReference());
         $this->assertSame('This transaction has been approved.', $response->getMessage());
     }
 
     public function testPurchaseFailure()
     {
-        $this->setMockResponse($this->httpClient, 'AIMPurchaseFailure.txt');
+        $this->setMockHttpResponse('AIMPurchaseFailure.txt');
 
-        $response = $this->gateway->purchase($this->purchaseOptions);
+        $response = $this->gateway->purchase($this->purchaseOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertSame('0', $response->getGatewayReference());
+        $this->assertSame('0', $response->getTransactionReference());
         $this->assertSame('A valid amount is required.', $response->getMessage());
     }
 }

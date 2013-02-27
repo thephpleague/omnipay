@@ -20,7 +20,7 @@ class ProGatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
-        $this->gateway = new ProGateway($this->httpClient, $this->httpRequest);
+        $this->gateway = new ProGateway($this->getHttpClient(), $this->getHttpRequest());
 
         $this->options = array(
             'amount' => 1000,
@@ -37,19 +37,19 @@ class ProGatewayTest extends GatewayTestCase
 
     public function testAuthorizeSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'PurchaseSuccess.txt');
+        $this->setMockHttpResponse('PurchaseSuccess.txt');
 
-        $response = $this->gateway->authorize($this->options);
+        $response = $this->gateway->authorize($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('V19R3EF62FBE', $response->getGatewayReference());
+        $this->assertEquals('V19R3EF62FBE', $response->getTransactionReference());
     }
 
     public function testAuthorizeError()
     {
-        $this->setMockResponse($this->httpClient, 'PurchaseFailure.txt');
+        $this->setMockHttpResponse('PurchaseFailure.txt');
 
-        $response = $this->gateway->authorize($this->options);
+        $response = $this->gateway->authorize($this->options)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('User authentication failed', $response->getMessage());
@@ -59,32 +59,32 @@ class ProGatewayTest extends GatewayTestCase
     {
         $options = array(
             'amount' => 1000,
-            'gatewayReference' => 'abc123',
+            'transactionReference' => 'abc123',
         );
 
-        $this->setMockResponse($this->httpClient, 'PurchaseSuccess.txt');
+        $this->setMockHttpResponse('PurchaseSuccess.txt');
 
-        $response = $this->gateway->capture($options);
+        $response = $this->gateway->capture($options)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('V19R3EF62FBE', $response->getGatewayReference());
+        $this->assertEquals('V19R3EF62FBE', $response->getTransactionReference());
     }
 
     public function testPurchaseSuccess()
     {
-        $this->setMockResponse($this->httpClient, 'PurchaseSuccess.txt');
+        $this->setMockHttpResponse('PurchaseSuccess.txt');
 
-        $response = $this->gateway->purchase($this->options);
+        $response = $this->gateway->purchase($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('V19R3EF62FBE', $response->getGatewayReference());
+        $this->assertEquals('V19R3EF62FBE', $response->getTransactionReference());
     }
 
     public function testPurchaseError()
     {
-        $this->setMockResponse($this->httpClient, 'PurchaseFailure.txt');
+        $this->setMockHttpResponse('PurchaseFailure.txt');
 
-        $response = $this->gateway->purchase($this->options);
+        $response = $this->gateway->purchase($this->options)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('User authentication failed', $response->getMessage());
@@ -94,14 +94,14 @@ class ProGatewayTest extends GatewayTestCase
     {
         $options = array(
             'amount' => 1000,
-            'gatewayReference' => 'abc123',
+            'transactionReference' => 'abc123',
         );
 
-        $this->setMockResponse($this->httpClient, 'PurchaseSuccess.txt');
+        $this->setMockHttpResponse('PurchaseSuccess.txt');
 
-        $response = $this->gateway->refund($options);
+        $response = $this->gateway->refund($options)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('V19R3EF62FBE', $response->getGatewayReference());
+        $this->assertEquals('V19R3EF62FBE', $response->getTransactionReference());
     }
 }

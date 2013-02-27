@@ -11,10 +11,6 @@
 
 namespace Omnipay;
 
-use Guzzle\Http\Client as HttpClient;
-use Omnipay\Common\CreditCard;
-use Symfony\Component\HttpFoundation\Request as HttpRequest;
-
 /**
  * Base Gateway Test class
  *
@@ -22,40 +18,6 @@ use Symfony\Component\HttpFoundation\Request as HttpRequest;
  */
 abstract class GatewayTestCase extends TestCase
 {
-    protected $httpClient;
-    protected $httpRequest;
-
-    public function setUp()
-    {
-        $this->httpClient = new HttpClient;
-        $this->httpRequest = new HttpRequest;
-    }
-
-    /**
-     * Helper method used by gateway test classes to generate a valid test credit card
-     */
-    public function getValidCard()
-    {
-        return new CreditCard(array(
-            'firstName' => 'Example',
-            'lastName' => 'User',
-            'number' => '4111111111111111',
-            'expiryMonth' => '12',
-            'expiryYear' => '2020',
-            'cvv' => '123',
-        ));
-    }
-
-    public function testConstructWithoutParameters()
-    {
-        // constructor should initialize default http client and request
-        $class = get_class($this->gateway);
-        $newGateway = new $class();
-
-        $this->assertInstanceOf('Guzzle\Http\ClientInterface', $newGateway->getHttpClient());
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Request', $newGateway->getHttpRequest());
-    }
-
     public function testGetNameNotEmpty()
     {
         $name = $this->gateway->getName();
@@ -70,15 +32,15 @@ abstract class GatewayTestCase extends TestCase
         $this->assertInternalType('string', $shortName);
     }
 
-    public function testDefineSettingsReturnsArray()
+    public function testGetDefaultParametersReturnsArray()
     {
-        $settings = $this->gateway->defineSettings();
+        $settings = $this->gateway->getDefaultParameters();
         $this->assertInternalType('array', $settings);
     }
 
-    public function testDefineSettingsHaveMatchingProperties()
+    public function testDefaultParametersHaveMatchingMethods()
     {
-        $settings = $this->gateway->defineSettings();
+        $settings = $this->gateway->getDefaultParameters();
         foreach ($settings as $key => $default) {
             $getter = 'get'.ucfirst($key);
             $setter = 'set'.ucfirst($key);
@@ -87,18 +49,32 @@ abstract class GatewayTestCase extends TestCase
             $this->assertTrue(method_exists($this->gateway, $getter), "Gateway must implement $getter()");
             $this->assertTrue(method_exists($this->gateway, $setter), "Gateway must implement $setter()");
 
-            $this->gateway->$setter($value);
+            // setter must return instance
+            $this->assertSame($this->gateway, $this->gateway->$setter($value));
             $this->assertSame($value, $this->gateway->$getter());
         }
     }
 
-    public function testToArrayReturnsSettings()
+    public function testTestMode()
     {
-        $settings = $this->gateway->defineSettings();
-        $output = $this->gateway->toArray();
-        foreach ($settings as $key => $default) {
-            $this->assertArrayHasKey($key, $output);
-        }
+        $this->assertSame($this->gateway, $this->gateway->setTestMode(false));
+        $this->assertSame(false, $this->gateway->getTestMode());
+
+        $this->assertSame($this->gateway, $this->gateway->setTestMode(true));
+        $this->assertSame(true, $this->gateway->getTestMode());
+    }
+
+    public function testCurrency()
+    {
+        // currency is normalized to uppercase
+        $this->assertSame($this->gateway, $this->gateway->setCurrency('eur'));
+        $this->assertSame('EUR', $this->gateway->getCurrency());
+    }
+
+    public function testPurchase()
+    {
+        // all gateways must implement purchase
+        $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->purchase());
     }
 
     public function testSupportsAuthorize()
@@ -107,13 +83,9 @@ abstract class GatewayTestCase extends TestCase
         $this->assertInternalType('boolean', $supportsAuthorize);
 
         if ($supportsAuthorize) {
-            // authorize method should throw InvalidRequestException
-            $this->setExpectedException('Omnipay\\Common\\Exception\\InvalidRequestException');
-            $this->gateway->authorize(array());
+            $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->authorize());
         } else {
-            // authorize method should throw UnsupportedMethodException
-            $this->setExpectedException('Omnipay\\Common\\Exception\\UnsupportedMethodException');
-            $this->gateway->authorize(array());
+            $this->assertFalse(method_exists($this->gateway, 'authorize'));
         }
     }
 
@@ -123,13 +95,9 @@ abstract class GatewayTestCase extends TestCase
         $this->assertInternalType('boolean', $supportsCapture);
 
         if ($supportsCapture) {
-            // capture method should throw InvalidRequestException
-            $this->setExpectedException('Omnipay\\Common\\Exception\\InvalidRequestException');
-            $this->gateway->capture(array());
+            $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->capture());
         } else {
-            // capture method should throw UnsupportedMethodException
-            $this->setExpectedException('Omnipay\\Common\\Exception\\UnsupportedMethodException');
-            $this->gateway->capture(array());
+            $this->assertFalse(method_exists($this->gateway, 'capture'));
         }
     }
 
@@ -139,13 +107,9 @@ abstract class GatewayTestCase extends TestCase
         $this->assertInternalType('boolean', $supportsRefund);
 
         if ($supportsRefund) {
-            // refund method should throw InvalidRequestException
-            $this->setExpectedException('Omnipay\\Common\\Exception\\InvalidRequestException');
-            $this->gateway->refund(array());
+            $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->refund());
         } else {
-            // refund method should throw UnsupportedMethodException
-            $this->setExpectedException('Omnipay\\Common\\Exception\\UnsupportedMethodException');
-            $this->gateway->refund(array());
+            $this->assertFalse(method_exists($this->gateway, 'refund'));
         }
     }
 
@@ -155,45 +119,33 @@ abstract class GatewayTestCase extends TestCase
         $this->assertInternalType('boolean', $supportsVoid);
 
         if ($supportsVoid) {
-            // void method should throw InvalidRequestException
-            $this->setExpectedException('Omnipay\\Common\\Exception\\InvalidRequestException');
-            $this->gateway->void(array());
+            $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->void());
         } else {
-            // void method should throw UnsupportedMethodException
-            $this->setExpectedException('Omnipay\\Common\\Exception\\UnsupportedMethodException');
-            $this->gateway->void(array());
+            $this->assertFalse(method_exists($this->gateway, 'void'));
         }
     }
 
-    public function testHttpClient()
+    public function testSupportsStore()
     {
-        $newHttpClient = new HttpClient;
+        $supportsStore = $this->gateway->supportsStore();
+        $this->assertInternalType('boolean', $supportsStore);
 
-        $this->gateway->setHttpClient($newHttpClient);
-        $this->assertSame($newHttpClient, $this->gateway->getHttpClient());
+        if ($supportsStore) {
+            $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->store());
+        } else {
+            $this->assertFalse(method_exists($this->gateway, 'store'));
+        }
     }
 
-    public function testGetDefaultHttpClient()
+    public function testSupportsUnstore()
     {
-        $client = $this->gateway->getDefaultHttpClient();
-        $curlOptions = $client->getConfig('curl.options');
+        $supportsUnstore = $this->gateway->supportsUnstore();
+        $this->assertInternalType('boolean', $supportsUnstore);
 
-        $this->assertInstanceOf('Guzzle\Http\Client', $client);
-        $this->assertArrayHasKey(CURLOPT_CONNECTTIMEOUT, $curlOptions);
-    }
-
-    public function testHttpRequest()
-    {
-        $newHttpRequest = new HttpRequest;
-
-        $this->gateway->setHttpRequest($newHttpRequest);
-        $this->assertSame($newHttpRequest, $this->gateway->getHttpRequest());
-    }
-
-    public function testGetDefaultHttpRequest()
-    {
-        $request = $this->gateway->getDefaultHttpRequest();
-
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Request', $request);
+        if ($supportsUnstore) {
+            $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->unstore());
+        } else {
+            $this->assertFalse(method_exists($this->gateway, 'unstore'));
+        }
     }
 }

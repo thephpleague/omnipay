@@ -11,6 +11,7 @@
 
 namespace Omnipay;
 
+use Mockery as m;
 use PHPUnit_Framework_TestCase;
 use ReflectionObject;
 use Guzzle\Common\Event;
@@ -18,6 +19,7 @@ use Guzzle\Http\Client as HttpClient;
 use Guzzle\Http\Message\Response;
 use Guzzle\Http\Message\RequestInterface as GuzzleRequestInterface;
 use Guzzle\Plugin\Mock\MockPlugin;
+use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 /**
  * Base class for all Omnipay tests
@@ -26,7 +28,10 @@ use Guzzle\Plugin\Mock\MockPlugin;
  */
 abstract class TestCase extends PHPUnit_Framework_TestCase
 {
-    private $requests = array();
+    private $mockHttpRequests = array();
+    private $mockRequest;
+    private $httpClient;
+    private $httpRequest;
 
     /**
      * Mark a request as being mocked
@@ -35,9 +40,9 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      *
      * @return self
      */
-    public function addMockedRequest(GuzzleRequestInterface $request)
+    public function addMockedHttpRequest(GuzzleRequestInterface $request)
     {
-        $this->requests[] = $request;
+        $this->mockHttpRequests[] = $request;
 
         return $this;
     }
@@ -49,7 +54,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      */
     public function getMockedRequests()
     {
-        return $this->requests;
+        return $this->mockHttpRequests;
     }
 
     /**
@@ -59,15 +64,21 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      *
      * @return Response
      */
-    public function getMockResponse($path)
+    public function getMockHttpResponse($path)
     {
         if ($path instanceof Response) {
             return $path;
         }
 
         $ref = new ReflectionObject($this);
+        $dir = dirname($ref->getFileName());
 
-        return MockPlugin::getMockFile(dirname($ref->getFileName()).'/Mock/'.$path);
+        // if mock file doesn't exist, check parent directory
+        if (!file_exists($dir.'/Mock/'.$path) && file_exists($dir.'/../Mock/'.$path)) {
+            return MockPlugin::getMockFile($dir.'/../Mock/'.$path);
+        }
+
+        return MockPlugin::getMockFile($dir.'/Mock/'.$path);
     }
 
     /**
@@ -77,27 +88,68 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      * Mock/ subdirectory of the current class. A mock response is added to the next
      * request sent by the client.
      *
-     * @param Client $client Client object to modify
-     * @param string $paths  Path to files within the Mock folder of the service
+     * @param string $paths Path to files within the Mock folder of the service
      *
      * @return MockPlugin returns the created mock plugin
      */
-    public function setMockResponse(HttpClient $client, $paths)
+    public function setMockHttpResponse($paths)
     {
-        $this->requests = array();
+        $this->mockHttpRequests = array();
         $that = $this;
         $mock = new MockPlugin(null, true);
-        $client->getEventDispatcher()->removeSubscriber($mock);
+        $this->getHttpClient()->getEventDispatcher()->removeSubscriber($mock);
         $mock->getEventDispatcher()->addListener('mock.request', function(Event $event) use ($that) {
-            $that->addMockedRequest($event['request']);
+            $that->addMockedHttpRequest($event['request']);
         });
 
         foreach ((array) $paths as $path) {
-            $mock->addResponse($this->getMockResponse($path));
+            $mock->addResponse($this->getMockHttpResponse($path));
         }
 
-        $client->getEventDispatcher()->addSubscriber($mock);
+        $this->getHttpClient()->getEventDispatcher()->addSubscriber($mock);
 
         return $mock;
+    }
+
+    /**
+     * Helper method used by gateway test classes to generate a valid test credit card
+     */
+    public function getValidCard()
+    {
+        return array(
+            'firstName' => 'Example',
+            'lastName' => 'User',
+            'number' => '4111111111111111',
+            'expiryMonth' => '12',
+            'expiryYear' => '2020',
+            'cvv' => '123',
+        );
+    }
+
+    public function getMockRequest()
+    {
+        if (null === $this->mockRequest) {
+            $this->mockRequest = m::mock('\Omnipay\Common\Message\RequestInterface');
+        }
+
+        return $this->mockRequest;
+    }
+
+    public function getHttpClient()
+    {
+        if (null === $this->httpClient) {
+            $this->httpClient = new HttpClient;
+        }
+
+        return $this->httpClient;
+    }
+
+    public function getHttpRequest()
+    {
+        if (null === $this->httpRequest) {
+            $this->httpRequest = new HttpRequest;
+        }
+
+        return $this->httpRequest;
     }
 }

@@ -12,9 +12,8 @@
 namespace Omnipay\TwoCheckout;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Exception\InvalidResponseException;
-use Omnipay\Common\RedirectResponse;
-use Omnipay\Common\Request;
+use Omnipay\TwoCheckout\Message\CompletePurchaseRequest;
+use Omnipay\TwoCheckout\Message\PurchaseRequest;
 
 /**
  * 2Checkout Gateway
@@ -23,111 +22,47 @@ use Omnipay\Common\Request;
  */
 class Gateway extends AbstractGateway
 {
-    protected $endpoint = 'https://www.2checkout.com/checkout/purchase';
-    protected $username;
-    protected $password;
-    protected $testMode;
-
     public function getName()
     {
         return '2Checkout';
     }
 
-    public function defineSettings()
+    public function getDefaultParameters()
     {
         return array(
-            'username' => '',
-            'password' => '',
+            'accountNumber' => '',
+            'secretWord' => '',
             'testMode' => false,
         );
     }
 
-    public function getUsername()
+    public function getAccountNumber()
     {
-        return $this->username;
+        return $this->getParameter('accountNumber');
     }
 
-    public function setUsername($value)
+    public function setAccountNumber($value)
     {
-        $this->username = $value;
+        return $this->setParameter('accountNumber', $value);
     }
 
-    public function getPassword()
+    public function getSecretWord()
     {
-        return $this->password;
+        return $this->getParameter('secretWord');
     }
 
-    public function setPassword($value)
+    public function setSecretWord($value)
     {
-        $this->password = $value;
+        return $this->setParameter('secretWord', $value);
     }
 
-    public function getTestMode()
+    public function purchase(array $parameters = array())
     {
-        return $this->testMode;
+        return $this->createRequest('\Omnipay\TwoCheckout\Message\PurchaseRequest', $parameters);
     }
 
-    public function setTestMode($value)
+    public function completePurchase(array $parameters = array())
     {
-        $this->testMode = $value;
-    }
-
-    public function purchase($options)
-    {
-        $data = $this->buildPurchase($options);
-
-        return new RedirectResponse($this->endpoint.'?'.http_build_query($data));
-    }
-
-    public function completePurchase($options)
-    {
-        $request = new Request($options);
-        $orderNo = $this->httpRequest->get('order_number');
-
-        // strange exception specified by 2Checkout
-        if ($this->testMode) {
-            $orderNo = '1';
-        }
-
-        $key = md5($this->password.$this->username.$orderNo.$request->getAmountDecimal());
-        if (strtoupper($key) !== strtoupper($this->httpRequest->get('key'))) {
-            throw new InvalidResponseException;
-        }
-
-        return new Response($orderNo);
-    }
-
-    protected function buildPurchase($options)
-    {
-        $request = new Request($options);
-        $request->validate(array('amount', 'returnUrl'));
-        $source = $request->getCard();
-
-        $data = array();
-        $data['sid'] = $this->username;
-        $data['cart_order_id'] = $request->getTransactionId();
-        $data['total'] = $request->getAmountDecimal();
-        $data['tco_currency'] = $request->getCurrency();
-        $data['fixed'] = 'Y';
-        $data['skip_landing'] = 1;
-        $data['x_receipt_link_url'] = $request->getReturnUrl();
-
-        if ($source) {
-            $data['card_holder_name'] = $source->getName();
-            $data['street_address'] = $source->getAddress1();
-            $data['street_address2'] = $source->getAddress2();
-            $data['city'] = $source->getCity();
-            $data['state'] = $source->getState();
-            $data['zip'] = $source->getPostcode();
-            $data['country'] = $source->getCountry();
-            $data['phone'] = $source->getPhone();
-            $data['email'] = $source->getEmail();
-        }
-
-        if ($this->testMode) {
-            $data['demo'] = 'Y';
-        }
-
-        return $data;
+        return $this->createRequest('\Omnipay\TwoCheckout\Message\CompletePurchaseRequest', $parameters);
     }
 }

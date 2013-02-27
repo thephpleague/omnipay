@@ -12,7 +12,6 @@
 namespace Omnipay\AuthorizeNet;
 
 use Omnipay\GatewayTestCase;
-use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 class SIMGatewayTest extends GatewayTestCase
 {
@@ -20,7 +19,7 @@ class SIMGatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
-        $this->gateway = new SIMGateway($this->httpClient, $this->httpRequest);
+        $this->gateway = new SIMGateway($this->getHttpClient(), $this->getHttpRequest());
         $this->gateway->setApiLoginId('example');
 
         $this->options = array(
@@ -32,7 +31,7 @@ class SIMGatewayTest extends GatewayTestCase
 
     public function testAuthorize()
     {
-        $response = $this->gateway->authorize($this->options);
+        $response = $this->gateway->authorize($this->options)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
@@ -44,7 +43,7 @@ class SIMGatewayTest extends GatewayTestCase
 
     public function testCompleteAuthorize()
     {
-        $this->httpRequest->request->replace(
+        $this->getHttpRequest()->request->replace(
             array(
                 'x_response_code' => '1',
                 'x_trans_id' => '12345',
@@ -52,16 +51,16 @@ class SIMGatewayTest extends GatewayTestCase
             )
         );
 
-        $response = $this->gateway->completeAuthorize($this->options);
+        $response = $this->gateway->completeAuthorize($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertSame('12345', $response->getGatewayReference());
+        $this->assertSame('12345', $response->getTransactionReference());
         $this->assertNull($response->getMessage());
     }
 
     public function testPurchase()
     {
-        $response = $this->gateway->purchase($this->options);
+        $response = $this->gateway->purchase($this->options)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
@@ -73,7 +72,7 @@ class SIMGatewayTest extends GatewayTestCase
 
     public function testCompletePurchase()
     {
-        $this->httpRequest->request->replace(
+        $this->getHttpRequest()->request->replace(
             array(
                 'x_response_code' => '1',
                 'x_trans_id' => '12345',
@@ -81,10 +80,10 @@ class SIMGatewayTest extends GatewayTestCase
             )
         );
 
-        $response = $this->gateway->completePurchase($this->options);
+        $response = $this->gateway->completePurchase($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertSame('12345', $response->getGatewayReference());
+        $this->assertSame('12345', $response->getTransactionReference());
         $this->assertNull($response->getMessage());
     }
 }
