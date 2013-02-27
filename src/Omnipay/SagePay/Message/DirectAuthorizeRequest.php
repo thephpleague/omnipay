@@ -66,7 +66,7 @@ class DirectAuthorizeRequest extends AbstractRequest
         $data['CardNumber'] = $this->getCard()->getNumber();
         $data['CV2'] = $this->getCard()->getCvv();
         $data['ExpiryDate'] = $this->getCard()->getExpiryDate('my');
-        $data['CardType'] = $this->getCard()->getType();
+        $data['CardType'] = $this->getCard()->getBrand();
 
         if ($this->getCard()->getStartMonth() and $this->getCard()->getStartYear()) {
             $data['StartDate'] = $this->getCard()->getStartDate('my');
