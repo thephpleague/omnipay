@@ -20,7 +20,7 @@ class DirectAuthorizeRequest extends AbstractRequest
 
     protected function getBaseAuthorizeData()
     {
-        $this->validate(array('amount', 'card', 'transactionId'));
+        $this->validate('amount', 'card', 'transactionId');
 
         $data = $this->getBaseData();
         $data['Description'] = $this->getDescription();

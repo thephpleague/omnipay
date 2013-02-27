@@ -52,7 +52,7 @@ class PurchaseRequest extends AbstractRequest
 
     public function getData()
     {
-        $this->validate(array('amount', 'currency'));
+        $this->validate('amount', 'currency');
 
         $data = array();
         $data['amount'] = $this->getAmount();
@@ -67,7 +67,7 @@ class PurchaseRequest extends AbstractRequest
             $data['card'] = $this->getCardData();
         } else {
             // one of cardReference, cardToken, or card is required
-            $this->validate(array('card'));
+            $this->validate('card');
         }
 
         return $data;

@@ -20,7 +20,7 @@ class ServerCompleteAuthorizeRequest extends AbstractRequest
 {
     public function getData()
     {
-        $this->validate(array('transactionId', 'transactionReference'));
+        $this->validate('transactionId', 'transactionReference');
 
         $reference = json_decode($this->getTransactionReference(), true);
 

@@ -28,7 +28,7 @@ class StoreRequest extends PurchaseRequest
             $data['email'] = $this->getCard()->getEmail();
         } else {
             // one of cardToken, or card is required
-            $this->validate(array('card'));
+            $this->validate('card');
         }
 
         return $data;

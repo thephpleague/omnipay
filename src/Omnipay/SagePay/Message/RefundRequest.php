@@ -20,7 +20,7 @@ class RefundRequest extends AbstractRequest
 
     public function getData()
     {
-        $this->validate(array('amount', 'transactionReference'));
+        $this->validate('amount', 'transactionReference');
         $reference = json_decode($this->getTransactionReference(), true);
 
         $data = $this->getBaseData();

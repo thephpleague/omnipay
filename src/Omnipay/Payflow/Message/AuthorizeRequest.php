@@ -76,7 +76,7 @@ class AuthorizeRequest extends AbstractRequest
 
     public function getData()
     {
-        $this->validate(array('amount', 'card'));
+        $this->validate('amount', 'card');
         $this->getCard()->validate();
 
         $data = $this->getBaseData();

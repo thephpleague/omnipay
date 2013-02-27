@@ -53,7 +53,7 @@ class PxPostAuthorizeRequest extends AbstractRequest
 
     public function getData()
     {
-        $this->validate(array('amount'));
+        $this->validate('amount');
 
         $data = $this->getBaseData();
         $data->InputCurrency = $this->getCurrency();
@@ -70,7 +70,7 @@ class PxPostAuthorizeRequest extends AbstractRequest
             $data->Cvc2 = $this->getCard()->getCvv();
         } else {
             // either cardReference or card is required
-            $this->validate(array('card'));
+            $this->validate('card');
         }
 
         return $data;

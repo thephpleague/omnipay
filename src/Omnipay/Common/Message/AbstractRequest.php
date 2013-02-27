@@ -115,11 +115,11 @@ abstract class AbstractRequest implements RequestInterface
      * This method is called internally by gateways to avoid wasting time with an API call
      * when the request is clearly invalid.
      *
-     * @param array an array of required parameters
+     * @param string a variable length list of required parameters
      */
-    public function validate(array $required)
+    public function validate()
     {
-        foreach ($required as $key) {
+        foreach (func_get_args() as $key) {
             $value = $this->parameters->get($key);
             if (empty($value)) {
                 throw new InvalidRequestException("The $key parameter is required");

@@ -18,7 +18,7 @@ class RefundRequest extends PurchaseRequest
 {
     public function getData()
     {
-        $this->validate(array('transactionReference', 'amount'));
+        $this->validate('transactionReference', 'amount');
 
         $data = array();
         $data['amount'] = $this->getAmount();

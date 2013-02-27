@@ -22,7 +22,7 @@ class ExpressCompleteAuthorizeRequest extends AuthorizeRequest
     {
         $data = $this->getBaseData('DoExpressCheckoutPayment');
 
-        $this->validate(array('amount'));
+        $this->validate('amount');
 
         $data['PAYMENTREQUEST_0_PAYMENTACTION'] = $this->action;
         $data['PAYMENTREQUEST_0_AMT'] = $this->getAmountDecimal();

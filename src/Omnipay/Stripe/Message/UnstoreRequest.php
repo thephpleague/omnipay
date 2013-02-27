@@ -18,7 +18,7 @@ class UnstoreRequest extends PurchaseRequest
 {
     public function getData()
     {
-        $this->validate(array('cardReference'));
+        $this->validate('cardReference');
 
         return null;
     }

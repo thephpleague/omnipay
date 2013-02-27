@@ -20,7 +20,7 @@ class CaptureRequest extends AbstractRequest
 
     public function getData()
     {
-        $this->validate(array('amount', 'transactionReference'));
+        $this->validate('amount', 'transactionReference');
 
         $data = $this->getBaseData();
         $data['x_amount'] = $this->getAmountDecimal();

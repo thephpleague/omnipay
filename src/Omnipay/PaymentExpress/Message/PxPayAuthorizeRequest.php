@@ -44,7 +44,7 @@ class PxPayAuthorizeRequest extends AbstractRequest
 
     public function getData()
     {
-        $this->validate(array('amount', 'returnUrl'));
+        $this->validate('amount', 'returnUrl');
 
         $data = new SimpleXMLElement('<GenerateRequest/>');
         $data->PxPayUserId = $this->getUsername();

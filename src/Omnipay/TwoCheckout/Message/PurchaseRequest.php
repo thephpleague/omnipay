@@ -40,7 +40,7 @@ class PurchaseRequest extends AbstractRequest
 
     public function getData()
     {
-        $this->validate(array('amount', 'returnUrl'));
+        $this->validate('amount', 'returnUrl');
 
         $data = array();
         $data['sid'] = $this->getAccountNumber();

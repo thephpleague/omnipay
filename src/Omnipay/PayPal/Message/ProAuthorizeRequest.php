@@ -22,7 +22,7 @@ class ProAuthorizeRequest extends AbstractRequest
     {
         $data = $this->getBaseData('DoDirectPayment');
 
-        $this->validate(array('amount', 'card'));
+        $this->validate('amount', 'card');
         $this->getCard()->validate();
 
         $prefix = '';

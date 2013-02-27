@@ -18,7 +18,7 @@ class PxPostStoreRequest extends PxPostAuthorizeRequest
 {
     public function getData()
     {
-        $this->validate(array('card'));
+        $this->validate('card');
         $this->getCard()->validate();
 
         $data = $this->getBaseData();
