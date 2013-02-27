@@ -14,7 +14,7 @@ namespace Omnipay\PayPal\Message;
 /**
  * PayPal Express Complete Authorize Request
  */
-class ExpressCompleteAuthorizeRequest extends AuthorizeRequest
+class ExpressCompleteAuthorizeRequest extends AbstractRequest
 {
     protected $action = 'Authorization';
 
