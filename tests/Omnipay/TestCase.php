@@ -19,7 +19,6 @@ use Guzzle\Http\Client as HttpClient;
 use Guzzle\Http\Message\Response;
 use Guzzle\Http\Message\RequestInterface as GuzzleRequestInterface;
 use Guzzle\Plugin\Mock\MockPlugin;
-use Omnipay\Common\CreditCard;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 /**
@@ -117,14 +116,14 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      */
     public function getValidCard()
     {
-        return new CreditCard(array(
+        return array(
             'firstName' => 'Example',
             'lastName' => 'User',
             'number' => '4111111111111111',
             'expiryMonth' => '12',
             'expiryYear' => '2020',
             'cvv' => '123',
-        ));
+        );
     }
 
     public function getMockRequest()

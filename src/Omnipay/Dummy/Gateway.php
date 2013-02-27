@@ -20,8 +20,11 @@ use Omnipay\Dummy\Message\AuthorizeRequest;
  * This gateway is useful for testing. It simply authorizes any payment made using a valid
  * credit card number and expiry.
  *
- * Any card number which passes the Luhn algorithm and ends in 0 is authorized
- * Any card number which passes the Luhn algorithm and ends in 1 is declined
+ * Any card number which passes the Luhn algorithm and ends in an even number is authorized,
+ * for example: 4242424242424242
+ *
+ * Any card number which passes the Luhn algorithm and ends in an odd number is declined,
+ * for example: 4111111111111111
  */
 class Gateway extends AbstractGateway
 {
