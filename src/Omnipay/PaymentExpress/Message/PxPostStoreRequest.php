@@ -24,7 +24,7 @@ class PxPostStoreRequest extends PxPostAuthorizeRequest
         $data = $this->getBaseData();
         $data->Amount = '1.00';
         $data->EnableAddBillCard = 1;
-        // $data->CardNumber = $this->getCard()->getNumber();
+        $data->CardNumber = $this->getCard()->getNumber();
         $data->CardHolderName = $this->getCard()->getName();
         $data->DateExpiry = $this->getCard()->getExpiryDate('my');
         $data->Cvc2 = $this->getCard()->getCvv();
