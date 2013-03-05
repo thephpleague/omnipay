@@ -15,6 +15,8 @@ use Omnipay\GatewayTestCase;
 
 class AIMGatewayTest extends GatewayTestCase
 {
+    protected $voidOptions;
+
     public function setUp()
     {
         parent::setUp();
@@ -28,6 +30,10 @@ class AIMGatewayTest extends GatewayTestCase
 
         $this->captureOptions = array(
             'amount' => 1000,
+            'transactionReference' => '12345',
+        );
+
+        $this->voidOptions = array(
             'transactionReference' => '12345',
         );
     }
@@ -97,4 +103,27 @@ class AIMGatewayTest extends GatewayTestCase
         $this->assertSame('0', $response->getTransactionReference());
         $this->assertSame('A valid amount is required.', $response->getMessage());
     }
+
+    public function testVoidSuccess()
+    {
+        $this->setMockHttpResponse('AIMVoidSuccess.txt');
+
+        $response = $this->gateway->void($this->voidOptions)->send();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame('0', $response->getTransactionReference());
+        $this->assertSame('This transaction has already been voided.', $response->getMessage());
+    }
+
+    public function testVoidFailure()
+    {
+        $this->setMockHttpResponse('AIMVoidFailure.txt');
+
+        $response = $this->gateway->void($this->voidOptions)->send();
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame('0', $response->getTransactionReference());
+        $this->assertSame('A valid referenced transaction ID is required.', $response->getMessage());
+    }
+
 }
