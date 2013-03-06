@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+Connection: close
+Date: Sat, 16 Feb 2013 04:00:03 GMT
+Server: Microsoft-IIS/6.0
+X-Powered-By: ASP.NET
+Content-Type: text/html
+Content-Length: 307
+Cache-Control: private, must-revalidate, max-age=0
+Expires: Tue, 01 Jan 1980 00:00:00 GMT
+
+|1|,|1|,|310|,|This transaction has already been voided.|,||,|P|,|0|,||,||,|0.00|,|CC|,|void|,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,|554B8CA3AE27C6104986860760858E83|,|P|,|2|,||,||,||,||,||,||,||,||,||,||,|XXXX1111|,|Visa|,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||,||
