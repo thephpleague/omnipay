@@ -73,26 +73,6 @@ class CreditCardTest extends TestCase
 
     /**
      * @expectedException \Omnipay\Common\Exception\InvalidCreditCardException
-     * @expectedExceptionMessage The firstName parameter is required
-     */
-    public function testValidateFirstNameRequired()
-    {
-        $this->card->setFirstName(null);
-        $this->card->validate();
-    }
-
-    /**
-     * @expectedException \Omnipay\Common\Exception\InvalidCreditCardException
-     * @expectedExceptionMessage The lastName parameter is required
-     */
-    public function testValidateLastNameRequired()
-    {
-        $this->card->setLastName(null);
-        $this->card->validate();
-    }
-
-    /**
-     * @expectedException \Omnipay\Common\Exception\InvalidCreditCardException
      * @expectedExceptionMessage The expiryMonth parameter is required
      */
     public function testValidateExpiryMonthRequired()
