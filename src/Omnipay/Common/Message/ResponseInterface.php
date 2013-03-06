@@ -45,6 +45,13 @@ interface ResponseInterface extends MessageInterface
     public function getMessage();
 
     /**
+     * Response code
+     *
+     * @return string A response code from the payment gateway
+     */
+    public function getCode();
+
+    /**
      * Gateway Reference
      *
      * @return string A reference provided by the gateway to represent this transaction

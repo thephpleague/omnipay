@@ -50,6 +50,11 @@ abstract class AbstractResponse implements ResponseInterface
         return null;
     }
 
+    public function getCode()
+    {
+        return null;
+    }
+
     public function getTransactionReference()
     {
         return null;
