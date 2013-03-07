@@ -4,7 +4,8 @@
 {% block content %}
 
     <p>You can create an instance of this gateway using:</p>
-    <pre>$gateway = GatewayFactory::create('{{ gateway.shortName }}');</pre>
+    <pre>$gateway = GatewayFactory::create('{{ gateway.shortName }}');
+$response = $gateway->initialize($params);</pre>
 
     <h3>Gateway Settings</h3>
     <p><span class="label label-info">Note</span> These settings will be stored in your session and used to create test purchases.</p>

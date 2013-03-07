@@ -6,9 +6,22 @@
     {% if response.isSuccessful() %}
         <div class="alert alert-success">Congratulations, your request was successful!</div>
     {% elseif response.isRedirect() %}
-        <div class="alert alert-info">Your request requires redirect to an off-site payment page.</div>
+        <div class="alert alert-info">Your request requires {{ response.redirectMethod }}
+        redirect to an off-site payment page.</div>
 
-        <p><a href="{{ response.redirectUrl }}" class="btn btn-success">Redirect Now</a></p>
+        {% if response.redirectMethod == "GET" %}
+            <p><a href="{{ response.redirectUrl }}" class="btn btn-success">Redirect Now</a></p>
+        {% elseif response.redirectMethod == "POST" %}
+            <form method="POST" action="{{ response.redirectUrl }}">
+                <p>
+                    {% for key, value in response.redirectData %}
+                        <input type="hidden" name="{{ key }}" value="{{ value }}" />
+                    {% endfor %}
+
+                    <button class="btn btn-success">Redirect Now</button>
+                </p>
+            </form>
+        {% endif %}
     {% else %}
         <div class="alert alert-error">Sorry, your request failed.</div>
     {% endif %}
@@ -24,6 +37,11 @@
     {% if response.redirectUrl is defined %}
         <p><b>$request->getRedirectUrl()</b></p>
         <pre>{{ response.redirectUrl }}</pre>
+    {% endif %}
+
+    {% if response.redirectMethod is defined %}
+        <p><b>$request->getRedirectMethod()</b></p>
+        <pre>{{ response.redirectMethod }}</pre>
     {% endif %}
 
     {% if response.redirectData is defined %}
