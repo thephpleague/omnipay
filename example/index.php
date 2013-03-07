@@ -21,14 +21,6 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 // enable Silex debugging
 $app['debug'] = true;
 
-// twig globals
-$app->before( function() use ( $app ) {
-    $notice = $app['session']->getFlash('notice');
-    if ($notice) {
-        $app['twig']->addGlobal('notice', $notice);
-    }
-});
-
 // root route
 $app->get('/', function() use ($app) {
     $gateways = array_map(function($name) {
@@ -62,7 +54,7 @@ $app->post('/gateways/{name}', function($name) use ($app) {
     $app['session']->set($sessionVar, $gateway->getParameters());
 
     // redirect back to gateway settings page
-    $app['session']->setFlash('success', 'Gateway settings updated!');
+    $app['session']->getFlashBag()->add('success', 'Gateway settings updated!');
 
     return $app->redirect($app['request']->getPathInfo());
 });

@@ -9,14 +9,9 @@
     <div class="container">
         <h1>{{ title }}</h1>
 
-        {% set success = app.session.flash('success') %}
-        {% set error = app.session.flash('error') %}
-        {% if success %}
-            <div class="alert alert-success">{{ success }}</div>
-        {% endif %}
-        {% if error %}
-            <div class="alert alert-error">{{ error }}</div>
-        {% endif %}
+        {% for message in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
 
         {% block content %}{% endblock %}
     </div>
