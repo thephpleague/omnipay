@@ -5,8 +5,13 @@ php:
   - 5.3
   - 5.4
 
+env:
+  - SYMFONY_VERSION="2.1.*"
+  - SYMFONY_VERSION="2.2.*"
+
 before_script:
   - composer self-update
+  - composer require symfony/http-foundation:${SYMFONY_VERSION} --no-update
   - composer install -n --dev --prefer-source
 
 script: vendor/bin/phpcs --standard=PSR2 src && vendor/bin/phpunit --coverage-text
