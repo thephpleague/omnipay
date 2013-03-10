@@ -109,6 +109,18 @@ class CreditCard
         return $this;
     }
 
+    protected function setYearParameter($key, $value)
+    {
+        // normalize year to four digits
+        if (null === $value || '' === $value) {
+            $value = null;
+        } else {
+            $value = (int) gmdate('Y', gmmktime(0, 0, 0, 1, 1, (int) $value));
+        }
+
+        return $this->setParameter($key, $value);
+    }
+
     /**
      * Validate this credit card. If the card is invalid, InvalidCreditCardException is thrown.
      *
@@ -213,7 +225,7 @@ class CreditCard
 
     public function setExpiryYear($value)
     {
-        return $this->setParameter('expiryYear', $value ? Helper::normalizeYear($value) : $value);
+        return $this->setYearParameter('expiryYear', $value);
     }
 
     /**
@@ -243,7 +255,7 @@ class CreditCard
 
     public function setStartYear($value)
     {
-        return $this->setParameter('startYear', $value ? Helper::normalizeYear($value) : $value);
+        return $this->setYearParameter('startYear', $value);
     }
 
     /**
