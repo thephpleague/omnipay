@@ -172,4 +172,155 @@ abstract class GatewayTestCase extends TestCase
             $this->assertFalse(method_exists($this->gateway, 'unstore'));
         }
     }
+
+    public function testAuthorizeParameters()
+    {
+        if ($this->gateway->supportsAuthorize()) {
+            foreach ($this->gateway->getDefaultParameters() as $key => $default) {
+                // set property on gateway
+                $getter = 'get'.ucfirst($key);
+                $setter = 'set'.ucfirst($key);
+                $value = uniqid();
+                $this->gateway->$setter($value);
+
+                // request should have matching property, with correct value
+                $request = $this->gateway->authorize();
+                $this->assertSame($value, $request->$getter());
+            }
+        }
+    }
+
+    public function testCompleteAuthorizeParameters()
+    {
+        if ($this->gateway->supportsCompleteAuthorize()) {
+            foreach ($this->gateway->getDefaultParameters() as $key => $default) {
+                // set property on gateway
+                $getter = 'get'.ucfirst($key);
+                $setter = 'set'.ucfirst($key);
+                $value = uniqid();
+                $this->gateway->$setter($value);
+
+                // request should have matching property, with correct value
+                $request = $this->gateway->completeAuthorize();
+                $this->assertSame($value, $request->$getter());
+            }
+        }
+    }
+
+    public function testCaptureParameters()
+    {
+        if ($this->gateway->supportsCapture()) {
+            foreach ($this->gateway->getDefaultParameters() as $key => $default) {
+                // set property on gateway
+                $getter = 'get'.ucfirst($key);
+                $setter = 'set'.ucfirst($key);
+                $value = uniqid();
+                $this->gateway->$setter($value);
+
+                // request should have matching property, with correct value
+                $request = $this->gateway->capture();
+                $this->assertSame($value, $request->$getter());
+            }
+        }
+    }
+
+    public function testPurchaseParameters()
+    {
+        foreach ($this->gateway->getDefaultParameters() as $key => $default) {
+            // set property on gateway
+            $getter = 'get'.ucfirst($key);
+            $setter = 'set'.ucfirst($key);
+            $value = uniqid();
+            $this->gateway->$setter($value);
+
+            // request should have matching property, with correct value
+            $request = $this->gateway->purchase();
+            $this->assertSame($value, $request->$getter());
+        }
+    }
+
+    public function testCompletePurchaseParameters()
+    {
+        if ($this->gateway->supportsCompletePurchase()) {
+            foreach ($this->gateway->getDefaultParameters() as $key => $default) {
+                // set property on gateway
+                $getter = 'get'.ucfirst($key);
+                $setter = 'set'.ucfirst($key);
+                $value = uniqid();
+                $this->gateway->$setter($value);
+
+                // request should have matching property, with correct value
+                $request = $this->gateway->completePurchase();
+                $this->assertSame($value, $request->$getter());
+            }
+        }
+    }
+
+    public function testRefundParameters()
+    {
+        if ($this->gateway->supportsRefund()) {
+            foreach ($this->gateway->getDefaultParameters() as $key => $default) {
+                // set property on gateway
+                $getter = 'get'.ucfirst($key);
+                $setter = 'set'.ucfirst($key);
+                $value = uniqid();
+                $this->gateway->$setter($value);
+
+                // request should have matching property, with correct value
+                $request = $this->gateway->refund();
+                $this->assertSame($value, $request->$getter());
+            }
+        }
+    }
+
+    public function testVoidParameters()
+    {
+        if ($this->gateway->supportsVoid()) {
+            foreach ($this->gateway->getDefaultParameters() as $key => $default) {
+                // set property on gateway
+                $getter = 'get'.ucfirst($key);
+                $setter = 'set'.ucfirst($key);
+                $value = uniqid();
+                $this->gateway->$setter($value);
+
+                // request should have matching property, with correct value
+                $request = $this->gateway->void();
+                $this->assertSame($value, $request->$getter());
+            }
+        }
+    }
+
+    public function testStoreParameters()
+    {
+        if ($this->gateway->supportsStore()) {
+            foreach ($this->gateway->getDefaultParameters() as $key => $default) {
+                // set property on gateway
+                $getter = 'get'.ucfirst($key);
+                $setter = 'set'.ucfirst($key);
+                $value = uniqid();
+                $this->gateway->$setter($value);
+
+                // request should have matching property, with correct value
+                $request = $this->gateway->store();
+                $this->assertSame($value, $request->$getter());
+            }
+        }
+    }
+
+    public function testUnstoreParameters()
+    {
+        if ($this->gateway->supportsUnstore()) {
+            foreach ($this->gateway->getDefaultParameters() as $key => $default) {
+                // set property on gateway
+                $getter = 'get'.ucfirst($key);
+                $setter = 'set'.ucfirst($key);
+                $value = uniqid();
+                $this->gateway->$setter($value);
+
+                // request should have matching property, with correct value
+                $request = $this->gateway->unstore();
+                $this->assertSame($value, $request->$getter());
+            }
+        }
+    }
 }

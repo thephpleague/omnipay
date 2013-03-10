@@ -49,6 +49,26 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('signature', $value);
     }
 
+    public function getSolutionType()
+    {
+        return $this->getParameter('solutionType');
+    }
+
+    public function setSolutionType($value)
+    {
+        return $this->setParameter('solutionType', $value);
+    }
+
+    public function getLandingPage()
+    {
+        return $this->getParameter('landingPage');
+    }
+
+    public function setLandingPage($value)
+    {
+        return $this->setParameter('landingPage', $value);
+    }
+
     protected function getBaseData($method)
     {
         $data = array();

@@ -16,26 +16,6 @@ namespace Omnipay\PayPal\Message;
  */
 class ExpressAuthorizeRequest extends AbstractRequest
 {
-    public function getSolutionType()
-    {
-        return $this->getParameter('solutionType');
-    }
-
-    public function setSolutionType($value)
-    {
-        return $this->setParameter('solutionType', $value);
-    }
-
-    public function getLandingPage()
-    {
-        return $this->getParameter('landingPage');
-    }
-
-    public function setLandingPage($value)
-    {
-        return $this->setParameter('landingPage', $value);
-    }
-
     public function getData()
     {
         $data = $this->getBaseData('SetExpressCheckout');
