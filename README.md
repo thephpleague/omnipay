@@ -29,7 +29,7 @@ $gateway = GatewayFactory::create('Stripe');
 $gateway->setApiKey('abc123');
 
 $formData = ['number' => '4111111111111111', 'expiryMonth' => 6, 'expiryYear' => 2016];
-$response = $gateway->purchase(['amount' => 1000, 'card' => $formData])->send();
+$response = $gateway->purchase(['amount' => 1000, 'currency' => 'USD', 'card' => $formData])->send();
 
 if ($response->isSuccessful()) {
     // payment was successful: update database
