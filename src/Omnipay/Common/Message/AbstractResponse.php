@@ -62,6 +62,9 @@ abstract class AbstractResponse implements ResponseInterface
 
     /**
      * Automatically perform any required redirect
+     *
+     * This method is meant to be a helper for simple scenarios. If you want to customize the
+     * redirection page, just call the getRedirectUrl() and getRedirectData() methods directly.
      */
     public function redirect()
     {
@@ -70,31 +73,26 @@ abstract class AbstractResponse implements ResponseInterface
         }
 
         if ('GET' === $this->getRedirectMethod()) {
-            return HttpRedirectResponse::create($this->getRedirectUrl())->send();
+            HttpRedirectResponse::create($this->getRedirectUrl())->send();
+            exit;
         } elseif ('POST' === $this->getRedirectMethod()) {
-            $hiddenFields = implode(
-                "\n",
-                array_map(
-                    function ($name, $value) {
-                        return sprintf(
-                            '<input type="hidden" name="%1$s" value="%2$s" />',
-                            htmlspecialchars($name, ENT_QUOTES, 'UTF-8'),
-                            htmlspecialchars($value, ENT_QUOTES, 'UTF-8')
-                        );
-                    },
-                    $this->getRedirectData()
-                )
-            );
+            $hiddenFields = '';
+            foreach ($this->getRedirectData() as $key => $value) {
+                $hiddenFields .= sprintf(
+                    '<input type="hidden" name="%1$s" value="%2$s" />',
+                    htmlspecialchars($key, ENT_QUOTES, 'UTF-8'),
+                    htmlspecialchars($value, ENT_QUOTES, 'UTF-8')
+                )."\n";
+            }
 
-            $output = <<<EOF
-<!DOCTYPE html>
+            $output = '<!DOCTYPE html>
 <html>
     <head>
         <title>Redirecting...</title>
     </head>
     <body onload="document.forms[0].submit();">
         <form action="%1$s" method="post">
-            <p>Redirecting to payment gateway...</p>
+            <p>Redirecting to payment page...</p>
             <p>
                 %2$s
                 <input type="submit" value="Continue" />
@@ -102,12 +100,12 @@ abstract class AbstractResponse implements ResponseInterface
         </form>
     </body>
 </html>';
-EOF;
             $output = sprintf($output, htmlspecialchars($this->redirectUrl, ENT_QUOTES, 'UTF-8'), $hiddenFields);
 
-            return HttpResponse::create($output)->send();
+            HttpResponse::create($output)->send();
+            exit;
         }
 
-        throw new RuntimeException("Unexpected redirect method '{$response->getRedirectMethod()}'");
+        throw new RuntimeException('Invalid redirect method "'.$response->getRedirectMethod().'".');
     }
 }
