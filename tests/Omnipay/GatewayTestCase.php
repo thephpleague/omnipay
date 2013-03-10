@@ -89,6 +89,18 @@ abstract class GatewayTestCase extends TestCase
         }
     }
 
+    public function testSupportsCompleteAuthorize()
+    {
+        $supportsCompleteAuthorize = $this->gateway->supportsCompleteAuthorize();
+        $this->assertInternalType('boolean', $supportsCompleteAuthorize);
+
+        if ($supportsCompleteAuthorize) {
+            $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->completeAuthorize());
+        } else {
+            $this->assertFalse(method_exists($this->gateway, 'completeAuthorize'));
+        }
+    }
+
     public function testSupportsCapture()
     {
         $supportsCapture = $this->gateway->supportsCapture();
@@ -98,6 +110,18 @@ abstract class GatewayTestCase extends TestCase
             $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->capture());
         } else {
             $this->assertFalse(method_exists($this->gateway, 'capture'));
+        }
+    }
+
+    public function testSupportsCompletePurchase()
+    {
+        $supportsCompletePurchase = $this->gateway->supportsCompletePurchase();
+        $this->assertInternalType('boolean', $supportsCompletePurchase);
+
+        if ($supportsCompletePurchase) {
+            $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->completePurchase());
+        } else {
+            $this->assertFalse(method_exists($this->gateway, 'completePurchase'));
         }
     }
 
