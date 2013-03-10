@@ -120,6 +120,16 @@ abstract class AbstractGateway implements GatewayInterface
     }
 
     /**
+     * Supports Complete Authorize
+     *
+     * @return boolean True if this gateway supports the completeAuthorize() method
+     */
+    public function supportsCompleteAuthorize()
+    {
+        return method_exists($this, 'completeAuthorize');
+    }
+
+    /**
      * Supports Capture
      *
      * @return boolean True if this gateway supports the capture() method
@@ -127,6 +137,16 @@ abstract class AbstractGateway implements GatewayInterface
     public function supportsCapture()
     {
         return method_exists($this, 'capture');
+    }
+
+    /**
+     * Supports Complete Purchase
+     *
+     * @return boolean True if this gateway supports the completePurchase() method
+     */
+    public function supportsCompletePurchase()
+    {
+        return method_exists($this, 'completePurchase');
     }
 
     /**
