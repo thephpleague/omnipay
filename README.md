@@ -27,7 +27,7 @@ use Omnipay\Common\GatewayFactory;
 $gateway = GatewayFactory::create('Stripe');
 $gateway->setApiKey('abc123');
 
-$formData = ['number' => '4242424242424242', 'expiryMonth' => 6, 'expiryYear' => 2016];
+$formData = ['number' => '4242424242424242', 'cvv' => 123, 'expiryMonth' => 6, 'expiryYear' => 2016];
 $response = $gateway->purchase(['amount' => 1000, 'currency' => 'USD', 'card' => $formData])->send();
 
 if ($response->isSuccessful()) {
