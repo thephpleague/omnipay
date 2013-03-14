@@ -1,0 +1,13 @@
+HTTP/1.1 200 OK
+Date: Thu, 07 Mar 2013 04:57:24 GMT
+Server: Apache/2.2.3 (CentOS)
+Set-Cookie: refer_session=Direct; path=/; domain=.payfast.co.za, refer_first=Direct; expires=Fri, 07-Mar-2014 04:57:24 GMT; path=/; domain=.payfast.co.za
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Vary: Accept-Encoding,User-Agent
+Content-Length: 7
+Connection: close
+Content-Type: text/html; charset=UTF-8
+
+INVALID
