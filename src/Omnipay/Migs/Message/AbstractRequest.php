@@ -9,34 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\Migs;
+namespace Omnipay\Migs\Message;
 
-use Omnipay\Common\AbstractGateway;
-use Omnipay\Migs\Message\PurchaseRequest;
-use Omnipay\Migs\Message\CompletePurchaseRequest;
+use Omnipay\Migs\ThreePartyGateway;
 
 /**
- * MIGS Gateway
- *
- * @link http://www.anz.com/australia/business/merchant/pdf/VPC-Dev-Kit-Integration-Notes.pdf
+ * GoCardless Abstract Request
  */
-class ThreePartyGateway extends AbstractGateway
+abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
-    public function getName()
-    {
-        return 'MIGS 3-Party';
-    }
+    protected $endpoint = 'https://migs.mastercard.com.au/vpcpay';
 
-    public function getDefaultParameters()
-    {
-        return array(
-            'merchantId'                   => '',
-            'merchantAccessCode'           => '',
-            'secureHash'                   => '',
-            'locale'                       => 'en',
-            'version'                      => '1',
-        );
-    }
 
     public function getMerchantId()
     {
@@ -49,6 +32,7 @@ class ThreePartyGateway extends AbstractGateway
     }
 
 
+
     public function getMerchantAccessCode()
     {
         return $this->getParameter('merchantAccessCode');
@@ -59,6 +43,7 @@ class ThreePartyGateway extends AbstractGateway
         return $this->setParameter('merchantAccessCode', $value);
     }
 
+
     public function getSecureHash()
     {
         return $this->getParameter('secureHash');
@@ -68,6 +53,7 @@ class ThreePartyGateway extends AbstractGateway
     {
         return $this->setParameter('secureHash', $value);
     }
+
 
     public function getLocale()
     {
@@ -89,13 +75,19 @@ class ThreePartyGateway extends AbstractGateway
         return $this->setParameter('version', $value);
     }
 
-    public function purchase(array $parameters = array())
+    protected function getBaseData()
     {
-        return $this->createRequest('\Omnipay\Migs\Message\PurchaseRequest', $parameters);
-    }
+        $data = array();
+        $data['vpc_Merchant']    = $this->getMerchantId();
+        $data['vpc_AccessCode']  = $this->getMerchantAccessCode();
+        $data['vpc_Version']     = $this->getVersion();
+        $data['vpc_Command']     = 'pay';
 
-    public function completePurchase(array $parameters = array())
+        return $data;
+    }
+    
+    public function getEndpoint()
     {
-        return $this->createRequest('\Omnipay\Migs\Message\CompletePurchaseRequest', $parameters);
+        return $this->endpoint;
     }
 }
