@@ -1,0 +1,34 @@
+HTTP/1.1 200 OK
+Date: Thu, 07 Mar 2013 04:50:36 GMT
+Server: Apache/2.2.3 (CentOS)
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Vary: Accept-Encoding,User-Agent
+Content-Length: 397
+Connection: close
+Content-Type: text/html; charset=UTF-8
+
+SUCCESS
+m_payment_id=
+pf_payment_id=61484
+payment_status=COMPLETE
+item_name=fjdksl
+item_description=
+amount_gross=12.00
+amount_fee=-0.27
+amount_net=11.73
+custom_str1=
+custom_str2=
+custom_str3=
+custom_str4=
+custom_str5=
+custom_int1=
+custom_int2=
+custom_int3=
+custom_int4=
+custom_int5=
+name_first=Test
+name_last=User+01
+email_address=sbtu01%40payfast.co.za
+merchant_id=10000103
