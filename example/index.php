@@ -66,6 +66,8 @@ $app->get('/gateways/{name}/authorize', function($name) use ($app) {
     $gateway->initialize((array) $app['session']->get($sessionVar));
 
     $params = $app['session']->get($sessionVar.'.authorize', array());
+    $params['returnUrl'] = str_replace('/authorize', '/completeAuthorize', $app['request']->getUri());
+    $params['cancelUrl'] = $app['request']->getUri();
     $card = new Omnipay\Common\CreditCard($app['session']->get($sessionVar.'.card'));
 
     return $app['twig']->render('request.twig', array(
@@ -143,6 +145,8 @@ $app->get('/gateways/{name}/purchase', function($name) use ($app) {
     $gateway->initialize((array) $app['session']->get($sessionVar));
 
     $params = $app['session']->get($sessionVar.'.purchase', array());
+    $params['returnUrl'] = str_replace('/purchase', '/completePurchase', $app['request']->getUri());
+    $params['cancelUrl'] = $app['request']->getUri();
     $card = new Omnipay\Common\CreditCard($app['session']->get($sessionVar.'.card'));
 
     return $app['twig']->render('request.twig', array(
