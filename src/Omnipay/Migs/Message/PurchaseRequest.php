@@ -51,22 +51,6 @@ class PurchaseRequest extends AbstractRequest
         return $this->response = new PurchaseResponse($this, $this->getData());
     }
 
-    // getBody returns the migs page saying cookies are disabled
-
-    // public function send()
-    // {
-    //     $url = $this->getEndpoint().'?'.http_build_query($this->getData());
-    //     echo $url.'<hr />';
-    //     $httpResponse = $this->httpClient->get($url)->send();
-    //     echo (string) $httpResponse->getBody();
-    //     return $this->createResponse($httpResponse->getBody());
-    // }
-
-    // protected function createResponse($data)
-    // {
-    //     return $this->response = new PurchaseResponse($this, $data);
-    // }
-
     /**
      * Generate a nonce for each request
      */
