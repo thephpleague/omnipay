@@ -32,9 +32,7 @@ class ThreePartyGateway extends AbstractGateway
         return array(
             'merchantId'                   => '',
             'merchantAccessCode'           => '',
-            'secureHash'                   => '',
-            'locale'                       => 'en',
-            'version'                      => '1',
+            'secureHash'                   => ''
         );
     }
 
@@ -67,26 +65,6 @@ class ThreePartyGateway extends AbstractGateway
     public function setSecureHash($value)
     {
         return $this->setParameter('secureHash', $value);
-    }
-
-    public function getLocale()
-    {
-        return $this->getParameter('locale');
-    }
-
-    public function setLocale($value)
-    {
-        return $this->setParameter('locale', $value);
-    }
-
-    public function getVersion()
-    {
-        return $this->getParameter('version');
-    }
-
-    public function setVersion($value)
-    {
-        return $this->setParameter('version', $value);
     }
 
     public function purchase(array $parameters = array())

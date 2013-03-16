@@ -23,7 +23,6 @@ class PurchaseRequest extends AbstractRequest
         $data = $this->getBaseData();
 
         $data['vpc_Amount']      = $this->getAmount();
-        $data['vpc_Locale']      = $this->getLocale();
         $data['vpc_MerchTxnRef'] = $this->generateNonce(40);
         $data['vpc_OrderInfo']   = $this->generateNonce(34);
         $data['vpc_ReturnURL']   = $this->getReturnUrl();

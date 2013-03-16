@@ -30,9 +30,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
         return $this->setParameter('merchantId', $value);
     }
-
-
-
+    
     public function getMerchantAccessCode()
     {
         return $this->getParameter('merchantAccessCode');
@@ -54,33 +52,13 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('secureHash', $value);
     }
 
-
-    public function getLocale()
-    {
-        return $this->getParameter('locale');
-    }
-
-    public function setLocale($value)
-    {
-        return $this->setParameter('locale', $value);
-    }
-
-    public function getVersion()
-    {
-        return $this->getParameter('version');
-    }
-
-    public function setVersion($value)
-    {
-        return $this->setParameter('version', $value);
-    }
-
     protected function getBaseData()
     {
         $data = array();
         $data['vpc_Merchant']    = $this->getMerchantId();
         $data['vpc_AccessCode']  = $this->getMerchantAccessCode();
-        $data['vpc_Version']     = $this->getVersion();
+        $data['vpc_Version']     = '1';
+        $data['vpc_Locale']     = 'en';
         $data['vpc_Command']     = 'pay';
 
         return $data;
