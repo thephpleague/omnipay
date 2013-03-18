@@ -35,4 +35,19 @@ class ThreePartyGatewayTest extends GatewayTestCase
         $this->assertStringStartsWith('https://migs.mastercard.com.au/vpcpay?', $response->getRedirectUrl());
     }
 
+    public function testCompletePurchase()
+    {
+        $this->getHttpRequest()->query->replace(
+            array(
+                'vpc_Message' => 'Approved',
+                'vpc_ReceiptNo' => '12345',
+            )
+        );
+
+        $response = $this->gateway->completePurchase($this->options)->send();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame('12345', $response->getTransactionReference());
+        $this->assertSame('Approved', $response->getMessage());
+    }
 }
