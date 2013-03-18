@@ -21,13 +21,13 @@ class CompletePurchaseRequest extends AbstractRequest
 {
     public function getData()
     {
-        $data = $this->httpRequest->getQueryString();
-        
+
+        $data = http_build_query($this->httpRequest->query->all());
         return $data;
     }
 
     public function send()
     {
-        return $this->resonse = new CompletePurchaseResponse($this, $this->getData());
+        return $this->response = new CompletePurchaseResponse($this, $this->getData());
     }
 }

@@ -28,9 +28,20 @@ class CompletePurchaseResponse extends AbstractResponse
     public function isSuccessful()
     {
         if (isset($this->data['vpc_Message'])) {
+
             if ($this->data['vpc_Message'] == "Approved") {
                 return true;
             }
+
+            // if(isset($this->data['vpc_SecureHash']))
+            // {
+            //     $secure_secret = "";
+
+            //     if($this->data['vpc_SecureHash'] == $this->getSecureHash($this->data, $secure_secret))
+            //     {
+            //         return true;
+            //     }
+            // }
         }
 
         return false;
@@ -38,15 +49,26 @@ class CompletePurchaseResponse extends AbstractResponse
 
     public function getTransactionReference()
     {
-        if (isset($this->data['vpc_ReceiptNo'])) {
-            return $this->data['vpc_ReceiptNo'];
-        }
-
-        return false;
+        return (isset($this->data['vpc_ReceiptNo']) ? $this->data['vpc_ReceiptNo'] : null);
     }
 
     public function getMessage()
     {
-        return (isset($this->data['vpc_Message']) ? $this->data['vpc_Message'] : false);
+        return (isset($this->data['vpc_Message']) ? $this->data['vpc_Message'] : null);
+    }
+
+    private function getSecureHash($data, $secure_secret)
+    {
+        $md5HashData = $secure_secret;
+
+        foreach ($this->data as $k => $v) {
+            if ($k !== "vpc_SecureHash") {
+                $md5HashData .= $v;
+            }
+        }
+
+        $hash = strtoupper(md5($md5HashData));
+
+        return $hash;
     }
 }
