@@ -17,7 +17,7 @@ class CompletePurchaseResponseTest extends TestCase
 {
     public function testCompletePurchaseSuccess()
     {
-        $response = new CompletePurchaseResponse($this->getMockRequest(), 'vpc_Message=Approved&vpc_ReceiptNo=12345');
+        $response = new CompletePurchaseResponse($this->getMockRequest(), 'vpc_Message=Approved&vpc_ReceiptNo=12345&vpc_TxnResponseCode=0');
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('12345', $response->getTransactionReference());
@@ -26,10 +26,10 @@ class CompletePurchaseResponseTest extends TestCase
 
     public function testCompletePurchaseFailure()
     {
-        $response = new CompletePurchaseResponse($this->getMockRequest(), 'vpc_Message=Declined');
+        $response = new CompletePurchaseResponse($this->getMockRequest(), 'vpc_Message=Error&vpc_ReceiptNo=12345&vpc_TxnResponseCode=1');
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertNull($response->getTransactionReference());
+        $this->assertSame('12345', $response->getTransactionReference());
         $this->assertNotSame('Approved', $response->getMessage());
     }
 }

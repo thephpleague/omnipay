@@ -27,9 +27,9 @@ class CompletePurchaseResponse extends AbstractResponse
 
     public function isSuccessful()
     {
-        if (isset($this->data['vpc_Message'])) {
+        if (isset($this->data['vpc_TxnResponseCode'])) {
 
-            if ($this->data['vpc_Message'] == "Approved") {
+            if ($this->data['vpc_TxnResponseCode'] == "0") {
                 return true;
             }
 

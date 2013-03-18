@@ -39,6 +39,7 @@ class ThreePartyGatewayTest extends GatewayTestCase
     {
         $this->getHttpRequest()->query->replace(
             array(
+                'vpc_TxnResponseCode' => '0',
                 'vpc_Message' => 'Approved',
                 'vpc_ReceiptNo' => '12345',
             )
