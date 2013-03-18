@@ -19,13 +19,34 @@ use Omnipay\Common\Message\RequestInterface;
  */
 class CompletePurchaseResponse extends AbstractResponse
 {
+    public function __construct(RequestInterface $request, $data)
+    {
+        $this->request = $request;
+        parse_str($data, $this->data);
+    }
+
     public function isSuccessful()
     {
+        if (isset($this->data['vpc_Message'])) {
+            if ($this->data['vpc_Message'] == "Approved") {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function getTransactionReference()
+    {
+        if (isset($this->data['vpc_ReceiptNo'])) {
+            return $this->data['vpc_ReceiptNo'];
+        }
+
         return false;
     }
 
     public function getMessage()
     {
-        return $this->data['error'];
+        return (isset($this->data['vpc_Message']) ? $this->data['vpc_Message'] : false);
     }
 }

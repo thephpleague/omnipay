@@ -21,13 +21,13 @@ class CompletePurchaseRequest extends AbstractRequest
 {
     public function getData()
     {
-        $data = array();
-        $data['error'] = $this->httpRequest->get('vpc_Message');
+        $data = $this->httpRequest->getQueryString();
+        
         return $data;
     }
 
     public function send()
     {
-        return $this->response = new CompletePurchaseResponse($this, $this->getData());
+        return $this->resonse = new CompletePurchaseResponse($this, $this->getData());
     }
 }
