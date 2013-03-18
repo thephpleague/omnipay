@@ -21,8 +21,6 @@ use Omnipay\Migs\ThreePartyGateway;
  */
 class PurchaseResponse extends AbstractResponse implements RedirectResponseInterface
 {
-
-
     public function isSuccessful()
     {
         return false;

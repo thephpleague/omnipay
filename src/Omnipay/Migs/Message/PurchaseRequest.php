@@ -12,13 +12,13 @@
 namespace Omnipay\Migs\Message;
 
 /**
- * GoCardless Purchase Request
+ * Migs Purchase Request
  */
 class PurchaseRequest extends AbstractRequest
 {
     public function getData()
     {
-        $this->validate('amount', 'returnUrl');
+        $this->validate('amount', 'returnUrl', 'transactionId');
 
         $data = $this->getBaseData();
 
@@ -27,21 +27,10 @@ class PurchaseRequest extends AbstractRequest
         $data['vpc_OrderInfo']   = $this->generateNonce(34);
         $data['vpc_ReturnURL']   = $this->getReturnUrl();
         
-        $secure_secret = $this->getSecureHash();
+        ksort($data);
 
-        $md5HashData = $secure_secret.
-            $data['vpc_AccessCode'] .
-            $data['vpc_Amount'] .
-            $data['vpc_Command'].
-            $data['vpc_Locale'] .
-            $data['vpc_MerchTxnRef'] .
-            $data['vpc_Merchant'] .
-            $data['vpc_OrderInfo'].
-            $data['vpc_ReturnURL'] .
-            $data['vpc_Version'];
-
-        $data['vpc_SecureHash']  = strtoupper(md5($md5HashData));
-
+        $data['vpc_SecureHash']  = $this->calculateHash($data);
+        
         return $data;
     }
 
@@ -50,20 +39,18 @@ class PurchaseRequest extends AbstractRequest
         return $this->response = new PurchaseResponse($this, $this->getData());
     }
 
-    /**
-     * Generate a nonce for each request
-     */
-    protected function generateNonce($length = 34)
+    private function calculateHash($data)
     {
-        $nonce = '';
-        for ($i = 0; $i < 64; $i++) {
-            // append random ASCII character
-            $nonce .= chr(mt_rand(33, 126));
+        $secureSecret = $this->getSecureHash();
+
+        $hash = $secureSecret;
+
+        foreach ($data as $k => $v) {
+            $hash .= $v;
         }
 
-        $nonce = base64_encode($nonce);
-        $nonce = substr($nonce, 0, $length);
+        $hash = strtoupper(md5($hash));
 
-        return $nonce;
+        return $hash;
     }
 }

@@ -17,7 +17,14 @@ class CompletePurchaseResponseTest extends TestCase
 {
     public function testCompletePurchaseSuccess()
     {
-        $response = new CompletePurchaseResponse($this->getMockRequest(), 'vpc_Message=Approved&vpc_ReceiptNo=12345&vpc_TxnResponseCode=0');
+        $data = array();
+
+        $data['vpc_Message']         = "Approved";
+        $data['vpc_ReceiptNo']       = "12345";
+        $data['vpc_TxnResponseCode'] = "0";
+        $data['vpc_SecureHash']      = "6EF34310C56872C53B2292C0AE22C8C8";
+
+        $response = new CompletePurchaseResponse($this->getMockRequest(), $data);
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('12345', $response->getTransactionReference());
@@ -26,7 +33,14 @@ class CompletePurchaseResponseTest extends TestCase
 
     public function testCompletePurchaseFailure()
     {
-        $response = new CompletePurchaseResponse($this->getMockRequest(), 'vpc_Message=Error&vpc_ReceiptNo=12345&vpc_TxnResponseCode=1');
+        $data = array();
+        
+        $data['vpc_Message']         = "Error";
+        $data['vpc_ReceiptNo']       = "12345";
+        $data['vpc_TxnResponseCode'] = "1";
+        $data['vpc_SecureHash']      = "6EF34310C56872C53B2292C0AE22C8C8";
+
+        $response = new CompletePurchaseResponse($this->getMockRequest(), $data);
 
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('12345', $response->getTransactionReference());
