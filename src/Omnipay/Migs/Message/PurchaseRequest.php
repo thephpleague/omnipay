@@ -23,8 +23,8 @@ class PurchaseRequest extends AbstractRequest
         $data = $this->getBaseData();
 
         $data['vpc_Amount']      = $this->getAmount();
-        $data['vpc_MerchTxnRef'] = $this->generateNonce(40);
-        $data['vpc_OrderInfo']   = $this->generateNonce(34);
+        $data['vpc_MerchTxnRef'] = $this->getTransactionId();
+        $data['vpc_OrderInfo']   = $this->getDescription();
         $data['vpc_ReturnURL']   = $this->getReturnUrl();
         
         ksort($data);
