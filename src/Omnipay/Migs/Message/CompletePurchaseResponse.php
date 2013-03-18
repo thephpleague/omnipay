@@ -27,6 +27,7 @@ class CompletePurchaseResponse extends AbstractResponse
 
     public function isSuccessful()
     {
+
         if (isset($this->data['vpc_TxnResponseCode'])) {
 
             if ($this->data['vpc_TxnResponseCode'] == "0") {
@@ -35,9 +36,9 @@ class CompletePurchaseResponse extends AbstractResponse
 
             // if(isset($this->data['vpc_SecureHash']))
             // {
-            //     $secure_secret = "";
+            //     $secure_secret = $this->request->getSecureHash();
 
-            //     if($this->data['vpc_SecureHash'] == $this->getSecureHash($this->data, $secure_secret))
+            //     if($this->data['vpc_SecureHash'] == $this->calculateHash($this->data, $secure_secret))
             //     {
             //         return true;
             //     }
@@ -57,7 +58,7 @@ class CompletePurchaseResponse extends AbstractResponse
         return (isset($this->data['vpc_Message']) ? $this->data['vpc_Message'] : null);
     }
 
-    private function getSecureHash($data, $secure_secret)
+    private function calculateHash($data, $secure_secret)
     {
         $md5HashData = $secure_secret;
 
