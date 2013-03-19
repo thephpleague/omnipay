@@ -27,8 +27,13 @@ class CompletePurchaseResponse extends AbstractResponse
 
     public function isSuccessful()
     {
-        if (isset($this->data['vpc_TxnResponseCode']) && isset($this->data['vpc_SecureHash'])) {       
-            if ($this->data['vpc_TxnResponseCode'] == "0" && $this->data['vpc_SecureHash'] == $this->calculateHash($this->data)) {
+        if (isset($this->data['vpc_TxnResponseCode']) && isset($this->data['vpc_SecureHash'])) {
+            
+            $responseCode = $this->data['vpc_TxnResponseCode'];
+            $secureHash = $this->data['vpc_SecureHash'];
+            $calculatedHash = $this->calculateHash($this->data);
+
+            if ($responseCode == "0" && $secureHash == $calculatedHash) {
                 return true;
             }
         }
