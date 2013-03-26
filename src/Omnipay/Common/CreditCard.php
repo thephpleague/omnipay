@@ -358,6 +358,30 @@ class CreditCard
         return $this->setParameter('billingPhone', $value);
     }
 
+    public function getShippingFirstName() {
+        return $this->getParameter('shippingFirstName');
+    }
+
+    public function setShippingFirstName($value) {
+        return $this->setParameter('shippingFirstName', $value);
+    }
+
+    public function getShippingLastName() {
+        return $this->getParameter('shippingLastName');
+    }
+
+    public function setShippingLastName($value) {
+        return $this->setParameter('shippingLastName', $value);
+    }
+
+    public function getShippingCompany() {
+        return $this->getParameter('shippingCompany');
+    }
+
+    public function setShippingCompany($value) {
+        return $this->setParameter('shippingCompany', $value);
+    }
+
     public function getShippingAddress1()
     {
         return $this->getParameter('shippingAddress1');

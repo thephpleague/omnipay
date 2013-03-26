@@ -87,6 +87,25 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $data;
     }
 
+    protected function getShippingData()
+    {
+        if (!$this->getCard()) {
+            return false;
+        }
+
+        $data = array();
+        $data['x_ship_to_address'] = trim($this->getCard()->getShippingAddress1() . " \n" . $this->getCard()->getShippingAddress2());
+        $data['x_ship_to_city'] = $this->getCard()->getShippngCity();
+        $data['x_ship_to_company'] = $this->getCard()->getShippingCompany();
+        $data['x_ship_to_country'] = $this->getCard()->getShippngCountry();
+        $data['x_ship_to_first_name'] = $this->getCard()->getShippingFirstName();
+        $data['x_ship_to_last_name'] = $this->getCard()->getShippingLastName();
+        $data['x_ship_to_state'] = $this->getCard()->getShippingState();
+        $data['x_ship_to_zip'] = $this->getCard()->getShippingPostcode();
+
+        return $data;
+    }
+
     public function send()
     {
         $httpResponse = $this->httpClient->post($this->getEndpoint(), null, $this->getData())->send();
