@@ -324,19 +324,19 @@ class CreditCardTest extends TestCase
     public function testShippingFirstName()
     {
         $this->card->setShippingFirstName('James Bond');
-        $this->assertEquals('James Bond', $this->getShippingFirstName());
+        $this->assertEquals('James Bond', $this->card->getShippingFirstName());
     }
 
     public function testShippingLastName()
     {
         $this->card->setShippingLastName('Doctor No');
-        $this->assertEquals('Doctor No', $this->getShippingLastName());
+        $this->assertEquals('Doctor No', $this->card->getShippingLastName());
     }
 
     public function testShippingCompany()
     {
         $this->card->setShippingCompany('SuperSoft');
-        $this->assertEquals('SuperSoft', $this->getShippingCompany());
+        $this->assertEquals('SuperSoft', $this->card->getShippingCompany());
     }
 
     public function testShippingAddress1()

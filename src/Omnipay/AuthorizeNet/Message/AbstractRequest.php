@@ -100,7 +100,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     protected function getShippingData()
     {
         if (!$this->getCard()) {
-            return false;
+            return array();
         }
 
         $data = array();
@@ -109,9 +109,9 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             . " \n"
             . $this->getCard()->getShippingAddress2()
         );
-        $data['x_ship_to_city'] = $this->getCard()->getShippngCity();
+        $data['x_ship_to_city'] = $this->getCard()->getShippingCity();
         $data['x_ship_to_company'] = $this->getCard()->getShippingCompany();
-        $data['x_ship_to_country'] = $this->getCard()->getShippngCountry();
+        $data['x_ship_to_country'] = $this->getCard()->getShippingCountry();
         $data['x_ship_to_first_name'] = $this->getCard()->getShippingFirstName();
         $data['x_ship_to_last_name'] = $this->getCard()->getShippingLastName();
         $data['x_ship_to_state'] = $this->getCard()->getShippingState();
