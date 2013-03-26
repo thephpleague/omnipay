@@ -104,7 +104,11 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         }
 
         $data = array();
-        $data['x_ship_to_address'] = trim($this->getCard()->getShippingAddress1() . " \n" . $this->getCard()->getShippingAddress2());
+        $data['x_ship_to_address'] = trim(
+            $this->getCard()->getShippingAddress1()
+            . " \n"
+            . $this->getCard()->getShippingAddress2()
+        );
         $data['x_ship_to_city'] = $this->getCard()->getShippngCity();
         $data['x_ship_to_company'] = $this->getCard()->getShippingCompany();
         $data['x_ship_to_country'] = $this->getCard()->getShippngCountry();
