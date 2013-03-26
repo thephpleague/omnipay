@@ -28,6 +28,7 @@ class AIMAuthorizeRequest extends AbstractRequest
         $data['x_card_num'] = $this->getCard()->getNumber();
         $data['x_exp_date'] = $this->getCard()->getExpiryDate('my');
         $data['x_card_code'] = $this->getCard()->getCvv();
+        $data['x_cust_id'] = $this->getCustomerId();
 
         if ($this->getTestMode()) {
             $data['x_test_request'] = 'TRUE';
