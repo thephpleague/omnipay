@@ -37,7 +37,7 @@ class SIMAuthorizeRequest extends AbstractRequest
             $data['x_test_request'] = 'TRUE';
         }
 
-        $data = array_merge($data, $this->getBillingData());
+        $data = array_merge($data, $this->getBillingData(), $this->getShippingData());
         $data['x_fp_hash'] = $this->getHash($data);
 
         return $data;

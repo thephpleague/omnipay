@@ -49,6 +49,16 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('developerMode', $value);
     }
 
+    public function getCustomerId()
+    {
+        return $this->getParameter('customerId');
+    }
+
+    public function setCustomerId($value)
+    {
+        return $this->setParameter('customerId', $value);
+    }
+
     protected function getBaseData()
     {
         $data = array();
@@ -83,6 +93,29 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             $data['x_phone'] = $this->getCard()->getPhone();
             $data['x_email'] = $this->getCard()->getEmail();
         }
+
+        return $data;
+    }
+
+    protected function getShippingData()
+    {
+        if (!$this->getCard()) {
+            return array();
+        }
+
+        $data = array();
+        $data['x_ship_to_address'] = trim(
+            $this->getCard()->getShippingAddress1()
+            . " \n"
+            . $this->getCard()->getShippingAddress2()
+        );
+        $data['x_ship_to_city'] = $this->getCard()->getShippingCity();
+        $data['x_ship_to_company'] = $this->getCard()->getShippingCompany();
+        $data['x_ship_to_country'] = $this->getCard()->getShippingCountry();
+        $data['x_ship_to_first_name'] = $this->getCard()->getShippingFirstName();
+        $data['x_ship_to_last_name'] = $this->getCard()->getShippingLastName();
+        $data['x_ship_to_state'] = $this->getCard()->getShippingState();
+        $data['x_ship_to_zip'] = $this->getCard()->getShippingPostcode();
 
         return $data;
     }
