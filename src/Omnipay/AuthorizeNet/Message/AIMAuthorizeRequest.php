@@ -34,6 +34,6 @@ class AIMAuthorizeRequest extends AbstractRequest
             $data['x_test_request'] = 'TRUE';
         }
 
-        return array_merge($data, $this->getBillingData(), $this->getShippingData());
+        return array_merge($data, $this->getBillingData());
     }
 }

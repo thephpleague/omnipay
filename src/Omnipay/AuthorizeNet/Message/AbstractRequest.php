@@ -81,41 +81,35 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $data['x_invoice_num'] = $this->getTransactionId();
         $data['x_description'] = $this->getDescription();
 
-        if ($this->getCard()) {
-            $data['x_first_name'] = $this->getCard()->getFirstName();
-            $data['x_last_name'] = $this->getCard()->getLastName();
-            $data['x_company'] = $this->getCard()->getCompany();
-            $data['x_address'] = trim($this->getCard()->getAddress1()." \n".$this->getCard()->getAddress2());
-            $data['x_city'] = $this->getCard()->getCity();
-            $data['x_state'] = $this->getCard()->getState();
-            $data['x_zip'] = $this->getCard()->getPostcode();
-            $data['x_country'] = $this->getCard()->getCountry();
-            $data['x_phone'] = $this->getCard()->getPhone();
-            $data['x_email'] = $this->getCard()->getEmail();
+        if ($card = $this->getCard()) {
+            // customer billing details
+            $data['x_first_name'] = $card->getBillingFirstName();
+            $data['x_last_name'] = $card->getBillingLastName();
+            $data['x_company'] = $card->getBillingCompany();
+            $data['x_address'] = trim(
+                $card->getBillingAddress1()." \n".
+                $card->getBillingAddress2()
+            );
+            $data['x_city'] = $card->getBillingCity();
+            $data['x_state'] = $card->getBillingState();
+            $data['x_zip'] = $card->getBillingPostcode();
+            $data['x_country'] = $card->getBillingCountry();
+            $data['x_phone'] = $card->getBillingPhone();
+            $data['x_email'] = $card->getEmail();
+
+            // customer shipping details
+            $data['x_ship_to_first_name'] = $card->getShippingFirstName();
+            $data['x_ship_to_last_name'] = $card->getShippingLastName();
+            $data['x_ship_to_company'] = $card->getShippingCompany();
+            $data['x_ship_to_address'] = trim(
+                $card->getShippingAddress1()." \n".
+                $card->getShippingAddress2()
+            );
+            $data['x_ship_to_city'] = $card->getShippingCity();
+            $data['x_ship_to_state'] = $card->getShippingState();
+            $data['x_ship_to_zip'] = $card->getShippingPostcode();
+            $data['x_ship_to_country'] = $card->getShippingCountry();
         }
-
-        return $data;
-    }
-
-    protected function getShippingData()
-    {
-        if (!$this->getCard()) {
-            return array();
-        }
-
-        $data = array();
-        $data['x_ship_to_address'] = trim(
-            $this->getCard()->getShippingAddress1()
-            . " \n"
-            . $this->getCard()->getShippingAddress2()
-        );
-        $data['x_ship_to_city'] = $this->getCard()->getShippingCity();
-        $data['x_ship_to_company'] = $this->getCard()->getShippingCompany();
-        $data['x_ship_to_country'] = $this->getCard()->getShippingCountry();
-        $data['x_ship_to_first_name'] = $this->getCard()->getShippingFirstName();
-        $data['x_ship_to_last_name'] = $this->getCard()->getShippingLastName();
-        $data['x_ship_to_state'] = $this->getCard()->getShippingState();
-        $data['x_ship_to_zip'] = $this->getCard()->getShippingPostcode();
 
         return $data;
     }
