@@ -17,7 +17,7 @@ use Omnipay\Migs\ThreePartyGateway;
 /**
  * Migs Complete Purchase Request
  */
-class CompletePurchaseRequest extends AbstractRequest
+class ThreeCompletePurchaseRequest extends AbstractRequest
 {
     public function getData()
     {
@@ -28,6 +28,11 @@ class CompletePurchaseRequest extends AbstractRequest
 
     public function send()
     {
-        return $this->response = new CompletePurchaseResponse($this, $this->getData());
+        return $this->response = new Response($this, $this->getData());
+    }
+
+    public function getEndpoint()
+    {
+        return $this->endpoint.'vpcpay';
     }
 }

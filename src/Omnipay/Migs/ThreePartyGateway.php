@@ -12,68 +12,28 @@
 namespace Omnipay\Migs;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Migs\Message\PurchaseRequest;
-use Omnipay\Migs\Message\CompletePurchaseRequest;
+use Omnipay\Migs\Message\ThreePurchaseRequest;
+use Omnipay\Migs\Message\ThreeCompletePurchaseRequest;
 
 /**
  * MIGS Gateway
  *
  * @link http://www.anz.com/australia/business/merchant/pdf/VPC-Dev-Kit-Integration-Notes.pdf
  */
-class ThreePartyGateway extends AbstractGateway
+class ThreePartyGateway extends TwoPartyGateway
 {
     public function getName()
     {
         return 'MIGS 3-Party';
     }
 
-    public function getDefaultParameters()
-    {
-        return array(
-            'merchantId'                   => '',
-            'merchantAccessCode'           => '',
-            'secureHash'                   => ''
-        );
-    }
-
-    public function getMerchantId()
-    {
-        return $this->getParameter('merchantId');
-    }
-
-    public function setMerchantId($value)
-    {
-        return $this->setParameter('merchantId', $value);
-    }
-
-
-    public function getMerchantAccessCode()
-    {
-        return $this->getParameter('merchantAccessCode');
-    }
-
-    public function setMerchantAccessCode($value)
-    {
-        return $this->setParameter('merchantAccessCode', $value);
-    }
-
-    public function getSecureHash()
-    {
-        return $this->getParameter('secureHash');
-    }
-
-    public function setSecureHash($value)
-    {
-        return $this->setParameter('secureHash', $value);
-    }
-
     public function purchase(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Migs\Message\PurchaseRequest', $parameters);
+        return $this->createRequest('\Omnipay\Migs\Message\ThreePurchaseRequest', $parameters);
     }
 
     public function completePurchase(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Migs\Message\CompletePurchaseRequest', $parameters);
+        return $this->createRequest('\Omnipay\Migs\Message\ThreeCompletePurchaseRequest', $parameters);
     }
 }

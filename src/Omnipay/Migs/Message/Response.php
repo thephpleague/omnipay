@@ -13,33 +13,63 @@ namespace Omnipay\Migs\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RequestInterface;
+use Omnipay\Common\Exception\InvalidResponseException;
+use Omnipay\Migs\TwoPartyGateway;
 
 /**
- * Migs Complete Purchase Response
+ * Migs Purchase Response
  */
-class CompletePurchaseResponse extends AbstractResponse
+class Response extends AbstractResponse
 {
+
     public function __construct(RequestInterface $request, $data)
     {
         $this->request = $request;
-        $this->data = $data;
+        
+        if(is_array($data))
+        {
+            $this->data = $data;
+        }
+        else
+        {
+            parse_str($data, $this->data);
+        }
     }
 
     public function isSuccessful()
     {
-        if (isset($this->data['vpc_TxnResponseCode']) && isset($this->data['vpc_SecureHash'])) {
-
+        if (isset($this->data['vpc_TxnResponseCode'])) {
+            
             $responseCode = $this->data['vpc_TxnResponseCode'];
-            $secureHash = $this->data['vpc_SecureHash'];
-            $calculatedHash = $this->calculateHash($this->data);
 
-            if ($responseCode == "0" && $secureHash == $calculatedHash) {
+            if ($responseCode == "0") {
                 return true;
             }
         }
 
         return false;
     }
+
+    // public function isSuccessful()
+    // {
+    //     if (isset($this->data['vpc_TxnResponseCode'])) {
+            
+    //         $responseCode = $this->data['vpc_TxnResponseCode'];
+
+    //         if(isset($this->data['vpc_SecureHash'])) {
+    //             $secureHash = $this->data['vpc_SecureHash'];
+    //             $calculatedHash = $this->calculateHash($this->data);
+
+    //             if($secureHash == $calculatedHash) {
+    //                 if ($responseCode == "0") {
+    //                     return true;
+    //                 }
+    //             }
+    //         }
+    //     }
+
+    //     return false;
+    // }
 
     public function getTransactionReference()
     {

@@ -19,7 +19,7 @@ use Omnipay\Migs\ThreePartyGateway;
 /**
  * Migs Purchase Response
  */
-class PurchaseResponse extends AbstractResponse implements RedirectResponseInterface
+class ThreePurchaseResponse extends AbstractResponse implements RedirectResponseInterface
 {
     public function isSuccessful()
     {

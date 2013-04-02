@@ -32,7 +32,7 @@ class ThreePartyGatewayTest extends GatewayTestCase
     {
         $response = $this->gateway->purchase($this->options)->send();
         
-        $this->assertInstanceOf('\Omnipay\Migs\Message\PurchaseResponse', $response);
+        $this->assertInstanceOf('\Omnipay\Migs\Message\ThreePurchaseResponse', $response);
         $this->assertTrue($response->isRedirect());
         $this->assertStringStartsWith('https://migs.mastercard.com.au/vpcpay?', $response->getRedirectUrl());
     }

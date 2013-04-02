@@ -18,8 +18,7 @@ use Omnipay\Migs\ThreePartyGateway;
  */
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
-    protected $endpoint = 'https://migs.mastercard.com.au/vpcpay';
-
+    protected $endpoint = 'https://migs.mastercard.com.au/';
 
     public function getMerchantId()
     {
@@ -54,11 +53,16 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     protected function getBaseData()
     {
         $data = array();
+
         $data['vpc_Merchant']   = $this->getMerchantId();
         $data['vpc_AccessCode'] = $this->getMerchantAccessCode();
         $data['vpc_Version']    = '1';
         $data['vpc_Locale']     = 'en';
-        $data['vpc_Command']    = 'pay';
+        $data['vpc_Command']    = $this->action;
+        $data['vpc_Amount']      = $this->getAmount();
+        $data['vpc_MerchTxnRef'] = $this->getTransactionId();
+        $data['vpc_OrderInfo']   = $this->getDescription();
+        $data['vpc_ReturnURL']   = $this->getReturnUrl();
 
         return $data;
     }
@@ -66,5 +70,20 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function getEndpoint()
     {
         return $this->endpoint;
+    }
+    
+    protected function calculateHash($data)
+    {
+        $secureSecret = $this->getSecureHash();
+
+        $hash = $secureSecret;
+
+        foreach ($data as $k => $v) {
+            $hash .= $v;
+        }
+
+        $hash = strtoupper(md5($hash));
+
+        return $hash;
     }
 }

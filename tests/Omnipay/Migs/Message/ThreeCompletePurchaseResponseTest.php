@@ -13,9 +13,9 @@ namespace Omnipay\Migs\Message;
 
 use Omnipay\TestCase;
 
-class CompletePurchaseResponseTest extends TestCase
+class ThreeCompletePurchaseResponseTest extends TestCase
 {
-    public function testCompletePurchaseSuccess()
+    public function testThreeCompletePurchaseSuccess()
     {
         $data = array();
 
@@ -24,14 +24,14 @@ class CompletePurchaseResponseTest extends TestCase
         $data['vpc_TxnResponseCode'] = "0";
         $data['vpc_SecureHash']      = "6EF34310C56872C53B2292C0AE22C8C8";
 
-        $response = new CompletePurchaseResponse($this->getMockRequest(), $data);
+        $response = new Response($this->getMockRequest(), $data);
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('12345', $response->getTransactionReference());
         $this->assertSame('Approved', $response->getMessage());
     }
 
-    public function testCompletePurchaseFailure()
+    public function testThreeCompletePurchaseFailure()
     {
         $data = array();
         
@@ -40,7 +40,7 @@ class CompletePurchaseResponseTest extends TestCase
         $data['vpc_TxnResponseCode'] = "1";
         $data['vpc_SecureHash']      = "6EF34310C56872C53B2292C0AE22C8C8";
 
-        $response = new CompletePurchaseResponse($this->getMockRequest(), $data);
+        $response = new Response($this->getMockRequest(), $data);
 
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('12345', $response->getTransactionReference());

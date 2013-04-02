@@ -14,19 +14,18 @@ namespace Omnipay\Migs\Message;
 /**
  * Migs Purchase Request
  */
-class PurchaseRequest extends AbstractRequest
+class ThreePurchaseRequest extends AbstractRequest
 {
+    protected $action = 'pay';
+
     public function getData()
     {
         $this->validate('amount', 'returnUrl', 'transactionId');
 
         $data = $this->getBaseData();
 
-        $data['vpc_Amount']      = $this->getAmount();
-        $data['vpc_MerchTxnRef'] = $this->getTransactionId();
-        $data['vpc_OrderInfo']   = $this->getDescription();
-        $data['vpc_ReturnURL']   = $this->getReturnUrl();
-        
+        // we need to sort parameters a-z for the gateway
+
         ksort($data);
 
         $data['vpc_SecureHash']  = $this->calculateHash($data);
@@ -36,21 +35,11 @@ class PurchaseRequest extends AbstractRequest
 
     public function send()
     {
-        return $this->response = new PurchaseResponse($this, $this->getData());
+        return $this->response = new ThreePurchaseResponse($this, $this->getData());
     }
 
-    private function calculateHash($data)
+    public function getEndpoint()
     {
-        $secureSecret = $this->getSecureHash();
-
-        $hash = $secureSecret;
-
-        foreach ($data as $k => $v) {
-            $hash .= $v;
-        }
-
-        $hash = strtoupper(md5($hash));
-
-        return $hash;
+        return $this->endpoint.'vpcpay';
     }
 }
