@@ -327,6 +327,16 @@ class CreditCard
         return $this->setParameter('billingLastName', $value);
     }
 
+    public function getBillingCompany()
+    {
+        return $this->getParameter('billingCompany');
+    }
+
+    public function setBillingCompany($value)
+    {
+        return $this->setParameter('billingCompany', $value);
+    }
+
     public function getBillingAddress1()
     {
         return $this->getParameter('billingAddress1');
@@ -604,12 +614,15 @@ class CreditCard
 
     public function getCompany()
     {
-        return $this->getParameter('company');
+        return $this->getParameter('billingCompany');
     }
 
     public function setCompany($value)
     {
-        return $this->setParameter('company', $value);
+        $this->setParameter('billingCompany', $value);
+        $this->setParameter('shippingCompany', $value);
+
+        return $this;
     }
 
     public function getEmail()
