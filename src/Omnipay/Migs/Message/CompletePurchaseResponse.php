@@ -28,7 +28,7 @@ class CompletePurchaseResponse extends AbstractResponse
     public function isSuccessful()
     {
         if (isset($this->data['vpc_TxnResponseCode']) && isset($this->data['vpc_SecureHash'])) {
-            
+
             $responseCode = $this->data['vpc_TxnResponseCode'];
             $secureHash = $this->data['vpc_SecureHash'];
             $calculatedHash = $this->calculateHash($this->data);
@@ -60,7 +60,7 @@ class CompletePurchaseResponse extends AbstractResponse
         ksort($data);
 
         foreach ($this->data as $k => $v) {
-            if ($k !== "vpc_SecureHash") {
+            if (substr($k, 0, 4) === 'vpc_' && $k !== 'vpc_SecureHash') {
                 $hash .= $v;
             }
         }
