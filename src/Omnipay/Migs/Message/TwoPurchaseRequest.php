@@ -11,6 +11,8 @@
 
 namespace Omnipay\Migs\Message;
 
+use Omnipay\Common\Exception\InvalidRequestException;
+
 /**
  * Migs Purchase Request
  */
@@ -35,7 +37,7 @@ class TwoPurchaseRequest extends AbstractRequest
 
         ksort($data);
 
-        $data['vpc_SecureHash']  = $this->calculateHash($data);
+        $data['vpc_SecureHash']  = $this->getHash($data);
 
         return $data;
     }
@@ -44,7 +46,27 @@ class TwoPurchaseRequest extends AbstractRequest
     {
         $httpResponse = $this->httpClient->post($this->getEndpoint(), null, $this->getData())->send();
 
-        return $this->response = new Response($this, $httpResponse->getBody());
+        $data = $httpResponse->getBody();
+
+        if(!is_array($data))
+        {
+            parse_str($data, $data);
+        }
+
+        if(!isset($data['vpc_SecureHash']))
+        {
+            throw new InvalidRequestException('Incorrect hash');
+        }
+
+        $secureHash = $data['vpc_SecureHash'];
+
+        $calculatedHash = $this->getHash($data);
+
+        if($secureHash != $calculatedHash) {
+            throw new InvalidRequestException('Incorrect hash');
+        }
+
+        return $this->response = new Response($this, $data);
     }
 
     public function getEndpoint()

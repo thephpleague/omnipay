@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+Date: Fri, 05 Apr 2013 12:29:13 GMT
+Server: Apache
+Expires: Sun, 15 Jul 1990 00:00:00 GMT
+Pragma: no-cache
+Cache-Control: no-cache
+Content-Length: 492
+P3P: CP="NOI DSP COR CURa ADMa TA1a OUR BUS IND UNI COM NAV INT"
+Content-Type: text/plain;charset=iso-8859-1
+
+vpc_AVSRequestCode=Z&vpc_AVSResultCode=Unsupported&vpc_AcqAVSRespCode=Unsupported&vpc_AcqCSCRespCode=Unsupported&vpc_AcqResponseCode=00&vpc_Amount=1000&vpc_AuthorizeId=12345&vpc_BatchNo=12345&vpc_CSCResultCode=Unsupported&vpc_Card=VC&vpc_Command=pay&vpc_Locale=en&vpc_MerchTxnRef=123&vpc_Merchant=EXAMPLE&vpc_Message=Approved&vpc_OrderInfo=&vpc_ReceiptNo=12345&vpc_SecureHash=58808781CF7265DEA89EA8B713FAB075&vpc_TransactionNo=12345&vpc_TxnResponseCode=0&vpc_Version=1

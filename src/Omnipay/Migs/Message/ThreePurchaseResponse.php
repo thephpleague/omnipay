@@ -13,8 +13,6 @@ namespace Omnipay\Migs\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RedirectResponseInterface;
-use Omnipay\Common\Message\RequestInterface;
-use Omnipay\Migs\ThreePartyGateway;
 
 /**
  * Migs Purchase Response

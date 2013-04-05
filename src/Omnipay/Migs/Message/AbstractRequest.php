@@ -11,8 +11,6 @@
 
 namespace Omnipay\Migs\Message;
 
-use Omnipay\Migs\ThreePartyGateway;
-
 /**
  * GoCardless Abstract Request
  */
@@ -72,14 +70,18 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->endpoint;
     }
     
-    protected function calculateHash($data)
+    public function getHash($data)
     {
         $secureSecret = $this->getSecureHash();
 
         $hash = $secureSecret;
 
+        ksort($data);
+
         foreach ($data as $k => $v) {
-            $hash .= $v;
+            if (substr($k, 0, 4) === 'vpc_' && $k !== 'vpc_SecureHash') {
+                $hash .= $v;
+            }
         }
 
         $hash = strtoupper(md5($hash));

@@ -12,7 +12,6 @@
 namespace Omnipay\Migs;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Migs\Message\PurchaseRequest;
 
 /**
  * MIGS Gateway

@@ -11,9 +11,6 @@
 
 namespace Omnipay\Migs\Message;
 
-use Omnipay\Common\Exception\InvalidResponseException;
-use Omnipay\Migs\ThreePartyGateway;
-
 /**
  * Migs Complete Purchase Request
  */

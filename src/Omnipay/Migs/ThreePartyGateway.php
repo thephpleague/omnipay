@@ -12,8 +12,6 @@
 namespace Omnipay\Migs;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Migs\Message\ThreePurchaseRequest;
-use Omnipay\Migs\Message\ThreeCompletePurchaseRequest;
 
 /**
  * MIGS Gateway
