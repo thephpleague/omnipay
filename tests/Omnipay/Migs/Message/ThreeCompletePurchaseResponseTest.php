@@ -22,7 +22,7 @@ class ThreeCompletePurchaseResponseTest extends TestCase
         $data['vpc_Message']         = "Approved";
         $data['vpc_ReceiptNo']       = "12345";
         $data['vpc_TxnResponseCode'] = "0";
-        $data['vpc_SecureHash']      = "6EF34310C56872C53B2292C0AE22C8C8";
+        $data['vpc_SecureHash']      = "8720B88CA00352B2A5F4D51C64E86BCB";
 
         $response = new Response($this->getMockRequest(), $data);
 
@@ -38,7 +38,7 @@ class ThreeCompletePurchaseResponseTest extends TestCase
         $data['vpc_Message']         = "Error";
         $data['vpc_ReceiptNo']       = "12345";
         $data['vpc_TxnResponseCode'] = "1";
-        $data['vpc_SecureHash']      = "6EF34310C56872C53B2292C0AE22C8C8";
+        $data['vpc_SecureHash']      = "8720B88CA00352B2A5F4D51C64E86BCB";
 
         $response = new Response($this->getMockRequest(), $data);
 

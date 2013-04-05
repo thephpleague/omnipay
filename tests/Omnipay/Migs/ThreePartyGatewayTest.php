@@ -44,7 +44,7 @@ class ThreePartyGatewayTest extends GatewayTestCase
                 'vpc_TxnResponseCode' => '0',
                 'vpc_Message'         => 'Approved',
                 'vpc_ReceiptNo'       => '12345',
-                'vpc_SecureHash'      => '6EF34310C56872C53B2292C0AE22C8C8',
+                'vpc_SecureHash'      => '8720B88CA00352B2A5F4D51C64E86BCB',
             )
         );
 
