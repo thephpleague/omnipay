@@ -28,7 +28,7 @@ class ThreePurchaseRequest extends AbstractRequest
 
         ksort($data);
 
-        $data['vpc_SecureHash']  = $this->getHash($data);
+        $data['vpc_SecureHash']  = $this->calculateHash($data);
         
         return $data;
     }

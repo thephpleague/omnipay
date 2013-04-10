@@ -22,6 +22,7 @@ class ThreeCompletePurchaseRequest extends AbstractRequest
     {
         $data = $this->httpRequest->query->all();
         
+        var_dump($data)
         return $data;
     }
 
@@ -43,7 +44,7 @@ class ThreeCompletePurchaseRequest extends AbstractRequest
 
         $secureHash = $data['vpc_SecureHash'];
 
-        $calculatedHash = $this->getHash($data);
+        $calculatedHash = $this->calculateHash($data);
         
         if($secureHash != $calculatedHash) {
             throw new InvalidRequestException('Incorrect hash');

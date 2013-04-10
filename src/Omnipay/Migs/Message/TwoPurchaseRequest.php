@@ -37,7 +37,7 @@ class TwoPurchaseRequest extends AbstractRequest
 
         ksort($data);
 
-        $data['vpc_SecureHash']  = $this->getHash($data);
+        $data['vpc_SecureHash']  = $this->calculateHash($data);
 
         return $data;
     }
@@ -60,7 +60,7 @@ class TwoPurchaseRequest extends AbstractRequest
 
         $secureHash = $data['vpc_SecureHash'];
 
-        $calculatedHash = $this->getHash($data);
+        $calculatedHash = $this->calculateHash($data);
 
         if($secureHash != $calculatedHash) {
             throw new InvalidRequestException('Incorrect hash');

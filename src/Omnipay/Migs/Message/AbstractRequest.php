@@ -70,7 +70,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->endpoint;
     }
     
-    public function getHash($data)
+    public function calculateHash($data)
     {
         $secureSecret = $this->getSecureHash();
 
