@@ -22,16 +22,6 @@ class ThreeCompletePurchaseRequest extends AbstractRequest
     {
         $data = $this->httpRequest->query->all();
         
-        var_dump($data)
-        return $data;
-    }
-
-    public function send()
-    {
-        $response = new Response($this, $this->getData());
-
-        $data = $response->getData();
-
         if(!is_array($data))
         {
             parse_str($data, $data);
@@ -50,8 +40,13 @@ class ThreeCompletePurchaseRequest extends AbstractRequest
             throw new InvalidRequestException('Incorrect hash');
         }
 
-        $this->response = $response;
+        return $data;
+    }
 
+    public function send()
+    {
+        $this->response = new Response($this, $this->getData());
+        
         return $this->response;
     }
 
