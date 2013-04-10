@@ -32,6 +32,19 @@ class Response extends AbstractResponse
         {
             parse_str($data, $this->data);
         }
+
+        if(!isset($this->data['vpc_SecureHash']))
+        {
+            throw new InvalidRequestException('Incorrect hash');
+        }
+
+        $secureHash = $this->data['vpc_SecureHash'];
+
+        $calculatedHash = $this->request->calculateHash($this->data);
+
+        if($secureHash != $calculatedHash) {
+            throw new InvalidRequestException('Incorrect hash');
+        }
     }
 
     public function isSuccessful()
