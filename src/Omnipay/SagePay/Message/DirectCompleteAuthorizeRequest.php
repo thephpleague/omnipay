@@ -23,7 +23,7 @@ class DirectCompleteAuthorizeRequest extends AbstractRequest
             'PARes' => $this->httpRequest->request->get('PaRes'), // inconsistent caps are intentional
         );
 
-        if (empty($data['MD']) OR empty($data['PARes'])) {
+        if (empty($data['MD']) || empty($data['PARes'])) {
             throw new InvalidResponseException;
         }
 

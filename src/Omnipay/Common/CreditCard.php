@@ -149,34 +149,39 @@ class CreditCard
 
     public function getFirstName()
     {
-        return $this->getParameter('firstName');
+        return $this->getBillingFirstName();
     }
 
     public function setFirstName($value)
     {
-        return $this->setParameter('firstName', $value);
+        $this->setBillingFirstName($value);
+        $this->setShippingFirstName($value);
+
+        return $this;
     }
 
     public function getLastName()
     {
-        return $this->getParameter('lastName');
+        return $this->getBillingLastName();
     }
 
     public function setLastName($value)
     {
-        return $this->setParameter('lastName', $value);
+        $this->setBillingLastName($value);
+        $this->setShippingLastName($value);
+
+        return $this;
     }
 
     public function getName()
     {
-        return trim($this->getFirstName().' '.$this->getLastName());
+        return $this->getBillingName();
     }
 
     public function setName($value)
     {
-        $names = explode(' ', $value, 2);
-        $this->setParameter('firstName', $names[0]);
-        $this->setParameter('lastName', isset($names[1]) ? $names[1] : null);
+        $this->setBillingName($value);
+        $this->setShippingName($value);
 
         return $this;
     }
@@ -288,6 +293,50 @@ class CreditCard
         return $this->setParameter('issueNumber', $value);
     }
 
+    public function getBillingName()
+    {
+        return trim($this->getBillingFirstName() . ' ' . $this->getBillingLastName());
+    }
+
+    public function setBillingName($value)
+    {
+        $names = explode(' ', $value, 2);
+        $this->setBillingFirstName($names[0]);
+        $this->setBillingLastName(isset($names[1]) ? $names[1] : null);
+
+        return $this;
+    }
+
+    public function getBillingFirstName()
+    {
+        return $this->getParameter('billingFirstName');
+    }
+
+    public function setBillingFirstName($value)
+    {
+        return $this->setParameter('billingFirstName', $value);
+    }
+
+    public function getBillingLastName()
+    {
+        return $this->getParameter('billingLastName');
+    }
+
+    public function setBillingLastName($value)
+    {
+        return $this->setParameter('billingLastName', $value);
+    }
+
+    public function getBillingCompany()
+    {
+        return $this->getParameter('billingCompany');
+    }
+
+    public function setBillingCompany($value)
+    {
+        return $this->setParameter('billingCompany', $value);
+    }
+
     public function getBillingAddress1()
     {
         return $this->getParameter('billingAddress1');
@@ -356,6 +405,50 @@ class CreditCard
     public function setBillingPhone($value)
     {
         return $this->setParameter('billingPhone', $value);
+    }
+
+    public function getShippingName()
+    {
+        return trim($this->getShippingFirstName() . ' ' . $this->getShippingLastName());
+    }
+
+    public function setShippingName($value)
+    {
+        $names = explode(' ', $value, 2);
+        $this->setShippingFirstName($names[0]);
+        $this->setShippingLastName(isset($names[1]) ? $names[1] : null);
+
+        return $this;
+    }
+
+    public function getShippingFirstName()
+    {
+        return $this->getParameter('shippingFirstName');
+    }
+
+    public function setShippingFirstName($value)
+    {
+        return $this->setParameter('shippingFirstName', $value);
+    }
+
+    public function getShippingLastName()
+    {
+        return $this->getParameter('shippingLastName');
+    }
+
+    public function setShippingLastName($value)
+    {
+        return $this->setParameter('shippingLastName', $value);
+    }
+
+    public function getShippingCompany()
+    {
+        return $this->getParameter('shippingCompany');
+    }
+
+    public function setShippingCompany($value)
+    {
+        return $this->setParameter('shippingCompany', $value);
     }
 
     public function getShippingAddress1()
@@ -521,12 +614,15 @@ class CreditCard
 
     public function getCompany()
     {
-        return $this->getParameter('company');
+        return $this->getParameter('billingCompany');
     }
 
     public function setCompany($value)
     {
-        return $this->setParameter('company', $value);
+        $this->setParameter('billingCompany', $value);
+        $this->setParameter('shippingCompany', $value);
+
+        return $this;
     }
 
     public function getEmail()
