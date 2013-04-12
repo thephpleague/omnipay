@@ -21,22 +21,9 @@ class ThreeCompletePurchaseRequest extends AbstractRequest
     public function getData()
     {
         $data = $this->httpRequest->query->all();
-        
-        if(!is_array($data))
-        {
-            parse_str($data, $data);
-        }
 
-        if(!isset($data['vpc_SecureHash']))
-        {
-            throw new InvalidRequestException('Incorrect hash');
-        }
-
-        $secureHash = $data['vpc_SecureHash'];
-
-        $calculatedHash = $this->calculateHash($data);
-        
-        if($secureHash != $calculatedHash) {
+        $hash = isset($data['vpc_SecureHash']) ? $data['vpc_SecureHash'] : null;
+        if ($this->calculateHash($data) !== $hash) {
             throw new InvalidRequestException('Incorrect hash');
         }
 
@@ -45,9 +32,7 @@ class ThreeCompletePurchaseRequest extends AbstractRequest
 
     public function send()
     {
-        $this->response = new Response($this, $this->getData());
-        
-        return $this->response;
+        return $this->response = new Response($this, $this->getData());
     }
 
     public function getEndpoint()

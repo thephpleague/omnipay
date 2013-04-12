@@ -23,20 +23,12 @@ class TwoPurchaseRequest extends AbstractRequest
     public function getData()
     {
         $this->validate('amount', 'transactionId', 'card');
-
         $this->getCard()->validate();
 
         $data = $this->getBaseData();
-
         $data['vpc_CardNum'] = $this->getCard()->getNumber();
         $data['vpc_CardExp'] = $this->getCard()->getExpiryDate('ym');
-        $data['vpc_CardSecurityCode'] = $this->getCard()->getCvv();        
-
-
-        // we need to sort parameters a-z for the gateway
-
-        ksort($data);
-
+        $data['vpc_CardSecurityCode'] = $this->getCard()->getCvv();
         $data['vpc_SecureHash']  = $this->calculateHash($data);
 
         return $data;

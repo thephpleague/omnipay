@@ -14,7 +14,6 @@ namespace Omnipay\Migs\Message;
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RequestInterface;
 
-
 /**
  * Migs Purchase Response
  */
@@ -22,43 +21,16 @@ class Response extends AbstractResponse
 {
     public function __construct(RequestInterface $request, $data)
     {
-        $this->request = $request;
-
-        if(is_array($data))
-        {
-            $this->data = $data;
-        }
-        else
-        {
-            parse_str($data, $this->data);
+        if (!is_array($data)) {
+            parse_str($data, $data);
         }
 
-        if(!isset($this->data['vpc_SecureHash']))
-        {
-            throw new InvalidRequestException('Incorrect hash');
-        }
-
-        $secureHash = $this->data['vpc_SecureHash'];
-
-        $calculatedHash = $this->request->calculateHash($this->data);
-
-        if($secureHash != $calculatedHash) {
-            throw new InvalidRequestException('Incorrect hash');
-        }
+        parent::__construct($request, $data);
     }
 
     public function isSuccessful()
     {
-        if (isset($this->data['vpc_TxnResponseCode'])) {
-            
-            $responseCode = $this->data['vpc_TxnResponseCode'];
-
-            if ($responseCode == "0") {
-                return true;
-            }
-        }
-
-        return false;
+        return isset($this->data['vpc_TxnResponseCode']) && "0" === $this->data['vpc_TxnResponseCode'];
     }
 
     public function getTransactionReference()

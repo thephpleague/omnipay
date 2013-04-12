@@ -23,13 +23,8 @@ class ThreePurchaseRequest extends AbstractRequest
         $this->validate('amount', 'returnUrl', 'transactionId');
 
         $data = $this->getBaseData();
-
-        // we need to sort parameters a-z for the gateway
-
-        ksort($data);
-
         $data['vpc_SecureHash']  = $this->calculateHash($data);
-        
+
         return $data;
     }
 
