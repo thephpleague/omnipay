@@ -21,6 +21,13 @@ class UpdateRequest extends PurchaseRequest
         $data = array();
         $data['description'] = $this->getDescription();
 
+        if ($this->getCardToken()) {
+            $data['card'] = $this->getCardToken();
+        } elseif ($this->getCard()) {
+            $data['card'] = $this->getCardData();
+            $data['email'] = $this->getCard()->getEmail();
+        }
+
         $this->validate('cardReference');
 
         return $data;
