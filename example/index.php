@@ -241,6 +241,47 @@ $app->post('/gateways/{name}/store', function($name) use ($app) {
     ));
 });
 
+// create gateway update
+$app->get('/gateways/{name}/update', function($name) use ($app) {
+    $gateway = Omnipay\Common\GatewayFactory::create($name);
+    $sessionVar = 'omnipay.'.$gateway->getShortName();
+    $gateway->initialize((array) $app['session']->get($sessionVar));
+
+    $params = $app['session']->get($sessionVar.'.update', array());
+    $card = new Omnipay\Common\CreditCard($app['session']->get($sessionVar.'.card'));
+
+    return $app['twig']->render('request.twig', array(
+        'gateway' => $gateway,
+        'method' => 'update',
+        'params' => $params,
+        'card' => $card->getParameters(),
+    ));
+});
+
+// submit gateway update
+$app->post('/gateways/{name}/update', function($name) use ($app) {
+    $gateway = Omnipay\Common\GatewayFactory::create($name);
+    $sessionVar = 'omnipay.'.$gateway->getShortName();
+    $gateway->initialize((array) $app['session']->get($sessionVar));
+
+    // load POST data
+    $params = $app['request']->get('params');
+    $card = $app['request']->get('card');
+
+    // save POST data into session
+    $app['session']->set($sessionVar.'.update', $params);
+    $app['session']->set($sessionVar.'.card', $card);
+
+    $params['card'] = $card;
+    $params['clientIp'] = $app['request']->getClientIp();
+    $response = $gateway->update($params)->send();
+
+    return $app['twig']->render('response.twig', array(
+        'gateway' => $gateway,
+        'response' => $response,
+    ));
+});
+
 // create gateway unstore
 $app->get('/gateways/{name}/unstore', function($name) use ($app) {
     $gateway = Omnipay\Common\GatewayFactory::create($name);
