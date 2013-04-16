@@ -190,6 +190,16 @@ abstract class AbstractGateway implements GatewayInterface
     }
 
     /**
+     * Supports Update
+     *
+     * @return boolean True if this gateway supports the update() method
+     */
+    public function supportsUpdate()
+    {
+        return method_exists($this, 'update');
+    }
+
+    /**
      * Create and initialize a request object using existing parameters from this gateway
      */
     protected function createRequest($class, array $parameters)
