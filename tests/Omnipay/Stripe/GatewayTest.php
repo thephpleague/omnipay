@@ -126,7 +126,7 @@ class GatewayTest extends GatewayTestCase
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
-        $this->assertSame('cus_1MZSEtqSghKx99', $response->getCardReference());
+        $this->assertSame('cus_1MZeNih5LdKxDq', $response->getCardReference());
         $this->assertNull($response->getMessage());
     }
 
