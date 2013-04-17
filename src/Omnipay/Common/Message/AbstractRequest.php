@@ -168,7 +168,7 @@ abstract class AbstractRequest implements RequestInterface
 
     public function setAmount($value)
     {
-        return $this->setParameter('amount', (int) $value);
+        return $this->setParameter('amount', (float) $value);
     }
 
     public function getAmountDecimal()
