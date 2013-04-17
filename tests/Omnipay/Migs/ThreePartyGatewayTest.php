@@ -30,28 +30,19 @@ class ThreePartyGatewayTest extends GatewayTestCase
 
     public function testPurchase()
     {
-        $response = $this->gateway->purchase($this->options)->send();
-        
-        $this->assertInstanceOf('\Omnipay\Migs\Message\ThreePurchaseResponse', $response);
-        $this->assertTrue($response->isRedirect());
-        $this->assertStringStartsWith('https://migs.mastercard.com.au/vpcpay?', $response->getRedirectUrl());
+        $request = $this->gateway->purchase(array('amount' => 1000));
+
+        $this->assertInstanceOf('\Omnipay\Migs\Message\ThreePurchaseRequest', $request);
+
+        $this->assertSame(1000, $request->getAmount());
     }
 
     public function testCompletePurchase()
     {
-        $this->getHttpRequest()->query->replace(
-            array(
-                'vpc_TxnResponseCode' => '0',
-                'vpc_Message'         => 'Approved',
-                'vpc_ReceiptNo'       => '12345',
-                'vpc_SecureHash'      => '8720B88CA00352B2A5F4D51C64E86BCB',
-            )
-        );
+        $request = $this->gateway->completePurchase(array('amount' => 1000));
 
-        $response = $this->gateway->completePurchase($this->options)->send();
+        $this->assertInstanceOf('\Omnipay\Migs\Message\ThreeCompletePurchaseRequest', $request);
 
-        $this->assertTrue($response->isSuccessful());
-        $this->assertSame('12345', $response->getTransactionReference());
-        $this->assertSame('Approved', $response->getMessage());
+        $this->assertSame(1000, $request->getAmount());
     }
 }

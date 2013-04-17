@@ -23,6 +23,7 @@ class TwoPurchaseRequest extends AbstractRequest
     public function getData()
     {
         $this->validate('amount', 'transactionId', 'card');
+
         $this->getCard()->validate();
 
         $data = $this->getBaseData();
