@@ -18,12 +18,14 @@ class TwoPurchaseRequestTest extends TestCase
             array(
                 'amount' => 1200,
                 'transactionId' => 123,
-                'card' => new CreditCard(array(
-                    'number' => '4111111111111111',
-                    'expiryMonth' => '05',
-                    'expiryYear' => '2013',
-                    'cvv' => '123',
-                )),
+                'card' => new CreditCard(
+                    array(
+                        'number' => '4111111111111111',
+                        'expiryMonth' => '05',
+                        'expiryYear' => '2013',
+                        'cvv' => '123',
+                    )
+                ),
                 'merchantId'                   => '123',
                 'merchantAccessCode'           => '123',
                 'secureHash'                   => '123',
@@ -44,12 +46,14 @@ class TwoPurchaseRequestTest extends TestCase
             array(
                 'amount' => 1200,
                 'transactionId' => 123,
-                'card' => new CreditCard(array(
-                    'number' => '4111111111111111',
-                    'expiryMonth' => '05',
-                    'expiryYear' => '2013',
-                    'cvv' => '123',
-                )),
+                'card' => new CreditCard(
+                    array(
+                        'number' => '4111111111111111',
+                        'expiryMonth' => '05',
+                        'expiryYear' => '2013',
+                        'cvv' => '123',
+                    )
+                ),
                 'merchantId'                   => '123',
                 'merchantAccessCode'           => '123',
                 'secureHash'                   => '123',
