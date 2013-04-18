@@ -28,6 +28,7 @@ class ExpressCompleteAuthorizeRequest extends AbstractRequest
         $data['PAYMENTREQUEST_0_AMT'] = $this->getAmountDecimal();
         $data['PAYMENTREQUEST_0_CURRENCYCODE'] = $this->getCurrency();
         $data['PAYMENTREQUEST_0_DESC'] = $this->getDescription();
+	$data['PAYMENTREQUEST_0_INVNUM'] = $this->getInvoiceNumber();
 
         $data['TOKEN'] = $this->httpRequest->query->get('token');
         $data['PAYERID'] = $this->httpRequest->query->get('PayerID');
