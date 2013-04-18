@@ -1,0 +1,32 @@
+HTTP/1.1 200 OK
+Connection: close
+Date: Sat, 16 Feb 2013 04:56:28 GMT
+Server: Microsoft-IIS/6.0
+X-Powered-By: ASP.NET
+Content-Type: text/html
+Content-Length: 638
+Cache-Control: private, must-revalidate, max-age=0
+Expires: Tue, 01 Jan 1980 00:00:00 GMT
+
+<ccTxnResponseV1 xmlns="http://www.optimalpayments.com/creditcard/xmlschema/v1">
+  <confirmationNumber>244356120</confirmationNumber>
+  <decision>ACCEPTED</decision>
+  <code>0</code>
+  <description>No Error</description>
+  <authCode>246413</authCode>
+  <avsResponse>X</avsResponse>
+  <detail>
+    <tag>InternalResponseCode</tag>
+    <value>0</value>
+  </detail>
+  <detail>
+    <tag>SubErrorCode</tag>
+    <value>0</value>
+  </detail>
+  <detail>
+    <tag>InternalResponseDescription</tag>
+    <value>no_error</value>
+  </detail>
+  <txnTime>2013-04-17T08:18:43.646-04:00</txnTime>
+  <duplicateFound>false</duplicateFound>
+</ccTxnResponseV1>

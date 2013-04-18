@@ -1,0 +1,31 @@
+HTTP/1.1 200 OK
+Connection: close
+Date: Sat, 16 Feb 2013 04:56:28 GMT
+Server: Microsoft-IIS/6.0
+X-Powered-By: ASP.NET
+Content-Type: text/html
+Content-Length: 638
+Cache-Control: private, must-revalidate, max-age=0
+Expires: Tue, 01 Jan 1980 00:00:00 GMT
+
+<ccTxnResponseV1 xmlns="http://www.optimalpayments.com/creditcard/xmlschema/v1">
+  <confirmationNumber>244356120</confirmationNumber>
+  <decision>ERROR</decision>
+  <code>3001</code>
+  <actionCode>C</actionCode>
+  <description>You submitted an unsupported card type with your request.</description>
+  <detail>
+    <tag>InternalResponseCode</tag>
+    <value>115</value>
+  </detail>
+  <detail>
+    <tag>SubErrorCode</tag>
+    <value>0</value>
+  </detail>
+  <detail>
+    <tag>InternalResponseDescription</tag>
+    <value>invalid brand</value>
+  </detail>
+  <txnTime>2013-04-17T08:23:22.009-04:00</txnTime>
+  <duplicateFound>false</duplicateFound>
+</ccTxnResponseV1>
