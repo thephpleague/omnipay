@@ -76,7 +76,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function setInvoiceNumber($value)
     {
-	    return $this->setParameter('invoiceNumber', $value);
+        return $this->setParameter('invoiceNumber', $value);
     }
 
     protected function getBaseData($method)
