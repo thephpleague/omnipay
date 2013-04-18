@@ -25,11 +25,11 @@ class ProAuthorizeRequest extends AbstractRequest
         $this->validate('amount', 'card');
         $this->getCard()->validate();
 
-        $prefix = '';
-        $data[$prefix.'PAYMENTACTION'] = $this->action;
-        $data[$prefix.'AMT'] = $this->getAmountDecimal();
-        $data[$prefix.'CURRENCYCODE'] = $this->getCurrency();
-        $data[$prefix.'DESC'] = $this->getDescription();
+        $data['PAYMENTACTION'] = $this->action;
+        $data['AMT'] = $this->getAmountDecimal();
+        $data['CURRENCYCODE'] = $this->getCurrency();
+        $data['INVNUM'] = $this->getTransactionId();
+        $data['DESC'] = $this->getDescription();
 
         // add credit card details
         $data['ACCT'] = $this->getCard()->getNumber();
