@@ -45,6 +45,9 @@ $response = $gateway->initialize($params);</pre>
         {% if gateway.supportsStore() %}
             <li><a href="/gateways/{{gateway.shortName}}/store">store()</a></li>
         {% endif %}
+        {% if gateway.supportsUpdate() %}
+            <li><a href="/gateways/{{gateway.shortName}}/update">update()</a></li>
+        {% endif %}
         {% if gateway.supportsUnstore() %}
             <li><a href="/gateways/{{gateway.shortName}}/unstore">unstore()</a></li>
         {% endif %}

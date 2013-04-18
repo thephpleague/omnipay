@@ -36,6 +36,10 @@ class GatewayTest extends GatewayTestCase
         $this->storeOptions = array(
             'card' => $this->getValidCard(),
         );
+        
+        $this->updateOptions = array(
+            'cardReference' => 'cus_1MZSEtqSghKx99',
+        );
 
         $this->unstoreOptions = array(
             'cardReference' => 'cus_1MZSEtqSghKx99',
@@ -112,6 +116,30 @@ class GatewayTest extends GatewayTestCase
         $this->assertNull($response->getTransactionReference());
         $this->assertNull($response->getCardReference());
         $this->assertSame('You must provide an integer value for \'exp_year\'.', $response->getMessage());
+    }
+    
+    public function testUpdateSuccess()
+    {
+        $this->setMockHttpResponse('UpdateSuccess.txt');
+        $response = $this->gateway->store($this->storeOptions)->send();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getTransactionReference());
+        $this->assertSame('cus_1MZeNih5LdKxDq', $response->getCardReference());
+        $this->assertNull($response->getMessage());
+    }
+
+    public function testUpdateFailure()
+    {
+        $this->setMockHttpResponse('UpdateFailure.txt');
+        $response = $this->gateway->store($this->storeOptions)->send();
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getTransactionReference());
+        $this->assertNull($response->getCardReference());
+        $this->assertSame('No such customer: cus_1MZeNih5LdKxDq', $response->getMessage());
     }
 
     public function testUnstoreSuccess()
