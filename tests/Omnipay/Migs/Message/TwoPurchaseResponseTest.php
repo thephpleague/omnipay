@@ -13,16 +13,19 @@ namespace Omnipay\Migs\Message;
 
 use Omnipay\TestCase;
 
-class ResponseTest extends TestCase
+class TwoPurchaseResponseTest extends TestCase
 {
     public function testTwoPurchaseSuccess()
     {
         $httpResponse = $this->getMockHttpResponse('TwoPurchaseSuccess.txt');
         $response = new Response($this->getMockRequest(), $httpResponse->getBody());
 
+        $this->assertInstanceOf('Omnipay\Migs\Message\Response', $response);
         $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
         $this->assertSame('12345', $response->getTransactionReference());
         $this->assertSame('Approved', $response->getMessage());
+        $this->assertNull($response->getCode());
     }
 
     public function testTwoPurchaseFailure()
@@ -30,8 +33,11 @@ class ResponseTest extends TestCase
         $httpResponse = $this->getMockHttpResponse('TwoPurchaseFailure.txt');
         $response = new Response($this->getMockRequest(), $httpResponse->getBody());
 
+        $this->assertInstanceOf('Omnipay\Migs\Message\Response', $response);
         $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
         $this->assertSame('12345', $response->getTransactionReference());
         $this->assertSame('Declined', $response->getMessage());
+        $this->assertNull($response->getCode());
     }
 }

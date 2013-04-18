@@ -13,8 +13,13 @@ namespace Omnipay\Migs\Message;
 
 use Omnipay\TestCase;
 
-class ThreeCompletePurchaseResponseTest extends TestCase
+class ThreeCompletePurchaseRequestTest extends TestCase
 {
+    public function setUp()
+    {
+        $this->request = new ThreeCompletePurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
+    }
+
     public function testThreeCompletePurchaseSuccess()
     {
         $data = array();
@@ -26,15 +31,19 @@ class ThreeCompletePurchaseResponseTest extends TestCase
 
         $response = new Response($this->getMockRequest(), $data);
 
+
+        $this->assertInstanceOf('Omnipay\Migs\Message\Response', $response);
         $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
         $this->assertSame('12345', $response->getTransactionReference());
         $this->assertSame('Approved', $response->getMessage());
+        $this->assertNull($response->getCode());
     }
 
     public function testThreeCompletePurchaseFailure()
     {
         $data = array();
-        
+
         $data['vpc_Message']         = "Error";
         $data['vpc_ReceiptNo']       = "12345";
         $data['vpc_TxnResponseCode'] = "1";
@@ -42,8 +51,11 @@ class ThreeCompletePurchaseResponseTest extends TestCase
 
         $response = new Response($this->getMockRequest(), $data);
 
+        $this->assertInstanceOf('Omnipay\Migs\Message\Response', $response);
         $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
         $this->assertSame('12345', $response->getTransactionReference());
         $this->assertNotSame('Approved', $response->getMessage());
+        $this->assertNull($response->getCode());
     }
 }

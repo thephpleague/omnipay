@@ -12,6 +12,7 @@
 namespace Omnipay\Migs\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
+use Omnipay\Common\Message\RequestInterface;
 use Omnipay\Common\Message\RedirectResponseInterface;
 
 /**
@@ -19,6 +20,14 @@ use Omnipay\Common\Message\RedirectResponseInterface;
  */
 class ThreePurchaseResponse extends AbstractResponse implements RedirectResponseInterface
 {
+    protected $redirectUrl;
+
+    public function __construct(RequestInterface $request, $data, $redirectUrl)
+    {
+        parent::__construct($request, $data);
+        $this->redirectUrl = $redirectUrl;
+    }
+
     public function isSuccessful()
     {
         return false;
@@ -31,7 +40,7 @@ class ThreePurchaseResponse extends AbstractResponse implements RedirectResponse
 
     public function getRedirectUrl()
     {
-        return $this->getRequest()->getEndpoint().'?'.http_build_query($this->data);
+        return $this->redirectUrl;
     }
 
     public function getRedirectMethod()
@@ -41,6 +50,6 @@ class ThreePurchaseResponse extends AbstractResponse implements RedirectResponse
 
     public function getRedirectData()
     {
-        return null;
+        return $this->getData();
     }
 }

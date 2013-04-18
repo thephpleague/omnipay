@@ -30,7 +30,9 @@ class ThreePurchaseRequest extends AbstractRequest
 
     public function send()
     {
-        return $this->response = new ThreePurchaseResponse($this, $this->getData());
+        $redirectUrl = $this->getEndpoint().'?'.http_build_query($this->getData());
+
+        return $this->response = new ThreePurchaseResponse($this, $this->getData(), $redirectUrl);
     }
 
     public function getEndpoint()
