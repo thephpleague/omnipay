@@ -1,0 +1,23 @@
+HTTP/1.1 200 OK
+Server: nginx
+Date: Tue, 26 Feb 2013 16:11:12 GMT
+Content-Type: application/json;charset=utf-8
+Content-Length: 694
+Connection: keep-alive
+Access-Control-Max-Age: 300
+Access-Control-Allow-Credentials: true
+Cache-Control: no-cache, no-store
+
+{
+  "object": "customer",
+  "created": 1365771516,
+  "id": "cus_1MZeNih5LdKxDq",
+  "livemode": false,
+  "description": "fdsa",
+  "active_card": null,
+  "email": null,
+  "delinquent": false,
+  "subscription": null,
+  "discount": null,
+  "account_balance": 0
+}
