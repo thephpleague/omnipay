@@ -91,6 +91,7 @@ The following gateways are already implemented:
 * Migs 2-Party
 * Migs 3-Party
 * Netaxept (BBS)
+* Netbanx
 * PayFast
 * Payflow Pro
 * PaymentExpress (DPS) PxPay
