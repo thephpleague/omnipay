@@ -12,7 +12,7 @@
 namespace Omnipay\AuthorizeNet\Message;
 
 /**
- * Authorize.Net AIM Authorize Request
+ * Authorize.Net AIM Void Request
  */
 class AIMVoidRequest extends AbstractRequest
 {
