@@ -60,7 +60,7 @@ class CaptureRequest extends AbstractRequest
         $merchantAccount->addChild('storePwd', $this->getStorePassword());
 
         $sxml->addChild('confirmationNumber', $this->getTransactionReference());
-        $sxml->addChild('merchantRefNum', $this->getCustomerId());
+        $sxml->addChild('merchantRefNum', $this->getMerchantRefNum());
         $sxml->addChild('amount', $this->getAmountDecimal());
 
         return $sxml->asXML();

@@ -115,6 +115,27 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
+     * Getter for Merchant Reference Number
+     *
+     * @return string
+     */
+    public function getMerchantRefNum()
+    {
+        return $this->getParameter('merchantRefNum');
+    }
+
+    /**
+     * Setter for Merchant Reference Number
+     *
+     * @param string $value
+     * @return $this
+     */
+    public function setMerchantRefNum($value)
+    {
+        return $this->setParameter('merchantRefNum', $value);
+    }
+
+    /**
      * Send request
      *
      * @return \Omnipay\Common\Message\ResponseInterface|void

@@ -65,7 +65,7 @@ class AuthorizeRequest extends AbstractRequest
         $merchantAccount->addChild('storeID', $this->getStoreId());
         $merchantAccount->addChild('storePwd', $this->getStorePassword());
 
-        $sxml->addChild('merchantRefNum', $this->getCustomerId() ?: 'ref-num - ' . time());
+        $sxml->addChild('merchantRefNum', $this->getMerchantRefNum() ?: 'ref-num - ' . time());
         $sxml->addChild('amount', $this->getAmountDecimal());
 
         $cardChild = $sxml->addChild('card');

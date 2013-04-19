@@ -61,7 +61,7 @@ class VoidRequest extends AbstractRequest
         $merchantAccount->addChild('storePwd', $this->getStorePassword());
 
         $sxml->addChild('confirmationNumber', $this->getTransactionReference());
-        $sxml->addChild('merchantRefNum', $this->getCustomerId());
+        $sxml->addChild('merchantRefNum', $this->getMerchantRefNum());
         $sxml->addChild('reversalAmount', $this->getAmountDecimal());
 
         return $sxml->asXML();

@@ -38,6 +38,7 @@ class GatewayTest extends GatewayTestCase
             'amount' => 9563,
             'card' => $card,
             'customerId' => '9966441',
+            'merchantRefNum' => '13841',
         );
 
         $this->captureOptions = array(
@@ -74,7 +75,7 @@ class GatewayTest extends GatewayTestCase
         $this->assertTrue(isset($sxml->shippingDetails));
 
         $this->assertSame('95.63', (string) $sxml->amount);
-        $this->assertSame('9966441', (string) $sxml->merchantRefNum);
+        $this->assertSame('13841', (string) $sxml->merchantRefNum);
         $this->assertSame('93401', $card->getPostcode());
         $this->assertSame('test@example.com', $card->getEmail());
 
