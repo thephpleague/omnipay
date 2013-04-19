@@ -35,4 +35,27 @@ class ExpressCompleteAuthorizeRequest extends AbstractRequest
 
         return $data;
     }
+
+    public function getDetailsData()
+    {
+        $data = $this->getBaseData('GetExpressCheckoutDetails');
+
+        $data['TOKEN'] = $this->httpRequest->query->get('token');
+        $data['PAYERID'] = $this->httpRequest->query->get('PayerID');
+
+        return $data;
+    }
+
+    public function send()
+    {
+        $paymentDoResponse = parent::send();
+
+        $url = $this->getEndpoint().'?'.http_build_query($this->getDetailsData());
+        $httpResponse = $this->httpClient->get($url)->send();
+        $paymentInfoResponse =  $this->createResponse($httpResponse->getBody());
+
+        $mergedData = array_merge($paymentDoResponse->getData(), $paymentInfoResponse->getData());
+
+        return $this->createResponse(http_build_query($mergedData));
+    }
 }
