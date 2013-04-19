@@ -88,6 +88,8 @@ The following gateways are already implemented:
 * Dummy
 * GoCardless
 * Manual
+* Migs 2-Party
+* Migs 3-Party
 * Netaxept (BBS)
 * PayFast
 * Payflow Pro
