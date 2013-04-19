@@ -49,7 +49,7 @@ class Gateway extends AbstractGateway
     /**
      * Authorize a new amount
      *
-     * @param array $parameters
+     * @param  array $parameters
      * @return mixed
      */
     public function authorize(array $parameters = array())
@@ -60,7 +60,7 @@ class Gateway extends AbstractGateway
     /**
      * Capture authorized amount
      *
-     * @param array $parameters An array of options
+     * @param  array                      $parameters An array of options
      * @return \Omnipay\ResponseInterface
      */
     public function capture(array $parameters = array())
@@ -82,7 +82,7 @@ class Gateway extends AbstractGateway
     /**
      * Void transaction
      *
-     * @param array $parameters An array of options
+     * @param  array                      $parameters An array of options
      * @return \Omnipay\ResponseInterface
      */
     public function void(array $parameters = array())

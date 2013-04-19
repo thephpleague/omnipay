@@ -24,8 +24,8 @@ class Response extends AbstractResponse
     /**
      * Constructor
      *
-     * @param RequestInterface $request
-     * @param string $data
+     * @param  RequestInterface         $request
+     * @param  string                   $data
      * @throws InvalidResponseException
      */
     public function __construct(RequestInterface $request, $data)
@@ -46,8 +46,8 @@ class Response extends AbstractResponse
      */
     public function isSuccessful()
     {
-        $decisionOk = Gateway::DECISION_ACCEPTED === (string)$this->data->decision;
-        $codeOk = Gateway::CODE_OK === (string)$this->data->code;
+        $decisionOk = Gateway::DECISION_ACCEPTED === (string) $this->data->decision;
+        $codeOk = Gateway::CODE_OK === (string) $this->data->code;
 
         return $decisionOk && $codeOk;
     }
@@ -59,7 +59,7 @@ class Response extends AbstractResponse
      */
     public function getTransactionReference()
     {
-        return (string)$this->data->confirmationNumber;
+        return (string) $this->data->confirmationNumber;
     }
 
     /**
@@ -69,6 +69,6 @@ class Response extends AbstractResponse
      */
     public function getMessage()
     {
-        return (string)$this->data->description;
+        return (string) $this->data->description;
     }
 }
