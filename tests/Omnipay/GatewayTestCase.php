@@ -149,27 +149,27 @@ abstract class GatewayTestCase extends TestCase
         }
     }
 
-    public function testSupportsStore()
+    public function testSupportsCreate()
     {
-        $supportsStore = $this->gateway->supportsStore();
-        $this->assertInternalType('boolean', $supportsStore);
+        $supportsCreate = $this->gateway->supportsCreate();
+        $this->assertInternalType('boolean', $supportsCreate);
 
-        if ($supportsStore) {
-            $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->store());
+        if ($supportsCreate) {
+            $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->create());
         } else {
-            $this->assertFalse(method_exists($this->gateway, 'store'));
+            $this->assertFalse(method_exists($this->gateway, 'create'));
         }
     }
 
-    public function testSupportsUnstore()
+    public function testSupportsDelete()
     {
-        $supportsUnstore = $this->gateway->supportsUnstore();
-        $this->assertInternalType('boolean', $supportsUnstore);
+        $supportsDelete = $this->gateway->supportsDelete();
+        $this->assertInternalType('boolean', $supportsDelete);
 
-        if ($supportsUnstore) {
-            $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->unstore());
+        if ($supportsDelete) {
+            $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->delete());
         } else {
-            $this->assertFalse(method_exists($this->gateway, 'unstore'));
+            $this->assertFalse(method_exists($this->gateway, 'delete'));
         }
     }
 
@@ -290,9 +290,9 @@ abstract class GatewayTestCase extends TestCase
         }
     }
 
-    public function testStoreParameters()
+    public function testCreateParameters()
     {
-        if ($this->gateway->supportsStore()) {
+        if ($this->gateway->supportsCreate()) {
             foreach ($this->gateway->getDefaultParameters() as $key => $default) {
                 // set property on gateway
                 $getter = 'get'.ucfirst($key);
@@ -301,15 +301,15 @@ abstract class GatewayTestCase extends TestCase
                 $this->gateway->$setter($value);
 
                 // request should have matching property, with correct value
-                $request = $this->gateway->store();
+                $request = $this->gateway->create();
                 $this->assertSame($value, $request->$getter());
             }
         }
     }
 
-    public function testUnstoreParameters()
+    public function testDeleteParameters()
     {
-        if ($this->gateway->supportsUnstore()) {
+        if ($this->gateway->supportsDelete()) {
             foreach ($this->gateway->getDefaultParameters() as $key => $default) {
                 // set property on gateway
                 $getter = 'get'.ucfirst($key);
@@ -318,7 +318,7 @@ abstract class GatewayTestCase extends TestCase
                 $this->gateway->$setter($value);
 
                 // request should have matching property, with correct value
-                $request = $this->gateway->unstore();
+                $request = $this->gateway->delete();
                 $this->assertSame($value, $request->$getter());
             }
         }

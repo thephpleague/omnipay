@@ -42,14 +42,14 @@ $response = $gateway->initialize($params);</pre>
         {% if gateway.supportsVoid() %}
             <li>void()</li>
         {% endif %}
-        {% if gateway.supportsStore() %}
-            <li><a href="/gateways/{{gateway.shortName}}/store">store()</a></li>
+        {% if gateway.supportsCreate() %}
+            <li><a href="/gateways/{{gateway.shortName}}/create">create()</a></li>
         {% endif %}
         {% if gateway.supportsUpdate() %}
             <li><a href="/gateways/{{gateway.shortName}}/update">update()</a></li>
         {% endif %}
-        {% if gateway.supportsUnstore() %}
-            <li><a href="/gateways/{{gateway.shortName}}/unstore">unstore()</a></li>
+        {% if gateway.supportsDelete() %}
+            <li><a href="/gateways/{{gateway.shortName}}/delete">delete()</a></li>
         {% endif %}
     </ul>
 

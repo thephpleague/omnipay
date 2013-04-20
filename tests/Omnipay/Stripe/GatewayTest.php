@@ -33,7 +33,7 @@ class GatewayTest extends GatewayTestCase
             'transactionReference' => 'ch_12RgN9L7XhO9mI',
         );
 
-        $this->storeOptions = array(
+        $this->createOptions = array(
             'card' => $this->getValidCard(),
         );
         
@@ -41,7 +41,7 @@ class GatewayTest extends GatewayTestCase
             'cardReference' => 'cus_1MZSEtqSghKx99',
         );
 
-        $this->unstoreOptions = array(
+        $this->deleteOptions = array(
             'cardReference' => 'cus_1MZSEtqSghKx99',
         );
     }
@@ -94,10 +94,10 @@ class GatewayTest extends GatewayTestCase
         $this->assertSame('Charge ch_12RgN9L7XhO9mI has already been refunded.', $response->getMessage());
     }
 
-    public function testStoreSuccess()
+    public function testCreateSuccess()
     {
-        $this->setMockHttpResponse('StoreSuccess.txt');
-        $response = $this->gateway->store($this->storeOptions)->send();
+        $this->setMockHttpResponse('CreateSuccess.txt');
+        $response = $this->gateway->create($this->createOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -106,10 +106,10 @@ class GatewayTest extends GatewayTestCase
         $this->assertNull($response->getMessage());
     }
 
-    public function testStoreFailure()
+    public function testCreateFailure()
     {
-        $this->setMockHttpResponse('StoreFailure.txt');
-        $response = $this->gateway->store($this->storeOptions)->send();
+        $this->setMockHttpResponse('CreateFailure.txt');
+        $response = $this->gateway->create($this->createOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -121,7 +121,7 @@ class GatewayTest extends GatewayTestCase
     public function testUpdateSuccess()
     {
         $this->setMockHttpResponse('UpdateSuccess.txt');
-        $response = $this->gateway->store($this->storeOptions)->send();
+        $response = $this->gateway->update($this->updateOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -133,7 +133,7 @@ class GatewayTest extends GatewayTestCase
     public function testUpdateFailure()
     {
         $this->setMockHttpResponse('UpdateFailure.txt');
-        $response = $this->gateway->store($this->storeOptions)->send();
+        $response = $this->gateway->update($this->updateOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -142,10 +142,10 @@ class GatewayTest extends GatewayTestCase
         $this->assertSame('No such customer: cus_1MZeNih5LdKxDq', $response->getMessage());
     }
 
-    public function testUnstoreSuccess()
+    public function testDeleteSuccess()
     {
-        $this->setMockHttpResponse('UnstoreSuccess.txt');
-        $response = $this->gateway->unstore($this->unstoreOptions)->send();
+        $this->setMockHttpResponse('DeleteSuccess.txt');
+        $response = $this->gateway->delete($this->deleteOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -154,10 +154,10 @@ class GatewayTest extends GatewayTestCase
         $this->assertNull($response->getMessage());
     }
 
-    public function testUnstoreFailure()
+    public function testDeleteFailure()
     {
-        $this->setMockHttpResponse('UnstoreFailure.txt');
-        $response = $this->gateway->unstore($this->unstoreOptions)->send();
+        $this->setMockHttpResponse('DeleteFailure.txt');
+        $response = $this->gateway->delete($this->deleteOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());

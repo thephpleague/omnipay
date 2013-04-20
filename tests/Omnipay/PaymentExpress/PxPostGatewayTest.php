@@ -105,10 +105,10 @@ class PxPostGatewayTest extends GatewayTestCase
         $this->assertEquals('000000030884cdc6', $response->getTransactionReference());
     }
 
-    public function testStoreSuccess()
+    public function testCreateSuccess()
     {
-        $this->setMockHttpResponse('PxPostStoreSuccess.txt');
-        $response = $this->gateway->store($this->options)->send();
+        $this->setMockHttpResponse('PxPostCreateSuccess.txt');
+        $response = $this->gateway->create($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -117,10 +117,10 @@ class PxPostGatewayTest extends GatewayTestCase
         $this->assertSame('Transaction Approved', $response->getMessage());
     }
 
-    public function testStoreFailure()
+    public function testCreateFailure()
     {
-        $this->setMockHttpResponse('PxPostStoreFailure.txt');
-        $response = $this->gateway->store($this->options)->send();
+        $this->setMockHttpResponse('PxPostCreateFailure.txt');
+        $response = $this->gateway->create($this->options)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
