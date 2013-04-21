@@ -12,9 +12,9 @@
 namespace Omnipay\Stripe\Message;
 
 /**
- * Stripe Store Request
+ * Stripe Update Credit Card Request
  */
-class StoreRequest extends PurchaseRequest
+class UpdateCardRequest extends PurchaseRequest
 {
     public function getData()
     {
@@ -26,16 +26,15 @@ class StoreRequest extends PurchaseRequest
         } elseif ($this->getCard()) {
             $data['card'] = $this->getCardData();
             $data['email'] = $this->getCard()->getEmail();
-        } else {
-            // one of cardToken, or card is required
-            $this->validate('card');
         }
+
+        $this->validate('cardReference');
 
         return $data;
     }
 
     public function getEndpoint()
     {
-        return $this->endpoint.'/customers';
+        return $this->endpoint.'/customers/'.$this->getCardReference();
     }
 }

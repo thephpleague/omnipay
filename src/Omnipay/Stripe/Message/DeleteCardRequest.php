@@ -12,9 +12,9 @@
 namespace Omnipay\Stripe\Message;
 
 /**
- * Stripe Unstore Request
+ * Stripe Delete Credit Card Request
  */
-class UnstoreRequest extends PurchaseRequest
+class DeleteCardRequest extends PurchaseRequest
 {
     public function getData()
     {
