@@ -149,27 +149,39 @@ abstract class GatewayTestCase extends TestCase
         }
     }
 
-    public function testSupportsCreate()
+    public function testSupportsCreateCard()
     {
-        $supportsCreate = $this->gateway->supportsCreate();
+        $supportsCreate = $this->gateway->supportsCreateCard();
         $this->assertInternalType('boolean', $supportsCreate);
 
         if ($supportsCreate) {
-            $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->create());
+            $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->createCard());
         } else {
-            $this->assertFalse(method_exists($this->gateway, 'create'));
+            $this->assertFalse(method_exists($this->gateway, 'createCard'));
         }
     }
 
-    public function testSupportsDelete()
+    public function testSupportsDeleteCard()
     {
-        $supportsDelete = $this->gateway->supportsDelete();
+        $supportsDelete = $this->gateway->supportsDeleteCard();
         $this->assertInternalType('boolean', $supportsDelete);
 
         if ($supportsDelete) {
-            $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->delete());
+            $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->deleteCard());
         } else {
-            $this->assertFalse(method_exists($this->gateway, 'delete'));
+            $this->assertFalse(method_exists($this->gateway, 'deleteCard'));
+        }
+    }
+
+    public function testSupportsUpdateCard()
+    {
+        $supportsUpdate = $this->gateway->supportsUpdateCard();
+        $this->assertInternalType('boolean', $supportsUpdate);
+
+        if ($supportsUpdate) {
+            $this->assertInstanceOf('Omnipay\Common\Message\RequestInterface', $this->gateway->updateCard());
+        } else {
+            $this->assertFalse(method_exists($this->gateway, 'updateCard'));
         }
     }
 
@@ -290,9 +302,9 @@ abstract class GatewayTestCase extends TestCase
         }
     }
 
-    public function testCreateParameters()
+    public function testCreateCardParameters()
     {
-        if ($this->gateway->supportsCreate()) {
+        if ($this->gateway->supportsCreateCard()) {
             foreach ($this->gateway->getDefaultParameters() as $key => $default) {
                 // set property on gateway
                 $getter = 'get'.ucfirst($key);
@@ -301,15 +313,15 @@ abstract class GatewayTestCase extends TestCase
                 $this->gateway->$setter($value);
 
                 // request should have matching property, with correct value
-                $request = $this->gateway->create();
+                $request = $this->gateway->createCard();
                 $this->assertSame($value, $request->$getter());
             }
         }
     }
 
-    public function testDeleteParameters()
+    public function testDeleteCardParameters()
     {
-        if ($this->gateway->supportsDelete()) {
+        if ($this->gateway->supportsDeleteCard()) {
             foreach ($this->gateway->getDefaultParameters() as $key => $default) {
                 // set property on gateway
                 $getter = 'get'.ucfirst($key);
@@ -318,7 +330,24 @@ abstract class GatewayTestCase extends TestCase
                 $this->gateway->$setter($value);
 
                 // request should have matching property, with correct value
-                $request = $this->gateway->delete();
+                $request = $this->gateway->deleteCard();
+                $this->assertSame($value, $request->$getter());
+            }
+        }
+    }
+
+    public function testUpdateCardParameters()
+    {
+        if ($this->gateway->supportsUpdateCard()) {
+            foreach ($this->gateway->getDefaultParameters() as $key => $default) {
+                // set property on gateway
+                $getter = 'get'.ucfirst($key);
+                $setter = 'set'.ucfirst($key);
+                $value = uniqid();
+                $this->gateway->$setter($value);
+
+                // request should have matching property, with correct value
+                $request = $this->gateway->updateCard();
                 $this->assertSame($value, $request->$getter());
             }
         }

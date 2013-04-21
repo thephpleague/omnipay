@@ -200,8 +200,8 @@ $app->match('/gateways/{name}/completePurchase', function($name) use ($app) {
     ));
 });
 
-// create gateway create
-$app->get('/gateways/{name}/create', function($name) use ($app) {
+// create gateway create Credit Card
+$app->get('/gateways/{name}/create-card', function($name) use ($app) {
     $gateway = Omnipay\Common\GatewayFactory::create($name);
     $sessionVar = 'omnipay.'.$gateway->getShortName();
     $gateway->initialize((array) $app['session']->get($sessionVar));
@@ -211,14 +211,14 @@ $app->get('/gateways/{name}/create', function($name) use ($app) {
 
     return $app['twig']->render('request.twig', array(
         'gateway' => $gateway,
-        'method' => 'create',
+        'method' => 'createCard',
         'params' => $params,
         'card' => $card->getParameters(),
     ));
 });
 
-// submit gateway create
-$app->post('/gateways/{name}/create', function($name) use ($app) {
+// submit gateway create Credit Card
+$app->post('/gateways/{name}/create-card', function($name) use ($app) {
     $gateway = Omnipay\Common\GatewayFactory::create($name);
     $sessionVar = 'omnipay.'.$gateway->getShortName();
     $gateway->initialize((array) $app['session']->get($sessionVar));
@@ -233,7 +233,7 @@ $app->post('/gateways/{name}/create', function($name) use ($app) {
 
     $params['card'] = $card;
     $params['clientIp'] = $app['request']->getClientIp();
-    $response = $gateway->create($params)->send();
+    $response = $gateway->createCard($params)->send();
 
     return $app['twig']->render('response.twig', array(
         'gateway' => $gateway,
@@ -241,8 +241,8 @@ $app->post('/gateways/{name}/create', function($name) use ($app) {
     ));
 });
 
-// create gateway update
-$app->get('/gateways/{name}/update', function($name) use ($app) {
+// create gateway update Credit Card
+$app->get('/gateways/{name}/update-card', function($name) use ($app) {
     $gateway = Omnipay\Common\GatewayFactory::create($name);
     $sessionVar = 'omnipay.'.$gateway->getShortName();
     $gateway->initialize((array) $app['session']->get($sessionVar));
@@ -252,14 +252,14 @@ $app->get('/gateways/{name}/update', function($name) use ($app) {
 
     return $app['twig']->render('request.twig', array(
         'gateway' => $gateway,
-        'method' => 'update',
+        'method' => 'updateCard',
         'params' => $params,
         'card' => $card->getParameters(),
     ));
 });
 
-// submit gateway update
-$app->post('/gateways/{name}/update', function($name) use ($app) {
+// submit gateway update Credit Card
+$app->post('/gateways/{name}/update-card', function($name) use ($app) {
     $gateway = Omnipay\Common\GatewayFactory::create($name);
     $sessionVar = 'omnipay.'.$gateway->getShortName();
     $gateway->initialize((array) $app['session']->get($sessionVar));
@@ -274,7 +274,7 @@ $app->post('/gateways/{name}/update', function($name) use ($app) {
 
     $params['card'] = $card;
     $params['clientIp'] = $app['request']->getClientIp();
-    $response = $gateway->update($params)->send();
+    $response = $gateway->updateCard($params)->send();
 
     return $app['twig']->render('response.twig', array(
         'gateway' => $gateway,
@@ -282,8 +282,8 @@ $app->post('/gateways/{name}/update', function($name) use ($app) {
     ));
 });
 
-// create gateway delete
-$app->get('/gateways/{name}/delete', function($name) use ($app) {
+// create gateway delete Credit Card
+$app->get('/gateways/{name}/delete-card', function($name) use ($app) {
     $gateway = Omnipay\Common\GatewayFactory::create($name);
     $sessionVar = 'omnipay.'.$gateway->getShortName();
     $gateway->initialize((array) $app['session']->get($sessionVar));
@@ -292,13 +292,13 @@ $app->get('/gateways/{name}/delete', function($name) use ($app) {
 
     return $app['twig']->render('request.twig', array(
         'gateway' => $gateway,
-        'method' => 'delete',
+        'method' => 'deleteCard',
         'params' => $params,
     ));
 });
 
-// submit gateway delete
-$app->post('/gateways/{name}/delete', function($name) use ($app) {
+// submit gateway delete Credit Card
+$app->post('/gateways/{name}/delete-card', function($name) use ($app) {
     $gateway = Omnipay\Common\GatewayFactory::create($name);
     $sessionVar = 'omnipay.'.$gateway->getShortName();
     $gateway->initialize((array) $app['session']->get($sessionVar));
@@ -310,7 +310,7 @@ $app->post('/gateways/{name}/delete', function($name) use ($app) {
     $app['session']->set($sessionVar.'.delete', $params);
 
     $params['clientIp'] = $app['request']->getClientIp();
-    $response = $gateway->delete($params)->send();
+    $response = $gateway->deleteCard($params)->send();
 
     return $app['twig']->render('response.twig', array(
         'gateway' => $gateway,

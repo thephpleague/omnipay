@@ -39,9 +39,9 @@ class ResponseTest extends TestCase
         $this->assertSame('Your card was declined', $response->getMessage());
     }
 
-    public function testCreateSuccess()
+    public function testCreateCardSuccess()
     {
-        $httpResponse = $this->getMockHttpResponse('CreateSuccess.txt');
+        $httpResponse = $this->getMockHttpResponse('CreateCardSuccess.txt');
         $response = new Response($this->getMockRequest(), $httpResponse->json());
 
         $this->assertTrue($response->isSuccessful());
@@ -51,9 +51,9 @@ class ResponseTest extends TestCase
         $this->assertNull($response->getMessage());
     }
 
-    public function testCreateFailure()
+    public function testCreateCardFailure()
     {
-        $httpResponse = $this->getMockHttpResponse('CreateFailure.txt');
+        $httpResponse = $this->getMockHttpResponse('CreateCardFailure.txt');
         $response = new Response($this->getMockRequest(), $httpResponse->json());
 
         $this->assertFalse($response->isSuccessful());
@@ -63,9 +63,9 @@ class ResponseTest extends TestCase
         $this->assertSame('You must provide an integer value for \'exp_year\'.', $response->getMessage());
     }
     
-    public function testUpdateSuccess()
+    public function testUpdateCardSuccess()
     {
-        $httpResponse = $this->getMockHttpResponse('UpdateSuccess.txt');
+        $httpResponse = $this->getMockHttpResponse('UpdateCardSuccess.txt');
         $response = new Response($this->getMockRequest(), $httpResponse->json());
 
         $this->assertTrue($response->isSuccessful());
@@ -75,9 +75,9 @@ class ResponseTest extends TestCase
         $this->assertNull($response->getMessage());
     }
 
-    public function testUpdateFailure()
+    public function testUpdateCardFailure()
     {
-        $httpResponse = $this->getMockHttpResponse('UpdateFailure.txt');
+        $httpResponse = $this->getMockHttpResponse('UpdateCardFailure.txt');
         $response = new Response($this->getMockRequest(), $httpResponse->json());
 
         $this->assertFalse($response->isSuccessful());
@@ -87,9 +87,9 @@ class ResponseTest extends TestCase
         $this->assertSame('No such customer: cus_1MZeNih5LdKxDq', $response->getMessage());
     }
 
-    public function testDeleteSuccess()
+    public function testDeleteCardSuccess()
     {
-        $httpResponse = $this->getMockHttpResponse('DeleteSuccess.txt');
+        $httpResponse = $this->getMockHttpResponse('DeleteCardSuccess.txt');
         $response = new Response($this->getMockRequest(), $httpResponse->json());
 
         $this->assertTrue($response->isSuccessful());
@@ -99,9 +99,9 @@ class ResponseTest extends TestCase
         $this->assertNull($response->getMessage());
     }
 
-    public function testDeleteFailure()
+    public function testDeleteCardFailure()
     {
-        $httpResponse = $this->getMockHttpResponse('DeleteFailure.txt');
+        $httpResponse = $this->getMockHttpResponse('DeleteCardFailure.txt');
         $response = new Response($this->getMockRequest(), $httpResponse->json());
 
         $this->assertFalse($response->isSuccessful());

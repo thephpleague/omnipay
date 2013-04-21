@@ -63,9 +63,9 @@ class ResponseTest extends TestCase
         $this->assertSame('Length of the data to decrypt is invalid.', $response->getMessage());
     }
 
-    public function testCreateSuccess()
+    public function testCreateCardSuccess()
     {
-        $httpResponse = $this->getMockHttpResponse('PxPostCreateSuccess.txt');
+        $httpResponse = $this->getMockHttpResponse('PxPostCreateCardSuccess.txt');
         $response = new Response($this->getMockRequest(), $httpResponse->xml());
 
         $this->assertTrue($response->isSuccessful());
@@ -75,9 +75,9 @@ class ResponseTest extends TestCase
         $this->assertSame('Transaction Approved', $response->getMessage());
     }
 
-    public function testCreateFailure()
+    public function testCreateCardFailure()
     {
-        $httpResponse = $this->getMockHttpResponse('PxPostCreateFailure.txt');
+        $httpResponse = $this->getMockHttpResponse('PxPostCreateCardFailure.txt');
         $response = new Response($this->getMockRequest(), $httpResponse->xml());
 
         $this->assertFalse($response->isSuccessful());

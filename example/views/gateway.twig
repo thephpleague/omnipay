@@ -42,14 +42,14 @@ $response = $gateway->initialize($params);</pre>
         {% if gateway.supportsVoid() %}
             <li>void()</li>
         {% endif %}
-        {% if gateway.supportsCreate() %}
-            <li><a href="/gateways/{{gateway.shortName}}/create">create()</a></li>
+        {% if gateway.supportsCreateCard() %}
+            <li><a href="/gateways/{{gateway.shortName}}/create-card">createCard()</a></li>
         {% endif %}
-        {% if gateway.supportsUpdate() %}
-            <li><a href="/gateways/{{gateway.shortName}}/update">update()</a></li>
+        {% if gateway.supportsUpdateCard() %}
+            <li><a href="/gateways/{{gateway.shortName}}/update-card">updateCard()</a></li>
         {% endif %}
-        {% if gateway.supportsDelete() %}
-            <li><a href="/gateways/{{gateway.shortName}}/delete">delete()</a></li>
+        {% if gateway.supportsDeleteCard() %}
+            <li><a href="/gateways/{{gateway.shortName}}/delete-card">deleteCard()</a></li>
         {% endif %}
     </ul>
 

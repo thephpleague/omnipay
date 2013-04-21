@@ -75,8 +75,8 @@ class PxPostGateway extends AbstractGateway
         return $this->createRequest('\Omnipay\PaymentExpress\Message\PxPostRefundRequest', $parameters);
     }
 
-    public function create(array $parameters = array())
+    public function createCard(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\PaymentExpress\Message\PxPostCreateRequest', $parameters);
+        return $this->createRequest('\Omnipay\PaymentExpress\Message\PxPostCreateCardRequest', $parameters);
     }
 }

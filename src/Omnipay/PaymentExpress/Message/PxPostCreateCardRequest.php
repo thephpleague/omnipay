@@ -12,9 +12,9 @@
 namespace Omnipay\PaymentExpress\Message;
 
 /**
- * PaymentExpress PxPost Create Request
+ * PaymentExpress PxPost Create Credit Card Request
  */
-class PxPostCreateRequest extends PxPostAuthorizeRequest
+class PxPostCreateCardRequest extends PxPostAuthorizeRequest
 {
     public function getData()
     {
