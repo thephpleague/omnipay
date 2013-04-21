@@ -170,33 +170,33 @@ abstract class AbstractGateway implements GatewayInterface
     }
 
     /**
-     * Supports Store
+     * Supports CreateCard
      *
-     * @return boolean True if this gateway supports the store() method
+     * @return boolean True if this gateway supports the create() method
      */
-    public function supportsStore()
+    public function supportsCreateCard()
     {
-        return method_exists($this, 'store');
+        return method_exists($this, 'createCard');
     }
 
     /**
-     * Supports Unstore
+     * Supports DeleteCard
      *
-     * @return boolean True if this gateway supports the unstore() method
+     * @return boolean True if this gateway supports the delete() method
      */
-    public function supportsUnstore()
+    public function supportsDeleteCard()
     {
-        return method_exists($this, 'unstore');
+        return method_exists($this, 'deleteCard');
     }
 
     /**
-     * Supports Update
+     * Supports UpdateCard
      *
      * @return boolean True if this gateway supports the update() method
      */
-    public function supportsUpdate()
+    public function supportsUpdateCard()
     {
-        return method_exists($this, 'update');
+        return method_exists($this, 'updateCard');
     }
 
     /**

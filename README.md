@@ -351,8 +351,9 @@ try {
 Token billing is still under development. Most likely gateways will be able to implement the
 following methods:
 
-* `store($options)` - returns a response object which includes a `token`, which can be used for future transactions
-* `unstore($options)` - remove a stored card, not all gateways support this method
+* `createCard($options)` - returns a response object which includes a `token`, which can be used for future transactions
+* `updateCard($options)` - update a stored card, not all gateways support this method
+* `deleteCard($options)` - remove a stored card, not all gateways support this method
 
 ## Recurring Billing
 
