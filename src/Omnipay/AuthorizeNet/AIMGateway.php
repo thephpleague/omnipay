@@ -85,4 +85,14 @@ class AIMGateway extends AbstractGateway
     {
         return $this->createRequest('\Omnipay\AuthorizeNet\Message\AIMVoidRequest', $parameters);
     }
+
+    public function createProfile(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\AuthorizeNet\Message\CIMCreateProfileRequest', $parameters);
+    }
+
+    public function createCard(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\AuthorizeNet\Message\CIMCreateCardRequest', $parameters);
+    }
 }

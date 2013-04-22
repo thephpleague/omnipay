@@ -11,10 +11,12 @@
 
 namespace Omnipay\AuthorizeNet\Message;
 
+use Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
+
 /**
  * Authorize.Net Abstract Request
  */
-abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
+abstract class AbstractRequest extends BaseAbstractRequest
 {
     protected $liveEndpoint = 'https://secure.authorize.net/gateway/transact.dll';
     protected $developerEndpoint = 'https://test.authorize.net/gateway/transact.dll';
