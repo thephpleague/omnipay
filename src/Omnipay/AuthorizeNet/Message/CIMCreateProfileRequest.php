@@ -18,8 +18,14 @@ class CIMCreateProfileRequest extends CIMAbstractRequest
 {
     public function getData()
     {
-        $this->validate('customerEmail');        
+        $this->validate('customerEmail');
 
-        return $this->getBaseData();
+        $data = $this->getBaseData();
+        
+        $data->profile->merchantCustomerId = $this->getCustomerId();
+        $data->profile->description = $this->getDescription();
+        $data->profile->email = $this->getCustomerEmail();
+
+        return $data;
     }
 }

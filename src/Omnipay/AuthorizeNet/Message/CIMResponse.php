@@ -22,16 +22,26 @@ class CIMResponse extends AbstractResponse
 {
     public function isSuccessful()
     {
-        return '1' === $this->data[0];
-    }
-
-    public function getTransactionReference()
-    {
-        return $this->data[6];
+        return 'Ok' === (string) $this->data->messages->resultCode;
     }
 
     public function getMessage()
     {
-        return $this->data[3];
+        return $this->data->messages->message->text;
+    }
+
+    public function getCode()
+    {
+        return $this->data->messages->message->code;
+    }
+
+    public function getCustomerProfileId()
+    {
+        return $this->data->customerProfileId;
+    }
+
+    public function getCustomerPaymentProfileId()
+    {
+        return $this->data->customerPaymentProfileId;
     }
 }
