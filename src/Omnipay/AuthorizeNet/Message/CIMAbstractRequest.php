@@ -49,23 +49,9 @@ abstract class CIMAbstractRequest extends AbstractRequest
         $this->setParameter('customerPaymentProfileId', $value);
     }
 
-    public function getRequestType()
-    {
-        if (!$this->getParameter('requestType')) {
-            $this->setRequestType('createCustomerProfileRequest');
-        }
-
-        return $this->getParameter('requestType');
-    }
-
-    public function setRequestType($value)
-    {
-        $this->setParameter('requestType', $value);
-    }
-
     protected function getBaseData()
     {
-        $data = new \SimpleXMLElement(sprintf('<?xml version="1.0" encoding="utf-8"?><%s />', $this->getRequestType()));
+        $data = new \SimpleXMLElement(sprintf('<?xml version="1.0" encoding="utf-8"?><%s />', $this->requestType));
         $data->addAttribute('xmlns', 'AnetApi/xml/v1/schema/AnetApiSchema.xsd');
         
         $data->merchantAuthentication->name = $this->getApiLoginId();
@@ -103,6 +89,22 @@ abstract class CIMAbstractRequest extends AbstractRequest
 
             $data->validationMode = 'liveMode';
         }
+
+        return $data;
+    }
+
+    protected function getTransactionData()
+    {
+        $data = $this->getBaseData();
+        $transaction = $data->addChild('transaction');
+        
+        $profileTransAuth = $transaction->addChild($this->action);
+        $profileTransAuth->amount = $this->getAmountDecimal();
+        $profileTransAuth->customerProfileId = $this->getCustomerProfileId();
+        $profileTransAuth->customerPaymentProfileId = $this->getCustomerPaymentProfileId();
+        
+        $order = $profileTransAuth->addChild('order');
+        $order->description = $this->getDescription();
 
         return $data;
     }

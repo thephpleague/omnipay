@@ -12,21 +12,22 @@
 namespace Omnipay\AuthorizeNet\Message;
 
 /**
- * Authorize.Net CIM Create Profile Request
+ * Authorize.Net CIM Update Profile Request
  */
-class CIMCreateProfileRequest extends CIMAbstractRequest
+class CIMUpdateProfileRequest extends CIMAbstractRequest
 {
-    protected $requestType = 'createCustomerProfileRequest';
+    protected $requestType = 'updateCustomerProfileRequest';
 
     public function getData()
     {
-        $this->validate('customerEmail');
+        $this->validate('customerEmail', 'customerProfileId');
         
         $data = $this->getBaseData();
         
         $data->profile->merchantCustomerId = $this->getCustomerId();
         $data->profile->description = $this->getDescription();
         $data->profile->email = $this->getCustomerEmail();
+        $data->profile->customerProfileId = $this->getCustomerProfileId();
 
         return $data;
     }

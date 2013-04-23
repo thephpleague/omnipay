@@ -16,12 +16,12 @@ namespace Omnipay\AuthorizeNet\Message;
  */
 class CIMCreateCardRequest extends CIMAbstractRequest
 {
+    protected $requestType = 'createCustomerPaymentProfileRequest';
+
     public function getData()
     {
         $this->validate('customerProfileId', 'card');
         $this->getCard()->validate();
-
-        $this->setRequestType('createCustomerPaymentProfileRequest');       
         
         $data = $this->getBillingData();
 

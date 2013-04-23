@@ -44,4 +44,16 @@ class CIMResponse extends AbstractResponse
     {
         return $this->data->customerPaymentProfileId;
     }
+
+    public function getDirectResponse()
+    {
+        return $this->data->directResponse;
+    }
+
+    public function getTransactionReference()
+    {
+        $directResponse = explode(',', $this->getDirectResponse());
+        
+        return $directResponse[6];
+    }
 }
