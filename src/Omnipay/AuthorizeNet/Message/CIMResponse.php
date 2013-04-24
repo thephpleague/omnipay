@@ -54,9 +54,9 @@ class CIMResponse extends AbstractResponse
     public function getDirectResponse()
     {
         if ($this->data->directResponse) {
-            return explode(',', $this->data->directResponse);    
+            return explode(',', $this->data->directResponse);
         } elseif ($this->data->validationDirectResponse) {
-            return explode(',', $this->data->validationDirectResponse);    
+            return explode(',', $this->data->validationDirectResponse);
         }
         
         return null;
