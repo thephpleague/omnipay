@@ -1,0 +1,10 @@
+HTTP/1.1 200 OK
+Date: Wed, 24 Apr 2013 12:38:21 GMT
+Server: Microsoft-IIS/6.0
+X-Powered-By: ASP.NET
+X-AspNet-Version: 2.0.50727
+Cache-Control: private
+Content-Type: text/xml; charset=utf-8
+Content-Length: 782
+
+﻿<?xml version="1.0" encoding="utf-8"?><createCustomerPaymentProfileResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd"><messages><resultCode>Ok</resultCode><message><code>I00001</code><text>Successful.</text></message></messages><customerPaymentProfileId>16829207</customerPaymentProfileId><validationDirectResponse>1,1,1,This transaction has been approved.,000000,P,0,none,Test transaction for ValidateCustomerPaymentProfile.,1.00,CC,auth_only,none,Limosul,Aliev,,,,,,,,,email@example.com,,,,,,,,,0.00,0.00,0.00,FALSE,none,ED8A6730E135E60BB3BC8E282611B2F7,,,,,,,,,,,,,XXXX4242,Visa,,,,,,,,,,,,,,,,</validationDirectResponse></createCustomerPaymentProfileResponse>

@@ -1,0 +1,10 @@
+HTTP/1.1 200 OK
+Date: Wed, 24 Apr 2013 12:47:05 GMT
+Server: Microsoft-IIS/6.0
+X-Powered-By: ASP.NET
+X-AspNet-Version: 2.0.50727
+Cache-Control: private
+Content-Type: text/xml; charset=utf-8
+Content-Length: 770
+
+﻿<?xml version="1.0" encoding="utf-8"?><updateCustomerPaymentProfileResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd"><messages><resultCode>Error</resultCode><message><code>E00027</code><text>There is one or more missing or invalid required fields.</text></message></messages><validationDirectResponse>3,1,290,There is one or more missing or invalid required fields.,,P,0,none,Test transaction for ValidateCustomerPaymentProfile.,0.00,CC,auth_only,,Limosul,Aliev,,,,,,,,,test@example.com,,,,,,,,,0.00,0.00,0.00,FALSE,none,BCB7478F4B39D67291F84A90CE588D66,,,,,,,,,,,,,XXXX1111,Visa,,,,,,,,,,,,,,,,</validationDirectResponse></updateCustomerPaymentProfileResponse>
