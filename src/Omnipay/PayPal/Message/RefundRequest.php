@@ -16,6 +16,16 @@ namespace Omnipay\PayPal\Message;
  */
 class RefundRequest extends AbstractRequest
 {
+    public function getRefundType()
+    {
+        return $this->getParameter('refundType');
+    }
+
+    public function setRefundType($value)
+    {
+        return $this->setParameter('refundType', $value);
+    }
+
     public function getData()
     {
         $data = $this->getBaseData('RefundTransaction');
@@ -23,7 +33,11 @@ class RefundRequest extends AbstractRequest
         $this->validate('transactionReference');
 
         $data['TRANSACTIONID'] = $this->getTransactionReference();
-        $data['REFUNDTYPE'] = 'Full';
+        $data['REFUNDTYPE'] = $this->getRefundType();
+        if ($this->getRefundType() != 'Full') {
+          $data['AMT'] = $this->getAmountDecimal();
+          $data['CURRENCYCODE'] = $this->getCurrency();
+        }
 
         return $data;
     }
