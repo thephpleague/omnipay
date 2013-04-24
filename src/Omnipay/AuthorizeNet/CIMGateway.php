@@ -51,6 +51,11 @@ class CIMGateway extends AIMGateway
         return $this->createRequest('\Omnipay\AuthorizeNet\Message\CIMUpdateProfileRequest', $parameters);
     }
 
+    public function deleteProfile(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\AuthorizeNet\Message\CIMDeleteProfileRequest', $parameters);
+    }
+
     public function createCard(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\AuthorizeNet\Message\CIMCreateCardRequest', $parameters);
@@ -59,10 +64,5 @@ class CIMGateway extends AIMGateway
     public function updateCard(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\AuthorizeNet\Message\CIMUpdateCardRequest', $parameters);
-    }
-
-    public function deleteCard(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\AuthorizeNet\Message\CIMDeleteCardRequest', $parameters);
     }
 }

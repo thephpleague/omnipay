@@ -23,8 +23,8 @@ class CIMUpdateCardRequest extends CIMAbstractRequest
         $this->validate('customerProfileId', 'customerPaymentProfileId', 'card');
         $this->getCard()->validate();
         
-        // If you use liveMode and you do not include the ccAddress 
-        // (billTo address in AuthorizeNet world) or ccZip (billTo zip), 
+        // If you use liveMode and you do not include the ccAddress
+        // (billTo address in AuthorizeNet world) or ccZip (billTo zip),
         // you will receive the following error:
         // There was an error processing the transaction
         // or

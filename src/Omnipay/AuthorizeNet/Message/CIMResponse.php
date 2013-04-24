@@ -33,33 +33,47 @@ class CIMResponse extends AbstractResponse
             return $directResponse[3];
         }
         
-        return $this->data->messages->message->text;
+        return (string) $this->data->messages->message->text;
     }
 
     public function getCode()
     {
-        return $this->data->messages->message->code;
+        return (string) $this->data->messages->message->code;
     }
 
     public function getCustomerProfileId()
     {
-        return $this->data->customerProfileId;
+        return (string) $this->data->customerProfileId;
     }
 
     public function getCustomerPaymentProfileId()
     {
-        return $this->data->customerPaymentProfileId;
+        return (string) $this->data->customerPaymentProfileId;
     }
 
     public function getDirectResponse()
     {
-        return explode(',', $this->data->directResponse);
+        if ($this->data->directResponse) {
+            return explode(',', $this->data->directResponse);    
+        } elseif ($this->data->validationDirectResponse) {
+            return explode(',', $this->data->validationDirectResponse);    
+        }
+        
+        return null;
     }
 
     public function getTransactionReference()
     {
-        $directResponse = $this->getDirectResponse();
-        
-        return $directResponse[6];
+        if ($this->getDirectResponse()) {
+            $directResponse = $this->getDirectResponse();
+            
+            if ($this->data->validationDirectResponse) {
+                return $directResponse[4];
+            }
+
+            return $directResponse[6];
+        }
+
+        return null;
     }
 }

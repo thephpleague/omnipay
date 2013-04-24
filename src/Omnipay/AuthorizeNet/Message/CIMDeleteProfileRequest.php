@@ -12,9 +12,9 @@
 namespace Omnipay\AuthorizeNet\Message;
 
 /**
- * Authorize.Net CIM Delete Card Request
+ * Authorize.Net CIM Delete Delete Request
  */
-class CIMDeleteCardRequest extends CIMAbstractRequest
+class CIMDeleteProfileRequest extends CIMAbstractRequest
 {
     protected $requestType = 'deleteCustomerProfileRequest';
 

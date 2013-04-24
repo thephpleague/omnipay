@@ -112,7 +112,7 @@ abstract class CIMAbstractRequest extends AbstractRequest
     public function send()
     {
         $httpResponse = $this->httpClient->post(
-            $this->getEndpoint(), 
+            $this->getEndpoint(),
             array('Content-Type' => 'text/xml'),
             $this->getData()->asXML()
         )->send();
@@ -140,7 +140,7 @@ abstract class CIMAbstractRequest extends AbstractRequest
             // Allow XML to be retrieved even if there is no response body
             $xml = new \SimpleXMLElement((string) $body ?: '<root />');
         } catch (\Exception $e) {
-            throw new RuntimeException('Unable to parse response body into XML: ' . $e->getMessage());
+            throw new \RuntimeException('Unable to parse response body into XML: ' . $e->getMessage());
         }
 
         return $xml;
