@@ -27,6 +27,12 @@ class CIMResponse extends AbstractResponse
 
     public function getMessage()
     {
+        if ($this->getDirectResponse()) {
+            $directResponse = $this->getDirectResponse();
+            
+            return $directResponse[3];
+        }
+        
         return $this->data->messages->message->text;
     }
 
@@ -47,12 +53,12 @@ class CIMResponse extends AbstractResponse
 
     public function getDirectResponse()
     {
-        return $this->data->directResponse;
+        return explode(',', $this->data->directResponse);
     }
 
     public function getTransactionReference()
     {
-        $directResponse = explode(',', $this->getDirectResponse());
+        $directResponse = $this->getDirectResponse();
         
         return $directResponse[6];
     }
