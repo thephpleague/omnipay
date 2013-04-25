@@ -35,8 +35,8 @@ class RefundRequest extends AbstractRequest
         $data['TRANSACTIONID'] = $this->getTransactionReference();
         $data['REFUNDTYPE'] = $this->getRefundType();
         if ($this->getRefundType() != 'Full') {
-          $data['AMT'] = $this->getAmountDecimal();
-          $data['CURRENCYCODE'] = $this->getCurrency();
+            $data['AMT'] = $this->getAmountDecimal();
+            $data['CURRENCYCODE'] = $this->getCurrency();
         }
 
         return $data;
