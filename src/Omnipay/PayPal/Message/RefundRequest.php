@@ -18,7 +18,7 @@ class RefundRequest extends AbstractRequest
 {
     public function getRefundType()
     {
-        return $this->getParameter('refundType');
+        return $this->getParameter('refundType') ?: 'Full';
     }
 
     public function setRefundType($value)
