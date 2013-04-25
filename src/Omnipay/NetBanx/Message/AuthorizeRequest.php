@@ -42,7 +42,7 @@ class AuthorizeRequest extends AbstractRequest
     }
 
     /**
-     * Get XML string (without header)
+     * Get XML string
      *
      * @return string
      */
@@ -76,8 +76,8 @@ class AuthorizeRequest extends AbstractRequest
         $cardExpiry->addChild('month', $card->getExpiryDate('m'));
         $cardExpiry->addChild('year', $card->getExpiryDate('Y'));
 
-        $cardChild->addChild('cardType', 'VI');
-        $cardChild->addChild('cvdIndicator', '0');
+        $cardChild->addChild('cardType', $this->getCardType() ?: 'VI');
+        $cardChild->addChild('cvdIndicator', '1');
         $cardChild->addChild('cvd', $card->getCvv());
 
         $billingDetails = $sxml->addChild('billingDetails');

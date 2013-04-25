@@ -58,6 +58,17 @@ class Gateway extends AbstractGateway
     }
 
     /**
+     * Authorize a new amount using Confirmation Number
+     *
+     * @param  array $parameters
+     * @return mixed
+     */
+    public function storedDataAuthorize(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\NetBanx\Message\StoredDataAuthorizeRequest', $parameters);
+    }
+
+    /**
      * Capture authorized amount
      *
      * @param  array                      $parameters An array of options
@@ -77,6 +88,17 @@ class Gateway extends AbstractGateway
     public function purchase(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\NetBanx\Message\PurchaseRequest', $parameters);
+    }
+
+    /**
+     * Create a new charge (combined authorize + capture) using Confirmation Number
+     *
+     * @param array An array of options
+     * @return \Omnipay\ResponseInterface
+     */
+    public function storedDataPurchase(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\NetBanx\Message\StoredDataPurchaseRequest', $parameters);
     }
 
     /**

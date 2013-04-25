@@ -12,16 +12,16 @@
 namespace Omnipay\NetBanx\Message;
 
 /**
- * NetBanx Capture Request
+ * NetBanx 'StoredData' Authorize Request
  */
-class CaptureRequest extends AbstractRequest
+class StoredDataAuthorizeRequest extends AbstractRequest
 {
     /**
      * Method
      *
      * @var string
      */
-    protected $txnMode = 'ccSettlement';
+    protected $txnMode = 'ccStoredDataAuthorize';
 
     /**
      * Get data
@@ -30,7 +30,7 @@ class CaptureRequest extends AbstractRequest
      */
     public function getData()
     {
-        $this->validate('amount', 'transactionReference');
+        $this->validate('amount', 'confirmationNumber');
 
         $data = $this->getBaseData();
         $data['txnRequest'] = $this->getXmlString();
@@ -46,7 +46,7 @@ class CaptureRequest extends AbstractRequest
     protected function getXmlString()
     {
         $xml = '<?xml version="1.0" encoding="UTF-8"?>
-                <ccPostAuthRequestV1
+                <ccStoredDataRequestV1
                     xmlns="http://www.optimalpayments.com/creditcard/xmlschema/v1"
                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                     xsi:schemaLocation="http://www.optimalpayments.com/creditcard/xmlschema/v1" />';
@@ -59,8 +59,8 @@ class CaptureRequest extends AbstractRequest
         $merchantAccount->addChild('storeID', $this->getStoreId());
         $merchantAccount->addChild('storePwd', $this->getStorePassword());
 
-        $sxml->addChild('confirmationNumber', $this->getTransactionReference());
-        $sxml->addChild('merchantRefNum', $this->getCustomerId());
+        $sxml->addChild('merchantRefNum', $this->getCustomerId() ?: 'ref-num - ' . time());
+        $sxml->addChild('confirmationNumber', $this->getConfirmationNumber());
         $sxml->addChild('amount', $this->getAmountDecimal());
 
         return $sxml->asXML();
