@@ -68,6 +68,17 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
         return $this->setParameter('landingPage', $value);
     }
+    
+    public function getHeaderImage()
+    {
+        return $this->getParameter('headerImage');
+    }
+
+    public function setHeaderImage($value)
+    {
+        return $this->setParameter('headerImage', $value);
+    }    
+    
 
     protected function getBaseData($method)
     {
