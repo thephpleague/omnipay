@@ -37,7 +37,6 @@ class GatewayTest extends GatewayTestCase
         $this->purchaseOptions = array(
             'amount' => 9563,
             'card' => $card,
-            'cardType' => 'AM',
             'customerId' => '9966441',
         );
 
@@ -76,7 +75,7 @@ class GatewayTest extends GatewayTestCase
         $this->assertSame('ccAuthorize', $requestData['txnMode']);
 
         $this->assertSame('93401', (string) $sxml->billingDetails->zip);
-        $this->assertSame('AM', (string) $sxml->card->cardType);
+        $this->assertSame('VI', (string) $sxml->card->cardType);
 
         $this->assertTrue(isset($sxml->billingDetails));
         $this->assertTrue(isset($sxml->shippingDetails));

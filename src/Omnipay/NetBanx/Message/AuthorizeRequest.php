@@ -57,7 +57,7 @@ class AuthorizeRequest extends AbstractRequest
      */
     protected function getXmlString()
     {
-        if ($this->getStoredDataMode() == $this->txnMode) {
+        if ($this->getTransactionReference()) {
             $xmlRoot = 'ccStoredDataRequestV1';
         } else {
             $xmlRoot = 'ccAuthRequestV1';
@@ -79,7 +79,7 @@ class AuthorizeRequest extends AbstractRequest
 
         $sxml->addChild('merchantRefNum', $this->getCustomerId() ?: 'ref-num - ' . time());
 
-        if ($this->getStoredDataMode() == $this->txnMode) {
+        if ($this->getTransactionReference()) {
             $sxml->addChild('confirmationNumber', $this->getTransactionReference());
             $sxml->addChild('amount', $this->getAmountDecimal());
         } else {
@@ -96,7 +96,7 @@ class AuthorizeRequest extends AbstractRequest
             $cardExpiry->addChild('month', $card->getExpiryDate('m'));
             $cardExpiry->addChild('year', $card->getExpiryDate('Y'));
 
-            $cardChild->addChild('cardType', $this->getCardType() ?: 'VI');
+            $cardChild->addChild('cardType', $this->translateCardType($card->getBrand()));
             $cardChild->addChild('cvdIndicator', '1');
             $cardChild->addChild('cvd', $card->getCvv());
 
