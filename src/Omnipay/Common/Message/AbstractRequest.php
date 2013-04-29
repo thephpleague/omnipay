@@ -88,11 +88,6 @@ abstract class AbstractRequest implements RequestInterface
         return $this->parameters->get($key);
     }
 
-    protected function hasParameter($key)
-    {
-        return $this->parameters->has($key);
-    }
-
     protected function setParameter($key, $value)
     {
         if (null !== $this->response) {
