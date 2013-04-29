@@ -18,12 +18,15 @@ use Omnipay\Common\CreditCard;
  */
 class AuthorizeRequest extends AbstractRequest
 {
+    const MODE_AUTH = 'ccAuthorize';
+    const MODE_STORED_DATA_AUTH = 'ccStoredDataAuthorize';
+
     /**
      * Method
      *
      * @var string
      */
-    protected $txnMode = 'ccAuthorize';
+    protected $txnMode;
 
     /**
      * Get data
@@ -32,8 +35,14 @@ class AuthorizeRequest extends AbstractRequest
      */
     public function getData()
     {
-        $this->validate('amount', 'card');
-        $this->getCard()->validate();
+        if ($this->getTransactionReference()) {
+            $this->txnMode = $this->getStoredDataMode();
+            $this->validate('amount', 'transactionReference');
+        } else {
+            $this->txnMode = $this->getBasicMode();
+            $this->validate('amount', 'card');
+            $this->getCard()->validate();
+        }
 
         $data = $this->getBaseData();
         $data['txnRequest'] = $this->getXmlString();
@@ -48,14 +57,17 @@ class AuthorizeRequest extends AbstractRequest
      */
     protected function getXmlString()
     {
-        /** @var $card CreditCard */
-        $card = $this->getCard();
+        if ($this->getStoredDataMode() == $this->txnMode) {
+            $xmlRoot = 'ccStoredDataRequestV1';
+        } else {
+            $xmlRoot = 'ccAuthRequestV1';
+        }
 
-        $xml = '<?xml version="1.0" encoding="UTF-8"?>
-                <ccAuthRequestV1
-                    xmlns="http://www.optimalpayments.com/creditcard/xmlschema/v1"
-                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                    xsi:schemaLocation="http://www.optimalpayments.com/creditcard/xmlschema/v1" />';
+        $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+                <{$xmlRoot}
+                    xmlns=\"http://www.optimalpayments.com/creditcard/xmlschema/v1\"
+                    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+                    xsi:schemaLocation=\"http://www.optimalpayments.com/creditcard/xmlschema/v1\" />";
 
         $sxml = new \SimpleXMLElement($xml);
 
@@ -66,47 +78,76 @@ class AuthorizeRequest extends AbstractRequest
         $merchantAccount->addChild('storePwd', $this->getStorePassword());
 
         $sxml->addChild('merchantRefNum', $this->getCustomerId() ?: 'ref-num - ' . time());
-        $sxml->addChild('amount', $this->getAmountDecimal());
 
-        $cardChild = $sxml->addChild('card');
+        if ($this->getStoredDataMode() == $this->txnMode) {
+            $sxml->addChild('confirmationNumber', $this->getTransactionReference());
+            $sxml->addChild('amount', $this->getAmountDecimal());
+        } else {
+            /** @var $card CreditCard */
+            $card = $this->getCard();
 
-        $cardChild->addChild('cardNum', $card->getNumber());
+            $sxml->addChild('amount', $this->getAmountDecimal());
 
-        $cardExpiry = $cardChild->addChild('cardExpiry');
-        $cardExpiry->addChild('month', $card->getExpiryDate('m'));
-        $cardExpiry->addChild('year', $card->getExpiryDate('Y'));
+            $cardChild = $sxml->addChild('card');
 
-        $cardChild->addChild('cardType', $this->getCardType() ?: 'VI');
-        $cardChild->addChild('cvdIndicator', '1');
-        $cardChild->addChild('cvd', $card->getCvv());
+            $cardChild->addChild('cardNum', $card->getNumber());
 
-        $billingDetails = $sxml->addChild('billingDetails');
+            $cardExpiry = $cardChild->addChild('cardExpiry');
+            $cardExpiry->addChild('month', $card->getExpiryDate('m'));
+            $cardExpiry->addChild('year', $card->getExpiryDate('Y'));
 
-        $billingDetails->addChild('cardPayMethod', 'WEB');
-        $billingDetails->addChild('firstName', $card->getBillingFirstName());
-        $billingDetails->addChild('lastName', $card->getBillingLastName());
-        $billingDetails->addChild('street', $card->getBillingAddress1());
-        $billingDetails->addChild('street2', $card->getBillingAddress2());
-        $billingDetails->addChild('city', $card->getBillingCity());
-        $billingDetails->addChild('state', $card->getBillingState());
-        $billingDetails->addChild('country', $card->getBillingCountry());
-        $billingDetails->addChild('zip', $card->getBillingPostcode());
-        $billingDetails->addChild('phone', $card->getBillingPhone());
-        $billingDetails->addChild('email', $card->getEmail());
+            $cardChild->addChild('cardType', $this->getCardType() ?: 'VI');
+            $cardChild->addChild('cvdIndicator', '1');
+            $cardChild->addChild('cvd', $card->getCvv());
 
-        $shippingDetails = $sxml->addChild('shippingDetails');
+            $billingDetails = $sxml->addChild('billingDetails');
 
-        $shippingDetails->addChild('firstName', $card->getShippingFirstName());
-        $shippingDetails->addChild('lastName', $card->getShippingLastName());
-        $shippingDetails->addChild('street', $card->getShippingAddress1());
-        $shippingDetails->addChild('street2', $card->getShippingAddress2());
-        $shippingDetails->addChild('city', $card->getShippingCity());
-        $shippingDetails->addChild('state', $card->getShippingState());
-        $shippingDetails->addChild('country', $card->getShippingCountry());
-        $shippingDetails->addChild('zip', $card->getShippingPostcode());
-        $shippingDetails->addChild('phone', $card->getShippingPhone());
-        $shippingDetails->addChild('email', $card->getEmail());
+            $billingDetails->addChild('cardPayMethod', 'WEB');
+            $billingDetails->addChild('firstName', $card->getBillingFirstName());
+            $billingDetails->addChild('lastName', $card->getBillingLastName());
+            $billingDetails->addChild('street', $card->getBillingAddress1());
+            $billingDetails->addChild('street2', $card->getBillingAddress2());
+            $billingDetails->addChild('city', $card->getBillingCity());
+            $billingDetails->addChild('state', $card->getBillingState());
+            $billingDetails->addChild('country', $card->getBillingCountry());
+            $billingDetails->addChild('zip', $card->getBillingPostcode());
+            $billingDetails->addChild('phone', $card->getBillingPhone());
+            $billingDetails->addChild('email', $card->getEmail());
+
+            $shippingDetails = $sxml->addChild('shippingDetails');
+
+            $shippingDetails->addChild('firstName', $card->getShippingFirstName());
+            $shippingDetails->addChild('lastName', $card->getShippingLastName());
+            $shippingDetails->addChild('street', $card->getShippingAddress1());
+            $shippingDetails->addChild('street2', $card->getShippingAddress2());
+            $shippingDetails->addChild('city', $card->getShippingCity());
+            $shippingDetails->addChild('state', $card->getShippingState());
+            $shippingDetails->addChild('country', $card->getShippingCountry());
+            $shippingDetails->addChild('zip', $card->getShippingPostcode());
+            $shippingDetails->addChild('phone', $card->getShippingPhone());
+            $shippingDetails->addChild('email', $card->getEmail());
+        }
 
         return $sxml->asXML();
+    }
+
+    /**
+     * Get Stored Data Mode
+     *
+     * @return string
+     */
+    protected function getStoredDataMode()
+    {
+        return self::MODE_STORED_DATA_AUTH;
+    }
+
+    /**
+     * Get Stored Data Mode
+     *
+     * @return string
+     */
+    protected function getBasicMode()
+    {
+        return self::MODE_AUTH;
     }
 }

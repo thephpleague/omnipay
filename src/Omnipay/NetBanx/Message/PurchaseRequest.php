@@ -16,10 +16,22 @@ namespace Omnipay\NetBanx\Message;
  */
 class PurchaseRequest extends AuthorizeRequest
 {
+    const MODE_PURCHASE = 'ccPurchase';
+    const MODE_STORED_DATA_PURCHASE = 'ccStoredDataPurchase';
+
     /**
-     * Method
-     *
-     * @var string
+     * @inheritdoc
      */
-    protected $txnMode = 'ccPurchase';
+    protected function getStoredDataMode()
+    {
+        return self::MODE_STORED_DATA_PURCHASE;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getBasicMode()
+    {
+        return self::MODE_PURCHASE;
+    }
 }

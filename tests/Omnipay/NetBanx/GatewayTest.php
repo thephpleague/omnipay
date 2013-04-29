@@ -56,7 +56,7 @@ class GatewayTest extends GatewayTestCase
         $this->storedDataOptions = array(
             'amount' => 9563,
             'customerId' => '9966441',
-            'confirmationNumber' => '244530120',
+            'transactionReference' => '244530120',
         );
     }
 
@@ -106,7 +106,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockHttpResponse('StoredDataAuthorizeSuccess.txt');
 
-        $request = $this->gateway->storedDataAuthorize($this->storedDataOptions);
+        $request = $this->gateway->authorize($this->storedDataOptions);
         $requestData = $request->getData();
 
         $response = $request->send();
@@ -129,7 +129,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockHttpResponse('StoredDataAuthorizeFailure.txt');
 
-        $response = $this->gateway->storedDataAuthorize($this->storedDataOptions)->send();
+        $response = $this->gateway->authorize($this->storedDataOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertSame(
@@ -146,6 +146,8 @@ class GatewayTest extends GatewayTestCase
         $requestData = $request->getData();
 
         $response = $request->send();
+
+        $this->assertSame('ccSettlement', $requestData['txnMode']);
 
         $sxml = new \SimpleXMLElement($requestData['txnRequest']);
 
@@ -164,6 +166,8 @@ class GatewayTest extends GatewayTestCase
         $requestData = $request->getData();
 
         $response = $request->send();
+
+        $this->assertSame('ccSettlement', $requestData['txnMode']);
 
         $sxml = new \SimpleXMLElement($requestData['txnRequest']);
 
@@ -228,7 +232,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockHttpResponse('StoredDataPurchaseSuccess.txt');
 
-        $request = $this->gateway->storedDataPurchase($this->storedDataOptions);
+        $request = $this->gateway->purchase($this->storedDataOptions);
         $requestData = $request->getData();
 
         $response = $request->send();
@@ -248,7 +252,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockHttpResponse('StoredDataPurchaseFailure.txt');
 
-        $response = $this->gateway->storedDataPurchase($this->storedDataOptions)->send();
+        $response = $this->gateway->purchase($this->storedDataOptions)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertSame(

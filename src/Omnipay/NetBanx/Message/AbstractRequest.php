@@ -115,27 +115,6 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
-     * Getter for Confirmation Number
-     *
-     * @return string
-     */
-    public function getConfirmationNumber()
-    {
-        return $this->getParameter('confirmationNumber');
-    }
-
-    /**
-     * Setter for Confirmation Number
-     *
-     * @param string $value
-     * @return $this
-     */
-    public function setConfirmationNumber($value)
-    {
-        return $this->setParameter('confirmationNumber', $value);
-    }
-
-    /**
      * Setter for Card Type
      *
      * @param string $value
