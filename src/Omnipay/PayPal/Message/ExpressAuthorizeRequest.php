@@ -38,7 +38,7 @@ class ExpressAuthorizeRequest extends AbstractRequest
 
         // Add optional header image
         if ($headerImage = $this->getHeaderImage()) {
-	        $data['HDRIMG'] = $headerImage;
+            $data['HDRIMG'] = $headerImage;
         }
 
         if ($card = $this->getCard()) {
