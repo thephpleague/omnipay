@@ -31,6 +31,16 @@ class ExpressGateway extends ProGateway
         $settings['solutionType'] = array('Sole', 'Mark');
         $settings['landingPage'] = array('Billing', 'Login');
 
+        /**
+         *
+         * (Optional) URL for the image you want to appear at the top left of the payment page.
+         * The image has a maximum size of 750 pixels wide by 90 pixels high.
+         * PayPal recommends that you provide an image that is stored on a secure (https) server.
+         * If you do not specify an image, the business name displays.
+         * Character length and limitations: 127 single-byte alphanumeric characters
+         */
+        $settings['headerImage'] = '';
+
         return $settings;
     }
 

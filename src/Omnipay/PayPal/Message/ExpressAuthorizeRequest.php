@@ -36,6 +36,11 @@ class ExpressAuthorizeRequest extends AbstractRequest
         $data['RETURNURL'] = $this->getReturnUrl();
         $data['CANCELURL'] = $this->getCancelUrl();
 
+        // Add optional header image
+        if ($headerImage = $this->getHeaderImage()) {
+            $data['HDRIMG'] = $headerImage;
+        }
+
         if ($card = $this->getCard()) {
             $data['PAYMENTREQUEST_0_SHIPTONAME'] = $card->getName();
             $data['PAYMENTREQUEST_0_SHIPTOSTREET'] = $card->getAddress1();
@@ -55,4 +60,15 @@ class ExpressAuthorizeRequest extends AbstractRequest
     {
         return $this->response = new ExpressAuthorizeResponse($this, $data);
     }
+
+    public function getHeaderImage()
+    {
+        return $this->getParameter('headerImage');
+    }
+
+    public function setHeaderImage($value)
+    {
+        return $this->setParameter('headerImage', $value);
+    }
+
 }
