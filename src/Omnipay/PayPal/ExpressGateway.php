@@ -64,16 +64,6 @@ class ExpressGateway extends ProGateway
         return $this->setParameter('landingPage', $value);
     }
 
-    public function getHeaderImage()
-    {
-        return $this->getParameter('headerImage');
-    }
-
-    public function setHeaderImage($value)
-    {
-        return $this->setParameter('headerImage', $value);
-    }
-
     public function authorize(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\PayPal\Message\ExpressAuthorizeRequest', $parameters);

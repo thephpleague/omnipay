@@ -60,4 +60,15 @@ class ExpressAuthorizeRequest extends AbstractRequest
     {
         return $this->response = new ExpressAuthorizeResponse($this, $data);
     }
+
+    public function getHeaderImage()
+    {
+        return $this->getParameter('headerImage');
+    }
+
+    public function setHeaderImage($value)
+    {
+        return $this->setParameter('headerImage', $value);
+    }
+
 }
