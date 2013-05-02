@@ -35,6 +35,10 @@ class ExpressAuthorizeRequest extends AbstractRequest
         $data['ALLOWNOTE'] = 0;
         $data['RETURNURL'] = $this->getReturnUrl();
         $data['CANCELURL'] = $this->getCancelUrl();
+        
+        if ($headerImage = $this->getHeaderImage()) {
+            $data['HDRIMG'] = $headerImage;
+        }
 
         if ($headerImageUrl = $this->getHeaderImageUrl()) {
             $data['HDRIMG'] = $headerImageUrl;
