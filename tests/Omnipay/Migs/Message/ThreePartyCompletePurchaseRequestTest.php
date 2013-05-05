@@ -31,7 +31,6 @@ class ThreePartyCompletePurchaseRequestTest extends TestCase
 
         $response = new Response($this->getMockRequest(), $data);
 
-
         $this->assertInstanceOf('Omnipay\Migs\Message\Response', $response);
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());

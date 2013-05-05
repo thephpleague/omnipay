@@ -217,7 +217,6 @@ class GatewayTest extends GatewayTestCase
         $this->assertSame('test', (string) $sxml->merchantAccount->storeID);
         $this->assertSame('test', (string) $sxml->merchantAccount->storePwd);
 
-
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('12345678', $response->getTransactionReference());
         $this->assertSame('The confirmation number included in this request could not be found.', $response->getMessage());
