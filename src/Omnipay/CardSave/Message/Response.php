@@ -67,7 +67,7 @@ class Response extends AbstractResponse implements RedirectResponseInterface
     public function getRedirectUrl()
     {
         if ($this->isRedirect()) {
-            return (string) $response->TransactionOutputData->ThreeDSecureOutputData->ACSURL;
+            return (string) $this->data->TransactionOutputData->ThreeDSecureOutputData->ACSURL;
         }
     }
 
@@ -79,9 +79,9 @@ class Response extends AbstractResponse implements RedirectResponseInterface
     public function getRedirectData()
     {
         return $redirectData = array(
-            'PaReq' => (string) $response->TransactionOutputData->ThreeDSecureOutputData->PaREQ,
+            'PaReq' => (string) $this->data->TransactionOutputData->ThreeDSecureOutputData->PaREQ,
             'TermUrl' => $this->getRequest()->getReturnUrl(),
-            'MD' => (string) $response->TransactionOutputData['CrossReference'],
+            'MD' => (string) $this->data->TransactionOutputData['CrossReference'],
         );
     }
 }
