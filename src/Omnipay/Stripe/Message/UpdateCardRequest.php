@@ -21,8 +21,8 @@ class UpdateCardRequest extends AbstractRequest
         $data = array();
         $data['description'] = $this->getDescription();
 
-        if ($this->getCardToken()) {
-            $data['card'] = $this->getCardToken();
+        if ($this->getToken()) {
+            $data['card'] = $this->getToken();
         } elseif ($this->getCard()) {
             $data['card'] = $this->getCardData();
             $data['email'] = $this->getCard()->getEmail();

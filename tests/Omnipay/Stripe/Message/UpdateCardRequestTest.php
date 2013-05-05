@@ -26,9 +26,9 @@ class UpdateCardRequestTest extends TestCase
         $this->assertSame('https://api.stripe.com/v1/customers/cus_1MZSEtqSghKx99', $this->request->getEndpoint());
     }
 
-    public function testDataWithCardToken()
+    public function testDataWithToken()
     {
-        $this->request->setCardToken('xyz');
+        $this->request->setToken('xyz');
         $data = $this->request->getData();
 
         $this->assertSame('xyz', $data['card']);

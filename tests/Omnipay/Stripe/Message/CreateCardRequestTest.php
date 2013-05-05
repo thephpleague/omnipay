@@ -36,9 +36,9 @@ class CreateCardRequestTest extends TestCase
         $this->request->getData();
     }
 
-    public function testDataWithCardToken()
+    public function testDataWithToken()
     {
-        $this->request->setCardToken('xyz');
+        $this->request->setToken('xyz');
         $data = $this->request->getData();
 
         $this->assertSame('xyz', $data['card']);

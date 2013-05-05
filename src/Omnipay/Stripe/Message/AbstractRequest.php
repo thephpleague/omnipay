@@ -28,6 +28,22 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('apiKey', $value);
     }
 
+    /**
+     * @deprecated
+     */
+    public function getCardToken()
+    {
+        return $this->getParameter('token');
+    }
+
+    /**
+     * @deprecated
+     */
+    public function setCardToken($value)
+    {
+        return $this->setParameter('token', $value);
+    }
+
     abstract public function getEndpoint();
 
     public function getHttpMethod()
