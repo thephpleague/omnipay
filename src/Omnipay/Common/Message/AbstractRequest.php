@@ -141,14 +141,14 @@ abstract class AbstractRequest implements RequestInterface
         return $this->setParameter('card', $value);
     }
 
-    public function getCardToken()
+    public function getToken()
     {
-        return $this->getParameter('cardToken');
+        return $this->getParameter('token');
     }
 
-    public function setCardToken($value)
+    public function setToken($value)
     {
-        return $this->setParameter('cardToken', $value);
+        return $this->setParameter('token', $value);
     }
 
     public function getCardReference()
