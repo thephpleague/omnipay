@@ -134,7 +134,7 @@ abstract class AbstractRequest implements RequestInterface
 
     public function setCard($value)
     {
-        if (!$value instanceof CreditCard) {
+        if ($value && !$value instanceof CreditCard) {
             $value = new CreditCard($value);
         }
 

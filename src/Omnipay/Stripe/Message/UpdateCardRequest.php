@@ -14,7 +14,7 @@ namespace Omnipay\Stripe\Message;
 /**
  * Stripe Update Credit Card Request
  */
-class UpdateCardRequest extends PurchaseRequest
+class UpdateCardRequest extends AbstractRequest
 {
     public function getData()
     {

@@ -14,7 +14,7 @@ namespace Omnipay\Stripe\Message;
 /**
  * Stripe Delete Credit Card Request
  */
-class DeleteCardRequest extends PurchaseRequest
+class DeleteCardRequest extends AbstractRequest
 {
     public function getData()
     {

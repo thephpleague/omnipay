@@ -12,22 +12,28 @@
 namespace Omnipay\Stripe\Message;
 
 /**
- * Stripe Create Credit Card Request
+ * Stripe Authorize Request
  */
-class CreateCardRequest extends AbstractRequest
+class AuthorizeRequest extends AbstractRequest
 {
     public function getData()
     {
-        $data = array();
-        $data['description'] = $this->getDescription();
+        $this->validate('amount', 'currency');
 
-        if ($this->getCardToken()) {
+        $data = array();
+        $data['amount'] = $this->getAmount();
+        $data['currency'] = strtolower($this->getCurrency());
+        $data['description'] = $this->getDescription();
+        $data['capture'] = 'false';
+
+        if ($this->getCardReference()) {
+            $data['customer'] = $this->getCardReference();
+        } elseif ($this->getCardToken()) {
             $data['card'] = $this->getCardToken();
         } elseif ($this->getCard()) {
             $data['card'] = $this->getCardData();
-            $data['email'] = $this->getCard()->getEmail();
         } else {
-            // one of cardToken, or card is required
+            // one of cardReference, cardToken, or card is required
             $this->validate('card');
         }
 
@@ -36,6 +42,6 @@ class CreateCardRequest extends AbstractRequest
 
     public function getEndpoint()
     {
-        return $this->endpoint.'/customers';
+        return $this->endpoint.'/charges';
     }
 }
