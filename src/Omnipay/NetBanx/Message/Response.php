@@ -63,6 +63,16 @@ class Response extends AbstractResponse
     }
 
     /**
+     * Get card reference
+     *
+     * @return string
+     */
+    public function getCardReference()
+    {
+        return (string) $this->data->confirmationNumber;
+    }
+
+    /**
      * Get message from responce
      *
      * @return string

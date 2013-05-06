@@ -301,4 +301,35 @@ class GatewayTest extends GatewayTestCase
         $this->assertSame('12345678', $response->getTransactionReference());
         $this->assertSame('The confirmation number included in this request could not be found.', $response->getMessage());
     }
+
+    public function testCreateCard()
+    {
+        $this->setMockHttpResponse('CreateCard.txt');
+
+        $request = $this->gateway->createCard($this->purchaseOptions);
+        $requestData = $request->getData();
+        /** @var $card CreditCard */
+        $card = $request->getCard();
+
+        $response = $request->send();
+
+        $sxml = new \SimpleXMLElement($requestData['txnRequest']);
+
+        $this->assertSame('ccAuthorize', $requestData['txnMode']);
+
+        $this->assertSame('93401', (string) $sxml->billingDetails->zip);
+        $this->assertSame('VI', (string) $sxml->card->cardType);
+
+        $this->assertTrue(isset($sxml->billingDetails));
+        $this->assertTrue(isset($sxml->shippingDetails));
+
+        $this->assertSame('1.00', (string) $sxml->amount);
+        $this->assertSame('9966441', (string) $sxml->merchantRefNum);
+        $this->assertSame('93401', $card->getPostcode());
+        $this->assertSame('test@example.com', $card->getEmail());
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame('244350540', $response->getCardReference());
+        $this->assertSame('No Error', $response->getMessage());
+    }
 }
