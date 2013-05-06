@@ -47,10 +47,10 @@ class AbstractRequestTest extends TestCase
         $this->assertSame('1234', $card->getNumber());
     }
 
-    public function testCardToken()
+    public function testToken()
     {
-        $this->assertSame($this->request, $this->request->setCardToken('12345'));
-        $this->assertSame('12345', $this->request->getCardToken());
+        $this->assertSame($this->request, $this->request->setToken('12345'));
+        $this->assertSame('12345', $this->request->getToken());
     }
 
     public function testCardReference()
