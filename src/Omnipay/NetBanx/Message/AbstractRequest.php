@@ -11,6 +11,8 @@
 
 namespace Omnipay\NetBanx\Message;
 
+use Omnipay\Common\CreditCard;
+
 /**
  * NetBanx Abstract Request
  */
@@ -149,5 +151,48 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $data['txnMode'] = $this->txnMode;
 
         return $data;
+    }
+
+    /**
+     * Translate card type to internal NetBanx format
+     *
+     * @param string $brand
+     * @return string
+     */
+    protected function translateCardType($brand)
+    {
+        switch ($brand) {
+            case CreditCard::BRAND_VISA:
+                $cardType = 'VI';
+                break;
+            case CreditCard::BRAND_AMEX:
+                $cardType = 'AM';
+                break;
+            case CreditCard::BRAND_DISCOVER:
+                $cardType = 'DI';
+                break;
+            case CreditCard::BRAND_MASTERCARD:
+                $cardType = 'MC';
+                break;
+            case CreditCard::BRAND_MAESTRO:
+                $cardType = 'MD';
+                break;
+            case CreditCard::BRAND_LASER:
+                $cardType = 'LA';
+                break;
+            case CreditCard::BRAND_SOLO:
+                $cardType = 'SO';
+                break;
+            case CreditCard::BRAND_JCB:
+                $cardType = 'JC';
+                break;
+            case CreditCard::BRAND_DINERS_CLUB:
+                $cardType = 'DC';
+                break;
+            default:
+                $cardType = 'VI';
+        }
+
+        return $cardType;
     }
 }

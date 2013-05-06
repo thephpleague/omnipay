@@ -39,7 +39,7 @@ class VoidRequest extends AbstractRequest
     }
 
     /**
-     * Get XML string (without header)
+     * Get XML string
      *
      * @return string
      */

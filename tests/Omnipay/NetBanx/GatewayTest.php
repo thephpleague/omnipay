@@ -51,6 +51,12 @@ class GatewayTest extends GatewayTestCase
             'storePassword' => 'test',
             'transactionReference' => '115147689',
         );
+
+        $this->storedDataOptions = array(
+            'amount' => 9563,
+            'customerId' => '9966441',
+            'transactionReference' => '244530120',
+        );
     }
 
     public function testAuthorizeSuccess()
@@ -69,6 +75,7 @@ class GatewayTest extends GatewayTestCase
         $this->assertSame('ccAuthorize', $requestData['txnMode']);
 
         $this->assertSame('93401', (string) $sxml->billingDetails->zip);
+        $this->assertSame('VI', (string) $sxml->card->cardType);
 
         $this->assertTrue(isset($sxml->billingDetails));
         $this->assertTrue(isset($sxml->shippingDetails));
@@ -94,6 +101,42 @@ class GatewayTest extends GatewayTestCase
         $this->assertSame('Invalid txnMode: ccccAuthorize', $response->getMessage());
     }
 
+    public function testStoredDataAuthorizeSuccess()
+    {
+        $this->setMockHttpResponse('StoredDataAuthorizeSuccess.txt');
+
+        $request = $this->gateway->authorize($this->storedDataOptions);
+        $requestData = $request->getData();
+
+        $response = $request->send();
+
+        $sxml = new \SimpleXMLElement($requestData['txnRequest']);
+
+        $this->assertSame('ccStoredDataAuthorize', $requestData['txnMode']);
+
+        $this->assertSame('244530120', (string) $sxml->confirmationNumber);
+
+        $this->assertSame('95.63', (string) $sxml->amount);
+        $this->assertSame('9966441', (string) $sxml->merchantRefNum);
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame('244530120', $response->getTransactionReference());
+        $this->assertSame('No Error', $response->getMessage());
+    }
+
+    public function testStoredDataAuthorizeFailure()
+    {
+        $this->setMockHttpResponse('StoredDataAuthorizeFailure.txt');
+
+        $response = $this->gateway->authorize($this->storedDataOptions)->send();
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame(
+            'You submitted an invalid XML request. Please verify your request and retry the transaction.',
+            $response->getMessage()
+        );
+    }
+
     public function testCaptureSuccess()
     {
         $this->setMockHttpResponse('CaptureSuccess.txt');
@@ -102,6 +145,8 @@ class GatewayTest extends GatewayTestCase
         $requestData = $request->getData();
 
         $response = $request->send();
+
+        $this->assertSame('ccSettlement', $requestData['txnMode']);
 
         $sxml = new \SimpleXMLElement($requestData['txnRequest']);
 
@@ -120,6 +165,8 @@ class GatewayTest extends GatewayTestCase
         $requestData = $request->getData();
 
         $response = $request->send();
+
+        $this->assertSame('ccSettlement', $requestData['txnMode']);
 
         $sxml = new \SimpleXMLElement($requestData['txnRequest']);
 
@@ -178,6 +225,39 @@ class GatewayTest extends GatewayTestCase
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('244356120', $response->getTransactionReference());
         $this->assertSame('You submitted an unsupported card type with your request.', $response->getMessage());
+    }
+
+    public function testStoredDataPurchaseSuccess()
+    {
+        $this->setMockHttpResponse('StoredDataPurchaseSuccess.txt');
+
+        $request = $this->gateway->purchase($this->storedDataOptions);
+        $requestData = $request->getData();
+
+        $response = $request->send();
+
+        $sxml = new \SimpleXMLElement($requestData['txnRequest']);
+
+        $this->assertSame('ccStoredDataPurchase', $requestData['txnMode']);
+
+        $this->assertSame('244530120', (string) $sxml->confirmationNumber);
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame('244679250', $response->getTransactionReference());
+        $this->assertSame('No Error', $response->getMessage());
+    }
+
+    public function testStoredDataPurchaseFailure()
+    {
+        $this->setMockHttpResponse('StoredDataPurchaseFailure.txt');
+
+        $response = $this->gateway->purchase($this->storedDataOptions)->send();
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame(
+            'You submitted an invalid XML request. Please verify your request and retry the transaction.',
+            $response->getMessage()
+        );
     }
 
     public function testVoidSuccess()
