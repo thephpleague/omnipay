@@ -35,7 +35,7 @@ class AuthorizeRequest extends AbstractRequest
      */
     public function getData()
     {
-        if ($this->getTransactionReference()) {
+        if ($this->getTransactionReference() || $this->getCardReference()) {
             $this->txnMode = $this->getStoredDataMode();
             $this->validate('amount');
         } else {
@@ -57,7 +57,7 @@ class AuthorizeRequest extends AbstractRequest
      */
     protected function getXmlString()
     {
-        if ($this->getTransactionReference()) {
+        if ($this->getTransactionReference() || $this->getCardReference()) {
             $xmlRoot = 'ccStoredDataRequestV1';
         } else {
             $xmlRoot = 'ccAuthRequestV1';
@@ -79,8 +79,8 @@ class AuthorizeRequest extends AbstractRequest
 
         $sxml->addChild('merchantRefNum', $this->getCustomerId() ?: 'ref-num - ' . time());
 
-        if ($this->getTransactionReference()) {
-            $sxml->addChild('confirmationNumber', $this->getTransactionReference());
+        if ($this->getTransactionReference() || $this->getCardReference()) {
+            $sxml->addChild('confirmationNumber', $this->getTransactionReference() ?: $this->getCardReference());
             $sxml->addChild('amount', $this->getAmountDecimal());
         } else {
             /** @var $card CreditCard */
