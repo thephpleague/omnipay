@@ -37,7 +37,7 @@ class AuthorizeRequest extends AbstractRequest
     {
         if ($this->getTransactionReference()) {
             $this->txnMode = $this->getStoredDataMode();
-            $this->validate('amount', 'transactionReference');
+            $this->validate('amount');
         } else {
             $this->txnMode = $this->getBasicMode();
             $this->validate('amount', 'card');
