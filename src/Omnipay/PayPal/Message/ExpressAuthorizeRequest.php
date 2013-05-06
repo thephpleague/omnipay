@@ -36,6 +36,10 @@ class ExpressAuthorizeRequest extends AbstractRequest
         $data['RETURNURL'] = $this->getReturnUrl();
         $data['CANCELURL'] = $this->getCancelUrl();
 
+        if ($headerImageUrl = $this->getHeaderImageUrl()) {
+            $data['HDRIMG'] = $headerImageUrl;
+        }
+
         if ($card = $this->getCard()) {
             $data['PAYMENTREQUEST_0_SHIPTONAME'] = $card->getName();
             $data['PAYMENTREQUEST_0_SHIPTOSTREET'] = $card->getAddress1();

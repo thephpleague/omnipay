@@ -44,6 +44,16 @@ class Gateway extends AbstractGateway
         return $this->setParameter('apiKey', $value);
     }
 
+    public function authorize(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Stripe\Message\AuthorizeRequest', $parameters);
+    }
+
+    public function capture(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Stripe\Message\CaptureRequest', $parameters);
+    }
+
     public function purchase(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\Stripe\Message\PurchaseRequest', $parameters);

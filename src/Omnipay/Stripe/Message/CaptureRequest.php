@@ -12,22 +12,25 @@
 namespace Omnipay\Stripe\Message;
 
 /**
- * Stripe Refund Request
+ * Stripe Capture Request
  */
-class RefundRequest extends AbstractRequest
+class CaptureRequest extends AbstractRequest
 {
     public function getData()
     {
-        $this->validate('transactionReference', 'amount');
+        $this->validate('transactionReference');
 
         $data = array();
-        $data['amount'] = $this->getAmount();
+
+        if ($amount = $this->getAmount()) {
+            $data['amount'] = $amount;
+        }
 
         return $data;
     }
 
     public function getEndpoint()
     {
-        return $this->endpoint.'/charges/'.$this->getTransactionReference().'/refund';
+        return $this->endpoint.'/charges/'.$this->getTransactionReference().'/capture';
     }
 }

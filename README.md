@@ -64,7 +64,7 @@ to your `composer.json` file:
 ```json
 {
     "require": {
-        "omnipay/omnipay": "0.8.*"
+        "omnipay/omnipay": "0.9.*"
     }
 }
 ```
@@ -254,9 +254,6 @@ $request = $gateway->authorize([
 ]);
 ```
 
-For most transactions, either the `card` or `token` parameter is required. For more information on
-using tokens, see the Token Billing section below.
-
 When calling the `completeAuthorize` or `completePurchase` methods, the exact same arguments should be provided as
 when you made the initial `authorize` or `purchase` call (some gateways will need to verify for example the actual
 amount paid equals the amount requested). The only parameter you can omit is `card`.
@@ -348,12 +345,17 @@ try {
 
 ## Token Billing
 
-Token billing is still under development. Most likely gateways will be able to implement the
-following methods:
+Token billing allows you to store a credit card with your gateway, and charge it at a later date.
+Token billing is not supported by all gateways. For supported gateways, the following methods
+are available:
 
-* `createCard($options)` - returns a response object which includes a `token`, which can be used for future transactions
+* `createCard($options)` - returns a response object which includes a `cardReference`, which can be used for future transactions
 * `updateCard($options)` - update a stored card, not all gateways support this method
 * `deleteCard($options)` - remove a stored card, not all gateways support this method
+
+Once you have a `cardReference`, you can use it instead of the `card` parameter when creating a charge:
+
+    $gateway->purchase(['amount' => 1000, 'cardReference' => 'abc']);
 
 ## Recurring Billing
 

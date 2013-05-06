@@ -62,7 +62,7 @@ class ResponseTest extends TestCase
         $this->assertNull($response->getCardReference());
         $this->assertSame('You must provide an integer value for \'exp_year\'.', $response->getMessage());
     }
-    
+
     public function testUpdateCardSuccess()
     {
         $httpResponse = $this->getMockHttpResponse('UpdateCardSuccess.txt');

@@ -14,20 +14,20 @@ namespace Omnipay\Stripe\Message;
 /**
  * Stripe Create Credit Card Request
  */
-class CreateCardRequest extends PurchaseRequest
+class CreateCardRequest extends AbstractRequest
 {
     public function getData()
     {
         $data = array();
         $data['description'] = $this->getDescription();
 
-        if ($this->getCardToken()) {
-            $data['card'] = $this->getCardToken();
+        if ($this->getToken()) {
+            $data['card'] = $this->getToken();
         } elseif ($this->getCard()) {
             $data['card'] = $this->getCardData();
             $data['email'] = $this->getCard()->getEmail();
         } else {
-            // one of cardToken, or card is required
+            // one of token or card is required
             $this->validate('card');
         }
 

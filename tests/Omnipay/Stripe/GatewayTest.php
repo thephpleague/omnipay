@@ -20,149 +20,61 @@ class GatewayTest extends GatewayTestCase
         parent::setUp();
 
         $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
-        $this->gateway->setApiKey('abc123');
-
-        $this->purchaseOptions = array(
-            'amount' => 1000,
-            'currency' => 'USD',
-            'card' => $this->getValidCard(),
-        );
-
-        $this->refundOptions = array(
-            'amount' => 1000,
-            'transactionReference' => 'ch_12RgN9L7XhO9mI',
-        );
-
-        $this->createOptions = array(
-            'card' => $this->getValidCard(),
-        );
-        
-        $this->updateOptions = array(
-            'cardReference' => 'cus_1MZSEtqSghKx99',
-        );
-
-        $this->deleteOptions = array(
-            'cardReference' => 'cus_1MZSEtqSghKx99',
-        );
     }
 
-    public function testPurchaseSuccess()
+    public function testAuthorize()
     {
-        $this->setMockHttpResponse('PurchaseSuccess.txt');
-        $response = $this->gateway->purchase($this->purchaseOptions)->send();
+        $request = $this->gateway->authorize(array('amount' => 123));
 
-        $this->assertTrue($response->isSuccessful());
-        $this->assertFalse($response->isRedirect());
-        $this->assertSame('ch_1IU9gcUiNASROd', $response->getTransactionReference());
-        $this->assertNull($response->getCardReference());
-        $this->assertNull($response->getMessage());
+        $this->assertInstanceOf('Omnipay\Stripe\Message\AuthorizeRequest', $request);
+        $this->assertSame(123, $request->getAmount());
     }
 
-    public function testPurchaseError()
+    public function testCapture()
     {
-        $this->setMockHttpResponse('PurchaseFailure.txt');
-        $response = $this->gateway->purchase($this->purchaseOptions)->send();
+        $request = $this->gateway->capture(array('amount' => 123));
 
-        $this->assertFalse($response->isSuccessful());
-        $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getTransactionReference());
-        $this->assertNull($response->getCardReference());
-        $this->assertSame('Your card was declined', $response->getMessage());
+        $this->assertInstanceOf('Omnipay\Stripe\Message\CaptureRequest', $request);
+        $this->assertSame(123, $request->getAmount());
     }
 
-    public function testRefundSuccess()
+    public function testPurchase()
     {
-        $this->setMockHttpResponse('RefundSuccess.txt');
-        $response = $this->gateway->refund($this->refundOptions)->send();
+        $request = $this->gateway->purchase(array('amount' => 123));
 
-        $this->assertTrue($response->isSuccessful());
-        $this->assertFalse($response->isRedirect());
-        $this->assertSame('ch_12RgN9L7XhO9mI', $response->getTransactionReference());
-        $this->assertNull($response->getCardReference());
-        $this->assertNull($response->getMessage());
+        $this->assertInstanceOf('Omnipay\Stripe\Message\PurchaseRequest', $request);
+        $this->assertSame(123, $request->getAmount());
     }
 
-    public function testRefundError()
+    public function testRefund()
     {
-        $this->setMockHttpResponse('RefundFailure.txt');
-        $response = $this->gateway->refund($this->refundOptions)->send();
+        $request = $this->gateway->refund(array('amount' => 123));
 
-        $this->assertFalse($response->isSuccessful());
-        $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getTransactionReference());
-        $this->assertNull($response->getCardReference());
-        $this->assertSame('Charge ch_12RgN9L7XhO9mI has already been refunded.', $response->getMessage());
+        $this->assertInstanceOf('Omnipay\Stripe\Message\RefundRequest', $request);
+        $this->assertSame(123, $request->getAmount());
     }
 
-    public function testCreateCardSuccess()
+    public function testCreateCard()
     {
-        $this->setMockHttpResponse('CreateCardSuccess.txt');
-        $response = $this->gateway->createCard($this->createOptions)->send();
+        $request = $this->gateway->createCard(array('description' => 'foo'));
 
-        $this->assertTrue($response->isSuccessful());
-        $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getTransactionReference());
-        $this->assertSame('cus_1MZSEtqSghKx99', $response->getCardReference());
-        $this->assertNull($response->getMessage());
+        $this->assertInstanceOf('Omnipay\Stripe\Message\CreateCardRequest', $request);
+        $this->assertSame('foo', $request->getDescription());
     }
 
-    public function testCreateCardFailure()
+    public function testUpdateCard()
     {
-        $this->setMockHttpResponse('CreateCardFailure.txt');
-        $response = $this->gateway->createCard($this->createOptions)->send();
+        $request = $this->gateway->updateCard(array('cardReference' => 'cus_1MZSEtqSghKx99'));
 
-        $this->assertFalse($response->isSuccessful());
-        $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getTransactionReference());
-        $this->assertNull($response->getCardReference());
-        $this->assertSame('You must provide an integer value for \'exp_year\'.', $response->getMessage());
-    }
-    
-    public function testUpdateCardSuccess()
-    {
-        $this->setMockHttpResponse('UpdateCardSuccess.txt');
-        $response = $this->gateway->updateCard($this->updateOptions)->send();
-
-        $this->assertTrue($response->isSuccessful());
-        $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getTransactionReference());
-        $this->assertSame('cus_1MZeNih5LdKxDq', $response->getCardReference());
-        $this->assertNull($response->getMessage());
+        $this->assertInstanceOf('Omnipay\Stripe\Message\UpdateCardRequest', $request);
+        $this->assertSame('cus_1MZSEtqSghKx99', $request->getCardReference());
     }
 
-    public function testUpdateCardFailure()
+    public function testDeleteCard()
     {
-        $this->setMockHttpResponse('UpdateCardFailure.txt');
-        $response = $this->gateway->updateCard($this->updateOptions)->send();
+        $request = $this->gateway->deleteCard(array('cardReference' => 'cus_1MZSEtqSghKx99'));
 
-        $this->assertFalse($response->isSuccessful());
-        $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getTransactionReference());
-        $this->assertNull($response->getCardReference());
-        $this->assertSame('No such customer: cus_1MZeNih5LdKxDq', $response->getMessage());
-    }
-
-    public function testDeleteCardSuccess()
-    {
-        $this->setMockHttpResponse('DeleteCardSuccess.txt');
-        $response = $this->gateway->deleteCard($this->deleteOptions)->send();
-
-        $this->assertTrue($response->isSuccessful());
-        $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getTransactionReference());
-        $this->assertNull($response->getCardReference());
-        $this->assertNull($response->getMessage());
-    }
-
-    public function testDeleteCardFailure()
-    {
-        $this->setMockHttpResponse('DeleteCardFailure.txt');
-        $response = $this->gateway->deleteCard($this->deleteOptions)->send();
-
-        $this->assertFalse($response->isSuccessful());
-        $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getTransactionReference());
-        $this->assertNull($response->getCardReference());
-        $this->assertSame('No such customer: cus_1MZeNih5LdKxDq', $response->getMessage());
+        $this->assertInstanceOf('Omnipay\Stripe\Message\DeleteCardRequest', $request);
+        $this->assertSame('cus_1MZSEtqSghKx99', $request->getCardReference());
     }
 }
