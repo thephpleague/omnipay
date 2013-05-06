@@ -106,6 +106,6 @@ abstract class AbstractResponse implements ResponseInterface
             exit;
         }
 
-        throw new RuntimeException('Invalid redirect method "'.$response->getRedirectMethod().'".');
+        throw new RuntimeException('Invalid redirect method "'.$this->getRedirectMethod().'".');
     }
 }
