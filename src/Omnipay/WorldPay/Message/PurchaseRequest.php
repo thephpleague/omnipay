@@ -51,6 +51,14 @@ class PurchaseRequest extends AbstractRequest
         return $this->setParameter('callbackPassword', $value);
     }
 
+    public function setOptional($params)
+    {
+        foreach($params as $key => $value)
+        {
+            $this->setParameter($key, $value);
+        }
+    }
+
     public function getData()
     {
         $this->validate('amount', 'returnUrl');
