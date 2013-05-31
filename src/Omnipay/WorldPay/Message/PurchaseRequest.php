@@ -53,8 +53,7 @@ class PurchaseRequest extends AbstractRequest
 
     public function setOptional($params)
     {
-        foreach($params as $key => $value)
-        {
+        foreach ($params as $key => $value) {
             $this->setParameter($key, $value);
         }
     }
