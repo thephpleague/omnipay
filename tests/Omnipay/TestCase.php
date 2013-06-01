@@ -120,9 +120,9 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
             'firstName' => 'Example',
             'lastName' => 'User',
             'number' => '4111111111111111',
-            'expiryMonth' => '12',
-            'expiryYear' => '2020',
-            'cvv' => '123',
+            'expiryMonth' => rand(1, 12),
+            'expiryYear' => date('Y') + rand(1, 5),
+            'cvv' => rand(100, 999),
         );
     }
 
