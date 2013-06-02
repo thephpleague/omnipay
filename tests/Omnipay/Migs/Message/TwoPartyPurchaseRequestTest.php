@@ -31,7 +31,7 @@ class TwoPartyPurchaseRequestTest extends TestCase
                     array(
                         'number' => '4111111111111111',
                         'expiryMonth' => '05',
-                        'expiryYear' => '2013',
+                        'expiryYear' => gmdate('Y')+2,
                         'cvv' => '123',
                     )
                 ),
@@ -44,7 +44,7 @@ class TwoPartyPurchaseRequestTest extends TestCase
 
         $data = $this->request->getData();
 
-        $this->assertSame('2624B4BABED7CCA98665238D75560600', $data['vpc_SecureHash']);
+        $this->assertSame('8D4E719B12D2C37E21E351A91D59AF23', $data['vpc_SecureHash']);
     }
 
     public function testPurchase()
@@ -59,7 +59,7 @@ class TwoPartyPurchaseRequestTest extends TestCase
                     array(
                         'number' => '4111111111111111',
                         'expiryMonth' => '05',
-                        'expiryYear' => '2013',
+                        'expiryYear' => gmdate('Y')+2,
                         'cvv' => '123',
                     )
                 ),

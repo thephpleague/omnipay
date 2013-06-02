@@ -31,7 +31,7 @@ class TwoPartyGatewayTest extends GatewayTestCase
                 array(
                     'number' => '4111111111111111',
                     'expiryMonth' => '05',
-                    'expiryYear' => '2013',
+                    'expiryYear' => gmdate('Y')+2,
                     'cvv' => '123',
                 )
             ),
