@@ -101,6 +101,7 @@ The following gateways are already implemented:
 * Pin Payments
 * Sage Pay Direct
 * Sage Pay Server
+* SecurePay Direct Post
 * Stripe
 * WorldPay
 
