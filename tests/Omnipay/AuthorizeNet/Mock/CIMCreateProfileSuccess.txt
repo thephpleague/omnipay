@@ -1,0 +1,10 @@
+HTTP/1.1 200 OK
+Date: Wed, 24 Apr 2013 12:35:29 GMT
+Server: Microsoft-IIS/6.0
+X-Powered-By: ASP.NET
+X-AspNet-Version: 2.0.50727
+Cache-Control: private
+Content-Type: text/xml; charset=utf-8
+Content-Length: 505
+
+﻿<?xml version="1.0" encoding="utf-8"?><createCustomerProfileResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd"><messages><resultCode>Ok</resultCode><message><code>I00001</code><text>Successful.</text></message></messages><customerProfileId>17951308</customerProfileId><customerPaymentProfileIdList /><customerShippingAddressIdList /><validationDirectResponseList /></createCustomerProfileResponse>

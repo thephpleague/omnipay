@@ -1,0 +1,10 @@
+HTTP/1.1 200 OK
+Date: Wed, 24 Apr 2013 10:24:44 GMT
+Server: Microsoft-IIS/6.0
+X-Powered-By: ASP.NET
+X-AspNet-Version: 2.0.50727
+Cache-Control: private
+Content-Type: text/xml; charset=utf-8
+Content-Length: 685
+
+﻿<?xml version="1.0" encoding="utf-8"?><createCustomerProfileTransactionResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd"><messages><resultCode>Error</resultCode><message><code>E00027</code><text>A duplicate transaction has been submitted.</text></message></messages><directResponse>3,1,11,A duplicate transaction has been submitted.,,P,0,,Sample Transaction from eE,4.00,CC,auth_only,243,Limosul,Aliev,,,,,,,,,pilot@pesochin.net,,,,,,,,,,,,,,65D8EE4E26A5C619195603FCA7CC1470,,,,,,,,,,,,,XXXX4242,Visa,,,,,,,,,,,,,,,,</directResponse></createCustomerProfileTransactionResponse>

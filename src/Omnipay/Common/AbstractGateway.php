@@ -200,6 +200,36 @@ abstract class AbstractGateway implements GatewayInterface
     }
 
     /**
+     * Supports CreateProfile
+     *
+     * @return boolean True if this gateway supports the create() method
+     */
+    public function supportsCreateProfile()
+    {
+        return method_exists($this, 'createProfile');
+    }
+
+    /**
+     * Supports UpdateProfile
+     *
+     * @return boolean True if this gateway supports the update() method
+     */
+    public function supportsUpdateProfile()
+    {
+        return method_exists($this, 'updateProfile');
+    }
+
+    /**
+     * Supports DeleteProfile
+     *
+     * @return boolean True if this gateway supports the delete() method
+     */
+    public function supportsDeleteProfile()
+    {
+        return method_exists($this, 'deleteProfile');
+    }
+
+    /**
      * Create and initialize a request object using existing parameters from this gateway
      */
     protected function createRequest($class, array $parameters)

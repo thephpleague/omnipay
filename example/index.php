@@ -318,4 +318,114 @@ $app->post('/gateways/{name}/delete-card', function($name) use ($app) {
     ));
 });
 
+// create gateway create Customer Profile
+$app->get('/gateways/{name}/create-profile', function($name) use ($app) {
+    $gateway = Omnipay\Common\GatewayFactory::create($name);
+    $sessionVar = 'omnipay.'.$gateway->getShortName();
+    $gateway->initialize((array) $app['session']->get($sessionVar));
+
+    $params = $app['session']->get($sessionVar.'.update', array());
+
+    return $app['twig']->render('request.twig', array(
+        'gateway' => $gateway,
+        'method' => 'createProfile',
+        'params' => $params,
+    ));
+});
+
+// submit gateway create Customer Profile
+$app->post('/gateways/{name}/create-profile', function($name) use ($app) {
+    $gateway = Omnipay\Common\GatewayFactory::create($name);
+    $sessionVar = 'omnipay.'.$gateway->getShortName();
+    $gateway->initialize((array) $app['session']->get($sessionVar));
+
+    // load POST data
+    $params = $app['request']->get('params');
+
+    // save POST data into session
+    $app['session']->set($sessionVar.'.update', $params);
+
+    $params['customerEmail'] = $app['request']->getCustomerEmail();
+    $response = $gateway->createProfile($params)->send();
+
+    return $app['twig']->render('response.twig', array(
+        'gateway' => $gateway,
+        'response' => $response,
+    ));
+});
+
+// create gateway update Customer Profile
+$app->get('/gateways/{name}/update-profile', function($name) use ($app) {
+    $gateway = Omnipay\Common\GatewayFactory::create($name);
+    $sessionVar = 'omnipay.'.$gateway->getShortName();
+    $gateway->initialize((array) $app['session']->get($sessionVar));
+
+    $params = $app['session']->get($sessionVar.'.update', array());
+    $card = new Omnipay\Common\CreditCard($app['session']->get($sessionVar.'.card'));
+
+    return $app['twig']->render('request.twig', array(
+        'gateway' => $gateway,
+        'method' => 'updateProfile',
+        'params' => $params,
+        'card' => $card->getParameters(),
+    ));
+});
+
+// submit gateway update Customer Profile
+$app->post('/gateways/{name}/update-profile', function($name) use ($app) {
+    $gateway = Omnipay\Common\GatewayFactory::create($name);
+    $sessionVar = 'omnipay.'.$gateway->getShortName();
+    $gateway->initialize((array) $app['session']->get($sessionVar));
+
+    // load POST data
+    $params = $app['request']->get('params');
+
+    // save POST data into session
+    $app['session']->set($sessionVar.'.update', $params);
+
+    $params['customerProfileId'] = $app['request']->getCustomerProfileId();
+    $response = $gateway->updateProfile($params)->send();
+
+    return $app['twig']->render('response.twig', array(
+        'gateway' => $gateway,
+        'response' => $response,
+    ));
+});
+
+// create gateway delete Customer Profile
+$app->get('/gateways/{name}/delete-profile', function($name) use ($app) {
+    $gateway = Omnipay\Common\GatewayFactory::create($name);
+    $sessionVar = 'omnipay.'.$gateway->getShortName();
+    $gateway->initialize((array) $app['session']->get($sessionVar));
+
+    $params = $app['session']->get($sessionVar.'.delete', array());
+
+    return $app['twig']->render('request.twig', array(
+        'gateway' => $gateway,
+        'method' => 'deleteProfile',
+        'params' => $params,
+    ));
+});
+
+// submit gateway delete Customer Profile
+$app->post('/gateways/{name}/delete-profile', function($name) use ($app) {
+    $gateway = Omnipay\Common\GatewayFactory::create($name);
+    $sessionVar = 'omnipay.'.$gateway->getShortName();
+    $gateway->initialize((array) $app['session']->get($sessionVar));
+
+    // load POST data
+    $params = $app['request']->get('params');
+
+    // save POST data into session
+    $app['session']->set($sessionVar.'.delete', $params);
+
+    $params['customerProfileId'] = $app['request']->getCustomerProfileId();
+    $response = $gateway->deleteProfile($params)->send();
+
+    return $app['twig']->render('response.twig', array(
+        'gateway' => $gateway,
+        'response' => $response,
+    ));
+});
+
 $app->run();

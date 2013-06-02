@@ -42,6 +42,15 @@ $response = $gateway->initialize($params);</pre>
         {% if gateway.supportsVoid() %}
             <li>void()</li>
         {% endif %}
+        {% if gateway.supportsCreateProfile() %}
+            <li><a href="/gateways/{{gateway.shortName}}/create-profile">createProfile()</a></li>
+        {% endif %}
+        {% if gateway.supportsUpdateProfile() %}
+            <li><a href="/gateways/{{gateway.shortName}}/update-profile">updateProfile()</a></li>
+        {% endif %}
+        {% if gateway.supportsDeleteProfile() %}
+            <li><a href="/gateways/{{gateway.shortName}}/delete-profile">deleteProfile()</a></li>
+        {% endif %}
         {% if gateway.supportsCreateCard() %}
             <li><a href="/gateways/{{gateway.shortName}}/create-card">createCard()</a></li>
         {% endif %}
