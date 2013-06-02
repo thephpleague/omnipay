@@ -21,6 +21,8 @@ class PurchaseRequest extends AbstractRequest
     protected $liveEndpoint = 'https://secure.worldpay.com/wcc/purchase';
     protected $testEndpoint = 'https://secure-test.worldpay.com/wcc/purchase';
 
+    protected $customParams = array();
+
     public function getInstallationId()
     {
         return $this->getParameter('installationId');
@@ -51,10 +53,17 @@ class PurchaseRequest extends AbstractRequest
         return $this->setParameter('callbackPassword', $value);
     }
 
-    public function setOptional($params)
+    public function setCustom($params)
     {
         foreach ($params as $key => $value) {
             $this->setParameter($key, $value);
+            $this->customParams[$key] = $value;
+        }
+    }
+
+    public function getCustomParam(){
+        if(count($this->customParams) > 0){
+            return $this->customParams;
         }
     }
 
@@ -70,6 +79,12 @@ class PurchaseRequest extends AbstractRequest
         $data['currency'] = $this->getCurrency();
         $data['testMode'] = $this->getTestMode() ? 100 : 0;
         $data['MC_callback'] = $this->getReturnUrl();
+
+        if($this->getCustomParam()){
+            foreach($this->getCustomParam() as $key => $value){
+                $data[$key] = $value;
+            }
+        }
 
         if ($this->getCard()) {
             $data['name'] = $this->getCard()->getName();
