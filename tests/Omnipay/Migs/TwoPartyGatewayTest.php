@@ -27,14 +27,7 @@ class TwoPartyGatewayTest extends GatewayTestCase
         $this->options = array(
             'amount'        => 1000,
             'transactionId' => 12345,
-            'card' => new CreditCard(
-                array(
-                    'number' => '4111111111111111',
-                    'expiryMonth' => '05',
-                    'expiryYear' => '2013',
-                    'cvv' => '123',
-                )
-            ),
+            'card' => $this->getValidCard(),
         );
     }
 
