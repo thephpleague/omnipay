@@ -91,20 +91,12 @@ class GatewayTest extends GatewayTestCase
 
     public function testOptionalParams()
     {
-        $options = array(
-            "amount"=>"300",
-            "returnUrl" => "https://www.example.com/return",
-            "optional" => array("MC_Order" => "order_id", "MC_Customer" => "customer_id")
-        );
+        $this->options['custom'] = array("MC_Customer" => 'customer_id');
 
-        $response = $this->gateway->purchase($options)->send();
+        $response = $this->gateway->purchase($this->options)->send();
 
-        $this->assertFalse($response->isSuccessful());
-        $this->assertTrue($response->isRedirect());
-        $this->assertNull($response->getTransactionReference());
-        $this->assertContains('https://secure.worldpay.com/wcc/purchase?', $response->getRedirectUrl());
+        $data = $response->getData();
 
-        $this->assertContains("order_id", $response->getData());
-        $this->assertContains("customer_id", $response->getData());
+        $this->assertEquals('customer_id', $data['MC_Customer']);
     }
 }
