@@ -3,6 +3,8 @@
 **An easy to use, consistent payment processing library for PHP 5.3+**
 
 [![Build Status](https://travis-ci.org/adrianmacneil/omnipay.png?branch=master)](https://travis-ci.org/adrianmacneil/omnipay)
+[![Latest Stable Version](https://poser.pugx.org/omnipay/omnipay/version.png)](https://packagist.org/packages/omnipay/omnipay)
+[![Total Downloads](https://poser.pugx.org/omnipay/omnipay/d/total.png)](https://packagist.org/packages/omnipay/omnipay)
 
 Omnipay is a payment processing library for PHP. It has been designed based on
 ideas from [Active Merchant](http://activemerchant.org/), plus experience implementing
