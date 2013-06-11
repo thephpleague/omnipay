@@ -30,6 +30,20 @@ class ExpressCompleteAuthorizeRequest extends AbstractRequest
         $data['PAYMENTREQUEST_0_INVNUM'] = $this->getTransactionId();
         $data['PAYMENTREQUEST_0_DESC'] = $this->getDescription();
 
+        // loop cart items
+        $i = 0;
+        foreach ($this->getCart() as $cart)
+        {
+            $this->setAmount($cart->price);
+            
+            $data['L_PAYMENTREQUEST_0_QTY'.$i] = 1;
+            $data['L_PAYMENTREQUEST_0_AMT'.$i] = $this->getAmountDecimal();
+            $data['L_PAYMENTREQUEST_0_NAME'.$i] = $cart->title;
+            $data['L_PAYMENTREQUEST_0_NUMBER'.$i] = $i;
+            
+            $i++;
+        }
+        
         $data['TOKEN'] = $this->httpRequest->query->get('token');
         $data['PAYERID'] = $this->httpRequest->query->get('PayerID');
 
