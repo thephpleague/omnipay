@@ -91,6 +91,16 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $data;
     }
 
+    public function setCart($value)
+    {
+        return $this->setParameter('cart', $value);
+    }
+
+    public function getCart()
+    {
+        return $this->getParameter('cart');
+    }
+    
     public function send()
     {
         $url = $this->getEndpoint().'?'.http_build_query($this->getData());
