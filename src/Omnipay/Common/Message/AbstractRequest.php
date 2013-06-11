@@ -272,6 +272,16 @@ abstract class AbstractRequest implements RequestInterface
         return $this->setParameter('cancelUrl', $value);
     }
 
+    public function getNotifyUrl()
+    {
+        return $this->getParameter('notifyUrl');
+    }
+
+    public function setNotifyUrl($value)
+    {
+        return $this->setParameter('notifyUrl', $value);
+    }
+
     public function getResponse()
     {
         if (null === $this->response) {
