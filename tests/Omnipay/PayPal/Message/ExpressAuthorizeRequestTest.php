@@ -35,7 +35,7 @@ class ExpressAuthorizeRequestTest extends TestCase
             'amount' => 1000,
             'currency' => 'AUD',
             'transactionId' => '111',
-            'description' => 'Order Description'
+            'description' => 'Order Description',
             'returnUrl' => 'https://www.example.com/return',
             'cancelUrl' => 'https://www.example.com/cancel',
             'notifyUrl' => 'https://www.example.com/notify',
