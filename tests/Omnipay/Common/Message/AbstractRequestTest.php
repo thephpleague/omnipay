@@ -143,4 +143,10 @@ class AbstractRequestTest extends TestCase
         $this->assertSame($this->request, $this->request->setCancelUrl('https://www.example.com/cancel'));
         $this->assertSame('https://www.example.com/cancel', $this->request->getCancelUrl());
     }
+
+    public function testNotifyUrl()
+    {
+        $this->assertSame($this->request, $this->request->setNotifyUrl('https://www.example.com/notify'));
+        $this->assertSame('https://www.example.com/notify', $this->request->getNotifyUrl());
+    }
 }

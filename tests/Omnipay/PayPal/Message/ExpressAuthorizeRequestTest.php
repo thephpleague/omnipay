@@ -29,11 +29,37 @@ class ExpressAuthorizeRequestTest extends TestCase
         );
     }
 
-    public function testHeaderImageUrl()
+    public function testGetData()
     {
-        $this->request->setHeaderImageUrl('https://www.example.com/image.jpg');
+        $this->request->initialize(array(
+            'amount' => 1000,
+            'currency' => 'AUD',
+            'transactionId' => '111',
+            'description' => 'Order Description'
+            'returnUrl' => 'https://www.example.com/return',
+            'cancelUrl' => 'https://www.example.com/cancel',
+            'notifyUrl' => 'https://www.example.com/notify',
+            'headerImageUrl' => 'https://www.example.com/header.jpg',
+        ));
 
         $data = $this->request->getData();
-        $this->assertEquals('https://www.example.com/image.jpg', $data['HDRIMG']);
+
+        $this->assertSame('10.00', $data['PAYMENTREQUEST_0_AMT']);
+        $this->assertSame('AUD', $data['PAYMENTREQUEST_0_CURRENCYCODE']);
+        $this->assertSame('111', $data['PAYMENTREQUEST_0_INVNUM']);
+        $this->assertSame('Order Description', $data['PAYMENTREQUEST_0_DESC']);
+        $this->assertSame('https://www.example.com/return', $data['RETURNURL']);
+        $this->assertSame('https://www.example.com/cancel', $data['CANCELURL']);
+        $this->assertSame('https://www.example.com/notify', $data['PAYMENTREQUEST_0_NOTIFYURL']);
+        $this->assertSame('https://www.example.com/header.jpg', $data['HDRIMG']);
+    }
+
+    public function testHeaderImageUrl()
+    {
+        $this->assertSame($this->request, $this->request->setHeaderImageUrl('https://www.example.com/header.jpg'));
+        $this->assertSame('https://www.example.com/header.jpg', $this->request->getHeaderImageUrl());
+
+        $data = $this->request->getData();
+        $this->assertEquals('https://www.example.com/header.jpg', $data['HDRIMG']);
     }
 }

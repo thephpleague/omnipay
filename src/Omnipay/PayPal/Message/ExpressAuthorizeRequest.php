@@ -29,7 +29,6 @@ class ExpressAuthorizeRequest extends AbstractRequest
         $data['PAYMENTREQUEST_0_DESC'] = $this->getDescription();
         $data['PAYMENTREQUEST_0_NOTIFYURL'] = $this->getNotifyUrl();
 
-
         // pp express specific fields
         $data['SOLUTIONTYPE'] = $this->getSolutionType();
         $data['LANDINGPAGE'] = $this->getLandingPage();
