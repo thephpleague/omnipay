@@ -12,7 +12,6 @@
 namespace Omnipay\Migs;
 
 use Omnipay\GatewayTestCase;
-use Omnipay\Common\CreditCard;
 
 class TwoPartyGatewayTest extends GatewayTestCase
 {

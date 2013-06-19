@@ -12,7 +12,6 @@
 namespace Omnipay\Migs\Message;
 
 use Omnipay\TestCase;
-use Omnipay\Common\CreditCard;
 
 class TwoPartyPurchaseRequestTest extends TestCase
 {
