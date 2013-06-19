@@ -1,0 +1,18 @@
+HTTP/1.1 200 OK
+Server: nginx/1.4.1
+Date: Tue, 18 Jun 2013 11:20:36 GMT
+Content-Type: text/xml
+Content-Length: 478
+Connection: keep-alive
+Vary: Accept-Encoding
+
+<?xml version="1.0" ?>
+<response>
+	<order>
+		<transaction_id>2e6455e7c1999436ef7093219f016fc5</transaction_id>
+		<amount>1200</amount>
+		<currency>EUR</currency>
+		<URL>https://www.mollie.nl/partners/ideal-test-bank?order_nr=M0361705M1078X9J&amp;transaction_id=2e6455e7c1999436ef7093219f016fc5&amp;trxid=0036170512173671</URL>
+		<message>Your iDEAL-payment has successfully been setup. Your customer should visit the given URL to make the payment</message>
+	</order>
+</response>
