@@ -19,6 +19,11 @@ is fully unit tested, and even comes with an example application to get you star
 * Because most payment gateways have exceptionally poor documentation
 * Because you are writing a shopping cart and need to support multiple gateways
 
+**Important Note: Upgrading from <1.0**
+
+If you are upgrading from a pre-1.0 version of Omnipay, please note that the currency format has changed.
+See the [changelog](https://github.com/adrianmacneil/omnipay/blob/master/CHANGELOG.md) for more details.
+
 ## TL;DR
 
 Just want to see some code?
