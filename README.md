@@ -113,9 +113,6 @@ The following gateways are already implemented:
 * Stripe
 * WorldPay
 
-More are coming soon! [All of these](https://github.com/expressodev/ci-merchant/tree/develop/libraries/merchant)
-will be implemented before we reach 1.0.
-
 Gateways are created and initialized like so:
 
 ```php
