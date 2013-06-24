@@ -25,8 +25,8 @@ class AbstractRequestTest extends TestCase
 
     public function testInitializeWithParams()
     {
-        $this->assertSame($this->request, $this->request->initialize(array('amount' => 123)));
-        $this->assertSame(123, $this->request->getAmount());
+        $this->assertSame($this->request, $this->request->initialize(array('amount' => '1.23')));
+        $this->assertSame('1.23', $this->request->getAmount());
     }
 
     public function testCard()
@@ -61,27 +61,67 @@ class AbstractRequestTest extends TestCase
 
     public function testAmount()
     {
-        $this->assertSame($this->request, $this->request->setAmount(200));
-        $this->assertSame(200, $this->request->getAmount());
+        $this->assertSame($this->request, $this->request->setAmount('2.00'));
+        $this->assertSame('2.00', $this->request->getAmount());
     }
 
-    public function testAmountCastsToInteger()
+    public function testAmountWithFloat()
     {
-        $this->assertSame($this->request, $this->request->setAmount('6.1'));
-        $this->assertSame(6, $this->request->getAmount());
+        $this->assertSame($this->request, $this->request->setAmount(2.0));
+        $this->assertSame('2.00', $this->request->getAmount());
     }
 
-    public function testGetAmountDecimal()
+    public function testAmountWithEmpty()
     {
-        $this->assertSame($this->request, $this->request->setAmount(1366));
-        $this->assertSame('13.66', $this->request->getAmountDecimal());
+        $this->assertSame($this->request, $this->request->setAmount(null));
+        $this->assertSame(null, $this->request->getAmount());
     }
 
-    public function testGetAmountDecimalNoDecimals()
+    public function testGetAmountNoDecimals()
     {
         $this->assertSame($this->request, $this->request->setCurrency('JPY'));
-        $this->assertSame($this->request, $this->request->setAmount(1366));
-        $this->assertSame('1366', $this->request->getAmountDecimal());
+        $this->assertSame($this->request, $this->request->setAmount('1366'));
+        $this->assertSame('1366', $this->request->getAmount());
+    }
+
+    public function testGetAmountNoDecimalsRounding()
+    {
+        $this->assertSame($this->request, $this->request->setAmount('136.5'));
+        $this->assertSame($this->request, $this->request->setCurrency('JPY'));
+        $this->assertSame('137', $this->request->getAmount());
+    }
+
+    /**
+     * @expectedException Omnipay\Common\Exception\InvalidRequestException
+     */
+    public function testAmountWithIntThrowsException()
+    {
+        // ambiguous value, avoid errors upgrading from v0.9
+        $this->assertSame($this->request, $this->request->setAmount(10));
+        $this->request->getAmount();
+    }
+
+    /**
+     * @expectedException Omnipay\Common\Exception\InvalidRequestException
+     */
+    public function testAmountWithIntStringThrowsException()
+    {
+        // ambiguous value, avoid errors upgrading from v0.9
+        $this->assertSame($this->request, $this->request->setAmount('10'));
+        $this->request->getAmount();
+    }
+
+    public function testGetAmountInteger()
+    {
+        $this->assertSame($this->request, $this->request->setAmount('13.66'));
+        $this->assertSame(1366, $this->request->getAmountInteger());
+    }
+
+    public function testGetAmountIntegerNoDecimals()
+    {
+        $this->assertSame($this->request, $this->request->setCurrency('JPY'));
+        $this->assertSame($this->request, $this->request->setAmount('1366'));
+        $this->assertSame(1366, $this->request->getAmountInteger());
     }
 
     public function testCurrency()

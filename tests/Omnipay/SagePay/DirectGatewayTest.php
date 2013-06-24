@@ -22,14 +22,14 @@ class DirectGatewayTest extends GatewayTestCase
         $this->gateway = new DirectGateway($this->getHttpClient(), $this->getHttpRequest());
 
         $this->purchaseOptions = array(
-            'amount' => 1000,
+            'amount' => '10.00',
             'transactionId' => '123',
             'card' => $this->getValidCard(),
             'returnUrl' => 'https://www.example.com/return',
         );
 
         $this->captureOptions = array(
-            'amount' => 1000,
+            'amount' => '10.00',
             'transactionReference' => '{"SecurityKey":"JEUPDN1N7E","TxAuthNo":"4255","VPSTxId":"{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}","VendorTxCode":"438791"}',
         );
     }

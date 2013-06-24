@@ -24,7 +24,7 @@ class PxPostCaptureRequest extends PxPostAuthorizeRequest
 
         $data = $this->getBaseData();
         $data->DpsTxnRef = $this->getTransactionReference();
-        $data->Amount = $this->getAmountDecimal();
+        $data->Amount = $this->getAmount();
 
         return $data;
     }

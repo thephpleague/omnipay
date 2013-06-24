@@ -24,7 +24,7 @@ class ThreePartyPurchaseRequestTest extends TestCase
     {
         $this->request->initialize(
             array(
-                'amount'             => 1200,
+                'amount'             => '12.00',
                 'transactionId'      => 123,
                 'returnUrl'          => 'https://www.example.com/return',
 
@@ -43,7 +43,7 @@ class ThreePartyPurchaseRequestTest extends TestCase
     {
         $this->request->initialize(
             array(
-                'amount'             => 1200,
+                'amount'             => '12.00',
                 'transactionId'      => 123,
                 'returnUrl'          => 'https://www.example.com/return',
 

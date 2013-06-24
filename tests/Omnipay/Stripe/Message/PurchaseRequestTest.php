@@ -20,7 +20,7 @@ class PurchaseRequestTest extends TestCase
         $this->request = new PurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize(
             array(
-                'amount' => 1000,
+                'amount' => '10.00',
                 'currency' => 'USD',
                 'card' => $this->getValidCard(),
             )

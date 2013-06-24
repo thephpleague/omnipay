@@ -19,7 +19,7 @@ use Omnipay\Common\AbstractGateway;
 class Gateway extends AbstractGateway
 {
     const DECISION_ACCEPTED = 'ACCEPTED';
-    const CREATE_CARD_AMOUNT = 100;
+    const CREATE_CARD_AMOUNT = '1.00';
     const CODE_OK = '0';
 
     /**

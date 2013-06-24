@@ -24,17 +24,17 @@ class GatewayTest extends GatewayTestCase
 
     public function testPurchase()
     {
-        $request = $this->gateway->purchase(array('amount' => 1200));
+        $request = $this->gateway->purchase(array('amount' => '12.00'));
 
         $this->assertInstanceOf('\Omnipay\PayFast\Message\PurchaseRequest', $request);
-        $this->assertSame(1200, $request->getAmount());
+        $this->assertSame('12.00', $request->getAmount());
     }
 
     public function testCompletePurchase()
     {
-        $request = $this->gateway->completePurchase(array('amount' => 1200));
+        $request = $this->gateway->completePurchase(array('amount' => '12.00'));
 
         $this->assertInstanceOf('\Omnipay\PayFast\Message\CompletePurchaseRequest', $request);
-        $this->assertSame(1200, $request->getAmount());
+        $this->assertSame('12.00', $request->getAmount());
     }
 }

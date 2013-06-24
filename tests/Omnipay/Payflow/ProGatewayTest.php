@@ -23,7 +23,7 @@ class ProGatewayTest extends GatewayTestCase
         $this->gateway = new ProGateway($this->getHttpClient(), $this->getHttpRequest());
 
         $this->options = array(
-            'amount' => 1000,
+            'amount' => '10.00',
             'card' => new CreditCard(array(
                 'firstName' => 'Example',
                 'lastName' => 'User',
@@ -58,7 +58,7 @@ class ProGatewayTest extends GatewayTestCase
     public function testCapture()
     {
         $options = array(
-            'amount' => 1000,
+            'amount' => '10.00',
             'transactionReference' => 'abc123',
         );
 
@@ -93,7 +93,7 @@ class ProGatewayTest extends GatewayTestCase
     public function testRefund()
     {
         $options = array(
-            'amount' => 1000,
+            'amount' => '10.00',
             'transactionReference' => 'abc123',
         );
 

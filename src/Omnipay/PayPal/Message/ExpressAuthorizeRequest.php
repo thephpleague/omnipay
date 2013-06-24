@@ -23,7 +23,7 @@ class ExpressAuthorizeRequest extends AbstractRequest
         $this->validate('amount', 'returnUrl', 'cancelUrl');
 
         $data['PAYMENTREQUEST_0_PAYMENTACTION'] = 'Authorization';
-        $data['PAYMENTREQUEST_0_AMT'] = $this->getAmountDecimal();
+        $data['PAYMENTREQUEST_0_AMT'] = $this->getAmount();
         $data['PAYMENTREQUEST_0_CURRENCYCODE'] = $this->getCurrency();
         $data['PAYMENTREQUEST_0_INVNUM'] = $this->getTransactionId();
         $data['PAYMENTREQUEST_0_DESC'] = $this->getDescription();

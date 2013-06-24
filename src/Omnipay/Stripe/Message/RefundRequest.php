@@ -21,7 +21,7 @@ class RefundRequest extends AbstractRequest
         $this->validate('transactionReference', 'amount');
 
         $data = array();
-        $data['amount'] = $this->getAmount();
+        $data['amount'] = $this->getAmountInteger();
 
         return $data;
     }

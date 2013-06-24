@@ -24,7 +24,7 @@ class CaptureRequest extends AbstractRequest
         $reference = json_decode($this->getTransactionReference(), true);
 
         $data = $this->getBaseData();
-        $data['ReleaseAmount'] = $this->getAmountDecimal();
+        $data['ReleaseAmount'] = $this->getAmount();
         $data['VendorTxCode'] = $reference['VendorTxCode'];
         $data['VPSTxId'] = $reference['VPSTxId'];
         $data['SecurityKey'] = $reference['SecurityKey'];

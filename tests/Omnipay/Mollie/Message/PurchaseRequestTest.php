@@ -21,7 +21,7 @@ class PurchaseRequestTest extends TestCase
         $this->request->initialize(
             array(
                 'partnerId' => 'my partner id',
-                'amount' => 1200,
+                'amount' => '12.00',
                 'issuer' => 'my bank',
                 'returnUrl' => 'https://www.example.com/return',
                 'notifyUrl' => 'https://www.example.com/return',
@@ -33,7 +33,7 @@ class PurchaseRequestTest extends TestCase
     {
         $this->request->initialize(array(
             'partnerId' => 'my partner id',
-            'amount' => 1200,
+            'amount' => '12.00',
             'issuer' => 'my bank',
             'returnUrl' => 'https://www.example.com/return',
             'notifyUrl' => 'https://www.example.com/notify',

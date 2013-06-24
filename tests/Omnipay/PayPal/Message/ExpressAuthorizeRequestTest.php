@@ -22,7 +22,7 @@ class ExpressAuthorizeRequestTest extends TestCase
         $this->request = new ExpressAuthorizeRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize(
             array(
-                'amount' => 1000,
+                'amount' => '10.00',
                 'returnUrl' => 'https://www.example.com/return',
                 'cancelUrl' => 'https://www.example.com/cancel',
             )
@@ -32,7 +32,7 @@ class ExpressAuthorizeRequestTest extends TestCase
     public function testGetData()
     {
         $this->request->initialize(array(
-            'amount' => 1000,
+            'amount' => '10.00',
             'currency' => 'AUD',
             'transactionId' => '111',
             'description' => 'Order Description',

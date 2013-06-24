@@ -24,34 +24,34 @@ class GatewayTest extends GatewayTestCase
 
     public function testAuthorize()
     {
-        $request = $this->gateway->authorize(array('amount' => 123));
+        $request = $this->gateway->authorize(array('amount' => '10.00'));
 
         $this->assertInstanceOf('Omnipay\Stripe\Message\AuthorizeRequest', $request);
-        $this->assertSame(123, $request->getAmount());
+        $this->assertSame('10.00', $request->getAmount());
     }
 
     public function testCapture()
     {
-        $request = $this->gateway->capture(array('amount' => 123));
+        $request = $this->gateway->capture(array('amount' => '10.00'));
 
         $this->assertInstanceOf('Omnipay\Stripe\Message\CaptureRequest', $request);
-        $this->assertSame(123, $request->getAmount());
+        $this->assertSame('10.00', $request->getAmount());
     }
 
     public function testPurchase()
     {
-        $request = $this->gateway->purchase(array('amount' => 123));
+        $request = $this->gateway->purchase(array('amount' => '10.00'));
 
         $this->assertInstanceOf('Omnipay\Stripe\Message\PurchaseRequest', $request);
-        $this->assertSame(123, $request->getAmount());
+        $this->assertSame('10.00', $request->getAmount());
     }
 
     public function testRefund()
     {
-        $request = $this->gateway->refund(array('amount' => 123));
+        $request = $this->gateway->refund(array('amount' => '10.00'));
 
         $this->assertInstanceOf('Omnipay\Stripe\Message\RefundRequest', $request);
-        $this->assertSame(123, $request->getAmount());
+        $this->assertSame('10.00', $request->getAmount());
     }
 
     public function testCreateCard()

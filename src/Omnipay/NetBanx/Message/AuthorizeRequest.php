@@ -81,12 +81,12 @@ class AuthorizeRequest extends AbstractRequest
 
         if ($this->getTransactionReference() || $this->getCardReference()) {
             $sxml->addChild('confirmationNumber', $this->getTransactionReference() ?: $this->getCardReference());
-            $sxml->addChild('amount', $this->getAmountDecimal());
+            $sxml->addChild('amount', $this->getAmount());
         } else {
             /** @var $card CreditCard */
             $card = $this->getCard();
 
-            $sxml->addChild('amount', $this->getAmountDecimal());
+            $sxml->addChild('amount', $this->getAmount());
 
             $cardChild = $sxml->addChild('card');
 

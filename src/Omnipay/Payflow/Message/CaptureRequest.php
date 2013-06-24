@@ -23,7 +23,7 @@ class CaptureRequest extends AuthorizeRequest
         $this->validate('transactionReference', 'amount');
 
         $data = $this->getBaseData();
-        $data['AMT'] = $this->getAmountDecimal();
+        $data['AMT'] = $this->getAmount();
         $data['ORIGID'] = $this->getTransactionReference();
 
         return $data;

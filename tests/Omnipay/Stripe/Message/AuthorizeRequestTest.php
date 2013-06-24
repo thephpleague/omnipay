@@ -20,7 +20,7 @@ class AuthorizeRequestTest extends TestCase
         $this->request = new AuthorizeRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize(
             array(
-                'amount' => 1200,
+                'amount' => '12.00',
                 'currency' => 'USD',
                 'card' => $this->getValidCard(),
             )

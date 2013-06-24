@@ -26,7 +26,7 @@ class PurchaseRequest extends AbstractRequest
         $data['returnurl'] = $this->getReturnUrl();
         $data['reporturl'] = $this->getNotifyUrl();
         $data['bank_id'] = $this->getIssuer();
-        $data['amount'] = $this->getAmount();
+        $data['amount'] = $this->getAmountInteger();
         $data['description'] = $this->getDescription();
 
         return $data;

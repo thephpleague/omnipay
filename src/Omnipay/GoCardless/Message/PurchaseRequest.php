@@ -28,7 +28,7 @@ class PurchaseRequest extends AbstractRequest
         $data['cancel_uri'] = $this->getCancelUrl();
         $data['bill'] = array();
         $data['bill']['merchant_id'] = $this->getMerchantId();
-        $data['bill']['amount'] = $this->getAmountDecimal();
+        $data['bill']['amount'] = $this->getAmount();
         $data['bill']['name'] = $this->getDescription();
 
         if ($this->getCard()) {

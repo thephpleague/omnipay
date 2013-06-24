@@ -25,33 +25,33 @@ class DirectPostGatewayTest extends GatewayTestCase
 
     public function testAuthorize()
     {
-        $request = $this->gateway->authorize(array('amount' => 1000));
+        $request = $this->gateway->authorize(array('amount' => '10.00'));
 
         $this->assertInstanceOf('\Omnipay\SecurePay\Message\DirectPostAuthorizeRequest', $request);
-        $this->assertSame(1000, $request->getAmount());
+        $this->assertSame('10.00', $request->getAmount());
     }
 
     public function testCompleteAuthorize()
     {
-        $request = $this->gateway->completeAuthorize(array('amount' => 1000));
+        $request = $this->gateway->completeAuthorize(array('amount' => '10.00'));
 
         $this->assertInstanceOf('\Omnipay\SecurePay\Message\DirectPostCompletePurchaseRequest', $request);
-        $this->assertSame(1000, $request->getAmount());
+        $this->assertSame('10.00', $request->getAmount());
     }
 
     public function testPurchase()
     {
-        $request = $this->gateway->purchase(array('amount' => 1000));
+        $request = $this->gateway->purchase(array('amount' => '10.00'));
 
         $this->assertInstanceOf('\Omnipay\SecurePay\Message\DirectPostPurchaseRequest', $request);
-        $this->assertSame(1000, $request->getAmount());
+        $this->assertSame('10.00', $request->getAmount());
     }
 
     public function testCompletePurchase()
     {
-        $request = $this->gateway->completePurchase(array('amount' => 1000));
+        $request = $this->gateway->completePurchase(array('amount' => '10.00'));
 
         $this->assertInstanceOf('\Omnipay\SecurePay\Message\DirectPostCompletePurchaseRequest', $request);
-        $this->assertSame(1000, $request->getAmount());
+        $this->assertSame('10.00', $request->getAmount());
     }
 }

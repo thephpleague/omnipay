@@ -24,7 +24,7 @@ class PurchaseRequestTest extends TestCase
     {
         $this->request->initialize(
             array(
-                'amount' => 1200,
+                'amount' => '12.00',
                 'description' => 'Test Product',
                 'transactionId' => 123,
                 'merchantId' => 'foo',
@@ -40,7 +40,7 @@ class PurchaseRequestTest extends TestCase
 
     public function testPurchase()
     {
-        $this->request->setAmount(1200)->setDescription('Test Product');
+        $this->request->setAmount('12.00')->setDescription('Test Product');
 
         $response = $this->request->send();
 

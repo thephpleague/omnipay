@@ -59,7 +59,7 @@ class PurchaseRequest extends AbstractRequest
         $data['instId'] = $this->getInstallationId();
         $data['cartId'] = $this->getTransactionId();
         $data['desc'] = $this->getDescription();
-        $data['amount'] = $this->getAmountDecimal();
+        $data['amount'] = $this->getAmount();
         $data['currency'] = $this->getCurrency();
         $data['testMode'] = $this->getTestMode() ? 100 : 0;
         $data['MC_callback'] = $this->getReturnUrl();

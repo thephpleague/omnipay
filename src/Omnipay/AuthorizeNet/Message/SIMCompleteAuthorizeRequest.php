@@ -29,7 +29,7 @@ class SIMCompleteAuthorizeRequest extends AbstractRequest
 
     public function getHash()
     {
-        return md5($this->getApiLoginId().$this->getTransactionId().$this->getAmountDecimal());
+        return md5($this->getApiLoginId().$this->getTransactionId().$this->getAmount());
     }
 
     public function send()

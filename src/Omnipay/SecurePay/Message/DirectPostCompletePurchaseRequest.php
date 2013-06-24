@@ -37,7 +37,7 @@ class DirectPostCompletePurchaseRequest extends DirectPostAbstractRequest
                 $data['merchant'],
                 $this->getTransactionPassword(),
                 $data['refid'],
-                $this->getAmountDecimal(),
+                $this->getAmount(),
                 $data['timestamp'],
                 $data['summarycode'],
             )

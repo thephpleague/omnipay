@@ -81,7 +81,7 @@ class AuthorizeRequest extends AbstractRequest
 
         $data = $this->getBaseData();
         $data['TENDER'] = 'C';
-        $data['AMT'] = $this->getAmountDecimal();
+        $data['AMT'] = $this->getAmount();
         $data['COMMENT1'] = $this->getDescription();
 
         $data['ACCT'] = $this->getCard()->getNumber();
