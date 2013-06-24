@@ -15,4 +15,4 @@ You must now create the request like so:
 This should avoid any further confusion over how to specify the amount.
 
 *   Added Mollie payment gateway
-*   Added notifyUrl and issuer fields to example app
+*   Added `notifyUrl` and `issuer` fields to example app
