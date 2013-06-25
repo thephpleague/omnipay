@@ -45,16 +45,16 @@ class PurchaseRequest extends AbstractRequest
         $this->validate('merchantId', 'secret', 'amount', 'returnUrl');
 
         $data = array();
-		$data['BPE_Merchant'] = $this->getMerchantId();
-		$data['BPE_Amount'] = $this->getAmountInteger();
-		$data['BPE_Currency'] = $this->getCurrency();
-		$data['BPE_Language'] = 'EN';
-		$data['BPE_Mode'] = (int) $this->getTestMode();
-		$data['BPE_Invoice'] = $this->getTransactionId();
-		$data['BPE_Return_Success'] = $this->getReturnUrl();
-		$data['BPE_Return_Reject'] = $this->getReturnUrl();
-		$data['BPE_Return_Error'] = $this->getReturnUrl();
-		$data['BPE_Return_Method'] = 'POST';
+        $data['BPE_Merchant'] = $this->getMerchantId();
+        $data['BPE_Amount'] = $this->getAmountInteger();
+        $data['BPE_Currency'] = $this->getCurrency();
+        $data['BPE_Language'] = 'EN';
+        $data['BPE_Mode'] = (int) $this->getTestMode();
+        $data['BPE_Invoice'] = $this->getTransactionId();
+        $data['BPE_Return_Success'] = $this->getReturnUrl();
+        $data['BPE_Return_Reject'] = $this->getReturnUrl();
+        $data['BPE_Return_Error'] = $this->getReturnUrl();
+        $data['BPE_Return_Method'] = 'POST';
         $data['BPE_Signature2'] = $this->generateSignature($data);
 
         return $data;

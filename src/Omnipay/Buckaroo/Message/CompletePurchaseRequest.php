@@ -39,7 +39,7 @@ class CompletePurchaseRequest extends PurchaseRequest
             $this->getCurrency().
             $this->getAmountInteger().
             $this->httpRequest->request->get('bpe_result').
-			(int) $this->getTestMode().
+            (int) $this->getTestMode().
             $this->getSecret()
         );
     }
