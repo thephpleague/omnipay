@@ -91,6 +91,7 @@ The following gateways are already implemented:
 * 2Checkout
 * Authorize.Net AIM
 * Authorize.Net SIM
+* Buckaroo
 * CardSave
 * Dummy
 * GoCardless
