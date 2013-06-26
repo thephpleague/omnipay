@@ -21,8 +21,8 @@ class CompletePurchaseRequest extends PurchaseRequest
 {
     public function getData()
     {
-        $md = $this->htttpRequest->request->get('MD');
-        $paRes = $this->htttpRequest->request->get('PaRes');
+        $md = $this->httpRequest->request->get('MD');
+        $paRes = $this->httpRequest->request->get('PaRes');
         if (empty($md) || empty($paRes)) {
             throw new InvalidResponseException;
         }
