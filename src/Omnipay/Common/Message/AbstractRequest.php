@@ -169,7 +169,7 @@ abstract class AbstractRequest implements RequestInterface
                 $this->getCurrencyDecimalPlaces() > 0 &&
                 false === strpos((string) $amount, '.')) {
                 throw new InvalidRequestException(
-                    'Please specify amount as a string or float, ' +
+                    'Please specify amount as a string or float, ' .
                     'with decimal places (e.g. \'10.00\' to represent $10.00).'
                 );
             }
