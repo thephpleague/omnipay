@@ -20,11 +20,11 @@
     },
     "require": {
         "php": ">=5.3.2",
-        "guzzle/http": "~3.0",
+        "guzzle/http": "~3.1",
         "symfony/http-foundation": "~2.1"
     },
     "require-dev": {
-        "guzzle/plugin-mock": "~3.0",
+        "guzzle/plugin-mock": "~3.1",
         "mockery/mockery": "~0.7",
         "phpunit/phpunit": "~3.7.16",
         "silex/silex": "1.0.*@dev",
