@@ -71,7 +71,7 @@ abstract class AbstractResponse implements ResponseInterface
         $this->getRedirectResponse()->send();
         exit;
     }
-    
+
     public function getRedirectResponse()
     {
         if (!$this instanceof RedirectResponseInterface || !$this->isRedirect()) {
