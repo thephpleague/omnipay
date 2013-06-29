@@ -1,6 +1,13 @@
 # Changelog :zap:
 
-# 1.0.0 (2013-06-24)
+# v1.0.1 (2013-06-29)
+
+* Added Buckaroo gateway
+* Added eWAY Rapid 3.0 gateway
+* Added `getRedirectResponse()` method to `AbstractResponse`
+* A few minor bug fixes & typos
+
+# v1.0.0 (2013-06-24)
 
 `amount` is now specified as a decimal (i.e. `'10.00'` instead of `1000`
 to represent $10.00. Passing integers will throw an exception, reminding you
