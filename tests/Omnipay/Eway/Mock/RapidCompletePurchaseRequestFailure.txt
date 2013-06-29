@@ -1,0 +1,16 @@
+HTTP/1.1 200 OK
+Cache-control: no-cache="set-cookie"
+Content-Type: application/json; charset=utf-8
+Date: Sat, 29 Jun 2013 03:25:35 GMT
+Set-Cookie: AWSELB=8361C96B088FEBBC7D3ABDFE8BA0FF6501B9705E7D00F53B19AA8D0E66C1AD34691F2170CB4C6B4D750DDAD028ED5C0787DEB1569F57CC58B5923AA0229EC5B49BD7647A57;PATH=/;MAX-AGE=86400
+X-EWAY-VIA: api-au.sandbox.ewaypayments.com/
+X-EWAY-VIA-FROM: http://api.sandbox.ewaypayments.com/GetAccessCodeResult.json
+X-EWAY-VIA-HTTP-METHOD: POST
+X-EWAY-VIA-HTTP-STATUS: 200
+X-EWAY-VIA-TO: http://api-au.sandbox.ewaypayments.com/GetAccessCodeResult.json
+X-ID: AM-143
+X-Powered-By: eWAY
+Content-Length: 469
+Connection: keep-alive
+
+{"AccessCode":"C3AB91ZFisYBgiWFSAtXjrzc4mVCqWvYCgCOAWp4NvAOwwZjPB4S5xyzdjewRwK09AI_DHwiKMbeAxT2WUIZunZSXt4AybHtI2k-A0SmHoS2JIEYKLGtAZeaFz_0HOWDJQuR4","AuthorisationCode":null,"ResponseCode":"06","ResponseMessage":"V6021","InvoiceNumber":"277","InvoiceReference":"","TotalAmount":46518,"TransactionID":null,"TransactionStatus":false,"TokenCustomerID":null,"BeagleScore":null,"Options":[],"Verification":{"CVN":0,"Address":0,"Email":0,"Mobile":0,"Phone":0},"Errors":null}

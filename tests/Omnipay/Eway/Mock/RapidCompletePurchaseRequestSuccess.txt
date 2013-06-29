@@ -1,0 +1,16 @@
+HTTP/1.1 200 OK
+Cache-control: no-cache="set-cookie"
+Content-Type: application/json; charset=utf-8
+Date: Sat, 29 Jun 2013 04:30:54 GMT
+Set-Cookie: AWSELB=8361C96B088FEBBC7D3ABDFE8BA0FF6501B9705E7D00F53B19AA8D0E66C1AD34691F2170CB4C6B4D750DDAD028ED5C0787DEB1569F57CC58B5923AA0229EC5B49BD7647A57;PATH=/;MAX-AGE=86400
+X-EWAY-VIA: api-au.sandbox.ewaypayments.com/
+X-EWAY-VIA-FROM: http://api.sandbox.ewaypayments.com/GetAccessCodeResult.json
+X-EWAY-VIA-HTTP-METHOD: POST
+X-EWAY-VIA-HTTP-STATUS: 200
+X-EWAY-VIA-TO: http://api-au.sandbox.ewaypayments.com/GetAccessCodeResult.json
+X-ID: AM-143
+X-Powered-By: eWAY
+Content-Length: 473
+Connection: keep-alive
+
+{"AccessCode":"44DD7Pm0cBWzDpMAlx2uFhzCQoYSMrcnJSXMlgVPkhTbyz1ovxEUEV_se-U2S0njrthN2Zwg0un6PVhNiAyELDPN_JvozBEh8ceZIQEumHBJqsSFljN8JAo_4N5j3Qqr1Wd60","AuthorisationCode":"397712","ResponseCode":"00","ResponseMessage":"A2000","InvoiceNumber":"295","InvoiceReference":"","TotalAmount":35500,"TransactionID":10204029,"TransactionStatus":true,"TokenCustomerID":null,"BeagleScore":0,"Options":[],"Verification":{"CVN":0,"Address":0,"Email":0,"Mobile":0,"Phone":0},"Errors":null}

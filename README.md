@@ -94,6 +94,7 @@ The following gateways are already implemented:
 * Buckaroo
 * CardSave
 * Dummy
+* eWAY Rapid 3.0
 * GoCardless
 * Manual
 * Migs 2-Party
