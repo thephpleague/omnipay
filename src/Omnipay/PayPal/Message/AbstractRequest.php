@@ -49,6 +49,16 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('signature', $value);
     }
 
+    public function getSubject()
+    {
+        return $this->getParameter('subject');
+    }
+
+    public function setSubject($value)
+    {
+        return $this->setParameter('subject', $value);
+    }
+
     public function getSolutionType()
     {
         return $this->getParameter('solutionType');
@@ -87,6 +97,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $data['USER'] = $this->getUsername();
         $data['PWD'] = $this->getPassword();
         $data['SIGNATURE'] = $this->getSignature();
+        $data['SUBJECT'] = $this->getSubject();
 
         return $data;
     }
