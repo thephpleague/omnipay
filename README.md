@@ -19,6 +19,11 @@ is fully unit tested, and even comes with an example application to get you star
 * Because most payment gateways have exceptionally poor documentation
 * Because you are writing a shopping cart and need to support multiple gateways
 
+**Important Note: Upgrading from <1.0**
+
+If you are upgrading from a pre-1.0 version of Omnipay, please note that the currency format has changed.
+See the [changelog](https://github.com/adrianmacneil/omnipay/blob/master/CHANGELOG.md) for more details.
+
 ## TL;DR
 
 Just want to see some code?
@@ -30,7 +35,7 @@ $gateway = GatewayFactory::create('Stripe');
 $gateway->setApiKey('abc123');
 
 $formData = ['number' => '4242424242424242', 'expiryMonth' => '6', 'expiryYear' => '2016', 'cvv' => '123'];
-$response = $gateway->purchase(['amount' => 1000, 'currency' => 'USD', 'card' => $formData])->send();
+$response = $gateway->purchase(['amount' => '10.00', 'currency' => 'USD', 'card' => $formData])->send();
 
 if ($response->isSuccessful()) {
     // payment was successful: update database
@@ -66,7 +71,7 @@ to your `composer.json` file:
 ```json
 {
     "require": {
-        "omnipay/omnipay": "0.9.*"
+        "omnipay/omnipay": "1.*"
     }
 }
 ```
@@ -86,12 +91,15 @@ The following gateways are already implemented:
 * 2Checkout
 * Authorize.Net AIM
 * Authorize.Net SIM
+* Buckaroo
 * CardSave
 * Dummy
+* eWAY Rapid 3.0
 * GoCardless
 * Manual
 * Migs 2-Party
 * Migs 3-Party
+* Mollie
 * Netaxept (BBS)
 * Netbanx
 * PayFast
@@ -106,9 +114,6 @@ The following gateways are already implemented:
 * SecurePay Direct Post
 * Stripe
 * WorldPay
-
-More are coming soon! [All of these](https://github.com/expressodev/ci-merchant/tree/develop/libraries/merchant)
-will be implemented before we reach 1.0.
 
 Gateways are created and initialized like so:
 
@@ -251,7 +256,7 @@ Pass the options through to the method like so:
 ```php
 $card = new CreditCard($formData);
 $request = $gateway->authorize([
-    'amount' => 1000, // this represents $10.00
+    'amount' => '10.00', // this represents $10.00
     'card' => $card,
     'returnUrl' => 'https://www.example.com/return',
 ]);
@@ -280,7 +285,7 @@ For a successful responses, a reference will normally be generated, which can be
 at a later date. The following methods are always available:
 
 ```php
-$response = $gateway->purchase(['amount' => 1000, 'card' => $card])->send();
+$response = $gateway->purchase(['amount' => '10.00', 'card' => $card])->send();
 
 $response->isSuccessful(); // is the response successful?
 $response->isRedirect(); // is the response a redirect?
@@ -298,7 +303,7 @@ POST (FormRedirectResponse). These could potentially be combined into a single r
 After processing a payment, the cart should check whether the response requires a redirect, and if so, redirect accordingly:
 
 ```php
-$response = $gateway->purchase(['amount' => 1000, 'card' => $card])->send();
+$response = $gateway->purchase(['amount' => '10.00', 'card' => $card])->send();
 if ($response->isSuccessful()) {
     // payment is complete
 } elseif ($response->isRedirect()) {
@@ -331,7 +336,7 @@ You can handle both scenarios by wrapping the entire request in a try-catch bloc
 
 ```php
 try {
-    $response = $gateway->purchase(['amount' => 1000, 'card' => $card])->send();
+    $response = $gateway->purchase(['amount' => '10.00', 'card' => $card])->send();
     if ($response->isSuccessful()) {
         // mark order as complete
     } elseif ($response->isRedirect()) {
@@ -358,7 +363,7 @@ are available:
 
 Once you have a `cardReference`, you can use it instead of the `card` parameter when creating a charge:
 
-    $gateway->purchase(['amount' => 1000, 'cardReference' => 'abc']);
+    $gateway->purchase(['amount' => '10.00', 'cardReference' => 'abc']);
 
 ## Recurring Billing
 

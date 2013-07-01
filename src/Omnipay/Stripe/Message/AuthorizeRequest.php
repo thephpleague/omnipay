@@ -21,7 +21,7 @@ class AuthorizeRequest extends AbstractRequest
         $this->validate('amount', 'currency');
 
         $data = array();
-        $data['amount'] = $this->getAmount();
+        $data['amount'] = $this->getAmountInteger();
         $data['currency'] = strtolower($this->getCurrency());
         $data['description'] = $this->getDescription();
         $data['capture'] = 'false';

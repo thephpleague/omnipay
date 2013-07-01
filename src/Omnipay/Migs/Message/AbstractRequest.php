@@ -56,7 +56,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $data['vpc_Version']    = '1';
         $data['vpc_Locale']     = 'en';
         $data['vpc_Command']    = $this->action;
-        $data['vpc_Amount']      = $this->getAmount();
+        $data['vpc_Amount']      = $this->getAmountInteger();
         $data['vpc_MerchTxnRef'] = $this->getTransactionId();
         $data['vpc_OrderInfo']   = $this->getDescription();
         $data['vpc_ReturnURL']   = $this->getReturnUrl();

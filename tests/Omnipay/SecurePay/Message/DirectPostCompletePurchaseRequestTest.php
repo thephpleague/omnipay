@@ -23,7 +23,7 @@ class DirectPostCompletePurchaseRequestTest extends TestCase
     public function testGenerateResponseFingerprint()
     {
         $this->request->initialize(array(
-            'amount' => '46518',
+            'amount' => '465.18',
             'transactionPassword' => 'abc123',
         ));
 
@@ -40,7 +40,7 @@ class DirectPostCompletePurchaseRequestTest extends TestCase
     public function testSuccess()
     {
         $this->request->initialize(array(
-            'amount' => '35500',
+            'amount' => '355.00',
             'transactionPassword' => 'abc123',
         ));
 
@@ -73,7 +73,7 @@ class DirectPostCompletePurchaseRequestTest extends TestCase
     public function testFailure()
     {
         $this->request->initialize(array(
-            'amount' => '46518',
+            'amount' => '465.18',
             'transactionPassword' => 'abc123',
         ));
 

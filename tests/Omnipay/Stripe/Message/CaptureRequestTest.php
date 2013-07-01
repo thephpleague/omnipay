@@ -31,7 +31,7 @@ class CaptureRequestTest extends TestCase
         // defualt is no amount
         $this->assertArrayNotHasKey('amount', $this->request->getData());
 
-        $this->request->setAmount(1000);
+        $this->request->setAmount('10.00');
 
         $data = $this->request->getData();
         $this->assertSame(1000, $data['amount']);

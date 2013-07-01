@@ -69,7 +69,7 @@ class PurchaseRequest extends AbstractRequest
         }
 
         $data['m_payment_id'] = $this->getTransactionId();
-        $data['amount'] = $this->getAmountDecimal();
+        $data['amount'] = $this->getAmount();
         $data['item_name'] = $this->getDescription();
 
         $data['signature'] = $this->generateSignature($data);

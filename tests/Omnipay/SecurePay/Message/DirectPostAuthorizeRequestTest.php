@@ -23,7 +23,7 @@ class DirectPostAuthorizeRequestTest extends TestCase
             array(
                 'merchantId' => 'foo',
                 'transactionPassword' => 'bar',
-                'amount' => 1200,
+                'amount' => '12.00',
                 'returnUrl' => 'https://www.example.com/return',
             )
         );

@@ -19,7 +19,7 @@ class AuthorizeRequestTest extends TestCase
     {
         $this->request = new AuthorizeRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize(array(
-            'amount' => 1000,
+            'amount' => '10.00',
             'card' => $this->getValidCard(),
         ));
     }
@@ -27,6 +27,6 @@ class AuthorizeRequestTest extends TestCase
     public function testGetData()
     {
         $data = $this->request->getData();
-        $this->assertSame(1000, $data['amount']);
+        $this->assertSame('10.00', $data['amount']);
     }
 }

@@ -22,7 +22,7 @@ class GatewayTest extends GatewayTestCase
         $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
 
         $this->options = array(
-            'amount' => 1000,
+            'amount' => '10.00',
             'card' => $this->getValidCard(),
         );
     }

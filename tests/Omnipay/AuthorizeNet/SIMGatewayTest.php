@@ -23,7 +23,7 @@ class SIMGatewayTest extends GatewayTestCase
         $this->gateway->setApiLoginId('example');
 
         $this->options = array(
-            'amount' => 1000,
+            'amount' => '10.00',
             'transactionId' => '99',
             'returnUrl' => 'https://www.example.com/return',
         );

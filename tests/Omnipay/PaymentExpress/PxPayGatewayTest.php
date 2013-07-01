@@ -22,7 +22,7 @@ class PxPayGatewayTest extends GatewayTestCase
         $this->gateway = new PxPayGateway($this->getHttpClient(), $this->getHttpRequest());
 
         $this->options = array(
-            'amount' => 1000,
+            'amount' => '10.00',
             'returnUrl' => 'https://www.example.com/return',
         );
     }

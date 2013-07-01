@@ -26,7 +26,7 @@ class DirectPostAuthorizeRequest extends DirectPostAbstractRequest
         $data['EPS_MERCHANT'] = $this->getMerchantId();
         $data['EPS_TXNTYPE'] = $this->txnType;
         $data['EPS_IP'] = $this->getClientIp();
-        $data['EPS_AMOUNT'] = $this->getAmountDecimal();
+        $data['EPS_AMOUNT'] = $this->getAmount();
         $data['EPS_REFERENCEID'] = $this->getTransactionId();
         $data['EPS_TIMESTAMP'] = gmdate('YmdHis');
         $data['EPS_FINGERPRINT'] = $this->generateFingerprint($data);

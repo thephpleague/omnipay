@@ -24,12 +24,12 @@ class AIMGatewayTest extends GatewayTestCase
         $this->gateway = new AIMGateway($this->getHttpClient(), $this->getHttpRequest());
 
         $this->purchaseOptions = array(
-            'amount' => 1000,
+            'amount' => '10.00',
             'card' => $this->getValidCard(),
         );
 
         $this->captureOptions = array(
-            'amount' => 1000,
+            'amount' => '10.00',
             'transactionReference' => '12345',
         );
 

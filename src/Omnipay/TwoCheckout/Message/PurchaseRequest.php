@@ -45,7 +45,7 @@ class PurchaseRequest extends AbstractRequest
         $data = array();
         $data['sid'] = $this->getAccountNumber();
         $data['cart_order_id'] = $this->getTransactionId();
-        $data['total'] = $this->getAmountDecimal();
+        $data['total'] = $this->getAmount();
         $data['tco_currency'] = $this->getCurrency();
         $data['fixed'] = 'Y';
         $data['skip_landing'] = 1;

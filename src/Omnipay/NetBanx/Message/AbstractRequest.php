@@ -156,7 +156,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     /**
      * Translate card type to internal NetBanx format
      *
-     * @param string $brand
+     * @param  string $brand
      * @return string
      */
     protected function translateCardType($brand)

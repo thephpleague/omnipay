@@ -163,22 +163,34 @@ abstract class AbstractRequest implements RequestInterface
 
     public function getAmount()
     {
-        return $this->getParameter('amount');
+        $amount = $this->getParameter('amount');
+        if ($amount) {
+            if (!is_float($amount) &&
+                $this->getCurrencyDecimalPlaces() > 0 &&
+                false === strpos((string) $amount, '.')) {
+                throw new InvalidRequestException(
+                    'Please specify amount as a string or float, ' .
+                    'with decimal places (e.g. \'10.00\' to represent $10.00).'
+                );
+            }
+
+            return number_format(
+                $amount,
+                $this->getCurrencyDecimalPlaces(),
+                '.',
+                ''
+            );
+        }
     }
 
     public function setAmount($value)
     {
-        return $this->setParameter('amount', (int) $value);
+        return $this->setParameter('amount', $value);
     }
 
-    public function getAmountDecimal()
+    public function getAmountInteger()
     {
-        return number_format(
-            $this->getAmount() / $this->getCurrencyDecimalFactor(),
-            $this->getCurrencyDecimalPlaces(),
-            '.',
-            ''
-        );
+        return (int) round($this->getAmount() * $this->getCurrencyDecimalFactor());
     }
 
     public function getCurrency()

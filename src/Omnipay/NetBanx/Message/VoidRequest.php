@@ -62,7 +62,7 @@ class VoidRequest extends AbstractRequest
 
         $sxml->addChild('confirmationNumber', $this->getTransactionReference());
         $sxml->addChild('merchantRefNum', $this->getCustomerId());
-        $sxml->addChild('reversalAmount', $this->getAmountDecimal());
+        $sxml->addChild('reversalAmount', $this->getAmount());
 
         return $sxml->asXML();
     }

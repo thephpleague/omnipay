@@ -22,7 +22,7 @@ class CaptureRequest extends AbstractRequest
 
         $data = array();
 
-        if ($amount = $this->getAmount()) {
+        if ($amount = $this->getAmountInteger()) {
             $data['amount'] = $amount;
         }
 

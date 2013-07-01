@@ -23,7 +23,7 @@ class GatewayTest extends GatewayTestCase
         $this->gateway->setCallbackPassword('bar123');
 
         $this->options = array(
-            'amount' => 1000,
+            'amount' => '10.00',
             'returnUrl' => 'https://www.example.com/return',
         );
     }

@@ -12,7 +12,6 @@
 namespace Omnipay\Migs;
 
 use Omnipay\GatewayTestCase;
-use Omnipay\Common\CreditCard;
 
 class TwoPartyGatewayTest extends GatewayTestCase
 {
@@ -25,7 +24,7 @@ class TwoPartyGatewayTest extends GatewayTestCase
         $this->gateway->setSecureHash(md5('example'));
 
         $this->options = array(
-            'amount'        => 1000,
+            'amount'        => '10.00',
             'transactionId' => 12345,
             'card' => $this->getValidCard(),
         );

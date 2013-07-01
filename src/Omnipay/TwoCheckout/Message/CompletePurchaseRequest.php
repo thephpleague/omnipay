@@ -27,7 +27,7 @@ class CompletePurchaseRequest extends PurchaseRequest
             $orderNo = '1';
         }
 
-        $key = md5($this->getSecretWord().$this->getAccountNumber().$orderNo.$this->getAmountDecimal());
+        $key = md5($this->getSecretWord().$this->getAccountNumber().$orderNo.$this->getAmount());
         if (strtolower($this->httpRequest->request->get('key')) !== $key) {
             throw new InvalidResponseException('Invalid key');
         }

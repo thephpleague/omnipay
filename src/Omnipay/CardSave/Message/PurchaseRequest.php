@@ -53,7 +53,7 @@ class PurchaseRequest extends AbstractRequest
 
         $data->PaymentMessage->MerchantAuthentication['MerchantID'] = $this->getMerchantId();
         $data->PaymentMessage->MerchantAuthentication['Password'] = $this->getPassword();
-        $data->PaymentMessage->TransactionDetails['Amount'] = $this->getAmount();
+        $data->PaymentMessage->TransactionDetails['Amount'] = $this->getAmountInteger();
         $data->PaymentMessage->TransactionDetails['CurrencyCode'] = $this->getCurrencyNumeric();
         $data->PaymentMessage->TransactionDetails->OrderID = $this->getTransactionId();
         $data->PaymentMessage->TransactionDetails->OrderDescription = $this->getDescription();

@@ -35,13 +35,13 @@ class GatewayTest extends GatewayTestCase
         $card->setEmail('test@example.com');
 
         $this->purchaseOptions = array(
-            'amount' => 9563,
+            'amount' => '95.63',
             'card' => $card,
             'customerId' => '9966441',
         );
 
         $this->captureOptions = array(
-            'amount' => 1000,
+            'amount' => '10.00',
             'transactionReference' => '9988775',
         );
 
@@ -53,7 +53,7 @@ class GatewayTest extends GatewayTestCase
         );
 
         $this->storedDataOptions = array(
-            'amount' => 9563,
+            'amount' => '95.63',
             'customerId' => '9966441',
             'transactionReference' => '244530120',
         );

@@ -22,7 +22,7 @@ class PxPostGatewayTest extends GatewayTestCase
         $this->gateway = new PxPostGateway($this->getHttpClient(), $this->getHttpRequest());
 
         $this->options = array(
-            'amount' => 1000,
+            'amount' => '10.00',
             'card' => $this->getValidCard(),
         );
     }
@@ -56,7 +56,7 @@ class PxPostGatewayTest extends GatewayTestCase
         $this->setMockHttpResponse('PxPostPurchaseSuccess.txt');
 
         $options = array(
-            'amount' => 1000,
+            'amount' => '10.00',
             'transactionReference' => '000000030884cdc6',
         );
 
@@ -95,7 +95,7 @@ class PxPostGatewayTest extends GatewayTestCase
         $this->setMockHttpResponse('PxPostPurchaseSuccess.txt');
 
         $options = array(
-            'amount' => 1000,
+            'amount' => '10.00',
             'transactionReference' => '000000030884cdc6',
         );
 

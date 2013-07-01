@@ -61,7 +61,7 @@ class CaptureRequest extends AbstractRequest
 
         $sxml->addChild('confirmationNumber', $this->getTransactionReference());
         $sxml->addChild('merchantRefNum', $this->getCustomerId());
-        $sxml->addChild('amount', $this->getAmountDecimal());
+        $sxml->addChild('amount', $this->getAmount());
 
         return $sxml->asXML();
     }

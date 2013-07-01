@@ -24,7 +24,7 @@ class GatewayTest extends GatewayTestCase
         $this->gateway->setPassword('bar');
 
         $this->options = array(
-            'amount' => 1000,
+            'amount' => '10.00',
             'currency' => 'NOK',
             'transactionId' => '123',
             'returnUrl' => 'https://www.example.com/return',

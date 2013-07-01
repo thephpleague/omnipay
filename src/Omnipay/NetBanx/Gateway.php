@@ -19,7 +19,7 @@ use Omnipay\Common\AbstractGateway;
 class Gateway extends AbstractGateway
 {
     const DECISION_ACCEPTED = 'ACCEPTED';
-    const CREATE_CARD_AMOUNT = 100;
+    const CREATE_CARD_AMOUNT = '1.00';
     const CODE_OK = '0';
 
     /**
@@ -94,12 +94,13 @@ class Gateway extends AbstractGateway
     /**
      * Create card
      *
-     * @param array $parameters
+     * @param  array $parameters
      * @return mixed
      */
     public function createCard(array $parameters = array())
     {
         $parameters['amount'] = self::CREATE_CARD_AMOUNT;
+
         return $this->createRequest('\Omnipay\NetBanx\Message\AuthorizeRequest', $parameters);
     }
 

@@ -12,7 +12,6 @@
 namespace Omnipay\Migs\Message;
 
 use Omnipay\TestCase;
-use Omnipay\Common\CreditCard;
 
 class TwoPartyPurchaseRequestTest extends TestCase
 {
@@ -50,7 +49,7 @@ class TwoPartyPurchaseRequestTest extends TestCase
 
         $this->request->initialize(
             array(
-                'amount' => 1200,
+                'amount' => '12.00',
                 'transactionId' => 123,
                 'card' => $this->getValidCard(),
                 'merchantId'                   => '123',

@@ -24,7 +24,7 @@ class RefundRequest extends AbstractRequest
         $reference = json_decode($this->getTransactionReference(), true);
 
         $data = $this->getBaseData();
-        $data['Amount'] = $this->getAmountDecimal();
+        $data['Amount'] = $this->getAmount();
         $data['Currency'] = $this->getCurrency();
         $data['Description'] = $this->getDescription();
         $data['RelatedVendorTxCode'] = $reference['VendorTxCode'];

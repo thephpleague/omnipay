@@ -36,7 +36,7 @@ class PurchaseRequest extends AbstractRequest
         $this->validate('amount');
 
         $data = array();
-        $data['amount'] = $this->getAmount();
+        $data['amount'] = $this->getAmountInteger();
         $data['currency'] = strtolower($this->getCurrency());
         $data['description'] = $this->getDescription();
         $data['ip_address'] = $this->getClientIp();

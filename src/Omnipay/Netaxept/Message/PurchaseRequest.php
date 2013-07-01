@@ -51,7 +51,7 @@ class PurchaseRequest extends AbstractRequest
         $data['serviceType'] = 'B';
         $data['orderNumber'] = $this->getTransactionId();
         $data['currencyCode'] = $this->getCurrency();
-        $data['amount'] = $this->getAmount();
+        $data['amount'] = $this->getAmountInteger();
         $data['redirectUrl'] = $this->getReturnUrl();
 
         if ($this->getCard()) {
