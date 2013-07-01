@@ -39,6 +39,7 @@ class ExpressAuthorizeRequestTest extends TestCase
             'returnUrl' => 'https://www.example.com/return',
             'cancelUrl' => 'https://www.example.com/cancel',
             'notifyUrl' => 'https://www.example.com/notify',
+            'subject' => 'demo@example.com',
             'headerImageUrl' => 'https://www.example.com/header.jpg',
         ));
 
@@ -51,6 +52,7 @@ class ExpressAuthorizeRequestTest extends TestCase
         $this->assertSame('https://www.example.com/return', $data['RETURNURL']);
         $this->assertSame('https://www.example.com/cancel', $data['CANCELURL']);
         $this->assertSame('https://www.example.com/notify', $data['PAYMENTREQUEST_0_NOTIFYURL']);
+        $this->assertSame('demo@example.com', $data['SUBJECT']);
         $this->assertSame('https://www.example.com/header.jpg', $data['HDRIMG']);
     }
 
