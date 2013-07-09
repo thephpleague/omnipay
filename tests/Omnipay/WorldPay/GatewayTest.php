@@ -88,4 +88,15 @@ class GatewayTest extends GatewayTestCase
         $this->assertNull($response->getTransactionReference());
         $this->assertSame('Declined', $response->getMessage());
     }
+
+    public function testOptionalParams()
+    {
+        $this->options['custom'] = array("MC_Customer" => 'customer_id');
+
+        $response = $this->gateway->purchase($this->options)->send();
+
+        $data = $response->getData();
+
+        $this->assertEquals('customer_id', $data['MC_Customer']);
+    }
 }
