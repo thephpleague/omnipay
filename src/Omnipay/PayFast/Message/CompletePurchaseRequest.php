@@ -44,22 +44,26 @@ class CompletePurchaseRequest extends PurchaseRequest
         throw new InvalidRequestException('Missing PDT or ITN variables');
     }
 
-    public function send()
+    public function send(array $datas = array(), $doMerge = true)
     {
-        $data = $this->getData();
-        if (isset($data['pt'])) {
+        if($datas)
+        	$datas = $doMerge ?array_merge($this->getData(), $datas) :$datas;
+        else
+        	$datas = $this->getData();
+        
+        if (isset($datas['pt'])) {
             // validate PDT
             $url = $this->getEndpoint().'/query/fetch';
-            $httpResponse = $this->httpClient->post($url, null, $data)->send();
+            $httpResponse = $this->httpClient->post($url, null, $datas)->send();
 
             return $this->response = new CompletePurchasePdtResponse($this, $httpResponse->getBody(true));
         } else {
             // validate ITN
             $url = $this->getEndpoint().'/query/validate';
-            $httpResponse = $this->httpClient->post($url, null, $data)->send();
+            $httpResponse = $this->httpClient->post($url, null, $datas)->send();
             $status = $httpResponse->getBody(true);
 
-            return $this->response = new CompletePurchaseItnResponse($this, $data, $status);
+            return $this->response = new CompletePurchaseItnResponse($this, $datas, $status);
         }
     }
 }
