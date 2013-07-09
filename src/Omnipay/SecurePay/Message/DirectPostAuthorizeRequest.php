@@ -58,9 +58,9 @@ class DirectPostAuthorizeRequest extends DirectPostAbstractRequest
     public function send(array $datas = array(), $doMerge = true)
     {
         if($datas)
-        	$datas = $doMerge ?array_merge($this->getData(), $datas) :$datas;
+            $datas = $doMerge ?array_merge($this->getData(), $datas) :$datas;
         else
-        	$datas = $this->getData();
+            $datas = $this->getData();
         
         return $this->response = new DirectPostAuthorizeResponse($this, $datas, $this->getEndpoint());
     }
