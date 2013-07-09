@@ -34,16 +34,19 @@ class CompletePurchaseRequest extends PurchaseRequest
         return $data;
     }
 
-    public function send()
+    public function send(array $datas = array(), $doMerge = true)
     {
-        $data = $this->getData();
-
-        if ('OK' !== $data['responseCode']) {
-            return $this->response = new ErrorResponse($this, $data);
+        if($datas)
+        	$datas = $doMerge ?array_merge($this->getData(), $datas) :$datas;
+        else
+        	$datas = $this->getData();
+        
+        if ('OK' !== $datas['responseCode']) {
+            return $this->response = new ErrorResponse($this, $datas);
         }
 
         $url = $this->getEndpoint().'/Netaxept/Process.aspx?';
-        $httpResponse = $this->httpClient->get($url.http_build_query($this->getData()))->send();
+        $httpResponse = $this->httpClient->get($url.http_build_query($datas))->send();
 
         return $this->response = new Response($this, $httpResponse->xml());
     }
