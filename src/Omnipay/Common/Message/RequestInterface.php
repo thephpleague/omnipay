@@ -42,5 +42,5 @@ interface RequestInterface extends MessageInterface
      *
      * @return ResponseInterface
      */
-    public function send();
+    public function send(array $datas = array(), $doMerge = true);
 }
