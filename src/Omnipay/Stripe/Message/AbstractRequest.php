@@ -51,8 +51,13 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return 'POST';
     }
 
-    public function send()
+    public function send(array $datas = array(), $doMerge = true)
     {
+        if($datas)
+        	$datas = $doMerge ?array_merge($this->getData(), $datas) :$datas;
+        else
+        	$datas = $this->getData();
+        
         // don't throw exceptions for 4xx errors
         $this->httpClient->getEventDispatcher()->addListener(
             'request.error',
@@ -67,7 +72,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             $this->getHttpMethod(),
             $this->getEndpoint(),
             null,
-            $this->getData()
+            $datas
         );
         $httpResponse = $httpRequest
             ->setHeader('Authorization', 'Basic '.base64_encode($this->getApiKey().':'))

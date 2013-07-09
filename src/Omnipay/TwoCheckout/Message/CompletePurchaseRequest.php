@@ -35,8 +35,13 @@ class CompletePurchaseRequest extends PurchaseRequest
         return $this->httpRequest->request->all();
     }
 
-    public function send()
-    {
-        return $this->response = new CompletePurchaseResponse($this, $this->getData());
+   public function send(array $datas = array(), $doMerge = true)
+   {
+        if($datas)
+        	$datas = $doMerge ?array_merge($this->getData(), $datas) :$datas;
+        else
+        	$datas = $this->getData();
+        
+        return $this->response = new CompletePurchaseResponse($this, $datas);
     }
 }
