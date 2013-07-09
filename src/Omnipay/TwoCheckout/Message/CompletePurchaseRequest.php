@@ -35,8 +35,8 @@ class CompletePurchaseRequest extends PurchaseRequest
         return $this->httpRequest->request->all();
     }
 
-   public function send(array $datas = array(), $doMerge = true)
-   {
+    public function send(array $datas = array(), $doMerge = true)
+    {
         if ($datas) {
             $datas = $doMerge ? array_merge($this->getData(), $datas) : $datas;
         } else {
