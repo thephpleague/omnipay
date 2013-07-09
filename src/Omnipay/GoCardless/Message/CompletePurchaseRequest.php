@@ -37,10 +37,11 @@ class CompletePurchaseRequest extends AbstractRequest
 
     public function send(array $datas = array(), $doMerge = true)
     {
-        if($datas)
-            $datas = $doMerge ?array_merge($this->getData(), $datas) :$datas;
-        else
+        if ($datas) {
+            $datas = $doMerge ? array_merge($this->getData(), $datas) : $datas;
+        } else {
             $datas = $this->getData();
+        }
 
         $httpRequest = $this->httpClient->post(
             $this->getEndpoint().'/api/v1/confirm',

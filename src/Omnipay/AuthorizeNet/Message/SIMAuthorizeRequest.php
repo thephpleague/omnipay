@@ -60,10 +60,11 @@ class SIMAuthorizeRequest extends AbstractRequest
 
     public function send(array $datas = array(), $doMerge = true)
     {
-        if($datas)
-            $datas = $doMerge ?array_merge($this->getData(), $datas) :$datas;
-        else
+        if ($datas) {
+            $datas = $doMerge ? array_merge($this->getData(), $datas) : $datas;
+        } else {
             $datas = $this->getData();
+        }
 
         return $this->response = new SIMAuthorizeResponse($this, $datas, $this->getEndpoint());
     }

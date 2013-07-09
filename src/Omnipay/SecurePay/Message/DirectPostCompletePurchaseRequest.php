@@ -48,10 +48,11 @@ class DirectPostCompletePurchaseRequest extends DirectPostAbstractRequest
 
     public function send(array $datas = array(), $doMerge = true)
     {
-        if($datas)
-            $datas = $doMerge ?array_merge($this->getData(), $datas) :$datas;
-        else
+        if ($datas) {
+            $datas = $doMerge ? array_merge($this->getData(), $datas) : $datas;
+        } else {
             $datas = $this->getData();
+        }
 
         return $this->response = new DirectPostCompletePurchaseResponse($this, $datas);
     }

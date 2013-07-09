@@ -63,10 +63,11 @@ class PurchaseRequest extends AbstractRequest
 
     public function send(array $datas = array(), $doMerge = true)
     {
-        if($datas)
-            $datas = $doMerge ?array_merge($this->getData(), $datas) :$datas;
-        else
+        if ($datas) {
+            $datas = $doMerge ? array_merge($this->getData(), $datas) : $datas;
+        } else {
             $datas = $this->getData();
+        }
 
         // don't throw exceptions for 4xx errors
         $this->httpClient->getEventDispatcher()->addListener(

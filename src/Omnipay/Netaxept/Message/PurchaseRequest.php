@@ -71,10 +71,11 @@ class PurchaseRequest extends AbstractRequest
 
     public function send(array $datas = array(), $doMerge = true)
     {
-        if($datas)
-            $datas = $doMerge ?array_merge($this->getData(), $datas) :$datas;
-        else
+        if ($datas) {
+            $datas = $doMerge ? array_merge($this->getData(), $datas) : $datas;
+        } else {
             $datas = $this->getData();
+        }
 
         $url = $this->getEndpoint().'/Netaxept/Register.aspx?';
         $httpResponse = $this->httpClient->get($url.http_build_query($datas))->send();
