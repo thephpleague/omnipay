@@ -72,9 +72,14 @@ class PurchaseRequest extends AbstractRequest
         );
     }
 
-    public function send()
+    public function send(array $datas = array(), $doMerge = true)
     {
-        return $this->response = new PurchaseResponse($this, $this->getData());
+        if($datas)
+        	$datas = $doMerge ?array_merge($this->getData(), $datas) :$datas;
+        else
+        	$datas = $this->getData();
+        
+        return $this->response = new PurchaseResponse($this, $datas);
     }
 
     public function getEndpoint()

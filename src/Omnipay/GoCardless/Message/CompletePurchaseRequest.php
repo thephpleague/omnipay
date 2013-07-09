@@ -35,12 +35,17 @@ class CompletePurchaseRequest extends AbstractRequest
         return $data;
     }
 
-    public function send()
+    public function send(array $datas = array(), $doMerge = true)
     {
+        if($datas)
+        	$datas = $doMerge ?array_merge($this->getData(), $datas) :$datas;
+        else
+        	$datas = $this->getData();
+        
         $httpRequest = $this->httpClient->post(
             $this->getEndpoint().'/api/v1/confirm',
             array('Accept' => 'application/json'),
-            Gateway::generateQueryString($this->getData())
+            Gateway::generateQueryString($datas)
         );
         $httpResponse = $httpRequest->setAuth($this->getAppId(), $this->getAppSecret())->send();
 

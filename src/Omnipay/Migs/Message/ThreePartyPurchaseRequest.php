@@ -28,11 +28,16 @@ class ThreePartyPurchaseRequest extends AbstractRequest
         return $data;
     }
 
-    public function send()
+    public function send(array $datas = array(), $doMerge = true)
     {
-        $redirectUrl = $this->getEndpoint().'?'.http_build_query($this->getData());
+        if($datas)
+        	$datas = $doMerge ?array_merge($this->getData(), $datas) :$datas;
+        else
+        	$datas = $this->getData();
+        
+        $redirectUrl = $this->getEndpoint().'?'.http_build_query($datas);
 
-        return $this->response = new ThreePartyPurchaseResponse($this, $this->getData(), $redirectUrl);
+        return $this->response = new ThreePartyPurchaseResponse($this, $datas, $redirectUrl);
     }
 
     public function getEndpoint()
