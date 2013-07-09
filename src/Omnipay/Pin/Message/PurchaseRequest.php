@@ -67,7 +67,7 @@ class PurchaseRequest extends AbstractRequest
             $datas = $doMerge ?array_merge($this->getData(), $datas) :$datas;
         else
             $datas = $this->getData();
-        
+
         // don't throw exceptions for 4xx errors
         $this->httpClient->getEventDispatcher()->addListener(
             'request.error',

@@ -79,7 +79,7 @@ class PxPostAuthorizeRequest extends AbstractRequest
     public function send(array $datas = array(), $doMerge = true)
     {
         $datas = $this->getData();
-        
+
         $httpResponse = $this->httpClient->post($this->endpoint, null, $datas->asXML())->send();
 
         return $this->response = new Response($this, $httpResponse->xml());

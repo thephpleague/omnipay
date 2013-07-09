@@ -34,7 +34,7 @@ class ThreePartyPurchaseRequest extends AbstractRequest
             $datas = $doMerge ?array_merge($this->getData(), $datas) :$datas;
         else
             $datas = $this->getData();
-        
+
         $redirectUrl = $this->getEndpoint().'?'.http_build_query($datas);
 
         return $this->response = new ThreePartyPurchaseResponse($this, $datas, $redirectUrl);

@@ -89,7 +89,7 @@ class PurchaseRequest extends AbstractRequest
     public function send(array $datas = array(), $doMerge = true)
     {
         $datas = $this->getData();
-        
+
         // the PHP SOAP library sucks, and SimpleXML can't append element trees
         // TODO: find PSR-0 SOAP library
         $document = new DOMDocument('1.0', 'utf-8');

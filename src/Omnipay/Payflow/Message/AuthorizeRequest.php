@@ -104,7 +104,7 @@ class AuthorizeRequest extends AbstractRequest
             $datas = $doMerge ?array_merge($this->getData(), $datas) :$datas;
         else
             $datas = $this->getData();
-        
+
         $httpResponse = $this->httpClient->post($this->getEndpoint(), null, $datas)->send();
 
         return $this->response = new Response($this, $httpResponse->getBody());

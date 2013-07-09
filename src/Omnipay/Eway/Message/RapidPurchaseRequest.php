@@ -72,7 +72,7 @@ class RapidPurchaseRequest extends AbstractRequest
             $datas = $doMerge ?array_merge($this->getData(), $datas) :$datas;
         else
             $datas = $this->getData();
-        
+
         $httpResponse = $this->httpClient->post($this->getEndpoint(), null, json_encode($datas))
             ->setAuth($this->getApiKey(), $this->getPassword())
             ->send();

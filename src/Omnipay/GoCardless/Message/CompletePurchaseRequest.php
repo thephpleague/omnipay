@@ -41,7 +41,7 @@ class CompletePurchaseRequest extends AbstractRequest
             $datas = $doMerge ?array_merge($this->getData(), $datas) :$datas;
         else
             $datas = $this->getData();
-        
+
         $httpRequest = $this->httpClient->post(
             $this->getEndpoint().'/api/v1/confirm',
             array('Accept' => 'application/json'),

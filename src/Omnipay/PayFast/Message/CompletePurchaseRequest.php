@@ -50,7 +50,7 @@ class CompletePurchaseRequest extends PurchaseRequest
             $datas = $doMerge ?array_merge($this->getData(), $datas) :$datas;
         else
             $datas = $this->getData();
-        
+
         if (isset($datas['pt'])) {
             // validate PDT
             $url = $this->getEndpoint().'/query/fetch';

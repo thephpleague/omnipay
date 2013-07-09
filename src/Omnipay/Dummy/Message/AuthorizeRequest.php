@@ -33,7 +33,7 @@ class AuthorizeRequest extends AbstractRequest
             $datas = $doMerge ?array_merge($this->getData(), $datas) :$datas;
         else
             $datas = $this->getData();
-        
+
         $datas['reference'] = uniqid();
         $datas['success'] = 0 === substr($this->getCard()->getNumber(), -1, 1) % 2;
         $datas['message'] = $datas['success'] ? 'Success' : 'Failure';

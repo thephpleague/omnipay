@@ -40,7 +40,7 @@ class CompletePurchaseRequest extends PurchaseRequest
             $datas = $doMerge ?array_merge($this->getData(), $datas) :$datas;
         else
             $datas = $this->getData();
-        
+
         if ('OK' !== $datas['responseCode']) {
             return $this->response = new ErrorResponse($this, $datas);
         }

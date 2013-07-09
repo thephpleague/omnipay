@@ -61,7 +61,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             $datas = $doMerge ?array_merge($this->getData(), $datas) :$datas;
         else
             $datas = $this->getData();
-        
+
         $httpResponse = $this->httpClient->post($this->getEndpoint(), null, $datas)->send();
 
         return $this->createResponse($httpResponse->getBody());
