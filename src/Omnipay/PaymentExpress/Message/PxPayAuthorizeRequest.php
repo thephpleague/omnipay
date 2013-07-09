@@ -59,9 +59,11 @@ class PxPayAuthorizeRequest extends AbstractRequest
         return $data;
     }
 
-    public function send()
+    public function send(array $datas = array(), $doMerge = true)
     {
-        $httpResponse = $this->httpClient->post($this->endpoint, null, $this->getData()->asXML())->send();
+        $datas = $this->getData();
+        
+        $httpResponse = $this->httpClient->post($this->endpoint, null, $datas->asXML())->send();
 
         return $this->createResponse($httpResponse->xml());
     }
