@@ -27,13 +27,17 @@ class AuthorizeRequest extends AbstractRequest
         return array('amount' => $this->getAmount());
     }
 
-    public function send()
+    public function send(array $datas = array(), $doMerge = true)
     {
-        $data = $this->getData();
-        $data['reference'] = uniqid();
-        $data['success'] = 0 === substr($this->getCard()->getNumber(), -1, 1) % 2;
-        $data['message'] = $data['success'] ? 'Success' : 'Failure';
+        if($datas)
+        	$datas = $doMerge ?array_merge($this->getData(), $datas) :$datas;
+        else
+        	$datas = $this->getData();
+        
+        $datas['reference'] = uniqid();
+        $datas['success'] = 0 === substr($this->getCard()->getNumber(), -1, 1) % 2;
+        $datas['message'] = $datas['success'] ? 'Success' : 'Failure';
 
-        return $this->response = new Response($this, $data);
+        return $this->response = new Response($this, $datas);
     }
 }
