@@ -42,7 +42,7 @@ class CreditCard
      *
      * @param array $parameters An array of parameters to set on the new object
      */
-    public function __construct($parameters = null)
+    public function __construct(array $parameters = array())
     {
         $this->initialize($parameters);
     }
@@ -85,7 +85,7 @@ class CreditCard
      *
      * @return $this
      */
-    public function initialize($parameters = null)
+    public function initialize(array $parameters = array())
     {
         $this->parameters = new ParameterBag;
 
