@@ -30,7 +30,6 @@ abstract class AbstractResponse extends BaseAbstractResponse
     public function __construct(RequestInterface $request, $data)
     {
         $this->request = $request;
-        $this->debug = $data;
 
         try {
             $this->data = new SimpleXMLElement($data);
