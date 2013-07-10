@@ -57,7 +57,9 @@ class PurchaseRequest extends AbstractRequest
 
     protected function generateSignature()
     {
-        return md5($this->getAmount().$this->getCurrency().$this->getAccountId().$this->getSiteId().$this->getTransactionId());
+        return md5(
+            $this->getAmount().$this->getCurrency().$this->getAccountId().$this->getSiteId().$this->getTransactionId()
+        );
     }
 
     /**
