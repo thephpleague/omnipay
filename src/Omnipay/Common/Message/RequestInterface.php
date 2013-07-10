@@ -11,8 +11,6 @@
 
 namespace Omnipay\Common\Message;
 
-use Omnipay\Common\Message\RequestInterface;
-
 /**
  * Request Interface
  */
