@@ -19,7 +19,7 @@ interface RequestInterface extends MessageInterface
     /**
      * Initialize request with parameters
      */
-    public function initialize(array $paramters = array());
+    public function initialize(array $parameters = array());
 
     /**
      * Get all request parameters
