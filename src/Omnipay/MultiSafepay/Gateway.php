@@ -12,6 +12,7 @@
 namespace Omnipay\MultiSafepay;
 
 use Omnipay\Common\AbstractGateway;
+use Omnipay\MultiSafepay\Message\FetchIssuersRequest;
 use Omnipay\MultiSafepay\Message\FetchPaymentMethodsRequest;
 
 class Gateway extends AbstractGateway
@@ -78,6 +79,18 @@ class Gateway extends AbstractGateway
     public function fetchPaymentMethods(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\MultiSafepay\Message\FetchPaymentMethodsRequest', $parameters);
+    }
+
+    /**
+     * Retrieve iDEAL issuers.
+     *
+     * @param array $parameters
+     *
+     * @return FetchIssuersRequest
+     */
+    public function fetchIssuers(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\MultiSafepay\Message\FetchIssuersRequest', $parameters);
     }
 
     /**
