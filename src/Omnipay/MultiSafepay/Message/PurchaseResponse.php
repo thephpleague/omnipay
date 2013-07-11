@@ -11,7 +11,6 @@
 
 namespace Omnipay\MultiSafepay\Message;
 
-use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RedirectResponseInterface;
 
 class PurchaseResponse extends AbstractResponse implements RedirectResponseInterface
@@ -21,7 +20,7 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
      */
     public function getTransactionReference()
     {
-        return isset($this->data->transaction->id) ? $this->data->transaction->id : null;
+        return isset($this->data->transaction->id) ? (string) $this->data->transaction->id : null;
     }
 
     /**
@@ -45,7 +44,7 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
      */
     public function getRedirectUrl()
     {
-        return $this->isRedirect() ? $this->data->transaction->payment_url : null;
+        return $this->isRedirect() ? (string) $this->data->transaction->payment_url : null;
     }
 
     /**

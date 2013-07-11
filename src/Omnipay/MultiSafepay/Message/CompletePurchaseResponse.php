@@ -11,8 +11,6 @@
 
 namespace Omnipay\MultiSafepay\Message;
 
-use Omnipay\Common\Message\AbstractResponse;
-
 class CompletePurchaseResponse extends AbstractResponse
 {
     /**
@@ -20,7 +18,7 @@ class CompletePurchaseResponse extends AbstractResponse
      */
     public function isSuccessful()
     {
-        return isset($this->data->ewallet->status) && 'completed' === $this->data->ewallet->status;
+        return isset($this->data->ewallet->status) && 'completed' === (string) $this->data->ewallet->status;
     }
 
     /**
@@ -28,6 +26,6 @@ class CompletePurchaseResponse extends AbstractResponse
      */
     public function getTransactionReference()
     {
-        return isset($this->data->transaction->id) ? $this->data->transaction->id : null;
+        return isset($this->data->transaction->id) ? (string) $this->data->transaction->id : null;
     }
 }

@@ -11,6 +11,7 @@
 
 namespace Omnipay\MultiSafepay;
 
+use Omnipay\Common\Exception\InvalidResponseException;
 use Omnipay\GatewayTestCase;
 
 class GatewayTest extends GatewayTestCase
@@ -60,6 +61,39 @@ class GatewayTest extends GatewayTestCase
         $this->assertSame('something@example.com', $request->getCard()->getEmail());
     }
 
+    public function testPurchaseResponse()
+    {
+        $this->setMockHttpResponse('PurchaseSuccess.txt');
+
+        /** @var \Omnipay\MultiSafepay\Message\PurchaseResponse $response */
+        $response = $this->gateway->purchase($this->options)->send();
+
+        $paymentUrl = 'https://testpay.multisafepay.com/pay/?transaction=1373536347Hz4sFtg7WgMulO5q123456&lang=';
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertTrue($response->isRedirect());
+        $this->assertEquals($paymentUrl, $response->getRedirectUrl());
+        $this->assertEquals('123456', $response->getTransactionReference());
+    }
+
+    /**
+     * @expectedException \Omnipay\Common\Exception\InvalidResponseException
+     */
+    public function testPurchaseResponseError()
+    {
+        $this->setMockHttpResponse('PurchaseFailure.txt');
+
+        try {
+            $this->gateway->purchase($this->options)->send();
+        } catch (InvalidResponseException $e) {
+            $this->assertEquals('Invalid amount', $e->getMessage());
+            $this->assertEquals(1001, $e->getCode());
+
+            // Rethrow so that the expectedException annotation can do its thing
+            throw $e;
+        }
+    }
+
     public function testCompletePurchase()
     {
         /** @var \Omnipay\MultiSafepay\Message\CompletePurchaseRequest $request */
@@ -72,5 +106,34 @@ class GatewayTest extends GatewayTestCase
         $this->assertSame('desc', $request->getDescription());
         $this->assertSame('127.0.0.1', $request->getClientIp());
         $this->assertSame('something@example.com', $request->getCard()->getEmail());
+    }
+
+    public function testCompletePurchaseResponse()
+    {
+        $this->setMockHttpResponse('CompletePurchaseSuccess.txt');
+
+        /** @var \Omnipay\MultiSafepay\Message\CompletePurchaseResponse $response */
+        $response = $this->gateway->completePurchase($this->options)->send();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertEquals('123456', $response->getTransactionReference());
+    }
+
+    /**
+     * @expectedException \Omnipay\Common\Exception\InvalidResponseException
+     */
+    public function testCompletePurchaseResponseError()
+    {
+        $this->setMockHttpResponse('CompletePurchaseFailure.txt');
+
+        try {
+            $this->gateway->completePurchase($this->options)->send();
+        } catch (InvalidResponseException $e) {
+            $this->assertEquals('Back-end: missing data', $e->getMessage());
+            $this->assertEquals(1016, $e->getCode());
+
+            // Rethrow so that the expectedException annotation can do its thing
+            throw $e;
+        }
     }
 }
