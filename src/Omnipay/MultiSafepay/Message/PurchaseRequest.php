@@ -55,13 +55,6 @@ class PurchaseRequest extends AbstractRequest
         return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }
 
-    protected function generateSignature()
-    {
-        return md5(
-            $this->getAmount().$this->getCurrency().$this->getAccountId().$this->getSiteId().$this->getTransactionId()
-        );
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -104,6 +97,16 @@ class PurchaseRequest extends AbstractRequest
         )->send();
 
         return $this->response = new PurchaseResponse($this, $httpResponse->xml());
+    }
+
+    /**
+     * @return string
+     */
+    protected function generateSignature()
+    {
+        return md5(
+            $this->getAmount().$this->getCurrency().$this->getAccountId().$this->getSiteId().$this->getTransactionId()
+        );
     }
 
     /**

@@ -12,18 +12,17 @@
 namespace Omnipay\MultiSafepay\Message;
 
 use Omnipay\TestCase;
-use ReflectionMethod;
 
-class PurchaseRequestTest extends TestCase
+class CompletePurchaseRequestTest extends TestCase
 {
     /**
-     * @var PurchaseRequest
+     * @var CompletePurchaseRequest
      */
     private $request;
 
     protected function setUp()
     {
-        $this->request = new PurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
+        $this->request = new CompletePurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize(array(
             'accountId' => '111111',
             'siteId' => '222222',
@@ -53,53 +52,20 @@ class PurchaseRequestTest extends TestCase
         $this->assertEquals($xml, $dom->saveXML());
     }
 
-    /**
-     * @covers \Omnipay\MultiSafepay\Message\PurchaseRequest::getHeaders()
-     */
-    public function testUserAgentHeaderMustNotBeSet()
-    {
-        $method = new ReflectionMethod('\Omnipay\MultiSafepay\Message\PurchaseRequest', 'getHeaders');
-        $method->setAccessible(true);
-
-        $headers = $method->invoke($this->request);
-        $this->assertArrayHasKey('User-Agent', $headers, 'Omitting User-Agent header not allowed because then Guzzle will set it and cause 403 Forbidden on the gateway');
-        $this->assertEquals('Omnipay', $headers['User-Agent'], 'User-Agent header set');
-    }
-
-    /**
-     * @covers \Omnipay\MultiSafepay\Message\PurchaseRequest::generateSignature()
-     */
-    public function testGenerateSignature()
-    {
-        $method = new ReflectionMethod('\Omnipay\MultiSafepay\Message\PurchaseRequest', 'generateSignature');
-        $method->setAccessible(true);
-
-        $signature = $method->invoke($this->request);
-        $this->assertEquals('bb886caff589f17e81b21097a39e47c2', $signature);
-    }
-
     public function dataProvider()
     {
         $xml = <<<EOF
 <?xml version="1.0" encoding="UTF-8"?>
-<redirecttransaction ua="Omnipay">
+<status ua="Omnipay">
   <merchant>
     <account>111111</account>
     <site_id>222222</site_id>
     <site_secure_code>333333</site_secure_code>
   </merchant>
-  <customer>
-    <ipaddress>127.0.0.1</ipaddress>
-    <email>something@example.com</email>
-  </customer>
   <transaction>
     <id>123456</id>
-    <currency>EUR</currency>
-    <amount>10000</amount>
-    <description>desc</description>
   </transaction>
-  <signature>bb886caff589f17e81b21097a39e47c2</signature>
-</redirecttransaction>
+</status>
 
 EOF;
 
