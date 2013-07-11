@@ -20,6 +20,8 @@ class CompletePurchaseRequest extends PurchaseRequest
      */
     public function getData()
     {
+        $this->validate('transactionId');
+
         $data = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><status/>');
         $data->addAttribute('ua', $this->userAgent);
 
