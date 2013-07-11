@@ -11,6 +11,8 @@
 
 namespace Omnipay\MultiSafepay\Message;
 
+use Omnipay\Common\Message\AbstractResponse;
+
 class CompletePurchaseResponse extends AbstractResponse
 {
     /**

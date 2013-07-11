@@ -103,7 +103,7 @@ class PurchaseRequest extends AbstractRequest
             $this->getData()->asXML()
         )->send();
 
-        return $this->response = new PurchaseResponse($this, $httpResponse->getBody());
+        return $this->response = new PurchaseResponse($this, $httpResponse->xml());
     }
 
     /**

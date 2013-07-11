@@ -11,6 +11,7 @@
 
 namespace Omnipay\MultiSafepay\Message;
 
+use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RedirectResponseInterface;
 
 class PurchaseResponse extends AbstractResponse implements RedirectResponseInterface

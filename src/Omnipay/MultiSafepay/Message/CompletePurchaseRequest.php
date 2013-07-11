@@ -45,6 +45,6 @@ class CompletePurchaseRequest extends PurchaseRequest
             $this->getData()->asXML()
         )->send();
 
-        return $this->response = new CompletePurchaseResponse($this, $httpResponse->getBody());
+        return $this->response = new CompletePurchaseResponse($this, $httpResponse->xml());
     }
 }
