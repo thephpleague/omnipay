@@ -12,6 +12,7 @@
 namespace Omnipay\MultiSafepay;
 
 use Omnipay\Common\AbstractGateway;
+use Omnipay\MultiSafepay\Message\FetchPaymentMethodsRequest;
 
 class Gateway extends AbstractGateway
 {
@@ -64,6 +65,19 @@ class Gateway extends AbstractGateway
     public function setSiteCode($value)
     {
         return $this->setParameter('siteCode', $value);
+    }
+
+    /**
+     * Retrieve payment methods active on the given MultiSafepay
+     * account.
+     *
+     * @param array $parameters
+     *
+     * @return FetchPaymentMethodsRequest
+     */
+    public function fetchPaymentMethods(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\MultiSafepay\Message\FetchPaymentMethodsRequest', $parameters);
     }
 
     /**

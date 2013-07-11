@@ -47,6 +47,51 @@ class GatewayTest extends GatewayTestCase
         );
     }
 
+    public function testFetchPaymentMethods()
+    {
+        /** @var \Omnipay\MultiSafepay\Message\FetchPaymentMethodsRequest $request */
+        $request = $this->gateway->fetchPaymentMethods(array('country' => 'NL'));
+
+        $this->assertInstanceOf('Omnipay\MultiSafepay\Message\FetchPaymentMethodsRequest', $request);
+    }
+
+    public function testFetchPaymentMethodsResponse()
+    {
+        $this->setMockHttpResponse('FetchPaymentMethodsSuccess.txt');
+
+        /** @var \Omnipay\MultiSafepay\Message\FetchPaymentMethodsResponse $response */
+        $response = $this->gateway->fetchPaymentMethods(array('country' => 'NL'))->send();
+
+        $expected = array(
+            'VISA' => 'Visa CreditCards',
+            'WALLET' => 'MultiSafepay',
+            'IDEAL' => 'iDEAL',
+            'BANKTRANS' => 'Bank Transfer',
+            'MASTERCARD' => 'MasterCard',
+        );
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertEquals($expected, $response->getPaymentMethods());
+    }
+
+    /**
+     * @expectedException \Omnipay\Common\Exception\InvalidResponseException
+     */
+    public function testFetchPaymentMethodsResponseError()
+    {
+        $this->setMockHttpResponse('FetchPaymentMethodsFailure.txt');
+
+        try {
+            $this->gateway->fetchPaymentMethods(array('country' => 'NL'))->send();
+        } catch (InvalidResponseException $e) {
+            $this->assertEquals('Invalid merchant security code', $e->getMessage());
+            $this->assertEquals(1005, $e->getCode());
+
+            // Rethrow so that the expectedException annotation can do its thing
+            throw $e;
+        }
+    }
+
     public function testPurchase()
     {
         /** @var \Omnipay\MultiSafepay\Message\PurchaseRequest $request */
