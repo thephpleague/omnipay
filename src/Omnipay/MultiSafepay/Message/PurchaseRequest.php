@@ -112,7 +112,7 @@ class PurchaseRequest extends AbstractRequest
     protected function getHeaders()
     {
         return array(
-            'User-Agent' => '',
+            'User-Agent' => $this->userAgent,
         );
     }
 }

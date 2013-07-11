@@ -30,7 +30,6 @@ class PurchaseRequestTest extends TestCase
 
         $headers = $method->invoke(new PurchaseRequest($httpClient, $httpRequest));
         $this->assertArrayHasKey('User-Agent', $headers, 'Omitting User-Agent header not allowed because then Guzzle will set it');
-        $this->assertNotNull($headers['User-Agent'], 'User-Agent header must not be null because then Guzzle will set it');
-        $this->assertEmpty($headers['User-Agent'], 'User-Agent header must be empty string to avoid a 403 forbidden on the gateway');
+        $this->assertEquals('Omnipay', $headers['User-Agent'], 'User-Agent header set');
     }
 }
