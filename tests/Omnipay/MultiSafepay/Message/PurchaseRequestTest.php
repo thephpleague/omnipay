@@ -29,7 +29,7 @@ class PurchaseRequestTest extends TestCase
         $method->setAccessible(true);
 
         $headers = $method->invoke(new PurchaseRequest($httpClient, $httpRequest));
-        $this->assertArrayHasKey('User-Agent', $headers, 'Omitting User-Agent header not allowed because then Guzzle will set it');
+        $this->assertArrayHasKey('User-Agent', $headers, 'Omitting User-Agent header not allowed because then Guzzle will set it and cause 403 Forbidden on the gateway');
         $this->assertEquals('Omnipay', $headers['User-Agent'], 'User-Agent header set');
     }
 }
