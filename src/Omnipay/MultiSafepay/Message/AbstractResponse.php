@@ -32,7 +32,10 @@ abstract class AbstractResponse extends BaseAbstractResponse
         $this->data = $data;
 
         if (isset($this->data->error)) {
-            throw new InvalidResponseException((string) $this->data->error->description, (int) $this->data->error->code);
+            throw new InvalidResponseException(
+                (string) $this->data->error->description,
+                (int) $this->data->error->code
+            );
         }
     }
 }
