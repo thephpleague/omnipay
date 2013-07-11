@@ -53,6 +53,7 @@ class GatewayTest extends GatewayTestCase
         $request = $this->gateway->fetchPaymentMethods(array('country' => 'NL'));
 
         $this->assertInstanceOf('Omnipay\MultiSafepay\Message\FetchPaymentMethodsRequest', $request);
+        $this->assertEquals('NL', $request->getCountry());
     }
 
     public function testFetchPaymentMethodsResponse()
