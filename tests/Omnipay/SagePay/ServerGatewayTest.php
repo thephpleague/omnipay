@@ -83,7 +83,7 @@ class ServerGatewayTest extends GatewayTestCase
                 'PayerStatus' => 'k',
                 'CardType' => 'l',
                 'Last4Digits' => 'm',
-                'VPSSignature' => md5('{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}438791OKbexamplecJEUPDN1N7Edefghijklm'),
+                'VPSSignature' => \strtoupper(md5('{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}438791OKbexamplecJEUPDN1N7Edefghijklm')),
             )
         );
 
@@ -144,7 +144,7 @@ class ServerGatewayTest extends GatewayTestCase
                 'PayerStatus' => 'k',
                 'CardType' => 'l',
                 'Last4Digits' => 'm',
-                'VPSSignature' => md5('{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}438791OKbexamplecJEUPDN1N7Edefghijklm'),
+                'VPSSignature' => \strtoupper(md5('{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}438791OKbexamplecJEUPDN1N7Edefghijklm')),
             )
         );
 
