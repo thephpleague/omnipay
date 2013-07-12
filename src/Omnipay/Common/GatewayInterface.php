@@ -60,7 +60,7 @@ interface GatewayInterface
      *
      * @param array $parameters An array of options
      *
-     * @return \Omnipay\Common\Message\ResponseInterface
+     * @return \Omnipay\Common\Message\RequestInterface
      */
     public function purchase(array $parameters = array());
 }
