@@ -38,7 +38,7 @@ class Gateway extends AbstractGateway
         return array();
     }
 
-    public function authorize(array $parameters = array())
+    private function authorize(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\Sips\Message\AuthorizeRequest', $parameters);
     }
@@ -46,5 +46,10 @@ class Gateway extends AbstractGateway
     public function purchase(array $parameters = array())
     {
         return $this->authorize($parameters);
+    }
+
+    public function completePurchase(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Sips\Message\CompletePurchaseRequest', $parameters);
     }
 }
