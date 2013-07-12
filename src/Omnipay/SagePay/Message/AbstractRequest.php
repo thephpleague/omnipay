@@ -91,7 +91,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->response = new Response($this, $data);
     }
 
-    // 
+    //
     // Helper Methods used to switch between OmniPay cardBrand and SagePay CardType
     //
     
