@@ -63,7 +63,11 @@ abstract class AbstractRequest implements RequestInterface
      *
      * If any unknown parameters passed, they will be ignored.
      *
-     * @param array An associative array of parameters
+     * @param array $parameters An associative array of parameters
+     *
+     * @return $this
+     *
+     * @throws RuntimeException
      */
     public function initialize(array $parameters = array())
     {
@@ -110,12 +114,14 @@ abstract class AbstractRequest implements RequestInterface
     }
 
     /**
-     * Validate the request
+     * Validate the request.
      *
      * This method is called internally by gateways to avoid wasting time with an API call
      * when the request is clearly invalid.
      *
-     * @param string a variable length list of required parameters
+     * @param string ... a variable length list of required parameters
+     *
+     * @throws InvalidRequestException
      */
     public function validate()
     {

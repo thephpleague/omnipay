@@ -46,7 +46,7 @@ interface GatewayInterface
     /**
      * Initialize gateway with parameters
      */
-    public function initialize(array $paramters = array());
+    public function initialize(array $parameters = array());
 
     /**
      * Get all gateway parameters
@@ -58,8 +58,9 @@ interface GatewayInterface
     /**
      * Create a new charge (combined authorize + capture).
      *
-     * @param array An array of options
-     * @return Omnipay\ResponseInterface
+     * @param array $parameters An array of options
+     *
+     * @return \Omnipay\Common\Message\RequestInterface
      */
     public function purchase(array $parameters = array());
 }
