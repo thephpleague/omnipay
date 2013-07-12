@@ -27,9 +27,9 @@ class CompletePurchaseRequestTest extends TestCase
             'accountId' => '111111',
             'siteId' => '222222',
             'siteCode' => '333333',
-            'transactionId' => 123456,
+            'transactionId' => '123456',
             'currency' => 'EUR',
-            'amount' => 100.00,
+            'amount' => '100.00',
             'description' => 'desc',
             'clientIp' => '127.0.0.1',
             'card' => array(
