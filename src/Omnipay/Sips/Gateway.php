@@ -35,17 +35,24 @@ class Gateway extends AbstractGateway
 
     public function getDefaultParameters()
     {
-        return array();
+        return array(
+            'merchantId' => '',
+        );
     }
 
-    private function authorize(array $parameters = array())
+    public function getMerchantId()
     {
-        return $this->createRequest('\Omnipay\Sips\Message\AuthorizeRequest', $parameters);
+        return $this->getParameter('merchantId');
+    }
+
+    public function setMerchantId($value)
+    {
+        return $this->setParameter('merchantId', $value);
     }
 
     public function purchase(array $parameters = array())
     {
-        return $this->authorize($parameters);
+        return $this->createRequest('\Omnipay\Sips\Message\AuthorizeRequest', $parameters);
     }
 
     public function completePurchase(array $parameters = array())
