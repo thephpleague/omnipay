@@ -119,7 +119,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
             /* the remaining Omnipay Card Types aren't handled by SagePay */
             default:
-                if (strpos($omniPayCardType, 'sagepay_') == 0) { // pass in a sagepay specific cardtype such as sagepay_PAYPAL
+                if (strpos($omniPayCardType, 'sagepay_') !== FALSE) { // pass in a sagepay specific cardtype such as sagepay_PAYPAL
                     return substr($omniPayCardType, strlen('sagepay_'));
                 } else {
                     return null;
