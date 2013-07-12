@@ -36,6 +36,21 @@ class ServerCompleteAuthorizeResponse extends Response
     }
 
     /**
+     * Get the CardBrand of the card.
+     * It should be one of the \Omnipay\Common\CreditCard::BRAND_???? constants,
+     * or sagepay_PAYPAL, or NULL if the message didn't contain a CardType
+     * @return string|null see \Omnipay\Common\CreditCard::BRAND_????
+     */
+    public function getCardBrand()
+    {
+        if (isset($this->data['CardType'])) {
+            return AbstractRequest::convertCardTypeSagePayToOmniPay($this->data['CardType']);
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * Confirm (Sage Pay Server only)
      *
      * Sage Pay Server does things backwards compared to every other gateway (including Sage Pay
