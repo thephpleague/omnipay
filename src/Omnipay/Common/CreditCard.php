@@ -75,8 +75,6 @@ class CreditCard
             static::BRAND_MAESTRO => '/^(5[06-8]|6\d)\d{10,17}$/',
             static::BRAND_FORBRUGSFORENINGEN => '/^600722\d{10}$/',
             static::BRAND_LASER => '/^(6304|6706|6709|6771(?!89))\d{8}(\d{4}|\d{6,7})?$/',
-            // TODO - static::BRAND_VISA_ELECTRON => ????,
-            // TODO - static::BRAND_VISA_DEBIT => ????,
         );
     }
 
