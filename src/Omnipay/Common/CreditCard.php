@@ -83,7 +83,9 @@ class CreditCard
      *
      * If any unknown parameters passed, they will be ignored.
      *
-     * @param array An associative array of parameters
+     * @param array $parameters An associative array of parameters
+     *
+     * @return $this
      */
     public function initialize($parameters = null)
     {
@@ -254,9 +256,11 @@ class CreditCard
     }
 
     /**
-     * Get the card expiry date, using the specified date format string
+     * Get the card expiry date, using the specified date format string.
      *
-     * @param string
+     * @param string $format
+     *
+     * @return string
      */
     public function getExpiryDate($format)
     {
@@ -286,7 +290,9 @@ class CreditCard
     /**
      * Get the card start date, using the specified date format string
      *
-     * @param string
+     * @param string $format
+     *
+     * @return string
      */
     public function getStartDate($format)
     {
