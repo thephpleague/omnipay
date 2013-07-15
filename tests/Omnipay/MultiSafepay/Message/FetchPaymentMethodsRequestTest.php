@@ -32,6 +32,30 @@ class FetchPaymentMethodsRequestTest extends TestCase
     }
 
     /**
+     * @dataProvider paymentMethodsProvider
+     */
+    public function testSendSuccess($expected)
+    {
+        $this->setMockHttpResponse('FetchPaymentMethodsSuccess.txt');
+
+        $response = $this->request->send();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertEquals($expected, $response->getPaymentMethods());
+    }
+
+    public function testSendFailure()
+    {
+        $this->setMockHttpResponse('FetchPaymentMethodsFailure.txt');
+
+        $response = $this->request->send();
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertEquals('Invalid merchant security code', $response->getMessage());
+        $this->assertEquals(1005, $response->getCode());
+    }
+
+    /**
      * @dataProvider dataProvider
      */
     public function testGetData($xml)
@@ -43,6 +67,21 @@ class FetchPaymentMethodsRequestTest extends TestCase
         $dom = dom_import_simplexml($data)->ownerDocument;
         $dom->formatOutput = true;
         $this->assertEquals($xml, $dom->saveXML());
+    }
+
+    public function paymentMethodsProvider()
+    {
+        return array(
+            array(
+                array(
+                    'VISA' => 'Visa CreditCards',
+                    'WALLET' => 'MultiSafepay',
+                    'IDEAL' => 'iDEAL',
+                    'BANKTRANS' => 'Bank Transfer',
+                    'MASTERCARD' => 'MasterCard',
+                ),
+            ),
+        );
     }
 
     public function dataProvider()

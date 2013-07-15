@@ -57,6 +57,29 @@ class PurchaseRequestTest extends TestCase
         ));
     }
 
+    public function testSendSuccess()
+    {
+        $this->setMockHttpResponse('PurchaseSuccess.txt');
+
+        $response = $this->request->send();
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertTrue($response->isRedirect());
+        $this->assertEquals('https://testpay.multisafepay.com/pay/?transaction=1373536347Hz4sFtg7WgMulO5q123456&lang=', $response->getRedirectUrl());
+        $this->assertEquals('123456', $response->getTransactionReference());
+    }
+
+    public function testSendFailure()
+    {
+        $this->setMockHttpResponse('PurchaseFailure.txt');
+
+        $response = $this->request->send();
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertEquals('Invalid amount', $response->getMessage());
+        $this->assertEquals(1001, $response->getCode());
+    }
+
     /**
      * @dataProvider allDataProvider
      */

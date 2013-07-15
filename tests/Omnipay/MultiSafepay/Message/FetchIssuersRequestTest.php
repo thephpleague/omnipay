@@ -31,6 +31,30 @@ class FetchIssuersRequestTest extends TestCase
     }
 
     /**
+     * @dataProvider issuersProvider
+     */
+    public function testSendSuccess($expected)
+    {
+        $this->setMockHttpResponse('FetchIssuersSuccess.txt');
+
+        $response = $this->request->send();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertEquals($expected, $response->getIssuers());
+    }
+
+    public function testSendFailure()
+    {
+        $this->setMockHttpResponse('FetchIssuersFailure.txt');
+
+        $response = $this->request->send();
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertEquals('Invalid merchant security code', $response->getMessage());
+        $this->assertEquals(1005, $response->getCode());
+    }
+
+    /**
      * @dataProvider dataProvider
      */
     public function testGetData($xml)
@@ -42,6 +66,26 @@ class FetchIssuersRequestTest extends TestCase
         $dom = dom_import_simplexml($data)->ownerDocument;
         $dom->formatOutput = true;
         $this->assertEquals($xml, $dom->saveXML());
+    }
+
+    public function issuersProvider()
+    {
+        return array(
+            array(
+                array(
+                    '0031' => 'ABN AMRO',
+                    '0751' => 'SNS Bank',
+                    '0721' => 'ING',
+                    '0021' => 'Rabobank',
+                    '0091' => 'Friesland Bank',
+                    '0761' => 'ASN Bank',
+                    '0771' => 'SNS Regio Bank',
+                    '0511' => 'Triodos Bank',
+                    '0161' => 'Van Lanschot Bankiers',
+                    '0801' => 'Knab',
+                ),
+            ),
+        );
     }
 
     public function dataProvider()

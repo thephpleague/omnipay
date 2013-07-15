@@ -56,6 +56,27 @@ class CompletePurchaseRequestTest extends TestCase
         ));
     }
 
+    public function testSendSuccess()
+    {
+        $this->setMockHttpResponse('CompletePurchaseSuccess.txt');
+
+        $response = $this->request->send();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertEquals('123456', $response->getTransactionReference());
+    }
+
+    public function testSendFailure()
+    {
+        $this->setMockHttpResponse('CompletePurchaseFailure.txt');
+
+        $response = $this->request->send();
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertEquals('Back-end: missing data', $response->getMessage());
+        $this->assertEquals(1016, $response->getCode());
+    }
+
     /**
      * @dataProvider dataProvider
      */
