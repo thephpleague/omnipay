@@ -34,7 +34,10 @@ class AuthorizeResponse extends AbstractResponse
 
     public function getTransactionReference()
     {
-        return isset($this->data['reference']) ? $this->data['reference'] : null;
+        /** @var AuthorizeRequest $request */
+        $request = $this->request;
+
+        return $request->getTransactionReference();
     }
 
     public function getMessage()

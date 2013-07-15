@@ -16,7 +16,42 @@ use Omnipay\Common\Message\AbstractRequest;
 
 class AuthorizeRequest extends AbstractRequest
 {
-    public function getData()
+    protected $merchantId;
+    protected $sipsFolderPath;
+
+    /**
+     * @param string $pathToSipsFolder
+     */
+    public function setSipsFolderPath($pathToSipsFolder)
+    {
+        $this->sipsFolderPath = $pathToSipsFolder;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSipsFolderPath()
+    {
+        return $this->sipsFolderPath;
+    }
+
+    /**
+     * @param string $merchantId
+     */
+    public function setMerchantId($merchantId)
+    {
+        $this->merchantId = $merchantId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMerchantId()
+    {
+        return $this->merchantId;
+    }
+
+    public function setData()
     {
         $this->validate('amount', 'card');
 
@@ -27,57 +62,51 @@ class AuthorizeRequest extends AbstractRequest
 
     public function send()
     {
-        $params = self::getSipsParamString($this);
-        $path_bin = '/var/www/app/config/sips/bin/request';
+        $params = $this->getSipsParamString();
+        $path_bin = '/var/www/app/config/sips/bin/request'; //TODO
         $result = exec("$path_bin $params");
 
         return $this->response = new AuthorizeResponse($this, $result);
     }
 
-    protected static function getSipsParamString(\Omnipay\Sips\Message\AuthorizeRequest $request)
+    protected function getSipsParamString()
     {
-        $params = 'merchant_id=014141675911111';
-        $params .= " pathfile=/var/www/app/config/sips/param/pathfile";
-        $params .= " amount=" . $request->getAmountInteger();
-        $params .= " currency_code=" . $request->getCurrencyNumeric();
-        $params .= " transaction_id=" . $request->getTransactionId();
+        $params = 'merchant_id=' . $this->getMerchantId();
+        $params .= " pathfile=".$this->getSipsFolderPath()."/param/pathfile";
+        $params .= " amount=" . $this->getAmountInteger();
+        $params .= " currency_code=" . $this->getCurrencyNumeric();
+        $params .= " transaction_id=" . $this->getTransactionId();
 
-        /** @var CreditCard  $cart */
-        $cart = $request->getCard();
+        /** @var CreditCard $card */
+        $card = $this->getCard();
 
-        $params .= " customer_email=" . $cart->getEmail();
-        $params .= " customer_ip_address=" . $request->getClientIp();
+        $params .= " customer_email=" . $card->getEmail();
+        $params .= " customer_ip_address=" . $this->getClientIp();
 
-        $cartParams = self::getSipsCartString($request);
+        $cartParams = $this->getSipsCartString();
         $params .= " caddie=" . $cartParams;
 
-        //$SUPERID = $parameters['sessionId'];
-        //$parm .= " cancel_return_url=http://www.monsite.com/response.php?SUPERID=" . $SUPERID;
-        //
-        //// url réponse automatique
-        //$parm .= " automatic_response_url=http://www.monsite.com/call_autoresponse.php";
-        //
-        ////url de retour du client après le paiement
-        //$parm .= " normal_return_url=http://www.monsite.com/response.php?SUPERID=" . $SUPERID;
+        $params .= " cancel_return_url=" . $this->getCancelUrl();
+        $params .= " automatic_response_url=" . $this->getReturnUrl();
+        $params .= " normal_return_url=" . $this->getReturnUrl();
 
         return trim($params);
     }
 
-    protected static function getSipsCartString(\Omnipay\Sips\Message\AuthorizeRequest $request)
+    protected function getSipsCartString()
     {
         $cartParams = array();
 
-        // User info
-        $cartParams[] = $request->getClientIp();
+        $cartParams[] = $this->getClientIp();
 
-        /** @var CreditCard  $cart */
-        $cart = $request->getCard();
+        /** @var CreditCard $cart */
+        $cart = $this->getCard();
 
         $cartParams[] = $cart->getBillingFirstName();
         $cartParams[] = $cart->getBillingLastName();
 
         $cartParams[] = $cart->getBillingCompany();
-        $cartParams[] = $cart->getBillingAddress1().' '.$cart->getBillingAddress2();
+        $cartParams[] = $cart->getBillingAddress1() . ' ' . $cart->getBillingAddress2();
 
         $cartParams[] = $cart->getBillingCity();
         $cartParams[] = $cart->getBillingPostcode();
@@ -87,13 +116,22 @@ class AuthorizeRequest extends AbstractRequest
         $cartParams[] = $cart->getBillingPhone();
         $cartParams[] = $cart->getEmail();
 
-        $cartParams[] = $request->getTransactionId();
+        $cartParams[] = $this->getTransactionId();
 
-        $cartParams[] = 'TbcEboutique';
-        $cartParams[] = 'vDev';
-
-        $cartParams[] = $request->getAmountInteger();
+        $cartParams[] = $this->getAmountInteger();
 
         return trim(base64_encode(serialize($cartParams)));
+    }
+
+    /**
+     * Get the raw data array for this message. The format of this varies from gateway to
+     * gateway, but will usually be either an associative array, or a SimpleXMLElement.
+     *
+     * @return mixed
+     */
+    public function getData()
+    {
+        $this->validate('amount');
+        return array('amount' => $this->getAmount());
     }
 }

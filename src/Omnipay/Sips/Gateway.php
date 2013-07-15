@@ -27,6 +27,7 @@ class Gateway extends AbstractGateway
     {
         return array(
             'merchantId' => '',
+            'sipsFolderPath' => ''
         );
     }
 
@@ -35,13 +36,26 @@ class Gateway extends AbstractGateway
         return $this->getParameter('merchantId');
     }
 
+    public function getSipsFolderPath()
+    {
+        return $this->getParameter('sipsFolderPath');
+    }
+
     public function setMerchantId($value)
     {
         return $this->setParameter('merchantId', $value);
     }
 
+    public function setSipsFolderPath($value)
+    {
+        return $this->setParameter('sipsFolderPath', $value);
+    }
+
     public function purchase(array $parameters = array())
     {
+        $parameters['merchandId'] = $this->getMerchantId();
+        $parameters['sipsFolderPath'] = $this->getSipsFolderPath();
+
         return $this->createRequest('\Omnipay\Sips\Message\AuthorizeRequest', $parameters);
     }
 
