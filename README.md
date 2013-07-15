@@ -100,6 +100,7 @@ The following gateways are already implemented:
 * Migs 2-Party
 * Migs 3-Party
 * Mollie
+* MultiSafepay
 * Netaxept (BBS)
 * Netbanx
 * PayFast

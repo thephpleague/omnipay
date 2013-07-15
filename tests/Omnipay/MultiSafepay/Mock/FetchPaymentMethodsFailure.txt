@@ -1,0 +1,10 @@
+HTTP/1.1 200 OK
+Date: Thu, 11 Jul 2013 12:32:27 GMT
+Server: Apache/2.2.16 (Debian)
+X-Powered-By: PHP/5.3.3-7+squeeze14
+Vary: Accept-Encoding
+Content-Length: 165
+Content-Type: text/xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gateways result="error"><error><code>1005</code><description>Invalid merchant security code</description></error></gateways>

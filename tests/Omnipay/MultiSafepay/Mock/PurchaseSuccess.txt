@@ -1,0 +1,8 @@
+HTTP/1.1 200 OK
+Date: Thu, 11 Jul 2013 09:52:27 GMT
+Server: Apache/2.2.22 (FreeBSD) mod_ssl/2.2.22 OpenSSL/0.9.8q DAV/2
+Content-Length: 256
+Content-Type: text/xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<redirecttransaction result="ok"><transaction><id>123456</id><payment_url>https://testpay.multisafepay.com/pay/?transaction=1373536347Hz4sFtg7WgMulO5q123456&amp;lang=</payment_url></transaction></redirecttransaction>
