@@ -62,4 +62,15 @@ class GatewayTest extends GatewayTestCase
         $this->assertSame('ABNAMRO', $request->getIssuer());
         $this->assertSame('something@example.com', $card->getEmail());
     }
+
+    /**
+     * Test mode is before an account acquires a contract,
+     * it is not possible to explicitly set it.
+     */
+    public function testTestMode()
+    {
+        $this->assertFalse($this->gateway->getTestMode(), 'test mode is off by default');
+        $this->gateway->setTestMode(true);
+        $this->assertFalse($this->gateway->getTestMode(), 'test mode can not be turned on');
+    }
 }

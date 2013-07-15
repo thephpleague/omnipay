@@ -59,6 +59,11 @@ class Gateway extends AbstractGateway
         return $this->setParameter('secretCode', $value);
     }
 
+    public function getTestMode()
+    {
+        return false;
+    }
+
     /**
      * {@inheritdoc}
      */
