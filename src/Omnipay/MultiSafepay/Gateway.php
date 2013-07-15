@@ -15,6 +15,11 @@ use Omnipay\Common\AbstractGateway;
 use Omnipay\MultiSafepay\Message\FetchIssuersRequest;
 use Omnipay\MultiSafepay\Message\FetchPaymentMethodsRequest;
 
+/**
+ * MultiSafepay gateway.
+ *
+ * @link https://www.multisafepay.com/downloads/handleidingen/Handleiding_connect(ENG).pdf
+ */
 class Gateway extends AbstractGateway
 {
     /**
