@@ -18,7 +18,7 @@ class FetchIssuersResponse extends AbstractResponse
      */
     public function isSuccessful()
     {
-        return true;
+        return isset($this->data->issuers);
     }
 
     /**

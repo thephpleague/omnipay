@@ -11,31 +11,31 @@
 
 namespace Omnipay\MultiSafepay\Message;
 
-use Omnipay\Common\Exception\InvalidResponseException;
 use Omnipay\Common\Message\AbstractResponse as BaseAbstractResponse;
-use Omnipay\Common\Message\RequestInterface;
-use SimpleXMLElement;
 
 abstract class AbstractResponse extends BaseAbstractResponse
 {
     /**
-     * Constructor.
-     *
-     * @param RequestInterface $request
-     * @param SimpleXMLElement $data
-     *
-     * @throws InvalidResponseException
+     * {@inheritdoc}
      */
-    public function __construct(RequestInterface $request, SimpleXMLElement $data)
+    public function getMessage()
     {
-        $this->request = $request;
-        $this->data = $data;
-
         if (isset($this->data->error)) {
-            throw new InvalidResponseException(
-                (string) $this->data->error->description,
-                (int) $this->data->error->code
-            );
+            return (string) $this->data->error->description;
         }
+
+        return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCode()
+    {
+        if (isset($this->data->error)) {
+            return (string) $this->data->error->code;
+        }
+
+        return null;
     }
 }

@@ -18,7 +18,7 @@ class FetchPaymentMethodsResponse extends AbstractResponse
      */
     public function isSuccessful()
     {
-        return true;
+        return isset($this->data->gateways);
     }
 
     /**
