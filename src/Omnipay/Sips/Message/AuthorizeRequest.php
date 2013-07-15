@@ -20,11 +20,11 @@ class AuthorizeRequest extends AbstractRequest
     protected $sipsFolderPath;
 
     /**
-     * @param string $pathToSipsFolder
+     * @param string $sipsFolderPath
      */
-    public function setSipsFolderPath($pathToSipsFolder)
+    public function setSipsFolderPath($sipsFolderPath)
     {
-        $this->sipsFolderPath = $pathToSipsFolder;
+        $this->sipsFolderPath = $sipsFolderPath;
     }
 
     /**
@@ -99,22 +99,22 @@ class AuthorizeRequest extends AbstractRequest
 
         $cartParams[] = $this->getClientIp();
 
-        /** @var CreditCard $cart */
-        $cart = $this->getCard();
+        /** @var CreditCard $card */
+        $card = $this->getCard();
 
-        $cartParams[] = $cart->getBillingFirstName();
-        $cartParams[] = $cart->getBillingLastName();
+        $cartParams[] = $card->getBillingFirstName();
+        $cartParams[] = $card->getBillingLastName();
 
-        $cartParams[] = $cart->getBillingCompany();
-        $cartParams[] = $cart->getBillingAddress1() . ' ' . $cart->getBillingAddress2();
+        $cartParams[] = $card->getBillingCompany();
+        $cartParams[] = $card->getBillingAddress1() . ' ' . $card->getBillingAddress2();
 
-        $cartParams[] = $cart->getBillingCity();
-        $cartParams[] = $cart->getBillingPostcode();
-        $cartParams[] = $cart->getBillingCountry();
+        $cartParams[] = $card->getBillingCity();
+        $cartParams[] = $card->getBillingPostcode();
+        $cartParams[] = $card->getBillingCountry();
 
 
-        $cartParams[] = $cart->getBillingPhone();
-        $cartParams[] = $cart->getEmail();
+        $cartParams[] = $card->getBillingPhone();
+        $cartParams[] = $card->getEmail();
 
         $cartParams[] = $this->getTransactionId();
 
