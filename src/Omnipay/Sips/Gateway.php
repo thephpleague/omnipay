@@ -12,19 +12,9 @@
 namespace Omnipay\Sips;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Dummy\Message\AuthorizeRequest;
 
 /**
- * Sips Gateway (cloned from Dummy Gateway for now)
- *
- * This gateway is useful for testing. It simply authorizes any payment made using a valid
- * credit card number and expiry.
- *
- * Any card number which passes the Luhn algorithm and ends in an even number is authorized,
- * for example: 4242424242424242
- *
- * Any card number which passes the Luhn algorithm and ends in an odd number is declined,
- * for example: 4111111111111111
+ * Sips Gateway
  */
 class Gateway extends AbstractGateway
 {
