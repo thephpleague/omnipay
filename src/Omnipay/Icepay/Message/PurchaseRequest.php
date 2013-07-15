@@ -93,17 +93,19 @@ class PurchaseRequest extends AbstractRequest
      */
     protected function generateSignature()
     {
-        return sha1(
-            implode('|', array(
-                    $this->getSecretCode(),
-                    $this->getMerchantId(),
-                    $this->getAmountInteger(),
-                    $this->getCurrency(),
-                    $this->getTransactionId(),
-                    $this->getPaymentMethod(),
-                    $this->getIssuer(),
-                )
+        $raw = implode(
+            '|',
+            array(
+                $this->getSecretCode(),
+                $this->getMerchantId(),
+                $this->getAmountInteger(),
+                $this->getCurrency(),
+                $this->getTransactionId(),
+                $this->getPaymentMethod(),
+                $this->getIssuer(),
             )
         );
+
+        return sha1($raw);
     }
 }
