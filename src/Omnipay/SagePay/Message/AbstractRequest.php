@@ -90,4 +90,70 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
         return $this->response = new Response($this, $data);
     }
+
+    //
+    // Helper Methods used to switch between OmniPay cardBrand and SagePay CardType
+    //
+    
+    public static function convertCardTypeOmniPayToSagePay($omniPayCardType)
+    {
+        switch ($omniPayCardType) {
+            case \Omnipay\Common\CreditCard::BRAND_VISA:
+                return 'VISA';
+            case \Omnipay\Common\CreditCard::BRAND_VISA_DEBIT:
+                return 'DELTA';
+            case \Omnipay\Common\CreditCard::BRAND_VISA_ELECTRON:
+                return 'UKE';
+            case \Omnipay\Common\CreditCard::BRAND_MASTERCARD:
+                return 'MC';
+            case \Omnipay\Common\CreditCard::BRAND_AMEX:
+                return 'AMEX';
+            case \Omnipay\Common\CreditCard::BRAND_DINERS_CLUB:
+                return 'DC';
+            case \Omnipay\Common\CreditCard::BRAND_JCB:
+                return 'JCB';
+            case \Omnipay\Common\CreditCard::BRAND_MAESTRO:
+                return 'MAESTRO';
+            case \Omnipay\Common\CreditCard::BRAND_LASER:
+                return 'LASER';
+
+            /* the remaining Omnipay Card Types aren't handled by SagePay */
+            default:
+                if (strpos($omniPayCardType, 'sagepay_') !== false) {
+                    // a sagepay specific cardtype such as sagepay_PAYPAL
+                    return substr($omniPayCardType, strlen('sagepay_'));
+                } else {
+                    return null;
+                }
+        }
+    }
+
+    public static function convertCardTypeSagePayToOmniPay($sagePayCardType)
+    {
+        switch ($sagePayCardType) {
+            case 'VISA':
+                return \Omnipay\Common\CreditCard::BRAND_VISA;
+            case 'MC':
+                return \Omnipay\Common\CreditCard::BRAND_MASTERCARD;
+            case 'DELTA':
+                return \Omnipay\Common\CreditCard::BRAND_VISA_DEBIT;
+            case 'MAESTRO':
+                return \Omnipay\Common\CreditCard::BRAND_MAESTRO;
+            case 'UKE':
+                return \Omnipay\Common\CreditCard::BRAND_VISA_ELECTRON;
+            case 'AMEX':
+                return \Omnipay\Common\CreditCard::BRAND_AMEX;
+            case 'DC':
+                return \Omnipay\Common\CreditCard::BRAND_DINERS_CLUB;
+            case 'JCB':
+                return \Omnipay\Common\CreditCard::BRAND_JCB;
+            case 'LASER':
+                return \Omnipay\Common\CreditCard::BRAND_LASER;
+
+            /* the remaining SagePay Card Types aren't handled specifically by Omnipay */
+            default:
+                // pass out sagepay specific cardtype such as sagepay_PAYPAL
+                return 'sagepay_'.$sagePayCardType;
+        }
+    }
 }

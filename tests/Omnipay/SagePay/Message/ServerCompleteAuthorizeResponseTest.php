@@ -54,4 +54,29 @@ class ServerCompleteAuthorizeResponseTest extends TestCase
         $this->assertNull($response->getTransactionReference());
         $this->assertNull($response->getMessage());
     }
+    
+    public function testServerCompleteAuthorizeResponseGetProperties()
+    {
+
+        $response = new ServerCompleteAuthorizeResponse(
+            $this->getMockRequest(),
+            array(
+                'Status' => 'OK',
+                'TxAuthNo' => '',
+                'AVSCV2' => 'c',
+                'AddressResult' => 'd',
+                'PostCodeResult' => 'e',
+                'CV2Result' => 'f',
+                'GiftAid' => 'g',
+                '3DSecureStatus' => 'h',
+                'CAVV' => 'i',
+                'AddressStatus' => 'j',
+                'PayerStatus' => 'k',
+                'CardType' => 'DC',
+                'Last4Digits' => 'm',
+            )
+        );
+
+        $this->assertSame(\Omnipay\Common\CreditCard::BRAND_DINERS_CLUB, $response->getCardBrand());
+    }
 }

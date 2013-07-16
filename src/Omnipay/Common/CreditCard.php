@@ -31,6 +31,8 @@ class CreditCard
     const BRAND_MAESTRO = 'maestro';
     const BRAND_FORBRUGSFORENINGEN = 'forbrugsforeningen';
     const BRAND_LASER = 'laser';
+    const BRAND_VISA_ELECTRON = 'visa_electron';
+    const BRAND_VISA_DEBIT = 'visa_debit';
 
     /**
      * @var \Symfony\Component\HttpFoundation\ParameterBag
@@ -201,18 +203,36 @@ class CreditCard
 
     /**
      * Credit Card Brand
-     *
-     * Iterates through known/supported card brands to determine the brand of this card
+     * Returns the specified card brand. If one hasn't been specified, then
+     * iterates through known/supported card brands to determine the brand of this card
      *
      * @return string
      */
     public function getBrand()
     {
+        // if a card brand has been set using setBrand, then use that
+        $brand = $this->getParameter('cardBrand');
+        if (isset($brand)) {
+            return $brand;
+        }
+            
+        // otherwise guess based on the card number
         foreach ($this->getSupportedBrands() as $brand => $val) {
             if (preg_match($val, $this->getNumber())) {
                 return $brand;
             }
         }
+    }
+
+    /**
+     * Specifiy the Card Brand. If this isn't done, then OmniPay will make
+     * it's best guess based on the card number
+     * @param string $value
+     * @return CreditCard returns $this to enable method chaining
+     */
+    public function setBrand($value)
+    {
+        return $this->setParameter('cardBrand', $value);
     }
 
     public function getExpiryMonth()
