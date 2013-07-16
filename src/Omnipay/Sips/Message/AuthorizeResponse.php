@@ -2,56 +2,28 @@
 
 namespace Omnipay\Sips\Message;
 
-use Omnipay\Common\Message\AbstractResponse;
+use Omnipay\Sips\Message\AuthorizeRequest;
 
 /**
  * Sips Authorize Response
  */
-class AuthorizeResponse extends AbstractResponse
+class AuthorizeResponse extends Response
 {
-    private $code;
-    private $debug;
-    private $message;
-
-    public function __construct(AuthorizeRequest $request, $data)
+    protected function getResultComponents()
     {
-        parent::__construct($request, $data);
-
-        $this->code = -1;
-
-        $results = explode("!", "$data");
-        if (count($results) > 3) {
-            $this->code = $results[1];
-            $this->debug = $results[2];
-            $this->message = $results[3];
-        }
+        return array(
+            'code' => 1,
+            'debug' => 2,
+            'message' => 3
+        );
     }
 
-    public function isSuccessful()
+    public function setData()
     {
-        return ($this->code == 0);
-    }
+        $this->validate('amount', 'card');
 
-    public function getTransactionReference()
-    {
-        /** @var AuthorizeRequest $request */
-        $request = $this->request;
+        $this->getCard()->validate();
 
-        return $request->getTransactionReference();
-    }
-
-    public function getMessage()
-    {
-        return $this->message;
-    }
-
-    public function getCode()
-    {
-        return $this->code;
-    }
-
-    public function getDebug()
-    {
-        return $this->debug;
+        return array('amount' => $this->getAmount());
     }
 }

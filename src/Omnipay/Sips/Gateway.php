@@ -63,4 +63,9 @@ class Gateway extends AbstractGateway
     {
         return $this->createRequest('\Omnipay\Sips\Message\CompletePurchaseRequest', $parameters);
     }
+
+    public function cancelPurchase(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Sips\Message\ReturnRequest', $parameters);
+    }
 }

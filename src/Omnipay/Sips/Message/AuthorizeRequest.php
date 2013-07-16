@@ -12,58 +12,13 @@
 namespace Omnipay\Sips\Message;
 
 use Omnipay\Common\CreditCard;
-use Omnipay\Common\Message\AbstractRequest;
 
-class AuthorizeRequest extends AbstractRequest
+class AuthorizeRequest extends Request
 {
-    protected $merchantId;
-    protected $sipsFolderPath;
-
-    /**
-     * @param string $sipsFolderPath
-     */
-    public function setSipsFolderPath($sipsFolderPath)
-    {
-        $this->sipsFolderPath = $sipsFolderPath;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSipsFolderPath()
-    {
-        return $this->sipsFolderPath;
-    }
-
-    /**
-     * @param string $merchantId
-     */
-    public function setMerchantId($merchantId)
-    {
-        $this->merchantId = $merchantId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMerchantId()
-    {
-        return $this->merchantId;
-    }
-
-    public function setData()
-    {
-        $this->validate('amount', 'card');
-
-        $this->getCard()->validate();
-
-        return array('amount' => $this->getAmount());
-    }
-
     public function send()
     {
         $params = $this->getSipsParamString();
-        $path_bin = '/var/www/app/config/sips/bin/request'; //TODO
+        $path_bin = $this->getSipsRequestExecPath();
         $result = exec("$path_bin $params");
 
         return $this->response = new AuthorizeResponse($this, $result);
@@ -71,8 +26,11 @@ class AuthorizeRequest extends AbstractRequest
 
     protected function getSipsParamString()
     {
-        $params = 'merchant_id=' . $this->getMerchantId();
-        $params .= " pathfile=".$this->getSipsFolderPath()."/param/pathfile";
+        $params = 'merchant_id=' . $this->getMerchant()->getId();
+        $params .= ' merchant_language=' . $this->getMerchant()->getLanguage();
+        $params .= ' merchant_country=' . $this->getMerchant()->getCountry();
+
+        $params .= " pathfile=".$this->getSipsPathFilePath();
         $params .= " amount=" . $this->getAmountInteger();
         $params .= " currency_code=" . $this->getCurrencyNumeric();
         $params .= " transaction_id=" . $this->getTransactionId();
@@ -131,7 +89,8 @@ class AuthorizeRequest extends AbstractRequest
      */
     public function getData()
     {
-        $this->validate('amount');
+        $this->validate('amount', 'card');
+        $this->getCard()->validate();
         return array('amount' => $this->getAmount());
     }
 }
