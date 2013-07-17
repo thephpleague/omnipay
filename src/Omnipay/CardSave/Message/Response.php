@@ -84,7 +84,7 @@ class Response extends AbstractResponse implements RedirectResponseInterface
             'MD' => (string) $this->data->TransactionOutputData['CrossReference'],
         );
     }
-	
+
     public function getCardType()
     {
         return $cardData = array(

@@ -64,8 +64,8 @@ class Gateway extends AbstractGateway
     {
         return $this->createRequest('\Omnipay\CardSave\Message\CompletePurchaseRequest', $parameters);
     }
-	
-	public function getCardType(array $parameters = array())
+
+    public function getCardType(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\CardSave\Message\CardType', $parameters);
     }
