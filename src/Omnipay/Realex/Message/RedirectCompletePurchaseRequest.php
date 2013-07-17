@@ -30,8 +30,7 @@ class RedirectCompletePurchaseRequest extends RedirectPurchaseRequest
 
         $baseHash = sha1("{$timestamp}.{$this->getUsername()}.{$orderId}.{$result}.{$message}.{$pasRef}.{$authCode}");
 
-        if(sha1($baseHash . '.' . $this->getSecret()) == $sha1Hash)
-        {
+        if(sha1($baseHash . '.' . $this->getSecret()) == $sha1Hash) {
             return $data;
         }
 

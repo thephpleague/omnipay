@@ -18,46 +18,46 @@ use Omnipay\Common\AbstractGateway;
  */
 class RedirectGateway extends AbstractGateway
 {
-	public function getName()
-	{
-		return 'Realex Redirect';
-	}
+    public function getName()
+    {
+        return 'Realex Redirect';
+    }
 
-	public function getDefaultParameters()
-	{
-		return array(
-			'username' => '',
-			'secret' => '',
-		);
-	}
+    public function getDefaultParameters()
+    {
+        return array(
+            'username' => '',
+            'secret' => '',
+        );
+    }
 
-	public function getUsername()
-	{
-		return $this->getParameter('username');
-	}
+    public function getUsername()
+    {
+        return $this->getParameter('username');
+    }
 
-	public function setUsername($value)
-	{
-		return $this->setParameter('username', $value);
-	}
+    public function setUsername($value)
+    {
+        return $this->setParameter('username', $value);
+    }
 
-	public function getSecret()
-	{
-		return $this->getParameter('secret');
-	}
+    public function getSecret()
+    {
+        return $this->getParameter('secret');
+    }
 
-	public function setSecret($value)
-	{
-		return $this->setParameter('secret', $value);
-	}
+    public function setSecret($value)
+    {
+        return $this->setParameter('secret', $value);
+    }
 
-	public function purchase(array $parameters = array())
-	{
-		return $this->createRequest('\Omnipay\Realex\Message\RedirectPurchaseRequest', $parameters);
-	}
+    public function purchase(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Realex\Message\RedirectPurchaseRequest', $parameters);
+    }
 
-	public function completePurchase(array $parameters = array())
-	{
-		return $this->createRequest('\Omnipay\Realex\Message\RedirectCompletePurchaseRequest', $parameters);
-	}
+    public function completePurchase(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Realex\Message\RedirectCompletePurchaseRequest', $parameters);
+    }
 }
