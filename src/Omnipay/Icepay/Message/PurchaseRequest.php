@@ -11,62 +11,17 @@
 
 namespace Omnipay\Icepay\Message;
 
-use Omnipay\Common\Message\AbstractRequest;
-
 class PurchaseRequest extends AbstractRequest
 {
     protected $endpoint = 'https://pay.icepay.eu/Checkout.aspx';
-
-    public function getMerchantId()
-    {
-        return $this->getParameter('merchantId');
-    }
-
-    public function setMerchantId($value)
-    {
-        return $this->setParameter('merchantId', $value);
-    }
-
-    public function getSecretCode()
-    {
-        return $this->getParameter('secretCode');
-    }
-
-    public function setSecretCode($value)
-    {
-        return $this->setParameter('secretCode', $value);
-    }
-
-    public function getPaymentMethod()
-    {
-        return $this->getParameter('paymentMethod');
-    }
-
-    public function setPaymentMethod($value)
-    {
-        return $this->setParameter('paymentMethod', $value);
-    }
-
-    public function getIssuer()
-    {
-        return $this->getParameter('issuer');
-    }
-
-    public function setIssuer($value)
-    {
-        return $this->setParameter('issuer', $value);
-    }
-
-    public function getEndpoint()
-    {
-        return $this->endpoint;
-    }
 
     /**
      * {@inheritdoc}
      */
     public function getData()
     {
+        $this->validate('merchantId', 'secretCode', 'transactionId', 'amount', 'currency', 'paymentMethod', 'issuer');
+
         $data = array(
             'IC_Merchant' => $this->getMerchantId(),
             'IC_Amount' => $this->getAmountInteger(),
