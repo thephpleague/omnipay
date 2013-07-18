@@ -2,6 +2,7 @@
 
 namespace Omnipay\Sips\Message;
 
+use Doctrine\ORM\Persisters\AbstractEntityInheritancePersister;
 use Omnipay\Sips\Message\AuthorizeRequest;
 
 /**
@@ -9,6 +10,9 @@ use Omnipay\Sips\Message\AuthorizeRequest;
  */
 class AuthorizeResponse extends Response
 {
+    /**
+     * @inheritdoc
+     */
     protected function getResultComponents()
     {
         return array(
@@ -18,6 +22,9 @@ class AuthorizeResponse extends Response
         );
     }
 
+    /**
+     * @inheritdoc
+     */
     public function setData()
     {
         $this->validate('amount', 'card');

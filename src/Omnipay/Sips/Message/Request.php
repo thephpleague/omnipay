@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the Omnipay package.
- *
- * (c) Adrian Macneil <adrian@adrianmacneil.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Omnipay\Sips\Message;
 
 use Guzzle\Http\ClientInterface;
@@ -17,13 +8,37 @@ use Omnipay\Sips\Merchant;
 
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
+/**
+ * Class Request
+ * @package Omnipay\Sips\Message
+ */
 abstract class Request extends AbstractRequest
 {
+    /**
+     * The Merchant
+     *
+     * @var Merchant
+     */
     protected $merchant;
+
+    /**
+     * The path of the folder containing
+     * the Sips files (binaries, params...)
+     *
+     * @var string
+     */
     protected $sipsFolderPath;
+
+    /**
+     * The data to add to the request
+     *
+     * @var
+     */
     protected $sipsData;
 
     /**
+     * Sets the data to add to the request
+     *
      * @param mixed $sipsData
      */
     public function setSipsData($sipsData)
@@ -32,6 +47,8 @@ abstract class Request extends AbstractRequest
     }
 
     /**
+     * Gets the data to add to the request
+     *
      * @return mixed
      */
     public function getSipsData()
@@ -40,6 +57,9 @@ abstract class Request extends AbstractRequest
     }
 
     /**
+     * Sets The path of the folder containing
+     * the Sips files (binaries, params...)
+     *
      * @param string $sipsFolderPath
      */
     public function setSipsFolderPath($sipsFolderPath)
@@ -48,6 +68,9 @@ abstract class Request extends AbstractRequest
     }
 
     /**
+     * Gets the path of the folder containing
+     * the Sips files (binaries, params...)
+     *
      * @return string
      */
     public function getSipsFolderPath()
@@ -56,6 +79,8 @@ abstract class Request extends AbstractRequest
     }
 
     /**
+     * Gets the path to the Sips PathFile
+     *
      * @return string
      */
     public function getSipsPathFilePath()
@@ -64,6 +89,8 @@ abstract class Request extends AbstractRequest
     }
 
     /**
+     * Gets the path to the Sips request binary
+     *
      * @return string
      */
     public function getSipsRequestExecPath()
@@ -72,6 +99,8 @@ abstract class Request extends AbstractRequest
     }
 
     /**
+     * Gets the path to the Sips response binary
+     *
      * @return string
      */
     public function getSipsResponseExecPath()
@@ -80,6 +109,8 @@ abstract class Request extends AbstractRequest
     }
 
     /**
+     * Sets the merchant id
+     *
      * @param string $merchantId
      */
     public function setMerchantId($merchantId)
@@ -88,6 +119,8 @@ abstract class Request extends AbstractRequest
     }
 
     /**
+     * Sets the merchant language
+     *
      * @param mixed $merchantLanguage
      */
     public function setMerchantLanguage($merchantLanguage)
@@ -96,6 +129,8 @@ abstract class Request extends AbstractRequest
     }
 
     /**
+     * Sets the merchant country
+     *
      * @param mixed $merchantLanguage
      */
     public function setMerchantCountry($merchantCountry)
@@ -104,6 +139,8 @@ abstract class Request extends AbstractRequest
     }
 
     /**
+     * Gets the merchant information
+     *
      * @return mixed
      */
     public function getMerchant()
@@ -115,7 +152,7 @@ abstract class Request extends AbstractRequest
      * Create a new Request
      *
      * @param ClientInterface $httpClient  A Guzzle client to make API calls with
-     * @param HttpRequest     $httpRequest A Symfony HTTP request object
+     * @param HttpRequest $httpRequest A Symfony HTTP request object
      */
     public function __construct(ClientInterface $httpClient, HttpRequest $httpRequest)
     {

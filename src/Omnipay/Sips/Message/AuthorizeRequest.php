@@ -1,20 +1,20 @@
 <?php
 
-/*
- * This file is part of the Omnipay package.
- *
- * (c) Adrian Macneil <adrian@adrianmacneil.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Omnipay\Sips\Message;
 
 use Omnipay\Common\CreditCard;
 
+/**
+ * Class AuthorizeRequest
+ * @package Omnipay\Sips\Message
+ */
 class AuthorizeRequest extends Request
 {
+    /**
+     * Sends request to the Sips binary file for payment authorization
+     *
+     * @return AuthorizeResponse
+     */
     public function send()
     {
         $params = $this->getSipsParamString();
@@ -24,13 +24,18 @@ class AuthorizeRequest extends Request
         return $this->response = new AuthorizeResponse($this, $result);
     }
 
+    /**
+     * Gets a string representing all the parameters to pass to Sips
+     *
+     * @return string
+     */
     protected function getSipsParamString()
     {
         $params = 'merchant_id=' . $this->getMerchant()->getId();
         $params .= ' merchant_language=' . $this->getMerchant()->getLanguage();
         $params .= ' merchant_country=' . $this->getMerchant()->getCountry();
 
-        $params .= " pathfile=".$this->getSipsPathFilePath();
+        $params .= " pathfile=" . $this->getSipsPathFilePath();
         $params .= " amount=" . $this->getAmountInteger();
         $params .= " currency_code=" . $this->getCurrencyNumeric();
         $params .= " transaction_id=" . $this->getTransactionId();
@@ -51,6 +56,12 @@ class AuthorizeRequest extends Request
         return trim($params);
     }
 
+    /**
+     * Gets a string representing the shopping cart
+     * and the owner of the payment card
+     *
+     * @return string
+     */
     protected function getSipsCartString()
     {
         $cartParams = array();

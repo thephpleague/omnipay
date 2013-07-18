@@ -1,47 +1,158 @@
 <?php
 
-/*
- * This file is part of the Omnipay package.
- *
- * (c) Adrian Macneil <adrian@adrianmacneil.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Omnipay\Sips\Message;
 
 use Omnipay\Common\CreditCard;
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Sips\Merchant;
 use Omnipay\Sips\Message\Request;
+use Symfony\Component\Validator\Constraints\DateTime;
 
+/**
+ * Class Response
+ * @package Omnipay\Sips\Message
+ *
+ * // TODO Validate params with ATOS Sips documentation
+ *
+ */
 abstract class Response extends AbstractResponse
 {
+    /**
+     * The return code of the call
+     *
+     * @var int
+     */
     private $code = -1;
+
+    /**
+     * The debug message
+     * (only in debug mode)
+     *
+     * @var string
+     */
     private $debug;
+
+    /**
+     * The response message
+     *
+     * @var string
+     */
     private $message;
+
+    /**
+     * The transaction unique id (for the system)
+     *
+     * @var string
+     */
     private $transactionId;
+
+    /**
+     * A list of payment means
+     *
+     * @var string
+     */
     private $paymentMeans;
+
+    /**
+     * The transmission date
+     *
+     * @var string
+     */
     private $transmissionDate;
+
+    /**
+     * The payment time
+     *
+     * @var string
+     */
     private $paymentTime;
+
+    /**
+     * The payment date
+     *
+     * @var string
+     */
     private $paymentDate;
+
+    /**
+     * The response code
+     *
+     * @var string
+     */
     private $responseCode;
+
+    /**
+     * The payment certificate
+     *
+     * @var string
+     */
     private $paymentCertificate;
+
+    /**
+     * The authorisation id
+     * (only if the payment if authorised)
+     *
+     * @var string
+     */
     private $authorisationId;
+
+    /**
+     *
+     *
+     * @var string
+     */
     private $cvvFlag;
+    /**
+     * @var
+     */
     private $cvvResponseCode;
+    /**
+     * @var
+     */
     private $bankResponseCode;
+    /**
+     * @var
+     */
     private $complementaryCode;
+    /**
+     * @var
+     */
     private $complementaryInfo;
+    /**
+     * @var
+     */
     private $returnContext;
+    /**
+     * @var
+     */
     private $caddie;
+    /**
+     * @var
+     */
     private $receiptComplement;
+    /**
+     * @var
+     */
     private $language;
+    /**
+     * @var
+     */
     private $customerId;
+    /**
+     * @var
+     */
     private $orderId;
+    /**
+     * @var
+     */
     private $captureDay;
+    /**
+     * @var
+     */
     private $captureMode;
+    /**
+     * @var
+     */
     private $dataPrivate;
 
     /**
@@ -588,6 +699,9 @@ abstract class Response extends AbstractResponse
         return ($this->code == 1);
     }
 
+    /**
+     * @return mixed
+     */
     public function getTransactionReference()
     {
         /** @var AuthorizeRequest $request */
@@ -595,6 +709,11 @@ abstract class Response extends AbstractResponse
         return $request->getTransactionReference();
     }
 
+    /**
+     * @param Request $request
+     * @param $data
+     * @param string $class
+     */
     public function __construct(Request $request, $data, $class = '\Omnipay\Sips\Message\Response')
     {
         parent::__construct($request, $data);
@@ -614,6 +733,9 @@ abstract class Response extends AbstractResponse
         }
     }
 
+    /**
+     * @return array
+     */
     protected function getResultComponents()
     {
         return array();

@@ -12,17 +12,26 @@
 namespace Omnipay\Sips;
 
 use Omnipay\Common\AbstractGateway;
+use Omnipay\Sips\Message\AuthorizeRequest;
+use Omnipay\Sips\Message\ReturnRequest;
 
 /**
  * Sips Gateway
  */
 class Gateway extends AbstractGateway
 {
+
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'Sips';
     }
 
+    /**
+     * @return array
+     */
     public function getDefaultParameters()
     {
         return array(
@@ -31,26 +40,46 @@ class Gateway extends AbstractGateway
         );
     }
 
+    /**
+     * @return mixed
+     */
     public function getMerchantId()
     {
         return $this->getParameter('merchantId');
     }
 
+    /**
+     * @return mixed
+     */
     public function getSipsFolderPath()
     {
         return $this->getParameter('sipsFolderPath');
     }
 
+    /**
+     * @param $value
+     * @return $this
+     */
     public function setMerchantId($value)
     {
         return $this->setParameter('merchantId', $value);
     }
 
+    /**
+     * @param $value
+     * @return $this
+     */
     public function setSipsFolderPath($value)
     {
         return $this->setParameter('sipsFolderPath', $value);
     }
 
+    /**
+     * Creates a request to the gateway
+     *
+     * @param array $parameters
+     * @return AuthorizeRequest
+     */
     public function purchase(array $parameters = array())
     {
         $parameters['merchandId'] = $this->getMerchantId();
@@ -59,12 +88,13 @@ class Gateway extends AbstractGateway
         return $this->createRequest('\Omnipay\Sips\Message\AuthorizeRequest', $parameters);
     }
 
-    public function completePurchase(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\Sips\Message\CompletePurchaseRequest', $parameters);
-    }
-
-    public function cancelPurchase(array $parameters = array())
+    /**
+     * Handles a response from the gateway
+     *
+     * @param array $parameters
+     * @return ReturnRequest
+     */
+    public function returnPurchase(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\Sips\Message\ReturnRequest', $parameters);
     }
