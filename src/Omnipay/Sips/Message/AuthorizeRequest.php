@@ -45,7 +45,7 @@ class AuthorizeRequest extends Request
         $params .= " caddie=" . $cartParams;
 
         $params .= " cancel_return_url=" . $this->getCancelUrl();
-        $params .= " automatic_response_url=" . $this->getReturnUrl();
+        $params .= " automatic_response_url=" . $this->getNotifyUrl();
         $params .= " normal_return_url=" . $this->getReturnUrl();
 
         return trim($params);
