@@ -22,9 +22,15 @@ class RequestCall extends SipsBinaryCall
     {
         $params = $this->buildRequest();
         $path_bin = $this->getSipsRequestExecPath();
-        $result = exec("$path_bin $params");
 
-        return $this->response = new RequestResult($this, $result);
+        $result = exec("$path_bin $params");
+        $response = $this->response = new RequestResult($this, $result);
+
+        if(!file_exists($path_bin)){
+            $response->setError('Unable to find binary file : '.$path_bin.'. Is Sips Folder Path defined ?');
+        }
+
+        return $response;
     }
 
     /**

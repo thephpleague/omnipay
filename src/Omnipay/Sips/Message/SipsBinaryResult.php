@@ -111,7 +111,6 @@ abstract class SipsBinaryResult extends AbstractResponse
 
             // Creates a key/value array from the result
             $parameters = array_combine($components, $results);
-            var_dump($parameters);
 
             Helper::initialize($this, $parameters);
         }
