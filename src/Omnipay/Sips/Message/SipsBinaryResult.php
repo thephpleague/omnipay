@@ -99,18 +99,21 @@ abstract class SipsBinaryResult extends AbstractResponse
     {
         parent::__construct($request, $data);
 
-        // $date is like : "!param1!param2!...!paramX" + a last "!"... or not
-        $paramString = trim($data, '!');
+        if (strlen($data)) {
+            // $date is like : "!param1!param2!...!paramX" + a last "!"... or not
+            $paramString = trim($data, '!');
 
-        // $paramString is like : "param1!param2!...!paramX"
-        $results = explode("!", "$paramString");
+            // $paramString is like : "param1!param2!...!paramX"
+            $results = explode("!", "$paramString");
 
-        // $results can contain a subset of all the components
-        $components = array_slice($this->getResultComponents(), 0, count($results));
+            // $results can contain a subset of all the components
+            $components = array_slice($this->getResultComponents(), 0, count($results));
 
-        // Creates a key/value array from the result
-        $parameters = array_combine($components, $results);
+            // Creates a key/value array from the result
+            $parameters = array_combine($components, $results);
+            var_dump($parameters);
 
-        Helper::initialize($this, $parameters);
+            Helper::initialize($this, $parameters);
+        }
     }
 }
