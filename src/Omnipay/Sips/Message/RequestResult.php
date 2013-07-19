@@ -11,26 +11,41 @@ use Omnipay\Sips\Message\RequestCall;
 class RequestResult extends SipsBinaryResult
 {
     /**
-     * @inheritdoc
+     * A html code buffer
+     *
+     * @var string
      */
-    protected function getResultComponents()
+    private $buffer;
+
+    /**
+     * Sets the buffer content
+     *
+     * @param string $buffer
+     */
+    public function setBuffer($buffer)
     {
-        return array(
-            'code' => 1,
-            'debug' => 2,
-            'message' => 3
-        );
+        $this->buffer = $buffer;
+    }
+
+    /**
+     * Gets the buffer content
+     *
+     * @return string
+     */
+    public function getBuffer()
+    {
+        return $this->buffer;
     }
 
     /**
      * @inheritdoc
      */
-    public function setData()
+    protected function getResultComponents()
     {
-        $this->validate('amount', 'card');
-
-        $this->getCard()->validate();
-
-        return array('amount' => $this->getAmount());
+        return array(
+            'code',
+            'error',
+            'buffer'
+        );
     }
 }

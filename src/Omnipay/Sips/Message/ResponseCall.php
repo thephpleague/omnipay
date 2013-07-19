@@ -1,23 +1,46 @@
 <?php
 
-/*
- * This file is part of the Omnipay package.
- *
- * (c) Adrian Macneil <adrian@adrianmacneil.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Omnipay\Sips\Message;
 
-use Omnipay\Common\CreditCard;
-
+/**
+ * Class ResponseCall
+ *
+ * Defines a call to the Sips Response binary
+ *
+ * @package Omnipay\Sips\Message
+ */
 class ResponseCall extends SipsBinaryCall
 {
+    /**
+     * Raw data coming back from Sips
+     *
+     * @var
+     */
+    protected $sipsData;
+
+    /**
+     * Sets the data to add to the request
+     *
+     * @param mixed $sipsData
+     */
+    public function setSipsData($sipsData)
+    {
+        $this->sipsData = $sipsData;
+    }
+
+    /**
+     * Gets the data to add to the request
+     *
+     * @return mixed
+     */
+    public function getSipsData()
+    {
+        return $this->sipsData;
+    }
+
     public function send()
     {
-        $params = $this->getSipsParamString();
+        $params = $this->buildRequest();
         $path_bin = $this->getSipsResponseExecPath();
 
         $result = exec("$path_bin $params");
@@ -25,12 +48,24 @@ class ResponseCall extends SipsBinaryCall
         return $this->response = new ResponseResult($this, $result);
     }
 
-    protected function getSipsParamString()
+    /**
+     * Gets a string representing all the parameters to pass to Sips
+     *
+     * @return string
+     */
+    protected function buildRequest()
     {
-        $params = 'message=' . $this->getSipsData();
-        $params .= " pathfile=".$this->getSipsPathFilePath();
+        $params = array(
+            'pathfile' => $this->getSipsPathFilePath(),
+            'message' => $this->getSipsData()
+        );
 
-        return trim($params);
+        $response = array();
+        foreach ($params as $key => $value) {
+            $response[] = $key . '=' . $value;
+        }
+
+        return implode(' ', $response);
     }
 
     /**

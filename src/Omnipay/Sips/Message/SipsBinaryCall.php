@@ -9,17 +9,63 @@ use Omnipay\Sips\Merchant;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 /**
- * Class Request
+ * Class SipsBinaryCall
+ * Represents a call to a Sips binary
+ *
  * @package Omnipay\Sips\Message
  */
 abstract class SipsBinaryCall extends AbstractRequest
 {
     /**
-     * The Merchant
+     * The merchant
      *
      * @var Merchant
      */
     protected $merchant;
+
+    #region merchant setters
+
+    /**
+     * Sets the merchant id
+     *
+     * @param string $merchantId
+     */
+    public function setMerchantId($merchantId)
+    {
+        $this->merchant->setId($merchantId);
+    }
+
+    /**
+     * Sets the merchant language
+     *
+     * @param mixed $merchantLanguage
+     */
+    public function setMerchantLanguage($merchantLanguage)
+    {
+        $this->merchant->setLanguage($merchantLanguage);
+    }
+
+    /**
+     * Sets the merchant country
+     *
+     * @param $merchantCountry
+     */
+    public function setMerchantCountry($merchantCountry)
+    {
+        $this->merchant->setCountry($merchantCountry);
+    }
+
+    #endregion
+
+    /**
+     * Gets the merchant information
+     *
+     * @return mixed
+     */
+    public function getMerchant()
+    {
+        return $this->merchant;
+    }
 
     /**
      * The path of the folder containing
@@ -28,33 +74,6 @@ abstract class SipsBinaryCall extends AbstractRequest
      * @var string
      */
     protected $sipsFolderPath;
-
-    /**
-     * The data to add to the request
-     *
-     * @var
-     */
-    protected $sipsData;
-
-    /**
-     * Sets the data to add to the request
-     *
-     * @param mixed $sipsData
-     */
-    public function setSipsData($sipsData)
-    {
-        $this->sipsData = $sipsData;
-    }
-
-    /**
-     * Gets the data to add to the request
-     *
-     * @return mixed
-     */
-    public function getSipsData()
-    {
-        return $this->sipsData;
-    }
 
     /**
      * Sets The path of the folder containing
@@ -109,46 +128,6 @@ abstract class SipsBinaryCall extends AbstractRequest
     }
 
     /**
-     * Sets the merchant id
-     *
-     * @param string $merchantId
-     */
-    public function setMerchantId($merchantId)
-    {
-        $this->merchant->setId($merchantId);
-    }
-
-    /**
-     * Sets the merchant language
-     *
-     * @param mixed $merchantLanguage
-     */
-    public function setMerchantLanguage($merchantLanguage)
-    {
-        $this->merchant->setLanguage($merchantLanguage);
-    }
-
-    /**
-     * Sets the merchant country
-     *
-     * @param mixed $merchantLanguage
-     */
-    public function setMerchantCountry($merchantCountry)
-    {
-        $this->merchant->setCountry($merchantCountry);
-    }
-
-    /**
-     * Gets the merchant information
-     *
-     * @return mixed
-     */
-    public function getMerchant()
-    {
-        return $this->merchant;
-    }
-
-    /**
      * Create a new Request
      *
      * @param ClientInterface $httpClient  A Guzzle client to make API calls with
@@ -159,4 +138,11 @@ abstract class SipsBinaryCall extends AbstractRequest
         parent::__construct($httpClient, $httpRequest);
         $this->merchant = new Merchant();
     }
+
+    /**
+     * Gets a string representing all the parameters to pass to the Sips binary
+     *
+     * @return string
+     */
+    abstract protected function buildRequest();
 }
