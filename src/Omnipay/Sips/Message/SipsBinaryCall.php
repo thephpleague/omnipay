@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request as HttpRequest;
  * Class Request
  * @package Omnipay\Sips\Message
  */
-abstract class Request extends AbstractRequest
+abstract class SipsBinaryCall extends AbstractRequest
 {
     /**
      * The Merchant

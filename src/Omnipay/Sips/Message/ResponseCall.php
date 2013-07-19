@@ -13,7 +13,7 @@ namespace Omnipay\Sips\Message;
 
 use Omnipay\Common\CreditCard;
 
-class ReturnRequest extends Request
+class ResponseCall extends SipsBinaryCall
 {
     public function send()
     {
@@ -22,7 +22,7 @@ class ReturnRequest extends Request
 
         $result = exec("$path_bin $params");
 
-        return $this->response = new ReturnResponse($this, $result);
+        return $this->response = new ResponseResult($this, $result);
     }
 
     protected function getSipsParamString()

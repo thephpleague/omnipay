@@ -2,29 +2,35 @@
 
 namespace Omnipay\Sips;
 
+/**
+ * Class Merchant
+ *
+ * @package Omnipay\Sips
+ */
 class Merchant
 {
+    /**
+     * The Merchant id
+     *
+     * @var string
+     */
     private $id;
+
+    /**
+     * The Merchant country
+     * @var string
+     */
     private $country;
+
+    /**
+     * The Merchant language
+     * @var string
+     */
     private $language;
 
     /**
-     * @return mixed
-     */
-    public function getCountry()
-    {
-        return $this->country;
-    }
-
-    /**
-     * @param mixed $country
-     */
-    public function setCountry($country)
-    {
-        $this->country = $country;
-    }
-
-    /**
+     * Gets the Merchant id
+     *
      * @return mixed
      */
     public function getId()
@@ -33,6 +39,8 @@ class Merchant
     }
 
     /**
+     * Sets the Merchant Id
+     *
      * @param mixed $id
      */
     public function setId($id)
@@ -41,6 +49,26 @@ class Merchant
     }
 
     /**
+     * Gets the Merchant country
+     * @param string $country
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+    }
+
+    /**
+     * Sets the Merchant country
+     * @return string
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * Gets the Merchant language
+     *
      * @return mixed
      */
     public function getLanguage()
@@ -49,6 +77,8 @@ class Merchant
     }
 
     /**
+     * Sets the Merchant language
+     *
      * @param mixed $language
      */
     public function setLanguage($language)

@@ -5,7 +5,7 @@ namespace Omnipay\Sips\Message;
 use Omnipay\Common\CreditCard;
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Sips\Merchant;
-use Omnipay\Sips\Message\Request;
+use Omnipay\Sips\Message\SipsBinaryCall;
 use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints\DateTime;
  * // TODO Validate params with ATOS Sips documentation
  *
  */
-abstract class Response extends AbstractResponse
+abstract class SipsBinaryResult extends AbstractResponse
 {
     /**
      * The return code of the call
@@ -160,7 +160,7 @@ abstract class Response extends AbstractResponse
      */
     public function setAmount($amount)
     {
-        /** @var Request $request */
+        /** @var SipsBinaryCall $request */
         $request = $this->request;
         $request->setAmount($amount);
     }
@@ -250,7 +250,7 @@ abstract class Response extends AbstractResponse
      */
     public function setCardNumber($cardNumber)
     {
-        /** @var Request $request */
+        /** @var SipsBinaryCall $request */
         $request = $this->request;
 
         /** @var CreditCard $card */
@@ -313,7 +313,7 @@ abstract class Response extends AbstractResponse
      */
     public function setCurrencyCode($currencyCode)
     {
-        /** @var Request $request */
+        /** @var SipsBinaryCall $request */
         $request = $this->request;
         $request->setCurrency($currencyCode);
     }
@@ -323,7 +323,7 @@ abstract class Response extends AbstractResponse
      */
     public function setCustomerEmail($customerEmail)
     {
-        /** @var Request $request */
+        /** @var SipsBinaryCall $request */
         $request = $this->request;
 
         /** @var CreditCard $card */
@@ -353,7 +353,7 @@ abstract class Response extends AbstractResponse
      */
     public function setCustomerIpAddress($customerIpAddress)
     {
-        /** @var Request $request */
+        /** @var SipsBinaryCall $request */
         $request = $this->request;
 
         $request->setClientIp($customerIpAddress);
@@ -444,7 +444,7 @@ abstract class Response extends AbstractResponse
      */
     public function setMerchantCountry($merchantCountry)
     {
-        /** @var Request $request */
+        /** @var SipsBinaryCall $request */
         $request = $this->request;
 
         /** @var Merchant $merchant */
@@ -458,7 +458,7 @@ abstract class Response extends AbstractResponse
      */
     public function setMerchantId($merchantId)
     {
-        /** @var Request $request */
+        /** @var SipsBinaryCall $request */
         $request = $this->request;
 
         /** @var Merchant $merchant */
@@ -472,7 +472,7 @@ abstract class Response extends AbstractResponse
      */
     public function setMerchantLanguage($merchantLanguage)
     {
-        /** @var Request $request */
+        /** @var SipsBinaryCall $request */
         $request = $this->request;
 
         /** @var Merchant $merchant */
@@ -704,17 +704,17 @@ abstract class Response extends AbstractResponse
      */
     public function getTransactionReference()
     {
-        /** @var AuthorizeRequest $request */
+        /** @var RequestCall $request */
         $request = $this->request;
         return $request->getTransactionReference();
     }
 
     /**
-     * @param Request $request
+     * @param SipsBinaryCall $request
      * @param $data
      * @param string $class
      */
-    public function __construct(Request $request, $data, $class = '\Omnipay\Sips\Message\Response')
+    public function __construct(SipsBinaryCall $request, $data, $class = '\Omnipay\Sips\Message\Response')
     {
         parent::__construct($request, $data);
 

@@ -2,12 +2,12 @@
 
 namespace Omnipay\Sips\Message;
 
-use Omnipay\Sips\Message\AuthorizeRequest;
+use Omnipay\Sips\Message\RequestCall;
 
 /**
  * Sips Authorize Response
  */
-class ReturnResponse extends Response
+class ResponseResult extends SipsBinaryResult
 {
     protected function getResultComponents()
     {
