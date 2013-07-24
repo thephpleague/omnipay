@@ -1,0 +1,59 @@
+HTTP/1.1 200 OK 
+Server: nginx 
+Date: Wed, 24 Jul 2013 07:14:02 GMT 
+Content-Type: application/json;charset=utf-8 
+Content-Length: 1092 
+Connection: keep-alive 
+Access-Control-Allow-Credentials: true 
+Access-Control-Max-Age: 300 
+Cache-Control: no-cache, no-store 
+
+{ 
+	"id": "ch_29yrvk84GVDsq9", 
+	"object": "charge", 
+	"created": 1373290882, 
+	"livemode": false, 
+	"paid": true, 
+	"amount": 4200, 
+	"currency": "gbp", 
+	"refunded": false, 
+	"fee": 152, 
+	"fee_details": [ 
+		{ 
+			"amount": 152, 
+			"currency": "gbp", 
+			"type": "stripe_fee", 
+			"description": "Stripe processing fees", 
+			"application": null, 
+			"amount_refunded": 0 
+		} 
+	], 
+	"card": { 
+		"object": "card", 
+		"last4": "4242", 
+		"type": "Visa", 
+		"exp_month": 5, 
+		"exp_year": 2015, 
+		"fingerprint": "o7bnpaR6swBKn5O7", 
+		"customer": null, 
+		"country": "US", 
+		"name": "John Doe", 
+		"address_line1": "", 
+		"address_line2": "", 
+		"address_city": "", 
+		"address_state": "", 
+		"address_zip": "", 
+		"address_country": "", 
+		"cvc_check": "pass", 
+		"address_line1_check": "pass", 
+		"address_zip_check": "pass" 
+	}, 
+	"captured": true, 
+	"failure_message": null, 
+	"failure_code": null, 
+	"amount_refunded": 0, 
+	"customer": null, 
+	"invoice": null, 
+	"description": "A12BCD/2", 
+	"dispute": null 
+}
