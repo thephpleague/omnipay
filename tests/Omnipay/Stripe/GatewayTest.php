@@ -58,7 +58,7 @@ class GatewayTest extends GatewayTestCase
     {
         $request = $this->gateway->fetchTransaction(array());
 
-        $this->assertInstanceOf('Omnipay\Stripe\Message\FetchTransactionRequest', $request)
+        $this->assertInstanceOf('Omnipay\Stripe\Message\FetchTransactionRequest', $request);
     }
 
     public function testCreateCard()
