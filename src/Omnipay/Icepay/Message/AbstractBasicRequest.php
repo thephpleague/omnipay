@@ -16,7 +16,15 @@ use stdClass;
 
 abstract class AbstractBasicRequest extends AbstractRequest
 {
+    /**
+     * @var string
+     */
     protected $endpoint = 'https://connect.icepay.com/webservice/icepay.svc?wsdl';
+
+    /**
+     * @var string
+     */
+    protected $namespace = 'connect.icepay.com';
 
     public function getTimestamp()
     {
@@ -30,12 +38,15 @@ abstract class AbstractBasicRequest extends AbstractRequest
 
     /**
      * @return SoapClient
+     *
+     * @todo this has to go
      */
     protected function getSoapClient()
     {
         return new SoapClient($this->getEndpoint(), array(
             'location' => $this->getEndpoint(),
             'cache_wsdl' => WSDL_CACHE_NONE,
+            'trace' => true,
         ));
     }
 

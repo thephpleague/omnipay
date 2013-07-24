@@ -11,6 +11,9 @@
 
 namespace Omnipay\Icepay\Message;
 
+use DOMDocument;
+use DOMElement;
+use DOMXPath;
 use Omnipay\Common\Message\AbstractResponse;
 
 class FetchPaymentMethodsResponse extends AbstractResponse
@@ -20,7 +23,8 @@ class FetchPaymentMethodsResponse extends AbstractResponse
      */
     public function isSuccessful()
     {
-        return isset($this->data->GetMyPaymentMethodsResult->PaymentMethods->PaymentMethod);
+        // TODO: handle error responses
+        return true;
     }
 
     /**
@@ -31,70 +35,169 @@ class FetchPaymentMethodsResponse extends AbstractResponse
      */
     public function getPaymentMethods()
     {
-        $result = array();
+        // Avoid warning on malformed namespace
+        $data = str_replace('connect.icepay.com', 'http://connect.icepay.com', $this->data);
 
-        foreach ($this->toArray($this->data->GetMyPaymentMethodsResult->PaymentMethods->PaymentMethod) as $paymentMethod) {
-            $result[$paymentMethod->PaymentMethodCode] = array(
-                'description' => $paymentMethod->Description,
-                'issuers' => $this->extractIssuers($paymentMethod),
-            );
+        $document = new DOMDocument('1.0', 'utf-8');
+        $document->loadXML($data);
+
+        $query = "/s:Envelope/s:Body/*[name()='GetMyPaymentMethodsResponse']/*[name()='GetMyPaymentMethodsResult']/a:PaymentMethods";
+        $rawData = $this->getMainXPath($document)->query($query);
+
+        $paymentMethods = array();
+        foreach ($rawData as $item) {
+            foreach ($item->childNodes as $paymentMethod) {
+                $paymentMethodDocument = $this->documentFromElement($paymentMethod);
+                $paymentMethods = array_merge($paymentMethods, $this->parsePaymentMethod($paymentMethodDocument));
+            }
         }
 
-        return $result;
+        return $paymentMethods;
     }
 
-    /**
-     * Convert given data to array if it isn't already one.
-     *
-     * @param mixed $data
-     *
-     * @return array
-     */
-    private function toArray($data)
+    private function parsePaymentMethod(DOMDocument $document)
     {
-        if (!is_array($data)) {
-            $data = array($data);
+        $rawData = $this->getSubXPath($document)->query("/b:PaymentMethod/*");
+
+        $data = array();
+        foreach ($rawData as $item) {
+            if ('b:Issuers' === $item->nodeName) {
+                $data['Issuers'] = $this->parseIssuers($this->documentFromElement($item));
+                continue;
+            }
+
+            $data[str_replace('b:', '', $item->nodeName)] = $item->nodeValue;
+        }
+
+        return $this->processResult($data, 'PaymentMethodCode');
+    }
+
+    private function parseIssuers(DOMDocument $document)
+    {
+        $rawData = $this->getSubXPath($document)->query("/b:Issuers/*");
+
+        $data = array();
+        foreach ($rawData as $item) {
+            $issuerDocument = $this->documentFromElement($item);
+            $data = array_merge($data, $this->parseIssuer($issuerDocument));
         }
 
         return $data;
     }
 
-    /**
-     * @param mixed $paymentMethod
-     *
-     * @return array
-     */
-    private function extractIssuers($paymentMethod)
+    private function parseIssuer(DOMDocument $document)
     {
-        $issuers = array();
+        $rawData = $this->getSubXPath($document)->query("/b:Issuer/*");
 
-        foreach ($this->toArray($paymentMethod->Issuers->Issuer) as $issuer) {
-            $issuers[$issuer->IssuerKeyword] = array(
-                'description' => $issuer->Description,
-                'countries' => $this->extractCountries($issuer),
-            );
+        $data = array();
+        foreach ($rawData as $item) {
+            if ('b:Countries' === $item->nodeName) {
+                $data['Countries'] = $this->parseCountries($this->documentFromElement($item));
+                continue;
+            }
+
+            $data[str_replace('b:', '', $item->nodeName)] = $item->nodeValue;
         }
 
-        return $issuers;
+        return $this->processResult($data, 'IssuerKeyword');
+    }
+
+    private function parseCountries(DOMDocument $document)
+    {
+        $rawData = $this->getSubXPath($document)->query("/b:Countries/*");
+
+        $data = array();
+        foreach ($rawData as $item) {
+            $countryDocument = $this->documentFromElement($item);
+            $data = array_merge($data, $this->parseCountry($countryDocument));
+        }
+
+        return $data;
+    }
+
+    private function parseCountry(DOMDocument $document)
+    {
+        $rawData = $this->getSubXPath($document)->query("/b:Country/*");
+
+        $data = array();
+        foreach ($rawData as $item) {
+            $data[str_replace('b:', '', $item->nodeName)] = $item->nodeValue;
+        }
+
+        return $this->processResult($data, 'CountryCode');
     }
 
     /**
-     * @param mixed $issuer
+     * @param DOMDocument $document
+     * @param array       $namespaces
+     *
+     * @return DOMXPath
+     */
+    private function getXPath(DOMDocument $document, array $namespaces = array())
+    {
+        $xpath = new DOMXPath($document);
+
+        foreach ($namespaces as $prefix => $uri) {
+            $xpath->registerNamespace($prefix, $uri);
+        }
+
+        return $xpath;
+    }
+
+    /**
+     * @param DOMDocument $document
+     *
+     * @return DOMXPath
+     */
+    private function getMainXPath(DOMDocument $document)
+    {
+        return $this->getXPath($document, array(
+            's' => 'http://schemas.xmlsoap.org/soap/envelope/',
+            'a' => 'http://schemas.datacontract.org/2004/07/APIService',
+        ));
+    }
+
+    /**
+     * @param DOMDocument $document
+     *
+     * @return DOMXPath
+     */
+    private function getSubXPath(DOMDocument $document)
+    {
+        return $this->getXPath($document, array(
+            'b' => 'http://schemas.datacontract.org/2004/07/APIService.Responses',
+        ));
+    }
+
+    /**
+     * @param DOMElement $element
+     *
+     * @return DOMDocument
+     */
+    private function documentFromElement(DOMElement $element)
+    {
+        $document = new DOMDocument('1.0', 'utf-8');
+        $document->appendChild($document->importNode($element, true));
+
+        return $document;
+    }
+
+    /**
+     * @param array  $data
+     * @param string $key
      *
      * @return array
      */
-    private function extractCountries($issuer)
+    private function processResult(array $data, $key)
     {
-        $countries = array();
+        $result = array();
 
-        foreach ($this->toArray($issuer->Countries->Country) as $country) {
-            $countries[$country->CountryCode] = array(
-                'currency' => $country->Currency,
-                'maxAmount' => $country->MaximumAmount,
-                'minAmount' => $country->MinimumAmount,
-            );
+        foreach ($data as $index => $value) {
+            if ($index != $key) {
+                $result[$data[$key]][$index] = $value;
+            }
         }
 
-        return $countries;
+        return $result;
     }
 }
