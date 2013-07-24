@@ -1,5 +1,11 @@
 # Changelog :zap:
 
+# v1.0.2 (2013-07-23)
+
+* Added MultiSafepay gateway
+* Added PayPal Subject parameter
+* PHPDoc fixes
+
 # v1.0.1 (2013-06-29)
 
 * Added Buckaroo gateway
