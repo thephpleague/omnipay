@@ -63,7 +63,7 @@ class DirectGateway extends AbstractGateway
 
     public function completeAuthorize(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\SagePay\Message\DirectAuthorizeRequest', $parameters);
+        return $this->createRequest('\Omnipay\SagePay\Message\DirectCompleteAuthorizeRequest', $parameters);
     }
 
     public function capture(array $parameters = array())
