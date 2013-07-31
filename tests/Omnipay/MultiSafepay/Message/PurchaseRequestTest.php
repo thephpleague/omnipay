@@ -110,6 +110,23 @@ class PurchaseRequestTest extends TestCase
     }
 
     /**
+     * @dataProvider specialCharsDataProvider
+     */
+    public function testGetDataWithUrlsWithSpecialChars($xml)
+    {
+        $this->request->setReturnUrl('http://localhost/?one=1&two=2');
+        $this->request->setCancelUrl('http://localhost/?one=1&two=2');
+        $this->request->setNotifyUrl('http://localhost/?one=1&two=2');
+        $data = $this->request->getData();
+        $this->assertInstanceOf('SimpleXMLElement', $data);
+
+        // Just so the provider remains readable...
+        $dom = dom_import_simplexml($data)->ownerDocument;
+        $dom->formatOutput = true;
+        $this->assertEquals($xml, $dom->saveXML());
+    }
+
+    /**
      * @covers \Omnipay\MultiSafepay\Message\PurchaseRequest::generateSignature()
      */
     public function testGenerateSignature()
@@ -185,6 +202,56 @@ EOF;
     <redirect_url>http://localhost/return</redirect_url>
     <gateway>another</gateway>
   </merchant>
+  <customer>
+    <ipaddress>127.0.0.1</ipaddress>
+    <locale>a language</locale>
+    <email>something@example.com</email>
+    <firstname>first name</firstname>
+    <lastname>last name</lastname>
+    <address1>address 1</address1>
+    <address2>address 2</address2>
+    <zipcode>1000</zipcode>
+    <city>a city</city>
+    <country>a country</country>
+    <phone>phone number</phone>
+  </customer>
+  <google_analytics>analytics code</google_analytics>
+  <transaction>
+    <id>123456</id>
+    <currency>EUR</currency>
+    <amount>10000</amount>
+    <description>desc</description>
+    <var1>extra 1</var1>
+    <var2>extra 2</var2>
+    <var3>extra 3</var3>
+  </transaction>
+  <signature>bb886caff589f17e81b21097a39e47c2</signature>
+</redirecttransaction>
+
+EOF;
+
+        return array(
+            array($xml),
+        );
+    }
+
+    public function specialCharsDataProvider()
+    {
+        $xml = <<<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<redirecttransaction ua="Omnipay">
+  <merchant>
+    <account>111111</account>
+    <site_id>222222</site_id>
+    <site_secure_code>333333</site_secure_code>
+    <notification_url>http://localhost/?one=1&amp;two=2</notification_url>
+    <cancel_url>http://localhost/?one=1&amp;two=2</cancel_url>
+    <redirect_url>http://localhost/?one=1&amp;two=2</redirect_url>
+    <gateway>IDEAL</gateway>
+  </merchant>
+  <gatewayinfo>
+    <issuerid>issuer</issuerid>
+  </gatewayinfo>
   <customer>
     <ipaddress>127.0.0.1</ipaddress>
     <locale>a language</locale>
