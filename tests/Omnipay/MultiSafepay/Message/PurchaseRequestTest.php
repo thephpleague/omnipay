@@ -135,7 +135,7 @@ class PurchaseRequestTest extends TestCase
         $method->setAccessible(true);
 
         $signature = $method->invoke($this->request);
-        $this->assertEquals('bb886caff589f17e81b21097a39e47c2', $signature);
+        $this->assertEquals('ad447bab87b8597853432c891e341db1', $signature);
     }
 
     public function allDataProvider()
@@ -178,7 +178,7 @@ class PurchaseRequestTest extends TestCase
     <var2>extra 2</var2>
     <var3>extra 3</var3>
   </transaction>
-  <signature>bb886caff589f17e81b21097a39e47c2</signature>
+  <signature>ad447bab87b8597853432c891e341db1</signature>
 </redirecttransaction>
 
 EOF;
@@ -225,7 +225,7 @@ EOF;
     <var2>extra 2</var2>
     <var3>extra 3</var3>
   </transaction>
-  <signature>bb886caff589f17e81b21097a39e47c2</signature>
+  <signature>ad447bab87b8597853432c891e341db1</signature>
 </redirecttransaction>
 
 EOF;
