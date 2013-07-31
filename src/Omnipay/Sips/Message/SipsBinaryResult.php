@@ -100,6 +100,7 @@ abstract class SipsBinaryResult extends AbstractResponse
         parent::__construct($request, $data);
 
         if (strlen($data)) {
+
             // $date is like : "!param1!param2!...!paramX" + a last "!"... or not
             $paramString = trim($data, '!');
 

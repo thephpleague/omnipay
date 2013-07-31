@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Request as HttpRequest;
  */
 abstract class SipsBinaryCall extends AbstractRequest
 {
+    protected $returnContext;
+
     /**
      * The merchant
      *
@@ -125,6 +127,26 @@ abstract class SipsBinaryCall extends AbstractRequest
     public function getSipsResponseExecPath()
     {
         return $this->sipsFolderPath . '/bin/response';
+    }
+
+    /**
+     * @param mixed $returnContext
+     *
+     * @return SipsBinaryCall
+     */
+    public function setReturnContext($returnContext)
+    {
+        $this->returnContext = $returnContext;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReturnContext()
+    {
+        return $this->returnContext;
     }
 
     /**

@@ -60,12 +60,13 @@ class RequestCall extends SipsBinaryCall
             'amount' => $this->getAmountInteger(),
             'currency_code' => $this->getCurrencyNumeric(),
             'transaction_id' => $this->getTransactionId(),
-            'order_id' => $this->getTransactionId(),
+            'order_id' => $this->getTransactionReference(),
 
-            'customer_email' => $card->getEmail(),
+            'customer_email' => $card ? $card->getEmail() : '',
             'customer_ip_address' => $this->getClientIp(),
 
             'caddie' => $this->buildCaddie(),
+            'return_context' => $this->getReturnContext(),
 
             'cancel_return_url' => $this->getCancelUrl(),
             'automatic_response_url' => $this->getNotifyUrl(),

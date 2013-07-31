@@ -3,6 +3,7 @@
 namespace Omnipay\Sips\Message;
 
 use Omnipay\Sips\Message\RequestCall;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Sips Authorize Response
@@ -43,9 +44,26 @@ class ResponseResult extends SipsBinaryResult
             'customerIpAddress',
             'captureDay',
             'captureMode',
-            'data'
+            'data',
+            'transactionCondition'
         );
     }
+
+    private $transactionId;
+
+    private $orderId;
+
+    private $caddie;
+
+    private $cardNumber;
+
+    private $amount;
+
+    private $transmissionDate;
+
+    private $returnContext;
+
+    private $transactionCondition;
 
     /**
      * A list of payment means
@@ -310,6 +328,11 @@ class ResponseResult extends SipsBinaryResult
         return $this->paymentDate;
     }
 
+    public function getPaymentDateTime()
+    {
+        return \DateTime::createFromFormat('Ymd Gis', sprintf("%s %s", $this->paymentDate, $this->paymentTime));
+    }
+
     /**
      * Sets the payment means
      *
@@ -399,6 +422,171 @@ class ResponseResult extends SipsBinaryResult
     public function getCaptureMode()
     {
         return $this->captureMode;
+    }
+
+    /**
+     * @param mixed $amount
+     *
+     * @return ResponseResult
+     */
+    public function setAmount($amount)
+    {
+        $this->amount = $amount;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAmount()
+    {
+        return $this->amount;
+    }
+
+    /**
+     * @param mixed $caddie
+     *
+     * @return ResponseResult
+     */
+    public function setCaddie($caddie)
+    {
+        $this->caddie = $caddie;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCaddie()
+    {
+        return $this->caddie;
+    }
+
+    /**
+     * @param mixed $cardNumber
+     *
+     * @return ResponseResult
+     */
+    public function setCardNumber($cardNumber)
+    {
+        $this->cardNumber = $cardNumber;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCardNumber()
+    {
+        return $this->cardNumber;
+    }
+
+    /**
+     * @param mixed $orderId
+     *
+     * @return ResponseResult
+     */
+    public function setOrderId($orderId)
+    {
+        $this->orderId = $orderId;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrderId()
+    {
+        return $this->orderId;
+    }
+
+    /**
+     * @param mixed $transactionId
+     *
+     * @return ResponseResult
+     */
+    public function setTransactionId($transactionId)
+    {
+        $this->transactionId = $transactionId;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTransactionId()
+    {
+        return $this->transactionId;
+    }
+
+    /**
+     * @param mixed $transmissionDate
+     *
+     * @return ResponseResult
+     */
+    public function setTransmissionDate($transmissionDate)
+    {
+        $this->transmissionDate = $transmissionDate;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTransmissionDate()
+    {
+        return $this->transmissionDate;
+    }
+
+    public function getTransmissionDateTime()
+    {
+        return \DateTime::createFromFormat('YmdGis', $this->transmissionDate);
+    }
+
+    /**
+     * @param mixed $returnContext
+     *
+     * @return ResponseResult
+     */
+    public function setReturnContext($returnContext)
+    {
+        $this->returnContext = $returnContext;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReturnContext()
+    {
+        return $this->returnContext;
+    }
+
+    /**
+     * @param mixed $transactionCondition
+     *
+     * @return ResponseResult
+     */
+    public function setTransactionCondition($transactionCondition)
+    {
+        $this->transactionCondition = $transactionCondition;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTransactionCondition()
+    {
+        return $this->transactionCondition;
     }
 
     /**
