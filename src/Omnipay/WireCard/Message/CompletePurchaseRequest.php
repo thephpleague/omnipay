@@ -38,7 +38,7 @@ class CompletePurchaseRequest extends PurchaseRequest
     protected function getCurl()
     {
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $URL_DATASTORAGE_INIT);
+        curl_setopt($curl, CURLOPT_URL, $this->getDataStorageInit());
         curl_setopt($curl, CURLOPT_PORT, 443);
         curl_setopt($curl, CURLOPT_PROTOCOLS, CURLPROTO_HTTPS);
         curl_setopt($curl, CURLOPT_POST, true);
@@ -50,17 +50,42 @@ class CompletePurchaseRequest extends PurchaseRequest
 
     }
 
+    protected function getDataStorageInit()
+    {
+        return 'some/url';
+    }
+
     protected function getPostFieldsAsString()
     {
         $postFields = "";
-        $postFields .= "customerId=" . $customerId;
-        $postFields .= "&shopId=" . $shopId;
+        $postFields .= "customerId=" . $this->getCustomerId();
+        $postFields .= "&shopId=" . $this->getShopId();
         $postFields .= "&orderIdent=" . $orderIdent;
-        $postFields .= "&returnUrl=" . $returnURL;
-        $postFields .= "&language=" . $language;
+        $postFields .= "&returnUrl=" . $this->getReturnUrl();
+        $postFields .= "&language=" . $this->getLanguage();
         $postFields .= "&requestFingerprint=" . $this->getRequestFingerPrint();
         return $postFields;
 
+    }
+
+    protected function getCustomerId()
+    {
+        return 12345;
+    }
+
+    protected function getShopId()
+    {
+        return 123;
+    }
+
+    protected function getReturnUrl()
+    {
+        return 'some/url';
+    }
+
+    protected function getLanguage()
+    {
+        return 'en';
     }
 
     protected function getRequestFingerPrint()
