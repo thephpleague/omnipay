@@ -56,7 +56,7 @@ class CompletePurchaseResponse extends AbstractResponse
      */
     public function isCancelled()
     {
-        return isset($this->data->ewallet->status) && 'void' === (string) $this->data->ewallet->status;
+        return isset($this->data->ewallet->status) && 'canceled' === (string) $this->data->ewallet->status;
     }
 
     /**
