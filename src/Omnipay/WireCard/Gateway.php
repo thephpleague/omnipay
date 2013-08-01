@@ -12,8 +12,8 @@
 namespace Omnipay\WireCard;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\WireCard\Message\CompletePurchaseRequest;
 use Omnipay\WireCard\Message\PurchaseRequest;
+use Omnipay\WireCard\Message\Refund;
 
 /**
  * @link https://integration.wirecard.at/doku.php/start
@@ -27,42 +27,34 @@ class Gateway extends AbstractGateway
 
     public function getDefaultParameters()
     {
-        return array(
-            'installationId' => '',
-            'secretWord' => '',
-            'callbackPassword' => '',
-            'testMode' => false,
-        );
+        return [ 
+            'secret'           => '',
+            'username'         => '56501',
+            'password'         => 'TestXAPTER',
+            'transaction_mode' => 'demo',
+            'testMode'         => true,
+            'business_case_signature' => '56501',
+
+           'JCB'       => '3528000000000000',
+           'AIRPLUS'   => '122000000000000',
+           'DINERS'    => '38000000000000',
+           'AMEX'      => '370000000000000',
+           'VISA'      => '4200000000000000',
+           'MASTER'    => '5500000000000000',
+           'DISCOVER'  => '6011000000000000',
+           'Maestro'   => '675940000000000002',
+           'test_card' => '4200000000000000',
+        ];
     }
 
-    public function getInstallationId()
+    public function getSecret()
     {
-        return $this->getParameter('installationId');
+        return $this->getParameter('secret');
     }
 
-    public function setInstallationId($value)
+    public function setSecret($value)
     {
-        return $this->setParameter('installationId', $value);
-    }
-
-    public function getSecretWord()
-    {
-        return $this->getParameter('secretWord');
-    }
-
-    public function setSecretWord($value)
-    {
-        return $this->setParameter('secretWord', $value);
-    }
-
-    public function getCallbackPassword()
-    {
-        return $this->getParameter('callbackPassword');
-    }
-
-    public function setCallbackPassword($value)
-    {
-        return $this->setParameter('callbackPassword', $value);
+        return $this->setParameter('secret', $value);
     }
 
     public function initializeDataStorage()
@@ -72,12 +64,28 @@ class Gateway extends AbstractGateway
 
     public function purchase(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\WireCard\Message\PurchaseRequest', $parameters);
+        return $this->createRequest(
+            '\Omnipay\WireCard\Message\PurchaseRequest', 
+            $parameters
+        );
     }
 
-    public function completePurchase(array $parameters = array())
+    public function refund(array $parameters)
     {
-        return $this->createRequest('\Omnipay\WireCard\Message\CompletePurchaseRequest', $parameters);
+        return $this->createRequest(
+            '\Omnipay\WireCard\Message\Refund', 
+            $parameters
+        );
     }
+
+    /**
+     * This is a joke. If you have to 
+     * ask you just aint cool
+     */
+    public function chargeBack(array $parameters)
+    {
+        return $this->cheekyBugger();
+    }
+
 }
 
