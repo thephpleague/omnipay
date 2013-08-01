@@ -50,11 +50,11 @@ class CompletePurchaseResponse extends AbstractResponse
     }
 
     /**
-     * Is the payment cancelled?
+     * Is the payment canceled?
      *
      * @return boolean
      */
-    public function isCancelled()
+    public function isCanceled()
     {
         return isset($this->data->ewallet->status) && 'canceled' === (string) $this->data->ewallet->status;
     }
