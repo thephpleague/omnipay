@@ -85,7 +85,7 @@ class PurchaseRequest extends AbstractRequest
     public function sendPayment()
     {
         $data = $this->getPaymentData();
-        $xml = $this->getPaymentXMLFromTemplate($data); 
+        $xml = $this->getPaymenttXMLFromTemplate($data); 
         return $this->getResponse($xml, $data);
     }
 
@@ -129,7 +129,8 @@ PREAUTHXML;
     protected function getRequestXmlFromTemplate(array $requestData)
     {
         $xml = <<<XML
-            <?xml version="1.0" encoding="UTF-8"?> <WIRECARD_BXML>
+            <?xml version="1.0" encoding="UTF-8"?> 
+            <WIRECARD_BXML>
                 <W_REQUEST>
                     <W_JOB>
                         <JobID>example ID Purchase J1</JobID> 
