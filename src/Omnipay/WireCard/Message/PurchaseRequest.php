@@ -75,55 +75,66 @@ class PurchaseRequest extends AbstractRequest
         return $data;
     }
 
-    public function sendPreAuth()
-    {
-        $data = $this->getPreAuthData();
-        $xml = $this->getPreauthXMLFromTemplate($data); 
-        return $this->getResponse($xml, $data);
-    }
-
     public function sendPayment()
     {
         $data = $this->getPaymentData();
-        $xml = $this->getPaymenttXMLFromTemplate($data); 
+        $xml  = $this->getPaymenttXMLFromTemplate($data);
+
         return $this->getResponse($xml, $data);
     }
 
-    protected function getPreauthXmlFromTemplate(array $preauthData)
+    protected function getXml(array $data)
     {
-        $xml = <<<PREAUTHXML
-            <?xml version="1.0" encoding="UTF-8"?> 
-            <WIRECARD_BXML>
+        $xml = <<<XML
+            <?xml version='1.0' encoding='UTF-8'?>
+            <WIRECARD_BXML xmlns:xsi='http://www.w3.org/1999/XMLSchema-instance'
+                        xsi:noNamespaceSchemaLocation='wirecard.xsd'>
                 <W_REQUEST>
                     <W_JOB>
-                        <BusinessCaseSignature>0123456789ABCDEF</BusinessCaseSignature> 
-                        <FNC_CC_PREAUTHORIZATION>
-                            <FunctionID>authorization 1</FunctionID> 
-                            <CC_TRANSACTION mode="demo">
-                                <TransactionID>9457892347623478</TransactionID> 
-                                <Amount minorunits="2">500</Amount> 
-                                <Currency>EUR</Currency> 
-                                <CountryCode>DE</CountryCode> 
-                                <Usage>OrderNo-FT345S71 Thank you</Usage> 
+                        <JobID>job 2</JobID>
+                        <BusinessCaseSignature>56501</BusinessCaseSignature>
+                        <FNC_CC_TRANSACTION>
+                            <FunctionID>WireCard Test</FunctionID>
+                            <CC_TRANSACTION>
+                                <TransactionID>2</TransactionID>
+                                <Amount>_AMOUNT_</Amount>
+                                <Currency>_CURRENCY_</Currency>
+                                <CountryCode>_COUNTRY_CODE_</CountryCode>
                                 <RECURRING_TRANSACTION>
-                                    <Type>Initial</Type> 
-                                </RECURRING_TRANSACTION> 
+                                    <Type>Single</Type>
+                                </RECURRING_TRANSACTION>
                                 <CREDIT_CARD_DATA>
-                                    <CreditCardNumber>4200000000000000</CreditCardNumber> 
-                                    <CVC2>001</CVC2>
-                                    <ExpirationYear>2019</ExpirationYear> 
-                                    <ExpirationMonth>01</ExpirationMonth> 
-                                    <CardHolderName>John Doe</CardHolderName>
-                                </CREDIT_CARD_DATA> 
+                                    <CreditCardNumber>_CREDIT_CARD_NUMBER_</CreditCardNumber>
+                                    <CVC2>_CVC2_</CVC2>
+                                    <ExpirationYear>_EXPIRATION_YEAR_</ExpirationYear>
+                                    <ExpirationMonth>_EXPIRATION_MONTH_</ExpirationMonth>
+                                    <CardHolderName>_CARD_HOLDER_NAME_</CardHolderName>
+                                </CREDIT_CARD_DATA>
                                 <CONTACT_DATA>
-                                    <IPAddress>192.168.1.1</IPAddress> 
+                                    <IPAddress>127.0.0.1</IPAddress>
                                 </CONTACT_DATA>
-                            </CC_TRANSACTION> 
-                        </FNC_CC_PREAUTHORIZATION>
-                    </W_JOB> 
-                </W_REQUEST> 
-            </WIRECARD_BXML>
-PREAUTHXML;
+                                <CORPTRUSTCENTER_DATA>
+                                    <ADDRESS>
+                                        <Address1></Address1>
+                                        <City></City>
+                                        <ZipCode></ZipCode>
+                                        <State></State>
+                                        <Country></Country>
+                                        <Phone></Phone>
+                                        <Email>support@wirecard.com</Email>
+                                    </ADDRESS>
+                                </CORPTRUSTCENTER_DATA>
+                            </CC_TRANSACTION>
+                        </FNC_CC_TRANSACTION>
+                    </W_JOB>
+                </W_REQUEST>
+            </WIRECARD_BXML>";
+XML;
+        foreach ($data as $k => $v) {
+            $xml = str_replace('_' . strtoupper($k) . '_', $v, $xml);
+        };
+
+        return $xml;
     }
 
     protected function getRequestXmlFromTemplate(array $requestData)
