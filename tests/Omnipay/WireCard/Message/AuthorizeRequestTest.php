@@ -1,12 +1,8 @@
 <?php
 
-/*
+/**
  * This file is part of the Omnipay package.
  *
- * (c) Adrian Macneil <adrian@adrianmacneil.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  */
 
 namespace Omnipay\Stripe\Message;
@@ -20,8 +16,8 @@ class AuthorizeRequestTest extends TestCase
         $this->request = new AuthorizeRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize(
             array(
-                'amount' => '12.00',
-                'currency' => 'USD',
+                'amount' => '15.00',
+                'currency' => 'EUR',
                 'card' => $this->getValidCard(),
             )
         );
@@ -53,10 +49,11 @@ class AuthorizeRequestTest extends TestCase
 
     public function testDataWithToken()
     {
-        $this->request->setToken('xyz');
+        $token = 'lbm';
+        $this->request->setToken($token);
         $data = $this->request->getData();
 
-        $this->assertSame('xyz', $data['card']);
+        $this->assertSame($token, $data['card']);
     }
 
     public function testDataWithCard()
