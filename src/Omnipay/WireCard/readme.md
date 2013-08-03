@@ -1,6 +1,19 @@
 # Wirecard
 
 ## Notes
+
+To test locally, if you have composer.phar in the root
+directory (omnipay):
+
+php composer.phar update
+
+and then run a local php server (see notes in root directory)
+
+It's pretty cool.
+
+
+# Some info
+
 Amount: 100002 - 02 Call Voice Authorization Number. 
 
 Amount: 100003 - 03 Invalid Merchant Number. 
