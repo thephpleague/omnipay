@@ -57,6 +57,16 @@ class Gateway extends AbstractGateway
         return $this->setParameter('secret', $value);
     }
 
+    public function getCountryCode()
+    {
+        return $this->getParameter('countryCode');
+    }
+
+    public function setCountryCode($value)
+    {
+        return $this->setParameter('countryCode', $value);
+    }
+
     public function initializeDataStorage()
     {
         return "https://checkout.wirecard.com/seamless/dataStorage/init";

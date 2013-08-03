@@ -10,6 +10,16 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     protected $init_endpoint = "https://checkout.wirecard.com/seamless/dataStorage/init";
     protected $endpoint = "";
 
+    public function getCountryCode()
+    {
+        return $this->getParameter('countryCode');
+    }
+
+    public function setCountryCode($value)
+    {
+        return $this->setParameter('countryCode', $value);
+    }
+
     public function getApiKey()
     {
         return $this->getParameter('apiKey');
