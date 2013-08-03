@@ -2,7 +2,7 @@
 
 namespace Omnipay\WireCard\Message;
 
-use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\WireCard\Message\AbstractRequest;
 
 /**
  * WireCard Purchase Request
@@ -11,11 +11,16 @@ class PurchaseRequest extends AbstractRequest
 {
     protected $endpoint = 'https://c3-test.wirecard.com/secure/ssl-gateway';
 
+    public function getEndPoint()
+    {
+        return $this->endpoint;
+    }
+
     public function getData()
     {
         return [
-            'username' => 56501, 
-            'password'           => 'TestXAPTER',
+            'business_case_signature' => '56501',
+            'password' => 'TestXAPTER',
             'amount'             => $this->getAmount(),
             'currency'           => $this->getCurrency(),
             'country_code'       => $this->getCountryCode(),
@@ -48,22 +53,12 @@ class PurchaseRequest extends AbstractRequest
     {
         $headers = $this->getHeaders(); 
         $xml     = $this->getXml();
-        //echo '<pre>'; echo $xml; die;
-        $httpResponse   = $this->httpClient->post($this->endpoint, $headers, $xml)->send();
+        $toSend = $this->httpClient->post($this->endpoint, $headers, $xml);
+        $httpResponse = $toSend->send();
         $this->response = new Response($this, $httpResponse->xml());
         return $this->response;
     }
 
-    function getHeaders()
-    {
-        
-        $username = $this->getData()['username'];
-        $password = $this->getData()['password'];
-        return [
-            "Authorization: Basic " . base64_encode($username . ":" . $password . "\n"),
-            "Content-Type: text/xml"
-        ];
-    }
     protected function getXml()
     {
         $data = $this->getData();
@@ -74,7 +69,7 @@ class PurchaseRequest extends AbstractRequest
                 <W_REQUEST>
                     <W_JOB>
                         <JobID>job 2</JobID>
-                        <BusinessCaseSignature>_USERNAME_</BusinessCaseSignature>
+                        <BusinessCaseSignature>_BUSINESS_CASE_SIGNATURE_</BusinessCaseSignature>
                         <FNC_CC_TRANSACTION>
                             <FunctionID>Wire Card Test</FunctionID>
                             <CC_TRANSACTION>
