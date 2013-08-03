@@ -16,25 +16,8 @@ class PurchaseRequest extends AbstractRequest
         return $this->endpoint;
     }
 
-    public function getData()
-    {
-        return [
-            'business_case_signature' => '56501',
-            'password' => 'TestXAPTER',
-            'amount'             => $this->getAmount(),
-            'currency'           => $this->getCurrency(),
-            'country_code'       => $this->getCountryCode(),
-            'credit_card_number' => $this->getCard()->getNumber(),
-            'expiration_year'    => $this->getCard()->getExpiryYear(),
-            'expiration_month'   => $this->getCard()->getExpiryMonth(),
-            'card_holder_name'   => $this->getCard()->getName(),
-            'cvc2' => '000',
-        ];
-    }
-
     public function getCountryCode()
     {
-        return 'ES';
         return $this->getParameter('countryCode');
     }
 
@@ -48,16 +31,22 @@ class PurchaseRequest extends AbstractRequest
         return $this->getCard()->getNumber();
     }
 
-
-    public function send()
+    public function getData()
     {
-        $headers = $this->getHeaders(); 
-        $xml     = $this->getXml();
-        $toSend = $this->httpClient->post($this->endpoint, $headers, $xml);
-        $httpResponse = $toSend->send();
-        $this->response = new Response($this, $httpResponse->xml());
-        return $this->response;
+        return [
+            'business_case_signature' => "56501",
+            'password'     => 'TestXAPTER',
+            'amount'       => '300',//$this->getAmount(),
+            'currency'     => $this->getCurrency(),
+            'country_code' => $this->getCountryCode(),
+            'credit_card_number' => $this->getCard()->getNumber(),
+            'expiration_year'    => $this->getCard()->getExpiryYear(),
+            'expiration_month'   => $this->getCard()->getExpiryMonth(),
+            'card_holder_name'   => $this->getCard()->getName(),
+            'cvc2'               => '000',
+        ];
     }
+
 
     protected function getXml()
     {

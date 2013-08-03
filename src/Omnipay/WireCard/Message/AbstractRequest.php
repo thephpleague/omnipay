@@ -41,9 +41,15 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function send()
     {
         $headers = $this->getHeaders(); 
+        //print_r($headers); die;
         $xml     = $this->getXml();
         $toSend = $this->httpClient->post($this->endpoint, $headers, $xml);
-        $httpResponse = $toSend->send();
+        try {
+            $httpResponse = $toSend->send();
+        } 
+        catch(Exception $e) {
+            echo 'ok';
+        } 
         $this->response = new Response($this, $httpResponse->xml());
         return $this->response;
     }
@@ -51,9 +57,15 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     protected function getHeaders()
     {
         
-        $username = $this->getData()['business_case_signature'];
-        $password = $this->getData()['password'];
-        $auth = base64_encode($username.':'.$password);
+        $data = $this->getData();
+        $username = $data['business_case_signature'];
+        $password = $data['password'];
+        $auth = sprintf("%s:%s", $username, $password);
+        return [
+            "Authorization: Basic ".
+            trim(base64_encode($auth)),
+            "Content-Type: text/xml",
+        ];
         return [
             "Authorization: Basic " . $auth . "\n",
             "Content-Type: text/xml"
