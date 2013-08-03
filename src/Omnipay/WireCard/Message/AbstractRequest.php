@@ -43,7 +43,9 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $headers = $this->getHeaders(); 
         //print_r($headers); die;
         $xml     = $this->getXml();
-        $toSend = $this->httpClient->post($this->endpoint, $headers, $xml);
+        $toSend = $this->httpClient->post(
+            $this->endpoint, $headers, $xml
+        );
         try {
             $httpResponse = $toSend->send();
         } 
