@@ -40,27 +40,24 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function send()
     {
-        // don't throw exceptions for 4xx errors
-        $this->httpClient->getEventDispatcher()->addListener(
-            'request.error',
-            function ($event) {
-                if ($event['response']->isClientError()) {
-                    $event->stopPropagation();
-                }
-            }
-        );
+        $headers = $this->getHeaders(); 
+        $xml     = $this->getXml();
+        $toSend = $this->httpClient->post($this->endpoint, $headers, $xml);
+        $httpResponse = $toSend->send();
+        $this->response = new Response($this, $httpResponse->xml());
+        return $this->response;
+    }
 
-        $httpRequest = $this->httpClient->createRequest(
-            $this->getHttpMethod(),
-            $this->getEndpoint(),
-            null,
-            $this->getData()
-        );
-        $httpResponse = $httpRequest
-            ->setHeader('Authorization', 'Basic '.base64_encode($this->getApiKey().':'))
-            ->send();
-
-        return $this->response = new Response($this, $httpResponse->json());
+    protected function getHeaders()
+    {
+        
+        $username = $this->getData()['business_case_signature'];
+        $password = $this->getData()['password'];
+        $auth = base64_encode($username.':'.$password);
+        return [
+            "Authorization: Basic " . $auth . "\n",
+            "Content-Type: text/xml"
+        ];
     }
 
     protected function getCardData()
