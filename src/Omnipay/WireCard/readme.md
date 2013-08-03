@@ -1,9 +1,18 @@
+# Wirecard
+
+## Notes
 Amount: 100002 - 02 Call Voice Authorization Number. 
+
 Amount: 100003 - 03 Invalid Merchant Number. 
+
 Amount: 100004 - 04 Retain Card.
+
 Amount: 100005 - 05 Authorization Declined.
+
 Amount: 100006 - 06 Error in Sequence Number. 
+
 Amount: 100009 - 09 Wait Command.
+
 Amount: 100098 - 98 Date and Time Not Plausible.
 
 Example:
@@ -18,4 +27,5 @@ Any failure not specified by the Wirecard system will produce error code 250
 <Number>250</Number> 
 <Message>System Error.</Message>
 
+__lloyd@toyfoundry.com__
 
