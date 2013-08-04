@@ -2,6 +2,8 @@
 
 namespace Omnipay\WireCard\Message;
 
+use Omnipay\WireCard\Message\PurchaseResponse;
+
 /**
  * WireCard Abstract Request
  */
@@ -41,21 +43,40 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function send()
     {
         $headers = $this->getHeaders(); 
-        //print_r($headers); die;
         $xml     = $this->getXml();
-        $toSend = $this->httpClient->post(
-            $this->endpoint, $headers, $xml
-        );
-        try {
-            $httpResponse = $toSend->send();
-        } 
-        catch(Exception $e) {
-            echo 'ok';
-        } 
-        $this->response = new Response($this, $httpResponse->xml());
+        $response =  $this->sendWithCurl($xml);
+
+        /*
+        $httpResponse = $this->httpClient
+            ->post($this->endpoint, $headers, $xml)
+            ->send();
+
+        $this->response = new PurchaseResponse($this, $httpResponse->xml());
+         */
+        $this->response = new PurchaseResponse($this, $response);
         return $this->response;
     }
 
+    public function sendWithCurl($post)
+    {
+        $header = $this->getHeaders();
+        $url = $this->endpoint;
+        $ch = curl_init ();
+        curl_setopt ($ch, CURLOPT_URL, $url);
+        curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt ($ch, CURLOPT_POST, 0);
+        curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
+        curl_setopt ($ch, CURLOPT_HTTPHEADER, $header);
+        curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        ob_start ();
+        $result = curl_exec ($ch);
+        ob_end_clean ();
+    
+        curl_close ($ch);
+        return $result;
+    }
+ 
     protected function getHeaders()
     {
         
@@ -64,13 +85,8 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $password = $data['password'];
         $auth = sprintf("%s:%s", $username, $password);
         return [
-            "Authorization: Basic ".
-            trim(base64_encode($auth)),
+            "Authorization: Basic ". base64_encode($auth . "\n"),
             "Content-Type: text/xml",
-        ];
-        return [
-            "Authorization: Basic " . $auth . "\n",
-            "Content-Type: text/xml"
         ];
     }
 

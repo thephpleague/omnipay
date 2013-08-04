@@ -59,13 +59,14 @@ class PurchaseRequest extends AbstractRequest
                     <W_JOB>
                         <JobID>job 2</JobID>
                         <BusinessCaseSignature>_BUSINESS_CASE_SIGNATURE_</BusinessCaseSignature>
-                        <FNC_CC_TRANSACTION>
+                        <FNC_CC_PURCHASE>
                             <FunctionID>Wire Card Test</FunctionID>
-                            <CC_TRANSACTION>
+                            <CC_TRANSACTION mode="demo">
                                 <TransactionID>2</TransactionID>
                                 <Amount>_AMOUNT_</Amount>
                                 <Currency>_CURRENCY_</Currency>
                                 <CountryCode>_COUNTRY_CODE_</CountryCode>
+                                <Usage>Usage</Usage>
                                 <RECURRING_TRANSACTION>
                                     <Type>Single</Type>
                                 </RECURRING_TRANSACTION>
@@ -79,19 +80,8 @@ class PurchaseRequest extends AbstractRequest
                                 <CONTACT_DATA>
                                     <IPAddress>127.0.0.1</IPAddress>
                                 </CONTACT_DATA>
-                                <CORPTRUSTCENTER_DATA>
-                                    <ADDRESS>
-                                        <Address1></Address1>
-                                        <City></City>
-                                        <ZipCode></ZipCode>
-                                        <State></State>
-                                        <Country></Country>
-                                        <Phone></Phone>
-                                        <Email>support@wirecard.com</Email>
-                                    </ADDRESS>
-                                </CORPTRUSTCENTER_DATA>
                             </CC_TRANSACTION>
-                        </FNC_CC_TRANSACTION>
+                        </FNC_CC_PURCHASE>
                     </W_JOB>
                 </W_REQUEST>
             </WIRECARD_BXML>
