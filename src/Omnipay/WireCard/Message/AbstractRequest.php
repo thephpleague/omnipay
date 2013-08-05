@@ -9,12 +9,18 @@ use Omnipay\WireCard\Message\PurchaseResponse;
  */
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
-    protected $init_endpoint = "https://checkout.wirecard.com/seamless/dataStorage/init";
-    protected $endpoint = "";
+    protected $endpoint = 'https://c3-test.wirecard.com/secure/ssl-gateway';
+    protected $signature = '56501';
 
     public function getCountryCode()
     {
-        return $this->getParameter('countryCode');
+        $list = [
+           'Spain'   => 'ES',
+           'England' => 'UK',
+           'France'  => 'FR',
+        ];
+        $country = $this->getCard()->getCountry();
+        return $list[$country];
     }
 
     public function setCountryCode($value)
@@ -22,70 +28,66 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('countryCode', $value);
     }
 
-    public function getApiKey()
+    public function getSignature()
     {
-        return $this->getParameter('apiKey');
+        return $this->signature;
     }
 
-    public function setApiKey($value)
+    public function setSignature($value)
     {
-        return $this->setParameter('apiKey', $value);
+        return $this->setParameter('signature', $value);
     }
 
+    public function getPassword()
+    {
+        return $this->getParameter('password');
+    }
 
-    abstract public function getEndpoint();
+    public function setPassword($value)
+    {
+        return $this->setParameter('password', $value);
+    }
 
     public function getHttpMethod()
     {
         return 'POST';
     }
 
+    public function getEndPoint()
+    {
+        return $this->endpoint;
+    }
+
+    public function getCardNumber()
+    {
+        return $this->getCard()->getNumber();
+    }
+
     public function send()
     {
-        $headers = $this->getHeaders(); 
-        $xml     = $this->getXml();
-        $response =  $this->sendWithCurl($xml);
-
-        /*
-        $httpResponse = $this->httpClient
-            ->post($this->endpoint, $headers, $xml)
-            ->send();
-
-        $this->response = new PurchaseResponse($this, $httpResponse->xml());
-         */
-        $this->response = new PurchaseResponse($this, $response);
+        $this->response = new PurchaseResponse($this, $this->sendWithCurl());
         return $this->response;
+        /*
+        $headers      = $this->getHeaders();
+        $httpResponse = $this->httpClient->post(
+                            $this->endpoint, 
+                            $this->getHeaders(), 
+                            $this->getData()->asXml()
+                        )->send();
+
+        $this->response = new PurchaseResponse($this, $httpResponse);
+        return $this->response;
+         */
     }
 
-    public function sendWithCurl($post)
-    {
-        $header = $this->getHeaders();
-        $url = $this->endpoint;
-        $ch = curl_init ();
-        curl_setopt ($ch, CURLOPT_URL, $url);
-        curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt ($ch, CURLOPT_POST, 0);
-        curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
-        curl_setopt ($ch, CURLOPT_HTTPHEADER, $header);
-        curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        ob_start ();
-        $result = curl_exec ($ch);
-        ob_end_clean ();
-    
-        curl_close ($ch);
-        return $result;
-    }
- 
     protected function getHeaders()
     {
         
-        $data = $this->getData();
-        $username = $data['business_case_signature'];
-        $password = $data['password'];
-        $auth = sprintf("%s:%s", $username, $password);
+        $username = $this->getSignature();
+        $password = $this->getPassword();
+        $auth = sprintf("%s:%s\n", $username, $password);
         return [
-            "Authorization: Basic ". base64_encode($auth . "\n"),
+            "Authorization: Basic ". base64_encode($auth),
             "Content-Type: text/xml",
         ];
     }
@@ -93,7 +95,6 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     protected function getCardData()
     {
         $this->getCard()->validate();
-
         $data = array();
         $data['number'] = $this->getCard()->getNumber();
         $data['exp_month'] = $this->getCard()->getExpiryMonth();
@@ -106,8 +107,25 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $data['address_zip'] = $this->getCard()->getPostcode();
         $data['address_state'] = $this->getCard()->getState();
         $data['address_country'] = $this->getCard()->getCountry();
-
         return $data;
     }
+
+    public function sendWithCurl()
+    {
+        $ch = curl_init ();
+        curl_setopt ($ch, CURLOPT_URL, $this->endpoint);
+        curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt ($ch, CURLOPT_POST, 0);
+        curl_setopt ($ch, CURLOPT_POSTFIELDS, $this->getData()->asXml());
+        curl_setopt ($ch, CURLOPT_HTTPHEADER, $this->getHeaders());
+        curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        ob_start ();
+        $result = curl_exec ($ch);
+        ob_end_clean ();
+        curl_close ($ch);
+        return new \SimpleXmlElement($result);
+    }
+ 
 }
 
