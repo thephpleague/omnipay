@@ -67,7 +67,7 @@ class Gateway extends AbstractGateway
         return $this->setParameter('countryCode', $value);
     }
 
-    public function purchase(array $parameters = array())
+    public function purchase(array $parameters = [])
     {
         return $this->createRequest(
             '\Omnipay\WireCard\Message\PurchaseRequest', 
@@ -75,12 +75,16 @@ class Gateway extends AbstractGateway
         );
     }
 
-    public function refund(array $parameters = array())
+    public function refund(array $parameters = [])
     {
         return $this->createRequest(
-            '\Omnipay\WireCard\Message\Refund', 
+            '\Omnipay\WireCard\Message\RefundRequest', 
             $parameters
         );
+    }
+
+    public function tokenize(array $parameters = [])
+    {
     }
 
     /**
