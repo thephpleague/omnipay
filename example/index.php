@@ -157,6 +157,25 @@ $app->get('/gateways/{name}/purchase', function($name) use ($app) {
     ));
 });
 
+// create gateway refund
+$app->get('/gateways/{name}/refund', function($name) use ($app) {
+    $gateway = Omnipay\Common\GatewayFactory::create($name);
+    $sessionVar = 'omnipay.'.$gateway->getShortName();
+    $gateway->initialize((array) $app['session']->get($sessionVar));
+
+    $params = $app['session']->get($sessionVar.'.refund', array());
+    $params['returnUrl'] = str_replace('/refund', '/completerefund', $app['request']->getUri());
+    $params['cancelUrl'] = $app['request']->getUri();
+    $card = new Omnipay\Common\CreditCard($app['session']->get($sessionVar.'.card'));
+
+    return $app['twig']->render('request.twig', array(
+        'gateway' => $gateway,
+        'method' => 'refund',
+        'params' => $params,
+        'card' => $card->getParameters(),
+    ));
+});
+
 // submit gateway purchase
 $app->post('/gateways/{name}/purchase', function($name) use ($app) {
     $gateway = Omnipay\Common\GatewayFactory::create($name);
@@ -174,6 +193,29 @@ $app->post('/gateways/{name}/purchase', function($name) use ($app) {
     $params['card'] = $card;
     $params['clientIp'] = $app['request']->getClientIp();
     $response = $gateway->purchase($params)->send();
+
+    return $app['twig']->render('response.twig', array(
+        'gateway' => $gateway,
+        'response' => $response,
+    ));
+});
+// submit gateway refund
+$app->post('/gateways/{name}/refund', function($name) use ($app) {
+    $gateway = Omnipay\Common\GatewayFactory::create($name);
+    $sessionVar = 'omnipay.'.$gateway->getShortName();
+    $gateway->initialize((array) $app['session']->get($sessionVar));
+
+    // load POST data
+    $params = $app['request']->get('params');
+    $card = $app['request']->get('card');
+
+    // save POST data into session
+    $app['session']->set($sessionVar.'.refund', $params);
+    $app['session']->set($sessionVar.'.card', $card);
+
+    $params['card'] = $card;
+    $params['clientIp'] = $app['request']->getClientIp();
+    $response = $gateway->refund($params)->send();
 
     return $app['twig']->render('response.twig', array(
         'gateway' => $gateway,
