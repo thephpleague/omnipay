@@ -67,11 +67,6 @@ class Gateway extends AbstractGateway
         return $this->setParameter('countryCode', $value);
     }
 
-    public function initializeDataStorage()
-    {
-        return "https://checkout.wirecard.com/seamless/dataStorage/init";
-    }
-
     public function purchase(array $parameters = array())
     {
         return $this->createRequest(
@@ -80,7 +75,7 @@ class Gateway extends AbstractGateway
         );
     }
 
-    public function refund(array $parameters)
+    public function refund(array $parameters = array())
     {
         return $this->createRequest(
             '\Omnipay\WireCard\Message\Refund', 
