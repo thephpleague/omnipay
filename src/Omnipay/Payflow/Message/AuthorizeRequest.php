@@ -92,7 +92,7 @@ class AuthorizeRequest extends AbstractRequest
             $data['ORIGID'] = $this->getCardReference();
 
             // if card variables are set, override
-            // the original transaction values 
+            // the original transaction values
             if ($card = $this->getCard()) {
 
                 if ($card->getNumber()) {
