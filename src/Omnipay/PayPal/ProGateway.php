@@ -15,6 +15,7 @@ use Omnipay\Common\AbstractGateway;
 use Omnipay\PayPal\Message\ProAuthorizeRequest;
 use Omnipay\PayPal\Message\CaptureRequest;
 use Omnipay\PayPal\Message\RefundRequest;
+use Omnipay\PayPal\Message\VoidRequest;
 
 /**
  * PayPal Pro Class
@@ -84,5 +85,10 @@ class ProGateway extends AbstractGateway
     public function refund(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\PayPal\Message\RefundRequest', $parameters);
+    }
+
+    public function void(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PayPal\Message\VoidRequest', $parameters);
     }
 }
