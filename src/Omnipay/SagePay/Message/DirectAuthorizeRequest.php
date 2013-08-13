@@ -17,6 +17,10 @@ namespace Omnipay\SagePay\Message;
 class DirectAuthorizeRequest extends AbstractRequest
 {
     protected $action = 'DEFERRED';
+    protected $cardBrandMap = array(
+        'mastercard' => 'mc',
+        'diners_club' => 'dc'
+    );
 
     protected function getBaseAuthorizeData()
     {
@@ -62,23 +66,11 @@ class DirectAuthorizeRequest extends AbstractRequest
         $data = $this->getBaseAuthorizeData();
         $this->getCard()->validate();
 
-        $cardType = $this->getCard()->getBrand();
-
-        // list of brands SagePay names differently
-        $brands = array(
-            'mastercard' => 'mc',
-            'diners_club' => 'dc'
-        );
-
-        if (isset($brands[$cardType])) {
-            $cardType = $brands[$cardType];
-        }
-
         $data['CardHolder'] = $this->getCard()->getName();
         $data['CardNumber'] = $this->getCard()->getNumber();
         $data['CV2'] = $this->getCard()->getCvv();
         $data['ExpiryDate'] = $this->getCard()->getExpiryDate('my');
-        $data['CardType'] = $cardType;
+        $data['CardType'] = $this->getCardBrand();
 
         if ($this->getCard()->getStartMonth() and $this->getCard()->getStartYear()) {
             $data['StartDate'] = $this->getCard()->getStartDate('my');
@@ -94,5 +86,16 @@ class DirectAuthorizeRequest extends AbstractRequest
     public function getService()
     {
         return 'vspdirect-register';
+    }
+
+    protected function getCardBrand()
+    {
+        $brand = $this->getCard()->getBrand();
+
+        if (isset($this->cardBrandMap[$brand])) {
+            return $this->cardBrandMap[$brand];
+        }
+
+        return $brand;
     }
 }
