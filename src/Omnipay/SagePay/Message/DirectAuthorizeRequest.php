@@ -62,11 +62,23 @@ class DirectAuthorizeRequest extends AbstractRequest
         $data = $this->getBaseAuthorizeData();
         $this->getCard()->validate();
 
+        $cardType = $this->getCard()->getBrand();
+
+        // list of brands SagePay names differently
+        $brands = array(
+            'mastercard' => 'mc',
+            'diners_club' => 'dc'
+        );
+
+        if (isset($brands[$cardType])) {
+            $cardType = $brands[$cardType];
+        }
+
         $data['CardHolder'] = $this->getCard()->getName();
         $data['CardNumber'] = $this->getCard()->getNumber();
         $data['CV2'] = $this->getCard()->getCvv();
         $data['ExpiryDate'] = $this->getCard()->getExpiryDate('my');
-        $data['CardType'] = $this->getCard()->getBrand();
+        $data['CardType'] = $cardType;
 
         if ($this->getCard()->getStartMonth() and $this->getCard()->getStartYear()) {
             $data['StartDate'] = $this->getCard()->getStartDate('my');
