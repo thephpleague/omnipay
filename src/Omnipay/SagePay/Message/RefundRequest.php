@@ -37,4 +37,10 @@ class RefundRequest extends AbstractRequest
 
         return $data;
     }
+
+    public function getService()
+    {
+       return 'refund';
+    }
+
 }
