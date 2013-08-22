@@ -57,7 +57,7 @@ class RequestCall extends SipsBinaryCall
             'merchant_language' => $this->getMerchant()->getLanguage(),
             'merchant_country' => $this->getMerchant()->getCountry(),
 
-            'amount' => $this->getAmountInteger(),
+            'amount' => sprintf('%1$03d', $this->getAmountInteger()),
             'currency_code' => $this->getCurrencyNumeric(),
             'transaction_id' => $this->getTransactionId(),
             'order_id' => $this->getTransactionReference(),
