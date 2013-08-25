@@ -78,19 +78,44 @@ abstract class AbstractResponse implements ResponseInterface
             throw new RuntimeException('This response does not support redirection.');
         }
 
+        if (!$this->isValidRedirectMethod()) {
+            $message = sprintf('Invalid redirect method "%s".', $this->getRedirectMethod());
+            throw new RuntimeException($message);
+        }
+
         if ('GET' === $this->getRedirectMethod()) {
             return HttpRedirectResponse::create($this->getRedirectUrl());
-        } elseif ('POST' === $this->getRedirectMethod()) {
-            $hiddenFields = '';
-            foreach ($this->getRedirectData() as $key => $value) {
-                $hiddenFields .= sprintf(
-                    '<input type="hidden" name="%1$s" value="%2$s" />',
-                    htmlspecialchars($key, ENT_QUOTES, 'UTF-8'),
-                    htmlspecialchars($value, ENT_QUOTES, 'UTF-8')
-                )."\n";
-            }
+        }
 
-            $output = '<!DOCTYPE html>
+        $output = $this->getRedirectHtml($this->getRedirectUrl(), $this->getRedirectData());
+
+        return HttpResponse::create($output);
+    }
+
+    protected function isValidRedirectMethod()
+    {
+        $validMethods = array('GET', 'POST');
+
+        return in_array($this->getRedirectMethod(), $validMethods);
+    }
+
+    /**
+     * @param string $url           URL to redirect to
+     * @param array  $redirectData  Key-value pairs to create as hidden form fields
+     * @return string
+     */
+    protected function getRedirectHtml($url, array $redirectData = array())
+    {
+        $hiddenFields = '';
+        foreach ($redirectData as $key => $value) {
+            $hiddenFields .= sprintf(
+                '<input type="hidden" name="%1$s" value="%2$s" />',
+                htmlspecialchars($key, ENT_QUOTES, 'UTF-8'),
+                htmlspecialchars($value, ENT_QUOTES, 'UTF-8')
+            )."\n";
+        }
+
+        $html = '<!DOCTYPE html>
 <html>
     <head>
         <title>Redirecting...</title>
@@ -105,11 +130,7 @@ abstract class AbstractResponse implements ResponseInterface
         </form>
     </body>
 </html>';
-            $output = sprintf($output, htmlspecialchars($this->getRedirectUrl(), ENT_QUOTES, 'UTF-8'), $hiddenFields);
 
-            return HttpResponse::create($output);
-        }
-
-        throw new RuntimeException('Invalid redirect method "'.$this->getRedirectMethod().'".');
+        return sprintf($html, htmlspecialchars($url, ENT_QUOTES, 'UTF-8'), $hiddenFields);
     }
 }
