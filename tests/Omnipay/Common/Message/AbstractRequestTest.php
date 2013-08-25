@@ -17,6 +17,11 @@ use Omnipay\TestCase;
 
 class AbstractRequestTest extends TestCase
 {
+    /**
+     * @var \Omnipay\Common\Message\AbstractRequest
+     */
+    protected $request;
+
     public function setUp()
     {
         $this->request = m::mock('\Omnipay\Common\Message\AbstractRequest[getData,send]');
@@ -92,7 +97,7 @@ class AbstractRequestTest extends TestCase
     }
 
     /**
-     * @expectedException Omnipay\Common\Exception\InvalidRequestException
+     * @expectedException \Omnipay\Common\Exception\InvalidRequestException
      */
     public function testAmountWithIntThrowsException()
     {
@@ -102,13 +107,25 @@ class AbstractRequestTest extends TestCase
     }
 
     /**
-     * @expectedException Omnipay\Common\Exception\InvalidRequestException
+     * @expectedException \Omnipay\Common\Exception\InvalidRequestException
      */
     public function testAmountWithIntStringThrowsException()
     {
         // ambiguous value, avoid errors upgrading from v0.9
         $this->assertSame($this->request, $this->request->setAmount('10'));
         $this->request->getAmount();
+    }
+
+    /**
+     * @expectedException \Omnipay\Common\Exception\RuntimeException
+     */
+    public function testReinitializingAfterSendingRequestThrowsException()
+    {
+        $this->request = $this->buildExceptionCausingRequest();
+
+        $this->request->send();
+
+        $this->request->initialize(array('foo' => 'bar'));
     }
 
     public function testGetAmountInteger()
@@ -188,5 +205,85 @@ class AbstractRequestTest extends TestCase
     {
         $this->assertSame($this->request, $this->request->setNotifyUrl('https://www.example.com/notify'));
         $this->assertSame('https://www.example.com/notify', $this->request->getNotifyUrl());
+    }
+
+    public function testInitializedParametersAreSet()
+    {
+        $params = array('testMode' => 'success');
+
+        $this->request->initialize($params);
+
+        $this->assertSame($this->request->getTestMode(), 'success');
+    }
+
+    /**
+     * @expectedException \Omnipay\Common\Exception\RuntimeException
+     */
+    public function testSettingParameterAfterSentThrowsException()
+    {
+        $this->request = $this->buildExceptionCausingRequest();
+
+        $this->request->send();
+        $this->request->setTestMode(true);
+    }
+
+    public function testGetParameters()
+    {
+        $this->request->setTestMode(true);
+        $this->request->setToken('asdf');
+
+        $expected = array(
+            'testMode' => true,
+            'token' => 'asdf',
+        );
+        $this->assertEquals($expected, $this->request->getParameters());
+    }
+
+    public function testCanValidateExistingParameters()
+    {
+        $this->request->setTestMode(true);
+        $this->request->setToken('asdf');
+
+        $this->assertNull($this->request->validate('testMode', 'token'));
+    }
+
+    /**
+     * @expectedException \Omnipay\Common\Exception\InvalidRequestException
+     */
+    public function testInvalidParametersThrowsException()
+    {
+        $this->request->setTestMode(true);
+
+        $this->request->validate('testMode', 'token');
+    }
+
+    public function testNoCurrencyReturnedIfCurrencyNotSet()
+    {
+        $this->assertNull($this->request->getCurrencyNumeric());
+    }
+
+    public function testGetResponse()
+    {
+        $this->request = $this->buildExceptionCausingRequest();
+
+        $this->request->send();
+
+        $this->assertInstanceOf('\Omnipay\Common\Message\ResponseInterface', $this->request->getResponse());
+    }
+
+    /**
+     * @expectedException \Omnipay\Common\Exception\RuntimeException
+     */
+    public function testMustSendRequestBeforeGettingResponse()
+    {
+        $this->request->getResponse();
+    }
+
+    private function buildExceptionCausingRequest()
+    {
+        $httpClient = m::mock('\Guzzle\Http\ClientInterface');
+        $httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
+
+        return new ExceptionCausingRequest($httpClient, $httpRequest);
     }
 }
