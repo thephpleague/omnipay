@@ -1,0 +1,10 @@
+HTTP/1.1 200 OK
+Cache-Control: private, max-age=0
+Content-Length: 944
+Content-Type: text/xml; charset=utf-8
+Node: VENUS
+X-Powered-By: ASP.NET
+X-AspNet-Version: 4.0.30319
+Date: Fri, 15 Feb 2013 14:10:53 GMT
+
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><CardDetailsTransactionResponse xmlns="https://www.thepaymentgateway.net/"><CardDetailsTransactionResult AuthorisationAttempted="True"><StatusCode>3</StatusCode><Message>AuthCode: 672167</Message></CardDetailsTransactionResult><TransactionOutputData CrossReference="130215141054377801316798"><AuthCode>672167</AuthCode><ThreeDSecureOutputData><ACSURL>http://some.redirect.com/</ACSURL><PaREQ>Some PaREQ</PaREQ></ThreeDSecureOutputData><ThreeDSecureAuthenticationCheckResult>NOT_ENROLLED</ThreeDSecureAuthenticationCheckResult><GatewayEntryPoints><GatewayEntryPoint EntryPointURL="https://gw1.cardsaveonlinepayments.com:4430/" Metric="100" /><GatewayEntryPoint EntryPointURL="https://gw2.cardsaveonlinepayments.com:4430/" Metric="200" /></GatewayEntryPoints></TransactionOutputData></CardDetailsTransactionResponse></soap:Body></soap:Envelope>
