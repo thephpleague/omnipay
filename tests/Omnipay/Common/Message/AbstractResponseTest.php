@@ -24,5 +24,64 @@ class AbstractResponseTest extends TestCase
         $this->assertNull($response->getData());
         $this->assertNull($response->getTransactionReference());
         $this->assertNull($response->getMessage());
+        $this->assertNull($response->getCode());
+    }
+
+    public function testGetRequest()
+    {
+        $request = m::mock('\Omnipay\Common\Message\RequestInterface');
+        $response = new GetRedirectResponse($request, array());
+
+        $this->assertSame($request, $response->getRequest());
+    }
+
+    /**
+     * @expectedException \Omnipay\Common\Exception\RuntimeException
+     */
+    public function testCannotRedirectResponseThatIsNotRedirectResponseInterface()
+    {
+        $response = m::mock('\Omnipay\Common\Message\AbstractResponse[isSuccessful,isRedirect]');
+
+        $response->getRedirectResponse();
+    }
+
+    /**
+     * @expectedException \Omnipay\Common\Exception\RuntimeException
+     */
+    public function testCannotRedirectResponseThatIsImproperlyConfigured()
+    {
+        $request = m::mock('\Omnipay\Common\Message\RequestInterface');
+        $response = new ImproperlyConfiguredRedirectResponse($request, array());
+
+        $response->getRedirectResponse();
+    }
+
+    /**
+     * @expectedException \Omnipay\Common\Exception\RuntimeException
+     */
+    public function testCannotRedirectResponseWithUnsupportedMethod()
+    {
+        $request = m::mock('\Omnipay\Common\Message\RequestInterface');
+        $response = new BadRedirectMethodRedirectResponse($request, array());
+
+        $response->getRedirectResponse();
+    }
+
+    public function testGetRedirectResponse()
+    {
+        $request = m::mock('\Omnipay\Common\Message\RequestInterface');
+        $data = array();
+        $response = new GetRedirectResponse($request, $data);
+
+        $this->assertInstanceOf('\Symfony\Component\HttpFoundation\RedirectResponse', $response->getRedirectResponse());
+    }
+
+    public function testPostRedirectResponse()
+    {
+        $request = m::mock('\Omnipay\Common\Message\RequestInterface');
+        $data = array();
+        $response = new PostRedirectResponse($request, $data);
+
+        $this->assertInstanceOf('\Symfony\Component\HttpFoundation\Response', $response->getRedirectResponse());
     }
 }
