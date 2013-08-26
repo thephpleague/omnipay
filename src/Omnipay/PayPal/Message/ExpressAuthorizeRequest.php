@@ -16,9 +16,11 @@ namespace Omnipay\PayPal\Message;
  */
 class ExpressAuthorizeRequest extends AbstractRequest
 {
+    const METHOD = 'SetExpressCheckout';
+
     public function getData()
     {
-        $data = $this->getBaseData('SetExpressCheckout');
+        $data = $this->getBaseData(self::METHOD);
 
         $this->validate('amount', 'returnUrl', 'cancelUrl');
 
