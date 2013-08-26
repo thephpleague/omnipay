@@ -31,6 +31,8 @@ class ExpressAuthorizeResponseTest extends TestCase
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('EC-42721413K79637829', $response->getTransactionReference());
         $this->assertNull($response->getMessage());
+        $this->assertNull($response->getRedirectData());
+        $this->assertSame('GET', $response->getRedirectMethod());
     }
 
     public function testExpressPurchaseFailure()
