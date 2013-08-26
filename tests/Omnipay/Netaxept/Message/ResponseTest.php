@@ -33,6 +33,8 @@ class ResponseTest extends TestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getRedirectUrl());
+        $this->assertNull($response->getRedirectData());
         $this->assertNull($response->getTransactionReference());
         $this->assertSame("Missing parameter: 'Order Number'", $response->getMessage());
     }
