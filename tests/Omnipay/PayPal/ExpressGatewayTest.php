@@ -75,4 +75,14 @@ class ExpressGatewayTest extends GatewayTestCase
         $this->assertNull($response->getTransactionReference());
         $this->assertSame('This transaction cannot be processed. The amount to be charged is zero.', $response->getMessage());
     }
+
+    public function testGetTransaction()
+    {
+        //$this->setMockHttpResponse('ExpressCheckoutDetailsSuccess.txt');
+
+        $response = $this->gateway->fetchTransaction()->send();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertFalse(false);
+    }
 }
