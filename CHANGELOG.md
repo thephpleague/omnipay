@@ -1,5 +1,12 @@
 # Changelog :zap:
 
+# v1.0.3 (2013-08-28)
+
+* Stripe: Added fetchTransaction method (@cfreear)
+* MultiSafepay: Assorted bug fixes (@aderuwe)
+* Sage Pay: Fixed not sending correct card brand for MasterCard and Diners Club (@steveneaston)
+* Sage Pay: Fixed RefundRequest not sending correct transaction type
+
 # v1.0.2 (2013-07-23)
 
 * Added MultiSafepay gateway
