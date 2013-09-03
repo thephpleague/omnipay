@@ -12,11 +12,13 @@
 namespace Omnipay\Icepay;
 
 use Omnipay\Common\AbstractGateway;
+use Omnipay\Icepay\Message\FetchPaymentMethodsRequest;
 
 /**
- * Icepay gateway.
+ * Icepay web service basic integration.
+ * Aka Version 2 basic integration.
  *
- * @link http://www.icepay.com/downloads/pdf/documentation/icepay_implementation_guide.pdf
+ * @link http://www.icepay.com/downloads/pdf/documentation/icepay_webservice.pdf
  */
 class Gateway extends AbstractGateway
 {
@@ -62,6 +64,19 @@ class Gateway extends AbstractGateway
     public function getTestMode()
     {
         return false;
+    }
+
+    /**
+     * Retrieve payment methods active on the given Icepay
+     * account.
+     *
+     * @param array $parameters
+     *
+     * @return FetchPaymentMethodsRequest
+     */
+    public function fetchPaymentMethods(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Icepay\Message\FetchPaymentMethodsRequest', $parameters);
     }
 
     /**

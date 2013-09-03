@@ -11,17 +11,34 @@
 
 namespace Omnipay\Icepay\Message;
 
+use Omnipay\Common\Exception\InvalidResponseException;
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RedirectResponseInterface;
+use Omnipay\Common\Message\RequestInterface;
+use stdClass;
 
 class PurchaseResponse extends AbstractResponse implements RedirectResponseInterface
 {
     /**
      * {@inheritdoc}
+     *
+     * @throws InvalidResponseException when the checksum is invalid
+     */
+    public function __construct(RequestInterface $request, $data)
+    {
+        parent::__construct($request, $data);
+
+        if (!$this->verifySignature($data->CheckoutResult)) {
+            throw new InvalidResponseException('Checksum invalid.');
+        }
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function getTransactionReference()
     {
-        return null;
+        return isset($this->data->CheckoutResult->ProviderTransactionID) ? $this->data->CheckoutResult->ProviderTransactionID : null;
     }
 
     /**
@@ -37,7 +54,7 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
      */
     public function isRedirect()
     {
-        return true;
+        return isset($this->data->CheckoutResult->PaymentScreenURL);
     }
 
     /**
@@ -45,7 +62,7 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
      */
     public function getRedirectUrl()
     {
-        return $this->request->getEndpoint();
+        return $this->isRedirect() ? $this->data->CheckoutResult->PaymentScreenURL : null;
     }
 
     /**
@@ -53,7 +70,7 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
      */
     public function getRedirectMethod()
     {
-        return 'POST';
+        return 'GET';
     }
 
     /**
@@ -61,6 +78,41 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
      */
     public function getRedirectData()
     {
-        return $this->data;
+        return null;
+    }
+
+    /**
+     * @param stdClass $data
+     *
+     * @return boolean
+     */
+    protected function verifySignature(stdClass $data)
+    {
+        $raw = implode(
+            '|',
+            array(
+                $this->request->getSecretCode(),
+                $data->MerchantID,
+                $data->Timestamp,
+                $data->Amount,
+                $data->Country,
+                $data->Currency,
+                $data->Description,
+                $data->EndUserIP,
+                $data->Issuer,
+                $data->Language,
+                $data->OrderID,
+                $data->PaymentID,
+                $data->PaymentMethod,
+                $data->PaymentScreenURL,
+                $data->ProviderTransactionID,
+                $data->Reference,
+                $data->TestMode ? 'true' : 'false',
+                $data->URLCompleted,
+                $data->URLError,
+            )
+        );
+
+         return sha1($raw) === $data->Checksum;
     }
 }

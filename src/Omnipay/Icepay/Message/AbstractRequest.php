@@ -12,10 +12,19 @@
 namespace Omnipay\Icepay\Message;
 
 use Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
+use SoapClient;
 
 abstract class AbstractRequest extends BaseAbstractRequest
 {
-    protected $endpoint = null;
+    /**
+     * @var string
+     */
+    protected $endpoint = 'https://connect.icepay.com/webservice/icepay.svc?wsdl';
+
+    /**
+     * @var string
+     */
+    protected $namespace = 'connect.icepay.com';
 
     public function getMerchantId()
     {
@@ -77,8 +86,29 @@ abstract class AbstractRequest extends BaseAbstractRequest
         return $this->setParameter('paymentMethod', $value);
     }
 
-    public function getEndpoint()
+    public function getTimestamp()
     {
-        return $this->endpoint;
+        return $this->getParameter('timestamp');
     }
+
+    public function setTimestamp($value)
+    {
+        return $this->setParameter('timestamp', $value);
+    }
+
+    /**
+     * @return SoapClient
+     *
+     * @todo this has to go
+     */
+    protected function getSoapClient()
+    {
+        return new SoapClient($this->endpoint, array(
+            'location' => $this->endpoint,
+            'cache_wsdl' => WSDL_CACHE_NONE,
+            'trace' => true,
+        ));
+    }
+
+    abstract protected function generateSignature();
 }

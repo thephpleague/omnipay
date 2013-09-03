@@ -12,11 +12,9 @@
 namespace Omnipay\Icepay\Message;
 
 use DOMDocument;
-use Guzzle\Http\Exception\ServerErrorResponseException;
 use SimpleXMLElement;
-use stdClass;
 
-class FetchPaymentMethodsRequest extends AbstractBasicRequest
+class FetchPaymentMethodsRequest extends AbstractRequest
 {
     /**
      * {@inheritdoc}
@@ -27,7 +25,7 @@ class FetchPaymentMethodsRequest extends AbstractBasicRequest
 
         $data = new SimpleXMLElement('<GetMyPaymentMethods/>');
         $request = $data->addChild('request');
-        $request->addChild('Checksum', $this->generateSignature(new stdClass()));
+        $request->addChild('Checksum', $this->generateSignature());
         $request->addChild('MerchantID', $this->getMerchantId());
         $request->addChild('Timestamp', (null !== $this->getTimestamp()) ? $this->getTimestamp() : gmdate("Y-m-d\TH:i:s\Z"));
 
@@ -76,7 +74,7 @@ class FetchPaymentMethodsRequest extends AbstractBasicRequest
     /**
      * {@inheritdoc}
      */
-    protected function generateSignature(stdClass $data)
+    protected function generateSignature()
     {
         $raw = implode(
             '|',

@@ -11,26 +11,46 @@
 
 namespace Omnipay\Icepay\Message;
 
+use Omnipay\Common\Exception\InvalidResponseException;
+use SoapFault;
+use stdClass;
+
 class PurchaseRequest extends AbstractRequest
 {
-    protected $endpoint = 'https://pay.icepay.eu/Checkout.aspx';
-
     /**
      * {@inheritdoc}
      */
     public function getData()
     {
-        $this->validate('merchantId', 'secretCode', 'transactionId', 'amount', 'currency', 'paymentMethod', 'issuer');
-
-        $data = array(
-            'IC_Merchant' => $this->getMerchantId(),
-            'IC_Amount' => $this->getAmountInteger(),
-            'IC_Currency' => $this->getCurrency(),
-            'IC_OrderID' => $this->getTransactionId(),
-            'IC_PaymentMethod' => $this->getPaymentMethod(),
-            'IC_Issuer' => $this->getIssuer(),
-            'IC_CheckSum' => $this->generateSignature(),
+        $this->validate(
+            'merchantId',
+            'secretCode',
+            'transactionId',
+            'amount',
+            'country',
+            'currency',
+            'clientIp',
+            'issuer',
+            'language',
+            'paymentMethod'
         );
+
+        $data = new stdClass();
+        $data->MerchantID = $this->getMerchantId();
+        $data->OrderID = $this->getTransactionId();
+        $data->Amount = $this->getAmountInteger();
+        $data->Description = 'description';
+        $data->Reference = null;
+        $data->Country = $this->getCountry();
+        $data->Currency = $this->getCurrency();
+        $data->EndUserIP = $this->getClientIp();
+        $data->Issuer = $this->getIssuer();
+        $data->Language = $this->getLanguage();
+        $data->PaymentMethod = $this->getPaymentMethod();
+        $data->Timestamp = (null !== $this->getTimestamp()) ? $this->getTimestamp() : gmdate("Y-m-d\TH:i:s\Z");
+        $data->URLCompleted = $this->getReturnUrl();
+        $data->URLError = $this->getCancelUrl();
+        $data->Checksum = $this->generateSignature($data);
 
         return $data;
     }
@@ -40,24 +60,40 @@ class PurchaseRequest extends AbstractRequest
      */
     public function send()
     {
-        return $this->response = new PurchaseResponse($this, $this->getData());
+        try {
+            $rawResponse = $this->getSoapClient()->Checkout(array(
+                'request' => $this->getData(),
+            ));
+        } catch (SoapFault $e) {
+            throw new InvalidResponseException($e->getMessage(), $e->getCode(), $e);
+        }
+
+        return $this->response = new PurchaseResponse($this, $rawResponse);
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
-    protected function generateSignature()
+    protected function generateSignature(stdClass $data)
     {
         $raw = implode(
             '|',
             array(
                 $this->getSecretCode(),
-                $this->getMerchantId(),
-                $this->getAmountInteger(),
-                $this->getCurrency(),
-                $this->getTransactionId(),
-                $this->getPaymentMethod(),
-                $this->getIssuer(),
+                $data->MerchantID,
+                $data->Timestamp,
+                $data->Amount,
+                $data->Country,
+                $data->Currency,
+                $data->Description,
+                $data->EndUserIP,
+                $data->Issuer,
+                $data->Language,
+                $data->OrderID,
+                $data->PaymentMethod,
+                $data->Reference,
+                $data->URLCompleted,
+                $data->URLError,
             )
         );
 
