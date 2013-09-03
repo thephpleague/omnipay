@@ -63,6 +63,23 @@ class GatewayTest extends GatewayTestCase
         $this->assertSame('something@example.com', $card->getEmail());
     }
 
+    public function testFetchPaymentMethods()
+    {
+        /** @var \Omnipay\Icepay\Message\FetchPaymentMethodsRequest $request */
+        $request = $this->gateway->fetchPaymentMethods($this->options);
+
+        /** @var CreditCard $card */
+        $card = $request->getCard();
+
+        $this->assertInstanceOf('Omnipay\Icepay\Message\FetchPaymentMethodsRequest', $request);
+        $this->assertSame('123456', $request->getTransactionId());
+        $this->assertSame('100.00', $request->getAmount());
+        $this->assertSame('EUR', $request->getCurrency());
+        $this->assertSame('IDEAL', $request->getPaymentMethod());
+        $this->assertSame('ABNAMRO', $request->getIssuer());
+        $this->assertSame('something@example.com', $card->getEmail());
+    }
+
     /**
      * Test mode is before an account acquires a contract,
      * it is not possible to explicitly set it.
