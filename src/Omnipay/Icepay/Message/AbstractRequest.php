@@ -12,7 +12,6 @@
 namespace Omnipay\Icepay\Message;
 
 use Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
-use SoapClient;
 
 abstract class AbstractRequest extends BaseAbstractRequest
 {
@@ -94,20 +93,6 @@ abstract class AbstractRequest extends BaseAbstractRequest
     public function setTimestamp($value)
     {
         return $this->setParameter('timestamp', $value);
-    }
-
-    /**
-     * @return SoapClient
-     *
-     * @todo this has to go
-     */
-    protected function getSoapClient()
-    {
-        return new SoapClient($this->endpoint, array(
-            'location' => $this->endpoint,
-            'cache_wsdl' => WSDL_CACHE_NONE,
-            'trace' => true,
-        ));
     }
 
     abstract protected function generateSignature();
