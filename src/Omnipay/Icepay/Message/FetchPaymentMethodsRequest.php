@@ -52,20 +52,14 @@ class FetchPaymentMethodsRequest extends AbstractRequest
         $body->appendChild($document->importNode(dom_import_simplexml($data), true));
 
         // post to Icepay
-        try {
-            $httpResponse = $this->httpClient->post(
-                $this->endpoint,
-                array(
-                    'Content-Type' => 'text/xml; charset=utf-8',
-                    'SOAPAction' => $this->namespace.'/IICEPAY/GetMyPaymentMethods',
-                ),
-                $this->replaceWithNamespaced($document)
-            )->send();
-        } catch(ServerErrorResponseException $e) {
-            // TODO: handle this
-            echo $e->getResponse()->getMessage();
-            die();
-        }
+        $httpResponse = $this->httpClient->post(
+            $this->endpoint,
+            array(
+                'Content-Type' => 'text/xml; charset=utf-8',
+                'SOAPAction' => $this->namespace.'/IICEPAY/GetMyPaymentMethods',
+            ),
+            $this->replaceWithNamespaced($document)
+        )->send();
 
         // Can't work with SimpleXMLElement here due to malformed response body
         return $this->response = new FetchPaymentMethodsResponse($this, $httpResponse->getBody(true));

@@ -151,10 +151,13 @@ class FetchPaymentMethodsResponse extends AbstractResponse
      */
     private function getMainXPath(DOMDocument $document)
     {
-        return $this->getXPath($document, array(
-            's' => 'http://schemas.xmlsoap.org/soap/envelope/',
-            'a' => 'http://schemas.datacontract.org/2004/07/APIService',
-        ));
+        return $this->getXPath(
+            $document,
+            array(
+                's' => 'http://schemas.xmlsoap.org/soap/envelope/',
+                'a' => 'http://schemas.datacontract.org/2004/07/APIService',
+            )
+        );
     }
 
     /**
@@ -164,9 +167,12 @@ class FetchPaymentMethodsResponse extends AbstractResponse
      */
     private function getSubXPath(DOMDocument $document)
     {
-        return $this->getXPath($document, array(
-            'b' => 'http://schemas.datacontract.org/2004/07/APIService.Responses',
-        ));
+        return $this->getXPath(
+            $document,
+            array(
+                'b' => 'http://schemas.datacontract.org/2004/07/APIService.Responses',
+            )
+        );
     }
 
     /**
