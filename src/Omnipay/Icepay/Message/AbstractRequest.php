@@ -87,7 +87,13 @@ abstract class AbstractRequest extends BaseAbstractRequest
 
     public function getTimestamp()
     {
-        return $this->getParameter('timestamp');
+        $timestamp = $this->getParameter('timestamp');
+
+        if (null === $timestamp) {
+            $this->setTimestamp($timestamp = gmdate("Y-m-d\TH:i:s\Z"));
+        }
+
+        return $timestamp;
     }
 
     public function setTimestamp($value)

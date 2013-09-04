@@ -27,7 +27,7 @@ class FetchPaymentMethodsRequest extends AbstractRequest
         $request = $data->addChild('request');
         $request->addChild('Checksum', $this->generateSignature());
         $request->addChild('MerchantID', $this->getMerchantId());
-        $request->addChild('Timestamp', (null !== $this->getTimestamp()) ? $this->getTimestamp() : gmdate("Y-m-d\TH:i:s\Z"));
+        $request->addChild('Timestamp', $this->getTimestamp());
 
         return $data;
     }
@@ -75,7 +75,7 @@ class FetchPaymentMethodsRequest extends AbstractRequest
             array(
                 $this->getMerchantId(),
                 $this->getSecretCode(),
-                (null !== $this->getTimestamp()) ? $this->getTimestamp() : gmdate("Y-m-d\TH:i:s\Z"),
+                $this->getTimestamp(),
             )
         );
 
