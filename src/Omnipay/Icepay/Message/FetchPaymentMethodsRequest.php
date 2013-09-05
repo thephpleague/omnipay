@@ -51,6 +51,16 @@ class FetchPaymentMethodsRequest extends AbstractRequest
         $body = $envelope->appendChild($document->createElement('SOAP-ENV:Body'));
         $body->appendChild($document->importNode(dom_import_simplexml($data), true));
 
+        // don't throw exceptions for errors
+        $this->httpClient->getEventDispatcher()->addListener(
+            'request.error',
+            function ($event) {
+                if ($event['response']->isError()) {
+                    $event->stopPropagation();
+                }
+            }
+        );
+
         // post to Icepay
         $httpResponse = $this->httpClient->post(
             $this->endpoint,
@@ -61,8 +71,8 @@ class FetchPaymentMethodsRequest extends AbstractRequest
             $this->replaceWithNamespaced($document)
         )->send();
 
-        // Can't work with SimpleXMLElement here due to malformed response body
-        return $this->response = new FetchPaymentMethodsResponse($this, $httpResponse->getBody(true));
+        // Must suppress warnings here due to malformed xml response
+        return $this->response = new FetchPaymentMethodsResponse($this, @$httpResponse->xml());
     }
 
     /**
