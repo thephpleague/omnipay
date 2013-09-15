@@ -16,16 +16,20 @@ namespace Omnipay\PayPal\Message;
  */
 class RefundRequest extends AbstractRequest
 {
+    const METHOD = 'RefundTransaction';
+    const TYPE_FULL = 'Full';
+    const TYPE_PARTIAL = 'Partial';
+
     public function getData()
     {
-        $data = $this->getBaseData('RefundTransaction');
+        $data = $this->getBaseData(self::METHOD);
 
         $this->validate('transactionReference');
 
         $data['TRANSACTIONID'] = $this->getTransactionReference();
-        $data['REFUNDTYPE'] = 'Full';
+        $data['REFUNDTYPE'] = self::TYPE_FULL;
         if ($this->getAmount() > 0) {
-            $data['REFUNDTYPE'] = 'Partial';
+            $data['REFUNDTYPE'] = self::TYPE_PARTIAL;
             $data['AMT'] = $this->getAmount();
             $data['CURRENCYCODE'] = $this->getCurrency();
         }

@@ -16,6 +16,8 @@ use Omnipay\GatewayTestCase;
 
 class GatewayTest extends GatewayTestCase
 {
+    private $options;
+
     public function setUp()
     {
         parent::setUp();
@@ -32,6 +34,9 @@ class GatewayTest extends GatewayTestCase
                 'expiryMonth' => '12',
                 'expiryYear' => '2016',
                 'cvv' => '123',
+                'issueNumber' => '5',
+                'startMonth' => '4',
+                'startYear' => '2013',
             )),
         );
     }

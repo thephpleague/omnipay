@@ -16,9 +16,11 @@ namespace Omnipay\PayPal\Message;
  */
 class CaptureRequest extends AbstractRequest
 {
+    const METHOD = 'DoCapture';
+
     public function getData()
     {
-        $data = $this->getBaseData('DoCapture');
+        $data = $this->getBaseData(self::METHOD);
 
         $this->validate('transactionReference', 'amount');
 
