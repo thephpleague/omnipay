@@ -15,7 +15,7 @@ use Omnipay\TestCase;
 
 class FetchTransactionRequestTest extends TestCase
 {
-	public function setUp()
+    public function setUp()
     {
         $this->request = new FetchTransactionRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->setTransactionReference('ch_29yrvk84GVDsq9');
