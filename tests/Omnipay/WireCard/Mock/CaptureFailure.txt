@@ -1,0 +1,16 @@
+HTTP/1.1 400 Bad Request
+Server: nginx
+Date: Sun, 05 May 2013 08:52:09 GMT
+Content-Type: application/json;charset=utf-8
+Content-Length: 127
+Connection: keep-alive
+Cache-Control: no-cache, no-store
+Access-Control-Max-Age: 300
+Access-Control-Allow-Credentials: true
+
+{
+  "error": {
+    "type": "invalid_request_error",
+    "message": "Charge ch_1lvgjcQgrNWUuZ has already been captured."
+  }
+}
