@@ -12,19 +12,13 @@
 namespace Omnipay\PagSeguro\Message;
 
 use Omnipay\Common\Message\AbstractRequest as BaseRequest;
-use Guzzle\Http\Client;
-use Guzzle\Common\Event;
+use Omnipay\PagSeguro\Message\Service\PaymentService;
 
 /**
  * PagSeguro Abstract Request
  */
 abstract class AbstractRequest extends BaseRequest
 {
-    /**
-     * @var string
-     */
-    const ENDPOINT = 'https://ws.pagseguro.uol.com.br/v2/checkout';
-
     public function getEmail()
     {
         return $this->getParameter('email');
@@ -47,7 +41,8 @@ abstract class AbstractRequest extends BaseRequest
 
     public function getCurrency()
     {
-        return 'BRL';
+        // return 'BRL';
+        return $this->getParameter('currency');
     }
 
     public function getCharset()
@@ -65,51 +60,12 @@ abstract class AbstractRequest extends BaseRequest
         return $this->endpoint;
     }
 
-    public function getData()
-    {
-        $data = array();
-        $data['email'] = $this->getEmail();
-        $data['token'] = $this->getToken();
-        $data['currency'] = $this->getCurrency();
-        $data['charset']  = $this->getCharset();
-
-        return $data;
-    }
-
     public function send()
     {
-        // $request = new HttpClient();
-        // $request->post($this->getEndpoint(), $this->getData());
+        $data     = $this->getData();
+        $service  = new PaymentService($data['credentials']);
+        $response = $service->send($data['paymentRequest']);
 
-        $options = array(
-            'curl.options' => array(
-                CURLOPT_CONNECTTIMEOUT => 10,
-                CURLOPT_SSL_VERIFYPEER => false,
-                CURLOPT_HTTPHEADER => array(
-                    'Content-Type: application/x-www-form-urlencoded; charset=ISO-8859-1'
-                )
-            )
-        );
-
-        var_dump($this->getData());
-        die;
-
-        $request = $this->httpClient->createRequest(
-            'POST',
-            $this->endpoint,
-            null,
-            http_build_query($this->getData(), '', '&'),
-            $options
-        );
-
-        var_dump($request);
-        die;
-
-        $request->send();
-        var_dump($request);
-        // $request->send();
-
-        // return $this->response = new Response($this, $response->getBody());
+        return new Response($this, $response);
     }
-
 }

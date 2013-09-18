@@ -11,13 +11,14 @@
 
 namespace Omnipay\PagSeguro\Message;
 
+use Omnipay\PagSeguro\Message\ValueObject\Payment\PaymentResponse;
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RequestInterface;
 use Omnipay\Common\Exception\InvalidResponseException;
 
 class Response extends AbstractResponse
 {
-    public function __construct(RequestInterface $request, $data)
+    public function __construct(RequestInterface $request, PaymentResponse $data)
     {
         $this->request = $request;
 
@@ -25,27 +26,36 @@ class Response extends AbstractResponse
             throw new InvalidResponseException;
         }
 
-        parse_str($data, $this->data);
+        $this->data = $data;
     }
 
     public function isSuccessful()
     {
-        var_dump($this->data);
+        return true;
+    }
 
-        return false;
+    public function isRedirect()
+    {
+        return true;
+    }
+
+    public function getRedirectUrl()
+    {
+        return $this->data->getRedirectionUrl();
+    }
+
+    public function getRedirectMethod()
+    {
+        return 'GET';
     }
 
     public function getTransactionReference()
     {
-        var_dump($this->data);
-
-        return false;
+        return $this->data->getCode();
     }
 
     public function getMessage()
     {
-        var_dump($this->data);
-
-        return false;
+        return null;
     }
 }

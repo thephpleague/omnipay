@@ -21,7 +21,7 @@ class Gateway extends AbstractGateway
     {
         return array(
             'email'    => '',
-            'token'    => '', //E659CD138C654E528F11F9E727C6BBC6
+            'token'    => '',
             'testMode' => false
         );
     }

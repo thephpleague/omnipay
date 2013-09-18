@@ -11,6 +11,11 @@
 
 namespace Omnipay\PagSeguro\Message;
 
+use Omnipay\PagSeguro\Message\ValueObject\Item;
+use Omnipay\PagSeguro\Message\ValueObject\Credentials;
+use Omnipay\PagSeguro\Message\ValueObject\Payment\PaymentRequest;
+use Omnipay\PagSeguro\Message\Service\PaymentService;
+
 /**
  * PagSeguro Authorize Request
  */
@@ -22,14 +27,21 @@ class AuthorizeRequest extends AbstractRequest
     {
         $data = array();
 
-        var_dump($this->getTransactionId());
+        // on authentication
+        $data['credentials'] = new Credentials(
+            $this->getEmail(),
+            $this->getToken()
+        );
 
-        $data['email'] = $this->getEmail();
-        $data['token'] = $this->getToken();
-        $data['currency'] = $this->getCurrency();
-        $data['itemId1'] = $this->getTransactionId();
-        $data['itemAmount1'] = $this->getAmountInteger();
-        $data['itemDescription1'] = $this->getDescription();
+        $data['paymentRequest'] = new PaymentRequest(
+            array(
+                new Item(
+                    $this->getTransactionId(),
+                    $this->getDescription(),
+                    $this->getAmount()
+                )
+            )
+        );
 
         return $data;
     }
