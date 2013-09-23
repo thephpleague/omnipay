@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+Date: Wed, 25 Sep 2013 08:44:20 GMT
+Server: Apache/2.2.3 (Debian) mod_fastcgi/2.4.2 mod_ssl/2.2.3 OpenSSL/0.9.8c
+Content-Location: start.php5
+Vary: negotiate
+TCN: choice
+X-Powered-By: PHP/5.2.0-8+etch16
+Transfer-Encoding: chunked
+Content-Type: text/plain; charset=ISO-8859-1
+
+000000 1284687|https://www.directebanking.com/payment/start?user_id=38165&project_id=98594&sender_holder=&sender_account_number=&sender_bank_code=&sender_country_id=BE&amount=100.00&currency_id=EUR&reason_1=1284687.easy%2C+no%3F&reason_2=VOLTEC+BV&user_variable_0=1284687&user_variable_1=&user_variable_2=&user_variable_3=&user_variable_4=&user_variable_5=&hash=a48af1cdf55877b84a66f9916d25e4a5d955e29f

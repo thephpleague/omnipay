@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+Date: Fri, 20 Sep 2013 09:35:34 GMT
+Server: Apache/2.2.3 (Debian) mod_fastcgi/2.4.2 mod_ssl/2.2.3 OpenSSL/0.9.8c
+Content-Location: start.php
+Vary: negotiate
+TCN: choice
+Content-Length: 24
+Content-Type: text/html; charset=ISO-8859-1
+X-Pad: avoid browser bug
+
+TP0016 Account disabled.
