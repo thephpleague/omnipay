@@ -18,7 +18,7 @@ class PaymentMethod
      * @param int $type
      * @param int $code
      */
-    public function __construnct($type, $code)
+    public function __construct($type, $code)
     {
         $this->setType($type);
         $this->setCode($code);
