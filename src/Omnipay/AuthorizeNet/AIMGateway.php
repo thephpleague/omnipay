@@ -29,11 +29,22 @@ class AIMGateway extends AbstractGateway
     public function getDefaultParameters()
     {
         return array(
+            'hashSecret' => '',
             'apiLoginId' => '',
             'transactionKey' => '',
             'testMode' => false,
             'developerMode' => false,
         );
+    }
+
+    public function getHashSecret()
+    {
+        return $this->getParameter('hashSecret');
+    }
+
+    public function setHashSecret($value)
+    {
+        return $this->setParameter('hashSecret', $value);
     }
 
     public function getApiLoginId()
