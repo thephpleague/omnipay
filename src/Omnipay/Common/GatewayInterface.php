@@ -16,7 +16,6 @@ namespace Omnipay\Common;
  */
 interface GatewayInterface
 {
-
     /**
      * Get gateway display name
      *
