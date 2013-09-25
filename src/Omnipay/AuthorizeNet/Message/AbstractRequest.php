@@ -59,6 +59,16 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('customerId', $value);
     }
 
+    public function getHashSecret()
+    {
+        return $this->getParameter('hashSecret');
+    }
+
+    public function setHashSecret($value)
+    {
+        return $this->setParameter('hashSecret', $value);
+    }
+
     protected function getBaseData()
     {
         $data = array();
