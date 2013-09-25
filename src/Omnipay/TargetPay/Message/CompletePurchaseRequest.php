@@ -11,7 +11,7 @@
 
 namespace Omnipay\TargetPay\Message;
 
-class CompletePurchaseRequest extends AbstractRequest
+abstract class CompletePurchaseRequest extends AbstractRequest
 {
     public function getExchangeOnce()
     {
@@ -28,7 +28,7 @@ class CompletePurchaseRequest extends AbstractRequest
      */
     public function getData()
     {
-        $this->validate('paymentMethod', 'transactionId');
+        $this->validate('transactionId');
 
         return array(
             'rtlo' => $this->getSubAccountId(),
@@ -44,7 +44,7 @@ class CompletePurchaseRequest extends AbstractRequest
     public function send()
     {
         $httpResponse = $this->httpClient->get(
-            $this->getEndpoint('check').'?'.http_build_query($this->getData())
+            $this->getEndpoint().'?'.http_build_query($this->getData())
         )->send();
 
         return $this->response = new CompletePurchaseResponse($this, $httpResponse->getBody(true));

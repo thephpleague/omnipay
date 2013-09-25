@@ -11,55 +11,22 @@
 
 namespace Omnipay\TargetPay;
 
-use Omnipay\Common\AbstractGateway;
 use Omnipay\TargetPay\Message\CompletePurchaseRequest;
 use Omnipay\TargetPay\Message\FetchIssuersRequest;
 
 /**
- * TargetPay gateway.
+ * TargetPay iDEAL gateway.
  *
- * @link https://www.targetpay.com/docs/TargetPay_MisterCash_V1.0_nl.pdf
  * @link https://www.targetpay.com/docs/TargetPay_iDEAL_V1.0_nl.pdf
- * @link https://www.targetpay.com/info/directebanking-docu
  */
-class Gateway extends AbstractGateway
+class IdealGateway extends AbstractGateway
 {
     /**
      * {@inheritdoc}
      */
     public function getName()
     {
-        return 'TargetPay';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDefaultParameters()
-    {
-        return array(
-            'subAccountId' => '',
-        );
-    }
-
-    public function getSubAccountId()
-    {
-        return $this->getParameter('subAccountId');
-    }
-
-    public function setSubAccountId($value)
-    {
-        return $this->setParameter('subAccountId', $value);
-    }
-
-    public function getPaymentMethod()
-    {
-        return $this->getParameter('paymentMethod');
-    }
-
-    public function setPaymentMethod($value)
-    {
-        return $this->setParameter('paymentMethod', $value);
+        return 'TargetPay iDEAL';
     }
 
     /**
@@ -79,9 +46,7 @@ class Gateway extends AbstractGateway
      */
     public function purchase(array $parameters = array())
     {
-        $class = '\Omnipay\TargetPay\Message\\'.ucfirst($this->getPaymentMethod()).'PurchaseRequest';
-
-        return $this->createRequest($class, $parameters);
+        return $this->createRequest('\Omnipay\TargetPay\Message\IdealPurchaseRequest', $parameters);
     }
 
     /**
@@ -93,6 +58,6 @@ class Gateway extends AbstractGateway
      */
     public function completePurchase(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\TargetPay\Message\CompletePurchaseRequest', $parameters);
+        return $this->createRequest('\Omnipay\TargetPay\Message\IdealCompletePurchaseRequest', $parameters);
     }
 }

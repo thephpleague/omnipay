@@ -13,20 +13,20 @@ namespace Omnipay\TargetPay\Message;
 
 use Omnipay\TestCase;
 
-class MrcashPurchaseRequestTest extends TestCase
+class IdealCompletePurchaseRequestTest extends TestCase
 {
     /**
-     * @var MrcashPurchaseRequest
+     * @var IdealCompletePurchaseRequest
      */
     private $request;
 
     protected function setUp()
     {
-        $this->request = new MrcashPurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
+        $this->request = new IdealCompletePurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
     }
 
     public function testEndpoint()
     {
-        $this->assertSame('https://www.targetpay.com/mrcash/start', $this->request->getEndpoint());
+        $this->assertSame('https://www.targetpay.com/ideal/check', $this->request->getEndpoint());
     }
 }

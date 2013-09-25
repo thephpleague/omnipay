@@ -9,12 +9,25 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\TargetPay\Message;
+namespace Omnipay\TargetPay;
 
-use Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
+use Omnipay\Common\AbstractGateway as BaseAbstractGateway;
 
-abstract class AbstractRequest extends BaseAbstractRequest
+/**
+ * Abstract TargetPay gateway.
+ */
+abstract class AbstractGateway extends BaseAbstractGateway
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefaultParameters()
+    {
+        return array(
+            'subAccountId' => '',
+        );
+    }
+
     public function getSubAccountId()
     {
         return $this->getParameter('subAccountId');
@@ -24,11 +37,4 @@ abstract class AbstractRequest extends BaseAbstractRequest
     {
         return $this->setParameter('subAccountId', $value);
     }
-
-    /**
-     * Get the endpoint for the request.
-     *
-     * @return string
-     */
-    abstract public function getEndpoint();
 }

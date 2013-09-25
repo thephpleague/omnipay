@@ -29,7 +29,7 @@ abstract class PurchaseRequest extends AbstractRequest
     public function send()
     {
         $httpResponse = $this->httpClient->get(
-            $this->getEndpoint('start').'?'.http_build_query($this->getData())
+            $this->getEndpoint().'?'.http_build_query($this->getData())
         )->send();
 
         return $this->response = new PurchaseResponse($this, $httpResponse->getBody(true));

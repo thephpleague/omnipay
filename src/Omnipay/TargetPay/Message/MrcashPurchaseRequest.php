@@ -30,4 +30,12 @@ class MrcashPurchaseRequest extends PurchaseRequest
             'reporturl' => $this->getNotifyUrl(),
         );
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getEndpoint()
+    {
+        return 'https://www.targetpay.com/mrcash/start';
+    }
 }

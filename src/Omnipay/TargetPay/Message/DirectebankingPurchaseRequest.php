@@ -52,4 +52,12 @@ class DirectebankingPurchaseRequest extends PurchaseRequest
             'reporturl' => $this->getNotifyUrl(),
         );
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getEndpoint()
+    {
+        return 'https://www.targetpay.com/directebanking/start';
+    }
 }

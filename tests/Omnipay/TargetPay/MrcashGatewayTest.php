@@ -13,10 +13,10 @@ namespace Omnipay\TargetPay;
 
 use Omnipay\GatewayTestCase;
 
-class GatewayTest extends GatewayTestCase
+class MrcashGatewayTest extends GatewayTestCase
 {
     /**
-     * @var Gateway
+     * @var MrcashGateway
      */
     protected $gateway;
 
@@ -24,33 +24,21 @@ class GatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
-        $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
+        $this->gateway = new MrcashGateway($this->getHttpClient(), $this->getHttpRequest());
         $this->gateway->setSubAccountId('123456');
     }
 
     public function testFetchIssuers()
     {
         /** @var \Omnipay\TargetPay\Message\FetchIssuersRequest $request */
-        $request = $this->gateway->fetchIssuers();
+        /*$request = $this->gateway->fetchIssuers();
 
         $this->assertInstanceOf('Omnipay\TargetPay\Message\FetchIssuersRequest', $request);
-        $this->assertNull($request->getData());
+        $this->assertNull($request->getData());*/
     }
 
-    // Disabled because without setting a payment method, a request can't be created
-    // Covered by other tests below
     public function testPurchase()
-    {}
-
-    // Disabled because without setting a payment method, a request can't be created
-    // Covered by other tests below
-    public function testPurchaseParameters()
-    {}
-
-    public function testPurchaseMrcash()
     {
-        $this->gateway->setPaymentMethod('mrcash');
-
         /** @var \Omnipay\TargetPay\Message\MrcashPurchaseRequest $request */
         $request = $this->gateway->purchase(array(
             'amount' => '100.00',
@@ -72,10 +60,8 @@ class GatewayTest extends GatewayTestCase
 
     public function testPurchaseIdeal()
     {
-        $this->gateway->setPaymentMethod('ideal');
-
         /** @var \Omnipay\TargetPay\Message\IdealPurchaseRequest $request */
-        $request = $this->gateway->purchase(array(
+        /*$request = $this->gateway->purchase(array(
             'issuer' => '0001',
             'amount' => '100.00',
             'currency' => 'EUR',
@@ -92,15 +78,13 @@ class GatewayTest extends GatewayTestCase
         $this->assertSame('desc', $request->getDescription());
         $this->assertSame('EN', $request->getLanguage());
         $this->assertSame('http://localhost/return', $request->getReturnUrl());
-        $this->assertSame('http://localhost/notify', $request->getNotifyUrl());
+        $this->assertSame('http://localhost/notify', $request->getNotifyUrl());*/
     }
 
     public function testPurchaseDirectebanking()
     {
-        $this->gateway->setPaymentMethod('directebanking');
-
         /** @var \Omnipay\TargetPay\Message\DirectebankingPurchaseRequest $request */
-        $request = $this->gateway->purchase(array(
+        /*$request = $this->gateway->purchase(array(
             'amount' => '100.00',
             'description' => 'desc',
             'clientIp' => '127.0.0.1',
@@ -119,7 +103,7 @@ class GatewayTest extends GatewayTestCase
         $this->assertSame('EN', $request->getLanguage());
         $this->assertSame('0', $request->getServiceType());
         $this->assertSame('http://localhost/return', $request->getReturnUrl());
-        $this->assertSame('http://localhost/notify', $request->getNotifyUrl());
+        $this->assertSame('http://localhost/notify', $request->getNotifyUrl());*/
     }
 
     public function testCompletePurchase()
