@@ -19,14 +19,14 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     protected $liveEndpoint = 'https://secure.authorize.net/gateway/transact.dll';
     protected $developerEndpoint = 'https://test.authorize.net/gateway/transact.dll';
 
-    public function getMd5HashSecret()
+    public function getHashSecret()
     {
-        return $this->getParameter('md5HashSecret');
+        return $this->getParameter('hashSecret');
     }
 
-    public function setMd5HashSecret($value)
+    public function setHashSecret($value)
     {
-        return $this->setParameter('md5HashSecret', $value);
+        return $this->setParameter('hashSecret', $value);
     }
 
     public function getApiLoginId()
