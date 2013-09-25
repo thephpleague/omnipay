@@ -28,7 +28,7 @@ abstract class AbstractResponse extends BaseAbstractResponse
     {
         parent::__construct($request, $data);
 
-        if (false !== preg_match('/^([A-Z0-9]{6})(.*)$/',$this->data, $matches)) {
+        if (false !== preg_match('/^([A-Z0-9]{6})(.*)$/', $this->data, $matches)) {
             $this->code = trim($matches[1]);
             $this->data = trim($matches[2]);
         }
