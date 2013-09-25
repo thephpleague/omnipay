@@ -15,6 +15,13 @@ use Omnipay\Common\AbstractGateway;
 use Omnipay\TargetPay\Message\CompletePurchaseRequest;
 use Omnipay\TargetPay\Message\FetchIssuersRequest;
 
+/**
+ * TargetPay gateway.
+ *
+ * @link https://www.targetpay.com/docs/TargetPay_MisterCash_V1.0_nl.pdf
+ * @link https://www.targetpay.com/docs/TargetPay_iDEAL_V1.0_nl.pdf
+ * @link https://www.targetpay.com/info/directebanking-docu
+ */
 class Gateway extends AbstractGateway
 {
     /**
