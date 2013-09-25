@@ -12,7 +12,6 @@
 namespace Omnipay\Common\Message;
 
 use Omnipay\Common\Exception\RuntimeException;
-use Omnipay\Common\Message\RequestInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse as HttpRedirectResponse;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 

@@ -15,7 +15,6 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ReflectionClass;
 use Guzzle\Http\ClientInterface;
-use Guzzle\Http\Client as HttpClient;
 use Omnipay\Common\Exception\RuntimeException;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
