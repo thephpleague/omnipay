@@ -13,20 +13,21 @@ namespace Omnipay\TargetPay\Message;
 
 use Omnipay\TestCase;
 
-class MrcashPurchaseRequestTest extends TestCase
+class IdealPurchaseRequestTest extends TestCase
 {
     /**
-     * @var MrcashPurchaseRequest
+     * @var IdealPurchaseRequest
      */
     private $request;
 
     protected function setUp()
     {
-        $this->request = new MrcashPurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
+        $this->request = new IdealPurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize(array(
+            'issuer' => '0001',
             'amount' => '100.00',
+            'currency' => 'EUR',
             'description' => 'easy, no?',
-            'clientIp' => '127.0.0.1',
             'language' => 'EN',
             'returnUrl' => 'http://localhost/return',
             'notifyUrl' => 'http://localhost/notify',
@@ -35,24 +36,24 @@ class MrcashPurchaseRequestTest extends TestCase
 
     public function testSendSuccess()
     {
-        $this->setMockHttpResponse('MrcashPurchaseSuccess.txt');
+        $this->setMockHttpResponse('IdealPurchaseSuccess.txt');
 
         $response = $this->request->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
-        $this->assertEquals('https://www.targetpay.com/mrcash/start.php?trxid=15983095', $response->getRedirectUrl());
-        $this->assertEquals('15983095', $response->getTransactionReference());
+        $this->assertEquals('https://www.abnamro.nl/nl/ideal/identification.do?randomizedstring=4588770896&trxid=20000672693122', $response->getRedirectUrl());
+        $this->assertEquals('0020000672693122', $response->getTransactionReference());
     }
 
     public function testSendFailure()
     {
-        $this->setMockHttpResponse('MrcashPurchaseFailure.txt');
+        $this->setMockHttpResponse('IdealPurchaseFailure.txt');
 
         $response = $this->request->send();
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertEquals('Account disabled.', $response->getMessage());
-        $this->assertEquals('TP0016', $response->getCode());
+        $this->assertEquals('Internal error, failed to create transaction.', $response->getMessage());
+        $this->assertEquals('TP9997', $response->getCode());
     }
 }

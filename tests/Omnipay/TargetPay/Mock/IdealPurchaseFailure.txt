@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+Date: Wed, 25 Sep 2013 10:57:39 GMT
+Server: Apache/2.2.3 (Debian) mod_fastcgi/2.4.2 mod_ssl/2.2.3 OpenSSL/0.9.8c
+Content-Location: start.php
+Vary: negotiate
+TCN: choice
+X-Powered-By: PHP/5.2.0-8+etch16
+Transfer-Encoding: chunked
+Content-Type: text/html; charset=ISO-8859-1
+
+TP9997 Internal error, failed to create transaction.

@@ -16,7 +16,7 @@ use Omnipay\TestCase;
 class DirectebankingPurchaseRequestTest extends TestCase
 {
     /**
-     * @var PurchaseRequest
+     * @var DirectebankingPurchaseRequest
      */
     private $request;
 
