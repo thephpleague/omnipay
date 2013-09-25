@@ -12,7 +12,6 @@
 namespace Omnipay\TargetPay;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\TargetPay\Message\CompletePurchaseRequest;
 use Omnipay\TargetPay\Message\FetchIssuersRequest;
 
@@ -73,23 +72,9 @@ class Gateway extends AbstractGateway
      */
     public function purchase(array $parameters = array())
     {
-        $paymentMethod = $this->getPaymentMethod();
+        $class = '\Omnipay\TargetPay\Message\\'.ucfirst($this->getPaymentMethod()).'PurchaseRequest';
 
-        switch ($paymentMethod) {
-            case 'mrcash':
-                $class = 'MrcashPurchaseRequest';
-                break;
-            case 'ideal':
-                $class = 'IdealPurchaseRequest';
-                break;
-            case 'directebanking':
-                $class = 'DirectebankingPurchaseRequest';
-                break;
-            default:
-                throw new InvalidRequestException(sprintf('Unknown payment method "%s".', $paymentMethod));
-        }
-
-        return $this->createRequest('\Omnipay\TargetPay\Message\\'.$class, $parameters);
+        return $this->createRequest($class, $parameters);
     }
 
     /**
