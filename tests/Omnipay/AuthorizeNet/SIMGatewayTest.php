@@ -21,6 +21,7 @@ class SIMGatewayTest extends GatewayTestCase
 
         $this->gateway = new SIMGateway($this->getHttpClient(), $this->getHttpRequest());
         $this->gateway->setApiLoginId('example');
+        $this->gateway->setHashSecret('elpmaxe');
 
         $this->options = array(
             'amount' => '10.00',
@@ -47,7 +48,7 @@ class SIMGatewayTest extends GatewayTestCase
             array(
                 'x_response_code' => '1',
                 'x_trans_id' => '12345',
-                'x_MD5_Hash' => md5('example9910.00'),
+                'x_MD5_Hash' => md5('elpmaxeexample9910.00'),
             )
         );
 
@@ -76,7 +77,7 @@ class SIMGatewayTest extends GatewayTestCase
             array(
                 'x_response_code' => '1',
                 'x_trans_id' => '12345',
-                'x_MD5_Hash' => md5('example9910.00'),
+                'x_MD5_Hash' => md5('elpmaxeexample9910.00'),
             )
         );
 
