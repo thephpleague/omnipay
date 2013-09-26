@@ -24,5 +24,16 @@ class AbstractResponseTest extends TestCase
         $this->assertNull($response->getData());
         $this->assertNull($response->getTransactionReference());
         $this->assertNull($response->getMessage());
+        $this->assertNull($response->getCode());
+    }
+
+    /**
+     * @expectedException \Omnipay\Common\Exception\RuntimeException
+     */
+    public function testCannotRedirectResponseThatIsNotRedirectResponseInterface()
+    {
+        $response = m::mock('\Omnipay\Common\Message\AbstractResponse[isSuccessful,isRedirect]');
+
+        $response->getRedirectResponse();
     }
 }

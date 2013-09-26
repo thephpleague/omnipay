@@ -33,15 +33,18 @@ class PurchaseRequest extends AbstractRequest
 
     public function getData()
     {
-        $this->validate('amount');
+        $this->validate('amount', 'card');
 
         $data = array();
         $data['amount'] = $this->getAmountInteger();
         $data['currency'] = strtolower($this->getCurrency());
         $data['description'] = $this->getDescription();
         $data['ip_address'] = $this->getClientIp();
+        $data['email'] = $this->getCard()->getEmail();
 
-        if ($this->getCard()) {
+        if ($this->getToken()) {
+            $data['card_token'] = $this->getToken();
+        } else {
             $this->getCard()->validate();
 
             $data['card']['number'] = $this->getCard()->getNumber();
@@ -55,7 +58,6 @@ class PurchaseRequest extends AbstractRequest
             $data['card']['address_postcode'] = $this->getCard()->getPostcode();
             $data['card']['address_state'] = $this->getCard()->getState();
             $data['card']['address_country'] = $this->getCard()->getCountry();
-            $data['email'] = $this->getCard()->getEmail();
         }
 
         return $data;

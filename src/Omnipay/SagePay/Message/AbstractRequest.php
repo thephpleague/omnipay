@@ -42,7 +42,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function getService()
     {
-        return $this->getParameter('action');
+        return $this->action;
     }
 
     protected function getBaseData()

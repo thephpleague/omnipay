@@ -16,6 +16,8 @@ namespace Omnipay\PayPal\Message;
  */
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
+    const API_VERSION = '85.0';
+
     protected $liveEndpoint = 'https://api-3t.paypal.com/nvp';
     protected $testEndpoint = 'https://api-3t.sandbox.paypal.com/nvp';
 
@@ -93,7 +95,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
         $data = array();
         $data['METHOD'] = $method;
-        $data['VERSION'] = '85.0';
+        $data['VERSION'] = static::API_VERSION;
         $data['USER'] = $this->getUsername();
         $data['PWD'] = $this->getPassword();
         $data['SIGNATURE'] = $this->getSignature();

@@ -114,6 +114,7 @@ The following gateways are already implemented:
 * Sage Pay Server
 * SecurePay Direct Post
 * Stripe
+* TargetPay
 * WorldPay
 
 Gateways are created and initialized like so:
@@ -384,10 +385,34 @@ web server (PHP 5.4+):
 
 For more information, see the [example application directory](https://github.com/adrianmacneil/omnipay/tree/master/example).
 
+## Support
+
+If you are having general issues with Omnipay, we suggest posting on
+[Stack Overflow](http://stackoverflow.com/). Be sure to add the
+[omnipay tag](http://stackoverflow.com/questions/tagged/omnipay) so it can be easily found.
+
+If you want to keep up to date with release anouncements, discuss ideas for the project,
+or ask more detailed questions, there is also a [mailing list](https://groups.google.com/forum/#!forum/omnipay) which
+you can subscribe to.
+
+If you believe you have found a bug, please report it using the [GitHub issue tracker](https://github.com/adrianmacneil/omnipay/issues),
+or better yet, fork the library and submit a pull request.
+
+## Contributing
+
+* Fork the project.
+* Make your feature addition or bug fix.
+* Add tests for it. This is important so I don't break it in a future version unintentionally.
+* Commit just the modifications, do not mess with the composer.json or CHANGELOG.md files.
+* Ensure your code is nicely formatted in the [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md)
+  style and that all tests pass.
+* Send the pull request.
+* Check that the [travis build](https://travis-ci.org/adrianmacneil/omnipay) passed. If not, rinse and repeat.
+
 ## Feedback
 
 **Please provide feedback!** We want to make this library useful in as many projects as possible.
-Please raise a Github issue, and point out what you do and don't like, or fork the project and make
-suggestions. **No issue is too small.**
+Please head on over to the [mailing list](https://groups.google.com/forum/#!forum/omnipay)
+and point out what you do and don't like, or fork the project and make suggestions. **No issue is too small.**
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/adrianmacneil/omnipay/trend.png)](https://bitdeli.com/free "Bitdeli Badge")

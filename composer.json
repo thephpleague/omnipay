@@ -21,6 +21,7 @@
         "merchant",
         "migs",
         "mollie",
+        "multisafepay",
         "netaxept",
         "netbanx",
         "pay",
@@ -37,6 +38,7 @@
         "stripe",
         "tala",
         "tala-payments",
+        "targetpay",
         "twocheckout",
         "worldpay"
     ],

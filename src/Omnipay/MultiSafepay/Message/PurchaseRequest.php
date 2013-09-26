@@ -100,9 +100,9 @@ class PurchaseRequest extends AbstractRequest
         $merchant->addChild('account', $this->getAccountId());
         $merchant->addChild('site_id', $this->getSiteId());
         $merchant->addChild('site_secure_code', $this->getSiteCode());
-        $merchant->addChild('notification_url', $this->getNotifyUrl());
-        $merchant->addChild('cancel_url', $this->getCancelUrl());
-        $merchant->addChild('redirect_url', $this->getReturnUrl());
+        $merchant->addChild('notification_url', htmlspecialchars($this->getNotifyUrl()));
+        $merchant->addChild('cancel_url', htmlspecialchars($this->getCancelUrl()));
+        $merchant->addChild('redirect_url', htmlspecialchars($this->getReturnUrl()));
         $merchant->addChild('gateway', $this->getGateway());
 
         if ('IDEAL' === $this->getGateway() && $this->getIssuer()) {
@@ -161,7 +161,11 @@ class PurchaseRequest extends AbstractRequest
     protected function generateSignature()
     {
         return md5(
-            $this->getAmount().$this->getCurrency().$this->getAccountId().$this->getSiteId().$this->getTransactionId()
+            $this->getAmountInteger().
+            $this->getCurrency().
+            $this->getAccountId().
+            $this->getSiteId().
+            $this->getTransactionId()
         );
     }
 }
