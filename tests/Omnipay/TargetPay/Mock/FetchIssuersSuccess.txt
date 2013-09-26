@@ -1,0 +1,9 @@
+TTP/1.1 200 OK
+Date: Tue, 24 Sep 2013 12:38:19 GMT
+Server: Apache/2.2.3 (Debian) mod_fastcgi/2.4.2 mod_ssl/2.2.3 OpenSSL/0.9.8c
+X-Powered-By: PHP/5.2.0-8+etch16
+Transfer-Encoding: chunked
+Content-Type: text/xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<issuers><issuer id="0001">Sample 1</issuer><issuer id="0002">Sample 2</issuer></issuers>

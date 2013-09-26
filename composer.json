@@ -37,6 +37,7 @@
         "stripe",
         "tala",
         "tala-payments",
+        "targetpay",
         "twocheckout",
         "worldpay"
     ],

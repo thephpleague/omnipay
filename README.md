@@ -114,6 +114,7 @@ The following gateways are already implemented:
 * Sage Pay Server
 * SecurePay Direct Post
 * Stripe
+* TargetPay
 * WorldPay
 
 Gateways are created and initialized like so:
