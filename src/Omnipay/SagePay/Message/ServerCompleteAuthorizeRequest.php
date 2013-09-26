@@ -27,7 +27,7 @@ class ServerCompleteAuthorizeRequest extends AbstractRequest
         // validate VPSSignature
         $signature = md5(
             $reference['VPSTxId'].
-            $reference['VendorTxCode'].
+            $this->getTransactionId().
             $this->httpRequest->request->get('Status').
             $this->httpRequest->request->get('TxAuthNo').
             $this->getVendor().
