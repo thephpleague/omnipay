@@ -33,8 +33,8 @@ class IdealPurchaseRequest extends PurchaseRequest
         return array(
             'rtlo' => $this->getSubAccountId(),
             'bank' => $this->getIssuer(),
-            'description' => $this->getDescription(),
             'amount' => $this->getAmountInteger(),
+            'description' => $this->getDescription(),
             'language' => $this->getLanguage(),
             'currency' => $this->getCurrency(),
             'returnurl' => $this->getReturnUrl(),

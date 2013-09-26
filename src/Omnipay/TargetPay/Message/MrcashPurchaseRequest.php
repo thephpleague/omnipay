@@ -22,8 +22,8 @@ class MrcashPurchaseRequest extends PurchaseRequest
 
         return array(
             'rtlo' => $this->getSubAccountId(),
-            'description' => $this->getDescription(),
             'amount' => $this->getAmountInteger(),
+            'description' => $this->getDescription(),
             'lang' => $this->getLanguage(),
             'userip' => $this->getClientIp(),
             'returnurl' => $this->getReturnUrl(),

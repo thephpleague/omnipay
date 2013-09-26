@@ -24,9 +24,19 @@ class CompletePurchaseRequestTest extends TestCase
     protected function setUp()
     {
         $arguments = array($this->getHttpClient(), $this->getHttpRequest());
-        $this->request = m::mock('Omnipay\TargetPay\Message\CompletePurchaseRequest[getData,getEndpoint]', $arguments);
-        $this->request->shouldReceive('getData')->andReturn(array());
+        $this->request = m::mock('Omnipay\TargetPay\Message\CompletePurchaseRequest[getEndpoint]', $arguments);
         $this->request->shouldReceive('getEndpoint')->andReturn('http://localhost');
+        $this->request->setTransactionId('123456');
+    }
+
+    public function testData()
+    {
+        $data = $this->request->getData();
+
+        $this->assertArrayHasKey('rtlo', $data);
+        $this->assertSame('123456', $data['trxid']);
+        $this->assertArrayHasKey('once', $data);
+        $this->assertArrayHasKey('test', $data);
     }
 
     public function testSendSuccess()
