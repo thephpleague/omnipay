@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+Date: Mon, 23 Sep 2013 14:50:39 GMT
+Server: Apache/2.2.3 (Debian) mod_fastcgi/2.4.2 mod_ssl/2.2.3 OpenSSL/0.9.8c
+Content-Location: check.php
+Vary: negotiate
+TCN: choice
+Content-Length: 9
+Content-Type: text/html; charset=ISO-8859-1
+X-Pad: avoid browser bug
+
+000000 OK
