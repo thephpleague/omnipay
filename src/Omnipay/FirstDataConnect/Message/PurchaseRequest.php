@@ -75,7 +75,7 @@ class PurchaseRequest extends AbstractRequest
         return $data;
     }
 
-    function createHash($dateTime, $amount)
+    public function createHash($dateTime, $amount)
     {
         $storeId = $this->getStoreId();
         $sharedSecret = $this->getSharedSecret();
