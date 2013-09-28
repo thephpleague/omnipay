@@ -13,7 +13,6 @@ namespace Omnipay\FirstDataConnect;
 
 use Omnipay\Common\AbstractGateway;
 
-
 class Gateway extends AbstractGateway
 {
     public function getName()
