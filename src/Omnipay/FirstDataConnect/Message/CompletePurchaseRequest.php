@@ -11,6 +11,7 @@
 
 namespace Omnipay\FirstDataConnect\Message;
 
+use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\Exception\InvalidResponseException;
 
 /**
@@ -27,7 +28,7 @@ class CompletePurchaseRequest extends PurchaseRequest
         $ourHash = $this->createResponseHash($amount, $dateTime, $code);
         if ($theirHash !== $ourHash) {
             echo $ourHash . '<br>' . $theirHash;
-            throw new InvalidResponseException("Invalid callback password");
+            throw new InvalidResponseException("Callback hash does not match expected value");
         }
         return $this->httpRequest->request->all();
     }
@@ -47,8 +48,14 @@ class CompletePurchaseRequest extends PurchaseRequest
     public function createResponseHash($amount, $dateTime, $code)
     {
         $storeId = $this->getStoreId();
+        if (empty($storeId)) throw new InvalidRequestException("storeId parameter missing, cannot process request");
+
         $sharedSecret = $this->getSharedSecret();
+        if (empty($sharedSecret)) throw new InvalidRequestException("sharedSecret parameter missing, cannot process request");
+
         $currency = $this->getCurrencyNumeric();
+        if (empty($currency)) throw new InvalidRequestException("currency parameter missing, cannot process request");
+
         $stringToHash = $sharedSecret . $code . $amount . $currency . $dateTime . $storeId;
         $ascii = bin2hex($stringToHash);
         return sha1($ascii);
