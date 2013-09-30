@@ -15,8 +15,6 @@ use Omnipay\Common\Exception\InvalidResponseException;
 
 /**
  * First Data Connect Complete Authorize Request
- *
- * @todo check hash on return
  */
 class CompletePurchaseRequest extends PurchaseRequest
 {
