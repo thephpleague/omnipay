@@ -91,6 +91,26 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('headerImageUrl', $value);
     }
 
+    public function getNoShipping()
+    {
+        return $this->getParameter('noShipping');
+    }
+
+    public function setNoShipping($value)
+    {
+        return $this->setParameter('noShipping', $value);
+    }
+
+    public function getAllowNote()
+    {
+        return $this->getParameter('allowNote');
+    }
+
+    public function setAllowNote($value)
+    {
+        return $this->setParameter('allowNote', $value);
+    }
+
     protected function getBaseData($method)
     {
         $data = array();
