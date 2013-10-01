@@ -18,7 +18,7 @@ use Omnipay\Common\Message\AbstractRequest;
  */
 class PurchaseRequest extends AbstractRequest
 {
-    protected $liveEndpoint = 'https://live.ipg-online.com/connect/gateway/processing';
+    protected $liveEndpoint = 'https://www.ipg-online.com/connect/gateway/processing';
     protected $testEndpoint = 'https://test.ipg-online.com/connect/gateway/processing';
 
     protected function getDateTime()
