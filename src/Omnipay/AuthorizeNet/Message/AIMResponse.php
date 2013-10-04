@@ -44,4 +44,14 @@ class AIMResponse extends AbstractResponse
     {
         return $this->data[3];
     }
+
+    public function getAuthorizeCode()
+    {
+        return $this->data[4];
+    }
+
+    public function getAVSMatch()
+    {
+        return $this->data[5];
+    }
 }
