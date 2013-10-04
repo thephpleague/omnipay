@@ -41,6 +41,7 @@ class PurchaseRequestTest extends TestCase
             'extraData2' => 'extra 2',
             'extraData3' => 'extra 3',
             'language' => 'a language',
+            'items' => 'the items',
             'clientIp' => '127.0.0.1',
             'googleAnalyticsCode' => 'analytics code',
             'card' => array(
@@ -177,6 +178,7 @@ class PurchaseRequestTest extends TestCase
     <var1>extra 1</var1>
     <var2>extra 2</var2>
     <var3>extra 3</var3>
+    <items>the items</items>
   </transaction>
   <signature>ad447bab87b8597853432c891e341db1</signature>
 </redirecttransaction>
@@ -224,6 +226,7 @@ EOF;
     <var1>extra 1</var1>
     <var2>extra 2</var2>
     <var3>extra 3</var3>
+    <items>the items</items>
   </transaction>
   <signature>ad447bab87b8597853432c891e341db1</signature>
 </redirecttransaction>
@@ -274,6 +277,7 @@ EOF;
     <var1>extra 1</var1>
     <var2>extra 2</var2>
     <var3>extra 3</var3>
+    <items>the items</items>
   </transaction>
   <signature>ad447bab87b8597853432c891e341db1</signature>
 </redirecttransaction>
