@@ -32,16 +32,36 @@ class AIMResponse extends AbstractResponse
 
     public function isSuccessful()
     {
-        return '1' === $this->data[0];
+        return '1' === $this->getCode();
     }
 
-    public function getTransactionReference()
+    public function getCode()
     {
-        return $this->data[6];
+        return $this->data[0];
+    }
+
+    public function getReasonCode()
+    {
+        return $this->data[2];
     }
 
     public function getMessage()
     {
         return $this->data[3];
+    }
+
+    public function getAuthorizationCode()
+    {
+        return $this->data[4];
+    }
+
+    public function getAVSCode()
+    {
+        return $this->data[5];
+    }
+
+    public function getTransactionReference()
+    {
+        return $this->data[6];
     }
 }
