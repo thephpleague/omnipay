@@ -32,13 +32,19 @@ class ExpressAuthorizeRequest extends AbstractRequest
         // pp express specific fields
         $data['SOLUTIONTYPE'] = $this->getSolutionType();
         $data['LANDINGPAGE'] = $this->getLandingPage();
-        $data['NOSHIPPING'] = 1;
-        $data['ALLOWNOTE'] = 0;
         $data['RETURNURL'] = $this->getReturnUrl();
         $data['CANCELURL'] = $this->getCancelUrl();
 
         if ($headerImageUrl = $this->getHeaderImageUrl()) {
             $data['HDRIMG'] = $headerImageUrl;
+        }
+
+        if (null !== ($noShipping = $this->getNoShipping())) {
+            $data['NOSHIPPING'] = $noShipping;
+        }
+
+        if (null !== ($allowNote = $this->getAllowNote())) {
+            $data['ALLOWNOTE'] = $allowNote;
         }
 
         if ($card = $this->getCard()) {

@@ -16,6 +16,11 @@ use Omnipay\TestCase;
 
 class ExpressAuthorizeRequestTest extends TestCase
 {
+    /**
+     * @var ExpressAuthorizeRequest
+     */
+    private $request;
+
     public function setUp()
     {
         parent::setUp();
@@ -42,6 +47,8 @@ class ExpressAuthorizeRequestTest extends TestCase
             'notifyUrl' => 'https://www.example.com/notify',
             'subject' => 'demo@example.com',
             'headerImageUrl' => 'https://www.example.com/header.jpg',
+            'noShipping' => 0,
+            'allowNote' => 0,
         ));
 
         $data = $this->request->getData();
@@ -55,9 +62,11 @@ class ExpressAuthorizeRequestTest extends TestCase
         $this->assertSame('https://www.example.com/notify', $data['PAYMENTREQUEST_0_NOTIFYURL']);
         $this->assertSame('demo@example.com', $data['SUBJECT']);
         $this->assertSame('https://www.example.com/header.jpg', $data['HDRIMG']);
+        $this->assertSame(0, $data['NOSHIPPING']);
+        $this->assertSame(0, $data['ALLOWNOTE']);
     }
 
-    public function testGetDataWitCard()
+    public function testGetDataWithCard()
     {
         $this->request->initialize(array(
             'amount' => '10.00',
@@ -69,6 +78,8 @@ class ExpressAuthorizeRequestTest extends TestCase
             'notifyUrl' => 'https://www.example.com/notify',
             'subject' => 'demo@example.com',
             'headerImageUrl' => 'https://www.example.com/header.jpg',
+            'noShipping' => 2,
+            'allowNote' => 1,
         ));
 
         $card = new CreditCard(array(
@@ -93,8 +104,8 @@ class ExpressAuthorizeRequestTest extends TestCase
             'PAYMENTREQUEST_0_PAYMENTACTION' => 'Authorization',
             'SOLUTIONTYPE' => null,
             'LANDINGPAGE' => null,
-            'NOSHIPPING' => 1,
-            'ALLOWNOTE' => 0,
+            'NOSHIPPING' => 2,
+            'ALLOWNOTE' => 1,
             'PAYMENTREQUEST_0_AMT' => '10.00',
             'PAYMENTREQUEST_0_CURRENCYCODE' => 'AUD',
             'PAYMENTREQUEST_0_INVNUM' => '111',
