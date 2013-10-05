@@ -86,6 +86,16 @@ class PurchaseRequest extends AbstractRequest
         return $this->setParameter('extraData3', $value);
     }
 
+    public function getItems()
+    {
+        return $this->getParameter('items');
+    }
+
+    public function setItems($value)
+    {
+        return $this->setParameter('items', $value);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -135,6 +145,7 @@ class PurchaseRequest extends AbstractRequest
         $transaction->addChild('var1', $this->getExtraData1());
         $transaction->addChild('var2', $this->getExtraData2());
         $transaction->addChild('var3', $this->getExtraData3());
+        $transaction->addChild('items', $this->getItems());
 
         $data->addChild('signature', $this->generateSignature());
 
