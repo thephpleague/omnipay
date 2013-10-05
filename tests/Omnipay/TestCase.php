@@ -123,6 +123,20 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
             'expiryMonth' => rand(1, 12),
             'expiryYear' => date('Y') + rand(1, 5),
             'cvv' => rand(100, 999),
+            'billingAddress1' => '123 Billing St',
+            'billingAddress2' => 'Billsville',
+            'billingCity' => 'Billstown',
+            'billingPostcode' => '12345',
+            'billingState' => 'CA',
+            'billingCountry' => 'US',
+            'billingPhone' => '(555) 123-4567',
+            'shippingAddress1' => '123 Shipping St',
+            'shippingAddress2' => 'Shipsville',
+            'shippingCity' => 'Shipstown',
+            'shippingPostcode' => '54321',
+            'shippingState' => 'NY',
+            'shippingCountry' => 'US',
+            'shippingPhone' => '(555) 987-6543',
         );
     }
 
