@@ -29,6 +29,44 @@ class DirectAuthorizeRequestTest extends TestCase
         );
     }
 
+    public function testGetDataCustomerDetails()
+    {
+        $card = $this->request->getCard();
+        $data = $this->request->getData();
+
+        $this->assertSame($card->getFirstName(), $data['BillingFirstnames']);
+        $this->assertSame($card->getLastName(), $data['BillingSurname']);
+        $this->assertSame($card->getBillingAddress1(), $data['BillingAddress1']);
+        $this->assertSame($card->getBillingAddress2(), $data['BillingAddress2']);
+        $this->assertSame($card->getBillingCity(), $data['BillingCity']);
+        $this->assertSame($card->getBillingPostcode(), $data['BillingPostCode']);
+        $this->assertSame($card->getBillingState(), $data['BillingState']);
+        $this->assertSame($card->getBillingCountry(), $data['BillingCountry']);
+        $this->assertSame($card->getBillingPhone(), $data['BillingPhone']);
+
+        $this->assertSame($card->getFirstName(), $data['DeliveryFirstnames']);
+        $this->assertSame($card->getLastName(), $data['DeliverySurname']);
+        $this->assertSame($card->getShippingAddress1(), $data['DeliveryAddress1']);
+        $this->assertSame($card->getShippingAddress2(), $data['DeliveryAddress2']);
+        $this->assertSame($card->getShippingCity(), $data['DeliveryCity']);
+        $this->assertSame($card->getShippingPostcode(), $data['DeliveryPostCode']);
+        $this->assertSame($card->getShippingState(), $data['DeliveryState']);
+        $this->assertSame($card->getShippingCountry(), $data['DeliveryCountry']);
+        $this->assertSame($card->getShippingPhone(), $data['DeliveryPhone']);
+    }
+
+    public function testGetDataCustomerDetailsIgnoresStateOutsideUS()
+    {
+        $card = $this->request->getCard();
+        $card->setBillingCountry('UK');
+        $card->setShippingCountry('NZ');
+
+        $data = $this->request->getData();
+
+        $this->assertNull($data['BillingState']);
+        $this->assertNull($data['DeliveryState']);
+    }
+
     public function testGetDataVisa()
     {
         $this->request->getCard()->setNumber('4929000000006');

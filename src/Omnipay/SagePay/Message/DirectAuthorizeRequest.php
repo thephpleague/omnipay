@@ -25,6 +25,7 @@ class DirectAuthorizeRequest extends AbstractRequest
     protected function getBaseAuthorizeData()
     {
         $this->validate('amount', 'card', 'transactionId');
+        $card = $this->getCard();
 
         $data = $this->getBaseData();
         $data['Description'] = $this->getDescription();
@@ -36,27 +37,27 @@ class DirectAuthorizeRequest extends AbstractRequest
         $data['Apply3DSecure'] = 0; // use account setting
 
         // billing details
-        $data['BillingFirstnames'] = $this->getCard()->getFirstName();
-        $data['BillingSurname'] = $this->getCard()->getLastName();
-        $data['BillingAddress1'] = $this->getCard()->getBillingAddress1();
-        $data['BillingAddress2'] = $this->getCard()->getBillingAddress2();
-        $data['BillingCity'] = $this->getCard()->getBillingCity();
-        $data['BillingPostCode'] = $this->getCard()->getBillingPostcode();
-        $data['BillingState'] = $this->getCard()->getBillingState();
-        $data['BillingCountry'] = $this->getCard()->getBillingCountry();
-        $data['BillingPhone'] = $this->getCard()->getBillingPhone();
+        $data['BillingFirstnames'] = $card->getFirstName();
+        $data['BillingSurname'] = $card->getLastName();
+        $data['BillingAddress1'] = $card->getBillingAddress1();
+        $data['BillingAddress2'] = $card->getBillingAddress2();
+        $data['BillingCity'] = $card->getBillingCity();
+        $data['BillingPostCode'] = $card->getBillingPostcode();
+        $data['BillingState'] = $card->getBillingCountry() === 'US' ? $card->getBillingState() : null;
+        $data['BillingCountry'] = $card->getBillingCountry();
+        $data['BillingPhone'] = $card->getBillingPhone();
 
         // shipping details
-        $data['DeliveryFirstnames'] = $this->getCard()->getFirstName();
-        $data['DeliverySurname'] = $this->getCard()->getLastName();
-        $data['DeliveryAddress1'] = $this->getCard()->getShippingAddress1();
-        $data['DeliveryAddress2'] = $this->getCard()->getShippingAddress2();
-        $data['DeliveryCity'] = $this->getCard()->getShippingCity();
-        $data['DeliveryPostCode'] = $this->getCard()->getShippingPostcode();
-        $data['DeliveryState'] = $this->getCard()->getShippingState();
-        $data['DeliveryCountry'] = $this->getCard()->getShippingCountry();
-        $data['DeliveryPhone'] = $this->getCard()->getShippingPhone();
-        $data['CustomerEMail'] = $this->getCard()->getEmail();
+        $data['DeliveryFirstnames'] = $card->getFirstName();
+        $data['DeliverySurname'] = $card->getLastName();
+        $data['DeliveryAddress1'] = $card->getShippingAddress1();
+        $data['DeliveryAddress2'] = $card->getShippingAddress2();
+        $data['DeliveryCity'] = $card->getShippingCity();
+        $data['DeliveryPostCode'] = $card->getShippingPostcode();
+        $data['DeliveryState'] = $card->getShippingCountry() === 'US' ? $card->getShippingState() : null;
+        $data['DeliveryCountry'] = $card->getShippingCountry();
+        $data['DeliveryPhone'] = $card->getShippingPhone();
+        $data['CustomerEMail'] = $card->getEmail();
 
         return $data;
     }
