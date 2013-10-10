@@ -13,6 +13,7 @@ env:
 
 before_script:
   - composer self-update
+  - composer --version
   - composer require symfony/http-foundation:${SYMFONY_VERSION} --no-update
   - composer require guzzle/http:${GUZZLE_VERSION} --no-update
   - composer install -n --dev --prefer-source
