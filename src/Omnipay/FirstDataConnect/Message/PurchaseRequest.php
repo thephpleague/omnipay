@@ -73,6 +73,7 @@ class PurchaseRequest extends AbstractRequest
         $currency = $this->getCurrencyNumeric();
         $stringToHash = $storeId . $dateTime . $amount . $currency . $sharedSecret;
         $ascii = bin2hex($stringToHash);
+        
         return sha1($ascii);
     }
 
