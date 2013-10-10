@@ -18,9 +18,9 @@ class CompletePurchaseRequest extends PurchaseRequest
         $code = (string)$this->httpRequest->request->get('approval_code');
         $ourHash = $this->createResponseHash($amount, $dateTime, $code);
         if ($theirHash !== $ourHash) {
-            echo $ourHash . '<br>' . $theirHash;
             throw new InvalidResponseException("Callback hash does not match expected value");
         }
+        
         return $this->httpRequest->request->all();
     }
 
@@ -55,6 +55,7 @@ class CompletePurchaseRequest extends PurchaseRequest
 
         $stringToHash = $sharedSecret . $code . $amount . $currency . $dateTime . $storeId;
         $ascii = bin2hex($stringToHash);
+        
         return sha1($ascii);
     }
 }
