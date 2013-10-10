@@ -38,20 +38,11 @@ class CompletePurchaseRequest extends PurchaseRequest
      */
     public function createResponseHash($amount, $dateTime, $code)
     {
+        $this->validate('storeId', 'sharedSecret', 'currency');
+        
         $storeId = $this->getStoreId();
-        if (empty($storeId)) {
-            throw new InvalidRequestException("storeId parameter missing, cannot process request");
-        }
-
         $sharedSecret = $this->getSharedSecret();
-        if (empty($sharedSecret)) {
-            throw new InvalidRequestException("sharedSecret parameter missing, cannot process request");
-        }
-
         $currency = $this->getCurrencyNumeric();
-        if (empty($currency)) {
-            throw new InvalidRequestException("currency parameter missing, cannot process request");
-        }
 
         $stringToHash = $sharedSecret . $code . $amount . $currency . $dateTime . $storeId;
         $ascii = bin2hex($stringToHash);
