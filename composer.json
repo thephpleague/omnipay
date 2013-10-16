@@ -48,6 +48,10 @@
         {
             "name": "Adrian Macneil",
             "email": "adrian@adrianmacneil.com"
+        },
+        {
+            "name": "Omnipay Community",
+            "homepage": "https://github.com/adrianmacneil/omnipay/graphs/contributors"
         }
     ],
     "autoload": {
