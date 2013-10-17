@@ -12,7 +12,7 @@ class DirectPurchaseRequest extends DirectAbstractRequest
     protected $liveEndpoint = 'https://www.eway.com.au/gateway_cvn/xmlpayment.asp';
     protected $testEndpoint = 'https://www.eway.com.au/gateway_cvn/xmltest/testpage.asp';
 
-    public function getData($sxml)
+    public function getData()
     {
         $this->validate('card');
 
