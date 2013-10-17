@@ -16,7 +16,7 @@ class DirectAuthorizeRequest extends DirectAbstractRequest
     {
         $this->validate('card');
 
-		$xml = '<?xml version="1.0"?><ewaygateway></ewaygateway>';
+        $xml = '<?xml version="1.0"?><ewaygateway></ewaygateway>';
         $sxml = new \SimpleXMLElement($xml);
 
         /* eWAY Customer Id */

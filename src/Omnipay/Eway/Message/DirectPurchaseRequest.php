@@ -15,9 +15,9 @@ class DirectPurchaseRequest extends DirectAbstractRequest
     public function getData($sxml)
     {
         $this->validate('card');
-        
-    	$xml = '<?xml version="1.0"?><ewaygateway></ewaygateway>';
-		$sxml = new \SimpleXMLElement($xml);
+
+        $xml = '<?xml version="1.0"?><ewaygateway></ewaygateway>';
+        $sxml = new \SimpleXMLElement($xml);
 
         /* eWAY Customer Id */
         $sxml->addChild('ewayCustomerID', $this->getCustomerId());
@@ -51,5 +51,4 @@ class DirectPurchaseRequest extends DirectAbstractRequest
 
         return $sxml->asXML();
     }
-
 }

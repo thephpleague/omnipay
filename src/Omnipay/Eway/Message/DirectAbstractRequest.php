@@ -10,7 +10,7 @@ use Omnipay\Common\Message\AbstractRequest;
 abstract class DirectAbstractRequest extends AbstractRequest
 {
 
-	public function send()
+    public function send()
     {
         $httpResponse = $this->httpClient->post($this->getEndpoint(), null, $this->getData())->send();
 
@@ -29,32 +29,32 @@ abstract class DirectAbstractRequest extends AbstractRequest
 
     public function setOption1($value)
     {
-    	return $this->setParameter('option1', $value);
+        return $this->setParameter('option1', $value);
     }
 
     public function getOption1()
     {
-    	return $this->getParameter('option1');
+        return $this->getParameter('option1');
     }
 
     public function setOption2($value)
     {
-    	return $this->setParameter('option2', $value);
+        return $this->setParameter('option2', $value);
     }
 
     public function getOption2()
     {
-    	return $this->getParameter('option2');
+        return $this->getParameter('option2');
     }
 
-	public function setOption3($value)
+    public function setOption3($value)
     {
-    	return $this->setParameter('option3', $value);
+        return $this->setParameter('option3', $value);
     }
 
     public function getOption3()
     {
-    	return $this->getParameter('option3');
+        return $this->getParameter('option3');
     }
 
     /**
@@ -68,5 +68,4 @@ abstract class DirectAbstractRequest extends AbstractRequest
     {
         return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }
-
 }

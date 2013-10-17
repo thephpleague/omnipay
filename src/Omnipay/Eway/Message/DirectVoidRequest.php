@@ -16,8 +16,8 @@ class DirectVoidRequest extends DirectAbstractRequest
     {
         $this->validate('transactionId');
 
-		$xml = '<?xml version="1.0"?><ewaygateway></ewaygateway>';
-		$sxml = new \SimpleXMLElement($xml);
+        $xml = '<?xml version="1.0"?><ewaygateway></ewaygateway>';
+        $sxml = new \SimpleXMLElement($xml);
 
         /* eWAY Customer Id */
         $sxml->addChild('ewayCustomerID', $this->getCustomerId());
