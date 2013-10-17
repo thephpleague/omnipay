@@ -40,7 +40,6 @@ class DirectPurchaseRequest extends DirectAbstractRequest
         $sxml->addChild('ewayCustomerEmail', $card->getEmail());
         $sxml->addChild('ewayCustomerAddress', $card->getAddress1().' '.$card->getAddress2());
         $sxml->addChild('ewayCustomerPostcode', $card->getPostCode());
-        $sxml->addChild('ewayCustomerPostcode', $card->getPostCode());
 
         $sxml->addChild('ewayOption1', $this->getOption1());
         $sxml->addChild('ewayOption2', $this->getOption2());
