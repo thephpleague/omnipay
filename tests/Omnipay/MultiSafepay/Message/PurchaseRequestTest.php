@@ -134,7 +134,7 @@ class PurchaseRequestTest extends TestCase
     {
         $xml = <<<EOF
 <?xml version="1.0" encoding="UTF-8"?>
-<redirecttransaction ua="Omnipay">
+<directtransaction ua="Omnipay">
   <merchant>
     <account>111111</account>
     <site_id>222222</site_id>
@@ -142,11 +142,7 @@ class PurchaseRequestTest extends TestCase
     <notification_url>http://localhost/notify</notification_url>
     <cancel_url>http://localhost/cancel</cancel_url>
     <redirect_url>http://localhost/return</redirect_url>
-    <gateway>IDEAL</gateway>
   </merchant>
-  <gatewayinfo>
-    <issuerid>issuer</issuerid>
-  </gatewayinfo>
   <customer>
     <ipaddress>127.0.0.1</ipaddress>
     <locale>a language</locale>
@@ -170,9 +166,13 @@ class PurchaseRequestTest extends TestCase
     <var2>extra 2</var2>
     <var3>extra 3</var3>
     <items>the items</items>
+    <gateway>IDEAL</gateway>
   </transaction>
+  <gatewayinfo>
+    <issuerid>issuer</issuerid>
+  </gatewayinfo>
   <signature>ad447bab87b8597853432c891e341db1</signature>
-</redirecttransaction>
+</directtransaction>
 
 EOF;
 
@@ -193,7 +193,6 @@ EOF;
     <notification_url>http://localhost/notify</notification_url>
     <cancel_url>http://localhost/cancel</cancel_url>
     <redirect_url>http://localhost/return</redirect_url>
-    <gateway>another</gateway>
   </merchant>
   <customer>
     <ipaddress>127.0.0.1</ipaddress>
@@ -218,6 +217,7 @@ EOF;
     <var2>extra 2</var2>
     <var3>extra 3</var3>
     <items>the items</items>
+    <gateway>another</gateway>
   </transaction>
   <signature>ad447bab87b8597853432c891e341db1</signature>
 </redirecttransaction>
@@ -233,7 +233,7 @@ EOF;
     {
         $xml = <<<EOF
 <?xml version="1.0" encoding="UTF-8"?>
-<redirecttransaction ua="Omnipay">
+<directtransaction ua="Omnipay">
   <merchant>
     <account>111111</account>
     <site_id>222222</site_id>
@@ -241,11 +241,7 @@ EOF;
     <notification_url>http://localhost/?one=1&amp;two=2</notification_url>
     <cancel_url>http://localhost/?one=1&amp;two=2</cancel_url>
     <redirect_url>http://localhost/?one=1&amp;two=2</redirect_url>
-    <gateway>IDEAL</gateway>
   </merchant>
-  <gatewayinfo>
-    <issuerid>issuer</issuerid>
-  </gatewayinfo>
   <customer>
     <ipaddress>127.0.0.1</ipaddress>
     <locale>a language</locale>
@@ -269,9 +265,13 @@ EOF;
     <var2>extra 2</var2>
     <var3>extra 3</var3>
     <items>the items</items>
+    <gateway>IDEAL</gateway>
   </transaction>
+  <gatewayinfo>
+    <issuerid>issuer</issuerid>
+  </gatewayinfo>
   <signature>ad447bab87b8597853432c891e341db1</signature>
-</redirecttransaction>
+</directtransaction>
 
 EOF;
 
