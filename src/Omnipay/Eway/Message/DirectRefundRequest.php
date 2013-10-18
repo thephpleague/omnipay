@@ -17,14 +17,14 @@ class DirectRefundRequest extends DirectAbstractRequest
         return $this->setParameter('refundPassword', $value);
     }
 
-    public function getRefundPassword($value)
+    public function getRefundPassword()
     {
-        return $this->setParameter('refundPassword', $value);
+        return $this->getParameter('refundPassword');
     }
 
     public function getData()
     {
-        $this->validate('refundPassword');
+        $this->validate('refundPassword', 'transactionId');
         
         $xml = '<?xml version="1.0"?><ewaygateway></ewaygateway>';
         $sxml = new \SimpleXMLElement($xml);
