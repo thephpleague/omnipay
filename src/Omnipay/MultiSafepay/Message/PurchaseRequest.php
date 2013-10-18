@@ -94,7 +94,12 @@ class PurchaseRequest extends AbstractRequest
     {
         $this->validate('transactionId', 'amount', 'currency', 'description', 'clientIp', 'card');
 
-        $data = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><redirecttransaction/>');
+        if ('IDEAL' === $this->getGateway() && $this->getIssuer()) {
+            $data = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><directtransaction/>');
+        } else {
+            $data = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><redirecttransaction/>');
+        }
+
         $data->addAttribute('ua', $this->userAgent);
 
         $merchant = $data->addChild('merchant');
@@ -104,12 +109,6 @@ class PurchaseRequest extends AbstractRequest
         $merchant->addChild('notification_url', htmlspecialchars($this->getNotifyUrl()));
         $merchant->addChild('cancel_url', htmlspecialchars($this->getCancelUrl()));
         $merchant->addChild('redirect_url', htmlspecialchars($this->getReturnUrl()));
-        $merchant->addChild('gateway', $this->getGateway());
-
-        if ('IDEAL' === $this->getGateway() && $this->getIssuer()) {
-            $gatewayInfo = $data->addChild('gatewayinfo');
-            $gatewayInfo->addChild('issuerid', $this->getIssuer());
-        }
 
         /** @var CreditCard $card */
         $card = $this->getCard();
@@ -137,6 +136,12 @@ class PurchaseRequest extends AbstractRequest
         $transaction->addChild('var2', $this->getExtraData2());
         $transaction->addChild('var3', $this->getExtraData3());
         $transaction->addChild('items', $this->getItems());
+        $transaction->addChild('gateway', $this->getGateway());
+
+        if ('IDEAL' === $this->getGateway() && $this->getIssuer()) {
+            $gatewayInfo = $data->addChild('gatewayinfo');
+            $gatewayInfo->addChild('issuerid', $this->getIssuer());
+        }
 
         $data->addChild('signature', $this->generateSignature());
 

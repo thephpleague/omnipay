@@ -27,7 +27,7 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
      */
     public function isRedirect()
     {
-        return isset($this->data->transaction->payment_url);
+        return isset($this->data->transaction->payment_url) || isset($this->data->gatewayinfo->redirecturl);
     }
 
     /**
@@ -35,7 +35,13 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
      */
     public function getRedirectUrl()
     {
-        return $this->isRedirect() ? (string) $this->data->transaction->payment_url : null;
+        if (isset($this->data->gatewayinfo->redirecturl)) {
+            return (string) $this->data->gatewayinfo->redirecturl;
+        } elseif (isset($this->data->transaction->payment_url)) {
+            return (string) $this->data->transaction->payment_url;
+        }
+
+        return null;
     }
 
     /**
