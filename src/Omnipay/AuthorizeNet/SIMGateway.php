@@ -33,7 +33,6 @@ class SIMGateway extends AIMGateway
         return $this->setParameter('hashSecret', $value);
     }
 
-
     public function authorize(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\AuthorizeNet\Message\SIMAuthorizeRequest', $parameters);
