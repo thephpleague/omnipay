@@ -95,6 +95,7 @@ The following gateways are already implemented:
 * CardSave
 * Dummy
 * eWAY Rapid 3.0
+* First Data Connect
 * GoCardless
 * Manual
 * Migs 2-Party
