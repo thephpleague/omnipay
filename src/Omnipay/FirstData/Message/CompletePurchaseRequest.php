@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\FirstDataConnect\Message;
+namespace Omnipay\FirstData\Message;
 
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\Exception\InvalidResponseException;

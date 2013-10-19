@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\FirstDataConnect\Message;
+namespace Omnipay\FirstData\Message;
 
 use Omnipay\TestCase;
 

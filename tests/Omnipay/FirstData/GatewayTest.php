@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\FirstDataConnect;
+namespace Omnipay\FirstData;
 
 use Omnipay\GatewayTestCase;
 
@@ -19,7 +19,7 @@ class GatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
-        $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
+        $this->gateway = new ConnectGateway($this->getHttpClient(), $this->getHttpRequest());
         $this->gateway->setSharedSecret('96MbdNvxTa');
         $this->gateway->setStoreId('1120540155');
 

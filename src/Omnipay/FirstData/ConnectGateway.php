@@ -1,14 +1,14 @@
 <?php
 
-namespace Omnipay\FirstDataConnect;
+namespace Omnipay\FirstData;
 
 use Omnipay\Common\AbstractGateway;
 
-class Gateway extends AbstractGateway
+class ConnectGateway extends AbstractGateway
 {
     public function getName()
     {
-        return 'FirstDataConnect';
+        return 'First Data Connect';
     }
 
     public function getDefaultParameters()
@@ -42,11 +42,11 @@ class Gateway extends AbstractGateway
 
     public function purchase(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\FirstDataConnect\Message\PurchaseRequest', $parameters);
+        return $this->createRequest('\Omnipay\FirstData\Message\PurchaseRequest', $parameters);
     }
 
     public function completePurchase(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\FirstDataConnect\Message\CompletePurchaseRequest', $parameters);
+        return $this->createRequest('\Omnipay\FirstData\Message\CompletePurchaseRequest', $parameters);
     }
 }

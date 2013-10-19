@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\FirstDataConnect\Message;
+namespace Omnipay\FirstData\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RedirectResponseInterface;
