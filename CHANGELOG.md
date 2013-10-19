@@ -1,5 +1,21 @@
 # Changelog :zap:
 
+# v1.1.0 (2013-10-19)
+
+* Paypal [BC BREAK]: Removed default value `1` for `noShipping` option and added `allowNote` option.
+  To retain previous behavior, pass `'noShipping' => 1` when creating the request. (@aderuwe)
+* Add TargetPay gateway (@aderuwe)
+* MultiSafepay: Add purchase parameter (@aderuwe)
+* MultiSafepay: Add support for directtransaction (@ruudk)
+* Authorize.Net SIM: Add support for hash secret (@amsross)
+* Authorize.Net AIM: Add extra response getters
+* Sage Pay Direct: Don't pass state unless country is US
+
+# v1.0.4 (2013-09-20)
+
+* Update Pin gateway to support using JS tokens (@nagash)
+* More tests (@johnkary)
+
 # v1.0.3 (2013-08-28)
 
 * Stripe: Added fetchTransaction method (@cfreear)
