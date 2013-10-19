@@ -62,29 +62,73 @@ class AuthorizeRequest extends AbstractRequest
         $data['VENDOR'] = $this->getVendor();
         $data['PARTNER'] = $this->getPartner();
 
+        if ($this->getClientIp()) {
+            $data['CUSTIP'] = $this->getClientIp();
+        }
+
         return $data;
     }
 
     public function getData()
     {
-        $this->validate('amount', 'card');
-        $this->getCard()->validate();
-
         $data = $this->getBaseData();
         $data['TENDER'] = 'C';
         $data['AMT'] = $this->getAmount();
-        $data['COMMENT1'] = $this->getDescription();
+        $data['INVNUM'] = $this->getTransactionId();
+        $data['DESC'] = $this->getDescription();
+    
+        if ($this->getCardReference()) {
+            $this->validate('amount');
 
-        $data['ACCT'] = $this->getCard()->getNumber();
-        $data['EXPDATE'] = $this->getCard()->getExpiryDate('my');
-        $data['CVV2'] = $this->getCard()->getCvv();
-        $data['BILLTOFIRSTNAME'] = $this->getCard()->getFirstName();
-        $data['BILLTOLASTNAME'] = $this->getCard()->getLastName();
-        $data['BILLTOSTREET'] = $this->getCard()->getAddress1();
-        $data['BILLTOCITY'] = $this->getCard()->getCity();
-        $data['BILLTOSTATE'] = $this->getCard()->getState();
-        $data['BILLTOZIP'] = $this->getCard()->getPostcode();
-        $data['BILLTOCOUNTRY'] = $this->getCard()->getCountry();
+            $data['ORIGID'] = $this->getCardReference();
+
+            // if card variables are set, override
+            // the original transaction values
+            if ($card = $this->getCard()) {
+
+                if ($card->getNumber()) {
+                    $data['ACCT'] = $card->getNumber();
+                }
+                if ($card->getExpiryMonth() && $card->getExpiryYear()) {
+                    $data['EXPDATE'] = $card->getExpiryDate('my');
+                }
+                if ($card->getFirstName()) {
+                    $data['BILLTOFIRSTNAME'] = $card->getFirstName();
+                }
+                if ($card->getLastName()) {
+                    $data['BILLTOLASTNAME'] = $card->getLastName();
+                }
+                if ($card->getAddress1()) {
+                    $data['BILLTOSTREET'] = $card->getAddress1();
+                }
+                if ($card->getCity()) {
+                    $data['BILLTOCITY'] = $card->getCity();
+                }
+                if ($card->getState()) {
+                    $data['BILLTOSTATE'] = $card->getState();
+                }
+                if ($card->getPostcode()) {
+                    $data['BILLTOZIP'] = $card->getPostcode();
+                }
+                if ($card->getCountry()) {
+                    $data['BILLTOCOUNTRY'] = $card->getCountry();
+                }
+            }
+        } else {
+            $this->validate('amount', 'card');
+            $this->getCard()->validate();
+
+            $data['ACCT'] = $this->getCard()->getNumber();
+            $data['EXPDATE'] = $this->getCard()->getExpiryDate('my');
+            $data['CVV2'] = $this->getCard()->getCvv();
+            $data['BILLTOFIRSTNAME'] = $this->getCard()->getFirstName();
+            $data['BILLTOLASTNAME'] = $this->getCard()->getLastName();
+            $data['BILLTOSTREET'] = $this->getCard()->getAddress1();
+            $data['BILLTOCITY'] = $this->getCard()->getCity();
+            $data['BILLTOSTATE'] = $this->getCard()->getState();
+            $data['BILLTOZIP'] = $this->getCard()->getPostcode();
+            $data['BILLTOCOUNTRY'] = $this->getCard()->getCountry();
+        }
 
         return $data;
     }
@@ -96,7 +140,7 @@ class AuthorizeRequest extends AbstractRequest
         return $this->response = new Response($this, $httpResponse->getBody());
     }
 
-    protected function getEndpoint()
+    public function getEndpoint()
     {
         return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }

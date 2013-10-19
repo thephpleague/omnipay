@@ -27,6 +27,11 @@ class Response extends AbstractResponse
         return isset($this->data['RESULT']) && '0' === $this->data['RESULT'];
     }
 
+    public function getCardReference()
+    {
+        return isset($this->data['PNREF']) ? $this->data['PNREF'] : null;
+    }
+
     public function getTransactionReference()
     {
         return isset($this->data['PNREF']) ? $this->data['PNREF'] : null;

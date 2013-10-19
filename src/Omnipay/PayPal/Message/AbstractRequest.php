@@ -112,6 +112,10 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $data['SIGNATURE'] = $this->getSignature();
         $data['SUBJECT'] = $this->getSubject();
 
+        if ($this->getClientIp()) {
+            $data['IPADDRESS'] = $this->getClientIp();
+        }
+
         return $data;
     }
 
@@ -123,7 +127,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->createResponse($httpResponse->getBody());
     }
 
-    protected function getEndpoint()
+    public function getEndpoint()
     {
         return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }
