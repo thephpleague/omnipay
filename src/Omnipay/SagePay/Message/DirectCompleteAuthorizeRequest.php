@@ -2,6 +2,8 @@
 
 namespace Omnipay\SagePay\Message;
 
+use Omnipay\Common\Exception\InvalidResponseException;
+
 /**
  * Sage Pay Direct Complete Authorize Request
  */
