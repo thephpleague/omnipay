@@ -12,6 +12,7 @@
 namespace Omnipay\SagePay\Message;
 
 use Omnipay\TestCase;
+use Mockery as m;
 
 class ServerCompleteAuthorizeResponseTest extends TestCase
 {
@@ -53,5 +54,13 @@ class ServerCompleteAuthorizeResponseTest extends TestCase
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
         $this->assertNull($response->getMessage());
+    }
+
+    public function testSendResponseConfirm()
+    {
+        $response = m::mock('\Omnipay\SagePay\Message\ServerCompleteAuthorizeResponse[sendResponse]');
+        $response->shouldReceive('sendResponse')->once()->with('OK', 'http://localhost', 'detail');
+
+        $response->confirm('http://localhost', 'detail');
     }
 }

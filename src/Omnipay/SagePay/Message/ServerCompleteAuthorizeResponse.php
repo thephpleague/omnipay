@@ -103,9 +103,9 @@ class ServerCompleteAuthorizeResponse extends Response
      *               return controller action URL.
      * @param string Optional human readable reasons for accepting the transaction.
      */
-    protected function sendResponse($status, $nextUrl, $detail = null)
+    public function sendResponse($status, $nextUrl, $detail = null)
     {
-        $response = "Status=" . $status . "\r\nRedirectUrl=".$nextUrl;
+        $response = "Status=" . $status . "\r\nRedirectUrl=" . $nextUrl;
 
         if ($detail != null) {
             $response .= "\r\nStatusDetail=".$detail;
