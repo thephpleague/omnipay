@@ -3,6 +3,7 @@
 namespace Omnipay\SagePay\Message;
 
 use Omnipay\TestCase;
+use Mockery as m;
 
 class ServerCompleteAuthorizeResponseTest extends TestCase
 {
@@ -44,5 +45,45 @@ class ServerCompleteAuthorizeResponseTest extends TestCase
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
         $this->assertNull($response->getMessage());
+    }
+
+    public function testConfirm()
+    {
+        $response = m::mock('\Omnipay\SagePay\Message\ServerCompleteAuthorizeResponse[sendResponse]');
+        $response->shouldReceive('sendResponse')->once()->with('OK', 'https://www.example.com/', 'detail');
+
+        $response->confirm('https://www.example.com/', 'detail');
+    }
+
+    public function testError()
+    {
+        $response = m::mock('\Omnipay\SagePay\Message\ServerCompleteAuthorizeResponse[sendResponse]');
+        $response->shouldReceive('sendResponse')->once()->with('ERROR', 'https://www.example.com/', 'detail');
+
+        $response->error('https://www.example.com/', 'detail');
+    }
+
+    public function testInvalid()
+    {
+        $response = m::mock('\Omnipay\SagePay\Message\ServerCompleteAuthorizeResponse[sendResponse]');
+        $response->shouldReceive('sendResponse')->once()->with('INVALID', 'https://www.example.com/', 'detail');
+
+        $response->invalid('https://www.example.com/', 'detail');
+    }
+
+    public function testSendResponse()
+    {
+        $response = m::mock('\Omnipay\SagePay\Message\ServerCompleteAuthorizeResponse[exitWith]');
+        $response->shouldReceive('exitWith')->once()->with("Status=FOO\r\nRedirectUrl=https://www.example.com/");
+
+        $response->sendResponse('FOO', 'https://www.example.com/');
+    }
+
+    public function testSendResponseDetail()
+    {
+        $response = m::mock('\Omnipay\SagePay\Message\ServerCompleteAuthorizeResponse[exitWith]');
+        $response->shouldReceive('exitWith')->once()->with("Status=FOO\r\nRedirectUrl=https://www.example.com/\r\nStatusDetail=Bar");
+
+        $response->sendResponse('FOO', 'https://www.example.com/', 'Bar');
     }
 }
