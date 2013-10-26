@@ -35,10 +35,10 @@ class ItemTest extends TestCase
         $this->assertSame('CD-ROM', $this->item->getName());
     }
 
-    public function testSku()
+    public function testDescription()
     {
-        $this->item->setSku('CD');
-        $this->assertSame('CD', $this->item->getSku());
+        $this->item->setDescription('CD');
+        $this->assertSame('CD', $this->item->getDescription());
     }
 
     public function testQuantity()

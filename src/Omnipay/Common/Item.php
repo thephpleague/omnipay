@@ -74,17 +74,17 @@ class Item implements ItemInterface
     /**
      * {@inheritDoc}
      */
-    public function getSku()
+    public function getDescription()
     {
-        return $this->getParameter('sku');
+        return $this->getParameter('description');
     }
 
     /**
-     * Set the item SKU
+     * Set the item description
      */
-    public function setSku($value)
+    public function setDescription($value)
     {
-        return $this->setParameter('sku', $value);
+        return $this->setParameter('description', $value);
     }
 
     /**

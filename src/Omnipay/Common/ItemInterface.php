@@ -13,9 +13,9 @@ interface ItemInterface
     public function getName();
 
     /**
-     * SKU of the item
+     * Description of the item
      */
-    public function getSku();
+    public function getDescription();
 
     /**
      * Quantity of the item
