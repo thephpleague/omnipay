@@ -120,6 +120,23 @@ class ExpressAuthorizeRequestTest extends TestCase
         $this->assertEquals($expected, $this->request->getData());
     }
 
+    public function testGetDataWithItems()
+    {
+        $this->request->setItems(array(
+            array('name' => 'Floppy Disk', 'quantity' => 2, 'price' => '10.00'),
+            array('name' => 'CD-ROM', 'quantity' => 1, 'price' => '40.00'),
+        ));
+
+        $data = $this->request->getData();
+        $this->assertSame('Floppy Disk', $data['PAYMENTREQUEST_0_NAME0']);
+        $this->assertSame(2, $data['PAYMENTREQUEST_0_QTY0']);
+        $this->assertSame('10.00', $data['PAYMENTREQUEST_0_AMT0']);
+
+        $this->assertSame('CD-ROM', $data['PAYMENTREQUEST_0_NAME1']);
+        $this->assertSame(1, $data['PAYMENTREQUEST_0_QTY1']);
+        $this->assertSame('40.00', $data['PAYMENTREQUEST_0_AMT1']);
+    }
+
     public function testHeaderImageUrl()
     {
         $this->assertSame($this->request, $this->request->setHeaderImageUrl('https://www.example.com/header.jpg'));

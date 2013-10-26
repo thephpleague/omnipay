@@ -50,6 +50,15 @@ class ExpressAuthorizeRequest extends AbstractRequest
             $data['EMAIL'] = $card->getEmail();
         }
 
+        $items = $this->getItems();
+        if ($items) {
+            foreach ($items as $n => $item) {
+                $data["PAYMENTREQUEST_0_NAME$n"] = $item->getName();
+                $data["PAYMENTREQUEST_0_QTY$n"] = $item->getQuantity();
+                $data["PAYMENTREQUEST_0_AMT$n"] = $item->getPrice();
+            }
+        }
+
         return $data;
     }
 
