@@ -123,18 +123,20 @@ class ExpressAuthorizeRequestTest extends TestCase
     public function testGetDataWithItems()
     {
         $this->request->setItems(array(
-            array('name' => 'Floppy Disk', 'quantity' => 2, 'price' => '10.00'),
-            array('name' => 'CD-ROM', 'quantity' => 1, 'price' => '40.00'),
+            array('name' => 'Floppy Disk', 'description' => 'MS-DOS', 'quantity' => 2, 'price' => 10),
+            array('name' => 'CD-ROM', 'description' => 'Windows 95', 'quantity' => 1, 'price' => 40),
         ));
 
         $data = $this->request->getData();
-        $this->assertSame('Floppy Disk', $data['PAYMENTREQUEST_0_NAME0']);
-        $this->assertSame(2, $data['PAYMENTREQUEST_0_QTY0']);
-        $this->assertSame('10.00', $data['PAYMENTREQUEST_0_AMT0']);
+        $this->assertSame('Floppy Disk', $data['L_PAYMENTREQUEST_0_NAME0']);
+        $this->assertSame('MS-DOS', $data['L_PAYMENTREQUEST_0_DESC0']);
+        $this->assertSame(2, $data['L_PAYMENTREQUEST_0_QTY0']);
+        $this->assertSame('10.00', $data['L_PAYMENTREQUEST_0_AMT0']);
 
-        $this->assertSame('CD-ROM', $data['PAYMENTREQUEST_0_NAME1']);
-        $this->assertSame(1, $data['PAYMENTREQUEST_0_QTY1']);
-        $this->assertSame('40.00', $data['PAYMENTREQUEST_0_AMT1']);
+        $this->assertSame('CD-ROM', $data['L_PAYMENTREQUEST_0_NAME1']);
+        $this->assertSame('Windows 95', $data['L_PAYMENTREQUEST_0_DESC1']);
+        $this->assertSame(1, $data['L_PAYMENTREQUEST_0_QTY1']);
+        $this->assertSame('40.00', $data['L_PAYMENTREQUEST_0_AMT1']);
     }
 
     public function testHeaderImageUrl()

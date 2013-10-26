@@ -53,9 +53,10 @@ class ExpressAuthorizeRequest extends AbstractRequest
         $items = $this->getItems();
         if ($items) {
             foreach ($items as $n => $item) {
-                $data["PAYMENTREQUEST_0_NAME$n"] = $item->getName();
-                $data["PAYMENTREQUEST_0_QTY$n"] = $item->getQuantity();
-                $data["PAYMENTREQUEST_0_AMT$n"] = $item->getPrice();
+                $data["L_PAYMENTREQUEST_0_NAME$n"] = $item->getName();
+                $data["L_PAYMENTREQUEST_0_DESC$n"] = $item->getDescription();
+                $data["L_PAYMENTREQUEST_0_QTY$n"] = $item->getQuantity();
+                $data["L_PAYMENTREQUEST_0_AMT$n"] = $this->formatCurrency($item->getPrice());
             }
         }
 
