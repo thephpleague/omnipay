@@ -8,6 +8,7 @@ use Omnipay\Common\Currency;
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\Exception\RuntimeException;
 use Omnipay\Common\Helper;
+use Omnipay\Common\ItemBag;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
@@ -249,6 +250,30 @@ abstract class AbstractRequest implements RequestInterface
     public function setTransactionReference($value)
     {
         return $this->setParameter('transactionReference', $value);
+    }
+
+    /**
+     * A list of items in this order
+     *
+     * @return ItemBag|null A bag containing items in this order
+     */
+    public function getItems()
+    {
+        return $this->getParameter('items');
+    }
+
+    /**
+     * Set the items in this order
+     *
+     * @param ItemBag|array $items An array of items in this order
+     */
+    public function setItems($items)
+    {
+        if ($items && !$items instanceof ItemBag) {
+            $items = new ItemBag($items);
+        }
+
+        return $this->setParameter('items', $items);
     }
 
     public function getClientIp()
