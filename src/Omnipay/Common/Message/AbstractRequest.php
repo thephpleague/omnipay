@@ -172,12 +172,7 @@ abstract class AbstractRequest implements RequestInterface
                 );
             }
 
-            return number_format(
-                $amount,
-                $this->getCurrencyDecimalPlaces(),
-                '.',
-                ''
-            );
+            return $this->formatCurrency($amount);
         }
     }
 
@@ -220,6 +215,16 @@ abstract class AbstractRequest implements RequestInterface
     private function getCurrencyDecimalFactor()
     {
         return pow(10, $this->getCurrencyDecimalPlaces());
+    }
+
+    public function formatCurrency($amount)
+    {
+        return number_format(
+            $amount,
+            $this->getCurrencyDecimalPlaces(),
+            '.',
+            ''
+        );
     }
 
     public function getDescription()
