@@ -4,6 +4,7 @@ namespace Omnipay\Common\Message;
 
 use Mockery as m;
 use Omnipay\Common\CreditCard;
+use Omnipay\Common\ItemBag;
 use Omnipay\TestCase;
 
 class AbstractRequestTest extends TestCase
@@ -155,6 +156,30 @@ class AbstractRequestTest extends TestCase
     {
         $this->assertSame($this->request, $this->request->setTransactionReference('xyz'));
         $this->assertSame('xyz', $this->request->getTransactionReference());
+    }
+
+    public function testItemsArray()
+    {
+        $this->assertSame($this->request, $this->request->setItems(array(
+            array('name' => 'Floppy Disk'),
+            array('name' => 'CD-ROM'),
+        )));
+
+        $itemBag = $this->request->getItems();
+        $this->assertInstanceOf('\Omnipay\Common\ItemBag', $itemBag);
+
+        $items = $itemBag->all();
+        $this->assertSame('Floppy Disk', $items[0]->getName());
+        $this->assertSame('CD-ROM', $items[1]->getName());
+    }
+
+    public function testItemsBag()
+    {
+        $itemBag = new ItemBag;
+        $itemBag->add(array('name' => 'Floppy Disk'));
+
+        $this->assertSame($this->request, $this->request->setItems($itemBag));
+        $this->assertSame($itemBag, $this->request->getItems());
     }
 
     public function testClientIp()
