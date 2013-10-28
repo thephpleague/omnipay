@@ -1,0 +1,3 @@
+HTTP/1.1 200 OK
+
+Amount=1000&ApprovalCode=060733&CardBrand=Visa%2FDelta%2FElectron&CardNumber=400000%2A%2A%2A%2A%2A%2A0010&CurrencyCode=USD&CVV2=%2A%2A%2A&CVV2ResponseCode=cvv2_not_checked&ErrorCode=&ExpiryDate=0919&Filename=ernest%2DRT2013%2D10%2D28&FormattedAmount=10%2E00&FormattedTicketAmount=&Message=&PRN=840033&PymtType=cc_debit&RAPIVersion=2&RequestID=030E30B804114781974C9A04E117D973&RequestNumber=5774047&RequestResult=ok&Signature=471388268b5a181e3a5cee0f325286a83023542e&Status=Approved&TicketCurrency=&TicketExchangeRate=&Timestamp=2013%2D10%2D28T21%3A13%3A22%2E000Z&TrackingNumber=10000160381&UnresolvedFlags=&UserName=ernest

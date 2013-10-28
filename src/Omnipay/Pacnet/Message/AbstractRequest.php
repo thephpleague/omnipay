@@ -70,31 +70,15 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('RequestID', $value);
     }
 
-    public function getHttpMethod()
-    {
-        return 'POST';
-    }
-
     public function send()
     {
-        // don't throw exceptions for 4xx errors
-        $this->httpClient->getEventDispatcher()->addListener(
-            'request.error',
-            function ($event) {
-                if ($event['response']->isClientError()) {
-                    $event->stopPropagation();
-                }
-            }
-        );
+        $httpResponse = $this->httpClient->post($this->getEndpoint(), null, $this->getData())->send();
 
-        $httpRequest = $this->httpClient->createRequest(
-            $this->getHttpMethod(),
-            $this->getEndpoint(),
-            null,
-            $this->getData()
-        );
-        $httpResponse = $httpRequest->send();
+        return $this->createResponse($httpResponse->getBody());
+    }
 
-        return $this->response = new Response($this, $httpResponse);
+    protected function createResponse($data)
+    {
+        return $this->response = new Response($this, $data);
     }
 }

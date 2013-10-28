@@ -3,47 +3,36 @@
 namespace Omnipay\Pacnet\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
+use Omnipay\Common\Message\RequestInterface;
 
 /**
  * Pacnet Response
  */
 class Response extends AbstractResponse
 {
-    protected $body;
-
-    public function __construct($request, $data)
+    public function __construct(RequestInterface $request, $data)
     {
         $this->request = $request;
-        $this->data = $data;
-        parse_str($this->data->getBody(), $this->body);
+        parse_str($data, $this->data);
     }
 
     public function isSuccessful()
     {
-
-        if (isset($this->body['Status']) and
-            ($this->body['Status'] == 'Approved' or
-                $this->body['Status'] == 'Submitted' or
-                $this->body['Status'] == 'InProgress' or
-                $this->body['Status'] == 'Voided')
-            ) {
-            return true;
-        } else {
-            return false;
-        }
+        return isset($this->data['Status']) && in_array($this->data['Status'], array(
+            'Approved',
+            'Submitted',
+            'InProgress',
+            'Voided'
+        ));
     }
 
     public function getMessage()
     {
-        if (isset($this->body['Message'])) {
-            return $this->body['Message'];
-        }
+        return (isset($this->data['Message'])) ? $this->data['Message'] : null;
     }
 
     public function getTransactionReference()
     {
-        if (isset($this->body['TrackingNumber'])) {
-            return $this->body['TrackingNumber'];
-        }
+        return (isset($this->data['TrackingNumber'])) ? $this->data['TrackingNumber'] : null;
     }
 }
