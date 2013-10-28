@@ -21,11 +21,15 @@ class Response extends AbstractResponse
     public function isSuccessful()
     {
 
-        if (isset($this->body['Status']) && ($this->body['Status'] == 'Approved' or $this->body['Status'] == 'Submitted' or $this->body['Status'] == 'InProgress' or $this->body['Status'] == 'Voided')) {
-            return TRUE;
-        }
-        else {
-            return FALSE;
+        if (isset($this->body['Status']) and
+            ($this->body['Status'] == 'Approved' or
+                $this->body['Status'] == 'Submitted' or
+                $this->body['Status'] == 'InProgress' or
+                $this->body['Status'] == 'Voided')
+            ) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -42,5 +46,4 @@ class Response extends AbstractResponse
             return $this->body['TrackingNumber'];
         }
     }
-
 }
