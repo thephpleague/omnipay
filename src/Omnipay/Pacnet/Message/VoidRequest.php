@@ -30,13 +30,14 @@ class VoidRequest extends AbstractRequest
 
     protected function generateSignature($data)
     {
-        return hash_hmac('sha1',
-                            $data['UserName'] .
-                            $data['Timestamp'] .
-                            $data['RequestID'] .
-                            $data['TrackingNumber'],
-                            $this->getPassword()
-                        );
+        return hash_hmac(
+                    'sha1',
+                    $data['UserName'] .
+                    $data['Timestamp'] .
+                    $data['RequestID'] .
+                    $data['TrackingNumber'],
+                    $this->getPassword()
+                );
     }
 
     public function getEndpoint()
