@@ -27,15 +27,15 @@ class SubmitRequest extends AbstractRequest
     protected function generateSignature($data)
     {
         return hash_hmac(
-                    'sha1',
-                    $data['UserName'] .
-                    $data['Timestamp'] .
-                    $data['RequestID'] .
-                    $data['PymtType'] .
-                    $data['Amount'] .
-                    $data['CurrencyCode'],
-                    $this->getPassword()
-                );
+            'sha1',
+            $data['UserName'] .
+            $data['Timestamp'] .
+            $data['RequestID'] .
+            $data['PymtType'] .
+            $data['Amount'] .
+            $data['CurrencyCode'],
+            $this->getPassword()
+        );
     }
 
     public function getEndPoint()

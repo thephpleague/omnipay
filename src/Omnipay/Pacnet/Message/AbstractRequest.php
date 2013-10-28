@@ -53,16 +53,16 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function getRequestID()
     {
         return sprintf(
-                    '%04X%04X%04X%04X%04X%04X%04X%04X',
-                    mt_rand(0, 65535),
-                    mt_rand(0, 65535),
-                    mt_rand(0, 65535),
-                    mt_rand(16384, 20479),
-                    mt_rand(32768, 49151),
-                    mt_rand(0, 65535),
-                    mt_rand(0, 65535),
-                    mt_rand(0, 65535)
-                );
+            '%04X%04X%04X%04X%04X%04X%04X%04X',
+            mt_rand(0, 65535),
+            mt_rand(0, 65535),
+            mt_rand(0, 65535),
+            mt_rand(16384, 20479),
+            mt_rand(32768, 49151),
+            mt_rand(0, 65535),
+            mt_rand(0, 65535),
+            mt_rand(0, 65535)
+        );
     }
 
     public function setRequestID($value)
