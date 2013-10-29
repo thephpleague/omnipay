@@ -7,5 +7,5 @@ namespace Omnipay\SagePay\Message;
  */
 class DirectCreateTokenRequest extends DirectAuthorizeRequest
 {
-    protected $action = 'TOKEN';
+    protected $action = 'DIRECTTOKEN';
 }

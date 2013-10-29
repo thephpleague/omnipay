@@ -65,6 +65,10 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
                 return $this->simulatorEndpoint.'/VSPServerGateway.asp?Service=VendorRegisterTx';
             } elseif ($service == 'direct3dcallback') {
                 return $this->simulatorEndpoint.'/VSPDirectCallback.asp';
+            }elseif ($service == 'token' ){
+
+            }elseif ($service == 'removetoken'){
+
             }
 
             return $this->simulatorEndpoint.'/VSPServerGateway.asp?Service=Vendor'.ucfirst($service).'Tx';

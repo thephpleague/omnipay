@@ -57,6 +57,10 @@ class Response extends AbstractResponse implements RedirectResponseInterface
         return isset($this->data['StatusDetail']) ? $this->data['StatusDetail'] : null;
     }
 
+	public function getToken(){
+		return isset($this->data['Token']) ? $this->data['Token'] : null;
+	}
+
     public function getRedirectUrl()
     {
         if ($this->isRedirect()) {
