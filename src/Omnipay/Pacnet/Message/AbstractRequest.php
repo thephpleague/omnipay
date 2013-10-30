@@ -20,14 +20,14 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('UserName', $value);
     }
 
-    public function getPassword()
+    public function getSharedSecret()
     {
-        return $this->getParameter('Password');
+        return $this->getParameter('SharedSecret');
     }
 
-    public function setPassword($value)
+    public function setSharedSecret($value)
     {
-        return $this->setParameter('Password', $value);
+        return $this->setParameter('SharedSecret', $value);
     }
 
     public function getPRN()

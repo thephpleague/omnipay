@@ -11,7 +11,7 @@ class SubmitRequest extends AbstractRequest
 {
     public function getData()
     {
-        $this->validate('UserName', 'Password', 'PRN');
+        $this->validate('UserName', 'SharedSecret', 'PRN');
 
         $data = array(
             'RAPIVersion'           => 2,
@@ -28,13 +28,13 @@ class SubmitRequest extends AbstractRequest
     {
         return hash_hmac(
             'sha1',
-            $data['UserName'] .
-            $data['Timestamp'] .
-            $data['RequestID'] .
-            $data['PymtType'] .
-            $data['Amount'] .
+            $data['UserName'].
+            $data['Timestamp'].
+            $data['RequestID'].
+            $data['PymtType'].
+            $data['Amount'].
             $data['CurrencyCode'],
-            $this->getPassword()
+            $this->getSharedSecret()
         );
     }
 

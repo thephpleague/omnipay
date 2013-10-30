@@ -19,10 +19,10 @@ class Gateway extends AbstractGateway
     public function getDefaultParameters()
     {
         return array(
-            'UserName'  => '',
-            'Password'  => '',
-            'PRN'       => '',
-            'testMode'  => false
+            'UserName'      => '',
+            'SharedSecret'  => '',
+            'PRN'           => '',
+            'testMode'      => false
         );
     }
 
@@ -36,14 +36,14 @@ class Gateway extends AbstractGateway
         return $this->setParameter('UserName', $value);
     }
 
-    public function getPassword()
+    public function getSharedSecret()
     {
-        return $this->getParameter('Password');
+        return $this->getParameter('SharedSecret');
     }
 
-    public function setPassword($value)
+    public function setSharedSecret($value)
     {
-        return $this->setParameter('Password', $value);
+        return $this->setParameter('SharedSecret', $value);
     }
 
     public function getPRN()

@@ -36,7 +36,7 @@ class VoidRequest extends AbstractRequest
             $data['Timestamp'] .
             $data['RequestID'] .
             $data['TrackingNumber'],
-            $this->getPassword()
+            $this->getSharedSecret()
         );
     }
 

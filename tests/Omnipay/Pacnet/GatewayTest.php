@@ -14,7 +14,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->gateway->setUserName('ernest');
         $this->gateway->setPRN('840033');
-        $this->gateway->setPassword('all good men die young');
+        $this->gateway->setSharedSecret('all good men die young');
 
         $this->options = array(
             'amount'    => '10.00',
