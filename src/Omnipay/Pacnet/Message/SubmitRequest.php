@@ -11,14 +11,16 @@ class SubmitRequest extends AbstractRequest
 {
     public function getData()
     {
-        $this->validate('UserName', 'SharedSecret', 'PRN');
+        $this->validate('UserName', 'SharedSecret', 'PRN', 'amount', 'currency');
 
         $data = array(
             'RAPIVersion'           => 2,
             'UserName'              => $this->getUserName(),
             'PRN'                   => $this->getPRN(),
             'Timestamp'             => gmdate('Y-m-d\TH:i:s.000\Z'),
-            'RequestID'             => $this->getRequestID()
+            'RequestID'             => $this->getRequestID(),
+            'Amount'                => $this->getAmountInteger(),
+            'CurrencyCode'          => $this->getCurrency()
         );
 
         return $data;

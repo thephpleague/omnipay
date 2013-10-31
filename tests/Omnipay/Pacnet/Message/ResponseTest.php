@@ -83,4 +83,52 @@ class ResponseTest extends TestCase
         $this->assertEquals('Invalid because the original payment is not a settled debit.', $response->getMessage());
         $this->assertEquals('invalid:OriginalPaymentNotSettled', $response->getCode());
     }
+
+    public function testAuthorizeSuccess()
+    {
+        $httpResponse = $this->getMockHttpResponse('AuthorizeSuccess.txt');
+        $response = new Response($this->getMockRequest(), $httpResponse->getBody());
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertEquals('10000165810', $response->getTransactionReference());
+        $this->assertNull($response->getMessage());
+        $this->assertNull($response->getCode());
+    }
+
+    public function testAuthorizeFailure()
+    {
+        $httpResponse = $this->getMockHttpResponse('AuthorizeFailure.txt');
+        $response = new Response($this->getMockRequest(), $httpResponse->getBody());
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertEquals('10000165844', $response->getTransactionReference());
+        $this->assertEquals('Invalid because activity on the account is blocked.', $response->getMessage());
+        $this->assertEquals('rejected:AccountBlocked', $response->getCode());
+    }
+
+    public function captureSuccess()
+    {
+        $httpResponse = $this->getMockHttpResponse('CaptureSuccess.txt');
+        $response = new Response($this->getMockRequest(), $httpResponse->getBody());
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertEquals('10000165927', $response->getTransactionReference());
+        $this->assertNull($response->getMessage());
+        $this->assertNull($response->getCode());
+    }
+
+    public function captureFailure()
+    {
+        $httpResponse = $this->getMockHttpResponse('CaptureFailure.txt');
+        $response = new Response($this->getMockRequest(), $httpResponse->getBody());
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertEquals('10000165935', $response->getTransactionReference());
+        $this->assertEquals('Invalid because the preauthorization #10000****19 was already used', $response->getMessage());
+        $this->assertEquals('rejected:PreauthAlreadyUsed', $response->getCode());
+    }
 }

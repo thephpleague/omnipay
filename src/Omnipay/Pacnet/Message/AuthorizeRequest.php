@@ -3,15 +3,15 @@
 namespace Omnipay\Pacnet\Message;
 
 /**
- * Pacnet Purchase Request
+ * Pacnet Authorize Request
  */
-class PurchaseRequest extends SubmitRequest
+class AuthorizeRequest extends SubmitRequest
 {
     public function getData()
     {
         $data = parent::getData();
 
-        $data['PymtType'] = 'cc_debit';
+        $data['PymtType'] = 'cc_preauth';
         $data['CardNumber'] = $this->getCard()->getNumber();
         $data['ExpiryDate'] = str_pad($this->getCard()->getExpiryMonth(), 2, '0', STR_PAD_LEFT) .
                               substr($this->getCard()->getExpiryYear(), -2, 2);

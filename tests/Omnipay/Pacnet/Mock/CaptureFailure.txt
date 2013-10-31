@@ -1,0 +1,13 @@
+HTTP/1.1 200 OK
+cache-control: Private, no-cache
+content-type: text/html; charset=iso-8859-1
+Date: Thu, 31 Oct 2013 20:51:55 GMT
+expires: -1
+mime-version: 1.0
+pragma: no-cache
+Server: 10328:d:8000
+strict-transport-security: max-age=15768000; includeSubDomains
+Content-Length: 664
+Connection: keep-alive
+
+Amount=1000&ApprovalCode=&CurrencyCode=USD&CVV2ResponseCode=cvv2_not_checked&ErrorCode=rejected%3APreauthAlreadyUsed&Filename=ernest%2DRT2013%2D10%2D31&FormattedAmount=10%2E00&FormattedTicketAmount=&Message=Invalid+because+the+preauthorization+%2310000%2A%2A%2A%2A19+was+already+used&PreAuthNumber=10000165919&PRN=840033&PymtType=cc_settle&RAPIVersion=2&RequestID=9D6D50CD31CA4704B8EE03DE44ACBF7F&RequestNumber=5873096&RequestResult=ok&Signature=8f86d0ec267fd5f24b5698cddbeb51e5ee7c5c95&Status=Rejected%3APreauthAlreadyUsed&TicketCurrency=&TicketExchangeRate=&Timestamp=2013%2D10%2D31T20%3A51%3A55%2E000Z&TrackingNumber=10000165935&UnresolvedFlags=&UserName=ernest

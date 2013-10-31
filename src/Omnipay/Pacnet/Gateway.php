@@ -70,4 +70,14 @@ class Gateway extends AbstractGateway
     {
         return $this->createRequest('\Omnipay\Pacnet\Message\VoidRequest', $parameters);
     }
+
+    public function authorize(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Pacnet\Message\AuthorizeRequest', $parameters);
+    }
+
+    public function capture(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Pacnet\Message\CaptureRequest', $parameters);
+    }
 }

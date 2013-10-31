@@ -3,9 +3,9 @@
 namespace Omnipay\Pacnet\Message;
 
 /**
- * Pacnet Refund Request
+ * Pacnet Capture Request
  */
-class RefundRequest extends SubmitRequest
+class CaptureRequest extends SubmitRequest
 {
     public function getData()
     {
@@ -13,8 +13,8 @@ class RefundRequest extends SubmitRequest
 
         $this->validate('transactionReference');
 
-        $data['PymtType'] = 'cc_refund';
-        $data['TemplateNumber'] = $this->getTransactionReference();
+        $data['PymtType'] = 'cc_settle';
+        $data['PreAuthNumber'] = $this->getTransactionReference();
 
         $data['Signature'] = $this->generateSignature($data);
 
