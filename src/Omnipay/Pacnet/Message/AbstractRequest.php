@@ -40,16 +40,6 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('PRN', $value);
     }
 
-    public function getTrackingNumber()
-    {
-        return $this->getParameter('TrackingNumber');
-    }
-
-    public function setTrackingNumber($value)
-    {
-        return $this->setParameter('TrackingNumber', $value);
-    }
-
     public function getRequestID()
     {
         return sprintf(
@@ -73,7 +63,6 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function send()
     {
         $httpResponse = $this->httpClient->post($this->getEndpoint(), null, $this->getData())->send();
-
         return $this->createResponse($httpResponse->getBody());
     }
 

@@ -28,14 +28,28 @@ class GatewayTest extends GatewayTestCase
         );
     }
 
-    public function testPurchaseSuccess()
+    public function testPurchase()
     {
-        $this->setMockHttpResponse('PurchaseSuccess.txt');
+        $request = $this->gateway->purchase(array('amount' => '10.00'));
 
-        $response = $this->gateway->purchase($this->options)->send();
+        $this->assertInstanceOf('Omnipay\Pacnet\Message\PurchaseRequest', $request);
+        $this->assertSame('10.00', $request->getAmount());
+    }
 
-        $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('10000160381', $response->getTransactionReference());
-        $this->assertEquals('', $response->getMessage());
+    public function testRefund()
+    {
+        $request = $this->gateway->refund(array('amount' => '10.00'));
+
+        $this->assertInstanceOf('Omnipay\Pacnet\Message\RefundRequest', $request);
+        $this->assertSame('10.00', $request->getAmount());
+    }
+
+    public function testVoid()
+    {
+        $request = $this->gateway->void();
+        $request->setTransactionReference('10000160381');
+
+        $this->assertInstanceOf('Omnipay\Pacnet\Message\VoidRequest', $request);
+        $this->assertSame('10000160381', $request->getTransactionReference());
     }
 }

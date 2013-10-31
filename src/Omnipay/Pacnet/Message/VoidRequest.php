@@ -11,7 +11,7 @@ class VoidRequest extends AbstractRequest
 {
     public function getData()
     {
-        $this->validate('UserName', 'Password', 'PRN', 'TrackingNumber');
+        $this->validate('UserName', 'SharedSecret', 'PRN', 'transactionReference');
 
         $data = array(
             'RAPIVersion'       => 2,
@@ -19,7 +19,7 @@ class VoidRequest extends AbstractRequest
             'PRN'               => $this->getPRN(),
             'Timestamp'         => gmdate('Y-m-d\TH:i:s.000\Z'),
             'RequestID'         => $this->getRequestID(),
-            'TrackingNumber'    => $this->getTrackingNumber(),
+            'TrackingNumber'    => $this->getTransactionReference(),
             'PymtType'          => 'cc_debit'
         );
 

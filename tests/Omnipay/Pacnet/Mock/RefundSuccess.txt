@@ -1,0 +1,13 @@
+HTTP/1.1 200 OK
+cache-control: Private, no-cache
+content-type: text/html; charset=iso-8859-1
+Date: Thu, 31 Oct 2013 19:33:51 GMT
+expires: -1
+mime-version: 1.0
+pragma: no-cache
+Server: 10328:d:8000
+strict-transport-security: max-age=15768000; includeSubDomains
+Content-Length: 539
+Connection: keep-alive
+
+Amount=1000&ApprovalCode=&CurrencyCode=USD&CVV2ResponseCode=cvv2_not_checked&ErrorCode=&Filename=ernest%2DRT2013%2D10%2D31&FormattedAmount=10%2E00&FormattedTicketAmount=&Message=&PRN=840033&PymtType=cc_refund&RAPIVersion=2&RequestID=F32DBCE365694E8F82AA652DB9443143&RequestNumber=5871264&RequestResult=ok&Signature=ff75c4a05715e3e566b2a6c8788365f48eb98e12&Status=Approved&TemplateNumber=10000165604&TicketCurrency=&TicketExchangeRate=&Timestamp=2013%2D10%2D31T19%3A33%3A51%2E000Z&TrackingNumber=10000165737&UnresolvedFlags=&UserName=ernest

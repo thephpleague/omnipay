@@ -19,8 +19,10 @@ class ResponseTest extends TestCase
         $response = new Response($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('10000160381', $response->getTransactionReference());
-        $this->assertEquals('', $response->getMessage());
+        $this->assertFalse($response->isRedirect());
+        $this->assertEquals('10000165604', $response->getTransactionReference());
+        $this->assertNull($response->getMessage());
+        $this->assertNull($response->getCode());
     }
 
     public function testPurchaseFailure()
@@ -29,6 +31,56 @@ class ResponseTest extends TestCase
         $response = new Response($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertEquals('', $response->getMessage());
+        $this->assertFalse($response->isRedirect());
+        $this->assertEquals('10000165646', $response->getTransactionReference());
+        $this->assertEquals('Invalid because activity on the account is blocked.', $response->getMessage());
+        $this->assertEquals('rejected:AccountBlocked', $response->getCode());
+    }
+
+    public function testVoidSuccess()
+    {
+        $httpResponse = $this->getMockHttpResponse('VoidSuccess.txt');
+        $response = new Response($this->getMockRequest(), $httpResponse->getBody());
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertEquals('10000165604', $response->getTransactionReference());
+        $this->assertNull($response->getMessage());
+        $this->assertNull($response->getCode());
+    }
+
+    public function testVoidFailure()
+    {
+        try {
+            $httpResponse = $this->getMockHttpResponse('VoidFailure.txt');
+            $response = new Response($this->getMockRequest(), $httpResponse->getBody());
+        } catch (Guzzle\Http\Exception\ClientErrorResponseException $e) {
+            $this->assetEquals('404', $e->getResponse()->getStatusCode());
+            $this->assertEquals('Not Found', $e->getResponse()->getReasonPhrase());
+        }
+    }
+
+    public function testRefundSuccess()
+    {
+        $httpResponse = $this->getMockHttpResponse('RefundSuccess.txt');
+        $response = new Response($this->getMockRequest(), $httpResponse->getBody());
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertEquals('10000165604', $response->getTransactionReference());
+        $this->assertNull($response->getMessage());
+        $this->assertNull($response->getCode());
+    }
+
+    public function testRefundFailure()
+    {
+        $httpResponse = $this->getMockHttpResponse('RefundFailure.txt');
+        $response = new Response($this->getMockRequest(), $httpResponse->getBody());
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertEquals('10000165604', $response->getTransactionReference());
+        $this->assertEquals('Invalid because the original payment is not a settled debit.', $response->getMessage());
+        $this->assertEquals('invalid:OriginalPaymentNotSettled', $response->getCode());
     }
 }

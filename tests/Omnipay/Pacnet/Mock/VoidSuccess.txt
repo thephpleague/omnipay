@@ -1,0 +1,13 @@
+HTTP/1.1 200 OK
+cache-control: Private, no-cache
+content-type: text/html; charset=iso-8859-1
+Date: Thu, 31 Oct 2013 19:11:49 GMT
+expires: -1
+mime-version: 1.0
+pragma: no-cache
+Server: 10328:d:8000
+strict-transport-security: max-age=15768000; includeSubDomains
+Content-Length: 479
+Connection: keep-alive
+
+ApprovalCode=034783&CVV2ResponseCode=cvv2_not_checked&ErrorCode=&filename=&FormattedAmount=10%2E00&FormattedTicketAmount=&Message=&PaymentReference=&PRN=840033&PymtType=cc_debit&RAPIVersion=2&RequestID=4279B71C4D7D447BA94750C49796784A&RequestNumber=5870548&RequestResult=ok&Signature=290a9c46758aa4012dff7730d025481e3f87f14c&Status=Voided&TicketCurrency=&TicketExchangeRate=&Timestamp=2013%2D10%2D31T19%3A11%3A48%2E000Z&TrackingNumber=10000165604&UnresolvedFlags=&UserName=ernest

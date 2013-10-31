@@ -26,13 +26,30 @@ class Response extends AbstractResponse
         ));
     }
 
+    public function getCode()
+    {
+        return (
+            isset($this->data['ErrorCode']) &&
+            $this->data['ErrorCode'] != ''
+        ) ? $this->data['ErrorCode'] : null;
+    }
+
     public function getMessage()
     {
-        return (isset($this->data['Message'])) ? $this->data['Message'] : null;
+        return (
+            isset($this->data['Message']) &&
+            $this->data['Message'] !== ''
+        ) ? $this->data['Message'] : null;
     }
 
     public function getTransactionReference()
     {
-        return (isset($this->data['TrackingNumber'])) ? $this->data['TrackingNumber'] : null;
+        if (isset($this->data['TemplateNumber'])) {
+            return $this->data['TemplateNumber'];
+        } elseif (isset($this->data['TrackingNumber']) && $this->data['TrackingNumber'] != '') {
+            return $this->data['TrackingNumber'];
+        } else {
+            return null;
+        }
     }
 }
