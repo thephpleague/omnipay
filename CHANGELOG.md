@@ -2,8 +2,8 @@
 
 # v1.1.0 (2013-10-19)
 
-* Paypal [BC BREAK]: Removed default value `1` for `noShipping` option and added `allowNote` option.
-  To retain previous behavior, pass `'noShipping' => 1` when creating the request. (@aderuwe)
+* Paypal [BC BREAK]: Removed default values for `noShipping` and `allowNote` Express Checkout options.
+  To retain previous behavior, pass `'noShipping' => 1` and `'allowNote' => 0` when creating the request. (@aderuwe)
 * Add TargetPay gateway (@aderuwe)
 * MultiSafepay: Add purchase parameter (@aderuwe)
 * MultiSafepay: Add support for directtransaction (@ruudk)
