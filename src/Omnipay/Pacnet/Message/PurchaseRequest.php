@@ -11,10 +11,12 @@ class PurchaseRequest extends SubmitRequest
     {
         $data = parent::getData();
 
+        $this->validate('card');
+
         $data['PymtType'] = 'cc_debit';
+        $data['CardBrand'] = $this->getCard()->getBrand();
         $data['CardNumber'] = $this->getCard()->getNumber();
-        $data['ExpiryDate'] = str_pad($this->getCard()->getExpiryMonth(), 2, '0', STR_PAD_LEFT) .
-                              substr($this->getCard()->getExpiryYear(), -2, 2);
+        $data['ExpiryDate'] = $this->getCard()->getExpiryDate('my');
 
         if ($this->getCard()->getCvv()) {
             $data['CVV2'] = $this->getCard()->getCvv();
@@ -22,10 +24,6 @@ class PurchaseRequest extends SubmitRequest
 
         if ($this->getCard()->getName()) {
             $data['AccountName'] = $this->getCard()->getName();
-        }
-
-        if ($this->getCard()->getBrand()) {
-            $data['CardBrand'] = $this->getCard()->getBrand();
         }
 
         $data['Signature'] = $this->generateSignature($data);

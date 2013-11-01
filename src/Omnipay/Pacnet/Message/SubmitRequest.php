@@ -11,16 +11,16 @@ class SubmitRequest extends AbstractRequest
 {
     public function getData()
     {
-        $this->validate('UserName', 'SharedSecret', 'PRN', 'amount', 'currency');
+        $this->validate('username', 'sharedSecret', 'paymentRoutingNumber', 'amount', 'currency');
 
         $data = array(
-            'RAPIVersion'           => 2,
-            'UserName'              => $this->getUserName(),
-            'PRN'                   => $this->getPRN(),
-            'Timestamp'             => gmdate('Y-m-d\TH:i:s.000\Z'),
-            'RequestID'             => $this->getRequestID(),
-            'Amount'                => $this->getAmountInteger(),
-            'CurrencyCode'          => $this->getCurrency()
+            'RAPIVersion'   => 2,
+            'UserName'      => $this->getUsername(),
+            'PRN'           => $this->getPaymentRoutingNumber(),
+            'Timestamp'     => gmdate('Y-m-d\TH:i:s.000\Z'),
+            'RequestID'     => $this->getRequestID(),
+            'Amount'        => $this->getAmountInteger(),
+            'CurrencyCode'  => $this->getCurrency()
         );
 
         return $data;
@@ -40,7 +40,7 @@ class SubmitRequest extends AbstractRequest
         );
     }
 
-    public function getEndPoint()
+    public function getEndpoint()
     {
         return ($this->getTestMode() ? $this->testEndPoint : $this->liveEndPoint) . 'submit';
     }

@@ -10,34 +10,34 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     protected $liveEndPoint = 'https://raven.pacnetservices.com/realtime/';
     protected $testEndPoint = 'https://demo.pacnetservices.com/realtime/';
 
-    public function getUserName()
+    public function getUsername()
     {
-        return $this->getParameter('UserName');
+        return $this->getParameter('username');
     }
 
-    public function setUserName($value)
+    public function setUsername($value)
     {
-        return $this->setParameter('UserName', $value);
+        return $this->setParameter('username', $value);
     }
 
     public function getSharedSecret()
     {
-        return $this->getParameter('SharedSecret');
+        return $this->getParameter('sharedSecret');
     }
 
     public function setSharedSecret($value)
     {
-        return $this->setParameter('SharedSecret', $value);
+        return $this->setParameter('sharedSecret', $value);
     }
 
-    public function getPRN()
+    public function getPaymentRoutingNumber()
     {
-        return $this->getParameter('PRN');
+        return $this->getParameter('paymentRoutingNumber');
     }
 
-    public function setPRN($value)
+    public function setPaymentRoutingNumber($value)
     {
-        return $this->setParameter('PRN', $value);
+        return $this->setParameter('paymentRoutingNumber', $value);
     }
 
     public function getRequestID()
@@ -53,11 +53,6 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             mt_rand(0, 65535),
             mt_rand(0, 65535)
         );
-    }
-
-    public function setRequestID($value)
-    {
-        return $this->setParameter('RequestID', $value);
     }
 
     public function send()
