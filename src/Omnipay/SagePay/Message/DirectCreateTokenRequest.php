@@ -4,7 +4,7 @@ namespace Omnipay\SagePay\Message;
 
 
 /**
- * Sage Pay Direct Purchase Request
+ * Sage Pay Direct Create Token Request
  */
 class DirectCreateTokenRequest extends AbstractRequest
 
@@ -24,6 +24,8 @@ class DirectCreateTokenRequest extends AbstractRequest
         $data['ClientIPAddress'] = $this->getClientIp();
         $data['ApplyAVSCV2'] = 0; // use account setting
         $data['Apply3DSecure'] = 0; // use account setting
+        
+        $data['StoreToken'] = 1; //Token needs to be kept
 
        
 
@@ -38,7 +40,7 @@ class DirectCreateTokenRequest extends AbstractRequest
 
         $data['Currency'] = 'GBP';
         $data['CardNumber'] = $card->getNumber();
-        $data['ExpiryDate'] = $this->getCard()->getExpiryDate('my');
+        $data['ExpiryDate'] = $card->getExpiryDate('my');
         $data['CardType']   = $this->getCardBrand();
         $data['CardHolder'] = $card->getName();
         
@@ -66,7 +68,7 @@ class DirectCreateTokenRequest extends AbstractRequest
         $data['CustomerEMail'] = $card->getEmail();
         
         
-        if ($card->getStartMonth() and $card->getStartYear()) {
+        if ($card->getStartMonth() && $card->getStartYear()) {
             $data['StartDate'] = $card->getStartDate('my');
         }
         if ($card->getIssueNumber()) {

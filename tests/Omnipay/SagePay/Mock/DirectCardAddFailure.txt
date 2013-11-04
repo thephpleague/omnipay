@@ -1,0 +1,14 @@
+HTTP/1.1 200 OK
+Date: Sat, 16 Feb 2013 06:39:41 GMT
+Server: Microsoft-IIS/6.0
+P3P: CP="CUR"
+X-Powered-By: ASP.NET
+Content-Length: 249
+Content-Type: Text/Plain
+Set-Cookie: ASPSESSIONIDSEHSCTTR=CIMGGPBDFDIKICAGIIHCACED; secure; path=/
+Cache-control: private
+
+VPSProtocol=2.23
+Status=INVALID
+StatusDetail=The Card registration has not been successful.
+TxType=TOKEN

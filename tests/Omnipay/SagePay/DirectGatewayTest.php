@@ -152,4 +152,19 @@ class DirectGatewayTest extends GatewayTestCase
         $this->assertNull($response->getTransactionReference());
         $this->assertSame('You are trying to RELEASE a transaction that has already been RELEASEd or ABORTed.', $response->getMessage());
     }
+
+    public function testCardAddSuccess()
+    {
+         $this->setMockHttpResponse('CaptureFailure.txt');
+
+        $response = $this->gateway->createCard($this->purchaseOptions)->send();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertNotNull($response->getToken());
+        $this->assertSame('The card was added successfully.', $response->getMessage());
+
+
+
+    }
+
 }
