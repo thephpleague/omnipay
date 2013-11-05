@@ -37,6 +37,10 @@ class ExpressAuthorizeRequest extends AbstractRequest
         if (null !== ($allowNote = $this->getAllowNote())) {
             $data['ALLOWNOTE'] = $allowNote;
         }
+        
+        if (null !== ($pagestyle = $this->getPageStyle())) {
+            $data['PAGESTYLE'] = $pagestyle;
+        }
 
         if ($card = $this->getCard()) {
             $data['PAYMENTREQUEST_0_SHIPTONAME'] = $card->getName();
