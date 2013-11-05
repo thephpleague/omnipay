@@ -19,19 +19,17 @@ class CompletePurchaseRequest extends PurchaseRequest
     public function generateResponseSignature()
     {
         return base64_encode(
-            hash_hmac
-            (
-				'sha1',
-					$this->getPaymentAmount().
-					$this->getCurrencyCode().
-					$this->getShipBeforeDate().
-					$this->getMerchantReference().
-					$this->getSkinCode().
-					$this->getMerchantAccount().
-					$this->getSessionValidity(),
-					$this->getSecret(), 
-				true
-			)
+            hash_hmac(
+                'sha1',
+                $this->getPaymentAmount().
+                $this->getCurrencyCode().
+                $this->getShipBeforeDate().
+                $this->getMerchantReference().
+                $this->getSkinCode().
+                $this->getMerchantAccount().
+                $this->getSessionValidity(),
+                $this->getSecret(), 
+                true)
         );
     }
 

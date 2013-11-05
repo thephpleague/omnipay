@@ -1,11 +1,8 @@
 <?php
 
 namespace Omnipay\Adyen\Message;
-
 use Omnipay\Common\Message\AbstractRequest;
 
-/**
- */
 class PurchaseRequest extends AbstractRequest
 {
     protected $endpoint = 'https://test.adyen.com/hpp/pay.shtml';
@@ -117,10 +114,10 @@ class PurchaseRequest extends AbstractRequest
         $data['paymentAmount'] 		= 	$this->getPaymentAmount();
         $data['currencyCode'] 		= 	$this->getCurrencyCode();		
         $data['shipBeforeDate'] 	=	$this->getShipBeforeDate();
-		$data['merchantReference']	= 	$this->getMerchantReference();
-		$data['skinCode'] 			= 	$this->getSkinCode();
-		$data['merchantAccount'] 	= 	$this->getMerchantAccount();
-		$data['sessionValidity']	= 	$this->getSessionValidity();
+        $data['merchantReference']	= 	$this->getMerchantReference();
+        $data['skinCode'] 			= 	$this->getSkinCode();
+        $data['merchantAccount'] 	= 	$this->getMerchantAccount();
+        $data['sessionValidity']	= 	$this->getSessionValidity();
         $data['merchantSig'] 		= 	$this->generateSignature($data);
         return $data;
     }
@@ -128,19 +125,17 @@ class PurchaseRequest extends AbstractRequest
     public function generateSignature($data)
     {
         return base64_encode(
-			hash_hmac
-			(
-				'sha1',
-                    $data['paymentAmount'].
-                    $data['currencyCode'].
-                    $data['shipBeforeDate'].
-                    $data['merchantReference'].
-                    $data['skinCode'].
-                    $data['merchantAccount'].
-                    $data['sessionValidity'],
-                    $this->getSecret(), 
-                true
-			)
+            hash_hmac(
+                'sha1',
+                $data['paymentAmount'].
+                $data['currencyCode'].
+                $data['shipBeforeDate'].
+                $data['merchantReference'].
+                $data['skinCode'].
+                $data['merchantAccount'].
+                $data['sessionValidity'],
+                $this->getSecret(), 
+                true)
         );
     }
 	

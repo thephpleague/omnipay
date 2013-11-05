@@ -28,7 +28,7 @@ class Gateway extends AbstractGateway {
                 date("s"), date("m"), 
                 date("j"), date("Y")+1)
             ),
-			'shopperLocale' => 'en_GB'
+            'shopperLocale' => 'en_GB'
         );
     }
 
