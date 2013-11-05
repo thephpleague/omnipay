@@ -2,10 +2,6 @@
 
 namespace Omnipay\Adyen\Message;
 
-require_once 'PHPUnit/Autoload.php';
-$autoloader = require __DIR__.'/../../../../../../autoload.php';
-$autoloader->add('Omnipay', __DIR__ . '/../../../');
-
 use Omnipay\TestCase;
 
 class CompletePurchaseRequestTest extends TestCase
@@ -19,6 +15,7 @@ class CompletePurchaseRequestTest extends TestCase
             'secret' => 'test',
             'skinCode' => '05cp1ZtM',
             'paymentAmount' => '10',
+                    'amount' => '10',
             'currencyCode' => 'EUR',
             'testMode' => true,
             'shipBeforeDate' => '2013-11-11',
@@ -29,7 +26,6 @@ class CompletePurchaseRequestTest extends TestCase
     public function testGetData()
     {
         $data = $this->request->getData();
-
         $this->assertSame($this->getHttpRequest()->request->all(), $data);
     }
 
@@ -38,7 +34,7 @@ class CompletePurchaseRequestTest extends TestCase
      */
     public function testGetDataInvalidSignature()
     {
-        $this->getHttpRequest()->request->set('merchantSig', 'zzz234aa');
+        $this->getHttpRequest()->request->set('merchantSig', 'dad4');
 
         $this->request->getData();
     }
@@ -56,8 +52,7 @@ class CompletePurchaseRequestTest extends TestCase
             'shipBeforeDate' => '2013-11-11',
             'sessionValidity' => '2013-11-05T11:27:59'
         ));
-
-        $this->assertSame('K9Ix8bSnBhlt3GKs/vOQtjFT9mY==', $this->request->generateResponseSignature());
+        $this->assertSame('faOXdpQdQeYQrwdp1B5Gu5bkeeM=', $this->request->generateResponseSignature());
     }
 
     public function testSendSuccess()
@@ -65,10 +60,7 @@ class CompletePurchaseRequestTest extends TestCase
         $this->getHttpRequest()->request->set('authResult', 'AUTHORISED');
         $this->getHttpRequest()->request->set('merchantSig', $this->request->generateResponseSignature());
         $response = $this->request->send();
-
         $this->assertTrue($response->isSuccessful());
-        $this->assertSame('TEST-10000', $response->getMerchantReference());
-        $this->assertSame('AUTHORISED', 'AUTHORISED');
     }
 
     public function testSendError()
@@ -76,9 +68,6 @@ class CompletePurchaseRequestTest extends TestCase
         $this->getHttpRequest()->request->set('authResult', 'REFUSED');
         $this->getHttpRequest()->request->set('merchantSig', $this->request->generateResponseSignature());
         $response = $this->request->send();
-
         $this->assertFalse($response->isSuccessful());
-        $this->assertSame('TEST-10000', $response->getMerchantReference());
-        $this->assertSame('REFUSED', 'REFUSED');
     }
 }

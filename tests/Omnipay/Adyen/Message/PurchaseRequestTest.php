@@ -2,10 +2,6 @@
 
 namespace Omnipay\Adyen\Message;
 
-require_once 'PHPUnit/Autoload.php';
-$autoloader = require __DIR__.'/../../../../../../autoload.php';
-$autoloader->add('Omnipay', __DIR__ . '/../../../');
-
 use Omnipay\TestCase;
 
 class PurchaseRequestTest extends TestCase
@@ -43,10 +39,10 @@ class PurchaseRequestTest extends TestCase
         $data = $this->request->getData();
 
         $this->assertSame('BidZoneNL', $data['merchantAccount']);
-        $this->assertSame(1200, $data['paymentAmount']);
+        $this->assertSame('10', $data['paymentAmount']);
         $this->assertSame('EUR', $data['currencyCode']);
-        $this->assertSame('EN', $data['shopperLocale']);
-        $this->assertSame('K9Ix8bSnBhlt3GKs/vOQtjFT9mY==', $data['merchantSig']);
+        $this->assertSame('TEST-10000', $data['merchantReference']);
+        $this->assertSame('faOXdpQdQeYQrwdp1B5Gu5bkeeM=', $data['merchantSig']);
     }
 
     public function testGenerateSignature()
@@ -62,7 +58,7 @@ class PurchaseRequestTest extends TestCase
             'sessionValidity' => '2013-11-05T11:27:59'
         );
 
-        $this->assertSame('K9Ix8bSnBhlt3GKs/vOQtjFT9mY==', $this->request->generateSignature($data));
+        $this->assertSame('faOXdpQdQeYQrwdp1B5Gu5bkeeM=', $this->request->generateSignature($data));
     }
 
     public function testSend()
