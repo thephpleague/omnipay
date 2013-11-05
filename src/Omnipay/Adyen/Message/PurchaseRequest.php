@@ -6,7 +6,7 @@ use Omnipay\Common\Message\AbstractRequest;
 class PurchaseRequest extends AbstractRequest
 {
     protected $endpoint = 'https://test.adyen.com/hpp/pay.shtml';
-   
+
     public function getMerchantAccount()
     {
         return $this->getParameter('merchantAccount');
@@ -25,8 +25,8 @@ class PurchaseRequest extends AbstractRequest
     public function setCurrencyCode($value)
     {
         return $this->setParameter('currencyCode', $value);
-    }	
-	
+    }
+
     public function getSkinCode()
     {
         return $this->getParameter('skinCode');
@@ -35,7 +35,7 @@ class PurchaseRequest extends AbstractRequest
     public function setSkinCode($value)
     {
         return $this->setParameter('skinCode', $value);
-    }	
+    }
 
     public function getSecret()
     {
@@ -45,8 +45,8 @@ class PurchaseRequest extends AbstractRequest
     public function setSecret($value)
     {
         return $this->setParameter('secret', $value);
-    }		
-	
+    }
+
     public function getPaymentAmount()
     {
         return $this->getParameter('paymentAmount');
@@ -55,7 +55,7 @@ class PurchaseRequest extends AbstractRequest
     public function setPaymentAmount($value)
     {
         return $this->setParameter('paymentAmount', $value);
-    }	
+    }
 
     public function getShipBeforeDate()
     {
@@ -65,8 +65,8 @@ class PurchaseRequest extends AbstractRequest
     public function setShipBeforeDate($value)
     {
         return $this->setParameter('shipBeforeDate', $value);
-    }		
-	
+    }
+
     public function getSessionValidity()
     {
         return $this->getParameter('sessionValidity');
@@ -75,8 +75,8 @@ class PurchaseRequest extends AbstractRequest
     public function setSessionValidity($value)
     {
         return $this->setParameter('sessionValidity', $value);
-    }		
-	
+    }
+
     public function getMerchantReference()
     {
         return $this->getParameter('merchantReference');
@@ -85,9 +85,9 @@ class PurchaseRequest extends AbstractRequest
     public function setMerchantReference($value)
     {
         return $this->setParameter('merchantReference', $value);
-    }	
-	
-	public function getShopperLocale()
+    }
+
+    public function getShopperLocale()
     {
         return $this->getParameter('shopperLocale');
     }
@@ -95,8 +95,8 @@ class PurchaseRequest extends AbstractRequest
     public function setShopperLocale($value)
     {
         return $this->setParameter('shopperLocale', $value);
-    }	
-	
+    }
+
     public function getAllowedMethods()
     {
         return $this->getParameter('allowedMethods');
@@ -106,19 +106,20 @@ class PurchaseRequest extends AbstractRequest
     {
         return $this->setParameter('allowedMethods', $value);
     }
-	
+
     public function getData()
     {
         $this->validate('merchantAccount', 'secret', 'paymentAmount');
         $data = array();
         $data['paymentAmount'] = $this->getPaymentAmount();
-        $data['currencyCode'] = $this->getCurrencyCode();		
+        $data['currencyCode'] = $this->getCurrencyCode();
         $data['shipBeforeDate'] = $this->getShipBeforeDate();
         $data['merchantReference'] = $this->getMerchantReference();
         $data['skinCode'] = $this->getSkinCode();
         $data['merchantAccount'] = $this->getMerchantAccount();
         $data['sessionValidity'] = $this->getSessionValidity();
         $data['merchantSig'] = $this->generateSignature($data);
+
         return $data;
     }
 
@@ -134,11 +135,11 @@ class PurchaseRequest extends AbstractRequest
                 $data['skinCode'].
                 $data['merchantAccount'].
                 $data['sessionValidity'],
-                $this->getSecret(), 
+                $this->getSecret(),
                 true)
         );
     }
-	
+
     public function send()
     {
         return $this->response = new PurchaseResponse($this, $this->getData());

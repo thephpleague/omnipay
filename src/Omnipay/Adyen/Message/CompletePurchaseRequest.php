@@ -2,8 +2,6 @@
 
 namespace Omnipay\Adyen\Message;
 
-use Omnipay\Common\Exception\InvalidRequestException;
-
 /**
  * Adyen Complete Purchase Request
  */
@@ -28,7 +26,7 @@ class CompletePurchaseRequest extends PurchaseRequest
                 $this->getSkinCode().
                 $this->getMerchantAccount().
                 $this->getSessionValidity(),
-                $this->getSecret(), 
+                $this->getSecret(),
                 true)
         );
     }
@@ -36,7 +34,7 @@ class CompletePurchaseRequest extends PurchaseRequest
     public function send()
     {
         $this->response = new CompletePurchaseResponse($this, $this->getData());
-        
-		return $this->response;
+
+        return $this->response;
     }
 }

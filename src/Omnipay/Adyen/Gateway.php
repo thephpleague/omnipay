@@ -7,13 +7,13 @@ use Omnipay\Adyen\Message\CompletePurchaseResponse;
 /**
 * Adyen Gateway
  */
-class Gateway extends AbstractGateway {
-
-	public function getName()
+class Gateway extends AbstractGateway
+{
+    public function getName()
     {
         return 'Adyen';
     }
-    
+
     public function getDefaultParameters()
     {
         return array(
@@ -24,8 +24,8 @@ class Gateway extends AbstractGateway {
             'currencyCode' => 'EUR',
             'shipBeforeDate' => date('Y-m-d',  time()),
             'sessionValidity' => date(
-                DATE_ATOM, mktime(date("H"), date("i"), 
-                date("s"), date("m"), 
+                DATE_ATOM, mktime(date("H"), date("i"),
+                date("s"), date("m"),
                 date("j"), date("Y")+1)
             ),
             'shopperLocale' => 'en_GB'
@@ -40,9 +40,9 @@ class Gateway extends AbstractGateway {
     public function setPaymentAmount($value)
     {
         return $this->setParameter('paymentAmount', $value);
-    }	
-	
-	public function getMerchantReference()
+    }
+
+    public function getMerchantReference()
     {
         return $this->getParameter('merchantReference');
     }
@@ -51,7 +51,7 @@ class Gateway extends AbstractGateway {
     {
         return $this->setParameter('merchantReference', $value);
     }
-	
+
     public function getMerchantAccount()
     {
         return $this->getParameter('merchantAccount');
@@ -70,8 +70,8 @@ class Gateway extends AbstractGateway {
     public function setCurrencyCode($value)
     {
         return $this->setParameter('currencyCode', $value);
-    }	
-	
+    }
+
     public function getSkinCode()
     {
         return $this->getParameter('skinCode');
@@ -80,8 +80,8 @@ class Gateway extends AbstractGateway {
     public function setSkinCode($value)
     {
         return $this->setParameter('skinCode', $value);
-    }	
-	
+    }
+
     public function getShipBeforeDate()
     {
         return $this->getParameter('shipBeforeDate');
@@ -91,7 +91,7 @@ class Gateway extends AbstractGateway {
     {
         return $this->setParameter('shipBeforeDate', $value);
     }
-	
+
     public function getSecret()
     {
         return $this->getParameter('secret');
@@ -100,9 +100,9 @@ class Gateway extends AbstractGateway {
     public function setSecret($value)
     {
         return $this->setParameter('secret', $value);
-    }	
- 	
-	public function getShopperLocale()
+    }
+
+    public function getShopperLocale()
     {
         return $this->getParameter('shopperLocale');
     }
@@ -112,7 +112,7 @@ class Gateway extends AbstractGateway {
         return $this->setParameter('shopperLocale', $value);
     }
 
-	public function getAllowedMethods()
+    public function getAllowedMethods()
     {
         return $this->getParameter('allowedMethods');
     }
@@ -121,7 +121,7 @@ class Gateway extends AbstractGateway {
     {
         return $this->setParameter('allowedMethods', $value);
     }
-	
+
     public function purchase(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\Adyen\Message\PurchaseRequest', $this->getParameters());
