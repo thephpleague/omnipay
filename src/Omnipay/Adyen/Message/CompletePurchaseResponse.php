@@ -1,11 +1,11 @@
 <?php
 
 namespace Omnipay\Adyen\Message;
-
+use Omnipay\Common\Message\AbstractResponse;
 /**
  * Adyen Complete Purchase Response
  */
-class CompletePurchaseResponse
+class CompletePurchaseResponse extends AbstractResponse
 {
     private $parameters = array();
     private $response = array();
@@ -31,5 +31,13 @@ class CompletePurchaseResponse
 
     public function getResponseError() { return $this->response; }
 
-    public function isSuccessful() { return $this->response['status']; }
+    public function isSuccessful() { 
+
+        if($this->response['status'] === true){
+        
+            return $this->response['status']; 
+
+        }
+    }
+
 }

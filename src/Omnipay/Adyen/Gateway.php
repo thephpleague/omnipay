@@ -32,6 +32,16 @@ class Gateway extends AbstractGateway
         );
     }
 
+    public function getSessionValidity()
+    {
+        return $this->getParameter('sessionValidity');
+    }
+
+    public function setSessionValidity($value)
+    {
+        return $this->setParameter('sessionValidity', $value);
+    }
+    
     public function getPaymentAmount()
     {
         return $this->getParameter('paymentAmount');
@@ -129,6 +139,6 @@ class Gateway extends AbstractGateway
 
     public function completePurchase(array $parameters = array())
     {
-        return new CompletePurchaseResponse($parameters);
+        return $this->createRequest('\Omnipay\Adyen\Message\CompletePurchaseRequest', $parameters);
     }
 }
