@@ -20,10 +20,10 @@ class Gateway extends AbstractGateway {
             'merchantAccount' => 'BidZoneNL',
             'secret' => 'test',
             'testMode' => true,
-			'skinCode' => '05cp1ZtM',
-			'currencyCode' => 'EUR',
-			'shipBeforeDate' => date('Y-m-d',  time()),
-			'sessionValidity' => date(
+            'skinCode' => '05cp1ZtM',
+            'currencyCode' => 'EUR',
+            'shipBeforeDate' => date('Y-m-d',  time()),
+            'sessionValidity' => date(
                 DATE_ATOM, mktime(date("H"), date("i"), 
                 date("s"), date("m"), 
                 date("j"), date("Y")+1)
