@@ -8,9 +8,6 @@ use Omnipay\Common\Message\AbstractRequest;
  */
 class PurchaseRequest extends AbstractRequest
 {
-
-    private $adyen;
-
     protected $endpoint = 'https://test.adyen.com/hpp/pay.shtml';
    
     public function getMerchantAccount()
@@ -116,9 +113,7 @@ class PurchaseRequest extends AbstractRequest
 	public function getData()
     {
         $this->validate('merchantAccount', 'secret', 'paymentAmount');
-
         $data = array();
-
         $data['paymentAmount'] 		= 	$this->getPaymentAmount();
         $data['currencyCode'] 		= 	$this->getCurrencyCode();		
         $data['shipBeforeDate'] 	=	$this->getShipBeforeDate();
@@ -127,7 +122,6 @@ class PurchaseRequest extends AbstractRequest
 		$data['merchantAccount'] 	= 	$this->getMerchantAccount();
 		$data['sessionValidity']	= 	$this->getSessionValidity();
         $data['merchantSig'] 		= 	$this->generateSignature($data);
-
         return $data;
     }
 
@@ -137,15 +131,15 @@ class PurchaseRequest extends AbstractRequest
 			hash_hmac
 			(
 				'sha1',
-					$data['paymentAmount'].
-					$data['currencyCode'].
-					$data['shipBeforeDate'].
-					$data['merchantReference'].
-					$data['skinCode'].
-					$data['merchantAccount'].
-					$data['sessionValidity'],
-					$this->getSecret(), 
-				true
+                    $data['paymentAmount'].
+                    $data['currencyCode'].
+                    $data['shipBeforeDate'].
+                    $data['merchantReference'].
+                    $data['skinCode'].
+                    $data['merchantAccount'].
+                    $data['sessionValidity'],
+                    $this->getSecret(), 
+                true
 			)
         );
     }

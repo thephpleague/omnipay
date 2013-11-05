@@ -18,10 +18,9 @@ class CompletePurchaseRequest extends PurchaseRequest
 
     public function generateResponseSignature()
     {
-
-		return base64_encode(
-			hash_hmac
-			(
+        return base64_encode(
+            hash_hmac
+            (
 				'sha1',
 					$this->getPaymentAmount().
 					$this->getCurrencyCode().
@@ -39,6 +38,7 @@ class CompletePurchaseRequest extends PurchaseRequest
     public function send()
     {
         $this->response = new CompletePurchaseResponse($this, $this->getData());
+        
 		return $this->response;
     }
 }

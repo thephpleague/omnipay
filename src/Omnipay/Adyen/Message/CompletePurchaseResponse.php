@@ -19,25 +19,17 @@ class CompletePurchaseResponse
                 'status' => true,
                 'success' => $this->parameters
             );
-        }else{
-            
+        }else{      
             $this->response = array(
                 'status' => false,
                 'error' => $this->parameters
-            );
-            
+            );          
         }
     }
     
     public function getResponse(){ return $this->response; }
     
     public function getResponseError(){ return $this->response; }
-    
-    
-    public function isSuccessful()
-    {
-        if($this->response['status'] === true){
-            return true;
-        }else return false;
-    }   
+      
+    public function isSuccessful(){ return $this->response['status']; }   
 }

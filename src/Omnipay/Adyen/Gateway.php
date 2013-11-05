@@ -3,7 +3,7 @@
 namespace Omnipay\Adyen;
 
 use Omnipay\Common\AbstractGateway;
-use \Omnipay\Adyen\Message\CompletePurchaseResponse;
+use Omnipay\Adyen\Message\CompletePurchaseResponse;
 /**
 * Adyen Gateway
  */
@@ -23,11 +23,11 @@ class Gateway extends AbstractGateway {
 			'skinCode' => '05cp1ZtM',
 			'currencyCode' => 'EUR',
 			'shipBeforeDate' => date('Y-m-d',  time()),
-			'sessionValidity' => date(DATE_ATOM, 
-				mktime(date("H"), date("i"), 
-						date("s"), date("m"), 
-						date("j"), date("Y")+1)),
-			
+			'sessionValidity' => date(
+                DATE_ATOM, mktime(date("H"), date("i"), 
+                date("s"), date("m"), 
+                date("j"), date("Y")+1)
+            ),
 			'shopperLocale' => 'en_GB'
         );
     }
@@ -129,6 +129,6 @@ class Gateway extends AbstractGateway {
 
     public function completePurchase(array $parameters = array())
     {
-        return new \Omnipay\Adyen\Message\CompletePurchaseResponse($parameters);
+        return new CompletePurchaseResponse($parameters);
     }
 }
