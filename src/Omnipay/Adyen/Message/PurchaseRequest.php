@@ -77,7 +77,7 @@ class PurchaseRequest extends AbstractRequest
         return $this->setParameter('sessionValidity', $value);
     }		
 	
-	public function getMerchantReference()
+    public function getMerchantReference()
     {
         return $this->getParameter('merchantReference');
     }
@@ -97,7 +97,7 @@ class PurchaseRequest extends AbstractRequest
         return $this->setParameter('shopperLocale', $value);
     }	
 	
-	public function getAllowedMethods()
+    public function getAllowedMethods()
     {
         return $this->getParameter('allowedMethods');
     }
@@ -107,7 +107,7 @@ class PurchaseRequest extends AbstractRequest
         return $this->setParameter('allowedMethods', $value);
     }
 	
-	public function getData()
+    public function getData()
     {
         $this->validate('merchantAccount', 'secret', 'paymentAmount');
         $data = array();
