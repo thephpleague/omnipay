@@ -96,6 +96,11 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
         return $this->getParameter('allowNote');
     }
+    
+    public function getPageStyle()
+    {
+        return $this->getParameter('pageStyle');
+    }
 
     public function setAllowNote($value)
     {
