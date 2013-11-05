@@ -1,5 +1,5 @@
 {
-    "name": "omnipay/omnipay",
+    "name": "TheBishopOfSoho/omnipay",
     "type": "library",
     "description": "A framework agnostic, multi-gateway payment processing library",
     "keywords": [
@@ -44,7 +44,7 @@
         "twocheckout",
         "worldpay"
     ],
-    "homepage": "https://github.com/adrianmacneil/omnipay",
+    "homepage": "https://github.com/TheBishopOfSoho/omnipay",
     "license": "MIT",
     "authors": [
         {
