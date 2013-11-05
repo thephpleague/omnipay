@@ -111,14 +111,14 @@ class PurchaseRequest extends AbstractRequest
     {
         $this->validate('merchantAccount', 'secret', 'paymentAmount');
         $data = array();
-        $data['paymentAmount'] 		= 	$this->getPaymentAmount();
-        $data['currencyCode'] 		= 	$this->getCurrencyCode();		
-        $data['shipBeforeDate'] 	=	$this->getShipBeforeDate();
-        $data['merchantReference']	= 	$this->getMerchantReference();
-        $data['skinCode'] 			= 	$this->getSkinCode();
-        $data['merchantAccount'] 	= 	$this->getMerchantAccount();
-        $data['sessionValidity']	= 	$this->getSessionValidity();
-        $data['merchantSig'] 		= 	$this->generateSignature($data);
+        $data['paymentAmount'] = $this->getPaymentAmount();
+        $data['currencyCode'] = $this->getCurrencyCode();		
+        $data['shipBeforeDate'] = $this->getShipBeforeDate();
+        $data['merchantReference'] = $this->getMerchantReference();
+        $data['skinCode'] = $this->getSkinCode();
+        $data['merchantAccount'] = $this->getMerchantAccount();
+        $data['sessionValidity'] = $this->getSessionValidity();
+        $data['merchantSig'] = $this->generateSignature($data);
         return $data;
     }
 
