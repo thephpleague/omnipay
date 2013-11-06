@@ -1,4 +1,5 @@
 <?php
+
 namespace Omnipay\Adyen;
 
 use Omnipay\GatewayTestCase;
@@ -19,9 +20,17 @@ class GatewayTest extends GatewayTestCase
 
     public function testPurchase()
     {
-        $this->gateway->setPaymentAmount(10);
+        $this->gateway->setAmount(10);
         $request = $this->gateway->purchase();
         $this->assertInstanceOf('Omnipay\Adyen\Message\PurchaseRequest', $request);
-        $this->assertSame(10, $request->getPaymentAmount('paymentAmount'));
+        $this->assertSame(10, $request->getAmount());
+    }
+
+    public function testPurchaseReturn()
+    {
+        $this->gateway->setAmount(10);
+        $request = $this->gateway->completePurchase();
+        $this->assertInstanceOf('Omnipay\Adyen\Message\CompletePurchaseRequest', $request);
+        $this->assertSame(10, $this->gateway->getAmount());
     }
 }

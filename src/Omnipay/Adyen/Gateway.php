@@ -19,7 +19,7 @@ class Gateway extends AbstractGateway
         return array(
             'merchantAccount' => 'BidZoneNL',
             'secret' => 'test',
-            'testMode' => true,
+            'testMode' => false,
             'skinCode' => '05cp1ZtM',
             'currencyCode' => 'EUR',
             'shipBeforeDate' => date('Y-m-d',  time()),
@@ -42,14 +42,14 @@ class Gateway extends AbstractGateway
         return $this->setParameter('sessionValidity', $value);
     }
     
-    public function getPaymentAmount()
+    public function getAmount()
     {
-        return $this->getParameter('paymentAmount');
+        return $this->getParameter('amount');
     }
 
-    public function setPaymentAmount($value)
+    public function setAmount($value)
     {
-        return $this->setParameter('paymentAmount', $value);
+        return $this->setParameter('amount', $value);
     }
 
     public function getMerchantReference()
@@ -135,5 +135,9 @@ class Gateway extends AbstractGateway
     public function purchase(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\Adyen\Message\PurchaseRequest', $this->getParameters());
+    }
+    public function completePurchase(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Adyen\Message\CompletePurchaseRequest', $parameters);
     }
 }

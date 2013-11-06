@@ -47,14 +47,14 @@ class PurchaseRequest extends AbstractRequest
         return $this->setParameter('secret', $value);
     }
 
-    public function getPaymentAmount()
+    public function getAmount()
     {
-        return $this->getParameter('paymentAmount');
+        return $this->getParameter('amount');
     }
 
-    public function setPaymentAmount($value)
+    public function setAmount($value)
     {
-        return $this->setParameter('paymentAmount', $value);
+        return $this->setParameter('amount', $value);
     }
 
     public function getShipBeforeDate()
@@ -109,9 +109,9 @@ class PurchaseRequest extends AbstractRequest
 
     public function getData()
     {
-        $this->validate('merchantAccount', 'secret', 'paymentAmount');
+        $this->validate('merchantAccount', 'secret', 'amount');
         $data = array();
-        $data['paymentAmount'] = $this->getPaymentAmount();
+        $data['amount'] = $this->getAmount();
         $data['currencyCode'] = $this->getCurrencyCode();
         $data['shipBeforeDate'] = $this->getShipBeforeDate();
         $data['merchantReference'] = $this->getMerchantReference();
@@ -128,7 +128,7 @@ class PurchaseRequest extends AbstractRequest
         return base64_encode(
             hash_hmac(
                 'sha1',
-                $data['paymentAmount'].
+                $data['amount'].
                 $data['currencyCode'].
                 $data['shipBeforeDate'].
                 $data['merchantReference'].
@@ -141,8 +141,14 @@ class PurchaseRequest extends AbstractRequest
     }
 
     public function send()
-    {
-        return $this->response = new PurchaseResponse($this, $this->getData());
+    {     
+        $data = $this->getData();
+        
+        if($this->getParameter('testMode') !== true){
+            $data['paymentAmount'] = $data['amount'];
+            unset($data['amount']);
+        }
+        return $this->response = new PurchaseResponse($this, $data);
     }
 
     public function getEndpoint()
