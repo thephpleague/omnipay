@@ -19,7 +19,7 @@ class CompletePurchaseRequest extends PurchaseRequest
         return base64_encode(
             hash_hmac(
                 'sha1',
-                $this->getPaymentAmount().
+                $this->getAmount().
                 $this->getCurrencyCode().
                 $this->getShipBeforeDate().
                 $this->getMerchantReference().

@@ -10,10 +10,6 @@ class CompletePurchaseResponse extends AbstractResponse
 
     public function getResponse() { return $this; }
 
-    public function isSuccessful() { 
-		if($this->data['authResult'] === 'AUTHORISED'){
-			return true;
-		}else return false;
-	}
+    public function isSuccessful() {}
 
 }

@@ -52,6 +52,16 @@ class Gateway extends AbstractGateway
         return $this->setParameter('paymentAmount', $value);
     }
 
+     public function getAmount()
+    {
+        return $this->getParameter('amount');
+    }
+
+    public function setAmount($value)
+    {
+        return $this->setParameter('amount', $value);
+    }   
+    
     public function getMerchantReference()
     {
         return $this->getParameter('merchantReference');
