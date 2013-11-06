@@ -24,12 +24,4 @@ class GatewayTest extends GatewayTestCase
         $this->assertInstanceOf('Omnipay\Adyen\Message\PurchaseRequest', $request);
         $this->assertSame(10, $request->getPaymentAmount('paymentAmount'));
     }
-
-    public function testPurchaseReturn()
-    {
-        $this->gateway->setPaymentAmount(10);
-        $request = $this->gateway->completePurchase();
-        $this->assertInstanceOf('Omnipay\Adyen\Message\CompletePurchaseRequest', $request);
-        $this->assertSame(10, $this->gateway->getPaymentAmount('paymentAmount'));
-    }
 }
