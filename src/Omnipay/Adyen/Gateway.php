@@ -48,16 +48,6 @@ class Gateway extends AbstractGateway
     {
         return $this->setParameter('sessionValidity', $value);
     }
-    
-    public function getAmount()
-    {
-        return $this->getParameter('amount');
-    }
-
-    public function setAmount($value)
-    {
-        return $this->setParameter('amount', $value);
-    }
 
     public function getMerchantReference()
     {
@@ -141,7 +131,7 @@ class Gateway extends AbstractGateway
 
     public function purchase(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Adyen\Message\PurchaseRequest', $this->getParameters());
+        return $this->createRequest('\Omnipay\Adyen\Message\PurchaseRequest', $parameters);
     }
     public function completePurchase(array $parameters = array())
     {

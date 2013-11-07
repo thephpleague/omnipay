@@ -38,7 +38,7 @@ class CompletePurchaseRequest extends PurchaseRequest
         $data = $this->getData();
 
         if ($this->getParameter('testMode') !== true and isset($data['amount'])) {
-            $data['paymentAmount'] = $data['amount'];
+            $data['paymentAmount'] = $data['amount'] * 100;
             unset($data['amount']);
         }
             

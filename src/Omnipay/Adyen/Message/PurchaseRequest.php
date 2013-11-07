@@ -48,16 +48,6 @@ class PurchaseRequest extends AbstractRequest
         return $this->setParameter('secret', $value);
     }
 
-    public function getAmount()
-    {
-        return $this->getParameter('amount');
-    }
-
-    public function setAmount($value)
-    {
-        return $this->setParameter('amount', $value);
-    }
-
     public function getShipBeforeDate()
     {
         return $this->getParameter('shipBeforeDate');
@@ -129,7 +119,7 @@ class PurchaseRequest extends AbstractRequest
         return base64_encode(
             hash_hmac(
                 'sha1',
-                $data['amount'].
+                $data['amount'] * 100 .
                 $data['currencyCode'].
                 $data['shipBeforeDate'].
                 $data['merchantReference'].
@@ -147,7 +137,7 @@ class PurchaseRequest extends AbstractRequest
         $data = $this->getData();
         
         if ($this->getParameter('testMode') !== true) {
-            $data['paymentAmount'] = $data['amount'];
+            $data['paymentAmount'] = $data['amount'] * 100;
             unset($data['amount']);
         }
         return $this->response = new PurchaseResponse($this, $data);
