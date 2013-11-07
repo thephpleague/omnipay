@@ -28,16 +28,6 @@ class CompletePurchaseRequestTest extends TestCase
         $this->assertSame($this->getHttpRequest()->request->all(), $data);
     }
 
-    /**
-     * @expectedException Omnipay\Common\Exception\InvalidRequestException
-     */
-    public function testGetDataInvalidSignature()
-    {
-        $this->getHttpRequest()->request->set('merchantSig', 'dad4');
-
-        $this->request->getData();
-    }
-
     public function testGenerateResponseSignature()
     {
         $this->request->initialize(array(
