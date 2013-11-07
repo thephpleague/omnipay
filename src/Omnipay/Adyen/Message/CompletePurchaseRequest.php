@@ -8,7 +8,8 @@ namespace Omnipay\Adyen\Message;
 class CompletePurchaseRequest extends PurchaseRequest
 {
     public function getData()
-    {       
+    {
+        
         $this->validate('merchantAccount', 'secret');
         
         return $this->httpRequest->request->all();
@@ -20,7 +21,7 @@ class CompletePurchaseRequest extends PurchaseRequest
             hash_hmac(
                 'sha1',
                 $this->getAmount().
-                $this->getCurrencyCode().
+                $this->getCurrency().
                 $this->getShipBeforeDate().
                 $this->getMerchantReference().
                 $this->getSkinCode().
@@ -35,11 +36,6 @@ class CompletePurchaseRequest extends PurchaseRequest
     public function send()
     {
         $data = $this->getData();
-
-        if ($this->getParameter('testMode') !== true and isset($data['amount'])) {
-            $data['paymentAmount'] = $data['amount'] * 100;
-            unset($data['amount']);
-        }
             
         $this->response = new CompletePurchaseResponse($this, $data);
 

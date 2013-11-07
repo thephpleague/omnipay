@@ -23,7 +23,6 @@ class Gateway extends AbstractGateway
             'secret' => 'test',
             'testMode' => false,
             'skinCode' => '05cp1ZtM',
-            'currencyCode' => 'EUR',
             'shipBeforeDate' => date('Y-m-d', time()),
             'sessionValidity' => date(
                 DATE_ATOM,
@@ -67,16 +66,6 @@ class Gateway extends AbstractGateway
     public function setMerchantAccount($value)
     {
         return $this->setParameter('merchantAccount', $value);
-    }
-
-    public function getCurrencyCode()
-    {
-        return $this->getParameter('currencyCode');
-    }
-
-    public function setCurrencyCode($value)
-    {
-        return $this->setParameter('currencyCode', $value);
     }
 
     public function getSkinCode()

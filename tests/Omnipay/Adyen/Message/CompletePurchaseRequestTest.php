@@ -15,7 +15,7 @@ class CompletePurchaseRequestTest extends TestCase
             'secret' => 'test',
             'skinCode' => '05cp1ZtM',
             'amount' => 10.00,
-            'currencyCode' => 'EUR',
+            'currency' => 'EUR',
             'testMode' => true,
             'shipBeforeDate' => '2013-11-11',
             'sessionValidity' => '2013-11-05T11:27:59'
@@ -36,7 +36,7 @@ class CompletePurchaseRequestTest extends TestCase
             'secret' => 'test',
             'skinCode' => '05cp1ZtM',
             'amount' => 10.00,
-            'currencyCode' => 'EUR',
+            'currency' => 'EUR',
             'testMode' => true,
             'shipBeforeDate' => '2013-11-11',
             'sessionValidity' => '2013-11-05T11:27:59'

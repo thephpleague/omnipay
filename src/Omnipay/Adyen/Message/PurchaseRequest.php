@@ -18,16 +18,6 @@ class PurchaseRequest extends AbstractRequest
         return $this->setParameter('merchantAccount', $value);
     }
 
-    public function getCurrencyCode()
-    {
-        return $this->getParameter('currencyCode');
-    }
-
-    public function setCurrencyCode($value)
-    {
-        return $this->setParameter('currencyCode', $value);
-    }
-
     public function getSkinCode()
     {
         return $this->getParameter('skinCode');
@@ -103,7 +93,7 @@ class PurchaseRequest extends AbstractRequest
         $this->validate('merchantAccount', 'secret', 'amount');
         $data = array();
         $data['amount'] = $this->getAmountInteger();
-        $data['currencyCode'] = $this->getCurrencyCode();
+        $data['currency'] = $this->getCurrency();
         $data['shipBeforeDate'] = $this->getShipBeforeDate();
         $data['merchantReference'] = $this->getMerchantReference();
         $data['skinCode'] = $this->getSkinCode();
@@ -120,7 +110,7 @@ class PurchaseRequest extends AbstractRequest
             hash_hmac(
                 'sha1',
                 $data['amount'].
-                $data['currencyCode'].
+                $data['currency'].
                 $data['shipBeforeDate'].
                 $data['merchantReference'].
                 $data['skinCode'].
@@ -138,7 +128,9 @@ class PurchaseRequest extends AbstractRequest
         
         if ($this->getParameter('testMode') !== true) {
             $data['paymentAmount'] = $data['amount'];
+            $data['currencyCode'] = $data['currency'];
             unset($data['amount']);
+            unset($data['currecny']);
         }
         return $this->response = new PurchaseResponse($this, $data);
     }

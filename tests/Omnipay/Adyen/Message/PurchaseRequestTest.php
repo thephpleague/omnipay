@@ -15,7 +15,7 @@ class PurchaseRequestTest extends TestCase
             'secret' => 'test',
             'skinCode' => '05cp1ZtM',
             'amount' => 10.00,
-            'currencyCode' => 'EUR',
+            'currency' => 'EUR',
             'testMode' => true,
             'shipBeforeDate' => '2013-11-11',
             'sessionValidity' => '2013-11-05T11:27:59'
@@ -30,7 +30,7 @@ class PurchaseRequestTest extends TestCase
             'secret' => 'test',
             'skinCode' => '05cp1ZtM',
             'amount' => 10.00,
-            'currencyCode' => 'EUR',
+            'currency' => 'EUR',
             'testMode' => true,
             'shipBeforeDate' => '2013-11-11',
             'sessionValidity' => '2013-11-05T11:27:59'
@@ -40,7 +40,7 @@ class PurchaseRequestTest extends TestCase
 
         $this->assertSame('BidZoneNL', $data['merchantAccount']);
         $this->assertSame(1000, $data['amount']);
-        $this->assertSame('EUR', $data['currencyCode']);
+        $this->assertSame('EUR', $data['currency']);
         $this->assertSame('TEST-10000', $data['merchantReference']);
         $this->assertSame('dxrViSKHSFX8EkqG8RwQ9ei5R+4=', $data['merchantSig']);
     }
@@ -50,7 +50,7 @@ class PurchaseRequestTest extends TestCase
         $this->request->setSecret('test');
         $data = array(
             'amount' => 1000,
-            'currencyCode' => 'EUR',
+            'currency' => 'EUR',
             'shipBeforeDate' => '2013-11-11',
             'merchantReference' => 'TEST-10000',
             'skinCode' => '05cp1ZtM',
