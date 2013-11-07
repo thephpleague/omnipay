@@ -14,7 +14,7 @@ class CompletePurchaseRequestTest extends TestCase
             'merchantReference' => 'TEST-10000',
             'secret' => 'test',
             'skinCode' => '05cp1ZtM',
-            'amount' => '10',
+            'amount' => 10.00,
             'currencyCode' => 'EUR',
             'testMode' => true,
             'shipBeforeDate' => '2013-11-11',
@@ -35,13 +35,13 @@ class CompletePurchaseRequestTest extends TestCase
             'merchantReference' => 'TEST-10000',
             'secret' => 'test',
             'skinCode' => '05cp1ZtM',
-            'amount' => '10',
+            'amount' => 10.00,
             'currencyCode' => 'EUR',
             'testMode' => true,
             'shipBeforeDate' => '2013-11-11',
             'sessionValidity' => '2013-11-05T11:27:59'
         ));
-        $this->assertSame('faOXdpQdQeYQrwdp1B5Gu5bkeeM=', $this->request->generateResponseSignature());
+        $this->assertSame('9c4u9SHR0eP7+pX2D2maZVgFqSQ=', $this->request->generateResponseSignature());
     }
 
     public function testSendSuccess()
