@@ -9,7 +9,6 @@ use Omnipay\Common\Message\AbstractResponse;
  */
 class CompletePurchaseResponse extends AbstractResponse
 {
-
     public function getResponse()
     {
         return $this;

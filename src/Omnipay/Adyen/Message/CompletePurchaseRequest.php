@@ -8,8 +8,7 @@ namespace Omnipay\Adyen\Message;
 class CompletePurchaseRequest extends PurchaseRequest
 {
     public function getData()
-    {
-        
+    {       
         $this->validate('merchantAccount', 'secret');
         
         return $this->httpRequest->request->all();
