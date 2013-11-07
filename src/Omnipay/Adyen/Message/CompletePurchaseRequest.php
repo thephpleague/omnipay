@@ -28,7 +28,8 @@ class CompletePurchaseRequest extends PurchaseRequest
                 $this->getMerchantAccount().
                 $this->getSessionValidity(),
                 $this->getSecret(),
-                true)
+                true
+            )
         );
     }
 
@@ -36,7 +37,7 @@ class CompletePurchaseRequest extends PurchaseRequest
     {
         $data = $this->getData();
 
-        if($this->getParameter('testMode') !== true and isset($data['amount'])){
+        if ($this->getParameter('testMode') !== true and isset($data['amount'])) {
             $data['paymentAmount'] = $data['amount'];
             unset($data['amount']);
         }

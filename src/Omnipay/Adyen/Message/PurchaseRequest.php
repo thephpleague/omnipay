@@ -1,6 +1,7 @@
 <?php
 
 namespace Omnipay\Adyen\Message;
+
 use Omnipay\Common\Message\AbstractRequest;
 
 class PurchaseRequest extends AbstractRequest
@@ -136,15 +137,16 @@ class PurchaseRequest extends AbstractRequest
                 $data['merchantAccount'].
                 $data['sessionValidity'],
                 $this->getSecret(),
-                true)
+                true
+            )
         );
     }
-
+    
     public function send()
-    {     
+    {
         $data = $this->getData();
         
-        if($this->getParameter('testMode') !== true){
+        if ($this->getParameter('testMode') !== true) {
             $data['paymentAmount'] = $data['amount'];
             unset($data['amount']);
         }
