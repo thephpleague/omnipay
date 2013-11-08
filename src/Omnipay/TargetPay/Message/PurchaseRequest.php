@@ -17,10 +17,10 @@ abstract class PurchaseRequest extends AbstractRequest
     /**
      * {@inheritdoc}
      */
-    public function send()
+    public function sendData($data)
     {
         $httpResponse = $this->httpClient->get(
-            $this->getEndpoint().'?'.http_build_query($this->getData())
+            $this->getEndpoint().'?'.http_build_query($data)
         )->send();
 
         return $this->response = new PurchaseResponse($this, $httpResponse->getBody(true));

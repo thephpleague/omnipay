@@ -21,9 +21,9 @@ class ThreePartyCompletePurchaseRequest extends AbstractRequest
         return $data;
     }
 
-    public function send()
+    public function sendData($data)
     {
-        return $this->response = new Response($this, $this->getData());
+        return $this->response = new Response($this, $data);
     }
 
     public function getEndpoint()

@@ -54,7 +54,7 @@ class PurchaseRequest extends AbstractRequest
         return $data;
     }
 
-    public function send()
+    public function sendData($data)
     {
         // don't throw exceptions for 4xx errors
         $this->httpClient->getEventDispatcher()->addListener(
@@ -66,7 +66,7 @@ class PurchaseRequest extends AbstractRequest
             }
         );
 
-        $httpResponse = $this->httpClient->post($this->getEndpoint().'/charges', null, $this->getData())
+        $httpResponse = $this->httpClient->post($this->getEndpoint().'/charges', null, $data)
             ->setHeader('Authorization', 'Basic '.base64_encode($this->getSecretKey().':'))
             ->send();
 

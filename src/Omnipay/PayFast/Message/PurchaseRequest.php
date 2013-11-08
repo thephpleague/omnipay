@@ -84,9 +84,9 @@ class PurchaseRequest extends AbstractRequest
         return md5(http_build_query($fields));
     }
 
-    public function send()
+    public function sendData($data)
     {
-        return $this->response = new PurchaseResponse($this, $this->getData(), $this->getEndpoint().'/process');
+        return $this->response = new PurchaseResponse($this, $data, $this->getEndpoint().'/process');
     }
 
     public function getEndpoint()

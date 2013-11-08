@@ -40,9 +40,9 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $data;
     }
 
-    public function send()
+    public function sendData($data)
     {
-        $httpResponse = $this->httpClient->post($this->endpoint, null, $this->getData())->send();
+        $httpResponse = $this->httpClient->post($this->endpoint, null, $data)->send();
 
         return $this->response = new Response($this, $httpResponse->xml());
     }

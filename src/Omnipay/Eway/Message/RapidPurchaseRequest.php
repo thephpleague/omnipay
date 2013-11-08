@@ -57,9 +57,9 @@ class RapidPurchaseRequest extends AbstractRequest
         return $data;
     }
 
-    public function send()
+    public function sendData($data)
     {
-        $httpResponse = $this->httpClient->post($this->getEndpoint(), null, json_encode($this->getData()))
+        $httpResponse = $this->httpClient->post($this->getEndpoint(), null, json_encode($data))
             ->setAuth($this->getApiKey(), $this->getPassword())
             ->send();
 

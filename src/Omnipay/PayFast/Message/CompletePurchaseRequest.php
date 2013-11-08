@@ -35,9 +35,8 @@ class CompletePurchaseRequest extends PurchaseRequest
         throw new InvalidRequestException('Missing PDT or ITN variables');
     }
 
-    public function send()
+    public function sendData($data)
     {
-        $data = $this->getData();
         if (isset($data['pt'])) {
             // validate PDT
             $url = $this->getEndpoint().'/query/fetch';
