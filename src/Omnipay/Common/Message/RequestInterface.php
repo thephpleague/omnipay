@@ -32,4 +32,12 @@ interface RequestInterface extends MessageInterface
      * @return ResponseInterface
      */
     public function send();
+
+    /**
+     * Send the request with specified data
+     *
+     * @param  mixed             $data The data to send
+     * @return ResponseInterface
+     */
+    public function sendData($data);
 }
