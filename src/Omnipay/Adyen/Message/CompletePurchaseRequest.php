@@ -9,9 +9,6 @@ class CompletePurchaseRequest extends PurchaseRequest
 {
     public function getData()
     {
-        
-        $this->validate('merchantAccount', 'secret');
-        
         return $this->httpRequest->request->all();
     }
 
@@ -36,9 +33,7 @@ class CompletePurchaseRequest extends PurchaseRequest
     public function send()
     {
         $data = $this->getData();
-            
-        $this->response = new CompletePurchaseResponse($this, $data);
-
-        return $this->response;
+        $data['success'] = ('AUTHORISED' == $this->httpRequest->query->get('authResult')) ? true : false;
+        return new CompletePurchaseResponse($this, $data);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Omnipay\Adyen\Message;
 
+use Symfony\Component\HttpFoundation\Request as HttpRequest;
+
 use Omnipay\Common\Message\AbstractResponse;
 
 /**
@@ -16,20 +18,7 @@ class CompletePurchaseResponse extends AbstractResponse
 
     public function isSuccessful()
     {
-        $request = $this->request->getParameters();
-        if ($request['testMode'] === true) {
-            if ($this->data['authResult'] == 'AUTHORISED') {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            $response = print_r($this, true);
-            if (strstr($response, 'authResult=AUTHORISED')) {
-                return true;
-            } else {
-                return false;
-            }
-        }
+        $data = ($this->getData());
+        return (isset($data['success']) and $data['success'] === true) ? true : false;
     }
 }

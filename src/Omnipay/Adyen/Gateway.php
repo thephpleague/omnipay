@@ -19,22 +19,8 @@ class Gateway extends AbstractGateway
     public function getDefaultParameters()
     {
         return array(
-            'merchantAccount' => 'BidZoneNL',
-            'secret' => 'test',
-            'testMode' => false,
-            'skinCode' => '05cp1ZtM',
-            'shipBeforeDate' => date('Y-m-d', time()),
-            'sessionValidity' => date(
-                DATE_ATOM,
-                mktime(
-                    date("i"),
-                    date("s"),
-                    date("m"),
-                    date("j"),
-                    date("Y")+1
-                )
-            ),
-            'shopperLocale' => 'en_GB'
+            'testMode' => true,
+            'secret' => 'test'
         );
     }
 
@@ -122,6 +108,7 @@ class Gateway extends AbstractGateway
     {
         return $this->createRequest('\Omnipay\Adyen\Message\PurchaseRequest', $parameters);
     }
+    
     public function completePurchase(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\Adyen\Message\CompletePurchaseRequest', $parameters);

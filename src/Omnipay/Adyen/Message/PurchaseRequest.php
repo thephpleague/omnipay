@@ -90,10 +90,10 @@ class PurchaseRequest extends AbstractRequest
 
     public function getData()
     {
-        $this->validate('merchantAccount', 'secret', 'amount');
+        $this->validate('secret', 'amount');
         $data = array();
-        $data['amount'] = $this->getAmountInteger();
-        $data['currency'] = $this->getCurrency();
+        $data['paymentAmount'] = $this->getAmountInteger();
+        $data['currencyCode'] = $this->getCurrency();
         $data['shipBeforeDate'] = $this->getShipBeforeDate();
         $data['merchantReference'] = $this->getMerchantReference();
         $data['skinCode'] = $this->getSkinCode();
@@ -109,8 +109,8 @@ class PurchaseRequest extends AbstractRequest
         return base64_encode(
             hash_hmac(
                 'sha1',
-                $data['amount'].
-                $data['currency'].
+                $data['paymentAmount'].
+                $data['currencyCode'].
                 $data['shipBeforeDate'].
                 $data['merchantReference'].
                 $data['skinCode'].
@@ -126,12 +126,6 @@ class PurchaseRequest extends AbstractRequest
     {
         $data = $this->getData();
         
-        if ($this->getParameter('testMode') !== true) {
-            $data['paymentAmount'] = $data['amount'];
-            $data['currencyCode'] = $data['currency'];
-            unset($data['amount']);
-            unset($data['currecny']);
-        }
         return $this->response = new PurchaseResponse($this, $data);
     }
 
