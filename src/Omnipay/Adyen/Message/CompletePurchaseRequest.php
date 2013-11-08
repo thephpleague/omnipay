@@ -34,6 +34,7 @@ class CompletePurchaseRequest extends PurchaseRequest
     {
         $data = $this->getData();
         $data['success'] = ('AUTHORISED' == $this->httpRequest->query->get('authResult')) ? true : false;
+        
         return new CompletePurchaseResponse($this, $data);
     }
 }
