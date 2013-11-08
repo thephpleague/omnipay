@@ -3,7 +3,6 @@
 namespace Omnipay\Adyen;
 
 use Omnipay\Common\AbstractGateway;
-
 use Omnipay\Adyen\Message\CompletePurchaseResponse;
 
 /**
