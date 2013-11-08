@@ -24,9 +24,15 @@ class TwoPartyPurchaseRequest extends AbstractRequest
         return $data;
     }
 
-    public function send()
+    public function send(array $datas = array(), $doMerge = true)
     {
-        $httpResponse = $this->httpClient->post($this->getEndpoint(), null, $this->getData())->send();
+        if ($datas) {
+            $datas = $doMerge ? array_merge($this->getData(), $datas) : $datas;
+        } else {
+            $datas = $this->getData();
+        }
+
+        $httpResponse = $this->httpClient->post($this->getEndpoint(), null, $datas)->send();
 
         return $this->response = new Response($this, $httpResponse->getBody());
     }

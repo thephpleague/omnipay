@@ -43,8 +43,14 @@ class ServerCompleteAuthorizeRequest extends AbstractRequest
         return $this->httpRequest->request->all();
     }
 
-    public function send()
+    public function send(array $datas = array(), $doMerge = true)
     {
-        return $this->response = new ServerCompleteAuthorizeResponse($this, $this->getData());
+        if ($datas) {
+            $datas = $doMerge ? array_merge($this->getData(), $datas) : $datas;
+        } else {
+            $datas = $this->getData();
+        }
+
+        return $this->response = new ServerCompleteAuthorizeResponse($this, $datas);
     }
 }

@@ -54,8 +54,14 @@ class PurchaseRequest extends AbstractRequest
         return $data;
     }
 
-    public function send()
+    public function send(array $datas = array(), $doMerge = true)
     {
+        if ($datas) {
+            $datas = $doMerge ? array_merge($this->getData(), $datas) : $datas;
+        } else {
+            $datas = $this->getData();
+        }
+
         // don't throw exceptions for 4xx errors
         $this->httpClient->getEventDispatcher()->addListener(
             'request.error',
@@ -66,7 +72,7 @@ class PurchaseRequest extends AbstractRequest
             }
         );
 
-        $httpResponse = $this->httpClient->post($this->getEndpoint().'/charges', null, $this->getData())
+        $httpResponse = $this->httpClient->post($this->getEndpoint().'/charges', null, $datas)
             ->setHeader('Authorization', 'Basic '.base64_encode($this->getSecretKey().':'))
             ->send();
 

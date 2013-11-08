@@ -115,9 +115,15 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $data;
     }
 
-    public function send()
+    public function send(array $datas = array(), $doMerge = true)
     {
-        $url = $this->getEndpoint().'?'.http_build_query($this->getData());
+        if ($datas) {
+            $datas = $doMerge ? array_merge($this->getData(), $datas) : $datas;
+        } else {
+            $datas = $this->getData();
+        }
+
+        $url = $this->getEndpoint().'?'.http_build_query($datas);
         $httpResponse = $this->httpClient->get($url)->send();
 
         return $this->createResponse($httpResponse->getBody());
