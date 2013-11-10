@@ -321,6 +321,13 @@ abstract class AbstractRequest implements RequestInterface
         return $this->setParameter('notifyUrl', $value);
     }
 
+    public function send()
+    {
+        $data = $this->getData();
+
+        return $this->sendData($data);
+    }
+
     public function getResponse()
     {
         if (null === $this->response) {
