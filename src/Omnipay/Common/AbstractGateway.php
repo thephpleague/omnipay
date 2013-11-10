@@ -129,6 +129,16 @@ abstract class AbstractGateway implements GatewayInterface
     {
         return method_exists($this, 'capture');
     }
+    
+    /**
+     * Supports Purchase
+     *
+     * @return boolean True if this gateway supports the purchase() method
+     */
+    public function supportsPurchase()
+    {
+        return method_exists($this, 'purchase');
+    }
 
     /**
      * Supports Complete Purchase
