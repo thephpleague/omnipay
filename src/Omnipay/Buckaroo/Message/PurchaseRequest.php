@@ -63,9 +63,9 @@ class PurchaseRequest extends AbstractRequest
         );
     }
 
-    public function send()
+    public function sendData($data)
     {
-        return $this->response = new PurchaseResponse($this, $this->getData());
+        return $this->response = new PurchaseResponse($this, $data);
     }
 
     public function getEndpoint()

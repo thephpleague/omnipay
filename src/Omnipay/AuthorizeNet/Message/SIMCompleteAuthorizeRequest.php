@@ -23,8 +23,8 @@ class SIMCompleteAuthorizeRequest extends AbstractRequest
         return md5($this->getHashSecret().$this->getApiLoginId().$this->getTransactionId().$this->getAmount());
     }
 
-    public function send()
+    public function sendData($data)
     {
-        return $this->response = new SIMCompleteAuthorizeResponse($this, $this->getData());
+        return $this->response = new SIMCompleteAuthorizeResponse($this, $data);
     }
 }

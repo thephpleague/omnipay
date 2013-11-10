@@ -43,8 +43,8 @@ class ServerCompleteAuthorizeRequest extends AbstractRequest
         return $this->httpRequest->request->all();
     }
 
-    public function send()
+    public function sendData($data)
     {
-        return $this->response = new ServerCompleteAuthorizeResponse($this, $this->getData());
+        return $this->response = new ServerCompleteAuthorizeResponse($this, $data);
     }
 }

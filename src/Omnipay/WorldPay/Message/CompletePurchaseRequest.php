@@ -19,8 +19,8 @@ class CompletePurchaseRequest extends PurchaseRequest
         return $this->httpRequest->request->all();
     }
 
-    public function send()
+    public function sendData($data)
     {
-        return $this->response = new CompletePurchaseResponse($this, $this->getData());
+        return $this->response = new CompletePurchaseResponse($this, $data);
     }
 }

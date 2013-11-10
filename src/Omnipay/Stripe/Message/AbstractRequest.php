@@ -42,7 +42,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return 'POST';
     }
 
-    public function send()
+    public function sendData($data)
     {
         // don't throw exceptions for 4xx errors
         $this->httpClient->getEventDispatcher()->addListener(
@@ -58,7 +58,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             $this->getHttpMethod(),
             $this->getEndpoint(),
             null,
-            $this->getData()
+            $data
         );
         $httpResponse = $httpRequest
             ->setHeader('Authorization', 'Basic '.base64_encode($this->getApiKey().':'))

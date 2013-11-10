@@ -49,8 +49,8 @@ class SIMAuthorizeRequest extends AbstractRequest
         return hash_hmac('md5', $fingerprint, $this->getTransactionKey());
     }
 
-    public function send()
+    public function sendData($data)
     {
-        return $this->response = new SIMAuthorizeResponse($this, $this->getData(), $this->getEndpoint());
+        return $this->response = new SIMAuthorizeResponse($this, $data, $this->getEndpoint());
     }
 }

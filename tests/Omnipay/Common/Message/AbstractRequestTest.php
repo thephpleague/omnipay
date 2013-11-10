@@ -11,7 +11,7 @@ class AbstractRequestTest extends TestCase
 {
     public function setUp()
     {
-        $this->request = m::mock('\Omnipay\Common\Message\AbstractRequest[getData,send]');
+        $this->request = m::mock('\Omnipay\Common\Message\AbstractRequest[getData,sendData]');
         $this->request->initialize();
     }
 
@@ -259,6 +259,17 @@ class AbstractRequestTest extends TestCase
     public function testNoCurrencyReturnedIfCurrencyNotSet()
     {
         $this->assertNull($this->request->getCurrencyNumeric());
+    }
+
+    public function testSend()
+    {
+        $response = m::mock('\Omnipay\Common\Message\ResponseInterface');
+        $data = array('request data');
+
+        $this->request->shouldReceive('getData')->once()->andReturn($data);
+        $this->request->shouldReceive('sendData')->once()->with($data)->andReturn($response);
+
+        $this->assertSame($response, $this->request->send());
     }
 
     /**

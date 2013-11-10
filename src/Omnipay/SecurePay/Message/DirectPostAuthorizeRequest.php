@@ -46,8 +46,8 @@ class DirectPostAuthorizeRequest extends DirectPostAbstractRequest
         return sha1($hash);
     }
 
-    public function send()
+    public function sendData($data)
     {
-        return $this->response = new DirectPostAuthorizeResponse($this, $this->getData(), $this->getEndpoint());
+        return $this->response = new DirectPostAuthorizeResponse($this, $data, $this->getEndpoint());
     }
 }

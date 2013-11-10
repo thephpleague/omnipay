@@ -18,9 +18,8 @@ class AuthorizeRequest extends AbstractRequest
         return array('amount' => $this->getAmount());
     }
 
-    public function send()
+    public function sendData($data)
     {
-        $data = $this->getData();
         $data['reference'] = uniqid();
         $data['success'] = 0 === substr($this->getCard()->getNumber(), -1, 1) % 2;
         $data['message'] = $data['success'] ? 'Success' : 'Failure';

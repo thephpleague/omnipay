@@ -22,7 +22,7 @@ class FetchIssuersRequest extends BaseAbstractRequest
     /**
      * {@inheritdoc}
      */
-    public function send()
+    public function sendData($data)
     {
         $httpResponse = $this->httpClient->get($this->endpoint)->send();
 

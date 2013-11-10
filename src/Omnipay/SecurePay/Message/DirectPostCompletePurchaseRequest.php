@@ -37,8 +37,8 @@ class DirectPostCompletePurchaseRequest extends DirectPostAbstractRequest
         return sha1($fields);
     }
 
-    public function send()
+    public function sendData($data)
     {
-        return $this->response = new DirectPostCompletePurchaseResponse($this, $this->getData());
+        return $this->response = new DirectPostCompletePurchaseResponse($this, $data);
     }
 }
