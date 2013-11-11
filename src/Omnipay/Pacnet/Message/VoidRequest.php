@@ -11,18 +11,12 @@ class VoidRequest extends AbstractRequest
 {
     public function getData()
     {
-        $this->validate('username', 'sharedSecret', 'paymentRoutingNumber', 'transactionReference');
+        $data = parent::getData();
 
-        $data = array(
-            'RAPIVersion'       => 2,
-            'UserName'          => $this->getUsername(),
-            'PRN'               => $this->getPaymentRoutingNumber(),
-            'Timestamp'         => gmdate('Y-m-d\TH:i:s.000\Z'),
-            'RequestID'         => $this->getRequestID(),
-            'TrackingNumber'    => $this->getTransactionReference(),
-            'PymtType'          => 'cc_debit'
-        );
+        $this->validate('transactionReference');
 
+        $data['PymtType'] = 'cc_debit';
+        $data['TrackingNumber'] = $this->getTransactionReference();
         $data['Signature'] = $this->generateSignature($data);
 
         return $data;

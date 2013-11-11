@@ -11,17 +11,12 @@ class SubmitRequest extends AbstractRequest
 {
     public function getData()
     {
-        $this->validate('username', 'sharedSecret', 'paymentRoutingNumber', 'amount', 'currency');
+        $data = parent::getData();
 
-        $data = array(
-            'RAPIVersion'   => 2,
-            'UserName'      => $this->getUsername(),
-            'PRN'           => $this->getPaymentRoutingNumber(),
-            'Timestamp'     => gmdate('Y-m-d\TH:i:s.000\Z'),
-            'RequestID'     => $this->getRequestID(),
-            'Amount'        => $this->getAmountInteger(),
-            'CurrencyCode'  => $this->getCurrency()
-        );
+        $this->validate('amount', 'currency');
+
+        $data['Amount'] = $this->getAmountInteger();
+        $data['CurrencyCode'] = $this->getCurrency();
 
         return $data;
     }

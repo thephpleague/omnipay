@@ -60,4 +60,19 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $httpResponse = $this->httpClient->post($this->getEndpoint(), null, $this->getData())->send();
         return new Response($this, $httpResponse->getBody());
     }
+
+    public function getData()
+    {
+        $this->validate('username', 'sharedSecret', 'paymentRoutingNumber');
+
+        $data = array();
+
+        $data['RAPIVersion'] = 2;
+        $data['UserName'] = $this->getUsername();
+        $data['PRN'] = $this->getPaymentRoutingNumber();
+        $data['Timestamp'] = gmdate('Y-m-d\TH:i:s.000\Z');
+        $data['RequestID'] = $this->getRequestID();
+
+        return $data;
+    }
 }
