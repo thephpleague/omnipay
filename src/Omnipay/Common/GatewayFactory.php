@@ -2,15 +2,51 @@
 
 namespace Omnipay\Common;
 
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
-use ReflectionClass;
 use Guzzle\Http\ClientInterface;
 use Omnipay\Common\Exception\RuntimeException;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 class GatewayFactory
 {
+    private static $gateways = array();
+
+    /**
+     * All available gateways
+     *
+     * @return array An array of gateway names
+     */
+    public static function all()
+    {
+        return static::$gateways;
+    }
+
+    /**
+     * Replace the list of available gateways
+     *
+     * @param array $gateways An array of gateway names
+     */
+    public static function replace(array $gateways)
+    {
+        static::$gateways = $gateways;
+    }
+
+    /**
+     * Register a new gateway
+     *
+     * @param string $className Gateway name
+     */
+    public static function register($className)
+    {
+        static::$gateways[] = $className;
+    }
+
+    /**
+     * Create a new gateway instance
+     *
+     * @param string               $class       Gateway name
+     * @param ClientInterface|null $httpClient  A Guzzle HTTP Client implementation
+     * @param HttpRequest|null     $httpRequest A Symfony HTTP Request implementation
+     */
     public static function create($class, ClientInterface $httpClient = null, HttpRequest $httpRequest = null)
     {
         $class = Helper::getGatewayClassName($class);
@@ -19,41 +55,6 @@ class GatewayFactory
             throw new RuntimeException("Class '$class' not found");
         }
 
-        $gateway = new $class($httpClient, $httpRequest);
-
-        return $gateway;
-    }
-
-    /**
-     * Get a list of supported gateways, in friendly format (e.g. PayPal_Express)
-     */
-    public static function find($directory = null)
-    {
-        $result = array();
-
-        // find all gateways in the Billing directory
-        $directory = dirname(__DIR__);
-        $it = new RecursiveDirectoryIterator($directory);
-        foreach (new RecursiveIteratorIterator($it) as $file) {
-            $filepath = $file->getPathName();
-            if ('Gateway.php' === substr($filepath, -11)) {
-                // determine class name
-                $type = substr($filepath, 0, -11);
-                $type = str_replace(array($directory, DIRECTORY_SEPARATOR), array('', '_'), $type);
-                $type = trim($type, '_');
-                $class = Helper::getGatewayClassName($type);
-
-                // ensure class exists and is not abstract
-                if (class_exists($class)) {
-                    $reflection = new ReflectionClass($class);
-                    if (!$reflection->isAbstract() and
-                        $reflection->implementsInterface('\\Omnipay\\Common\\GatewayInterface')) {
-                        $result[] = $type;
-                    }
-                }
-            }
-        }
-
-        return $result;
+        return new $class($httpClient, $httpRequest);
     }
 }
