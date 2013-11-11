@@ -133,4 +133,9 @@ class PurchaseRequest extends AbstractRequest
     {
         return $this->endpoint;
     }
+
+    public function sendData($data)
+    {
+
+    }
 }
