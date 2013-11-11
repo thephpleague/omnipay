@@ -24,8 +24,10 @@ class CompletePurchaseRequestTest extends TestCase
 
     public function testGetData()
     {
+        
         $data = $this->request->getData();
         $this->assertSame($this->getHttpRequest()->request->all(), $data);
+        
     }
 
     public function testGenerateResponseSignature()
@@ -34,5 +36,13 @@ class CompletePurchaseRequestTest extends TestCase
             'Ti+ACycv7TmV3VY6hfQ6tIIdhGM=',
             $this->request->generateResponseSignature($this->request->getData())
         );
+    }
+    
+    public function testSend()
+    {
+        $this->getHttpRequest()->request->set('authResult', 'AUTHORISED');
+        $authResult = $this->request->getData();
+        $this->assertSame('AUTHORISED', $authResult['authResult']);
+        
     }
 }

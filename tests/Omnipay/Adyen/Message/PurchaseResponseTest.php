@@ -6,9 +6,10 @@ use Omnipay\TestCase;
 
 class PurchaseResponseTest extends TestCase
 {
-    public function testPurchaseSuccess()
+    
+    public function setUp()
     {
-        $response = new PurchaseResponse($this->getMockRequest(), array(
+        $this->response = new PurchaseResponse($this->getMockRequest(), array(
             'amount' => '10.00',
             'currency' => 'EUR',
             'merchantReference' => 'TEST-10000',
@@ -17,13 +18,33 @@ class PurchaseResponseTest extends TestCase
             'sessionValidity' => '2013-11-05T11:27:59',
             'merchantAccount' => 'testacc',
             'secret' => 'test',
-            'shopperLocale' => 'en_GB'
+            'shopperLocale' => 'en_GB',
+            'endPoint' => 'https://test.adyen.com/hpp/pay.shtml'
         ));
-
-        $this->assertFalse($response->isSuccessful());
-        $this->assertTrue($response->isRedirect());
-        $this->assertNull($response->getTransactionReference());
-        $this->assertNull($response->getMessage());
-        $this->assertSame('POST', $response->getRedirectMethod());
+    }
+    public function testIsSuccessful()
+    {
+        $this->assertFalse($this->response->isSuccessful());
+    }
+    
+    public function testIsRedirect()
+    {
+        $this->assertTrue($this->response->isRedirect());
+    }
+    
+    public function testGetRedirectUrl()
+    {
+        $endPoint = $this->response->getData();
+        $this->assertSame('https://test.adyen.com/hpp/pay.shtml', $endPoint['endPoint']);
+    }
+    
+    public function testGetRedirectData()
+    {
+        $this->assertSame(count($this->response->getRedirectData()), 10);
+    }
+    
+    public function testRedirectMethod()
+    {
+        $this->assertSame('POST', $this->response->getRedirectMethod());
     }
 }
