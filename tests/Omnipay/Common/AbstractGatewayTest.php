@@ -14,11 +14,6 @@ class AbstractGatewayTest extends TestCase
 
     public function testGetShortName()
     {
-        // test a couple of known getShortName() examples
-        $gateway = GatewayFactory::create('PayPal_Express');
-        $this->assertSame('PayPal_Express', $gateway->getShortName());
-
-        $gateway = GatewayFactory::create('Stripe');
-        $this->assertSame('Stripe', $gateway->getShortName());
+        $this->assertSame('\\'.get_class($this->gateway), $this->gateway->getShortName());
     }
 }
