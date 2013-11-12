@@ -81,6 +81,10 @@ class DirectGateway extends AbstractGateway
     {
         return $this->createRequest('\Omnipay\SagePay\Message\DirectCreateTokenRequest', $parameters);
     }
+    
+    public function repeatPayment(array $parameters = array()){
+        return $this->createRequest('\Omnipay\SagePay\Message\DirectRepeatPaymentRequest', $parameters);
+    }
 
     
     public function deleteCard(array $parameters = array())
