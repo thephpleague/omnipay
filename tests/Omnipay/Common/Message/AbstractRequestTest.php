@@ -5,7 +5,7 @@ namespace Omnipay\Common\Message;
 use Mockery as m;
 use Omnipay\Common\CreditCard;
 use Omnipay\Common\ItemBag;
-use Omnipay\TestCase;
+use Omnipay\Tests\TestCase;
 
 class AbstractRequestTest extends TestCase
 {

@@ -3,7 +3,7 @@
 namespace Omnipay\Common;
 
 use Mockery as m;
-use Omnipay\TestCase;
+use Omnipay\Tests\TestCase;
 
 class AbstractGatewayTest extends TestCase
 {

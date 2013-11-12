@@ -2,7 +2,7 @@
 
 namespace Omnipay\Common;
 
-use Omnipay\TestCase;
+use Omnipay\Tests\TestCase;
 
 class ItemBagTest extends TestCase
 {
