@@ -26,12 +26,12 @@ class CompletePurchaseRequest extends AbstractRequest
         return $data;
     }
 
-    public function send()
+    public function sendData($data)
     {
         $httpRequest = $this->httpClient->post(
             $this->getEndpoint().'/api/v1/confirm',
             array('Accept' => 'application/json'),
-            Gateway::generateQueryString($this->getData())
+            Gateway::generateQueryString($data)
         );
         $httpResponse = $httpRequest->setAuth($this->getAppId(), $this->getAppSecret())->send();
 

@@ -67,9 +67,9 @@ class PxPostAuthorizeRequest extends AbstractRequest
         return $data;
     }
 
-    public function send()
+    public function sendData($data)
     {
-        $httpResponse = $this->httpClient->post($this->endpoint, null, $this->getData()->asXML())->send();
+        $httpResponse = $this->httpClient->post($this->endpoint, null, $data->asXML())->send();
 
         return $this->response = new Response($this, $httpResponse->xml());
     }

@@ -25,12 +25,12 @@ class FetchIssuersRequest extends AbstractRequest
     /**
      * {@inheritdoc}
      */
-    public function send()
+    public function sendData($data)
     {
         $httpResponse = $this->httpClient->post(
             $this->getEndpoint(),
             $this->getHeaders(),
-            $this->getData()->asXML()
+            $data->asXML()
         )->send();
 
         return $this->response = new FetchIssuersResponse($this, $httpResponse->xml());

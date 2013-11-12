@@ -4,13 +4,14 @@ namespace Omnipay\Common\Message;
 
 use Mockery as m;
 use Omnipay\Common\CreditCard;
+use Omnipay\Common\ItemBag;
 use Omnipay\TestCase;
 
 class AbstractRequestTest extends TestCase
 {
     public function setUp()
     {
-        $this->request = m::mock('\Omnipay\Common\Message\AbstractRequest[getData,send]');
+        $this->request = m::mock('\Omnipay\Common\Message\AbstractRequest[getData,sendData]');
         $this->request->initialize();
     }
 
@@ -139,6 +140,17 @@ class AbstractRequestTest extends TestCase
         $this->assertSame(0, $this->request->getCurrencyDecimalPlaces());
     }
 
+    public function testFormatCurrency()
+    {
+        $this->assertSame('1234.00', $this->request->formatCurrency(1234));
+    }
+
+    public function testFormatCurrencyNoDecimals()
+    {
+        $this->request->setCurrency('JPY');
+        $this->assertSame('1234', $this->request->formatCurrency(1234));
+    }
+
     public function testDescription()
     {
         $this->assertSame($this->request, $this->request->setDescription('Cool product'));
@@ -155,6 +167,30 @@ class AbstractRequestTest extends TestCase
     {
         $this->assertSame($this->request, $this->request->setTransactionReference('xyz'));
         $this->assertSame('xyz', $this->request->getTransactionReference());
+    }
+
+    public function testItemsArray()
+    {
+        $this->assertSame($this->request, $this->request->setItems(array(
+            array('name' => 'Floppy Disk'),
+            array('name' => 'CD-ROM'),
+        )));
+
+        $itemBag = $this->request->getItems();
+        $this->assertInstanceOf('\Omnipay\Common\ItemBag', $itemBag);
+
+        $items = $itemBag->all();
+        $this->assertSame('Floppy Disk', $items[0]->getName());
+        $this->assertSame('CD-ROM', $items[1]->getName());
+    }
+
+    public function testItemsBag()
+    {
+        $itemBag = new ItemBag;
+        $itemBag->add(array('name' => 'Floppy Disk'));
+
+        $this->assertSame($this->request, $this->request->setItems($itemBag));
+        $this->assertSame($itemBag, $this->request->getItems());
     }
 
     public function testClientIp()
@@ -223,6 +259,17 @@ class AbstractRequestTest extends TestCase
     public function testNoCurrencyReturnedIfCurrencyNotSet()
     {
         $this->assertNull($this->request->getCurrencyNumeric());
+    }
+
+    public function testSend()
+    {
+        $response = m::mock('\Omnipay\Common\Message\ResponseInterface');
+        $data = array('request data');
+
+        $this->request->shouldReceive('getData')->once()->andReturn($data);
+        $this->request->shouldReceive('sendData')->once()->with($data)->andReturn($response);
+
+        $this->assertSame($response, $this->request->send());
     }
 
     /**

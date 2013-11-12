@@ -16,8 +16,8 @@ class Request extends AbstractRequest
         return $this->getParameters();
     }
 
-    public function send()
+    public function sendData($data)
     {
-        return $this->response = new Response($this, $this->getData());
+        return $this->response = new Response($this, $data);
     }
 }

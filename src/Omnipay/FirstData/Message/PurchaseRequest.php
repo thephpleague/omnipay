@@ -77,9 +77,9 @@ class PurchaseRequest extends AbstractRequest
         return sha1($ascii);
     }
 
-    public function send()
+    public function sendData($data)
     {
-        return $this->response = new PurchaseResponse($this, $this->getData());
+        return $this->response = new PurchaseResponse($this, $data);
     }
 
     public function getEndpoint()
