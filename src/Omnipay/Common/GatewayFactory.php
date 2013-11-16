@@ -8,16 +8,16 @@ use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 class GatewayFactory
 {
-    private static $gateways = array();
+    private $gateways = array();
 
     /**
      * All available gateways
      *
      * @return array An array of gateway names
      */
-    public static function all()
+    public function all()
     {
-        return static::$gateways;
+        return $this->gateways;
     }
 
     /**
@@ -25,9 +25,9 @@ class GatewayFactory
      *
      * @param array $gateways An array of gateway names
      */
-    public static function replace(array $gateways)
+    public function replace(array $gateways)
     {
-        static::$gateways = $gateways;
+        $this->gateways = $gateways;
     }
 
     /**
@@ -35,9 +35,30 @@ class GatewayFactory
      *
      * @param string $className Gateway name
      */
-    public static function register($className)
+    public function register($className)
     {
-        static::$gateways[] = $className;
+        if (!in_array($className, $this->gateways)) {
+            $this->gateways[] = $className;
+        }
+    }
+
+    /**
+     * Automatically find and register all officially supported gateways
+     *
+     * @return array An array of gateway names
+     */
+    public function find()
+    {
+        foreach ($this->getSupportedGateways() as $gateway) {
+            $class = Helper::getGatewayClassName($gateway);
+            if (class_exists($class)) {
+                $this->register($gateway);
+            }
+        }
+
+        ksort($this->gateways);
+
+        return $this->all();
     }
 
     /**
@@ -47,7 +68,7 @@ class GatewayFactory
      * @param ClientInterface|null $httpClient  A Guzzle HTTP Client implementation
      * @param HttpRequest|null     $httpRequest A Symfony HTTP Request implementation
      */
-    public static function create($class, ClientInterface $httpClient = null, HttpRequest $httpRequest = null)
+    public function create($class, ClientInterface $httpClient = null, HttpRequest $httpRequest = null)
     {
         $class = Helper::getGatewayClassName($class);
 
@@ -56,5 +77,17 @@ class GatewayFactory
         }
 
         return new $class($httpClient, $httpRequest);
+    }
+
+    /**
+     * Get a list of supported gateways which may be available
+     *
+     * @return array
+     */
+    public function getSupportedGateways()
+    {
+        $package = json_decode(file_get_contents(__DIR__.'/../../../composer.json'), true);
+
+        return $package['extra']['gateways'];
     }
 }

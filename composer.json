@@ -23,7 +23,8 @@
         }
     ],
     "autoload": {
-        "psr-0": { "Omnipay\\Common\\" : "src/" }
+        "psr-0": { "Omnipay\\Common\\" : "src/" },
+        "classmap": ["src/Omnipay/Omnipay.php"]
     },
     "require": {
         "php": ">=5.3.2",
@@ -40,7 +41,40 @@
     "extra": {
         "branch-alias": {
             "dev-master": "2.0.x-dev"
-        }
+        },
+        "gateways": [
+            "AuthorizeNet_AIM",
+            "AuthorizeNet_SIM",
+            "Buckaroo",
+            "CardSave",
+            "Dummy",
+            "Eway_Rapid",
+            "FirstData_Connect",
+            "GoCardless",
+            "Manual",
+            "Migs_ThreeParty",
+            "Migs_TwoParty",
+            "Mollie",
+            "MultiSafepay",
+            "Netaxept",
+            "NetBanx",
+            "PayFast",
+            "Payflow_Pro",
+            "PaymentExpress_PxPay",
+            "PaymentExpress_PxPost",
+            "PayPal_Express",
+            "PayPal_Pro",
+            "Pin",
+            "SagePay_Direct",
+            "SagePay_Server",
+            "SecurePay_DirectPost",
+            "Stripe",
+            "TargetPay_Directebanking",
+            "TargetPay_Ideal",
+            "TargetPay_Mrcash",
+            "TwoCheckout",
+            "WorldPay"
+        ]
     },
     "minimum-stability": "dev",
     "prefer-stable": true
