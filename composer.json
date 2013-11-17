@@ -34,9 +34,9 @@
     "require-dev": {
         "guzzle/plugin-mock": "~3.1",
         "mockery/mockery": "~0.8",
-        "omnipay/tests": "2.*",
-        "phpunit/phpunit": "~3.7.16",
-        "squizlabs/php_codesniffer": "~1.4.4"
+        "omnipay/tests": "~2.0",
+        "phpunit/phpunit": "~3.7",
+        "squizlabs/php_codesniffer": "~1.4"
     },
     "extra": {
         "branch-alias": {
@@ -46,6 +46,8 @@
             "AuthorizeNet_AIM",
             "AuthorizeNet_SIM",
             "Buckaroo",
+            "Buckaroo_Ideal",
+            "Buckaroo_PayPal",
             "CardSave",
             "Dummy",
             "Eway_Rapid",
