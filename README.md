@@ -106,8 +106,8 @@ Next, run composer to update your dependencies:
 
 ## Payment Gateways
 
-All payment gateways must implement [GatewayInterface](https://github.com/omnipay/omnipay/blob/master/src/Omnipay/Common/GatewayInterface.php), and will usually
-extend [AbstractGateway](https://github.com/omnipay/omnipay/blob/master/src/Omnipay/Common/AbstractGateway.php) for basic functionality.
+All payment gateways must implement [GatewayInterface](https://github.com/omnipay/common/blob/master/src/Omnipay/Common/GatewayInterface.php), and will usually
+extend [AbstractGateway](https://github.com/omnipay/common/blob/master/src/Omnipay/Common/AbstractGateway.php) for basic functionality.
 
 The following gateways are available and officially supported:
 
@@ -170,7 +170,7 @@ gateway (other than by the methods they support).
 
 ## Credit Card / Payment Form Input
 
-User form input is directed to an [CreditCard](https://github.com/omnipay/omnipay/blob/master/src/Omnipay/Common/CreditCard.php)
+User form input is directed to an [CreditCard](https://github.com/omnipay/common/blob/master/src/Omnipay/Common/CreditCard.php)
 object. This provides a safe way to accept user input.
 
 The `CreditCard` object has the following fields:
@@ -228,7 +228,7 @@ $card->setFirstName('Adrian');
 ```
 
 If you submit credit card details which are obviously invalid (missing required fields, or a number
-which fails the Luhn check), [InvalidCreditCardException](https://github.com/omnipay/omnipay/blob/master/src/Omnipay/Common/Exception/InvalidCreditCardException.php)
+which fails the Luhn check), [InvalidCreditCardException](https://github.com/omnipay/common/blob/master/src/Omnipay/Common/Exception/InvalidCreditCardException.php)
 will be thrown.  You should validate the card details using your framework's validation library
 before submitting the details to your gateway, to avoid unnecessary API calls.
 
@@ -295,7 +295,7 @@ To summarize the various parameters you have available to you:
 
 ## The Payment Response
 
-The payment response must implement [ResponseInterface](https://github.com/omnipay/omnipay/blob/master/src/Omnipay/Common/ResponseInterface.php). There are two main types of response:
+The payment response must implement [ResponseInterface](https://github.com/omnipay/common/blob/master/src/Omnipay/Common/Message/ResponseInterface.php). There are two main types of response:
 
 * Payment was successful (standard response)
 * Website requires redirect to off-site payment form (redirect response)
@@ -396,13 +396,13 @@ you really think this should be a core feature and worth the effort.
 
 ## Example Application
 
-An example application is provided in the `example` directory. You can run it using PHP's built in
-web server (PHP 5.4+):
+An example application is provided in the [omnipay/example](https://github.com/omnipay/example) repo.
+You can run it using PHP's built in web server (PHP 5.4+):
 
     $ php composer.phar update --dev
-    $ php -S localhost:8000 -t example/
+    $ php -S localhost:8000
 
-For more information, see the [example application directory](https://github.com/omnipay/omnipay/tree/master/example).
+For more information, see the [Omnipay example application](https://github.com/omnipay/example).
 
 ## Support
 
