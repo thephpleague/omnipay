@@ -2,7 +2,7 @@
 
 **An easy to use, consistent payment processing library for PHP 5.3+**
 
-[![Build Status](https://travis-ci.org/adrianmacneil/omnipay.png?branch=master)](https://travis-ci.org/adrianmacneil/omnipay)
+[![Build Status](https://travis-ci.org/omnipay/omnipay.png?branch=master)](https://travis-ci.org/omnipay/omnipay)
 [![Latest Stable Version](https://poser.pugx.org/omnipay/omnipay/version.png)](https://packagist.org/packages/omnipay/omnipay)
 [![Total Downloads](https://poser.pugx.org/omnipay/omnipay/d/total.png)](https://packagist.org/packages/omnipay/omnipay)
 
@@ -22,7 +22,7 @@ is fully unit tested, and even comes with an example application to get you star
 **Important Note: Upgrading from <1.0**
 
 If you are upgrading from a pre-1.0 version of Omnipay, please note that the currency format has changed.
-See the [changelog](https://github.com/adrianmacneil/omnipay/blob/master/CHANGELOG.md) for more details.
+See the [changelog](https://github.com/omnipay/omnipay/blob/master/CHANGELOG.md) for more details.
 
 ## TL;DR
 
@@ -83,8 +83,8 @@ And run composer to update your dependencies:
 
 ## Payment Gateways
 
-All payment gateways must implement [GatewayInterface](https://github.com/adrianmacneil/omnipay/blob/master/src/Omnipay/Common/GatewayInterface.php), and will usually
-extend [AbstractGateway](https://github.com/adrianmacneil/omnipay/blob/master/src/Omnipay/Common/AbstractGateway.php) for basic functionality.
+All payment gateways must implement [GatewayInterface](https://github.com/omnipay/omnipay/blob/master/src/Omnipay/Common/GatewayInterface.php), and will usually
+extend [AbstractGateway](https://github.com/omnipay/omnipay/blob/master/src/Omnipay/Common/AbstractGateway.php) for basic functionality.
 
 The following gateways are already implemented:
 
@@ -152,7 +152,7 @@ gateway (other than by the methods they support).
 
 ## Credit Card / Payment Form Input
 
-User form input is directed to an [CreditCard](https://github.com/adrianmacneil/omnipay/blob/master/src/Omnipay/Common/CreditCard.php)
+User form input is directed to an [CreditCard](https://github.com/omnipay/omnipay/blob/master/src/Omnipay/Common/CreditCard.php)
 object. This provides a safe way to accept user input.
 
 The `CreditCard` object has the following fields:
@@ -210,7 +210,7 @@ $card->setFirstName('Adrian');
 ```
 
 If you submit credit card details which are obviously invalid (missing required fields, or a number
-which fails the Luhn check), [InvalidCreditCardException](https://github.com/adrianmacneil/omnipay/blob/master/src/Omnipay/Common/Exception/InvalidCreditCardException.php)
+which fails the Luhn check), [InvalidCreditCardException](https://github.com/omnipay/omnipay/blob/master/src/Omnipay/Common/Exception/InvalidCreditCardException.php)
 will be thrown.  You should validate the card details using your framework's validation library
 before submitting the details to your gateway, to avoid unnecessary API calls.
 
@@ -277,7 +277,7 @@ To summarize the various parameters you have available to you:
 
 ## The Payment Response
 
-The payment response must implement [ResponseInterface](https://github.com/adrianmacneil/omnipay/blob/master/src/Omnipay/Common/ResponseInterface.php). There are two main types of response:
+The payment response must implement [ResponseInterface](https://github.com/omnipay/omnipay/blob/master/src/Omnipay/Common/ResponseInterface.php). There are two main types of response:
 
 * Payment was successful (standard response)
 * Website requires redirect to off-site payment form (redirect response)
@@ -384,7 +384,7 @@ web server (PHP 5.4+):
     $ php composer.phar update --dev
     $ php -S localhost:8000 -t example/
 
-For more information, see the [example application directory](https://github.com/adrianmacneil/omnipay/tree/master/example).
+For more information, see the [example application directory](https://github.com/omnipay/omnipay/tree/master/example).
 
 ## Support
 
@@ -396,7 +396,7 @@ If you want to keep up to date with release anouncements, discuss ideas for the 
 or ask more detailed questions, there is also a [mailing list](https://groups.google.com/forum/#!forum/omnipay) which
 you can subscribe to.
 
-If you believe you have found a bug, please report it using the [GitHub issue tracker](https://github.com/adrianmacneil/omnipay/issues),
+If you believe you have found a bug, please report it using the [GitHub issue tracker](https://github.com/omnipay/omnipay/issues),
 or better yet, fork the library and submit a pull request.
 
 ## Contributing
@@ -408,7 +408,7 @@ or better yet, fork the library and submit a pull request.
 * Ensure your code is nicely formatted in the [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md)
   style and that all tests pass.
 * Send the pull request.
-* Check that the [travis build](https://travis-ci.org/adrianmacneil/omnipay) passed. If not, rinse and repeat.
+* Check that the [travis build](https://travis-ci.org/omnipay/omnipay) passed. If not, rinse and repeat.
 
 ## Feedback
 
