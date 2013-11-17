@@ -2,7 +2,7 @@
 
 **An easy to use, consistent payment processing library for PHP 5.3+**
 
-[![Build Status](https://travis-ci.org/omnipay/omnipay.png?branch=master)](https://travis-ci.org/omnipay/omnipay)
+[![Build Status](https://travis-ci.org/omnipay/common.png?branch=master)](https://travis-ci.org/omnipay/common)
 [![Latest Stable Version](https://poser.pugx.org/omnipay/omnipay/version.png)](https://packagist.org/packages/omnipay/omnipay)
 [![Total Downloads](https://poser.pugx.org/omnipay/omnipay/d/total.png)](https://packagist.org/packages/omnipay/omnipay)
 
@@ -19,19 +19,22 @@ is fully unit tested, and even comes with an example application to get you star
 * Because most payment gateways have exceptionally poor documentation
 * Because you are writing a shopping cart and need to support multiple gateways
 
-**Important Note: Upgrading from <1.0**
+**Important Note: Upgrading from <2.0**
 
-If you are upgrading from a pre-1.0 version of Omnipay, please note that the currency format has changed.
-See the [changelog](https://github.com/omnipay/omnipay/blob/master/CHANGELOG.md) for more details.
+If you are upgrading from a pre-2.0 version of Omnipay, please note that the
+project has now been split into multiple packages. There have also been some
+changes to how gateway instances are created. See the
+[full release notes](https://github.com/omnipay/omnipay/releases/tag/v2.0.0)
+for more details.
 
 ## TL;DR
 
 Just want to see some code?
 
 ```php
-use Omnipay\Common\GatewayFactory;
+use Omnipay\Omnipay;
 
-$gateway = GatewayFactory::create('Stripe');
+$gateway = Omnipay::create('Stripe');
 $gateway->setApiKey('abc123');
 
 $formData = ['number' => '4242424242424242', 'expiryMonth' => '6', 'expiryYear' => '2016', 'cvv' => '123'];
@@ -121,9 +124,9 @@ The following gateways are already implemented:
 Gateways are created and initialized like so:
 
 ```php
-use Omnipay\Common\GatewayFactory;
+use Omnipay\Omnipay;
 
-$gateway = GatewayFactory::create('PayPal_Express');
+$gateway = Omnipay::create('PayPal_Express');
 $gateway->setUsername('adrian');
 $gateway->setPassword('12345');
 ```
@@ -396,24 +399,11 @@ If you want to keep up to date with release anouncements, discuss ideas for the 
 or ask more detailed questions, there is also a [mailing list](https://groups.google.com/forum/#!forum/omnipay) which
 you can subscribe to.
 
-If you believe you have found a bug, please report it using the [GitHub issue tracker](https://github.com/omnipay/omnipay/issues),
-or better yet, fork the library and submit a pull request.
-
-## Contributing
-
-* Fork the project.
-* Make your feature addition or bug fix.
-* Add tests for it. This is important so I don't break it in a future version unintentionally.
-* Commit just the modifications, do not mess with the composer.json or CHANGELOG.md files.
-* Ensure your code is nicely formatted in the [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md)
-  style and that all tests pass.
-* Send the pull request.
-* Check that the [travis build](https://travis-ci.org/omnipay/omnipay) passed. If not, rinse and repeat.
+If you believe you have found a bug, please report it using the GitHub issue tracker
+for the appropriate package, or better yet, fork the library and submit a pull request.
 
 ## Feedback
 
 **Please provide feedback!** We want to make this library useful in as many projects as possible.
 Please head on over to the [mailing list](https://groups.google.com/forum/#!forum/omnipay)
 and point out what you do and don't like, or fork the project and make suggestions. **No issue is too small.**
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/adrianmacneil/omnipay/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
