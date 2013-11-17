@@ -57,29 +57,49 @@ as possible the differences between the various payments gateways.
 
 ## Package Layout
 
-Omnipay is a single package which provides abstract base classes and implementations for all
-officially supported gateways. There are no dependencies on official payment gateway PHP packages -
+Omnipay is a collection of packages which all depend on the
+[omnipay/common](https://github.com/omnipay/common) package to provide
+a consistent interface. There are no dependencies on official payment gateway PHP packages -
 we prefer to work with the HTTP API directly. Under the hood, we use the popular and powerful
 [Guzzle](http://guzzlephp.org/) library to make HTTP requests.
 
-New gateways can either be added by forking this package and submitting a pull request
-(unit tests and tidy code required), or by distributing a separate library which depends on this
-package and makes use of our base classes and consistent developer API.
+New gateways can be created by cloning the layout of an existing package. When choosing a
+name for your package, please don't use the `omnipay` vendor prefix, as this implies that
+it is officially supported. You should use your own username as the vendor prefix, and append
+`-omnipay` to the package name to make it clear that your package works with Omnipay.
+For example, if your GitHub username was `santa`, and you were implementing the `giftpay`
+payment library, a good name for your composer package would be `santa/giftpay-omnipay`.
+
+If you want to transfer your gateway to the `omnipay` GitHub organization and add it
+to the list of officially supported gateways, please open a pull request on the 
+[omnipay/common](https://github.com/omnipay/common) package. Before new gateways will
+be accepted, they must have 100% unit test code coverage, and follow the conventions
+and code style used in other Omnipay gateways.
 
 ## Installation
 
-Omnipay is installed via [Composer](http://getcomposer.org/). To install, simply add it
-to your `composer.json` file:
+Omnipay is installed via [Composer](http://getcomposer.org/). To install all officially
+supported gateways, simply add the following to your `composer.json` file:
 
 ```json
 {
     "require": {
-        "omnipay/omnipay": "1.*"
+        "omnipay/omnipay": "~2.0"
     }
 }
 ```
 
-And run composer to update your dependencies:
+Alternatively, you can require individual gateways:
+
+```json
+{
+    "require": {
+        "omnipay/paypal": "~2.0"
+    }
+}
+```
+
+Next, run composer to update your dependencies:
 
     $ curl -s http://getcomposer.org/installer | php
     $ php composer.phar update
@@ -89,37 +109,32 @@ And run composer to update your dependencies:
 All payment gateways must implement [GatewayInterface](https://github.com/omnipay/omnipay/blob/master/src/Omnipay/Common/GatewayInterface.php), and will usually
 extend [AbstractGateway](https://github.com/omnipay/omnipay/blob/master/src/Omnipay/Common/AbstractGateway.php) for basic functionality.
 
-The following gateways are already implemented:
+The following gateways are available and officially supported:
 
-* 2Checkout
-* Authorize.Net AIM
-* Authorize.Net SIM
-* Buckaroo
-* CardSave
-* Dummy
-* eWAY Rapid 3.0
-* First Data Connect
-* GoCardless
-* Manual
-* Migs 2-Party
-* Migs 3-Party
-* Mollie
-* MultiSafepay
-* Netaxept (BBS)
-* Netbanx
-* PayFast
-* Payflow Pro
-* PaymentExpress (DPS) PxPay
-* PaymentExpress (DPS) PxPost
-* PayPal Express Checkout
-* PayPal Payments Pro
-* Pin Payments
-* Sage Pay Direct
-* Sage Pay Server
-* SecurePay Direct Post
-* Stripe
-* TargetPay
-* WorldPay
+* [2Checkout](https://github.com/omnipay/2checkout)
+* [Authorize.Net](https://github.com/omnipay/authorizenet)
+* [Buckaroo](https://github.com/omnipay/buckaroo)
+* [CardSave](https://github.com/omnipay/cardsave)
+* [Dummy](https://github.com/omnipay/dummy)
+* [eWAY](https://github.com/omnipay/eway)
+* [First Data](https://github.com/omnipay/firstdata)
+* [GoCardless](https://github.com/omnipay/gocardless)
+* [Manual](https://github.com/omnipay/manual)
+* [Migs](https://github.com/omnipay/migs)
+* [Mollie](https://github.com/omnipay/mollie)
+* [MultiSafepay](https://github.com/omnipay/multisafepay)
+* [Netaxept (BBS)](https://github.com/omnipay/netaxept)
+* [Netbanx](https://github.com/omnipay/netbanx)
+* [PayFast](https://github.com/omnipay/payfast)
+* [Payflow](https://github.com/omnipay/payflow)
+* [PaymentExpress (DPS)](https://github.com/omnipay/paymentexpress)
+* [PayPal](https://github.com/omnipay/paypal)
+* [Pin Payments](https://github.com/omnipay/pin)
+* [Sage Pay](https://github.com/omnipay/sagepay)
+* [SecurePay](https://github.com/omnipay/securepay)
+* [Stripe](https://github.com/omnipay/stripe)
+* [TargetPay](https://github.com/omnipay/targetpay)
+* [WorldPay](https://github.com/omnipay/worldpay)
 
 Gateways are created and initialized like so:
 
