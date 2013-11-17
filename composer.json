@@ -32,11 +32,7 @@
         "symfony/http-foundation": "~2.1"
     },
     "require-dev": {
-        "guzzle/plugin-mock": "~3.1",
-        "mockery/mockery": "~0.8",
-        "omnipay/tests": "~2.0",
-        "phpunit/phpunit": "~3.7",
-        "squizlabs/php_codesniffer": "~1.4"
+        "omnipay/tests": "~2.0"
     },
     "extra": {
         "branch-alias": {
@@ -77,7 +73,5 @@
             "TwoCheckout",
             "WorldPay"
         ]
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    }
 }
