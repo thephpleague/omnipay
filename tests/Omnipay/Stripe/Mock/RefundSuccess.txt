@@ -1,3 +1,0 @@
-HTTP/1.1 200 OK
-
-{"id":"ch_12RgN9L7XhO9mI","object": "charge"}

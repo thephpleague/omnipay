@@ -1,3 +1,0 @@
-HTTP/1.1 200 OK
-
-{"error":{"message":"Charge ch_12RgN9L7XhO9mI has already been refunded."}}

@@ -1,9 +1,0 @@
-HTTP/1.1 200 OK
-Server: DPS_PX_SERVER
-Cache-Control: private
-Content-Length: 744
-Content-Type: application/xhtml+xml; charset=utf-8
-Expires: Sat, 23 Feb 2013 15:14:26 GMT
-Date: Sat, 23 Feb 2013 15:15:26 GMT
-
-<Response valid="0"><Success></Success><TxnType></TxnType><CurrencyInput></CurrencyInput><MerchantReference></MerchantReference><TxnData1></TxnData1><TxnData2></TxnData2><TxnData3></TxnData3><AuthCode></AuthCode><CardName></CardName><CardHolderName></CardHolderName><CardNumber></CardNumber><DateExpiry></DateExpiry><ClientInfo></ClientInfo><TxnId></TxnId><EmailAddress></EmailAddress><DpsTxnRef></DpsTxnRef><BillingId></BillingId><DpsBillingId></DpsBillingId><AmountSettlement></AmountSettlement><CurrencySettlement></CurrencySettlement><TxnMac></TxnMac><ResponseText>Length of the data to decrypt is invalid.</ResponseText><CardNumber2></CardNumber2><IssuerCountryId></IssuerCountryId><Cvc2ResultCode></Cvc2ResultCode><ReCo></ReCo></Response>

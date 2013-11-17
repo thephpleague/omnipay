@@ -1,9 +1,0 @@
-HTTP/1.1 200 OK
-Server: DPS_PX_SERVER
-Cache-Control: private
-Content-Length: 866
-Content-Type: application/xhtml+xml; charset=utf-8
-Expires: Sat, 23 Feb 2013 15:11:45 GMT
-Date: Sat, 23 Feb 2013 15:12:45 GMT
-
-<Response valid="1"><Success>1</Success><TxnType>Auth</TxnType><CurrencyInput>NZD</CurrencyInput><MerchantReference></MerchantReference><TxnData1></TxnData1><TxnData2></TxnData2><TxnData3></TxnData3><AuthCode>041211</AuthCode><CardName>Visa</CardName><CardHolderName>JDFKL FDJKSL</CardHolderName><CardNumber>411111........11</CardNumber><DateExpiry>0819</DateExpiry><ClientInfo>115.67.229.192</ClientInfo><TxnId>P075985DA31094D8</TxnId><EmailAddress></EmailAddress><DpsTxnRef>0000000103f5dc65</DpsTxnRef><BillingId></BillingId><DpsBillingId></DpsBillingId><AmountSettlement>10.00</AmountSettlement><CurrencySettlement>NZD</CurrencySettlement><DateSettlement>20130224</DateSettlement><TxnMac></TxnMac><ResponseText>APPROVED</ResponseText><CardNumber2></CardNumber2><IssuerCountryId>0</IssuerCountryId><Cvc2ResultCode>NotUsed</Cvc2ResultCode><ReCo>00</ReCo></Response>

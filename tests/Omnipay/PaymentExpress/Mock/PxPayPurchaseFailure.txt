@@ -1,9 +1,0 @@
-HTTP/1.1 200 OK
-Server: DPS_PX_SERVER
-Cache-Control: private
-Content-Length: 51
-Content-Type: application/xhtml+xml; charset=utf-8
-Expires: Sat, 23 Feb 2013 14:54:40 GMT
-Date: Sat, 23 Feb 2013 14:55:40 GMT
-
-<Request valid="0"><URI>Invalid Key</URI></Request>

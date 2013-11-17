@@ -1,8 +1,0 @@
-HTTP/1.1 200 OK
-Date: Fri, 15 Feb 2013 18:49:26 GMT
-Server: Apache
-Content-Length: 340
-Connection: close
-Content-Type: text/plain; charset=utf-8
-
-TIMESTAMP=2013%2d02%2d15T18%3a49%3a27Z&CORRELATIONID=ec641b50c33b0&ACK=Failure&VERSION=85%2e0&BUILD=5060305&L_ERRORCODE0=10562&L_SHORTMESSAGE0=Invalid%20Data&L_LONGMESSAGE0=This%20transaction%20cannot%20be%20processed%2e%20Please%20enter%20a%20valid%20credit%20card%20expiration%20year%2e&L_SEVERITYCODE0=Error&AMT=150%2e04&CURRENCYCODE=USD

@@ -1,8 +1,0 @@
-HTTP/1.1 200 OK
-Date: Fri, 15 Feb 2013 19:19:21 GMT
-Server: Apache
-Content-Length: 136
-Connection: close
-Content-Type: text/plain; charset=utf-8
-
-TOKEN=EC%2d42721413K79637829&TIMESTAMP=2013%2d02%2d15T19%3a19%3a21Z&CORRELATIONID=37b8b9915987c&ACK=Success&VERSION=85%2e0&BUILD=5060305

@@ -1,8 +1,0 @@
-HTTP/1.1 200 OK
-Date: Thu, 11 Jul 2013 10:06:38 GMT
-Server: Apache/2.2.22 (FreeBSD) mod_ssl/2.2.22 OpenSSL/0.9.8q DAV/2
-Content-Length: 213
-Content-Type: text/xml
-
-<?xml version="1.0" encoding="UTF-8"?>
-<redirecttransaction result="error"><error><code>1001</code><description>Invalid amount</description></error><transaction><id>123456</id></transaction></redirecttransaction>

@@ -1,8 +1,0 @@
-HTTP/1.1 200 OK
-Date: Wed, 20 Feb 2013 13:55:50 GMT
-Server: Apache
-Content-Length: 214
-Connection: close
-Content-Type: text/plain; charset=utf-8
-
-TIMESTAMP=2013%2d02%2d20T13%3a55%3a50Z&CORRELATIONID=73310039452e7&ACK=Failure&VERSION=85%2e0&BUILD=5060305&L_ERRORCODE0=10410&L_SHORTMESSAGE0=Invalid%20token&L_LONGMESSAGE0=Invalid%20token%2e&L_SEVERITYCODE0=Error

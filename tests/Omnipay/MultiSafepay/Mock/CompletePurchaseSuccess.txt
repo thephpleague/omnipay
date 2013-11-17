@@ -1,8 +1,0 @@
-HTTP/1.1 200 OK
-Date: Thu, 11 Jul 2013 10:34:48 GMT
-Server: Apache/2.2.22 (FreeBSD) mod_ssl/2.2.22 OpenSSL/0.9.8q DAV/2
-Content-Length: 931
-Content-Type: text/xml
-
-<?xml version="1.0" encoding="UTF-8"?>
-<status result="ok"><ewallet><id>2087325</id><status>completed</status><fastcheckout>NO</fastcheckout><created>20130711123308</created><modified>20130711123317</modified><reasoncode/><reason/></ewallet><customer><amount>10000</amount><currency>EUR</currency><account/><locale>en_US</locale><firstname/><lastname/><address1/><address2/><housenumber/><zipcode/><city/><state/><country/><countryname/><phone1/><phone2/><email>tester@example.com</email></customer><customer-delivery/><transaction><id>123456</id><currency>EUR</currency><amount>10000</amount><description>desc</description><var1/><var2/><var3/><items/></transaction><paymentdetails><type>IDEAL</type><accountid>213698412</accountid><accountholdername>Hr E G H Küppers en/of Mw M J Küppers an nog een lange consumername</accountholdername><externaltransactionid>0050000075107095</externaltransactionid></paymentdetails></status>
