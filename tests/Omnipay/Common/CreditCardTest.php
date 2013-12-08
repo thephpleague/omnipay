@@ -498,4 +498,23 @@ class CreditCardTest extends TestCase
         $this->card->setEmail('adrian@example.com');
         $this->assertEquals('adrian@example.com', $this->card->getEmail());
     }
+
+    public function testBirthday()
+    {
+        $this->card->setBirthday('01-02-2000');
+        $this->assertEquals('2000-02-01', $this->card->getBirthday());
+        $this->assertEquals('01/02/2000', $this->card->getBirthday('d/m/Y'));
+    }
+
+    public function testBirthdayEmpty()
+    {
+        $this->card->setBirthday('');
+        $this->assertNull($this->card->getBirthday());
+    }
+
+    public function testGender()
+    {
+        $this->card->setGender('female');
+        $this->assertEquals('female', $this->card->getGender());
+    }
 }

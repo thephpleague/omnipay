@@ -2,6 +2,8 @@
 
 namespace Omnipay\Common;
 
+use DateTime;
+use DateTimeZone;
 use Omnipay\Common\Exception\InvalidCreditCardException;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
@@ -630,5 +632,33 @@ class CreditCard
     public function setEmail($value)
     {
         return $this->setParameter('email', $value);
+    }
+
+    public function getBirthday($format = 'Y-m-d')
+    {
+        $value = $this->getParameter('birthday');
+
+        return $value ? $value->format($format) : null;
+    }
+
+    public function setBirthday($value)
+    {
+        if ($value) {
+            $value = new DateTime($value, new DateTimeZone('UTC'));
+        } else {
+            $value = null;
+        }
+
+        return $this->setParameter('birthday', $value);
+    }
+
+    public function getGender()
+    {
+        return $this->getParameter('gender');
+    }
+
+    public function setGender($value)
+    {
+        return $this->setParameter('gender', $value);
     }
 }
