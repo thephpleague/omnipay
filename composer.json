@@ -61,7 +61,7 @@
         "omnipay/authorizenet": "~2.0",
         "omnipay/buckaroo": "~2.0",
         "omnipay/cardsave": "~2.0",
-        "omnipay/common": "~2.0.0",
+        "omnipay/common": "~2.1.0",
         "omnipay/dummy": "~2.0",
         "omnipay/eway": "~2.0",
         "omnipay/firstdata": "~2.0",
