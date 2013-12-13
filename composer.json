@@ -1,0 +1,41 @@
+{
+    "name": "omnipay/Adyen",
+    "type": "library",
+    "description": "Adyent driver for the Omnipay payment processing library",
+    "keywords": [
+        "Adyen",
+        "2co",
+        "gateway",
+        "merchant",
+        "omnipay",
+        "pay",
+        "payment",
+        "twocheckout"
+    ],
+    "homepage": "https://github.com/omnipay/Adyen",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Adrian Macneil",
+            "email": "adrian@adrianmacneil.com"
+        },
+        {
+            "name": "Omnipay Contributors",
+            "homepage": "https://github.com/omnipay/2checkout/contributors"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "Omnipay\\Adyen\\" : "Adyen/src/" }
+    },
+    "require": {
+        "omnipay/common": "~2.0"
+    },
+    "require-dev": {
+        "omnipay/tests": "~2.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    }
+}
