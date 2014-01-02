@@ -1,50 +1,17 @@
 {
-	"name": "omnipay/omnipay",
-	"type": "metapackage",
-	"description": "Includes Omnipay payment processing library and all officially supported gateways",
+	"name": "omnipay/alipay",
+	"type": "library",
+	"description": "Alipay gateway for Omnipay payment processing library",
 	"keywords": [
-		"2checkout",
-		"2co",
-		"auth.net",
-		"authorize",
-		"authorize.net",
-		"buckaroo",
-		"cardsave",
-		"commweb",
-		"dps",
-		"egate",
-		"eway",
-		"express",
-		"first data",
-		"firstdata",
 		"gateway",
-		"gocardless",
-		"ideal",
 		"merchant",
-		"migs",
-		"mollie",
-		"multisafepay",
-		"netaxept",
-		"netbanx",
+		"omnipay",
 		"pay",
-		"payfast",
-		"payflow",
 		"payment",
-		"paymentexpress",
-		"paypal",
-		"pin",
-		"purchase",
-		"rapid",
-		"sagepay",
-		"securepay",
-		"stripe",
-		"tala",
-		"tala-payments",
-		"targetpay",
-		"twocheckout",
-		"worldpay"
+		"alipay",
+		"purchase"
 	],
-	"homepage": "https://github.com/omnipay/omnipay",
+	"homepage": "https://github.com/omnipay/alipay",
 	"license": "MIT",
 	"authors": [
 		{
@@ -52,37 +19,15 @@
 			"email": "adrian@adrianmacneil.com"
 		},
 		{
-			"name": "Omnipay Community",
-			"homepage": "https://github.com/omnipay/omnipay/graphs/contributors"
+			"name": "Omnipay Contributors",
+			"homepage": "https://github.com/omnipay/alipay/contributors"
 		}
 	],
+	"autoload": {
+		"psr-0": { "Omnipay\\Alipay\\" : "src/" }
+	},
 	"require": {
-		"omnipay/2checkout": "~2.0",
-		"omnipay/authorizenet": "~2.0",
-		"omnipay/buckaroo": "~2.0",
-		"omnipay/cardsave": "~2.0",
-		"omnipay/common": "~2.1.0",
-		"omnipay/dummy": "~2.0",
-		"omnipay/eway": "~2.0",
-		"omnipay/firstdata": "~2.0",
-		"omnipay/gocardless": "~2.0",
-		"omnipay/manual": "~2.0",
-		"omnipay/migs": "~2.0",
-		"omnipay/mollie": "~2.0",
-		"omnipay/multisafepay": "~2.0",
-		"omnipay/netaxept": "~2.0",
-		"omnipay/netbanx": "~2.0",
-		"omnipay/payfast": "~2.0",
-		"omnipay/payflow": "~2.0",
-		"omnipay/paymentexpress": "~2.0",
-		"omnipay/paypal": "~2.0",
-		"omnipay/pin": "~2.0",
-		"omnipay/sagepay": "~2.0",
-		"omnipay/securepay": "~2.0",
-		"omnipay/stripe": "~2.0",
-		"omnipay/targetpay": "~2.0",
-		"omnipay/worldpay": "~2.0",
-		"silex/silex": "~1.1"
+		"omnipay/common": "~2.0"
 	},
 	"require-dev": {
 		"omnipay/tests": "~2.0"
@@ -90,11 +35,6 @@
 	"extra": {
 		"branch-alias": {
 			"dev-master": "2.0.x-dev"
-		}
-	},
-	"autoload": {
-		"psr-0": {
-			"Omnipay\\Alipay\\": "src/"
 		}
 	}
 }
