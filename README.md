@@ -32,7 +32,7 @@ And run composer to update your dependencies:
 The following gateways are provided by this package:
 
 
-* Alipay_Express (Alipay Express Checkout) 支付宝即时导致接口
+* Alipay_Express (Alipay Express Checkout) 支付宝即时到账接口
 * Alipay_Secured (Alipay Secured Checkout) 支付宝担保交易接口
 * Alipay_Dual (Alipay Dual Function Checkout) 支付宝双功能交易接口
 * Alipay_WapExpress (Alipay Wap Express Checkout) 支付宝WAP客户端接口
