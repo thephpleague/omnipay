@@ -36,7 +36,7 @@ The following gateways are provided by this package:
 * Alipay_Secured (Alipay Secured Checkout)
 * Alipay_Dual (Alipay Dual Function Checkout)
 * Alipay_WapExpress (Alipay Wap Express Checkout)
-* Alipay_MobileExpress (Alipay Wap MobileExpress Checkout)
+* Alipay_MobileExpress (Alipay Mobile Express Checkout)
 * Alipay_Bank (Alipay Bank Checkout)
 
 For general usage instructions, please see the main [Omnipay](https://github.com/omnipay/omnipay)
