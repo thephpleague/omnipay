@@ -17,7 +17,7 @@ to your `composer.json` file:
 ```json
 {
     "require": {
-        "omnipay/Alipay": "~2.0"
+        "omnipay/alipay": "~2.0"
     }
 }
 ```
