@@ -32,13 +32,12 @@ And run composer to update your dependencies:
 The following gateways are provided by this package:
 
 
-* Alipay_Express (Alipay Express Checkout)
-* Alipay_Secured (Alipay Secured Checkout)
-* Alipay_Dual (Alipay Dual Function Checkout)
-* Alipay_WapExpress (Alipay Wap Express Checkout)
-* Alipay_MobileExpress (Alipay Mobile Express Checkout)
-* Alipay_Bank (Alipay Bank Checkout)
-
+* Alipay_Express (Alipay Express Checkout) 支付宝即时导致接口
+* Alipay_Secured (Alipay Secured Checkout) 支付宝担保交易接口
+* Alipay_Dual (Alipay Dual Function Checkout) 支付宝双功能交易接口
+* Alipay_WapExpress (Alipay Wap Express Checkout) 支付宝WAP客户端接口
+* Alipay_MobileExpress (Alipay Mobile Express Checkout) 支付宝无线支付接口
+* Alipay_Bank (Alipay Bank Checkout) 支付宝网银快捷接口
 
 For general usage instructions, please see the main [Omnipay](https://github.com/omnipay/omnipay)
 repository.
