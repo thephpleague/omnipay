@@ -130,4 +130,9 @@ class WapExpressGateway extends AbstractGateway
             return $this->createRequest('\Omnipay\Alipay\Message\WapExpressPurchaseRequest', $parameters);
         }
     }
+
+    public function completePurchase(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Alipay\Message\WapExpressCompletePurchaseRequest', $parameters);
+    }
 }
