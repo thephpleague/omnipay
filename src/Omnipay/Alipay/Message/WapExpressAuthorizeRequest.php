@@ -7,7 +7,6 @@
 namespace Omnipay\Alipay\Message;
 
 use DOMDocument;
-use Omnipay\Mollie\Message\AbstractRequest;
 
 class WapExpressAuthorizeRequest extends BaseAbstractRequest
 {

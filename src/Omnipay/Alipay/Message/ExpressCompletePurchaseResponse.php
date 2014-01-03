@@ -6,7 +6,7 @@
  */
 namespace Omnipay\Alipay\Message;
 
-use Omnipay\MultiSafepay\Message\AbstractResponse;
+use Omnipay\Common\Message\AbstractResponse;
 
 class ExpressCompletePurchaseResponse extends AbstractResponse
 {

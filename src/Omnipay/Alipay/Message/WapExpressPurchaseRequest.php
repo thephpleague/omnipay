@@ -6,8 +6,6 @@
  */
 namespace Omnipay\Alipay\Message;
 
-use Omnipay\Mollie\Message\AbstractRequest;
-
 class WapExpressPurchaseRequest extends BaseAbstractRequest
 {
 

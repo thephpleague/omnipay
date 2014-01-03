@@ -6,7 +6,6 @@
  */
 namespace Omnipay\Alipay\Message;
 
-use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\Common\Message\ResponseInterface;
 
 abstract class BasePurchaseRequest extends BaseAbstractRequest

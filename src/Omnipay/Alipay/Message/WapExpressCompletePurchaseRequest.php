@@ -8,7 +8,7 @@ namespace Omnipay\Alipay\Message;
 
 use DOMDocument;
 use Omnipay\Common\Exception\InvalidRequestException;
-use Omnipay\Mollie\Message\AbstractRequest;
+use Omnipay\Common\Message\AbstractRequest;
 
 class WapExpressCompletePurchaseRequest extends AbstractRequest
 {
