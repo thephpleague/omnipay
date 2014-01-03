@@ -29,7 +29,7 @@ class DualGatewayTest extends GatewayTestCase
             SecuredGateway::LOGISTIC_TYPE_EMS,
             SecuredGateway::LOGISTIC_PAYMENT_BUYER_PAY
         );
-        $this->gateway->setReceiveInfo('sqiu', 'shanghai', '201306', '15201914272', '15201914272');
+        $this->gateway->setReceiveInfo('sqiu', 'shanghai', '201306', '15201234567', '15201234567');
         $this->options = array(
             'out_trade_no' => '2014010122390001',
             'subject'      => 'test',
