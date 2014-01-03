@@ -31,6 +31,7 @@ abstract class BaseAbstractRequest extends AbstractRequest
             default :
                 $sign = '';
         }
+
         return $sign;
     }
 
