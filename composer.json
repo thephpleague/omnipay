@@ -11,7 +11,7 @@
 		"alipay",
 		"purchase"
 	],
-	"homepage": "https://github.com/omnipay/alipay",
+	"homepage": "https://github.com/likielse/alipay-omnipay",
 	"license": "MIT",
 	"authors": [
 		{
