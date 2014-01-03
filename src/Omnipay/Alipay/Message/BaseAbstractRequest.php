@@ -7,7 +7,7 @@
 namespace Omnipay\Alipay\Message;
 
 use Exception;
-use Omnipay\NetBanx\Message\AbstractRequest;
+use Omnipay\Common\Message\AbstractRequest;
 
 abstract class BaseAbstractRequest extends AbstractRequest
 {
