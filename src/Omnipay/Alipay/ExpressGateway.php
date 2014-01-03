@@ -27,6 +27,4 @@ class ExpressGateway extends BaseAbstractGateway
         $this->setService($this->service_name);
         return $this->createRequest('\Omnipay\Alipay\Message\ExpressPurchaseRequest', $parameters);
     }
-
-
 }

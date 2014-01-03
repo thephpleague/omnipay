@@ -37,6 +37,4 @@ class BankGateway extends ExpressGateway
         }
         return $this->createRequest('\Omnipay\Alipay\Message\ExpressPurchaseRequest', $parameters);
     }
-
-
 }
