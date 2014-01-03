@@ -87,22 +87,22 @@ class WapExpressGateway extends AbstractGateway
         return $this->setParameter('cancel_url', $value);
     }
 
-    function getSignType()
+    public function getSignType()
     {
         return $this->getParameter('sign_type');
     }
 
-    function setSignType($value)
+    public function setSignType($value)
     {
         return $this->setParameter('sign_type', $value);
     }
 
-    function getInputCharset()
+    public function getInputCharset()
     {
         return $this->getParameter('input_charset');
     }
 
-    function setInputCharset($value)
+    public function setInputCharset($value)
     {
         return $this->setParameter('input_charset', $value);
     }

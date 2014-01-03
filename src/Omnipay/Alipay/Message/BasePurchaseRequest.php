@@ -104,7 +104,7 @@ abstract class BasePurchaseRequest extends BaseAbstractRequest
         return $this->getParameter('show_url');
     }
 
-    function setShowUrl($value)
+    public function setShowUrl($value)
     {
         $this->setParameter('show_url', $value);
     }

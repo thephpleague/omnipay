@@ -119,7 +119,7 @@ class WapExpressCompletePurchaseRequest extends AbstractRequest
         return $this->setParameter('input_charset', $value);
     }
 
-    function getKey()
+    public function getKey()
     {
         return $this->getParameter('key');
     }

@@ -42,7 +42,7 @@ class WapExpressPurchaseRequest extends BaseAbstractRequest
         return $data;
     }
 
-    public  function getKey()
+    public function getKey()
     {
         return $this->getParameter('key');
     }
@@ -72,7 +72,7 @@ class WapExpressPurchaseRequest extends BaseAbstractRequest
         $this->setParameter('sign_type', $value);
     }
 
-    public  function getPartner()
+    public function getPartner()
     {
         return $this->getParameter('partner');
     }

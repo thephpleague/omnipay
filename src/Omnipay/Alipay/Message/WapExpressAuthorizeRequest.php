@@ -110,7 +110,7 @@ class WapExpressAuthorizeRequest extends BaseAbstractRequest
         return $this->getParameter('subject');
     }
 
-    function setSubject($value)
+    public function setSubject($value)
     {
         return $this->setParameter('subject', $value);
     }
@@ -140,7 +140,7 @@ class WapExpressAuthorizeRequest extends BaseAbstractRequest
         return $this->getParameter('notify_url');
     }
 
-    function setNotifyUrl($value)
+    public function setNotifyUrl($value)
     {
         return $this->setParameter('notify_url', $value);
     }

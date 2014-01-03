@@ -143,7 +143,7 @@ class SecuredPurchaseRequest extends BasePurchaseRequest
         $this->setParameter('receive_zip', $value);
     }
 
-    function getReceivePhone()
+    public function getReceivePhone()
     {
         return $this->getParameter('receive_phone');
     }

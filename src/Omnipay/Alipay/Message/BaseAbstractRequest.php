@@ -19,19 +19,18 @@ abstract class BaseAbstractRequest extends AbstractRequest
         $query_string = http_build_query($data);
         $query_string = urldecode($query_string);
         switch (strtoupper($this->getSignType())) {
-            case "MD5" :
+            case "MD5":
                 $sign = $this->md5Sign($query_string);
                 break;
-            case "RSA" :
+            case "RSA":
                 $sign = $this->rsaSign($query_string, $this->getPrivateKey());
                 break;
-            case "0001" :
+            case "0001":
                 $sign = $this->rsaSign($query_string, $this->getPrivateKey());
                 break;
-            default :
+            default:
                 $sign = '';
         }
-
         return $sign;
     }
 
