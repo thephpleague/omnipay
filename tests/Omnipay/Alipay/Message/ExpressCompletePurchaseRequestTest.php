@@ -25,7 +25,7 @@ class ExpressCompletePurchaseRequestTest extends TestCase
                  ),
                  'transport'      => 'http',
                  'partner'        => '123456789',
-                 'ca_cert_path'   => __DIR__ . './../Mock/cacert.pem',
+                 'ca_cert_path'   => dirname(__DIR__) . '/Mock/cacert.pem',
                  'sign_type'      => 'MD5',
                  'key'            => 'here_is_key',
             )
