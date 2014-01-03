@@ -31,8 +31,17 @@ class WapExpressAuthorizeRequest extends BaseAbstractRequest
             'total_fee',
             'cancel_url'
         );
+        $format       = '<direct_trade_create_req>' . /**/
+          '<notify_url>%s</notify_url>' . /**/
+          '<call_back_url>%s</call_back_url>' . /**/
+          '<seller_account_name>%s</seller_account_name>' . /**/
+          '<out_trade_no>%s</out_trade_no>' . /**/
+          '<subject>%s</subject>' . /**/
+          '<total_fee>%s</total_fee>' . /**/
+          '<merchant_url>%s</merchant_url>' . /**/
+          '</direct_trade_create_req>';
         $req_data     = sprintf(
-            '<direct_trade_create_req><notify_url>%s</notify_url><call_back_url>%s</call_back_url><seller_account_name>%s</seller_account_name><out_trade_no>%s</out_trade_no><subject>%s</subject><total_fee>%s</total_fee><merchant_url>%s</merchant_url></direct_trade_create_req>',
+            $format,
             $this->getNotifyUrl(),
             $this->getReturnUrl(),
             $this->getSellerEmail(),
@@ -167,7 +176,8 @@ class WapExpressAuthorizeRequest extends BaseAbstractRequest
 
     public function sendData($data)
     {
-        $responseText = $this->httpClient->post($this->endpoint, array(), $this->getData())->send()->getBody(true);
+        $responseText = $this->httpClient->post($this->endpoint, array(), $this->getData()) /**/
+          ->send()->getBody(true);
         //die($responseText);
         $responseData = $this->parseResponse($responseText);
         //var_dump($responseData);
