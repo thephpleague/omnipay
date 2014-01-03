@@ -55,57 +55,57 @@ class WapExpressAuthorizeRequest extends BaseAbstractRequest
         return $data;
     }
 
-    function getKey()
+    public function getKey()
     {
         return $this->getParameter('key');
     }
 
-    function setKey($value)
+    public function setKey($value)
     {
         return $this->setParameter('key', $value);
     }
 
-    function getInputCharset()
+    public function getInputCharset()
     {
         return $this->getParameter('input_charset');
     }
 
-    function setInputCharset($value)
+    public function setInputCharset($value)
     {
         return $this->setParameter('input_charset', $value);
     }
 
-    function getSignType()
+    public function getSignType()
     {
         return $this->getParameter('sign_type');
     }
 
-    function setSignType($value)
+    public function setSignType($value)
     {
         return $this->setParameter('sign_type', $value);
     }
 
-    function getPartner()
+    public function getPartner()
     {
         return $this->getParameter('partner');
     }
 
-    function setPartner($value)
+    public function setPartner($value)
     {
         return $this->setParameter('partner', $value);
     }
 
-    function getTotalFee()
+    public function getTotalFee()
     {
         return $this->getParameter('total_fee');
     }
 
-    function setTotalFee($value)
+    public function setTotalFee($value)
     {
         return $this->setParameter('total_fee', $value);
     }
 
-    function getSubject()
+    public function getSubject()
     {
         return $this->getParameter('subject');
     }
@@ -115,27 +115,27 @@ class WapExpressAuthorizeRequest extends BaseAbstractRequest
         return $this->setParameter('subject', $value);
     }
 
-    function getOutTradeNo()
+    public function getOutTradeNo()
     {
         return $this->getParameter('out_trade_no');
     }
 
-    function setOutTradeNo($value)
+    public function setOutTradeNo($value)
     {
         return $this->setParameter('out_trade_no', $value);
     }
 
-    function getSellerEmail()
+    public function getSellerEmail()
     {
         return $this->getParameter('seller_email');
     }
 
-    function setSellerEmail($value)
+    public function setSellerEmail($value)
     {
         return $this->setParameter('seller_email', $value);
     }
 
-    function getNotifyUrl()
+    public function getNotifyUrl()
     {
         return $this->getParameter('notify_url');
     }
@@ -145,27 +145,27 @@ class WapExpressAuthorizeRequest extends BaseAbstractRequest
         return $this->setParameter('notify_url', $value);
     }
 
-    function getReturnUrl()
+    public function getReturnUrl()
     {
         return $this->getParameter('return_url');
     }
 
-    function setReturnUrl($value)
+    public function setReturnUrl($value)
     {
         return $this->setParameter('return_url', $value);
     }
 
-    function getCancelUrl()
+    public function getCancelUrl()
     {
         return $this->getParameter('cancel_url');
     }
 
-    function setCancelUrl($value)
+    public function setCancelUrl($value)
     {
         return $this->setParameter('cancel_url', $value);
     }
 
-    function sendData($data)
+    public function sendData($data)
     {
         $responseText = $this->httpClient->post($this->endpoint, array(), $this->getData())->send()->getBody(true);
         //die($responseText);
@@ -174,7 +174,7 @@ class WapExpressAuthorizeRequest extends BaseAbstractRequest
         return $this->response = new WapExpressAuthorizeResponse($this, $responseData);
     }
 
-    function parseResponse($str_text)
+    public function parseResponse($str_text)
     {
         $str_text   = urldecode($str_text); //URL转码
         $para_split = explode('&', $str_text);

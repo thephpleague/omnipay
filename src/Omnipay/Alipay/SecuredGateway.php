@@ -38,44 +38,44 @@ class SecuredGateway extends BaseAbstractGateway
         return 'Alipay Secured';
     }
 
-    function setLogisticsInfo($fee, $type, $payment)
+    public function setLogisticsInfo($fee, $type, $payment)
     {
         $this->setLogisticsFee($fee);
         $this->setLogisticsType($type);
         $this->setLogisticsPayment($payment);
     }
 
-    function getLogisticsFee()
+    public function getLogisticsFee()
     {
         return $this->getParameter('logistics_fee');
     }
 
-    function setLogisticsFee($value)
+    public function setLogisticsFee($value)
     {
         $this->setParameter('logistics_fee', $value);
     }
 
-    function getLogisticsType()
+    public function getLogisticsType()
     {
         return $this->getParameter('logistics_type');
     }
 
-    function setLogisticsType($value)
+    public function setLogisticsType($value)
     {
         $this->setParameter('logistics_type', $value);
     }
 
-    function getLogisticsPayment()
+    public function getLogisticsPayment()
     {
         return $this->getParameter('logistics_payment');
     }
 
-    function setLogisticsPayment($value)
+    public function setLogisticsPayment($value)
     {
         $this->setParameter('logistics_payment', $value);
     }
 
-    function setReceiveInfo($name, $address, $zip, $phone, $mobile)
+    public function setReceiveInfo($name, $address, $zip, $phone, $mobile)
     {
         $this->setReceiveName($name);
         $this->setReceiveAddress($address);
@@ -84,52 +84,52 @@ class SecuredGateway extends BaseAbstractGateway
         $this->setReceiveMobile($mobile);
     }
 
-    function getReceiveName()
+    public function getReceiveName()
     {
         return $this->getParameter('receive_name');
     }
 
-    function setReceiveName($value)
+    public function setReceiveName($value)
     {
         $this->setParameter('receive_name', $value);
     }
 
-    function getReceiveAddress()
+    public function getReceiveAddress()
     {
         return $this->getParameter('receive_address');
     }
 
-    function setReceiveAddress($value)
+    public function setReceiveAddress($value)
     {
         $this->setParameter('receive_address', $value);
     }
 
-    function getReceiveZip()
+    public function getReceiveZip()
     {
         return $this->getParameter('receive_zip');
     }
 
-    function setReceiveZip($value)
+    public function setReceiveZip($value)
     {
         $this->setParameter('receive_zip', $value);
     }
 
-    function getReceivePhone()
+    public function getReceivePhone()
     {
         return $this->getParameter('receive_phone');
     }
 
-    function setReceivePhone($value)
+    public function setReceivePhone($value)
     {
         $this->setParameter('receive_phone', $value);
     }
 
-    function getReceiveMobile()
+    public function getReceiveMobile()
     {
         return $this->getParameter('receive_mobile');
     }
 
-    function setReceiveMobile($value)
+    public function setReceiveMobile($value)
     {
         $this->setParameter('receive_mobile', $value);
     }

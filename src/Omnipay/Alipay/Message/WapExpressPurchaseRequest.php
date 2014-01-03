@@ -42,52 +42,52 @@ class WapExpressPurchaseRequest extends BaseAbstractRequest
         return $data;
     }
 
-    function getKey()
+    public  function getKey()
     {
         return $this->getParameter('key');
     }
 
-    function setKey($value)
+    public function setKey($value)
     {
         $this->setParameter('key', $value);
     }
 
-    function getInputCharset()
+    public function getInputCharset()
     {
         return $this->getParameter('input_charset');
     }
 
-    function setInputCharset($value)
+    public function setInputCharset($value)
     {
         $this->setParameter('input_charset', $value);
     }
 
-    function getSignType()
+    public function getSignType()
     {
         return $this->getParameter('sign_type');
     }
 
-    function setSignType($value)
+    public function setSignType($value)
     {
         $this->setParameter('sign_type', $value);
     }
 
-    function getPartner()
+    public  function getPartner()
     {
         return $this->getParameter('partner');
     }
 
-    function setPartner($value)
+    public function setPartner($value)
     {
         $this->setParameter('partner', $value);
     }
 
-    function sendData($data)
+    public function sendData($data)
     {
         return $this->response = new WapExpressPurchaseResponse($this, $data);
     }
 
-    function getEndpoint()
+    public function getEndpoint()
     {
         return $this->endpoint;
     }

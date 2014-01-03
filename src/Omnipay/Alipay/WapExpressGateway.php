@@ -37,12 +37,12 @@ class WapExpressGateway extends AbstractGateway
         );
     }
 
-    function getSellerEmail()
+    public function getSellerEmail()
     {
         return $this->getParameter('seller_email');
     }
 
-    function setSellerEmail($value)
+    public function setSellerEmail($value)
     {
         return $this->setParameter('seller_email', $value);
     }
@@ -57,12 +57,12 @@ class WapExpressGateway extends AbstractGateway
         return $this->setParameter('partner', $value);
     }
 
-    function getKey()
+    public function getKey()
     {
         return $this->getParameter('key');
     }
 
-    function setKey($value)
+    public function setKey($value)
     {
         return $this->setParameter('key', $value);
     }

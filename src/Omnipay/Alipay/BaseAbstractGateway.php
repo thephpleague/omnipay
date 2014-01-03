@@ -51,72 +51,72 @@ abstract class BaseAbstractGateway extends AbstractGateway
         return $this->setParameter('return_url', $value);
     }
 
-    function getSignType()
+    public function getSignType()
     {
         return $this->getParameter('sign_type');
     }
 
-    function setSignType($value)
+    public function setSignType($value)
     {
         return $this->setParameter('sign_type', $value);
     }
 
-    function getInputCharset()
+    public function getInputCharset()
     {
         return $this->getParameter('input_charset');
     }
 
-    function setInputCharset($value)
+    public function setInputCharset($value)
     {
         return $this->setParameter('input_charset', $value);
     }
 
-    function getTransport()
+    public function getTransport()
     {
         return $this->getParameter('transport');
     }
 
-    function setTransport($value)
+    public function setTransport($value)
     {
         return $this->setParameter('transport', $value);
     }
 
-    function getAntiPhishingKey()
+    public function getAntiPhishingKey()
     {
         return $this->getParameter('anti_phishing_key');
     }
 
-    function setAntiPhishingKey($value)
+    public function setAntiPhishingKey($value)
     {
         return $this->setParameter('anti_phishing_key', $value);
     }
 
-    function getExterInvokeIp()
+    public function getExterInvokeIp()
     {
         return $this->getParameter('exter_invoke_ip');
     }
 
-    function setExterInvokeIp($value)
+    public function setExterInvokeIp($value)
     {
         return $this->setParameter('exter_invoke_ip', $value);
     }
 
-    function getBody()
+    public function getBody()
     {
         return $this->getParameter('body');
     }
 
-    function setBody($value)
+    public function setBody($value)
     {
         return $this->setParameter('body', $value);
     }
 
-    function getShowUrl()
+    public function getShowUrl()
     {
         return $this->getParameter('show_url');
     }
 
-    function setShowUrl($value)
+    public function setShowUrl($value)
     {
         return $this->setParameter('show_url', $value);
     }
@@ -141,22 +141,22 @@ abstract class BaseAbstractGateway extends AbstractGateway
         $this->setParameter('service', $value);
     }
 
-    function getDefaultBank()
+    public function getDefaultBank()
     {
         return $this->getParameter('default_bank');
     }
 
-    function setDefaultBank($value)
+    public function setDefaultBank($value)
     {
         $this->setParameter('default_bank', $value);
     }
 
-    function getPayMethod()
+    public function getPayMethod()
     {
         return $this->getParameter('pay_method');
     }
 
-    function setPayMethod($value)
+    public function setPayMethod($value)
     {
         $this->setParameter('pay_method', $value);
     }

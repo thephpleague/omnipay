@@ -40,7 +40,7 @@ class WapExpressCompletePurchaseRequest extends AbstractRequest
         }
     }
 
-    function rsaDecrypt($content, $private_key)
+    public function rsaDecrypt($content, $private_key)
     {
         $res     = openssl_pkey_get_private($private_key);
         $content = base64_decode($content);
@@ -54,7 +54,7 @@ class WapExpressCompletePurchaseRequest extends AbstractRequest
         return $result;
     }
 
-    function getParamsToSign()
+    public function getParamsToSign()
     {
         $params = $this->getRequestParams();
         unset($params['sign']);
@@ -62,17 +62,17 @@ class WapExpressCompletePurchaseRequest extends AbstractRequest
         return $params;
     }
 
-    function getRequestParams()
+    public function getRequestParams()
     {
         return $this->getParameter('request_params');
     }
 
-    function setRequestParams($value)
+    public function setRequestParams($value)
     {
         return $this->setParameter('request_params', $value);
     }
 
-    function getRequestParam($key)
+    public function getRequestParam($key)
     {
         $params = $this->getRequestParams();
         if (isset($params[$key])) {
@@ -82,39 +82,39 @@ class WapExpressCompletePurchaseRequest extends AbstractRequest
         }
     }
 
-    function setRequestParam($key, $value)
+    public function setRequestParam($key, $value)
     {
         $params       = $this->getRequestParams();
         $params[$key] = $value;
         return $this;
     }
 
-    function getSignType()
+    public function getSignType()
     {
         return $this->getParameter('sign_type');
     }
 
-    function setSignType($value)
+    public function setSignType($value)
     {
         return $this->setParameter('sign_type', $value);
     }
 
-    function getPrivateKey()
+    public function getPrivateKey()
     {
         return $this->getParameter('private_key');
     }
 
-    function setPrivateKey($value)
+    public function setPrivateKey($value)
     {
         return $this->setParameter('private_key', $value);
     }
 
-    function getInputCharset()
+    public function getInputCharset()
     {
         return $this->getParameter('input_charset');
     }
 
-    function setInputCharset($value)
+    public function setInputCharset($value)
     {
         return $this->setParameter('input_charset', $value);
     }
@@ -124,37 +124,37 @@ class WapExpressCompletePurchaseRequest extends AbstractRequest
         return $this->getParameter('key');
     }
 
-    function setKey($value)
+    public function setKey($value)
     {
         return $this->setParameter('key', $value);
     }
 
-    function getTransport()
+    public function getTransport()
     {
         return $this->getParameter('transport');
     }
 
-    function setTransport($value)
+    public function setTransport($value)
     {
         return $this->setParameter('transport', $value);
     }
 
-    function getPartner()
+    public function getPartner()
     {
         return $this->getParameter('partner');
     }
 
-    function setPartner($value)
+    public function setPartner($value)
     {
         return $this->setParameter('partner', $value);
     }
 
-    function getCaCertPath()
+    public function getCaCertPath()
     {
         return $this->getParameter('ca_cert_path');
     }
 
-    function setCaCertPath($value)
+    public function setCaCertPath($value)
     {
         if (!is_file($value)) {
             throw new InvalidRequestException("The ca_cert_path($value) is not exists");
@@ -162,59 +162,57 @@ class WapExpressCompletePurchaseRequest extends AbstractRequest
         return $this->setParameter('ca_cert_path', $value);
     }
 
-    function getNotifyId()
+    public function getNotifyId()
     {
         return $this->getRequestParam('notify_id');
     }
 
-    function setNotifyId($value)
+    public function setNotifyId($value)
     {
         return $this->setRequestParam('notify_id', $value);
     }
 
-    function getNotifyData()
+    public function getNotifyData()
     {
         return $this->getRequestParam('notify_data');
     }
 
-    function setNotifyData($value)
+    public function setNotifyData($value)
     {
         return $this->setRequestParam('notify_data', $value);
     }
 
-    function getOutTradeNo()
+    public function getOutTradeNo()
     {
         return $this->getRequestParam('out_trade_no');
     }
 
-    function setOutTradeNO($value)
+    public function setOutTradeNO($value)
     {
         return $this->setRequestParam('out_trade_no', $value);
     }
 
-    function getTradeNo()
+    public function getTradeNo()
     {
         return $this->getRequestParam('trade_no');
     }
 
-    function setTradeNO($value)
+    public function setTradeNO($value)
     {
         return $this->setRequestParam('trade_no', $value);
     }
 
-    function getTradeStatus()
+    public function getTradeStatus()
     {
         return $this->getRequestParam('trade_status');
     }
 
-    function setTradeStatus($value)
+    public function setTradeStatus($value)
     {
         return $this->setRequestParam('trade_status', $value);
     }
 
-
-
-    function getEndpoint()
+    public function getEndpoint()
     {
         if (strtolower($this->getTransport()) == 'http') {
             return $this->endpoint;
@@ -223,7 +221,7 @@ class WapExpressCompletePurchaseRequest extends AbstractRequest
         }
     }
 
-    function decrypt($str)
+    public function decrypt($str)
     {
         return $this->rsaDecrypt($str, $this->getPrivateKey());
     }

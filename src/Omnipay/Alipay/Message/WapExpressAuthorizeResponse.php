@@ -33,7 +33,7 @@ class WapExpressAuthorizeResponse extends AbstractResponse implements ResponseIn
         }
     }
 
-    function getToken()
+    public function getToken()
     {
         if ($this->isSuccessful()) {
             return $this->data['request_token'];

@@ -50,32 +50,32 @@ class ExpressPurchaseRequest extends BasePurchaseRequest
         return $data;
     }
 
-    function getTotalFee()
+    public function getTotalFee()
     {
         return $this->getParameter('total_fee');
     }
 
-    function setTotalFee($value)
+    public function setTotalFee($value)
     {
         $this->setParameter('total_fee', $value);
     }
 
-    function getDefaultBank()
+    public function getDefaultBank()
     {
         return $this->getParameter('default_bank');
     }
 
-    function setDefaultBank($value)
+    public function setDefaultBank($value)
     {
         $this->setParameter('default_bank', $value);
     }
 
-    function getPayMethod()
+    public function getPayMethod()
     {
         return $this->getParameter('pay_method');
     }
 
-    function setPayMethod($value)
+    public function setPayMethod($value)
     {
         $this->setParameter('pay_method', $value);
     }

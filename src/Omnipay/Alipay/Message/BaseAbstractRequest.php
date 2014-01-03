@@ -55,32 +55,32 @@ abstract class BaseAbstractRequest extends AbstractRequest
         return md5($query_string . $this->getKey());
     }
 
-    function getPrivateKey()
+    public function getPrivateKey()
     {
         return $this->getParameter('private_key');
     }
 
-    function setPrivateKey($value)
+    public function setPrivateKey($value)
     {
         $this->setParameter('private_key', $value);
     }
 
-    function getKey()
+    public function getKey()
     {
         return $this->getParameter('key');
     }
 
-    function setKey($value)
+    public function setKey($value)
     {
         $this->setParameter('key', $value);
     }
 
-    function getSignType()
+    public function getSignType()
     {
         return $this->getParameter('sign_type');
     }
 
-    function setSignType($value)
+    public function setSignType($value)
     {
         if (in_array($value, array('md5', 'rsa'))) {
             throw new Exception('sign_type should be upper case');

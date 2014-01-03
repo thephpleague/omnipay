@@ -29,12 +29,12 @@ class MobileExpressGateway extends BaseAbstractGateway
         return $this->createRequest('\Omnipay\Alipay\Message\MobileExpressPurchaseRequest', $parameters);
     }
 
-    function getPrivateKey()
+    public function getPrivateKey()
     {
         return $this->getParameter('private_key');
     }
 
-    function setPrivateKey($value)
+    public function setPrivateKey($value)
     {
         $this->setParameter('private_key', $value);
     }

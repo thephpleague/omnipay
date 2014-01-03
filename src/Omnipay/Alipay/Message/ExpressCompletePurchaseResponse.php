@@ -36,7 +36,7 @@ class ExpressCompletePurchaseResponse extends AbstractResponse
         return ($status == 'TRADE_FINISHED' || $status == 'TRADE_SUCCESS');
     }
 
-    function getResponseText()
+    public function getResponseText()
     {
         if ($this->isSuccessful()) {
             return 'success';

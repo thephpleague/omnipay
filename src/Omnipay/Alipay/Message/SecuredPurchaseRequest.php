@@ -6,7 +6,6 @@
  */
 namespace Omnipay\Alipay\Message;
 
-
 class SecuredPurchaseRequest extends BasePurchaseRequest
 {
 
@@ -64,82 +63,82 @@ class SecuredPurchaseRequest extends BasePurchaseRequest
         return $data;
     }
 
-    function getPrice()
+    public function getPrice()
     {
         return $this->getParameter('price');
     }
 
-    function setPrice($value)
+    public function setPrice($value)
     {
         $this->setParameter('price', $value);
     }
 
-    function getQuantity()
+    public function getQuantity()
     {
         return $this->getParameter('quantity');
     }
 
-    function setQuantity($value)
+    public function setQuantity($value)
     {
         $this->setParameter('quantity', $value);
     }
 
-    function getLogisticsFee()
+    public function getLogisticsFee()
     {
         return $this->getParameter('logistics_fee');
     }
 
-    function setLogisticsFee($value)
+    public function setLogisticsFee($value)
     {
         $this->setParameter('logistics_fee', $value);
     }
 
-    function getLogisticsType()
+    public function getLogisticsType()
     {
         return $this->getParameter('logistics_type');
     }
 
-    function setLogisticsType($value)
+    public function setLogisticsType($value)
     {
         $this->setParameter('logistics_type', $value);
     }
 
-    function getLogisticsPayment()
+    public function getLogisticsPayment()
     {
         return $this->getParameter('logistics_payment');
     }
 
-    function setLogisticsPayment($value)
+    public function setLogisticsPayment($value)
     {
         $this->setParameter('logistics_payment', $value);
     }
 
-    function getReceiveName()
+    public function getReceiveName()
     {
         return $this->getParameter('receive_name');
     }
 
-    function setReceiveName($value)
+    public function setReceiveName($value)
     {
         $this->setParameter('receive_name', $value);
     }
 
-    function getReceiveAddress()
+    public function getReceiveAddress()
     {
         return $this->getParameter('receive_address');
     }
 
-    function setReceiveAddress($value)
+    public function setReceiveAddress($value)
     {
         $this->setParameter('receive_address', $value);
     }
 
-    function getReceiveZip()
+    public function getReceiveZip()
     {
         return $this->getParameter('receive_zip');
     }
 
-    function setReceiveZip($value)
+    public function setReceiveZip($value)
     {
         $this->setParameter('receive_zip', $value);
     }
@@ -149,17 +148,17 @@ class SecuredPurchaseRequest extends BasePurchaseRequest
         return $this->getParameter('receive_phone');
     }
 
-    function setReceivePhone($value)
+    public function setReceivePhone($value)
     {
         $this->setParameter('receive_phone', $value);
     }
 
-    function getReceiveMobile()
+    public function getReceiveMobile()
     {
         return $this->getParameter('receive_mobile');
     }
 
-    function setReceiveMobile($value)
+    public function setReceiveMobile($value)
     {
         $this->setParameter('receive_mobile', $value);
     }

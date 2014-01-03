@@ -41,7 +41,7 @@ class ExpressCompletePurchaseRequest extends AbstractRequest
         }
     }
 
-    function getParamsToSign()
+    public function getParamsToSign()
     {
         $params = $this->getRequestParams();
         unset($params['sign']);
@@ -49,17 +49,17 @@ class ExpressCompletePurchaseRequest extends AbstractRequest
         return $params;
     }
 
-    function getRequestParams()
+    public function getRequestParams()
     {
         return $this->getParameter('request_params');
     }
 
-    function setRequestParams($value)
+    public function setRequestParams($value)
     {
         return $this->setParameter('request_params', $value);
     }
 
-    function getRequestParam($key)
+    public function getRequestParam($key)
     {
         $params = $this->getRequestParams();
         if (isset($params[$key])) {
@@ -69,69 +69,69 @@ class ExpressCompletePurchaseRequest extends AbstractRequest
         }
     }
 
-    function setRequestParam($key, $value)
+    public function setRequestParam($key, $value)
     {
         $params       = $this->getRequestParams();
         $params[$key] = $value;
         return $this;
     }
 
-    function getSignType()
+    public function getSignType()
     {
         return $this->getParameter('sign_type');
     }
 
-    function setSignType($value)
+    public function setSignType($value)
     {
         return $this->setParameter('sign_type', $value);
     }
 
-    function getInputCharset()
+    public function getInputCharset()
     {
         return $this->getParameter('input_charset');
     }
 
-    function setInputCharset($value)
+    public function setInputCharset($value)
     {
         return $this->setParameter('input_charset', $value);
     }
 
-    function getKey()
+    public function getKey()
     {
         return $this->getParameter('key');
     }
 
-    function setKey($value)
+    public function setKey($value)
     {
         return $this->setParameter('key', $value);
     }
 
-    function getTransport()
+    public function getTransport()
     {
         return $this->getParameter('transport');
     }
 
-    function setTransport($value)
+    public function setTransport($value)
     {
         return $this->setParameter('transport', $value);
     }
 
-    function getPartner()
+    public function getPartner()
     {
         return $this->getParameter('partner');
     }
 
-    function setPartner($value)
+    public function setPartner($value)
     {
         return $this->setParameter('partner', $value);
     }
 
-    function getCaCertPath()
+    public function getCaCertPath()
     {
         return $this->getParameter('ca_cert_path');
     }
 
-    function setCaCertPath($value)
+    public function setCaCertPath($value)
     {
         if (!is_file($value)) {
             throw new InvalidRequestException("The ca_cert_path($value) is not exists");
@@ -139,37 +139,37 @@ class ExpressCompletePurchaseRequest extends AbstractRequest
         return $this->setParameter('ca_cert_path', $value);
     }
 
-    function getNotifyId()
+    public function getNotifyId()
     {
         return $this->getRequestParam('notify_id');
     }
 
-    function setNotifyId($value)
+    public function setNotifyId($value)
     {
         return $this->setParameter('notify_id', $value);
     }
 
-    function getAliPubicKey()
+    public function getAliPubicKey()
     {
         return $this->getRequestParam('ali_public_key');
     }
 
-    function setAliPubicKey($value)
+    public function setAliPubicKey($value)
     {
         return $this->setParameter('ali_public_key', $value);
     }
 
-    function getTradeStatus()
+    public function getTradeStatus()
     {
         return $this->getRequestParam('trade_status');
     }
 
-    function setTradeStatus($value)
+    public function setTradeStatus($value)
     {
         return $this->setRequestParam('trade_status', $value);
     }
 
-    function getEndpoint()
+    public function getEndpoint()
     {
         if (strtolower($this->getTransport()) == 'http') {
             return $this->endpoint;

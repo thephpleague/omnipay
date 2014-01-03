@@ -29,77 +29,77 @@ abstract class BasePurchaseRequest extends BaseAbstractRequest
         );
     }
 
-    function getService()
+    public function getService()
     {
         return $this->getParameter('service');
     }
 
-    function setService($value)
+    public function setService($value)
     {
         $this->setParameter('service', $value);
     }
 
-    function getOutTradeNo()
+    public function getOutTradeNo()
     {
         return $this->getParameter('out_trade_no');
     }
 
-    function setOutTradeNo($value)
+    public function setOutTradeNo($value)
     {
         $this->setParameter('out_trade_no', $value);
     }
 
-    function getTransport()
+    public function getTransport()
     {
         return $this->getParameter('transport');
     }
 
-    function setTransport($value)
+    public function setTransport($value)
     {
         $this->setParameter('transport', $value);
     }
 
-    function getAntiPhishingKey()
+    public function getAntiPhishingKey()
     {
         return $this->getParameter('anti_phishing_key');
     }
 
-    function setAntiPhishingKey($value)
+    public function setAntiPhishingKey($value)
     {
         $this->setParameter('anti_phishing_key', $value);
     }
 
-    function getExterInvokeIp()
+    public function getExterInvokeIp()
     {
         return $this->getParameter('exter_invoke_ip');
     }
 
-    function setExterInvokeIp($value)
+    public function setExterInvokeIp($value)
     {
         $this->setParameter('exter_invoke_ip', $value);
     }
 
-    function getBody()
+    public function getBody()
     {
         return $this->getParameter('body');
     }
 
-    function setBody($value)
+    public function setBody($value)
     {
         $this->setParameter('body', $value);
     }
 
-    function getPartner()
+    public function getPartner()
     {
         return $this->getParameter('partner');
     }
 
-    function setPartner($value)
+    public function setPartner($value)
     {
         $this->setParameter('partner', $value);
     }
 
-    function getShowUrl()
+    public function getShowUrl()
     {
         return $this->getParameter('show_url');
     }
@@ -109,52 +109,52 @@ abstract class BasePurchaseRequest extends BaseAbstractRequest
         $this->setParameter('show_url', $value);
     }
 
-    function getInputCharset()
+    public function getInputCharset()
     {
         return $this->getParameter('input_charset');
     }
 
-    function setInputCharset($value)
+    public function setInputCharset($value)
     {
         $this->setParameter('input_charset', $value);
     }
 
-    function getNotifyUrl()
+    public function getNotifyUrl()
     {
         return $this->getParameter('notify_url');
     }
 
-    function setNotifyUrl($value)
+    public function setNotifyUrl($value)
     {
         $this->setParameter('notify_url', $value);
     }
 
-    function getReturnUrl()
+    public function getReturnUrl()
     {
         return $this->getParameter('return_url');
     }
 
-    function setReturnUrl($value)
+    public function setReturnUrl($value)
     {
         $this->setParameter('return_url', $value);
     }
 
-    function getSellerEmail()
+    public function getSellerEmail()
     {
         return $this->getParameter('seller_email');
     }
 
-    function setSellerEmail($value)
+    public function setSellerEmail($value)
     {
         $this->setParameter('seller_email', $value);
     }
 
-    function getSubject()
+    public function getSubject()
     {
         return $this->getParameter('subject');
     }
 
-    function setSubject($value)
+    public function setSubject($value)
     {
         $this->setParameter('subject', $value);
     }
@@ -171,7 +171,7 @@ abstract class BasePurchaseRequest extends BaseAbstractRequest
         return $this->response = new PurchaseResponse($this, $data);
     }
 
-    function getEndpoint()
+    public function getEndpoint()
     {
         return $this->liveEndpoint;
     }
