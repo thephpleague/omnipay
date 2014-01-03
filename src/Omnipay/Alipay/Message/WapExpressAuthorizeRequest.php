@@ -197,10 +197,9 @@ class WapExpressAuthorizeRequest extends BaseAbstractRequest
             $data[$key] = $value;
         }
         if (!empty ($data['res_data'])) {
-            //            if ($this->getSignType == '0001') {
-            //                $data['res_data'] = rsaDecrypt($data['res_data'], $this->alipay_config['private_key_path']);
-            //            }
-            //token从res_data中解析出来（也就是说res_data中已经包含token的内容）
+            if ($this->getSignType() == '0001') {
+                $data['res_data'] = rsaDecrypt($data['res_data'], $this->getPrivateKey());
+            }
             $doc = new DOMDocument();
             $doc->loadXML($data['res_data']);
             $data['request_token'] = $doc->getElementsByTagName("request_token")->item(0)->nodeValue;
