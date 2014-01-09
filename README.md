@@ -65,10 +65,10 @@ we prefer to work with the HTTP API directly. Under the hood, we use the popular
 
 New gateways can be created by cloning the layout of an existing package. When choosing a
 name for your package, please don't use the `omnipay` vendor prefix, as this implies that
-it is officially supported. You should use your own username as the vendor prefix, and append
-`-omnipay` to the package name to make it clear that your package works with Omnipay.
+it is officially supported. You should use your own username as the vendor prefix, and prepend
+`omnipay-` to the package name to make it clear that your package works with Omnipay.
 For example, if your GitHub username was `santa`, and you were implementing the `giftpay`
-payment library, a good name for your composer package would be `santa/giftpay-omnipay`.
+payment library, a good name for your composer package would be `santa/omnipay-giftpay`.
 
 If you want to transfer your gateway to the `omnipay` GitHub organization and add it
 to the list of officially supported gateways, please open a pull request on the 
@@ -109,32 +109,36 @@ Next, run composer to update your dependencies:
 All payment gateways must implement [GatewayInterface](https://github.com/omnipay/common/blob/master/src/Omnipay/Common/GatewayInterface.php), and will usually
 extend [AbstractGateway](https://github.com/omnipay/common/blob/master/src/Omnipay/Common/AbstractGateway.php) for basic functionality.
 
-The following gateways are available and officially supported:
+The following gateways are available:
 
-* [2Checkout](https://github.com/omnipay/2checkout)
-* [Authorize.Net](https://github.com/omnipay/authorizenet)
-* [Buckaroo](https://github.com/omnipay/buckaroo)
-* [CardSave](https://github.com/omnipay/cardsave)
-* [Dummy](https://github.com/omnipay/dummy)
-* [eWAY](https://github.com/omnipay/eway)
-* [First Data](https://github.com/omnipay/firstdata)
-* [GoCardless](https://github.com/omnipay/gocardless)
-* [Manual](https://github.com/omnipay/manual)
-* [Migs](https://github.com/omnipay/migs)
-* [Mollie](https://github.com/omnipay/mollie)
-* [MultiSafepay](https://github.com/omnipay/multisafepay)
-* [Netaxept (BBS)](https://github.com/omnipay/netaxept)
-* [Netbanx](https://github.com/omnipay/netbanx)
-* [PayFast](https://github.com/omnipay/payfast)
-* [Payflow](https://github.com/omnipay/payflow)
-* [PaymentExpress (DPS)](https://github.com/omnipay/paymentexpress)
-* [PayPal](https://github.com/omnipay/paypal)
-* [Pin Payments](https://github.com/omnipay/pin)
-* [Sage Pay](https://github.com/omnipay/sagepay)
-* [SecurePay](https://github.com/omnipay/securepay)
-* [Stripe](https://github.com/omnipay/stripe)
-* [TargetPay](https://github.com/omnipay/targetpay)
-* [WorldPay](https://github.com/omnipay/worldpay)
+Gateway | Composer Package | Maintainer
+--- | --- | ---
+[2Checkout](https://github.com/omnipay/2checkout) | omnipay/twocheckout | [Adrian Macneil](https://github.com/adrianmacneil)
+[Authorize.Net](https://github.com/omnipay/authorizenet) | omnipay/authorizenet | [Adrian Macneil](https://github.com/adrianmacneil)
+[Buckaroo](https://github.com/omnipay/buckaroo) | omnipay/buckaroo | [Adrian Macneil](https://github.com/adrianmacneil)
+[CardSave](https://github.com/omnipay/cardsave) | omnipay/cardsave | [Adrian Macneil](https://github.com/adrianmacneil)
+[Dummy](https://github.com/omnipay/dummy) | omnipay/dummy | [Adrian Macneil](https://github.com/adrianmacneil)
+[eWAY](https://github.com/omnipay/eway) | omnipay/eway | [Adrian Macneil](https://github.com/adrianmacneil)
+[First Data](https://github.com/omnipay/firstdata) | omnipay/firstdata | [Adrian Macneil](https://github.com/adrianmacneil)
+[GoCardless](https://github.com/omnipay/gocardless) | omnipay/gocardless | [Adrian Macneil](https://github.com/adrianmacneil)
+[Manual](https://github.com/omnipay/manual) | omnipay/manual | [Adrian Macneil](https://github.com/adrianmacneil)
+[Migs](https://github.com/omnipay/migs) | omnipay/migs | [Adrian Macneil](https://github.com/adrianmacneil)
+[Mollie](https://github.com/omnipay/mollie) | omnipay/mollie | [Adrian Macneil](https://github.com/adrianmacneil)
+[MultiSafepay](https://github.com/omnipay/multisafepay) | omnipay/multisafepay | [Alexander Deruwe](https://github.com/aderuwe)
+[Netaxept (BBS)](https://github.com/omnipay/netaxept) | omnipay/netaxept | [Adrian Macneil](https://github.com/adrianmacneil)
+[Netbanx](https://github.com/omnipay/netbanx) | omnipay/netbanx | [Adrian Macneil](https://github.com/adrianmacneil)
+[Pacnet](https://github.com/mfauveau/omnipay-pacnet) | mfauveau/omnipay-pacnet | [Matthieu Fauveau](https://github.com/mfauveau)
+[PayFast](https://github.com/omnipay/payfast) | omnipay/payfast | [Adrian Macneil](https://github.com/adrianmacneil)
+[Payflow](https://github.com/omnipay/payflow) | omnipay/payflow | [Adrian Macneil](https://github.com/adrianmacneil)
+[PaymentExpress (DPS)](https://github.com/omnipay/paymentexpress) | omnipay/paymentexpress | [Adrian Macneil](https://github.com/adrianmacneil)
+[PayPal](https://github.com/omnipay/paypal) | omnipay/paypal | [Adrian Macneil](https://github.com/adrianmacneil)
+[Pin Payments](https://github.com/omnipay/pin) | omnipay/pin | [Adrian Macneil](https://github.com/adrianmacneil)
+[Sage Pay](https://github.com/omnipay/sagepay) | omnipay/sagepay | [Adrian Macneil](https://github.com/adrianmacneil)
+[SecurePay](https://github.com/omnipay/securepay) | omnipay/securepay | [Adrian Macneil](https://github.com/adrianmacneil)
+[Skrill](https://github.com/alfaproject/omnipay-skrill) | alfaproject/omnipay-skrill | [João Dias](https://github.com/alfaproject)
+[Stripe](https://github.com/omnipay/stripe) | omnipay/stripe | [Adrian Macneil](https://github.com/adrianmacneil)
+[TargetPay](https://github.com/omnipay/targetpay) | omnipay/targetpay | [Alexander Deruwe](https://github.com/aderuwe)
+[WorldPay](https://github.com/omnipay/worldpay) | omnipay/worldpay | [Adrian Macneil](https://github.com/adrianmacneil)
 
 Gateways are created and initialized like so:
 
