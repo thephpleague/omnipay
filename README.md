@@ -119,7 +119,7 @@ Gateway | Composer Package | Maintainer
 [CardSave](https://github.com/omnipay/cardsave) | omnipay/cardsave | [Adrian Macneil](https://github.com/adrianmacneil)
 [Dummy](https://github.com/omnipay/dummy) | omnipay/dummy | [Adrian Macneil](https://github.com/adrianmacneil)
 [eWAY](https://github.com/omnipay/eway) | omnipay/eway | [Adrian Macneil](https://github.com/adrianmacneil)
-[First Data](https://github.com/omnipay/firstdata) | omnipay/firstdata | [Adrian Macneil](https://github.com/adrianmacneil)
+[First Data](https://github.com/omnipay/firstdata) | omnipay/firstdata | [Andrew Coates](https://github.com/coatesap)
 [GoCardless](https://github.com/omnipay/gocardless) | omnipay/gocardless | [Adrian Macneil](https://github.com/adrianmacneil)
 [Manual](https://github.com/omnipay/manual) | omnipay/manual | [Adrian Macneil](https://github.com/adrianmacneil)
 [Migs](https://github.com/omnipay/migs) | omnipay/migs | [Adrian Macneil](https://github.com/adrianmacneil)
