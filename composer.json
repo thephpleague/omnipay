@@ -5,6 +5,7 @@
     "keywords": [
         "2checkout",
         "2co",
+        "alipay",        
         "auth.net",
         "authorize",
         "authorize.net",
@@ -52,12 +53,17 @@
             "email": "adrian@adrianmacneil.com"
         },
         {
+            "name": "Loki Else",
+            "email": "https://github.com/lokielse"
+        },        
+        {
             "name": "Omnipay Community",
             "homepage": "https://github.com/omnipay/omnipay/graphs/contributors"
         }
     ],
     "require": {
         "omnipay/2checkout": "~2.0",
+        "lokielse/alipay-omnipay": "~2.0",        
         "omnipay/authorizenet": "~2.0",
         "omnipay/buckaroo": "~2.0",
         "omnipay/cardsave": "~2.0",
