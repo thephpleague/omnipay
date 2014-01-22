@@ -297,6 +297,18 @@ To summarize the various parameters you have available to you:
 * Method options are used for any payment-specific options, which are not set by the customer. For example, the payment `amount`, `currency`, `transactionId` and `returnUrl`.
 * CreditCard parameters are data which the user supplies. For example, you want the user to specify their `firstName` and `billingCountry`, but you don't want a user to specify the payment `currency` or `returnUrl`.
 
+##Stripe (and similar gateway) Integration
+
+The Stripe integration is fairly straight forward. Essentially you just pass a "token" field through to Stripe instead of the regular credit card data.
+
+Start by following the standard Stripe JS guide here: [https://stripe.com/docs/tutorials/forms](https://stripe.com/docs/tutorials/forms)
+
+After that you will have a stripeToken field which will be submitted to your server. Simply pass this through to the gateway as 'token', instead of the usual 'card' array:
+
+```$response = $gateway->purchase(['amount' => '10.00', 'currency' => 'USD', 'token' => $_POST['stripeToken']])->send();```
+
+If you want to add more gateways which work like this, your best bet would be to copy how the Stripe gateway works.
+
 ## The Payment Response
 
 The payment response must implement [ResponseInterface](https://github.com/omnipay/common/blob/master/src/Omnipay/Common/Message/ResponseInterface.php). There are two main types of response:
