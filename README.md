@@ -135,6 +135,7 @@ Gateway | Composer Package | Maintainer
 [Pin Payments](https://github.com/omnipay/pin) | omnipay/pin | [Adrian Macneil](https://github.com/adrianmacneil)
 [Sage Pay](https://github.com/omnipay/sagepay) | omnipay/sagepay | [Adrian Macneil](https://github.com/adrianmacneil)
 [SecurePay](https://github.com/omnipay/securepay) | omnipay/securepay | [Adrian Macneil](https://github.com/adrianmacneil)
+[Sisow](https://github.com/nettob/omnipay-sisow) | nettob/omnipay-sisow | [Nico Borghuis](https://github.com/nettob)
 [Skrill](https://github.com/alfaproject/omnipay-skrill) | alfaproject/omnipay-skrill | [João Dias](https://github.com/alfaproject)
 [Stripe](https://github.com/omnipay/stripe) | omnipay/stripe | [Adrian Macneil](https://github.com/adrianmacneil)
 [TargetPay](https://github.com/omnipay/targetpay) | omnipay/targetpay | [Alexander Deruwe](https://github.com/aderuwe)
