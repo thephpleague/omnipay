@@ -117,6 +117,7 @@ Gateway | Composer Package | Maintainer
 [Authorize.Net](https://github.com/omnipay/authorizenet) | omnipay/authorizenet | [Adrian Macneil](https://github.com/adrianmacneil)
 [Buckaroo](https://github.com/omnipay/buckaroo) | omnipay/buckaroo | [Adrian Macneil](https://github.com/adrianmacneil)
 [CardSave](https://github.com/omnipay/cardsave) | omnipay/cardsave | [Adrian Macneil](https://github.com/adrianmacneil)
+[DataCash](https://github.com/coatesap/omnipay-datacash) | coatesap/omnipay-datacash | [Andrew Coates](https://github.com/coatesap)
 [Dummy](https://github.com/omnipay/dummy) | omnipay/dummy | [Adrian Macneil](https://github.com/adrianmacneil)
 [eWAY](https://github.com/omnipay/eway) | omnipay/eway | [Adrian Macneil](https://github.com/adrianmacneil)
 [First Data](https://github.com/omnipay/firstdata) | omnipay/firstdata | [Andrew Coates](https://github.com/coatesap)
