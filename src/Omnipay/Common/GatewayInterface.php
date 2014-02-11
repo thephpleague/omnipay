@@ -44,13 +44,4 @@ interface GatewayInterface
      * @return array
      */
     public function getParameters();
-
-    /**
-     * Create a new charge (combined authorize + capture).
-     *
-     * @param array $parameters An array of options
-     *
-     * @return \Omnipay\Common\Message\RequestInterface
-     */
-    public function purchase(array $parameters = array());
 }

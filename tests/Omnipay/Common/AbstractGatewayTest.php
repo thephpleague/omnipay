@@ -9,7 +9,7 @@ class AbstractGatewayTest extends TestCase
 {
     public function setUp()
     {
-        $this->gateway = m::mock("\Omnipay\Common\AbstractGateway[getName,getDefaultParameters,purchase]");
+        $this->gateway = m::mock("\Omnipay\Common\AbstractGateway")->makePartial();
     }
 
     public function testGetShortName()

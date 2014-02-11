@@ -9,7 +9,7 @@ class AbstractResponseTest extends TestCase
 {
     public function testDefaultMethods()
     {
-        $response = m::mock('\Omnipay\Common\Message\AbstractResponse[isSuccessful]');
+        $response = m::mock('\Omnipay\Common\Message\AbstractResponse')->makePartial();
 
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getData());
@@ -23,7 +23,7 @@ class AbstractResponseTest extends TestCase
      */
     public function testCannotRedirectResponseThatIsNotRedirectResponseInterface()
     {
-        $response = m::mock('\Omnipay\Common\Message\AbstractResponse[isSuccessful,isRedirect]');
+        $response = m::mock('\Omnipay\Common\Message\AbstractResponse')->makePartial();
 
         $response->getRedirectResponse();
     }
