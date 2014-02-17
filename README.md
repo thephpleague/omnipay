@@ -128,6 +128,7 @@ Gateway | Composer Package | Maintainer
 [MultiSafepay](https://github.com/omnipay/multisafepay) | omnipay/multisafepay | [Alexander Deruwe](https://github.com/aderuwe)
 [Netaxept (BBS)](https://github.com/omnipay/netaxept) | omnipay/netaxept | [Adrian Macneil](https://github.com/adrianmacneil)
 [Netbanx](https://github.com/omnipay/netbanx) | omnipay/netbanx | [Maks Rafalko](https://github.com/mrafalko)
+[Neteller](https://github.com/alfaproject/omnipay-neteller) | alfaproject/omnipay-neteller | [João Dias](https://github.com/alfaproject)
 [Pacnet](https://github.com/mfauveau/omnipay-pacnet) | mfauveau/omnipay-pacnet | [Matthieu Fauveau](https://github.com/mfauveau)
 [PayFast](https://github.com/omnipay/payfast) | omnipay/payfast | [Adrian Macneil](https://github.com/adrianmacneil)
 [Payflow](https://github.com/omnipay/payflow) | omnipay/payflow | [Adrian Macneil](https://github.com/adrianmacneil)
