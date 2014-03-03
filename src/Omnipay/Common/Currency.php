@@ -107,7 +107,7 @@ class Currency
             'PGK' => array('numeric' => '598', 'decimals' => 2),
             'PHP' => array('numeric' => '608', 'decimals' => 2),
             'PLN' => array('numeric' => '985', 'decimals' => 2),
-            'PYG' => array('numeric' => '600', 'decimals' => 2),
+            'PYG' => array('numeric' => '600', 'decimals' => 0),
             'SBD' => array('numeric' => '090', 'decimals' => 2),
             'SEK' => array('numeric' => '752', 'decimals' => 2),
             'SGD' => array('numeric' => '702', 'decimals' => 2),
