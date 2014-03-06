@@ -1,26 +1,22 @@
 {
-	"name": "omnipay/alipay",
+	"name": "lokielse/omnipay-alipay",
 	"type": "library",
 	"description": "Alipay gateway for Omnipay payment processing library",
 	"keywords": [
+		"alipay",
 		"gateway",
 		"merchant",
 		"omnipay",
 		"pay",
 		"payment",
-		"alipay",
 		"purchase"
 	],
-	"homepage": "https://github.com/lokielse/alipay-omnipay",
+	"homepage": "https://github.com/lokielse/omnipay-alipay",
 	"license": "MIT",
 	"authors": [
 		{
-			"name": "Adrian Macneil",
-			"email": "adrian@adrianmacneil.com"
-		},
-		{
-			"name": "Omnipay Contributors",
-			"homepage": "https://github.com/omnipay/alipay/contributors"
+			"name": "Loki Else",
+			"email": "lokielse@gmail.com"
 		}
 	],
 	"autoload": {
@@ -31,10 +27,5 @@
 	},
 	"require-dev": {
 		"omnipay/tests": "~2.0"
-	},
-	"extra": {
-		"branch-alias": {
-			"dev-master": "2.0.x-dev"
-		}
 	}
 }

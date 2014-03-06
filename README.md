@@ -2,9 +2,9 @@
 
 **Alipay driver for the Omnipay PHP payment processing library**
 
-[![Build Status](https://travis-ci.org/lokielse/alipay-omnipay.png?branch=master)](https://travis-ci.org/lokielse/alipay-omnipay)
-[![Latest Stable Version](https://poser.pugx.org/omnipay/alipay/version.png)](https://packagist.org/packages/omnipay/alipay)
-[![Total Downloads](https://poser.pugx.org/omnipay/alipay/d/total.png)](https://packagist.org/packages/omnipay/alipay)
+[![Build Status](https://travis-ci.org/lokielse/omnipay-alipay.png?branch=master)](https://travis-ci.org/lokielse/omnipay-alipay)
+[![Latest Stable Version](https://poser.pugx.org/lokielse/omnipay-alipay/version.png)](https://packagist.org/packages/lokielse/omnipay-alipay)
+[![Total Downloads](https://poser.pugx.org/lokielse/omnipay-alipay/d/total.png)](https://packagist.org/packages/lokielse/omnipay-alipay)
 
 [Omnipay](https://github.com/omnipay/omnipay) is a framework agnostic, multi-gateway payment
 processing library for PHP 5.3+. This package implements Alipay support for Omnipay.
@@ -17,7 +17,7 @@ to your `composer.json` file:
 ```json
 {
     "require": {
-        "omnipay/alipay": "~2.0"
+        "lokielse/omnipay-alipay": "~2.0"
     }
 }
 ```
@@ -52,5 +52,5 @@ If you want to keep up to date with release anouncements, discuss ideas for the 
 or ask more detailed questions, there is also a [mailing list](https://groups.google.com/forum/#!forum/omnipay) which
 you can subscribe to.
 
-If you believe you have found a bug, please report it using the [GitHub issue tracker](https://github.com/omnipay/Alipay/issues),
+If you believe you have found a bug, please report it using the [GitHub issue tracker](https://github.com/lokielse/omnipay-alipay/issues),
 or better yet, fork the library and submit a pull request.
