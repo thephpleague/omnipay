@@ -36,6 +36,7 @@ class ExpressPurchaseRequest extends BasePurchaseRequest
             "out_trade_no"      => $this->getOutTradeNo(),
             "subject"           => $this->getSubject(),
             "total_fee"         => $this->getTotalFee(),
+            "currency"          => $this->getCurrency(),
             "body"              => $this->getBody(),
             "show_url"          => $this->getShowUrl(),
             "anti_phishing_key" => $this->getAntiPhishingKey(),
@@ -58,6 +59,16 @@ class ExpressPurchaseRequest extends BasePurchaseRequest
     public function setTotalFee($value)
     {
         $this->setParameter('total_fee', $value);
+    }
+
+    public function getCurrency()
+    {
+        return $this->getParameter('currency');
+    }
+
+    public function setCurrency($value)
+    {
+        $this->setParameter('currency', $value);
     }
 
     public function getDefaultBank()
