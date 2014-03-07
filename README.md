@@ -9,6 +9,11 @@
 [Omnipay](https://github.com/omnipay/omnipay) is a framework agnostic, multi-gateway payment
 processing library for PHP 5.3+. This package implements Alipay support for Omnipay.
 
+
+## Example Code
+[omnipay-alipay-example](https://github.com/lokielse/omnipay-alipay-example)
+
+
 ## Installation
 
 Omnipay is installed via [Composer](http://getcomposer.org/). To install, simply add it
@@ -17,7 +22,7 @@ to your `composer.json` file:
 ```json
 {
     "require": {
-        "lokielse/omnipay-alipay": "~2.0"
+        "lokielse/omnipay-alipay": "dev-master"
     }
 }
 ```
