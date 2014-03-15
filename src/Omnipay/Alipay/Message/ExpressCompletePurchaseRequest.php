@@ -27,7 +27,7 @@ class ExpressCompletePurchaseRequest extends AbstractRequest
     public function getData()
     {
         $this->validate('request_params', 'transport', 'partner', 'ca_cert_path', 'sign_type', 'key');
-        $this->validateRequestParams('notify_id', 'sign', 'trade_status', 'out_trade_no', 'trade_no');
+        $this->validateRequestParams('sign', 'trade_status', 'out_trade_no', 'trade_no');
         return $this->getParameters();
     }
 
@@ -208,7 +208,12 @@ class ExpressCompletePurchaseRequest extends AbstractRequest
 
     public function sendData($data)
     {
-        $this->verifyResponse    = $this->getVerifyResponse($this->getNotifyId());
+        $notify_id = $this->getNotifyId();
+
+        $this->verifyResponse = 'true';
+        if (!is_null($notify_id)) {
+            $this->verifyResponse = $this->getVerifyResponse($this->getNotifyId());
+        }
         $data                    = array();
         $data['verify_response'] = $this->verifyResponse;
         if ($this->isResponseOk($this->verifyResponse) && $this->isSignMatch()) {
