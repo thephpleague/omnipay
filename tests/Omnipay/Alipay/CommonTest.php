@@ -29,8 +29,8 @@ class CommonTest extends GatewayTestCase
         );
 
         $response = $this->gateway->purchase($this->options)->send();
-        echo 'alipay_pay_url:';
-        die($response->getRedirectUrl()); //debug the pay url, paste in browser, it will redirect.
+        //echo 'alipay_pay_url:';
+        //die($response->getRedirectUrl()); //debug the pay url, paste in browser, it will redirect.
         //$response->redirect();  //you can make a redirect use this method.
     }
 }
