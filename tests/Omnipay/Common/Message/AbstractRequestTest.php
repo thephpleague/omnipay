@@ -217,6 +217,18 @@ class AbstractRequestTest extends TestCase
         $this->assertSame('https://www.example.com/notify', $this->request->getNotifyUrl());
     }
 
+    public function testIssuer()
+    {
+        $this->assertSame($this->request, $this->request->setIssuer('some-bank'));
+        $this->assertSame('some-bank', $this->request->getIssuer());
+    }
+
+    public function testPaymentMethod()
+    {
+        $this->assertSame($this->request, $this->request->setPaymentMethod('ideal'));
+        $this->assertSame('ideal', $this->request->getPaymentMethod());
+    }
+
     public function testInitializedParametersAreSet()
     {
         $params = array('testMode' => 'success');

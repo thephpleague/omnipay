@@ -321,6 +321,38 @@ abstract class AbstractRequest implements RequestInterface
         return $this->setParameter('notifyUrl', $value);
     }
 
+    public function getIssuer()
+    {
+        return $this->getParameter('issuer');
+    }
+
+    /**
+     * Set the payment issuer.
+     *
+     * This field is used by some European gateways, and normally represents
+     * the bank where an account is held (separate from the card brand).
+     */
+    public function setIssuer($value)
+    {
+        return $this->setParameter('issuer', $value);
+    }
+
+    public function getPaymentMethod()
+    {
+        return $this->getParameter('paymentMethod');
+    }
+
+    /**
+     * Set the payment method.
+     *
+     * This field is used by some European gateways, which support
+     * multiple payment providers with a single API.
+     */
+    public function setPaymentMethod($value)
+    {
+        return $this->setParameter('paymentMethod', $value);
+    }
+
     public function send()
     {
         $data = $this->getData();
