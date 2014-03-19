@@ -133,6 +133,7 @@ Gateway | Composer Package | Maintainer
 [PayFast](https://github.com/omnipay/payfast) | omnipay/payfast | [Adrian Macneil](https://github.com/adrianmacneil)
 [Payflow](https://github.com/omnipay/payflow) | omnipay/payflow | [Adrian Macneil](https://github.com/adrianmacneil)
 [PaymentExpress (DPS)](https://github.com/omnipay/paymentexpress) | omnipay/paymentexpress | [Adrian Macneil](https://github.com/adrianmacneil)
+[PaymentSense](https://github.com/coatesap/omnipay-paymentsense) | coatesap/omnipay-paymentsense | [Andrew Coates](https://github.com/coatesap)
 [PayPal](https://github.com/omnipay/paypal) | omnipay/paypal | [Adrian Macneil](https://github.com/adrianmacneil)
 [Pin Payments](https://github.com/omnipay/pin) | omnipay/pin | [Adrian Macneil](https://github.com/adrianmacneil)
 [Sage Pay](https://github.com/omnipay/sagepay) | omnipay/sagepay | [Adrian Macneil](https://github.com/adrianmacneil)
