@@ -57,6 +57,7 @@ class MobileExpressPurchaseRequest extends BaseAbstractRequest
         $orderInfoStr           = http_build_query($data);
         $orderInfoStr           = str_replace('&', '"&', $orderInfoStr);
         $orderInfoStr           = str_replace('=', '="', $orderInfoStr) . '"';
+        $orderInfoStr           = urldecode($orderInfoStr); # utf-8 char fix
         $rsa_sign               = $this->rsaSign($orderInfoStr, $this->getPrivateKey());
         $resp['order_info_str'] = sprintf('%s&sign="%s"&sign_type="%s"', $orderInfoStr, urlencode($rsa_sign), 'RSA');
         return $resp;
