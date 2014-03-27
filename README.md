@@ -114,6 +114,7 @@ The following gateways are available:
 Gateway | Composer Package | Maintainer
 --- | --- | ---
 [2Checkout](https://github.com/omnipay/2checkout) | omnipay/twocheckout | [Adrian Macneil](https://github.com/adrianmacneil)
+[Alipay](https://github.com/lokielse/omnipay-alipay) | lokielse/omnipay-alipay | [Loki Else](https://github.com/lokielse)
 [Authorize.Net](https://github.com/omnipay/authorizenet) | omnipay/authorizenet | [Adrian Macneil](https://github.com/adrianmacneil)
 [Buckaroo](https://github.com/omnipay/buckaroo) | omnipay/buckaroo | [Adrian Macneil](https://github.com/adrianmacneil)
 [CardSave](https://github.com/omnipay/cardsave) | omnipay/cardsave | [Adrian Macneil](https://github.com/adrianmacneil)
