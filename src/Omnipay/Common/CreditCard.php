@@ -192,6 +192,11 @@ class CreditCard
         return $this->setParameter('number', preg_replace('/\D/', '', $value));
     }
 
+    public function getNumberLastFour()
+    {
+        return substr($this->getNumber(), -4, 4) ?: null;
+    }
+
     /**
      * Credit Card Brand
      *
