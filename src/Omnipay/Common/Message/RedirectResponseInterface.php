@@ -3,7 +3,7 @@
 namespace Omnipay\Common\Message;
 
 /**
- * Response interface
+ * Redirect Response interface
  */
 interface RedirectResponseInterface extends ResponseInterface
 {

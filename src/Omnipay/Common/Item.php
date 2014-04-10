@@ -5,7 +5,7 @@ namespace Omnipay\Common;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
- * Cart Item interface
+ * Cart Item
  */
 class Item implements ItemInterface
 {
