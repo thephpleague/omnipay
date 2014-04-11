@@ -77,8 +77,8 @@ abstract class AbstractResponse implements ResponseInterface
             foreach ($this->getRedirectData() as $key => $value) {
                 $hiddenFields .= sprintf(
                     '<input type="hidden" name="%1$s" value="%2$s" />',
-                    htmlspecialchars($key, ENT_QUOTES, 'UTF-8'),
-                    htmlspecialchars($value, ENT_QUOTES, 'UTF-8')
+                    htmlentities($key, ENT_QUOTES, 'UTF-8', false),
+                    htmlentities($value, ENT_QUOTES, 'UTF-8', false)
                 )."\n";
             }
 
@@ -97,7 +97,7 @@ abstract class AbstractResponse implements ResponseInterface
         </form>
     </body>
 </html>';
-            $output = sprintf($output, htmlspecialchars($this->getRedirectUrl(), ENT_QUOTES, 'UTF-8'), $hiddenFields);
+            $output = sprintf($output, htmlentities($this->getRedirectUrl(), ENT_QUOTES, 'UTF-8', false), $hiddenFields);
 
             return HttpResponse::create($output);
         }
