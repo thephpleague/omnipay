@@ -58,7 +58,6 @@ abstract class AbstractRequest implements RequestInterface
      * @param array $parameters An associative array of parameters
      *
      * @return $this
-     *
      * @throws RuntimeException
      */
     public function initialize(array $parameters = array())

@@ -55,6 +55,8 @@ abstract class AbstractResponse implements ResponseInterface
      *
      * This method is meant to be a helper for simple scenarios. If you want to customize the
      * redirection page, just call the getRedirectUrl() and getRedirectData() methods directly.
+     *
+     * @codeCoverageIgnore
      */
     public function redirect()
     {
