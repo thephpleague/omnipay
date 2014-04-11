@@ -97,7 +97,11 @@ abstract class AbstractResponse implements ResponseInterface
         </form>
     </body>
 </html>';
-            $output = sprintf($output, htmlentities($this->getRedirectUrl(), ENT_QUOTES, 'UTF-8', false), $hiddenFields);
+            $output = sprintf(
+                $output,
+                htmlentities($this->getRedirectUrl(), ENT_QUOTES, 'UTF-8', false),
+                $hiddenFields
+            );
 
             return HttpResponse::create($output);
         }
