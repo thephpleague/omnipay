@@ -12,7 +12,7 @@ interface FetchPaymentMethodsResponseInterface extends ResponseInterface
      *
      * These represent separate payment methods which the user must choose between.
      *
-     * @return array An array of \Omnipay\Common\PaymentMethod objects
+     * @return \Omnipay\Common\PaymentMethod[]
      */
     public function getPaymentMethods();
 }

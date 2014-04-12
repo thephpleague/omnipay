@@ -12,7 +12,7 @@ interface FetchIssuersResponseInterface extends ResponseInterface
      *
      * These represent banks which the user must choose between.
      *
-     * @return array An array of \Omnipay\Common\Issuer objects
+     * @return \Omnipay\Common\Issuer[]
      */
     public function getIssuers();
 }
