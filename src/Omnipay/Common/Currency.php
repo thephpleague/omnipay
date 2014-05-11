@@ -75,10 +75,11 @@ class Currency
     public static function all()
     {
         return array(
-            'AUD' => array('numeric' => '036', 'decimals' => 2),
             'ARS' => array('numeric' => '032', 'decimals' => 2),
-            'BRL' => array('numeric' => '986', 'decimals' => 2),
+            'AUD' => array('numeric' => '036', 'decimals' => 2),
             'BOB' => array('numeric' => '068', 'decimals' => 2),
+            'BRL' => array('numeric' => '986', 'decimals' => 2),
+            'BTC' => array('numeric' => null, 'decimals' => 8),
             'CAD' => array('numeric' => '124', 'decimals' => 2),
             'CHF' => array('numeric' => '756', 'decimals' => 2),
             'CLP' => array('numeric' => '152', 'decimals' => 0),
@@ -86,8 +87,8 @@ class Currency
             'COP' => array('numeric' => '170', 'decimals' => 2),
             'CRC' => array('numeric' => '188', 'decimals' => 2),
             'CZK' => array('numeric' => '203', 'decimals' => 2),
-            'DOP' => array('numeric' => '214', 'decimals' => 2),
             'DKK' => array('numeric' => '208', 'decimals' => 2),
+            'DOP' => array('numeric' => '214', 'decimals' => 2),
             'EUR' => array('numeric' => '978', 'decimals' => 2),
             'FJD' => array('numeric' => '242', 'decimals' => 2),
             'GBP' => array('numeric' => '826', 'decimals' => 2),
