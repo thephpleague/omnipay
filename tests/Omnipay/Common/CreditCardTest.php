@@ -179,6 +179,20 @@ class CreditCardTest extends TestCase
         $this->assertSame('1234', $this->card->getNumberLastFour());
     }
 
+    public function testGetNumberMasked()
+    {
+        $this->card->setNumber('4000000000001234');
+
+        $this->assertSame('XXXXXXXXXXXX1234', $this->card->getNumberMasked());
+    }
+
+    public function testGetNumberMaskedNonDigits()
+    {
+        $this->card->setNumber('4000 0000 0000 12x34');
+
+        $this->assertSame('XXXXXXXXXXXX1234', $this->card->getNumberMasked());
+    }
+
     public function testGetBrandDefault()
     {
         $card = new CreditCard;
