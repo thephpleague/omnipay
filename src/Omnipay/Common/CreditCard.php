@@ -198,6 +198,19 @@ class CreditCard
     }
 
     /**
+     * Returns a masked credit card number with only the last 4 chars visible
+     *
+     * @param string $mask Character to use in place of numbers
+     * @return string
+     */
+    public function getNumberMasked($mask = 'X')
+    {
+        $maskLength = strlen($this->getNumber()) - 4;
+
+        return str_repeat($mask, $maskLength) . $this->getNumberLastFour();
+    }
+
+    /**
      * Credit Card Brand
      *
      * Iterates through known/supported card brands to determine the brand of this card
