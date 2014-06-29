@@ -142,6 +142,19 @@ class CreditCard
         }
     }
 
+    public function getTitle()
+    {
+        return $this->getBillingTitle();
+    }
+
+    public function setTitle($value)
+    {
+        $this->setBillingTitle($value);
+        $this->setShippingTitle($value);
+
+        return $this;
+    }
+
     public function getFirstName()
     {
         return $this->getBillingFirstName();
@@ -310,6 +323,16 @@ class CreditCard
         return $this->setParameter('issueNumber', $value);
     }
 
+    public function getBillingTitle()
+    {
+        return $this->getParameter('billingTitle');
+    }
+
+    public function setBillingTitle($value)
+    {
+        return $this->setParameter('billingTitle', $value);
+    }
+
     public function getBillingName()
     {
         return trim($this->getBillingFirstName() . ' ' . $this->getBillingLastName());
@@ -422,6 +445,26 @@ class CreditCard
     public function setBillingPhone($value)
     {
         return $this->setParameter('billingPhone', $value);
+    }
+
+    public function getBillingFax()
+    {
+        return $this->getParameter('billingFax');
+    }
+
+    public function setBillingFax($value)
+    {
+        return $this->setParameter('billingFax', $value);
+    }
+
+    public function getShippingTitle()
+    {
+        return $this->getParameter('shippingTitle');
+    }
+
+    public function setShippingTitle($value)
+    {
+        return $this->setParameter('shippingTitle', $value);
     }
 
     public function getShippingName()
@@ -538,6 +581,16 @@ class CreditCard
         return $this->setParameter('shippingPhone', $value);
     }
 
+    public function getShippingFax()
+    {
+        return $this->getParameter('shippingFax');
+    }
+
+    public function setShippingFax($value)
+    {
+        return $this->setParameter('shippingFax', $value);
+    }
+
     public function getAddress1()
     {
         return $this->getParameter('billingAddress1');
@@ -625,6 +678,19 @@ class CreditCard
     {
         $this->setParameter('billingPhone', $value);
         $this->setParameter('shippingPhone', $value);
+
+        return $this;
+    }
+
+    public function getFax()
+    {
+        return $this->getParameter('billingFax');
+    }
+
+    public function setFax($value)
+    {
+        $this->setParameter('billingFax', $value);
+        $this->setParameter('shippingFax', $value);
 
         return $this;
     }

@@ -109,6 +109,12 @@ class CreditCardTest extends TestCase
         $this->assertArrayHasKey(CreditCard::BRAND_VISA, $brands);
     }
 
+    public function testTitle()
+    {
+        $this->card->setTitle('Mr.');
+        $this->assertEquals('Mr.', $this->card->getTitle());
+    }
+
     public function testFirstName()
     {
         $this->card->setFirstName('Bob');
@@ -309,6 +315,13 @@ class CreditCardTest extends TestCase
         $this->assertSame('12', $this->card->getIssueNumber());
     }
 
+    public function testBillingTitle()
+    {
+        $this->card->setBillingTitle('Mrs.');
+        $this->assertEquals('Mrs.', $this->card->getBillingTitle());
+        $this->assertEquals('Mrs.', $this->card->getTitle());
+    }
+
     public function testBillingFirstName()
     {
         $this->card->setBillingFirstName('Bob');
@@ -390,6 +403,19 @@ class CreditCardTest extends TestCase
         $this->assertSame('12345', $this->card->getPhone());
     }
 
+    public function testBillingFax()
+    {
+        $this->card->setBillingFax('54321');
+        $this->assertSame('54321', $this->card->getBillingFax());
+        $this->assertSame('54321', $this->card->getFax());
+    }
+
+    public function testShippingTitle()
+    {
+        $this->card->setShippingTitle('Dr.');
+        $this->assertEquals('Dr.', $this->card->getShippingTitle());
+    }
+
     public function testShippingFirstName()
     {
         $this->card->setShippingFirstName('James');
@@ -461,6 +487,12 @@ class CreditCardTest extends TestCase
         $this->assertEquals('12345', $this->card->getShippingPhone());
     }
 
+    public function testShippingFax()
+    {
+        $this->card->setShippingFax('54321');
+        $this->assertEquals('54321', $this->card->getShippingFax());
+    }
+
     public function testCompany()
     {
         $this->card->setCompany('FooBar');
@@ -523,6 +555,14 @@ class CreditCardTest extends TestCase
         $this->assertEquals('12345', $this->card->getPhone());
         $this->assertEquals('12345', $this->card->getBillingPhone());
         $this->assertEquals('12345', $this->card->getShippingPhone());
+    }
+
+    public function testFax()
+    {
+        $this->card->setFax('54321');
+        $this->assertEquals('54321', $this->card->getFax());
+        $this->assertEquals('54321', $this->card->getBillingFax());
+        $this->assertEquals('54321', $this->card->getShippingFax());
     }
 
     public function testEmail()
