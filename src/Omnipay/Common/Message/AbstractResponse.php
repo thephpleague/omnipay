@@ -30,6 +30,11 @@ abstract class AbstractResponse implements ResponseInterface
         return false;
     }
 
+    public function isTransparentRedirect()
+    {
+      return false;
+    }
+
     public function getData()
     {
         return $this->data;
