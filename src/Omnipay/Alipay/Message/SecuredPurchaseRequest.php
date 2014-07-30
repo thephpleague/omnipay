@@ -13,15 +13,13 @@ class SecuredPurchaseRequest extends BasePurchaseRequest
     {
         parent::validateData();
         $this->validate(
+            'out_trade_no',
+            'subject',
             'price',
             'quantity',
             'logistics_fee',
             'logistics_type',
-            'receive_name',
-            'receive_address',
-            'receive_zip',
-            'receive_phone',
-            'receive_mobile'
+            'logistics_payment'
         );
     }
 
