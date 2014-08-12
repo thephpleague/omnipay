@@ -32,7 +32,7 @@ abstract class AbstractResponse implements ResponseInterface
 
     public function isTransparentRedirect()
     {
-      return false;
+        return false;
     }
 
     public function getData()
