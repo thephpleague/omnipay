@@ -138,6 +138,7 @@ Gateway | Composer Package | Maintainer
 [PaymentSense](https://github.com/coatesap/omnipay-paymentsense) | coatesap/omnipay-paymentsense | [Andrew Coates](https://github.com/coatesap)
 [PayPal](https://github.com/omnipay/paypal) | omnipay/paypal | [Adrian Macneil](https://github.com/adrianmacneil)
 [Pin Payments](https://github.com/omnipay/pin) | omnipay/pin | [Adrian Macneil](https://github.com/adrianmacneil)
+[Realex](https://github.com/coatesap/omnipay-realex) | coatesap/omnipay-realex | [Andrew Coates](https://github.com/coatesap)
 [Sage Pay](https://github.com/omnipay/sagepay) | omnipay/sagepay | [Adrian Macneil](https://github.com/adrianmacneil)
 [SecurePay](https://github.com/omnipay/securepay) | omnipay/securepay | [Adrian Macneil](https://github.com/adrianmacneil)
 [SecPay](https://github.com/justinbusschau/omnipay-secpay) | justinbusschau/omnipay-secpay | [Justin Busschau](https://github.com/justinbusschau)
