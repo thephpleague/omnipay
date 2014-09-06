@@ -10,7 +10,7 @@
         "payment",
         "purchase"
     ],
-    "homepage": "https://github.com/omnipay/common",
+    "homepage": "https://github.com/thephpleague/omnipay-common",
     "license": "MIT",
     "authors": [
         {
@@ -19,7 +19,7 @@
         },
         {
             "name": "Omnipay Contributors",
-            "homepage": "https://github.com/omnipay/common/contributors"
+            "homepage": "https://github.com/thephpleague/omnipay-common/contributors"
         }
     ],
     "autoload": {
