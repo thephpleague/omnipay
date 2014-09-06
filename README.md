@@ -2,7 +2,7 @@
 
 **An easy to use, consistent payment processing library for PHP 5.3+**
 
-[![Build Status](https://travis-ci.org/omnipay/common.png?branch=master)](https://travis-ci.org/omnipay/common)
+[![Build Status](https://travis-ci.org/thephpleague/omnipay-common.png?branch=master)](https://travis-ci.org/thephpleague/omnipay-common)
 [![Latest Stable Version](https://poser.pugx.org/omnipay/omnipay/version.png)](https://packagist.org/packages/omnipay/omnipay)
 [![Total Downloads](https://poser.pugx.org/omnipay/omnipay/d/total.png)](https://packagist.org/packages/omnipay/omnipay)
 
@@ -24,7 +24,7 @@ is fully unit tested, and even comes with an example application to get you star
 If you are upgrading from a pre-2.0 version of Omnipay, please note that the
 project has now been split into multiple packages. There have also been some
 changes to how gateway instances are created. See the
-[full release notes](https://github.com/omnipay/omnipay/releases/tag/v2.0.0)
+[full release notes](https://github.com/thephpleague/omnipay/releases/tag/v2.0.0)
 for more details.
 
 ## TL;DR
@@ -58,7 +58,7 @@ as possible the differences between the various payments gateways.
 ## Package Layout
 
 Omnipay is a collection of packages which all depend on the
-[omnipay/common](https://github.com/omnipay/common) package to provide
+[omnipay/common](https://github.com/thephpleague/omnipay-common) package to provide
 a consistent interface. There are no dependencies on official payment gateway PHP packages -
 we prefer to work with the HTTP API directly. Under the hood, we use the popular and powerful
 [Guzzle](http://guzzlephp.org/) library to make HTTP requests.
@@ -72,7 +72,7 @@ payment library, a good name for your composer package would be `santa/omnipay-g
 
 If you want to transfer your gateway to the `omnipay` GitHub organization and add it
 to the list of officially supported gateways, please open a pull request on the 
-[omnipay/common](https://github.com/omnipay/common) package. Before new gateways will
+[omnipay/common](https://github.com/thephpleague/omnipay-common) package. Before new gateways will
 be accepted, they must have 100% unit test code coverage, and follow the conventions
 and code style used in other Omnipay gateways.
 
@@ -106,47 +106,47 @@ Next, run composer to update your dependencies:
 
 ## Payment Gateways
 
-All payment gateways must implement [GatewayInterface](https://github.com/omnipay/common/blob/master/src/Omnipay/Common/GatewayInterface.php), and will usually
-extend [AbstractGateway](https://github.com/omnipay/common/blob/master/src/Omnipay/Common/AbstractGateway.php) for basic functionality.
+All payment gateways must implement [GatewayInterface](https://github.com/thephpleague/omnipay-common/blob/master/src/Omnipay/Common/GatewayInterface.php), and will usually
+extend [AbstractGateway](https://github.com/thephpleague/omnipay-common/blob/master/src/Omnipay/Common/AbstractGateway.php) for basic functionality.
 
 The following gateways are available:
 
 Gateway | Composer Package | Maintainer
 --- | --- | ---
-[2Checkout](https://github.com/omnipay/2checkout) | omnipay/twocheckout | [Adrian Macneil](https://github.com/adrianmacneil)
+[2Checkout](https://github.com/thephpleague/omnipay-2checkout) | omnipay/twocheckout | [Adrian Macneil](https://github.com/adrianmacneil)
 [Alipay](https://github.com/lokielse/omnipay-alipay) | lokielse/omnipay-alipay | [Loki Else](https://github.com/lokielse)
-[Authorize.Net](https://github.com/omnipay/authorizenet) | omnipay/authorizenet | [Adrian Macneil](https://github.com/adrianmacneil)
-[Buckaroo](https://github.com/omnipay/buckaroo) | omnipay/buckaroo | [Adrian Macneil](https://github.com/adrianmacneil)
-[CardSave](https://github.com/omnipay/cardsave) | omnipay/cardsave | [Adrian Macneil](https://github.com/adrianmacneil)
-[Coinbase](https://github.com/omnipay/coinbase) | omnipay/coinbase | [Adrian Macneil](https://github.com/adrianmacneil)
+[Authorize.Net](https://github.com/thephpleague/omnipay-authorizenet) | omnipay/authorizenet | [Adrian Macneil](https://github.com/adrianmacneil)
+[Buckaroo](https://github.com/thephpleague/omnipay-buckaroo) | omnipay/buckaroo | [Adrian Macneil](https://github.com/adrianmacneil)
+[CardSave](https://github.com/thephpleague/omnipay-cardsave) | omnipay/cardsave | [Adrian Macneil](https://github.com/adrianmacneil)
+[Coinbase](https://github.com/thephpleague/omnipay-coinbase) | omnipay/coinbase | [Adrian Macneil](https://github.com/adrianmacneil)
 [DataCash](https://github.com/coatesap/omnipay-datacash) | coatesap/omnipay-datacash | [Andrew Coates](https://github.com/coatesap)
-[Dummy](https://github.com/omnipay/dummy) | omnipay/dummy | [Adrian Macneil](https://github.com/adrianmacneil)
-[eWAY](https://github.com/omnipay/eway) | omnipay/eway | [Adrian Macneil](https://github.com/adrianmacneil)
-[First Data](https://github.com/omnipay/firstdata) | omnipay/firstdata | [Andrew Coates](https://github.com/coatesap)
-[GoCardless](https://github.com/omnipay/gocardless) | omnipay/gocardless | [Adrian Macneil](https://github.com/adrianmacneil)
-[Manual](https://github.com/omnipay/manual) | omnipay/manual | [Adrian Macneil](https://github.com/adrianmacneil)
-[Migs](https://github.com/omnipay/migs) | omnipay/migs | [Adrian Macneil](https://github.com/adrianmacneil)
-[Mollie](https://github.com/omnipay/mollie) | omnipay/mollie | [Adrian Macneil](https://github.com/adrianmacneil)
-[MultiSafepay](https://github.com/omnipay/multisafepay) | omnipay/multisafepay | [Alexander Deruwe](https://github.com/aderuwe)
-[Netaxept (BBS)](https://github.com/omnipay/netaxept) | omnipay/netaxept | [Adrian Macneil](https://github.com/adrianmacneil)
-[Netbanx](https://github.com/omnipay/netbanx) | omnipay/netbanx | [Maks Rafalko](https://github.com/borNfreee)
+[Dummy](https://github.com/thephpleague/omnipay-dummy) | omnipay/dummy | [Adrian Macneil](https://github.com/adrianmacneil)
+[eWAY](https://github.com/thephpleague/omnipay-eway) | omnipay/eway | [Adrian Macneil](https://github.com/adrianmacneil)
+[First Data](https://github.com/thephpleague/omnipay-firstdata) | omnipay/firstdata | [Andrew Coates](https://github.com/coatesap)
+[GoCardless](https://github.com/thephpleague/omnipay-gocardless) | omnipay/gocardless | [Adrian Macneil](https://github.com/adrianmacneil)
+[Manual](https://github.com/thephpleague/omnipay-manual) | omnipay/manual | [Adrian Macneil](https://github.com/adrianmacneil)
+[Migs](https://github.com/thephpleague/omnipay-migs) | omnipay/migs | [Adrian Macneil](https://github.com/adrianmacneil)
+[Mollie](https://github.com/thephpleague/omnipay-mollie) | omnipay/mollie | [Adrian Macneil](https://github.com/adrianmacneil)
+[MultiSafepay](https://github.com/thephpleague/omnipay-multisafepay) | omnipay/multisafepay | [Alexander Deruwe](https://github.com/aderuwe)
+[Netaxept (BBS)](https://github.com/thephpleague/omnipay-netaxept) | omnipay/netaxept | [Adrian Macneil](https://github.com/adrianmacneil)
+[Netbanx](https://github.com/thephpleague/omnipay-netbanx) | omnipay/netbanx | [Maks Rafalko](https://github.com/borNfreee)
 [Neteller](https://github.com/alfaproject/omnipay-neteller) | alfaproject/omnipay-neteller | [João Dias](https://github.com/alfaproject)
 [Pacnet](https://github.com/mfauveau/omnipay-pacnet) | mfauveau/omnipay-pacnet | [Matthieu Fauveau](https://github.com/mfauveau)
-[PayFast](https://github.com/omnipay/payfast) | omnipay/payfast | [Adrian Macneil](https://github.com/adrianmacneil)
-[Payflow](https://github.com/omnipay/payflow) | omnipay/payflow | [Adrian Macneil](https://github.com/adrianmacneil)
-[PaymentExpress (DPS)](https://github.com/omnipay/paymentexpress) | omnipay/paymentexpress | [Adrian Macneil](https://github.com/adrianmacneil)
+[PayFast](https://github.com/thephpleague/omnipay-payfast) | omnipay/payfast | [Adrian Macneil](https://github.com/adrianmacneil)
+[Payflow](https://github.com/thephpleague/omnipay-payflow) | omnipay/payflow | [Adrian Macneil](https://github.com/adrianmacneil)
+[PaymentExpress (DPS)](https://github.com/thephpleague/omnipay-paymentexpress) | omnipay/paymentexpress | [Adrian Macneil](https://github.com/adrianmacneil)
 [PaymentSense](https://github.com/coatesap/omnipay-paymentsense) | coatesap/omnipay-paymentsense | [Andrew Coates](https://github.com/coatesap)
-[PayPal](https://github.com/omnipay/paypal) | omnipay/paypal | [Adrian Macneil](https://github.com/adrianmacneil)
-[Pin Payments](https://github.com/omnipay/pin) | omnipay/pin | [Adrian Macneil](https://github.com/adrianmacneil)
+[PayPal](https://github.com/thephpleague/omnipay-paypal) | omnipay/paypal | [Adrian Macneil](https://github.com/adrianmacneil)
+[Pin Payments](https://github.com/thephpleague/omnipay-pin) | omnipay/pin | [Adrian Macneil](https://github.com/adrianmacneil)
 [Realex](https://github.com/coatesap/omnipay-realex) | coatesap/omnipay-realex | [Andrew Coates](https://github.com/coatesap)
-[Sage Pay](https://github.com/omnipay/sagepay) | omnipay/sagepay | [Adrian Macneil](https://github.com/adrianmacneil)
-[SecurePay](https://github.com/omnipay/securepay) | omnipay/securepay | [Adrian Macneil](https://github.com/adrianmacneil)
+[Sage Pay](https://github.com/thephpleague/omnipay-sagepay) | omnipay/sagepay | [Adrian Macneil](https://github.com/adrianmacneil)
+[SecurePay](https://github.com/thephpleague/omnipay-securepay) | omnipay/securepay | [Adrian Macneil](https://github.com/adrianmacneil)
 [SecPay](https://github.com/justinbusschau/omnipay-secpay) | justinbusschau/omnipay-secpay | [Justin Busschau](https://github.com/justinbusschau)
 [Sisow](https://github.com/nettob/omnipay-sisow) | nettob/omnipay-sisow | [Niek](https://github.com/nettob)
 [Skrill](https://github.com/alfaproject/omnipay-skrill) | alfaproject/omnipay-skrill | [João Dias](https://github.com/alfaproject)
-[Stripe](https://github.com/omnipay/stripe) | omnipay/stripe | [Adrian Macneil](https://github.com/adrianmacneil)
-[TargetPay](https://github.com/omnipay/targetpay) | omnipay/targetpay | [Alexander Deruwe](https://github.com/aderuwe)
-[WorldPay](https://github.com/omnipay/worldpay) | omnipay/worldpay | [Adrian Macneil](https://github.com/adrianmacneil)
+[Stripe](https://github.com/thephpleague/omnipay-stripe) | omnipay/stripe | [Adrian Macneil](https://github.com/adrianmacneil)
+[TargetPay](https://github.com/thephpleague/omnipay-targetpay) | omnipay/targetpay | [Alexander Deruwe](https://github.com/aderuwe)
+[WorldPay](https://github.com/thephpleague/omnipay-worldpay) | omnipay/worldpay | [Adrian Macneil](https://github.com/adrianmacneil)
 
 Gateways are created and initialized like so:
 
@@ -182,7 +182,7 @@ gateway (other than by the methods they support).
 
 ## Credit Card / Payment Form Input
 
-User form input is directed to an [CreditCard](https://github.com/omnipay/common/blob/master/src/Omnipay/Common/CreditCard.php)
+User form input is directed to an [CreditCard](https://github.com/thephpleague/omnipay-common/blob/master/src/Omnipay/Common/CreditCard.php)
 object. This provides a safe way to accept user input.
 
 The `CreditCard` object has the following fields:
@@ -240,7 +240,7 @@ $card->setFirstName('Adrian');
 ```
 
 If you submit credit card details which are obviously invalid (missing required fields, or a number
-which fails the Luhn check), [InvalidCreditCardException](https://github.com/omnipay/common/blob/master/src/Omnipay/Common/Exception/InvalidCreditCardException.php)
+which fails the Luhn check), [InvalidCreditCardException](https://github.com/thephpleague/omnipay-common/blob/master/src/Omnipay/Common/Exception/InvalidCreditCardException.php)
 will be thrown.  You should validate the card details using your framework's validation library
 before submitting the details to your gateway, to avoid unnecessary API calls.
 
@@ -307,7 +307,7 @@ To summarize the various parameters you have available to you:
 
 ## The Payment Response
 
-The payment response must implement [ResponseInterface](https://github.com/omnipay/common/blob/master/src/Omnipay/Common/Message/ResponseInterface.php). There are two main types of response:
+The payment response must implement [ResponseInterface](https://github.com/thephpleague/omnipay-common/blob/master/src/Omnipay/Common/Message/ResponseInterface.php). There are two main types of response:
 
 * Payment was successful (standard response)
 * Website requires redirect to off-site payment form (redirect response)
@@ -408,13 +408,13 @@ you really think this should be a core feature and worth the effort.
 
 ## Example Application
 
-An example application is provided in the [omnipay/example](https://github.com/omnipay/example) repo.
+An example application is provided in the [omnipay/example](https://github.com/thephpleague/omnipay-example) repo.
 You can run it using PHP's built in web server (PHP 5.4+):
 
     $ php composer.phar update --dev
     $ php -S localhost:8000
 
-For more information, see the [Omnipay example application](https://github.com/omnipay/example).
+For more information, see the [Omnipay example application](https://github.com/thephpleague/omnipay-example).
 
 ## Support
 

@@ -45,7 +45,7 @@
         "twocheckout",
         "worldpay"
     ],
-    "homepage": "https://github.com/omnipay/omnipay",
+    "homepage": "https://github.com/thephpleague/omnipay",
     "license": "MIT",
     "authors": [
         {
@@ -54,7 +54,7 @@
         },
         {
             "name": "Omnipay Community",
-            "homepage": "https://github.com/omnipay/omnipay/graphs/contributors"
+            "homepage": "https://github.com/thephpleague/omnipay/graphs/contributors"
         }
     ],
     "require": {
