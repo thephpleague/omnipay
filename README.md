@@ -19,7 +19,7 @@ is fully unit tested, and even comes with an example application to get you star
 * Because most payment gateways have exceptionally poor documentation
 * Because you are writing a shopping cart and need to support multiple gateways
 
-**Important Note: Upgrading from <2.0**
+**Important Note: Upgrading from < 2.0**
 
 If you are upgrading from a pre-2.0 version of Omnipay, please note that the
 project has now been split into multiple packages. There have also been some
