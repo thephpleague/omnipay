@@ -70,7 +70,7 @@
         "omnipay/gocardless": "~2.0",
         "omnipay/manual": "~2.0",
         "omnipay/migs": "~2.0",
-        "omnipay/mollie": "~2.0",
+        "omnipay/mollie": "~3.0",
         "omnipay/multisafepay": "~2.0",
         "omnipay/netaxept": "~2.0",
         "omnipay/netbanx": "~2.0",
