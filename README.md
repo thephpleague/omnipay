@@ -244,7 +244,7 @@ which fails the Luhn check), [InvalidCreditCardException](https://github.com/the
 will be thrown.  You should validate the card details using your framework's validation library
 before submitting the details to your gateway, to avoid unnecessary API calls.
 
-For on-site payment gateways, the following card fields are always required:
+For on-site payment gateways, the following card fields are generally required:
 
 * firstName
 * lastName
