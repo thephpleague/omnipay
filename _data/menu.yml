@@ -4,14 +4,15 @@ Getting Started:
     Installation: '/installation/'
     Changelog: '/changelog/'
 Gateways:
-    Available: '/gateways/available/'
+    Official: '/gateways/official/'
+    Third party: '/gateways/third-party/'
     Build your own: '/gateways/build-your-own/'
     Configuring: '/gateways/configuring/'
 API:
     Cards: '/api/cards/'
     Authorizing: '/api/authorizing/'
     Charging: '/api/charging/'
-    Refunding: '/api/refunding/'
+    Refunds: '/api/refunds/'
     Voiding: '/api/voiding/'
     Responses: '/api/responses/'
     Error Handling: '/api/error-handling/'
