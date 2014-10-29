@@ -16,6 +16,6 @@ Gateway | Composer Package | Maintainer
 [PaymentSense](/gateways/paymentsense/) | `coatesap/omnipay-paymentsense` | Andrew Coates
 [Realex](/gateways/realex/) | `coatesap/omnipay-realex` | Andrew Coates
 [SecPay](/gateways/secpay/) | `justinbusschau/omnipay-secpay` | Justin Busschau
-[Sisow](/gateways/sisow/) | `nettob/omnipay-sisow` | Niek
+[Sisow](https://github.com/fruitcakestudio/omnipay-sisow ) | `fruitcakestudio/omnipay-sisow` | [Fruitcake Studio](https://github.com/fruitcakestudio)
 [Skrill](/gateways/skrill/) | `alfaproject/omnipay-skrill` | João Dias
 [Cybersource](https://github.com/dioscouri/omnipay-cybersource) | `dioscouri/omnipay-cybersource` | [Dioscouri Design](https://github.com/dioscouri)
