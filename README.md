@@ -142,7 +142,7 @@ Gateway | Composer Package | Maintainer
 [Sage Pay](https://github.com/thephpleague/omnipay-sagepay) | omnipay/sagepay | [Adrian Macneil](https://github.com/adrianmacneil)
 [SecurePay](https://github.com/thephpleague/omnipay-securepay) | omnipay/securepay | [Adrian Macneil](https://github.com/adrianmacneil)
 [SecPay](https://github.com/justinbusschau/omnipay-secpay) | justinbusschau/omnipay-secpay | [Justin Busschau](https://github.com/justinbusschau)
-[Sisow](https://github.com/nettob/omnipay-sisow) | nettob/omnipay-sisow | [Niek](https://github.com/nettob)
+[Sisow](https://github.com/fruitcakestudio/omnipay-sisow ) | fruitcakestudio/omnipay-sisow | [Fruitcake Studio](https://github.com/fruitcakestudio)
 [Skrill](https://github.com/alfaproject/omnipay-skrill) | alfaproject/omnipay-skrill | [João Dias](https://github.com/alfaproject)
 [Stripe](https://github.com/thephpleague/omnipay-stripe) | omnipay/stripe | [Adrian Macneil](https://github.com/adrianmacneil)
 [TargetPay](https://github.com/thephpleague/omnipay-targetpay) | omnipay/targetpay | [Alexander Deruwe](https://github.com/aderuwe)
