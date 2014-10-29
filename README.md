@@ -147,6 +147,7 @@ Gateway | Composer Package | Maintainer
 [Stripe](https://github.com/thephpleague/omnipay-stripe) | omnipay/stripe | [Adrian Macneil](https://github.com/adrianmacneil)
 [TargetPay](https://github.com/thephpleague/omnipay-targetpay) | omnipay/targetpay | [Alexander Deruwe](https://github.com/aderuwe)
 [WorldPay](https://github.com/thephpleague/omnipay-worldpay) | omnipay/worldpay | [Adrian Macneil](https://github.com/adrianmacneil)
+[Cybersource](https://github.com/dioscouri/omnipay-cybersource) | dioscouri/omnipay-cybersource | [Dioscouri Design](https://github.com/dioscouri)
 
 Gateways are created and initialized like so:
 
