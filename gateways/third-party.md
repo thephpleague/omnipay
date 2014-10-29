@@ -18,3 +18,4 @@ Gateway | Composer Package | Maintainer
 [SecPay](/gateways/secpay/) | `justinbusschau/omnipay-secpay` | Justin Busschau
 [Sisow](/gateways/sisow/) | `nettob/omnipay-sisow` | Niek
 [Skrill](/gateways/skrill/) | `alfaproject/omnipay-skrill` | João Dias
+[Cybersource](https://github.com/dioscouri/omnipay-cybersource) | `dioscouri/omnipay-cybersource` | [Dioscouri Design](https://github.com/dioscouri)
