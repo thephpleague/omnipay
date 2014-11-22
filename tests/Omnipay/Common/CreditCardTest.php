@@ -596,6 +596,6 @@ class CreditCardTest extends TestCase
     public function testInvalidShortCard()
     {
         $this->card->setNumber('43');
-	    $this->card->validate();
+        $this->card->validate();
     }
 }

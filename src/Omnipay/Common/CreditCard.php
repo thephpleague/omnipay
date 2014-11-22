@@ -141,9 +141,9 @@ class CreditCard
             throw new InvalidCreditCardException('Card number is invalid');
         }
 
-	    if (!is_null($this->getNumber()) && !preg_match('/^\d{12,19}$/i', $this->getNumber())) {
-		    throw new InvalidCreditCardException('Card number should have 12 to 19 digits');
-	    }
+        if (!is_null($this->getNumber()) && !preg_match('/^\d{12,19}$/i', $this->getNumber())) {
+            throw new InvalidCreditCardException('Card number should have 12 to 19 digits');
+        }
     }
 
     public function getTitle()
