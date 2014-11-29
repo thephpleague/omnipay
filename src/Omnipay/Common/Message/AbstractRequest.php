@@ -161,14 +161,40 @@ abstract class AbstractRequest implements RequestInterface
     public function getAmount()
     {
         $amount = $this->getParameter('amount');
-        if ($amount) {
-            if (!is_float($amount) &&
-                $this->getCurrencyDecimalPlaces() > 0 &&
-                false === strpos((string) $amount, '.')) {
-                throw new InvalidRequestException(
-                    'Please specify amount as a string or float, ' .
-                    'with decimal places (e.g. \'10.00\' to represent $10.00).'
-                );
+        $message = 'Please specify amount as a string or float, '
+            . 'with decimal places (e.g. \'10.00\' to represent $10.00).';
+
+        if (isset($amount)) {
+            // Don't allow integers for currencies that support decimals.
+            // This is for legacy reasons - upgrades from v0.9
+            if (is_int($amount) && $this->getCurrencyDecimalPlaces() > 0) {
+                throw new InvalidRequestException($message);
+            }
+
+            if (is_string($amount)) {
+                // A '-' is not considered a valid character, so a negative amounts will be invalid.
+                if (preg_match('/[^0-9\.]/', $amount)) {
+                    throw new InvalidRequestException('Invalid character in amount.');
+                }
+
+                // Generic number, with optional decimals.
+                if (!preg_match('/^[0-9]+(\.[0-9]*)?$/', $amount)) {
+                    throw new InvalidRequestException('Amount string is not a valid decimal number.');
+                }
+
+                // Don't allow integers for currencies that support decimals (legacy v0.9).
+                if ($this->getCurrencyDecimalPlaces() > 0 && false === strpos((string) $amount, '.')) {
+                    throw new InvalidRequestException($message);
+                }
+            }
+
+            // The number_format() used later requires a float.
+            $amount = (float)$amount;
+
+            // Check for rounding that may occur if too many decimal places are supplied.
+            $decimal_count = strlen(substr(strrchr((string)$amount, '.'), 1));
+            if ($decimal_count > $this->getCurrencyDecimalPlaces()) {
+                throw new InvalidRequestException('Amount precision is too high for currency.');
             }
 
             return $this->formatCurrency($amount);
