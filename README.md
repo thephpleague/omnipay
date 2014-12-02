@@ -119,6 +119,7 @@ Gateway | Composer Package | Maintainer
 [Buckaroo](https://github.com/thephpleague/omnipay-buckaroo) | omnipay/buckaroo | [Adrian Macneil](https://github.com/adrianmacneil)
 [CardSave](https://github.com/thephpleague/omnipay-cardsave) | omnipay/cardsave | [Adrian Macneil](https://github.com/adrianmacneil)
 [Coinbase](https://github.com/thephpleague/omnipay-coinbase) | omnipay/coinbase | [Adrian Macneil](https://github.com/adrianmacneil)
+[Cybersource](https://github.com/dioscouri/omnipay-cybersource) | dioscouri/omnipay-cybersource | [Dioscouri Design](https://github.com/dioscouri)
 [DataCash](https://github.com/coatesap/omnipay-datacash) | coatesap/omnipay-datacash | [Andrew Coates](https://github.com/coatesap)
 [Dummy](https://github.com/thephpleague/omnipay-dummy) | omnipay/dummy | [Adrian Macneil](https://github.com/adrianmacneil)
 [eWAY](https://github.com/thephpleague/omnipay-eway) | omnipay/eway | [Adrian Macneil](https://github.com/adrianmacneil)
@@ -147,7 +148,6 @@ Gateway | Composer Package | Maintainer
 [Stripe](https://github.com/thephpleague/omnipay-stripe) | omnipay/stripe | [Adrian Macneil](https://github.com/adrianmacneil)
 [TargetPay](https://github.com/thephpleague/omnipay-targetpay) | omnipay/targetpay | [Alexander Deruwe](https://github.com/aderuwe)
 [WorldPay](https://github.com/thephpleague/omnipay-worldpay) | omnipay/worldpay | [Adrian Macneil](https://github.com/adrianmacneil)
-[Cybersource](https://github.com/dioscouri/omnipay-cybersource) | dioscouri/omnipay-cybersource | [Dioscouri Design](https://github.com/dioscouri)
 [Yandex.Money](https://github.com/aTastyCookie/yandexmoney_omnipay) | aTastyCookie/yandexmoney_omnipay | [Roman Ananyev](https://github.com/aTastyCookie/)
 
 Gateways are created and initialized like so:
