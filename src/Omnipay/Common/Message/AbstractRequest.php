@@ -164,7 +164,7 @@ abstract class AbstractRequest implements RequestInterface
         $message = 'Please specify amount as a string or float, '
             . 'with decimal places (e.g. \'10.00\' to represent $10.00).';
 
-        if (isset($amount)) {
+        if ($amount !== null) {
             // Don't allow integers for currencies that support decimals.
             // This is for legacy reasons - upgrades from v0.9
             if (is_int($amount) && $this->getCurrencyDecimalPlaces() > 0) {
