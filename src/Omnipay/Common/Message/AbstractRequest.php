@@ -161,7 +161,7 @@ abstract class AbstractRequest implements RequestInterface
     public function getAmount()
     {
         $amount = $this->getParameter('amount');
-        if ($amount) {
+        if ($amount !== NULL) {
             if (!is_float($amount) &&
                 $this->getCurrencyDecimalPlaces() > 0 &&
                 false === strpos((string) $amount, '.')) {
