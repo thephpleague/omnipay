@@ -95,7 +95,7 @@ class AbstractRequestTest extends TestCase
 
     public function testAmountZeroString()
     {
-        $this->assertSame($this->request, $this->request->setAmount('0.0'));
+        $this->assertSame($this->request, $this->request->setAmount('0.000000'));
         $this->assertSame('0.00', $this->request->getAmount());
     }
 
@@ -166,6 +166,15 @@ class AbstractRequestTest extends TestCase
     public function testAmountInvalidFormatThrowsException()
     {
         $this->assertSame($this->request, $this->request->setAmount('1.234.00'));
+        $this->request->getAmount();
+    }
+
+    /**
+     * @expectedException Omnipay\Common\Exception\InvalidRequestException
+     */
+    public function testAmountInvalidTypeThrowsException()
+    {
+        $this->assertSame($this->request, $this->request->setAmount(true));
         $this->request->getAmount();
     }
 
