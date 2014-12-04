@@ -29,6 +29,13 @@ interface ResponseInterface extends MessageInterface
     public function isRedirect();
 
     /**
+     * Is the transaction cancelled by the user?
+     *
+     * @return boolean
+     */
+    public function isCancelled();
+
+    /**
      * Response Message
      *
      * @return string A response message from the payment gateway
