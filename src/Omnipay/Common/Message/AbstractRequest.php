@@ -159,6 +159,8 @@ abstract class AbstractRequest implements RequestInterface
     }
 
     /**
+     * Validates and returns the formated amount.
+     *
      * @throws InvalidRequestException on any validation failure.
      * @return string The amount formatted to the correct number of decimal places for the selected currency.
      */
