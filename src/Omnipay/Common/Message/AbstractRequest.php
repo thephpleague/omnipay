@@ -161,7 +161,6 @@ abstract class AbstractRequest implements RequestInterface
     public function getAmount()
     {
         $amount = $this->getParameter('amount');
-<<<<<<< HEAD
         $message = 'Please specify amount as a string or float, '
             . 'with decimal places (e.g. \'10.00\' to represent $10.00).';
 
@@ -196,16 +195,7 @@ abstract class AbstractRequest implements RequestInterface
             $decimal_count = strlen(substr(strrchr((string)$amount, '.'), 1));
             if ($decimal_count > $this->getCurrencyDecimalPlaces()) {
                 throw new InvalidRequestException('Amount precision is too high for currency.');
-=======
-        if ($amount !== null) {
-            if (!is_float($amount) &&
-                $this->getCurrencyDecimalPlaces() > 0 &&
-                false === strpos((string) $amount, '.')) {
-                throw new InvalidRequestException(
-                    'Please specify amount as a string or float, ' .
-                    'with decimal places (e.g. \'10.00\' to represent $10.00).'
-                );
->>>>>>> 66a1999f3b20f4466855326220b6e42f49426548
+
             }
 
             return $this->formatCurrency($amount);
