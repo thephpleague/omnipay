@@ -43,7 +43,8 @@
         "tala-payments",
         "targetpay",
         "twocheckout",
-        "worldpay"
+        "worldpay", 
+        "payU"
     ],
     "homepage": "https://github.com/thephpleague/omnipay",
     "license": "MIT",
