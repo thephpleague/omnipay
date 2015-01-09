@@ -139,6 +139,7 @@ Gateway | Composer Package | Maintainer
 [PaymentExpress (DPS)](https://github.com/thephpleague/omnipay-paymentexpress) | omnipay/paymentexpress | [Adrian Macneil](https://github.com/adrianmacneil)
 [PaymentSense](https://github.com/coatesap/omnipay-paymentsense) | coatesap/omnipay-paymentsense | [Andrew Coates](https://github.com/coatesap)
 [PayPal](https://github.com/thephpleague/omnipay-paypal) | omnipay/paypal | [Adrian Macneil](https://github.com/adrianmacneil)
+[PayU](https://github.com/efesaid/omnipay-payu) | omnipay/payu | [efesaid](https://github.com/efesaid)
 [Pin Payments](https://github.com/thephpleague/omnipay-pin) | omnipay/pin | [Adrian Macneil](https://github.com/adrianmacneil)
 [Realex](https://github.com/coatesap/omnipay-realex) | coatesap/omnipay-realex | [Andrew Coates](https://github.com/coatesap)
 [Sage Pay](https://github.com/thephpleague/omnipay-sagepay) | omnipay/sagepay | [Adrian Macneil](https://github.com/adrianmacneil)
