@@ -178,13 +178,13 @@ abstract class AbstractRequest implements RequestInterface
 
     public function toFloat($value)
     {
-        if ( ! is_string($value) && ! is_int($value) && ! is_float($value)) {
+        if (!is_string($value) && ! is_int($value) && ! is_float($value)) {
             throw new InvalidRequestException('Data type is not a valid decimal number.');
         }
 
         if (is_string($value)) {
             // Validate generic number, with optional sign and decimals.
-            if ( ! preg_match('/^[-]?[0-9]+(\.[0-9]*)?$/', $value)) {
+            if (!preg_match('/^[-]?[0-9]+(\.[0-9]*)?$/', $value)) {
                 throw new InvalidRequestException('String is not a valid decimal number.');
             }
         }
@@ -210,7 +210,7 @@ abstract class AbstractRequest implements RequestInterface
                 if (is_int($amount) || (is_string($amount) && false === strpos((string) $amount, '.'))) {
                     throw new InvalidRequestException(
                         'Please specify amount as a string or float, '
-                            . 'with decimal places (e.g. \'10.00\' to represent $10.00).'
+                        . 'with decimal places (e.g. \'10.00\' to represent $10.00).'
                     );
                 };
             }
@@ -218,12 +218,12 @@ abstract class AbstractRequest implements RequestInterface
             $amount = $this->toFloat($amount);
 
             // Check for a negative amount.
-            if ( ! $this->negativeAmountAllowed && $amount < 0) {
+            if (!$this->negativeAmountAllowed && $amount < 0) {
                 throw new InvalidRequestException('A negative amount is not allowed.');
             }
 
             // Check for a zero amount.
-            if ( ! $this->zeroAmountAllowed && $amount === 0.0) {
+            if (!$this->zeroAmountAllowed && $amount === 0.0) {
                 throw new InvalidRequestException('A zero amount is not allowed.');
             }
 
