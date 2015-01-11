@@ -1,4 +1,7 @@
 <?php
+/**
+ * Base payment gateway class
+ */
 
 namespace Omnipay\Common;
 
@@ -9,6 +12,11 @@ use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 /**
  * Base payment gateway class
+ *
+ * This abstract class should be extended by all payment gateways
+ * throughout the Omnipay system.  It enforces implementation of
+ * the GatewayInterface interface and defines various common attibutes
+ * and methods that all gateways should have.
  */
 abstract class AbstractGateway implements GatewayInterface
 {
