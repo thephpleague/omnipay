@@ -1,9 +1,16 @@
 <?php
+/**
+ * Currency class
+ */
 
 namespace Omnipay\Common;
 
 /**
  * Currency class
+ *
+ * This class abstracts certain functionality around currency objects,
+ * currency codes and currency numbers relating to global currencies used
+ * in the Omnipay system.
  */
 class Currency
 {

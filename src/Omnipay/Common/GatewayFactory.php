@@ -1,4 +1,7 @@
 <?php
+/**
+ * Omnipay Gateway Factory class
+ */
 
 namespace Omnipay\Common;
 
@@ -6,8 +9,19 @@ use Guzzle\Http\ClientInterface;
 use Omnipay\Common\Exception\RuntimeException;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
+/**
+ * Omnipay Gateway Factory class
+ *
+ * This class abstracts a set of gateways that can be independently
+ * registered, accessed, and used.
+ */
 class GatewayFactory
 {
+    /**
+     * Internal storage for all available gateways
+     *
+     * @var array
+     */
     private $gateways = array();
 
     /**
