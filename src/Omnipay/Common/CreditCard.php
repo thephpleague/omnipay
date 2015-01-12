@@ -15,6 +15,79 @@ use Symfony\Component\HttpFoundation\ParameterBag;
  *
  * This class defines and abstracts all of the credit card types used
  * throughout the Omnipay system.
+ *
+ * Example:
+ *
+ * <code>
+ *   // Define credit card parameters, which should look like this
+ *   $parameters = [
+ *       'firstName' => 'Bobby',
+ *       'lastName' => 'Tables',
+ *       'number' => '4444333322221111',
+ *       'cvv' => '123',
+ *       'expiryMonth' => '12',
+ *       'expiryYear' => '2017',
+ *       'email' => 'testcard@gmail.com',
+ *   ];
+ *
+ *   // Create a credit card object
+ *   $card = new CreditCard($parameters);
+ * </code>
+ *
+ * The full list of card attributes that may be set via the parameter to
+ * *new* is as follows:
+ *
+ * * title
+ * * firstName
+ * * lastName
+ * * name
+ * * company
+ * * address1
+ * * address2
+ * * city
+ * * postcode
+ * * state
+ * * country
+ * * phone
+ * * fax
+ * * number
+ * * expiryMonth
+ * * expiryYear
+ * * startMonth
+ * * startYear
+ * * cvv
+ * * issueNumber
+ * * billingTitle
+ * * billingName
+ * * billingFirstName
+ * * billingLastName
+ * * billingCompany
+ * * billingAddress1
+ * * billingAddress2
+ * * billingCity
+ * * billingPostcode
+ * * billingState
+ * * billingCountry
+ * * billingPhone
+ * * billingFax
+ * * shippingTitle
+ * * shippingName
+ * * shippingFirstName
+ * * shippingLastName
+ * * shippingCompany
+ * * shippingAddress1
+ * * shippingAddress2
+ * * shippingCity
+ * * shippingPostcode
+ * * shippingState
+ * * shippingCountry
+ * * shippingPhone
+ * * shippingFax
+ * * email
+ * * birthday
+ * * gender
+ *
+ * If any unknown parameters are passed in, they will be ignored.  No error is thrown.
  */
 class CreditCard
 {
@@ -32,6 +105,8 @@ class CreditCard
     const BRAND_LASER = 'laser';
 
     /**
+     * Internal storage of all of the card parameters.
+     *
      * @var \Symfony\Component\HttpFoundation\ParameterBag
      */
     protected $parameters;
@@ -81,8 +156,7 @@ class CreditCard
      * If any unknown parameters passed, they will be ignored.
      *
      * @param array $parameters An associative array of parameters
-     *
-     * @return $this
+     * @return CreditCard provides a fluent interface.
      */
     public function initialize($parameters = null)
     {
@@ -93,16 +167,33 @@ class CreditCard
         return $this;
     }
 
+    /**
+     * Get all parameters.
+     *
+     * @return array An associative array of parameters.
+     */
     public function getParameters()
     {
         return $this->parameters->all();
     }
 
+    /**
+     * Get one parameter.
+     *
+     * @return mixed A single parameter value.
+     */
     protected function getParameter($key)
     {
         return $this->parameters->get($key);
     }
 
+    /**
+     * Set one parameter.
+     *
+     * @param string $key Parameter key
+     * @param mixed $value Parameter value
+     * @return CreditCard provides a fluent interface.
+     */
     protected function setParameter($key, $value)
     {
         $this->parameters->set($key, $value);
@@ -110,6 +201,15 @@ class CreditCard
         return $this;
     }
 
+    /**
+     * Set the credit card year.
+     *
+     * The input value is normalised to a 4 digit number.
+     *
+     * @param string $key Parameter key, e.g. 'expiryYear'
+     * @param mixed $value Parameter value
+     * @return CreditCard provides a fluent interface.
+     */
     protected function setYearParameter($key, $value)
     {
         // normalize year to four digits
@@ -130,6 +230,8 @@ class CreditCard
      *
      * Generally if you want to validate the credit card yourself with custom error
      * messages, you should use your framework's validation library, not this method.
+     *
+     * @return void
      */
     public function validate()
     {
@@ -148,11 +250,22 @@ class CreditCard
         }
     }
 
+    /**
+     * Get Card Title.
+     *
+     * @return string
+     */
     public function getTitle()
     {
         return $this->getBillingTitle();
     }
 
+    /**
+     * Set Card Title.
+     *
+     * @param string $value Parameter value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setTitle($value)
     {
         $this->setBillingTitle($value);
@@ -161,11 +274,22 @@ class CreditCard
         return $this;
     }
 
+    /**
+     * Get Card First Name.
+     *
+     * @return string
+     */
     public function getFirstName()
     {
         return $this->getBillingFirstName();
     }
 
+    /**
+     * Set Card First Name (Billing and Shipping).
+     *
+     * @param string $value Parameter value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setFirstName($value)
     {
         $this->setBillingFirstName($value);
@@ -174,11 +298,22 @@ class CreditCard
         return $this;
     }
 
+    /**
+     * Get Card Last Name.
+     *
+     * @return string
+     */
     public function getLastName()
     {
         return $this->getBillingLastName();
     }
 
+    /**
+     * Set Card Last Name (Billing and Shipping).
+     *
+     * @param string $value Parameter value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setLastName($value)
     {
         $this->setBillingLastName($value);
@@ -187,11 +322,22 @@ class CreditCard
         return $this;
     }
 
+    /**
+     * Get Card Name.
+     *
+     * @return string
+     */
     public function getName()
     {
         return $this->getBillingName();
     }
 
+    /**
+     * Set Card Name (Billing and Shipping).
+     *
+     * @param string $value Parameter value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setName($value)
     {
         $this->setBillingName($value);
@@ -200,17 +346,36 @@ class CreditCard
         return $this;
     }
 
+    /**
+     * Get Card Number.
+     *
+     * @return string
+     */
     public function getNumber()
     {
         return $this->getParameter('number');
     }
 
+    /**
+     * Set Card Number
+     *
+     * Non-numeric characters are stripped out of the card number, so
+     * it's safe to pass in strings such as "4444-3333 2222 1111" etc.
+     *
+     * @param string $value Parameter value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setNumber($value)
     {
         // strip non-numeric characters
         return $this->setParameter('number', preg_replace('/\D/', '', $value));
     }
 
+    /**
+     * Get the last 4 digits of the card number.
+     *
+     * @return string
+     */
     public function getNumberLastFour()
     {
         return substr($this->getNumber(), -4, 4) ?: null;
@@ -245,21 +410,43 @@ class CreditCard
         }
     }
 
+    /**
+     * Get the card expiry month.
+     *
+     * @return string
+     */
     public function getExpiryMonth()
     {
         return $this->getParameter('expiryMonth');
     }
 
+    /**
+     * Sets the card expiry month.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setExpiryMonth($value)
     {
         return $this->setParameter('expiryMonth', (int) $value);
     }
 
+    /**
+     * Get the card expiry year.
+     *
+     * @return string
+     */
     public function getExpiryYear()
     {
         return $this->getParameter('expiryYear');
     }
 
+    /**
+     * Sets the card expiry year.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setExpiryYear($value)
     {
         return $this->setYearParameter('expiryYear', $value);
@@ -277,21 +464,43 @@ class CreditCard
         return gmdate($format, gmmktime(0, 0, 0, $this->getExpiryMonth(), 1, $this->getExpiryYear()));
     }
 
+    /**
+     * Get the card start month.
+     *
+     * @return string
+     */
     public function getStartMonth()
     {
         return $this->getParameter('startMonth');
     }
 
+    /**
+     * Sets the card start month.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setStartMonth($value)
     {
         return $this->setParameter('startMonth', (int) $value);
     }
 
+    /**
+     * Get the card start year.
+     *
+     * @return string
+     */
     public function getStartYear()
     {
         return $this->getParameter('startYear');
     }
 
+    /**
+     * Sets the card start year.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setStartYear($value)
     {
         return $this->setYearParameter('startYear', $value);
@@ -309,41 +518,85 @@ class CreditCard
         return gmdate($format, gmmktime(0, 0, 0, $this->getStartMonth(), 1, $this->getStartYear()));
     }
 
+    /**
+     * Get the card CVV.
+     *
+     * @return string
+     */
     public function getCvv()
     {
         return $this->getParameter('cvv');
     }
 
+    /**
+     * Sets the card CVV.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setCvv($value)
     {
         return $this->setParameter('cvv', $value);
     }
 
+    /**
+     * Get the card issue number.
+     *
+     * @return string
+     */
     public function getIssueNumber()
     {
         return $this->getParameter('issueNumber');
     }
 
+    /**
+     * Sets the card issue number.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setIssueNumber($value)
     {
         return $this->setParameter('issueNumber', $value);
     }
 
+    /**
+     * Get the card billing title.
+     *
+     * @return string
+     */
     public function getBillingTitle()
     {
         return $this->getParameter('billingTitle');
     }
 
+    /**
+     * Sets the card billing title.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setBillingTitle($value)
     {
         return $this->setParameter('billingTitle', $value);
     }
 
+    /**
+     * Get the card billing name.
+     *
+     * @return string
+     */
     public function getBillingName()
     {
         return trim($this->getBillingFirstName() . ' ' . $this->getBillingLastName());
     }
 
+    /**
+     * Sets the card billing name.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setBillingName($value)
     {
         $names = explode(' ', $value, 2);
@@ -353,131 +606,274 @@ class CreditCard
         return $this;
     }
 
+    /**
+     * Get the first part of the card billing name.
+     *
+     * @return string
+     */
     public function getBillingFirstName()
     {
         return $this->getParameter('billingFirstName');
     }
 
+    /**
+     * Sets the first part of the card billing name.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setBillingFirstName($value)
     {
         return $this->setParameter('billingFirstName', $value);
     }
 
+    /**
+     * Get the last part of the card billing name.
+     *
+     * @return string
+     */
     public function getBillingLastName()
     {
         return $this->getParameter('billingLastName');
     }
 
+    /**
+     * Sets the last part of the card billing name.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setBillingLastName($value)
     {
         return $this->setParameter('billingLastName', $value);
     }
 
+    /**
+     * Get the billing company name.
+     *
+     * @return string
+     */
     public function getBillingCompany()
     {
         return $this->getParameter('billingCompany');
     }
 
+    /**
+     * Sets the billing company name.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setBillingCompany($value)
     {
         return $this->setParameter('billingCompany', $value);
     }
 
+    /**
+     * Get the billing address, line 1.
+     *
+     * @return string
+     */
     public function getBillingAddress1()
     {
         return $this->getParameter('billingAddress1');
     }
 
+    /**
+     * Sets the billing address, line 1.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setBillingAddress1($value)
     {
         return $this->setParameter('billingAddress1', $value);
     }
 
+    /**
+     * Get the billing address, line 2.
+     *
+     * @return string
+     */
     public function getBillingAddress2()
     {
         return $this->getParameter('billingAddress2');
     }
 
+    /**
+     * Sets the billing address, line 2.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setBillingAddress2($value)
     {
         return $this->setParameter('billingAddress2', $value);
     }
 
+    /**
+     * Get the billing city.
+     *
+     * @return string
+     */
     public function getBillingCity()
     {
         return $this->getParameter('billingCity');
     }
 
+    /**
+     * Sets billing city.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setBillingCity($value)
     {
         return $this->setParameter('billingCity', $value);
     }
 
+    /**
+     * Get the billing postcode.
+     *
+     * @return string
+     */
     public function getBillingPostcode()
     {
         return $this->getParameter('billingPostcode');
     }
 
+    /**
+     * Sets the billing postcode.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setBillingPostcode($value)
     {
         return $this->setParameter('billingPostcode', $value);
     }
 
+    /**
+     * Get the billing state.
+     *
+     * @return string
+     */
     public function getBillingState()
     {
         return $this->getParameter('billingState');
     }
 
+    /**
+     * Sets the billing state.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setBillingState($value)
     {
         return $this->setParameter('billingState', $value);
     }
 
+    /**
+     * Get the billing country name.
+     *
+     * @return string
+     */
     public function getBillingCountry()
     {
         return $this->getParameter('billingCountry');
     }
 
+    /**
+     * Sets the billing country name.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setBillingCountry($value)
     {
         return $this->setParameter('billingCountry', $value);
     }
 
+    /**
+     * Get the billing phone number.
+     *
+     * @return string
+     */
     public function getBillingPhone()
     {
         return $this->getParameter('billingPhone');
     }
 
+    /**
+     * Sets the billing phone number.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setBillingPhone($value)
     {
         return $this->setParameter('billingPhone', $value);
     }
 
+    /**
+     * Get the billing fax number.
+     *
+     * @return string
+     */
     public function getBillingFax()
     {
         return $this->getParameter('billingFax');
     }
 
+    /**
+     * Sets the billing fax number.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setBillingFax($value)
     {
         return $this->setParameter('billingFax', $value);
     }
 
+    /**
+     * Get the title of the card shipping name.
+     *
+     * @return string
+     */
     public function getShippingTitle()
     {
         return $this->getParameter('shippingTitle');
     }
 
+    /**
+     * Sets the title of the card shipping name.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setShippingTitle($value)
     {
         return $this->setParameter('shippingTitle', $value);
     }
 
+    /**
+     * Get the card shipping name.
+     *
+     * @return string
+     */
     public function getShippingName()
     {
         return trim($this->getShippingFirstName() . ' ' . $this->getShippingLastName());
     }
 
+    /**
+     * Sets the card shipping name.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setShippingName($value)
     {
         $names = explode(' ', $value, 2);
@@ -487,121 +883,253 @@ class CreditCard
         return $this;
     }
 
+    /**
+     * Get the first part of the card shipping name.
+     *
+     * @return string
+     */
     public function getShippingFirstName()
     {
         return $this->getParameter('shippingFirstName');
     }
 
+    /**
+     * Sets the first part of the card shipping name.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setShippingFirstName($value)
     {
         return $this->setParameter('shippingFirstName', $value);
     }
 
+    /**
+     * Get the last part of the card shipping name.
+     *
+     * @return string
+     */
     public function getShippingLastName()
     {
         return $this->getParameter('shippingLastName');
     }
 
+    /**
+     * Sets the last part of the card shipping name.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setShippingLastName($value)
     {
         return $this->setParameter('shippingLastName', $value);
     }
 
+    /**
+     * Get the shipping company name.
+     *
+     * @return string
+     */
     public function getShippingCompany()
     {
         return $this->getParameter('shippingCompany');
     }
 
+    /**
+     * Sets the shipping company name.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setShippingCompany($value)
     {
         return $this->setParameter('shippingCompany', $value);
     }
 
+    /**
+     * Get the shipping address, line 1.
+     *
+     * @return string
+     */
     public function getShippingAddress1()
     {
         return $this->getParameter('shippingAddress1');
     }
 
+    /**
+     * Sets the shipping address, line 1.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setShippingAddress1($value)
     {
         return $this->setParameter('shippingAddress1', $value);
     }
 
+    /**
+     * Get the shipping address, line 2.
+     *
+     * @return string
+     */
     public function getShippingAddress2()
     {
         return $this->getParameter('shippingAddress2');
     }
 
+    /**
+     * Sets the shipping address, line 2.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setShippingAddress2($value)
     {
         return $this->setParameter('shippingAddress2', $value);
     }
 
+    /**
+     * Get the shipping city.
+     *
+     * @return string
+     */
     public function getShippingCity()
     {
         return $this->getParameter('shippingCity');
     }
 
+    /**
+     * Sets the shipping city.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setShippingCity($value)
     {
         return $this->setParameter('shippingCity', $value);
     }
 
+    /**
+     * Get the shipping postcode.
+     *
+     * @return string
+     */
     public function getShippingPostcode()
     {
         return $this->getParameter('shippingPostcode');
     }
 
+    /**
+     * Sets the shipping postcode.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setShippingPostcode($value)
     {
         return $this->setParameter('shippingPostcode', $value);
     }
 
+    /**
+     * Get the shipping state.
+     *
+     * @return string
+     */
     public function getShippingState()
     {
         return $this->getParameter('shippingState');
     }
 
+    /**
+     * Sets the shipping state.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setShippingState($value)
     {
         return $this->setParameter('shippingState', $value);
     }
 
+    /**
+     * Get the shipping country.
+     *
+     * @return string
+     */
     public function getShippingCountry()
     {
         return $this->getParameter('shippingCountry');
     }
 
+    /**
+     * Sets the shipping country.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setShippingCountry($value)
     {
         return $this->setParameter('shippingCountry', $value);
     }
 
+    /**
+     * Get the shipping phone number.
+     *
+     * @return string
+     */
     public function getShippingPhone()
     {
         return $this->getParameter('shippingPhone');
     }
 
+    /**
+     * Sets the shipping phone number.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setShippingPhone($value)
     {
         return $this->setParameter('shippingPhone', $value);
     }
 
+    /**
+     * Get the shipping fax number.
+     *
+     * @return string
+     */
     public function getShippingFax()
     {
         return $this->getParameter('shippingFax');
     }
 
+    /**
+     * Sets the shipping fax number.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setShippingFax($value)
     {
         return $this->setParameter('shippingFax', $value);
     }
 
+    /**
+     * Get the billing address, line 1.
+     *
+     * @return string
+     */
     public function getAddress1()
     {
         return $this->getParameter('billingAddress1');
     }
 
+    /**
+     * Sets the billing and shipping address, line 1.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setAddress1($value)
     {
         $this->setParameter('billingAddress1', $value);
@@ -610,11 +1138,22 @@ class CreditCard
         return $this;
     }
 
+    /**
+     * Get the billing address, line 2.
+     *
+     * @return string
+     */
     public function getAddress2()
     {
         return $this->getParameter('billingAddress2');
     }
 
+    /**
+     * Sets the billing and shipping address, line 2.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setAddress2($value)
     {
         $this->setParameter('billingAddress2', $value);
@@ -623,11 +1162,22 @@ class CreditCard
         return $this;
     }
 
+    /**
+     * Get the billing city.
+     *
+     * @return string
+     */
     public function getCity()
     {
         return $this->getParameter('billingCity');
     }
 
+    /**
+     * Sets the billing and shipping city.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setCity($value)
     {
         $this->setParameter('billingCity', $value);
@@ -636,11 +1186,22 @@ class CreditCard
         return $this;
     }
 
+    /**
+     * Get the billing postcode.
+     *
+     * @return string
+     */
     public function getPostcode()
     {
         return $this->getParameter('billingPostcode');
     }
 
+    /**
+     * Sets the billing and shipping postcode.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setPostcode($value)
     {
         $this->setParameter('billingPostcode', $value);
@@ -649,11 +1210,22 @@ class CreditCard
         return $this;
     }
 
+    /**
+     * Get the billing state.
+     *
+     * @return string
+     */
     public function getState()
     {
         return $this->getParameter('billingState');
     }
 
+    /**
+     * Sets the billing and shipping state.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setState($value)
     {
         $this->setParameter('billingState', $value);
@@ -662,11 +1234,22 @@ class CreditCard
         return $this;
     }
 
+    /**
+     * Get the billing country.
+     *
+     * @return string
+     */
     public function getCountry()
     {
         return $this->getParameter('billingCountry');
     }
 
+    /**
+     * Sets the billing and shipping country.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setCountry($value)
     {
         $this->setParameter('billingCountry', $value);
@@ -675,11 +1258,22 @@ class CreditCard
         return $this;
     }
 
+    /**
+     * Get the billing phone number.
+     *
+     * @return string
+     */
     public function getPhone()
     {
         return $this->getParameter('billingPhone');
     }
 
+    /**
+     * Sets the billing and shipping phone number.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setPhone($value)
     {
         $this->setParameter('billingPhone', $value);
@@ -688,11 +1282,22 @@ class CreditCard
         return $this;
     }
 
+    /**
+     * Get the billing fax number..
+     *
+     * @return string
+     */
     public function getFax()
     {
         return $this->getParameter('billingFax');
     }
 
+    /**
+     * Sets the billing and shipping fax number.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setFax($value)
     {
         $this->setParameter('billingFax', $value);
@@ -701,11 +1306,22 @@ class CreditCard
         return $this;
     }
 
+    /**
+     * Get the card billing company name.
+     *
+     * @return string
+     */
     public function getCompany()
     {
         return $this->getParameter('billingCompany');
     }
 
+    /**
+     * Sets the billing and shipping company name.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setCompany($value)
     {
         $this->setParameter('billingCompany', $value);
@@ -714,16 +1330,32 @@ class CreditCard
         return $this;
     }
 
+    /**
+     * Get the cardholder's email address.
+     *
+     * @return string
+     */
     public function getEmail()
     {
         return $this->getParameter('email');
     }
 
+    /**
+     * Sets the cardholder's email address.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setEmail($value)
     {
         return $this->setParameter('email', $value);
     }
 
+    /**
+     * Get the cardholder's birthday.
+     *
+     * @return string
+     */
     public function getBirthday($format = 'Y-m-d')
     {
         $value = $this->getParameter('birthday');
@@ -731,6 +1363,12 @@ class CreditCard
         return $value ? $value->format($format) : null;
     }
 
+    /**
+     * Sets the cardholder's birthday.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setBirthday($value)
     {
         if ($value) {
@@ -742,11 +1380,22 @@ class CreditCard
         return $this->setParameter('birthday', $value);
     }
 
+    /**
+     * Get the cardholder's gender.
+     *
+     * @return string
+     */
     public function getGender()
     {
         return $this->getParameter('gender');
     }
 
+    /**
+     * Sets the cardholder's gender.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
     public function setGender($value)
     {
         return $this->setParameter('gender', $value);
