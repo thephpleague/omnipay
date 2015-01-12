@@ -28,15 +28,19 @@ use Symfony\Component\HttpFoundation\Request as HttpRequest;
  * Example -- creating a request:
  *
  * <code>
- *   class myRequest extends \Omnipay\Common\Message\AbstractRequest {};
+ *   class MyRequest extends \Omnipay\Common\Message\AbstractRequest {};
  *
- *   class myGateway extends \Omnipay\Common\AbstractGateway {
+ *   class MyGateway extends \Omnipay\Common\AbstractGateway {
  *     function myRequest($parameters) {
- *       $this->createRequest('myRequest', $parameters);
+ *       $this->createRequest('MyRequest', $parameters);
  *     }
  *   }
  *
- *   $myRequest = myGateway->myRequest($someParameters);
+ *   // Create the gateway object
+ *   $gw = Omnipay::create('MyGateway');
+ *
+ *   // Create the request object
+ *   $myRequest = $gw->myRequest($someParameters);
  * </code>
  *
  * Example -- validating and sending a request:

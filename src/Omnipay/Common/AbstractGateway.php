@@ -247,15 +247,19 @@ abstract class AbstractGateway implements GatewayInterface
      * Example:
      *
      * <code>
-     *   class myRequest extends \Omnipay\Common\Message\AbstractRequest {};
+     *   class MyRequest extends \Omnipay\Common\Message\AbstractRequest {};
      *
-     *   class myGateway extends \Omnipay\Common\AbstractGateway {
+     *   class MyGateway extends \Omnipay\Common\AbstractGateway {
      *     function myRequest($parameters) {
-     *       $this->createRequest('myRequest', $parameters);
+     *       $this->createRequest('MyRequest', $parameters);
      *     }
      *   }
      *
-     *   $myRequest = myGateway->myRequest($someParameters);
+     *   // Create the gateway object
+     *   $gw = Omnipay::create('MyGateway');
+     *
+     *   // Create the request object
+     *   $myRequest = $gw->myRequest($someParameters);
      * </code>
      *
      * @see \Omnipay\Common\Message\AbstractRequest
