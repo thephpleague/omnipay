@@ -1,6 +1,6 @@
 ---
 layout: default
-permalink: gateways/stripe/
+permalink: gateways/targetpay/
 title: TargetPay
 ---
 
