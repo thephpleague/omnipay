@@ -1,4 +1,7 @@
 <?php
+/**
+ * Credit Card class
+ */
 
 namespace Omnipay\Common;
 
@@ -9,6 +12,9 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
  * Credit Card class
+ *
+ * This class defines and abstracts all of the credit card types used
+ * throughout the Omnipay system.
  */
 class CreditCard
 {

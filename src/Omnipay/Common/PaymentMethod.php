@@ -1,13 +1,35 @@
 <?php
+/**
+ * Payment Method
+ */
 
 namespace Omnipay\Common;
 
 /**
  * Payment Method
+ *
+ * This class defines a payment method to be used in the Omnipay system.
+ *
+ * @see Issuer
  */
 class PaymentMethod
 {
+
+    /**
+     * The ID of the payment method.  Used as the payment method ID in the
+     * Issuer class.
+     *
+     * @see Issuer
+     *
+     * @var string
+     */
     protected $id;
+    
+    /**
+     * The full name of the payment method
+     *
+     * @var string
+     */
     protected $name;
 
     /**
