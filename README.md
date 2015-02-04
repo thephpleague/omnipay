@@ -434,6 +434,10 @@ you can subscribe to.
 If you believe you have found a bug, please report it using the GitHub issue tracker
 for the appropriate package, or better yet, fork the library and submit a pull request.
 
+## Security
+If you discover any security related issues, please email kayladnls@gmail.com instead of using the issue tracker.
+
+
 ## Feedback
 
 **Please provide feedback!** We want to make this library useful in as many projects as possible.
