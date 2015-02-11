@@ -134,6 +134,7 @@ Gateway | Composer Package | Maintainer
 [Netaxept (BBS)](https://github.com/thephpleague/omnipay-netaxept) | omnipay/netaxept | [Adrian Macneil](https://github.com/adrianmacneil)
 [Netbanx](https://github.com/thephpleague/omnipay-netbanx) | omnipay/netbanx | [Maks Rafalko](https://github.com/borNfreee)
 [Neteller](https://github.com/alfaproject/omnipay-neteller) | alfaproject/omnipay-neteller | [João Dias](https://github.com/alfaproject)
+[Network Merchants International (NMI)](https://github.com/mfauveau/omnipay-nmi) | mfauveau/omnipay-nmi | [Matthieu Fauveau](https://github.com/mfauveau)
 [Pacnet](https://github.com/mfauveau/omnipay-pacnet) | mfauveau/omnipay-pacnet | [Matthieu Fauveau](https://github.com/mfauveau)
 [PayFast](https://github.com/thephpleague/omnipay-payfast) | omnipay/payfast | [Adrian Macneil](https://github.com/adrianmacneil)
 [Payflow](https://github.com/thephpleague/omnipay-payflow) | omnipay/payflow | [Adrian Macneil](https://github.com/adrianmacneil)
