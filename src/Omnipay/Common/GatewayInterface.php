@@ -10,6 +10,8 @@ namespace Omnipay\Common;
  *
  * This interface class defines the standard functions that any
  * Omnipay gateway needs to define.
+ *
+ * @see AbstractGateway
  */
 interface GatewayInterface
 {
