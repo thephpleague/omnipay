@@ -150,6 +150,7 @@ Gateway | Composer Package | Maintainer
 [Skrill](https://github.com/alfaproject/omnipay-skrill) | alfaproject/omnipay-skrill | [João Dias](https://github.com/alfaproject)
 [Stripe](https://github.com/thephpleague/omnipay-stripe) | omnipay/stripe | [Adrian Macneil](https://github.com/adrianmacneil)
 [TargetPay](https://github.com/thephpleague/omnipay-targetpay) | omnipay/targetpay | [Alexander Deruwe](https://github.com/aderuwe)
+[Veritrans](https://github.com/andylibrian/omnipay-veritrans) | andylibrian/omnipay-veritrans | [Andy Librian](https://github.com/andylibrian)
 [WorldPay](https://github.com/thephpleague/omnipay-worldpay) | omnipay/worldpay | [Adrian Macneil](https://github.com/adrianmacneil)
 [Yandex.Money](https://github.com/aTastyCookie/yandexmoney_omnipay) | aTastyCookie/yandexmoney_omnipay | [Roman Ananyev](https://github.com/aTastyCookie/)
 
