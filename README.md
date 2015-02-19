@@ -78,31 +78,20 @@ and code style used in other Omnipay gateways.
 
 ## Installation
 
-Omnipay is installed via [Composer](http://getcomposer.org/). To install all officially
-supported gateways, simply add the following to your `composer.json` file:
+Omnipay is installed via [Composer](http://getcomposer.org/). For most uses, you will need to require an individual gateway:
 
-```json
-{
-    "require": {
-        "omnipay/omnipay": "~2.0"
-    }
-}
+```
+composer require omnipay/paypal:~2.0
 ```
 
-Alternatively, you can require individual gateways:
-
-```json
-{
-    "require": {
-        "omnipay/paypal": "~2.0"
-    }
-}
+ To install all officially supported gateways:
+ 
 ```
+composer require omnipay/omnipay:~2.0
+```
+ 
+>*This will require **ALL** ~25 Omnipay gateways and is generally discourged.*
 
-Next, run composer to update your dependencies:
-
-    $ curl -s http://getcomposer.org/installer | php
-    $ php composer.phar update
 
 ## Payment Gateways
 
@@ -113,44 +102,43 @@ The following gateways are available:
 
 Gateway | Composer Package | Maintainer
 --- | --- | ---
-[2Checkout](https://github.com/thephpleague/omnipay-2checkout) | omnipay/twocheckout | [Adrian Macneil](https://github.com/adrianmacneil)
+[2Checkout](https://github.com/thephpleague/omnipay-2checkout) | omnipay/twocheckout | [Kayla Daniels](https://github.com/kayladnls)
 [Alipay](https://github.com/lokielse/omnipay-alipay) | lokielse/omnipay-alipay | [Loki Else](https://github.com/lokielse)
-[Authorize.Net](https://github.com/thephpleague/omnipay-authorizenet) | omnipay/authorizenet | [Adrian Macneil](https://github.com/adrianmacneil)
-[Buckaroo](https://github.com/thephpleague/omnipay-buckaroo) | omnipay/buckaroo | [Adrian Macneil](https://github.com/adrianmacneil)
-[CardSave](https://github.com/thephpleague/omnipay-cardsave) | omnipay/cardsave | [Adrian Macneil](https://github.com/adrianmacneil)
-[Coinbase](https://github.com/thephpleague/omnipay-coinbase) | omnipay/coinbase | [Adrian Macneil](https://github.com/adrianmacneil)
+[Authorize.Net](https://github.com/thephpleague/omnipay-authorizenet) | omnipay/authorizenet | [Kayla Daniels](https://github.com/kayladnls)
+[Buckaroo](https://github.com/thephpleague/omnipay-buckaroo) | omnipay/buckaroo | [Kayla Daniels](https://github.com/kayladnls)
+[CardSave](https://github.com/thephpleague/omnipay-cardsave) | omnipay/cardsave | [Kayla Daniels](https://github.com/kayladnls)
+[Coinbase](https://github.com/thephpleague/omnipay-coinbase) | omnipay/coinbase | [Kayla Daniels](https://github.com/kayladnls)
 [Cybersource](https://github.com/dioscouri/omnipay-cybersource) | dioscouri/omnipay-cybersource | [Dioscouri Design](https://github.com/dioscouri)
 [Cybersource SOAP](https://github.com/DABSquared/omnipay-cybersource-soap) | dabsquared/omnipay-cybersource-soap | [DABSquared](https://github.com/DABSquared)
 [DataCash](https://github.com/coatesap/omnipay-datacash) | coatesap/omnipay-datacash | [Andrew Coates](https://github.com/coatesap)
-[Dummy](https://github.com/thephpleague/omnipay-dummy) | omnipay/dummy | [Adrian Macneil](https://github.com/adrianmacneil)
+[Dummy](https://github.com/thephpleague/omnipay-dummy) | omnipay/dummy | [Kayla Daniels](https://github.com/kayladnls)
 [ecoPayz](https://github.com/dercoder/omnipay-ecopayz) | dercoder/omnipay-ecopayz | [Alexander Fedra](https://github.com/dercoder)
-[eWAY](https://github.com/thephpleague/omnipay-eway) | omnipay/eway | [Adrian Macneil](https://github.com/adrianmacneil)
+[eWAY](https://github.com/thephpleague/omnipay-eway) | omnipay/eway | [Kayla Daniels](https://github.com/kayladnls)
 [First Data](https://github.com/thephpleague/omnipay-firstdata) | omnipay/firstdata | [Andrew Coates](https://github.com/coatesap)
-[GoCardless](https://github.com/thephpleague/omnipay-gocardless) | omnipay/gocardless | [Adrian Macneil](https://github.com/adrianmacneil)
-[Manual](https://github.com/thephpleague/omnipay-manual) | omnipay/manual | [Adrian Macneil](https://github.com/adrianmacneil)
-[Migs](https://github.com/thephpleague/omnipay-migs) | omnipay/migs | [Adrian Macneil](https://github.com/adrianmacneil)
-[Mollie](https://github.com/thephpleague/omnipay-mollie) | omnipay/mollie | [Adrian Macneil](https://github.com/adrianmacneil)
-[MultiSafepay](https://github.com/thephpleague/omnipay-multisafepay) | omnipay/multisafepay | [Alexander Deruwe](https://github.com/aderuwe)
-[Netaxept (BBS)](https://github.com/thephpleague/omnipay-netaxept) | omnipay/netaxept | [Adrian Macneil](https://github.com/adrianmacneil)
+[GoCardless](https://github.com/thephpleague/omnipay-gocardless) | omnipay/gocardless | [Kayla Daniels](https://github.com/kayladnls)
+[Manual](https://github.com/thephpleague/omnipay-manual) | omnipay/manual | [Kayla Daniels](https://github.com/kayladnls)
+[Migs](https://github.com/thephpleague/omnipay-migs) | omnipay/migs | [Kayla Daniels](https://github.com/kayladnls)
+[Mollie](https://github.com/thephpleague/omnipay-mollie) | omnipay/mollie | [Kayla Daniels](https://github.com/kayladnls)ukkij[MultiSafepay](https://github.com/thephpleague/omnipay-multisafepay) | omnipay/multisafepay | [Alexander Deruwe](https://github.com/aderuwe)
+[Netaxept (BBS)](https://github.com/thephpleague/omnipay-netaxept) | omnipay/netaxept | [Kayla Daniels](https://github.com/kayladnls)
 [Netbanx](https://github.com/thephpleague/omnipay-netbanx) | omnipay/netbanx | [Maks Rafalko](https://github.com/borNfreee)
 [Neteller](https://github.com/alfaproject/omnipay-neteller) | alfaproject/omnipay-neteller | [João Dias](https://github.com/alfaproject)
 [Pacnet](https://github.com/mfauveau/omnipay-pacnet) | mfauveau/omnipay-pacnet | [Matthieu Fauveau](https://github.com/mfauveau)
-[PayFast](https://github.com/thephpleague/omnipay-payfast) | omnipay/payfast | [Adrian Macneil](https://github.com/adrianmacneil)
-[Payflow](https://github.com/thephpleague/omnipay-payflow) | omnipay/payflow | [Adrian Macneil](https://github.com/adrianmacneil)
-[PaymentExpress (DPS)](https://github.com/thephpleague/omnipay-paymentexpress) | omnipay/paymentexpress | [Adrian Macneil](https://github.com/adrianmacneil)
+[PayFast](https://github.com/thephpleague/omnipay-payfast) | omnipay/payfast | [Kayla Daniels](https://github.com/kayladnls)
+[Payflow](https://github.com/thephpleague/omnipay-payflow) | omnipay/payflow | [Kayla Daniels](https://github.com/kayladnls)
+[PaymentExpress (DPS)](https://github.com/thephpleague/omnipay-paymentexpress) | omnipay/paymentexpress | [Kayla Daniels](https://github.com/kayladnls)
 [PaymentSense](https://github.com/coatesap/omnipay-paymentsense) | coatesap/omnipay-paymentsense | [Andrew Coates](https://github.com/coatesap)
-[PayPal](https://github.com/thephpleague/omnipay-paypal) | omnipay/paypal | [Adrian Macneil](https://github.com/adrianmacneil)
+[PayPal](https://github.com/thephpleague/omnipay-paypal) | omnipay/paypal | [Kayla Daniels](https://github.com/kayladnls)
 [PayU](https://github.com/efesaid/omnipay-payu) | omnipay/payu | [efesaid](https://github.com/efesaid)
-[Pin Payments](https://github.com/thephpleague/omnipay-pin) | omnipay/pin | [Adrian Macneil](https://github.com/adrianmacneil)
+[Pin Payments](https://github.com/thephpleague/omnipay-pin) | omnipay/pin | [Kayla Daniels](https://github.com/kayladnls)
 [Realex](https://github.com/coatesap/omnipay-realex) | coatesap/omnipay-realex | [Andrew Coates](https://github.com/coatesap)
-[Sage Pay](https://github.com/thephpleague/omnipay-sagepay) | omnipay/sagepay | [Adrian Macneil](https://github.com/adrianmacneil)
-[SecurePay](https://github.com/thephpleague/omnipay-securepay) | omnipay/securepay | [Adrian Macneil](https://github.com/adrianmacneil)
+[Sage Pay](https://github.com/thephpleague/omnipay-sagepay) | omnipay/sagepay | [Kayla Daniels](https://github.com/kayladnls)
+[SecurePay](https://github.com/thephpleague/omnipay-securepay) | omnipay/securepay | [Kayla Daniels](https://github.com/kayladnls)
 [SecPay](https://github.com/justinbusschau/omnipay-secpay) | justinbusschau/omnipay-secpay | [Justin Busschau](https://github.com/justinbusschau)
 [Sisow](https://github.com/fruitcakestudio/omnipay-sisow ) | fruitcakestudio/omnipay-sisow | [Fruitcake Studio](https://github.com/fruitcakestudio)
 [Skrill](https://github.com/alfaproject/omnipay-skrill) | alfaproject/omnipay-skrill | [João Dias](https://github.com/alfaproject)
-[Stripe](https://github.com/thephpleague/omnipay-stripe) | omnipay/stripe | [Adrian Macneil](https://github.com/adrianmacneil)
+[Stripe](https://github.com/thephpleague/omnipay-stripe) | omnipay/stripe | [Kayla Daniels](https://github.com/kayladnls)
 [TargetPay](https://github.com/thephpleague/omnipay-targetpay) | omnipay/targetpay | [Alexander Deruwe](https://github.com/aderuwe)
-[WorldPay](https://github.com/thephpleague/omnipay-worldpay) | omnipay/worldpay | [Adrian Macneil](https://github.com/adrianmacneil)
+[WorldPay](https://github.com/thephpleague/omnipay-worldpay) | omnipay/worldpay | [Kayla Daniels](https://github.com/kayladnls)
 [Yandex.Money](https://github.com/aTastyCookie/yandexmoney_omnipay) | aTastyCookie/yandexmoney_omnipay | [Roman Ananyev](https://github.com/aTastyCookie/)
 
 Gateways are created and initialized like so:
