@@ -90,7 +90,7 @@ composer require omnipay/paypal:~2.0
 composer require omnipay/omnipay:~2.0
 ```
  
->*This will require **ALL** ~25 Omnipay gateways and is generally discourged.*
+> This will require **ALL** ~25 Omnipay gateways and is generally discouraged.
 
 
 ## Payment Gateways
