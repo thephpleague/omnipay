@@ -105,6 +105,7 @@ Gateway | Composer Package | Maintainer
 [2Checkout](https://github.com/thephpleague/omnipay-2checkout) | omnipay/twocheckout | [Kayla Daniels](https://github.com/kayladnls)
 [Alipay](https://github.com/lokielse/omnipay-alipay) | lokielse/omnipay-alipay | [Loki Else](https://github.com/lokielse)
 [Authorize.Net](https://github.com/thephpleague/omnipay-authorizenet) | omnipay/authorizenet | [Kayla Daniels](https://github.com/kayladnls)
+[Barclays ePDQ](https://github.com/samvaughton/omnipay-barclays-epdq) | samvaughton/omnipay-barclays-epdq | [Sam Vaughton](https://github.com/samvaughton)
 [Buckaroo](https://github.com/thephpleague/omnipay-buckaroo) | omnipay/buckaroo | [Kayla Daniels](https://github.com/kayladnls)
 [CardSave](https://github.com/thephpleague/omnipay-cardsave) | omnipay/cardsave | [Kayla Daniels](https://github.com/kayladnls)
 [Coinbase](https://github.com/thephpleague/omnipay-coinbase) | omnipay/coinbase | [Kayla Daniels](https://github.com/kayladnls)
