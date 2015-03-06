@@ -1,9 +1,17 @@
 <?php
+/**
+ * Response interface
+ */
 
 namespace Omnipay\Common\Message;
 
 /**
- * Response interface
+ * Response Interface
+ *
+ * This interface class defines the standard functions that any Omnipay response
+ * interface needs to be able to provide.  It is an extension of MessageInterface.
+ *
+ * @see MessageInterface
  */
 interface ResponseInterface extends MessageInterface
 {
