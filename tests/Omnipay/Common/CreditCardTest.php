@@ -589,4 +589,13 @@ class CreditCardTest extends TestCase
         $this->card->setGender('female');
         $this->assertEquals('female', $this->card->getGender());
     }
+
+    /**
+     * @expectedException Omnipay\Common\Exception\InvalidCreditCardException
+     */
+    public function testInvalidShortCard()
+    {
+        $this->card->setNumber('43');
+        $this->card->validate();
+    }
 }
