@@ -5,6 +5,8 @@
 
 namespace Omnipay\Common;
 
+use InvalidArgumentException;
+
 /**
  * Helper class
  *
@@ -114,5 +116,31 @@ class Helper
         }
 
         return '\\Omnipay\\'.$shortName.'Gateway';
+    }
+
+    /**
+     * Convert an amount into a float.
+     * The float datatype can then be converted into the string
+     * format that the remote gateway requies.
+     *
+     * @var string|int|float $value The value to convert.
+     * @throws InvalidArgumentException on a validation failure.
+     * @return float The amount converted to a float.
+     */
+
+    public static function toFloat($value)
+    {
+        if (!is_string($value) && !is_int($value) && !is_float($value)) {
+            throw new InvalidArgumentException('Data type is not a valid decimal number.');
+        }
+
+        if (is_string($value)) {
+            // Validate generic number, with optional sign and decimals.
+            if (!preg_match('/^[-]?[0-9]+(\.[0-9]*)?$/', $value)) {
+                throw new InvalidArgumentException('String is not a valid decimal number.');
+            }
+        }
+
+        return (float)$value;
     }
 }

@@ -134,4 +134,93 @@ class HelperTest extends TestCase
         $class = Helper::getGatewayClassName('PayPal_Express');
         $this->assertEquals('\\Omnipay\\PayPal\\ExpressGateway', $class);
     }
+
+    /**
+     * Some valid toFloat() inputs.
+     */
+    public function testToFloatFromFloat()
+    {
+        $shortName = Helper::toFloat(1.99);
+        $this->assertSame(1.99, $shortName);
+    }
+
+    public function testToFloatFromInt()
+    {
+        $shortName = Helper::toFloat(199);
+        $this->assertSame(199.0, $shortName);
+    }
+
+    public function testToFloatFromStringDecimal()
+    {
+        $shortName = Helper::toFloat("1.99");
+        $this->assertSame(1.99, $shortName);
+    }
+
+    public function testToFloatFromStringRedunantZeroes()
+    {
+        $shortName = Helper::toFloat("000009.99900000000");
+        $this->assertSame(9.999, $shortName);
+    }
+
+    public function testToFloatFromStringEmptyDecimal()
+    {
+        $shortName = Helper::toFloat("1.");
+        $this->assertSame(1.0, $shortName);
+    }
+
+    public function testToFloatFromStringInt()
+    {
+        $shortName = Helper::toFloat("199");
+        $this->assertSame(199.0, $shortName);
+    }
+
+    public function testToFloatFromStringIntNegative()
+    {
+        $shortName = Helper::toFloat("-199");
+        $this->assertSame(-199.0, $shortName);
+    }
+
+    /**
+     * Some invalid toFloat() inputs.
+     */
+
+    /**
+     * The number MUST always start with a digit.
+     * This is arguably an arbitrary rule that perhaps does not need
+     * to be enforced.
+     *
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage String is not a valid decimal number
+     */
+    public function testToFloatFromStringEmptyIntegerPart()
+    {
+        $shortName = Helper::toFloat(".99");
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage String is not a valid decimal number
+     */
+    public function testToFloatFromStringTwoDecimalPoints()
+    {
+        $shortName = Helper::toFloat("1.99.");
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage String is not a valid decimal number
+     */
+    public function testToFloatFromStringWrongDecimalPoints()
+    {
+        $shortName = Helper::toFloat("1,99");
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Data type is not a valid decimal number
+     */
+    public function testToFloatFromBoolean()
+    {
+        $shortName = Helper::toFloat(false);
+    }
 }

@@ -14,6 +14,7 @@ use Omnipay\Common\Helper;
 use Omnipay\Common\ItemBag;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
+use InvalidArgumentException;
 
 /**
  * Abstract Request
@@ -290,18 +291,12 @@ abstract class AbstractRequest implements RequestInterface
 
     public function toFloat($value)
     {
-        if (!is_string($value) && ! is_int($value) && ! is_float($value)) {
-            throw new InvalidRequestException('Data type is not a valid decimal number.');
+        try {
+            return Helper::toFloat($value);
+        } catch (InvalidArgumentException $e) {
+            // Throw old exception for legacy implementations.
+            throw new InvalidRequestException($e->getMessage(), $e->getCode(), $e);
         }
-
-        if (is_string($value)) {
-            // Validate generic number, with optional sign and decimals.
-            if (!preg_match('/^[-]?[0-9]+(\.[0-9]*)?$/', $value)) {
-                throw new InvalidRequestException('String is not a valid decimal number.');
-            }
-        }
-
-        return (float)$value;
     }
 
     /**
