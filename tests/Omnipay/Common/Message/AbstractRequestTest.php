@@ -87,6 +87,18 @@ class AbstractRequestTest extends TestCase
         $this->assertSame(null, $this->request->getAmount());
     }
 
+    public function testAmountZeroFloat()
+    {
+        $this->assertSame($this->request, $this->request->setAmount(0.0));
+        $this->assertSame('0.00', $this->request->getAmount());
+    }
+
+    public function testAmountZeroString()
+    {
+        $this->assertSame($this->request, $this->request->setAmount('0.000000'));
+        $this->assertSame('0.00', $this->request->getAmount());
+    }
+
     public function testGetAmountNoDecimals()
     {
         $this->assertSame($this->request, $this->request->setCurrency('JPY'));
@@ -94,11 +106,15 @@ class AbstractRequestTest extends TestCase
         $this->assertSame('1366', $this->request->getAmount());
     }
 
+    /**
+     * @expectedException Omnipay\Common\Exception\InvalidRequestException
+     */
     public function testGetAmountNoDecimalsRounding()
     {
+        // There will not be any rounding; the amount is sent as requested or not at all.
         $this->assertSame($this->request, $this->request->setAmount('136.5'));
         $this->assertSame($this->request, $this->request->setCurrency('JPY'));
-        $this->assertSame('137', $this->request->getAmount());
+        $this->request->getAmount();
     }
 
     /**
@@ -117,6 +133,7 @@ class AbstractRequestTest extends TestCase
     public function testAmountWithIntStringThrowsException()
     {
         // ambiguous value, avoid errors upgrading from v0.9
+        // Some currencies only take integers, so an integer (in a string) should be valid.
         $this->assertSame($this->request, $this->request->setAmount('10'));
         $this->request->getAmount();
     }
@@ -132,6 +149,51 @@ class AbstractRequestTest extends TestCase
         $this->assertSame($this->request, $this->request->setCurrency('JPY'));
         $this->assertSame($this->request, $this->request->setAmount('1366'));
         $this->assertSame(1366, $this->request->getAmountInteger());
+    }
+
+    /**
+     * @expectedException Omnipay\Common\Exception\InvalidRequestException
+     */
+    public function testAmountThousandsSepThrowsException()
+    {
+        $this->assertSame($this->request, $this->request->setAmount('1,234.00'));
+        $this->request->getAmount();
+    }
+
+    /**
+     * @expectedException Omnipay\Common\Exception\InvalidRequestException
+     */
+    public function testAmountInvalidFormatThrowsException()
+    {
+        $this->assertSame($this->request, $this->request->setAmount('1.234.00'));
+        $this->request->getAmount();
+    }
+
+    /**
+     * @expectedException Omnipay\Common\Exception\InvalidRequestException
+     */
+    public function testAmountInvalidTypeThrowsException()
+    {
+        $this->assertSame($this->request, $this->request->setAmount(true));
+        $this->request->getAmount();
+    }
+
+    /**
+     * @expectedException Omnipay\Common\Exception\InvalidRequestException
+     */
+    public function testAmountNegativeStringThrowsException()
+    {
+        $this->assertSame($this->request, $this->request->setAmount('-123.00'));
+        $this->request->getAmount();
+    }
+
+    /**
+     * @expectedException Omnipay\Common\Exception\InvalidRequestException
+     */
+    public function testAmountNegativeFloatThrowsException()
+    {
+        $this->assertSame($this->request, $this->request->setAmount(-123.00));
+        $this->request->getAmount();
     }
 
     public function testCurrency()

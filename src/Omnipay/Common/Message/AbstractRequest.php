@@ -14,6 +14,7 @@ use Omnipay\Common\Helper;
 use Omnipay\Common\ItemBag;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
+use InvalidArgumentException;
 
 /**
  * Abstract Request
@@ -87,6 +88,16 @@ abstract class AbstractRequest implements RequestInterface
      * @var ResponseInterface
      */
     protected $response;
+
+    /**
+     * @var bool
+     */
+    protected $zeroAmountAllowed = true;
+
+    /**
+     * @var bool
+     */
+    protected $negativeAmountAllowed = false;
 
     /**
      * Create a new Request
@@ -271,21 +282,61 @@ abstract class AbstractRequest implements RequestInterface
     }
 
     /**
-     * Get the payment amount.
+     * Convert an amount into a float.
      *
-     * @return string
+     * @var string|int|float $value The value to convert.
+     * @throws InvalidRequestException on any validation failure.
+     * @return float The amount converted to a float.
+     */
+
+    public function toFloat($value)
+    {
+        try {
+            return Helper::toFloat($value);
+        } catch (InvalidArgumentException $e) {
+            // Throw old exception for legacy implementations.
+            throw new InvalidRequestException($e->getMessage(), $e->getCode(), $e);
+        }
+    }
+
+    /**
+     * Validates and returns the formated amount.
+     *
+     * @throws InvalidRequestException on any validation failure.
+     * @return string The amount formatted to the correct number of decimal places for the selected currency.
      */
     public function getAmount()
     {
         $amount = $this->getParameter('amount');
+
         if ($amount !== null) {
-            if (!is_float($amount) &&
-                $this->getCurrencyDecimalPlaces() > 0 &&
-                false === strpos((string) $amount, '.')) {
-                throw new InvalidRequestException(
-                    'Please specify amount as a string or float, ' .
-                    'with decimal places (e.g. \'10.00\' to represent $10.00).'
-                );
+            // Don't allow integers for currencies that support decimals.
+            // This is for legacy reasons - upgrades from v0.9
+            if ($this->getCurrencyDecimalPlaces() > 0) {
+                if (is_int($amount) || (is_string($amount) && false === strpos((string) $amount, '.'))) {
+                    throw new InvalidRequestException(
+                        'Please specify amount as a string or float, '
+                        . 'with decimal places (e.g. \'10.00\' to represent $10.00).'
+                    );
+                };
+            }
+
+            $amount = $this->toFloat($amount);
+
+            // Check for a negative amount.
+            if (!$this->negativeAmountAllowed && $amount < 0) {
+                throw new InvalidRequestException('A negative amount is not allowed.');
+            }
+
+            // Check for a zero amount.
+            if (!$this->zeroAmountAllowed && $amount === 0.0) {
+                throw new InvalidRequestException('A zero amount is not allowed.');
+            }
+
+            // Check for rounding that may occur if too many significant decimal digits are supplied.
+            $decimal_count = strlen(substr(strrchr((string)$amount, '.'), 1));
+            if ($decimal_count > $this->getCurrencyDecimalPlaces()) {
+                throw new InvalidRequestException('Amount precision is too high for currency.');
             }
 
             return $this->formatCurrency($amount);
