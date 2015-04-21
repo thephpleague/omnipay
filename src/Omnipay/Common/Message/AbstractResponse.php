@@ -67,6 +67,11 @@ abstract class AbstractResponse implements ResponseInterface
         return $this->request;
     }
 
+    public function isPending()
+    {
+        return false;
+    }
+
     public function isRedirect()
     {
         return false;
