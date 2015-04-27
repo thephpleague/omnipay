@@ -94,7 +94,10 @@ class Omnipay
      *
      * @see GatewayFactory
      *
-     * @param mixed Parameters passed to the factory method.
+     * @param string $method     The factory method to invoke.
+     * @param mixed  $parameters Parameters passed to the factory method.
+     * 
+     * @return mixed
      */
     public static function __callStatic($method, $parameters)
     {
