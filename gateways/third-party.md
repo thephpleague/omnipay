@@ -9,6 +9,7 @@ Third party gateways
 
 Gateway | Composer Package | Maintainer
 ------- | ---------------- | ----------
+[Agms](https://github.com/agmscode/omnipay-agms) | agmscode/omnipay-agms | [Maanas Royy](https://github.com/maanas)
 [Alipay](/gateways/alipay/) | `lokielse/omnipay-alipay` | Loki Else
 [DataCash](/gateways/datacash/) | `coatesap/omnipay-datacash` | Andrew Coates
 [Neteller](/gateways/neteller/) | `alfaproject/omnipay-neteller` | João Dias
@@ -19,3 +20,4 @@ Gateway | Composer Package | Maintainer
 [Sisow](https://github.com/fruitcakestudio/omnipay-sisow ) | `fruitcakestudio/omnipay-sisow` | [Fruitcake Studio](https://github.com/fruitcakestudio)
 [Skrill](/gateways/skrill/) | `alfaproject/omnipay-skrill` | João Dias
 [Cybersource](https://github.com/dioscouri/omnipay-cybersource) | `dioscouri/omnipay-cybersource` | [Dioscouri Design](https://github.com/dioscouri)
+
