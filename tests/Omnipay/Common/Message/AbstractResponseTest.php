@@ -24,6 +24,7 @@ class AbstractResponseTest extends TestCase
 
     public function testDefaultMethods()
     {
+        $this->assertFalse($this->response->isPending());
         $this->assertFalse($this->response->isRedirect());
         $this->assertNull($this->response->getData());
         $this->assertNull($this->response->getTransactionReference());
@@ -91,6 +92,11 @@ class AbstractResponseTest extends TestCase
 
 class AbstractResponseTest_MockRedirectResponse extends AbstractResponse implements RedirectResponseInterface
 {
+    public function isPending()
+    {
+        return false;
+    }
+
     public function isSuccessful()
     {
         return false;
