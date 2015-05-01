@@ -35,7 +35,7 @@ Alternatively, if you want to migrate to an individual gateway, simply change yo
 
 ### Breaking Changes
 
-The `GatewayFactory` class can now longer be called in a static fashion. To help those who want to use dependency injection, you can now create an instance of GatewayFactory:
+The `GatewayFactory` class can no longer be called in a static fashion. To help those who want to use dependency injection, you can now create an instance of GatewayFactory:
 
 ~~~ php
 $factory = new GatewayFactory();
