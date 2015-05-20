@@ -40,6 +40,13 @@ use Omnipay\Common\GatewayFactory;
  *
  * For further code examples see the *omnipay-example* repository on github.
  *
+ * @method static array  all()
+ * @method static array  replace(array $gateways)
+ * @method static string register(string $className)
+ * @method static array  find()
+ * @method static array  getSupportedGateways()
+ * @method static \Omnipay\Common\GatewayInterface create(string $class, \Guzzle\Http\ClientInterface $httpClient = null, \Symfony\Component\HttpFoundation\Request $httpRequest = null)
+ *
  * @see Omnipay\Common\GatewayFactory
  */
 class Omnipay
@@ -95,7 +102,7 @@ class Omnipay
      * @see GatewayFactory
      *
      * @param string $method     The factory method to invoke.
-     * @param mixed  $parameters Parameters passed to the factory method.
+     * @param array  $parameters Parameters passed to the factory method.
      * 
      * @return mixed
      */
