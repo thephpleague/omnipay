@@ -95,7 +95,7 @@ class GatewayFactory
      * @param ClientInterface|null $httpClient  A Guzzle HTTP Client implementation
      * @param HttpRequest|null     $httpRequest A Symfony HTTP Request implementation
      * @throws RuntimeException                 If no such gateway is found
-     * @return object                           An object of class $class is created and returned
+     * @return GatewayInterface                 An object of class $class is created and returned
      */
     public function create($class, ClientInterface $httpClient = null, HttpRequest $httpRequest = null)
     {
