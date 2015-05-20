@@ -656,6 +656,11 @@ abstract class AbstractRequest implements RequestInterface
         return $this->setParameter('paymentMethod', $value);
     }
 
+    /**
+     * Send the request
+     *
+     * @return ResponseInterface
+     */
     public function send()
     {
         $data = $this->getData();
@@ -663,6 +668,11 @@ abstract class AbstractRequest implements RequestInterface
         return $this->sendData($data);
     }
 
+    /**
+     * Get the associated Response.
+     *
+     * @return ResponseInterface
+     */
     public function getResponse()
     {
         if (null === $this->response) {

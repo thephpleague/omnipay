@@ -67,21 +67,41 @@ abstract class AbstractResponse implements ResponseInterface
         return $this->request;
     }
 
+    /**
+     * Is the response successful?
+     *
+     * @return boolean
+     */
     public function isPending()
     {
         return false;
     }
 
+    /**
+     * Does the response require a redirect?
+     *
+     * @return boolean
+     */
     public function isRedirect()
     {
         return false;
     }
 
+    /**
+     * Is the response a transparent redirect?
+     *
+     * @return boolean
+     */
     public function isTransparentRedirect()
     {
         return false;
     }
 
+    /**
+     * Is the transaction cancelled by the user?
+     *
+     * @return boolean
+     */
     public function isCancelled()
     {
         return false;
@@ -97,16 +117,31 @@ abstract class AbstractResponse implements ResponseInterface
         return $this->data;
     }
 
+    /**
+     * Response Message
+     *
+     * @return null|string A response message from the payment gateway
+     */
     public function getMessage()
     {
         return null;
     }
 
+    /**
+     * Response code
+     *
+     * @return null|string A response code from the payment gateway
+     */
     public function getCode()
     {
         return null;
     }
 
+    /**
+     * Gateway Reference
+     *
+     * @return null|string A reference provided by the gateway to represent this transaction
+     */
     public function getTransactionReference()
     {
         return null;
@@ -119,6 +154,8 @@ abstract class AbstractResponse implements ResponseInterface
      * redirection page, just call the getRedirectUrl() and getRedirectData() methods directly.
      *
      * @codeCoverageIgnore
+     *
+     * @return void
      */
     public function redirect()
     {
@@ -126,6 +163,9 @@ abstract class AbstractResponse implements ResponseInterface
         exit;
     }
 
+    /**
+     * @return HttpRedirectResponse
+     */
     public function getRedirectResponse()
     {
         if (!$this instanceof RedirectResponseInterface || !$this->isRedirect()) {
