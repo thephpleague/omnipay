@@ -45,7 +45,9 @@ use Omnipay\Common\GatewayFactory;
  * @method static string register(string $className)
  * @method static array  find()
  * @method static array  getSupportedGateways()
+ * @codingStandardsIgnoreStart
  * @method static \Omnipay\Common\GatewayInterface create(string $class, \Guzzle\Http\ClientInterface $httpClient = null, \Symfony\Component\HttpFoundation\Request $httpRequest = null)
+ * @codingStandardsIgnoreEnd
  *
  * @see Omnipay\Common\GatewayFactory
  */
