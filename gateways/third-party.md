@@ -12,6 +12,7 @@ Gateway | Composer Package | Maintainer
 [Agms](https://github.com/agmscode/omnipay-agms) | agmscode/omnipay-agms | [Maanas Royy](https://github.com/maanas)
 [Alipay](/gateways/alipay/) | `lokielse/omnipay-alipay` | Loki Else
 [DataCash](/gateways/datacash/) | `coatesap/omnipay-datacash` | Andrew Coates
+[Fat Zebra](/gateways/fatzebra) |	`delatbabel/omnipay-fatzebra` |	Del
 [Neteller](/gateways/neteller/) | `alfaproject/omnipay-neteller` | João Dias
 [Pacnet](/gateways/pacnet/) | `mfauveau/omnipay-pacnet` | Matthieu Fauveau
 [PaymentSense](/gateways/paymentsense/) | `coatesap/omnipay-paymentsense` | Andrew Coates
