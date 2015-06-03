@@ -126,7 +126,7 @@ abstract class AbstractGateway implements GatewayInterface
      * @param  string $key
      * @return mixed
      */
-    protected function getParameter($key)
+    public function getParameter($key)
     {
         return $this->parameters->get($key);
     }
@@ -136,7 +136,7 @@ abstract class AbstractGateway implements GatewayInterface
      * @param  mixed  $value
      * @return $this
      */
-    protected function setParameter($key, $value)
+    public function setParameter($key, $value)
     {
         $this->parameters->set($key, $value);
 
