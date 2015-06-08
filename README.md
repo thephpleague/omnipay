@@ -108,7 +108,7 @@ Gateway | Composer Package | Maintainer
 [Authorize.Net](https://github.com/thephpleague/omnipay-authorizenet) | omnipay/authorizenet | [Kayla Daniels](https://github.com/kayladnls)
 [Barclays ePDQ](https://github.com/samvaughton/omnipay-barclays-epdq) | samvaughton/omnipay-barclays-epdq | [Sam Vaughton](https://github.com/samvaughton)
 [Buckaroo](https://github.com/thephpleague/omnipay-buckaroo) | omnipay/buckaroo | [Kayla Daniels](https://github.com/kayladnls)
-[CardGate](https://github.com/cardgate/omnipay-cardgate) | omnipay/cardgate | [CardGate](https://github.com/cardgate)
+[CardGate](https://github.com/cardgate/omnipay-cardgate) | cardgate/omnipay-cardgate | [CardGate](https://github.com/cardgate)
 [CardSave](https://github.com/thephpleague/omnipay-cardsave) | omnipay/cardsave | [Kayla Daniels](https://github.com/kayladnls)
 [Coinbase](https://github.com/thephpleague/omnipay-coinbase) | omnipay/coinbase | [Kayla Daniels](https://github.com/kayladnls)
 [Cybersource](https://github.com/dioscouri/omnipay-cybersource) | dioscouri/omnipay-cybersource | [Dioscouri Design](https://github.com/dioscouri)
