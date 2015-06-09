@@ -137,6 +137,7 @@ Gateway | Composer Package | Maintainer
 [PaymentExpress (DPS)](https://github.com/thephpleague/omnipay-paymentexpress) | omnipay/paymentexpress | [Kayla Daniels](https://github.com/kayladnls)
 [PaymentSense](https://github.com/coatesap/omnipay-paymentsense) | coatesap/omnipay-paymentsense | [Andrew Coates](https://github.com/coatesap)
 [PayPal](https://github.com/thephpleague/omnipay-paypal) | omnipay/paypal | [Kayla Daniels](https://github.com/kayladnls)
+[PayPro](https://github.com/payproNL/omnipay-paypro) | paypronl/omnipay-paypro | [Fruitcake Studio](https://github.com/fruitcakestudio)
 [PayU](https://github.com/efesaid/omnipay-payu) | omnipay/payu | [efesaid](https://github.com/efesaid)
 [Pin Payments](https://github.com/thephpleague/omnipay-pin) | omnipay/pin | [Kayla Daniels](https://github.com/kayladnls)
 [Realex](https://github.com/coatesap/omnipay-realex) | coatesap/omnipay-realex | [Andrew Coates](https://github.com/coatesap)
