@@ -31,5 +31,5 @@ Gateway | Composer Package | Maintainer
 [SecPay](/gateways/secpay/) | `justinbusschau/omnipay-secpay` | Justin Busschau
 [Sisow](https://github.com/fruitcakestudio/omnipay-sisow ) | `fruitcakestudio/omnipay-sisow` | [Fruitcake Studio](https://github.com/fruitcakestudio)
 [Skrill](/gateways/skrill/) | `alfaproject/omnipay-skrill` | João Dias
-[Wirecard](https://github.com/igaponov/omnipay-wirecard) | igaponov/omnipay-wirecard | [Igor Gaponov](https://github.com/igaponov)
+[Wirecard](https://github.com/igaponov/omnipay-wirecard) | `igaponov/omnipay-wirecard` | [Igor Gaponov](https://github.com/igaponov)
 
