@@ -116,6 +116,7 @@
         "lokielse/omnipay-alipay": "Alipay",
         "mfauveau/omnipay-nmi": "Network Merchants Inc. (NMI)",
         "mfauveau/omnipay-pacnet": "Pacnet",
+        "omnipay/payu": "PayU",
         "paypronl/omnipay-paypro": "PayPro",
         "samvaughton/omnipay-barclays-epdq": "Barclays ePDQ",
         "teaandcode/omnipay-worldpay-xml": "WorldPay XML Direct"
