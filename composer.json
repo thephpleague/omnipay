@@ -95,8 +95,7 @@
         "omnipay/tests": "~2.0"
     },
     "suggest": {
-        "aTastyCookie/yandexmoney_omnipay": "Yandex.Money",
-        "aacademe/omnipay-helcim": "Helcim",
+        "academe/omnipay-helcim": "Helcim",
         "agmscode/omnipay-agms": "Agms",
         "alfaproject/omnipay-neteller": "Neteller",
         "alfaproject/omnipay-skrill": "Skrill",
