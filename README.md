@@ -119,7 +119,7 @@ Gateway | Composer Package | Maintainer
 [eWAY](https://github.com/thephpleague/omnipay-eway) | omnipay/eway | [Kayla Daniels](https://github.com/kayladnls)
 [Fasapay](https://github.com/andreas22/omnipay-fasapay) | andreas22/omnipay-fasapay | [Andreas Christodoulou](https://github.com/andreas22)
 [Fat Zebra](https://github.com/delatbabel/omnipay-fatzebra) | delatbabel/omnipay-fatzebra | [Del](https://github.com/delatbabel)
-[First Data](https://github.com/delatbabel) | omnipay/firstdata | [Andrew Coates](https://github.com/coatesap)
+[First Data](https://github.com/thephpleague/omnipay-firstdata) | omnipay/firstdata | [Andrew Coates](https://github.com/coatesap)
 [Globalcloudpay](https://github.com/dercoder/omnipay-globalcloudpay) | dercoder/omnipay-globalcloudpay | [Alexander Fedra](https://github.com/dercoder)
 [GoCardless](https://github.com/thephpleague/omnipay-gocardless) | omnipay/gocardless | [Kayla Daniels](https://github.com/kayladnls)
 [Helcim](https://github.com/academe/omnipay-helcim) | academe/omnipay-helcim | [Jason Judge](https://github.com/judgej)
