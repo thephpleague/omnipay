@@ -15,6 +15,22 @@ class AbstractRequestTest extends TestCase
         $this->request->initialize();
     }
 
+    /**
+     * Allow changing a protected property using reflections.
+     *
+     * @param $property
+     * @param bool|true $value
+     */
+    private function changeProtectedProperty($property, $value = true)
+    {
+        $reflection = new \ReflectionClass($this->request);
+
+        $reflection_property = $reflection->getProperty($property);
+        $reflection_property->setAccessible(true);
+        $reflection_property->setValue($this->request, $value);
+        $reflection_property->setAccessible(false);
+    }
+
     public function testConstruct()
     {
         $this->request = new AbstractRequestTest_MockAbstractRequest($this->getHttpClient(), $this->getHttpRequest());
@@ -97,6 +113,17 @@ class AbstractRequestTest extends TestCase
     {
         $this->assertSame($this->request, $this->request->setAmount('0.000000'));
         $this->assertSame('0.00', $this->request->getAmount());
+    }
+
+    /**
+     * @expectedException Omnipay\Common\Exception\InvalidRequestException
+     * @expectedExceptionMessage A zero amount is not allowed.
+     */
+    public function testAmountZeroNotAllowed()
+    {
+        $this->changeProtectedProperty('zeroAmountAllowed', false);
+        $this->request->setAmount('0.00');
+        $this->request->getAmount();
     }
 
     public function testGetAmountNoDecimals()
