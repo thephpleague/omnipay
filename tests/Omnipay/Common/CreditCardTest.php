@@ -109,6 +109,21 @@ class CreditCardTest extends TestCase
         $this->assertArrayHasKey(CreditCard::BRAND_VISA, $brands);
     }
 
+    public function testCustomSupportedBrand()
+    {
+        $this->card->addSupportedBrand('omniexpress', '/^9\d{12}(\d{3})?$/');
+        $this->assertArrayHasKey('omniexpress', $this->card->getSupportedBrands());
+    }
+
+    public function testCustomBrandWorks()
+    {
+        $this->card->addSupportedBrand('omniexpress', '/^9\d{12}(\d{3})?$/');
+        $this->assertArrayHasKey('omniexpress', $this->card->getSupportedBrands());
+        $this->card->setNumber('9111111111111110');
+        $this->card->validate();
+        $this->assertEquals('omniexpress', $this->card->getBrand());
+    }
+
     public function testTitle()
     {
         $this->card->setTitle('Mr.');
