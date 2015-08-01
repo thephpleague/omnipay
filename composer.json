@@ -46,7 +46,7 @@
         "twocheckout",
         "worldpay", 
         "payU",
-        'nestpay',
+        'nestpay'
     ],
     "homepage": "https://github.com/thephpleague/omnipay",
     "license": "MIT",
