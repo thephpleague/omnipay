@@ -45,7 +45,8 @@
         "targetpay",
         "twocheckout",
         "worldpay", 
-        "payU"
+        "payU",
+        'nestpay',
     ],
     "homepage": "https://github.com/thephpleague/omnipay",
     "license": "MIT",
@@ -117,6 +118,7 @@
         "mfauveau/omnipay-nmi": "Network Merchants Inc. (NMI)",
         "mfauveau/omnipay-pacnet": "Pacnet",
         "omnipay/payu": "PayU",
+        "yasinkuyu/omnipay-nestpay": "NestPay",
         "paypronl/omnipay-paypro": "PayPro",
         "samvaughton/omnipay-barclays-epdq": "Barclays ePDQ",
         "teaandcode/omnipay-worldpay-xml": "WorldPay XML Direct"
