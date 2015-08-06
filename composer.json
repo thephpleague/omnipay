@@ -45,7 +45,11 @@
         "targetpay",
         "twocheckout",
         "worldpay", 
-        "payU"
+        "payU",
+        "nestpay",
+        "posnet",
+        "gvp garanti",
+        "iyzico"
     ],
     "homepage": "https://github.com/thephpleague/omnipay",
     "license": "MIT",
@@ -117,6 +121,9 @@
         "mfauveau/omnipay-nmi": "Network Merchants Inc. (NMI)",
         "mfauveau/omnipay-pacnet": "Pacnet",
         "omnipay/payu": "PayU",
+        "yasinkuyu/omnipay-gvp": "GVP (Garanti)",
+        "yasinkuyu/omnipay-posnet": "Posnet",
+        "yasinkuyu/omnipay-iyzico": "Iyzico",
         "paypronl/omnipay-paypro": "PayPro",
         "samvaughton/omnipay-barclays-epdq": "Barclays ePDQ",
         "teaandcode/omnipay-worldpay-xml": "WorldPay XML Direct"
