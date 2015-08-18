@@ -114,6 +114,7 @@
         "igaponov/omnipay-wirecard": "Wirecard",
         "justinbusschau/omnipay-secpay": "SecPay",
         "lokielse/omnipay-alipay": "Alipay",
+        "lokielse/omnipay-unionpay": "UnionPay",
         "mfauveau/omnipay-nmi": "Network Merchants Inc. (NMI)",
         "mfauveau/omnipay-pacnet": "Pacnet",
         "omnipay/payu": "PayU",
