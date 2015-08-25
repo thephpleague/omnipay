@@ -141,6 +141,7 @@ Gateway | Composer Package | Maintainer
 [PaymentWall](https://github.com/incube8/omnipay-paymentwall) | incube8/omnipay-paymentwall | [Del](https://github.com/delatbabel)
 [PayPal](https://github.com/thephpleague/omnipay-paypal) | omnipay/paypal | [Kayla Daniels](https://github.com/kayladnls)
 [PayPro](https://github.com/payproNL/omnipay-paypro) | paypronl/omnipay-paypro | [Fruitcake Studio](https://github.com/fruitcakestudio)
+[PayTrace](https://github.com/iddqdidkfa/omnipay-paytrace) | softcommerce/omnipay-paytrace | [Oleg Ilyushyn](https://github.com/iddqdidkfa)
 [PayU](https://github.com/efesaid/omnipay-payu) | omnipay/payu | [efesaid](https://github.com/efesaid)
 [NestPay (EST)](https://github.com/yasinkuyu/omnipay-nestpay) | yasinkuyu/omnipay-nestpay | [Yasin Kuyu](https://github.com/yasinkuyu)
 [Pin Payments](https://github.com/thephpleague/omnipay-pin) | omnipay/pin | [Kayla Daniels](https://github.com/kayladnls)
