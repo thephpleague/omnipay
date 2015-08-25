@@ -141,6 +141,7 @@ Gateway | Composer Package | Maintainer
 [PayPal](https://github.com/thephpleague/omnipay-paypal) | omnipay/paypal | [Kayla Daniels](https://github.com/kayladnls)
 [PayPro](https://github.com/payproNL/omnipay-paypro) | paypronl/omnipay-paypro | [Fruitcake Studio](https://github.com/fruitcakestudio)
 [PayU](https://github.com/efesaid/omnipay-payu) | omnipay/payu | [efesaid](https://github.com/efesaid)
+[NestPay (EST)](https://github.com/yasinkuyu/omnipay-nestpay) | yasinkuyu/omnipay-nestpay | [Yasin Kuyu](https://github.com/yasinkuyu)
 [Pin Payments](https://github.com/thephpleague/omnipay-pin) | omnipay/pin | [Kayla Daniels](https://github.com/kayladnls)
 [Realex](https://github.com/coatesap/omnipay-realex) | coatesap/omnipay-realex | [Andrew Coates](https://github.com/coatesap)
 [Sage Pay](https://github.com/thephpleague/omnipay-sagepay) | omnipay/sagepay | [Kayla Daniels](https://github.com/kayladnls)
