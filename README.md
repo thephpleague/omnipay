@@ -134,6 +134,7 @@ Gateway | Composer Package | Maintainer
 [Neteller](https://github.com/alfaproject/omnipay-neteller) | alfaproject/omnipay-neteller | [João Dias](https://github.com/alfaproject)
 [Network Merchants Inc. (NMI)](https://github.com/mfauveau/omnipay-nmi) | mfauveau/omnipay-nmi | [Matthieu Fauveau](https://github.com/mfauveau)
 [Pacnet](https://github.com/mfauveau/omnipay-pacnet) | mfauveau/omnipay-pacnet | [Matthieu Fauveau](https://github.com/mfauveau)
+[Pagar.me](https://github.com/descubraomundo/omnipay-pagarme) | descubraomundo/omnipay-pagarme | [Descubra o Mundo](https://github.com/descubraomundo)
 [PayFast](https://github.com/thephpleague/omnipay-payfast) | omnipay/payfast | [Kayla Daniels](https://github.com/kayladnls)
 [Payflow](https://github.com/thephpleague/omnipay-payflow) | omnipay/payflow | [Kayla Daniels](https://github.com/kayladnls)
 [PaymentExpress (DPS)](https://github.com/thephpleague/omnipay-paymentexpress) | omnipay/paymentexpress | [Kayla Daniels](https://github.com/kayladnls)
