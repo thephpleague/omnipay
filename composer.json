@@ -28,7 +28,7 @@
         "multisafepay",
         "netaxept",
         "netbanx",
-        "pagarme"
+        "pagarme",
         "pay",
         "payfast",
         "payflow",
@@ -45,7 +45,7 @@
         "tala-payments",
         "targetpay",
         "twocheckout",
-        "worldpay", 
+        "worldpay",
         "payU",
         "checkoutcom"
     ],
