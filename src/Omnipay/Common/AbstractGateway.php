@@ -248,6 +248,16 @@ abstract class AbstractGateway implements GatewayInterface
     }
 
     /**
+     * Supports AcceptNotification
+     *
+     * @return boolean True if this gateway supports the acceptNotification() method
+     */
+    public function supportsAcceptNotification()
+    {
+        return method_exists($this, 'acceptNotification');
+    }
+
+    /**
      * Supports CreateCard
      *
      * @return boolean True if this gateway supports the create() method

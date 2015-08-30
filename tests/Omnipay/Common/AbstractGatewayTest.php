@@ -133,6 +133,11 @@ class AbstractGatewayTest extends TestCase
         $this->assertFalse($this->gateway->supportsUpdateCard());
     }
 
+    public function testSupportsAcceptNotification()
+    {
+        $this->assertFalse($this->gateway->supportsAcceptNotification());
+    }
+
     public function testCreateRequest()
     {
         $this->gateway = new AbstractGatewayTest_MockAbstractGateway;
