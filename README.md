@@ -279,13 +279,17 @@ The main methods implemented by gateways are:
 * `completePurchase($options)` - handle return from off-site gateways after purchase
 * `refund($options)` - refund an already processed transaction
 * `void($options)` - generally can only be called up to 24 hours after submitting a transaction
+* `acceptNotification()` - convert an incoming request from an off-site gateway to a generic notification object
+  for further processing
 
-On-site gateways do not need to implement the `completeAuthorize` and `completePurchase` methods. If any gateway does not support
-certain features (such as refunds), it will throw `BadMethodCallException`.
+On-site gateways do not need to implement the `completeAuthorize` and `completePurchase` methods. Gateways that don't
+receive payment notifications don't need to implement `acceptNotification`. If any gateway does not support certain
+features (such as refunds), it will throw `BadMethodCallException`.
 
-All gateway methods take an `$options` array as an argument. Each gateway differs in which
-parameters are required, and the gateway will throw `InvalidRequestException` if you
-omit any required parameters. All gateways will accept a subset of these options:
+All gateway methods except `acceptNotification` take an `$options` array as an argument. The `acceptNotification` method
+does not take any parameters and will access the HTTP URL variables or POST data implicitly. Each gateway differs in
+which parameters are required, and the gateway will throw `InvalidRequestException` if you omit any required parameters.
+All gateways will accept a subset of these options:
 
 * card
 * token
@@ -419,6 +423,22 @@ This is because there is likely far too many differences between how each gatewa
 recurring billing profiles. Also in most cases token billing will cover your needs, as you can
 store a credit card then charge it on whatever schedule you like. Feel free to get in touch if
 you really think this should be a core feature and worth the effort.
+
+## Incoming Notifications
+
+Some gateways (e.g. Cybersource, GoPay) offer HTTP notifications to inform the merchant about the completion (or, in
+general, status) of the payment. To assist with handling such notifications, the `acceptNotification()` method will
+extract the transaction reference and payment status from the HTTP request and return a generic `NotificationInterface`.
+
+```php
+$notification = $gateway->acceptNotification();
+
+$notification->getTransactionReference(); // A reference provided by the gateway to represent this transaction
+$notification->getTransactionStatus(); // Current status of the transaction, one of NotificationInterface::STATUS_*
+$notification->getMessage(); // Additional message, if any, provided by the gateway
+
+// update the status of the corresponding transaction in your database
+```
 
 ## Example Application
 
