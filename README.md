@@ -124,6 +124,7 @@ Gateway | Composer Package | Maintainer
 [Globalcloudpay](https://github.com/dercoder/omnipay-globalcloudpay) | dercoder/omnipay-globalcloudpay | [Alexander Fedra](https://github.com/dercoder)
 [GoCardless](https://github.com/thephpleague/omnipay-gocardless) | omnipay/gocardless | [Kayla Daniels](https://github.com/kayladnls)
 [Helcim](https://github.com/academe/omnipay-helcim) | academe/omnipay-helcim | [Jason Judge](https://github.com/judgej)
+[Komoju](https://github.com/dannyvink/omnipay-komoju) | vink/omnipay-komoju | [Danny Vink](https://github.com/dannyvink)
 [Manual](https://github.com/thephpleague/omnipay-manual) | omnipay/manual | [Kayla Daniels](https://github.com/kayladnls)
 [Migs](https://github.com/thephpleague/omnipay-migs) | omnipay/migs | [Kayla Daniels](https://github.com/kayladnls)
 [Mollie](https://github.com/thephpleague/omnipay-mollie) | omnipay/mollie | [Kayla Daniels](https://github.com/kayladnls)
