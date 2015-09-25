@@ -151,6 +151,7 @@ Gateway | Composer Package | Maintainer
 [Realex](https://github.com/coatesap/omnipay-realex) | coatesap/omnipay-realex | [Andrew Coates](https://github.com/coatesap)
 [Sage Pay](https://github.com/thephpleague/omnipay-sagepay) | omnipay/sagepay | [Kayla Daniels](https://github.com/kayladnls)
 [SecurePay](https://github.com/thephpleague/omnipay-securepay) | omnipay/securepay | [Kayla Daniels](https://github.com/kayladnls)
+[Secure Trading](https://github.com/meebio/omnipay-secure-trading) | meebio/omnipay-secure-trading | [John Jablonski](https://github.com/jan-j)
 [SecPay](https://github.com/justinbusschau/omnipay-secpay) | justinbusschau/omnipay-secpay | [Justin Busschau](https://github.com/justinbusschau)
 [Sisow](https://github.com/fruitcakestudio/omnipay-sisow ) | fruitcakestudio/omnipay-sisow | [Fruitcake Studio](https://github.com/fruitcakestudio)
 [Skrill](https://github.com/alfaproject/omnipay-skrill) | alfaproject/omnipay-skrill | [João Dias](https://github.com/alfaproject)
