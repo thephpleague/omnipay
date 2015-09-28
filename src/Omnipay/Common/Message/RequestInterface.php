@@ -17,6 +17,7 @@ interface RequestInterface extends MessageInterface
 {
     /**
      * Initialize request with parameters
+     * @param array $parameters The parameters to send
      */
     public function initialize(array $parameters = array());
 
