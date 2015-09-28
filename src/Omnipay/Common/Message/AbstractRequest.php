@@ -189,6 +189,7 @@ abstract class AbstractRequest implements RequestInterface
      * Sets the test mode of the request.
      *
      * @param boolean $value True for test mode on.
+     * @return AbstractRequest
      */
     public function setTestMode($value)
     {
@@ -513,6 +514,7 @@ abstract class AbstractRequest implements RequestInterface
      * Set the items in this order
      *
      * @param ItemBag|array $items An array of items in this order
+     * @return AbstractRequest
      */
     public function setItems($items)
     {
