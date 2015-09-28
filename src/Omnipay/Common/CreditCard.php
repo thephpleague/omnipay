@@ -231,6 +231,7 @@ class CreditCard
      * Generally if you want to validate the credit card yourself with custom error
      * messages, you should use your framework's validation library, not this method.
      *
+     * @throws InvalidCreditCardException
      * @return void
      */
     public function validate()
