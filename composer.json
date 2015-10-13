@@ -71,26 +71,7 @@
             "TargetPay_Directebanking",
             "TargetPay_Ideal",
             "TargetPay_Mrcash",
-            "TwoCheckout",
-            "WorldPay",
-            "Alipay Bank",
-            "AliPay Dual Func",
-            "Alipay Express",
-            "Alipay Mobile Express",
-            "Alipay Secured",
-            "Alipay Wap Express",
-            "Cybersource",
-            "DataCash",
-            "Ecopayz",
-            "Neteller",
-            "Pacnet",
-            "PaymentSense",
-            "Realex Remote",
-            "SecPay (PayPoint.net)",
-            "Sisow",
-            "Skrill",
-            "YandexMoney",
-            "YandexMoneyIndividual"
+            "WorldPay"
         ]
     }
 }
