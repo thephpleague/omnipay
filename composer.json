@@ -41,7 +41,6 @@
         "gateways": [
             "AuthorizeNet_AIM",
             "AuthorizeNet_SIM",
-            "Buckaroo",
             "Buckaroo_Ideal",
             "Buckaroo_PayPal",
             "CardSave",
