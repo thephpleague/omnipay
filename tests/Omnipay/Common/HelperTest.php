@@ -19,6 +19,12 @@ class HelperTest extends TestCase
         $this->assertEquals('testCase', $result);
     }
 
+    public function testCamelCaseWithUppercaseValue()
+    {
+        $result = Helper::camelCase('TEST_CASE');
+        $this->assertEquals('testCase', $result);
+    }
+
     public function testValidateLuhnValid()
     {
         $result = Helper::validateLuhn('4111111111111111');

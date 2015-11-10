@@ -11,7 +11,7 @@ use InvalidArgumentException;
  * Helper class
  *
  * This class defines various static utility functions that are in use
- * throughout the Omnipay system. 
+ * throughout the Omnipay system.
  */
 class Helper
 {
@@ -23,6 +23,7 @@ class Helper
      */
     public static function camelCase($str)
     {
+        $str = self::convertToLowercase($str);
         return preg_replace_callback(
             '/_([a-z])/',
             function ($match) {
@@ -30,6 +31,26 @@ class Helper
             },
             $str
         );
+    }
+
+    /**
+     * Convert strings with underscores to be all lowercase before camelCase is preformed.
+     *
+     * @param  string $str The input string
+     * @return string The output string
+     */
+    protected static function convertToLowercase($str)
+    {
+        $explodedStr = explode('_', $str);
+
+        if (count($explodedStr) > 1) {
+            foreach ($explodedStr as $value) {
+                $lowercasedStr[] = strtolower($value);
+            }
+            $str = implode('_', $lowercasedStr);
+        }
+
+        return $str;
     }
 
     /**
