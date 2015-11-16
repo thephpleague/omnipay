@@ -27,3 +27,9 @@ to the list of officially supported gateways, please open a pull request on the
 [omnipay/common](https://github.com/thephpleague/omnipay-common) package. Before new gateways will
 be accepted, they must have 100% unit test code coverage, and follow the conventions
 and code style used in other Omnipay gateways.
+
+## Omnipay Conventions
+
+When developing your own payment gateway driver, it's worth remembering that ideally the person using your driver should be able to switch between drivers easily, without modifying their own code. With that in mind, here are some conventions that are used in Omnipay:
+ - **transactionId vs transactionReference** - `transactionId` is 'our' reference to the transaction - so typically the ID of our record in the database. `transactionReference` is 'their' reference to the transaction - so the payment gateway's own reference to the transaction.
+ - **returnUrl vs notifyUrl** - `returnUrl` is used by drivers when they need to tell the gateway where to redirect customers to following a transaction. Typically this is used by off-site 'redirect' gateway integrations. `notifyUrl` is used by drivers where the gateway sends a server-to-server notification about the status of a customer's payment.
