@@ -111,6 +111,7 @@ class Currency
             'MYR' => array('numeric' => '458', 'decimals' => 2),
             'NOK' => array('numeric' => '578', 'decimals' => 2),
             'NZD' => array('numeric' => '554', 'decimals' => 2),
+            'OMR' => array('numeric' => '512', 'decimals' => 3),
             'PEN' => array('numeric' => '604', 'decimals' => 2),
             'PGK' => array('numeric' => '598', 'decimals' => 2),
             'PHP' => array('numeric' => '608', 'decimals' => 2),
