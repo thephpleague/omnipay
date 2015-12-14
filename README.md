@@ -37,8 +37,8 @@ use Omnipay\Omnipay;
 $gateway = Omnipay::create('Stripe');
 $gateway->setApiKey('abc123');
 
-$formData = ['number' => '4242424242424242', 'expiryMonth' => '6', 'expiryYear' => '2016', 'cvv' => '123'];
-$response = $gateway->purchase(['amount' => '10.00', 'currency' => 'USD', 'card' => $formData])->send();
+$formData = array('number' => '4242424242424242', 'expiryMonth' => '6', 'expiryYear' => '2016', 'cvv' => '123');
+$response = $gateway->purchase(array('amount' => '10.00', 'currency' => 'USD', 'card' => $formData))->send();
 
 if ($response->isSuccessful()) {
     // payment was successful: update database
@@ -311,11 +311,11 @@ Pass the options through to the method like so:
 
 ```php
 $card = new CreditCard($formData);
-$request = $gateway->authorize([
+$request = $gateway->authorize(array(
     'amount' => '10.00', // this represents $10.00
     'card' => $card,
     'returnUrl' => 'https://www.example.com/return',
-]);
+));
 ```
 
 When calling the `completeAuthorize` or `completePurchase` methods, the exact same arguments should be provided as
@@ -341,7 +341,7 @@ For a successful responses, a reference will normally be generated, which can be
 at a later date. The following methods are always available:
 
 ```php
-$response = $gateway->purchase(['amount' => '10.00', 'card' => $card])->send();
+$response = $gateway->purchase(array('amount' => '10.00', 'card' => $card))->send();
 
 $response->isSuccessful(); // is the response successful?
 $response->isRedirect(); // is the response a redirect?
@@ -360,7 +360,7 @@ POST (FormRedirectResponse). These could potentially be combined into a single r
 After processing a payment, the cart should check whether the response requires a redirect, and if so, redirect accordingly:
 
 ```php
-$response = $gateway->purchase(['amount' => '10.00', 'card' => $card])->send();
+$response = $gateway->purchase(array('amount' => '10.00', 'card' => $card))->send();
 if ($response->isSuccessful()) {
     // payment is complete
 } elseif ($response->isRedirect()) {
@@ -393,7 +393,7 @@ You can handle both scenarios by wrapping the entire request in a try-catch bloc
 
 ```php
 try {
-    $response = $gateway->purchase(['amount' => '10.00', 'card' => $card])->send();
+    $response = $gateway->purchase(array('amount' => '10.00', 'card' => $card))->send();
     if ($response->isSuccessful()) {
         // mark order as complete
     } elseif ($response->isRedirect()) {
@@ -420,7 +420,7 @@ are available:
 
 Once you have a `cardReference`, you can use it instead of the `card` parameter when creating a charge:
 
-    $gateway->purchase(['amount' => '10.00', 'cardReference' => 'abc']);
+    $gateway->purchase(array('amount' => '10.00', 'cardReference' => 'abc'));
 
 ## Recurring Billing
 
