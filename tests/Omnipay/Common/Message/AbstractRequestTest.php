@@ -122,6 +122,18 @@ class AbstractRequestTest extends TestCase
         $this->assertSame('0.01', $this->request->getAmount());
     }
 
+    /**
+     * @expectedException Omnipay\Common\Exception\InvalidRequestException
+     *
+     * We still want to catch obvious fractions of the minor units that are
+     * not precision errors at a much lower level.
+     */
+    public function testAmountPrecisionTooHigh()
+    {
+        $this->assertSame($this->request, $this->request->setAmount('123.005'));
+        $this->assertSame('123.005', $this->request->getAmount());
+    }
+
     public function testGetAmountNoDecimals()
     {
         $this->assertSame($this->request, $this->request->setCurrency('JPY'));
