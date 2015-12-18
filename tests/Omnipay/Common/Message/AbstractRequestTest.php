@@ -99,6 +99,23 @@ class AbstractRequestTest extends TestCase
         $this->assertSame('0.00', $this->request->getAmount());
     }
 
+    // See https://github.com/thephpleague/omnipay-common/issues/69
+    public function testAmountPrecision()
+    {
+        // The default precision for PHP is 6 decimal places.
+        ini_set('precision', 6);
+        $this->assertSame($this->request, $this->request->setAmount('67.10'));
+        $this->assertSame('67.10', $this->request->getAmount());
+
+        // At 17 decimal places, 67.10 will echo as 67.09999...
+        // This is *why* PHP sets the default precision at 6.
+        ini_set('precision', 17);
+        $this->assertSame('67.10', $this->request->getAmount());
+        $this->assertSame('67.01', $this->request->getAmount());
+        $this->assertSame('0.10', $this->request->getAmount());
+        $this->assertSame('0.01', $this->request->getAmount());
+    }
+
     public function testGetAmountNoDecimals()
     {
         $this->assertSame($this->request, $this->request->setCurrency('JPY'));
