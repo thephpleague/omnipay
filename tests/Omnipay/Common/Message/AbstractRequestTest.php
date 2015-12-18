@@ -111,8 +111,14 @@ class AbstractRequestTest extends TestCase
         // This is *why* PHP sets the default precision at 6.
         ini_set('precision', 17);
         $this->assertSame('67.10', $this->request->getAmount());
+
+        $this->assertSame($this->request, $this->request->setAmount('67.01'));
         $this->assertSame('67.01', $this->request->getAmount());
+
+        $this->assertSame($this->request, $this->request->setAmount('0.10'));
         $this->assertSame('0.10', $this->request->getAmount());
+
+        $this->assertSame($this->request, $this->request->setAmount('0.01'));
         $this->assertSame('0.01', $this->request->getAmount());
     }
 
