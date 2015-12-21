@@ -403,6 +403,13 @@ class CreditCardTest extends TestCase
         $this->assertSame('12345', $this->card->getPhone());
     }
 
+    public function testBillingPhoneExtension()
+    {
+        $this->card->setBillingPhoneExtension('001');
+        $this->assertSame('001', $this->card->getBillingPhoneExtension());
+        $this->assertSame('001', $this->card->getPhoneExtension());
+    }
+
     public function testBillingFax()
     {
         $this->card->setBillingFax('54321');
@@ -487,6 +494,12 @@ class CreditCardTest extends TestCase
         $this->assertEquals('12345', $this->card->getShippingPhone());
     }
 
+    public function testShippingPhoneExtension()
+    {
+        $this->card->setShippingPhoneExtension('001');
+        $this->assertEquals('001', $this->card->getShippingPhoneExtension());
+    }
+
     public function testShippingFax()
     {
         $this->card->setShippingFax('54321');
@@ -555,6 +568,14 @@ class CreditCardTest extends TestCase
         $this->assertEquals('12345', $this->card->getPhone());
         $this->assertEquals('12345', $this->card->getBillingPhone());
         $this->assertEquals('12345', $this->card->getShippingPhone());
+    }
+
+    public function testPhoneExtension()
+    {
+        $this->card->setPhoneExtension('001');
+        $this->assertEquals('001', $this->card->getPhoneExtension());
+        $this->assertEquals('001', $this->card->getBillingPhoneExtension());
+        $this->assertEquals('001', $this->card->getShippingPhoneExtension());
     }
 
     public function testFax()
