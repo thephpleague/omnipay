@@ -49,7 +49,7 @@ use Symfony\Component\HttpFoundation\ParameterBag;
  * * state
  * * country
  * * phone
- * * phoneExt
+ * * phoneExtension
  * * fax
  * * number
  * * expiryMonth
