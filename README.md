@@ -150,6 +150,7 @@ Gateway | Composer Package | Maintainer
 [NestPay (EST)](https://github.com/yasinkuyu/omnipay-nestpay) | yasinkuyu/omnipay-nestpay | [Yasin Kuyu](https://github.com/yasinkuyu)
 [Pin Payments](https://github.com/thephpleague/omnipay-pin) | omnipay/pin | [Kayla Daniels](https://github.com/kayladnls)
 [Realex](https://github.com/coatesap/omnipay-realex) | coatesap/omnipay-realex | [Andrew Coates](https://github.com/coatesap)
+[RedSys](https://github.com/jsampedro77/sermepa-omnipay) | nazka/sermepa-omnipay | [Javier Sampedro](https://github.com/jsampedro77)
 [Sage Pay](https://github.com/thephpleague/omnipay-sagepay) | omnipay/sagepay | [Kayla Daniels](https://github.com/kayladnls)
 [SecurePay](https://github.com/thephpleague/omnipay-securepay) | omnipay/securepay | [Kayla Daniels](https://github.com/kayladnls)
 [Secure Trading](https://github.com/meebio/omnipay-secure-trading) | meebio/omnipay-secure-trading | [John Jablonski](https://github.com/jan-j)
