@@ -17,29 +17,6 @@ env:
   - SYMFONY_VERSION="2.*" GUZZLE_VERSION="3.1"
   - SYMFONY_VERSION="2.1" GUZZLE_VERSION="3.*"
   - SYMFONY_VERSION="2.*" GUZZLE_VERSION="3.*"
-  - SYMFONY_VERSION="3.0" GUZZLE_VERSION="3.1"
-  - SYMFONY_VERSION="3.*" GUZZLE_VERSION="3.1"
-  - SYMFONY_VERSION="3.0" GUZZLE_VERSION="3.*"
-  - SYMFONY_VERSION="3.*" GUZZLE_VERSION="3.*"
-
-matrix:
-  exclude:
-    - php: 5.3
-      env: SYMFONY_VERSION="3.0" GUZZLE_VERSION="3.1"
-    - php: 5.3
-      env: SYMFONY_VERSION="3.*" GUZZLE_VERSION="3.1"
-    - php: 5.3
-      env: SYMFONY_VERSION="3.0" GUZZLE_VERSION="3.*"
-    - php: 5.3
-      env: SYMFONY_VERSION="3.*" GUZZLE_VERSION="3.*"
-    - php: 5.4
-      env: SYMFONY_VERSION="3.0" GUZZLE_VERSION="3.1"
-    - php: 5.4
-      env: SYMFONY_VERSION="3.*" GUZZLE_VERSION="3.1"
-    - php: 5.4
-      env: SYMFONY_VERSION="3.0" GUZZLE_VERSION="3.*"
-    - php: 5.4
-      env: SYMFONY_VERSION="3.*" GUZZLE_VERSION="3.*"
 
 before_script:
   - composer require symfony/http-foundation:${SYMFONY_VERSION} --no-update
