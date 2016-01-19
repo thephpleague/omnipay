@@ -5,15 +5,15 @@
 
 namespace Omnipay\Common\Message;
 
-use Guzzle\Http\ClientInterface;
+use Omnipay\Common\Http\ClientInterface;
 use Omnipay\Common\CreditCard;
 use Omnipay\Common\Currency;
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\Exception\RuntimeException;
 use Omnipay\Common\Helper;
 use Omnipay\Common\ItemBag;
+use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
-use Symfony\Component\HttpFoundation\Request as HttpRequest;
 use InvalidArgumentException;
 
 /**
@@ -71,14 +71,14 @@ abstract class AbstractRequest implements RequestInterface
     /**
      * The request client.
      *
-     * @var \Guzzle\Http\ClientInterface
+     * @var ClientInterface
      */
     protected $httpClient;
 
     /**
      * The HTTP request object.
      *
-     * @var \Symfony\Component\HttpFoundation\Request
+     * @var ServerRequestInterface
      */
     protected $httpRequest;
 
@@ -102,10 +102,10 @@ abstract class AbstractRequest implements RequestInterface
     /**
      * Create a new Request
      *
-     * @param ClientInterface $httpClient  A Guzzle client to make API calls with
-     * @param HttpRequest     $httpRequest A Symfony HTTP request object
+     * @param ClientInterface           $httpClient  A Http client to make API calls with
+     * @param ServerRequestInterface    $httpRequest A HTTP request object
      */
-    public function __construct(ClientInterface $httpClient, HttpRequest $httpRequest)
+    public function __construct(ClientInterface $httpClient, ServerRequestInterface $httpRequest)
     {
         $this->httpClient = $httpClient;
         $this->httpRequest = $httpRequest;

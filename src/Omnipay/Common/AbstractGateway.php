@@ -5,10 +5,14 @@
 
 namespace Omnipay\Common;
 
-use Guzzle\Http\ClientInterface;
-use Guzzle\Http\Client as HttpClient;
+use GuzzleHttp\Client as GuzzleClient;
+use Psr\Http\Message\ServerRequestInterface;
+use Zend\Diactoros\ServerRequestFactory;
+use Omnipay\Common\Http\ClientInterface;
+use Omnipay\Common\Http\Client as HttpClient;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
+
 
 /**
  * Base payment gateway class
@@ -50,22 +54,22 @@ abstract class AbstractGateway implements GatewayInterface
     protected $parameters;
 
     /**
-     * @var \Guzzle\Http\ClientInterface
+     * @var ClientInterface
      */
     protected $httpClient;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Request
+     * @var ServerRequestInterface
      */
     protected $httpRequest;
 
     /**
      * Create a new gateway instance
      *
-     * @param ClientInterface $httpClient  A Guzzle client to make API calls with
-     * @param HttpRequest     $httpRequest A Symfony HTTP request object
+     * @param ClientInterface $httpClient  A HTTP client to make API calls with
+     * @param ServerRequestInterface     $httpRequest A HTTP request object
      */
-    public function __construct(ClientInterface $httpClient = null, HttpRequest $httpRequest = null)
+    public function __construct(ClientInterface $httpClient = null, ServerRequestInterface $httpRequest = null)
     {
         $this->httpClient = $httpClient ?: $this->getDefaultHttpClient();
         $this->httpRequest = $httpRequest ?: $this->getDefaultHttpRequest();
@@ -331,21 +335,16 @@ abstract class AbstractGateway implements GatewayInterface
      */
     protected function getDefaultHttpClient()
     {
-        return new HttpClient(
-            '',
-            array(
-                'curl.options' => array(CURLOPT_CONNECTTIMEOUT => 60),
-            )
-        );
+        return new HttpClient();
     }
 
     /**
      * Get the global default HTTP request.
      *
-     * @return HttpRequest
+     * @return ServerRequestInterface
      */
     protected function getDefaultHttpRequest()
     {
-        return HttpRequest::createFromGlobals();
+        return ServerRequestFactory::fromGlobals();
     }
 }

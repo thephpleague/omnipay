@@ -18,8 +18,8 @@ class AbstractGatewayTest extends TestCase
     public function testConstruct()
     {
         $this->gateway = new AbstractGatewayTest_MockAbstractGateway;
-        $this->assertInstanceOf('\Guzzle\Http\Client', $this->gateway->getProtectedHttpClient());
-        $this->assertInstanceOf('\Symfony\Component\HttpFoundation\Request', $this->gateway->getProtectedHttpRequest());
+        $this->assertInstanceOf('\Omnipay\Common\Http\Client', $this->gateway->getProtectedHttpClient());
+        $this->assertInstanceOf('\Psr\Http\Message\ServerRequestInterface', $this->gateway->getProtectedHttpRequest());
         $this->assertSame(array(), $this->gateway->getParameters());
     }
 
