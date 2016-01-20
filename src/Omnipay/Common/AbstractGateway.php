@@ -5,14 +5,11 @@
 
 namespace Omnipay\Common;
 
-use GuzzleHttp\Client as GuzzleClient;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\ServerRequestFactory;
 use Omnipay\Common\Http\ClientInterface;
 use Omnipay\Common\Http\Client as HttpClient;
 use Symfony\Component\HttpFoundation\ParameterBag;
-use Symfony\Component\HttpFoundation\Request as HttpRequest;
-
 
 /**
  * Base payment gateway class

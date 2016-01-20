@@ -4,6 +4,8 @@ namespace Omnipay\Common\Http;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\UriInterface;
 
 /**
  * Http Interface
@@ -21,20 +23,32 @@ interface ClientInterface
     public function send(RequestInterface $request);
 
     /**
-     * @param  $method
-     * @param  $uri
+     * @param  string $method
+     * @param  string|UriInterface $uri
      * @param  array $headers
-     * @param  null $body
+     * @param  string|resource|StreamInterface $body
      * @return ResponseInterface
      */
     public function request($method, $uri, array $headers = [], $body = null);
 
     /**
      * @param  string $method
-     * @param  string $uri
+     * @param  string|UriInterface $uri
      * @param  array $headers
-     * @param  null $body
+     * @param  string|resource|StreamInterface $body
      * @return RequestInterface
      */
     public function createRequest($method, $uri, array $headers = [], $body = null);
+
+    /**
+     * @param  string|UriInterface $uri
+     * @return UriInterface
+     */
+    public function createUri($uri);
+
+    /**
+     * @param  mixed $resource
+     * @return StreamInterface
+     */
+    public function createStream($resource);
 }
