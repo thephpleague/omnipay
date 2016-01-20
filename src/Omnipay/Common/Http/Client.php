@@ -2,8 +2,10 @@
 
 namespace Omnipay\Common\Http;
 
-use GuzzleHttp\Client as GuzzleClient;
-use GuzzleHttp\Psr7\Request;
+use Http\Client\HttpClient;
+use Http\Message\MessageFactory;
+use Http\Client\Common\HttpMethodsClient;
+use Http\Adapter\Guzzle6\Client as GuzzleClient;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
@@ -15,66 +17,64 @@ use Psr\Http\Message\UriInterface;
  * Implementation of the Http ClientInterface by using Guzzle.
  *
  */
-class Client implements ClientInterface
+class Client extends HttpMethodsClient implements HttpClient, MessageFactory
 {
-    /** @var  \GuzzleHttp\Client */
-    public $guzzle;
-
-    public function __construct(GuzzleClient $client = null)
-    {
-        $this->guzzle = $client ?: new GuzzleClient();
-    }
-
     /**
-     * @param  RequestInterface $request
-     * @return ResponseInterface
+     * @var HttpClient
      */
-    public function send(RequestInterface $request)
-    {
-        return $this->guzzle->send($request);
-    }
+    private $httpClient;
 
     /**
-     * @param  string $method
-     * @param  string|UriInterface $uri
-     * @param  array $headers
-     * @param  string|resource|StreamInterface $body
-     * @return ResponseInterface
+     * @var MessageFactory
      */
-    public function request($method, $uri, array $headers = [], $body = null)
-    {
-        $request = $this->createRequest($method, $uri, $headers, $body);
+    private $messageFactory;
 
-        return $this->send($request);
+    /**
+     * @param HttpClient     $httpClient     The client to send requests with.
+     * @param MessageFactory $messageFactory The message factory to create requests.
+     */
+    public function __construct(HttpClient $httpClient = null, MessageFactory $messageFactory = null)
+    {
+        $this->httpClient = $httpClient ?: new GuzzleClient;
+        $this->messageFactory = $messageFactory ?: new MessageFactory\DiactorosMessageFactory();
+
+        parent::__construct($this->httpClient, $this->messageFactory);
     }
 
     /**
-     * @param  string $method
-     * @param  string|UriInterface $uri
-     * @param  array $headers
-     * @param  string|resource|StreamInterface $body
+     * Creates a new PSR-7 request.
+     *
+     * @param string                               $method
+     * @param string|UriInterface                  $uri
+     * @param array                                $headers
+     * @param resource|string|StreamInterface|null $body
+     * @param string                               $protocolVersion
+     *
      * @return RequestInterface
      */
-    public function createRequest($method, $uri, array $headers = [], $body = null)
+    public function createRequest($method, $uri, array $headers = [], $body = null, $protocolVersion = '1.1')
     {
-        return new Request($method, $uri, $headers, $body);
+        return $this->messageFactory->createRequest($method, $uri, $headers, $body, $protocolVersion);
     }
 
     /**
-     * @param  string|UriInterface $uri
-     * @return UriInterface
+     * Creates a new PSR-7 response.
+     *
+     * @param int $statusCode
+     * @param string|null $reasonPhrase
+     * @param array $headers
+     * @param resource|string|StreamInterface|null $body
+     * @param string $protocolVersion
+     *
+     * @return ResponseInterface
      */
-    public function createUri($uri)
-    {
-        return \GuzzleHttp\Psr7\uri_for($uri);
-    }
-
-    /**
-     * @param  mixed $resource
-     * @return StreamInterface
-     */
-    public function createStream($resource)
-    {
-        \GuzzleHttp\Psr7\stream_for($resource);
+    public function createResponse(
+        $statusCode = 200,
+        $reasonPhrase = null,
+        array $headers = [],
+        $body = null,
+        $protocolVersion = '1.1'
+    ) {
+        return $this->messageFactory->createResponse($statusCode, $reasonPhrase, $headers, $body, $protocolVersion);
     }
 }

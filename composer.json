@@ -31,10 +31,15 @@
         "symfony/http-foundation": "^2.1|^3.0",
         "psr/http-message": "^1.0",
         "zendframework/zend-diactoros": "^1.0",
-        "guzzlehttp/guzzle": "^6.0"
+        "php-http/client-common": "^0.2.0",
+        "php-http/message": "^0.2.1"
     },
     "require-dev": {
-        "omnipay/tests": "^3.0"
+        "omnipay/tests": "^3.0",
+        "php-http/guzzle6-adapter": "^0.4"
+    },
+    "suggest": {
+        "php-http/guzzle6-adapter": "^0.4 for Guzzle as Http Client"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
