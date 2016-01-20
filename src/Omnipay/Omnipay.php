@@ -108,7 +108,7 @@ class Omnipay
      *
      * @param string $method     The factory method to invoke.
      * @param array  $parameters Parameters passed to the factory method.
-     * 
+     *
      * @return mixed
      */
     public static function __callStatic($method, $parameters)

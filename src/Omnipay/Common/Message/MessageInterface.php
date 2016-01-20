@@ -9,7 +9,7 @@ namespace Omnipay\Common\Message;
  * Message Interface
  *
  * This interface class defines the standard functions that any Omnipay message
- * interface needs to be able to provide.  
+ * interface needs to be able to provide.
  */
 interface MessageInterface
 {
