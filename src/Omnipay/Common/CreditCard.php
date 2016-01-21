@@ -8,7 +8,6 @@ namespace Omnipay\Common;
 use DateTime;
 use DateTimeZone;
 use Omnipay\Common\Exception\InvalidCreditCardException;
-use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
  * Credit Card class
@@ -107,7 +106,7 @@ class CreditCard
     /**
      * Internal storage of all of the card parameters.
      *
-     * @var \Symfony\Component\HttpFoundation\ParameterBag
+     * @var ParameterBag
      */
     protected $parameters;
 

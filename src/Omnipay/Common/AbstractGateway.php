@@ -9,7 +9,6 @@ use Omnipay\Common\Http\GuzzleClient;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\ServerRequestFactory;
 use Omnipay\Common\Http\ClientInterface;
-use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
  * Base payment gateway class
@@ -46,7 +45,7 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 abstract class AbstractGateway implements GatewayInterface
 {
     /**
-     * @var \Symfony\Component\HttpFoundation\ParameterBag
+     * @var ParameterBag
      */
     protected $parameters;
 

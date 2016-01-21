@@ -3,10 +3,7 @@
 namespace Omnipay\Common\Http;
 
 use Mockery as m;
-use Omnipay\Common\CreditCard;
-use Omnipay\Common\ItemBag;
 use Omnipay\Tests\TestCase;
-use ReflectionClass;
 use GuzzleHttp\Client as Guzzle;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;

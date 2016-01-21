@@ -12,8 +12,8 @@ use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\Exception\RuntimeException;
 use Omnipay\Common\Helper;
 use Omnipay\Common\ItemBag;
+use Omnipay\Common\ParameterBag;
 use Psr\Http\Message\ServerRequestInterface;
-use Symfony\Component\HttpFoundation\ParameterBag;
 use InvalidArgumentException;
 
 /**
@@ -64,7 +64,7 @@ abstract class AbstractRequest implements RequestInterface
     /**
      * The request parameters
      *
-     * @var \Symfony\Component\HttpFoundation\ParameterBag
+     * @var ParameterBag
      */
     protected $parameters;
 
