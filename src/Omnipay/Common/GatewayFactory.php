@@ -5,7 +5,7 @@
 
 namespace Omnipay\Common;
 
-use Omnipay\Common\Http\Client;
+use Omnipay\Common\Http\ClientInterface;
 use Omnipay\Common\Exception\RuntimeException;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -92,12 +92,12 @@ class GatewayFactory
      * Create a new gateway instance
      *
      * @param string               $class       Gateway name
-     * @param Client|null $httpClient  A HTTP Client implementation
+     * @param ClientInterface|null $httpClient  A HTTP Client implementation
      * @param ServerRequestInterface|null     $httpRequest A HTTP Request implementation
      * @throws RuntimeException                 If no such gateway is found
      * @return GatewayInterface                 An object of class $class is created and returned
      */
-    public function create($class, Client $httpClient = null, ServerRequestInterface $httpRequest = null)
+    public function create($class, ClientInterface $httpClient = null, ServerRequestInterface $httpRequest = null)
     {
         $class = Helper::getGatewayClassName($class);
 

@@ -5,7 +5,7 @@
 
 namespace Omnipay\Common\Message;
 
-use Omnipay\Common\Http\Client;
+use Omnipay\Common\Http\ClientInterface;
 use Omnipay\Common\CreditCard;
 use Omnipay\Common\Currency;
 use Omnipay\Common\Exception\InvalidRequestException;
@@ -102,10 +102,10 @@ abstract class AbstractRequest implements RequestInterface
     /**
      * Create a new Request
      *
-     * @param Client           $httpClient  A Http client to make API calls with
+     * @param ClientInterface           $httpClient  A Http client to make API calls with
      * @param ServerRequestInterface    $httpRequest A HTTP request object
      */
-    public function __construct(Client $httpClient, ServerRequestInterface $httpRequest)
+    public function __construct(ClientInterface $httpClient, ServerRequestInterface $httpRequest)
     {
         $this->httpClient = $httpClient;
         $this->httpRequest = $httpRequest;
