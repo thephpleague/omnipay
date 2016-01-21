@@ -18,7 +18,7 @@ use Psr\Http\Message\UriInterface;
 class GuzzleClient implements ClientInterface
 {
     /** @var  \GuzzleHttp\Client */
-    public $guzzle;
+    protected $guzzle;
 
     public function __construct(Client $client = null)
     {
