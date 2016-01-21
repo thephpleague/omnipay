@@ -60,7 +60,7 @@ class AbstractResponseTest extends TestCase
 
         $httpResponse = $this->response->getRedirectResponse();
         $this->assertSame(302, $httpResponse->getStatusCode());
-        $this->assertSame('https://example.com/redirect?a=1&b=2', $httpResponse->getTargetUrl());
+        $this->assertSame('https://example.com/redirect?a=1&b=2', $httpResponse->getHeaderLine('Location'));
     }
 
     public function testGetRedirectResponsePost()
@@ -72,9 +72,9 @@ class AbstractResponseTest extends TestCase
 
         $httpResponse = $this->response->getRedirectResponse();
         $this->assertSame(200, $httpResponse->getStatusCode());
-        $this->assertContains('<form action="https://example.com/redirect?a=1&amp;b=2" method="post">', $httpResponse->getContent());
-        $this->assertContains('<input type="hidden" name="foo" value="bar" />', $httpResponse->getContent());
-        $this->assertContains('<input type="hidden" name="key&amp;&quot;" value="&lt;value&gt;" />', $httpResponse->getContent());
+        $this->assertContains('<form action="https://example.com/redirect?a=1&amp;b=2" method="post">', (string) $httpResponse->getBody());
+        $this->assertContains('<input type="hidden" name="foo" value="bar" />', (string) $httpResponse->getBody());
+        $this->assertContains('<input type="hidden" name="key&amp;&quot;" value="&lt;value&gt;" />', (string) $httpResponse->getBody());
     }
 
     /**
