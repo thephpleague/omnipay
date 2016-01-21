@@ -60,5 +60,4 @@ interface ClientInterface
      * @return StreamInterface
      */
     public function createStream($body);
-
 }
