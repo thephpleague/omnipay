@@ -87,7 +87,7 @@ class GuzzleClient implements ClientInterface
      */
     public function post($uri, array $headers = [], $body = null)
     {
-        $request = $this->createRequest('GET', $uri, $headers, $body);
+        $request = $this->createRequest('POST', $uri, $headers, $body);
 
         return $this->sendRequest($request);
     }
