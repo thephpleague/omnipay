@@ -5,10 +5,10 @@
 
 namespace Omnipay\Common;
 
+use Omnipay\Common\Http\GuzzleClient;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\ServerRequestFactory;
 use Omnipay\Common\Http\ClientInterface;
-use Omnipay\Common\Http\Client as HttpClient;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
@@ -328,11 +328,11 @@ abstract class AbstractGateway implements GatewayInterface
     /**
      * Get the global default HTTP client.
      *
-     * @return HttpClient
+     * @return ClientInterface
      */
     protected function getDefaultHttpClient()
     {
-        return new HttpClient();
+        return new GuzzleClient();
     }
 
     /**

@@ -17,28 +17,37 @@ use Psr\Http\Message\UriInterface;
 interface ClientInterface
 {
     /**
+     * Send a GET request
+     *
+     * @param string|UriInterface $uri
+     * @param array $headers
+     * @return ResponseInterface
+     */
+    public function get($uri, array $headers = []);
+
+    /**
+     * @param  string|UriInterface$uri
+     * @param  array $headers
+     * @param  string|resource|StreamInterface $body
+     * @return ResponseInterface
+     */
+    public function post($uri, array $headers = [], $body = null);
+
+    /**
      * @param  RequestInterface $request
      * @return ResponseInterface
      */
-    public function send(RequestInterface $request);
+    public function sendRequest(RequestInterface $request);
 
     /**
      * @param  string $method
      * @param  string|UriInterface $uri
      * @param  array $headers
      * @param  string|resource|StreamInterface $body
-     * @return ResponseInterface
-     */
-    public function request($method, $uri, array $headers = [], $body = null);
-
-    /**
-     * @param  string $method
-     * @param  string|UriInterface $uri
-     * @param  array $headers
-     * @param  string|resource|StreamInterface $body
+     * @param  string $protocolVersion
      * @return RequestInterface
      */
-    public function createRequest($method, $uri, array $headers = [], $body = null);
+    public function createRequest($method, $uri, array $headers = [], $body = null, $protocolVersion = '1.1');
 
     /**
      * @param  string|UriInterface $uri
@@ -47,8 +56,9 @@ interface ClientInterface
     public function createUri($uri);
 
     /**
-     * @param  mixed $resource
+     * @param  mixed $body
      * @return StreamInterface
      */
-    public function createStream($resource);
+    public function createStream($body);
+
 }

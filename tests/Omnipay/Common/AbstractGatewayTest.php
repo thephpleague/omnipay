@@ -18,7 +18,7 @@ class AbstractGatewayTest extends TestCase
     public function testConstruct()
     {
         $this->gateway = new AbstractGatewayTest_MockAbstractGateway;
-        $this->assertInstanceOf('\Omnipay\Common\Http\Client', $this->gateway->getProtectedHttpClient());
+        $this->assertInstanceOf('\Omnipay\Common\Http\ClientInterface', $this->gateway->getProtectedHttpClient());
         $this->assertInstanceOf('\Psr\Http\Message\ServerRequestInterface', $this->gateway->getProtectedHttpRequest());
         $this->assertSame(array(), $this->gateway->getParameters());
     }
