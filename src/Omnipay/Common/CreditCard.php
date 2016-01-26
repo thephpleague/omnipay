@@ -49,6 +49,7 @@ use Symfony\Component\HttpFoundation\ParameterBag;
  * * state
  * * country
  * * phone
+ * * phoneExtension
  * * fax
  * * number
  * * expiryMonth
@@ -822,6 +823,27 @@ class CreditCard
     }
 
     /**
+     * Get the billing phone number extension.
+     *
+     * @return string
+     */
+    public function getBillingPhoneExtension()
+    {
+        return $this->getParameter('billingPhoneExtension');
+    }
+
+    /**
+     * Sets the billing phone number extension.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
+    public function setBillingPhoneExtension($value)
+    {
+        return $this->setParameter('billingPhoneExtension', $value);
+    }
+
+    /**
      * Get the billing fax number.
      *
      * @return string
@@ -1099,6 +1121,27 @@ class CreditCard
     }
 
     /**
+     * Get the shipping phone number extension.
+     *
+     * @return string
+     */
+    public function getShippingPhoneExtension()
+    {
+        return $this->getParameter('shippingPhoneExtension');
+    }
+
+    /**
+     * Sets the shipping phone number extension.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
+    public function setShippingPhoneExtension($value)
+    {
+        return $this->setParameter('shippingPhoneExtension', $value);
+    }
+
+    /**
      * Get the shipping fax number.
      *
      * @return string
@@ -1283,6 +1326,30 @@ class CreditCard
     {
         $this->setParameter('billingPhone', $value);
         $this->setParameter('shippingPhone', $value);
+
+        return $this;
+    }
+
+    /**
+     * Get the billing phone number extension.
+     *
+     * @return string
+     */
+    public function getPhoneExtension()
+    {
+        return $this->getParameter('billingPhoneExtension');
+    }
+
+    /**
+     * Sets the billing and shipping phone number extension.
+     *
+     * @param string $value
+     * @return CreditCard provides a fluent interface.
+     */
+    public function setPhoneExtension($value)
+    {
+        $this->setParameter('billingPhoneExtension', $value);
+        $this->setParameter('shippingPhoneExtension', $value);
 
         return $this;
     }
