@@ -592,10 +592,21 @@ class CreditCardTest extends TestCase
 
     /**
      * @expectedException Omnipay\Common\Exception\InvalidCreditCardException
+     * @expectedExceptionMessage Card number is invalid
+     */
+    public function testInvalidLuhn()
+    {
+        $this->card->setNumber('43');
+        $this->card->validate();
+    }
+
+    /**
+     * @expectedException Omnipay\Common\Exception\InvalidCreditCardException
+     * @expectedExceptionMessage Card number should have 12 to 19 digits
      */
     public function testInvalidShortCard()
     {
-        $this->card->setNumber('43');
+        $this->card->setNumber('4440');
         $this->card->validate();
     }
 }
