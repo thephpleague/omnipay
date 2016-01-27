@@ -209,7 +209,7 @@ abstract class AbstractRequest implements RequestInterface
     {
         foreach (func_get_args() as $key) {
             $value = $this->parameters->get($key);
-            if (empty($value)) {
+            if (! isset($value)) {
                 throw new InvalidRequestException("The $key parameter is required");
             }
         }
