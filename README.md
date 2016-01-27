@@ -159,6 +159,7 @@ Gateway | Composer Package | Maintainer
 [Stripe](https://github.com/thephpleague/omnipay-stripe) | omnipay/stripe | [Kayla Daniels](https://github.com/kayladnls)
 [TargetPay](https://github.com/thephpleague/omnipay-targetpay) | omnipay/targetpay | [Alexander Deruwe](https://github.com/aderuwe)
 [UnionPay](https://github.com/lokielse/omnipay-unionpay) | omnipay/lokielse-unionpay | [Loki Else](https://github.com/lokielse)
+[WeChat](https://github.com/labs7in0/omnipay-wechat) | labs7in0/omnipay-wechat | [7IN0's Labs](https://github.com/labs7in0)
 [WechatPay](https://github.com/lokielse/omnipay-wechatpay) | lokielse/omnipay-wechatpay | [Loki Else](https://github.com/lokielse)
 [WePay](https://github.com/Collizo4sky/omnipay-wepay) | Collizo4sky/omnipay-wepay | [Agbonghama Collins](https://github.com/Collizo4sky)
 [Wirecard](https://github.com/igaponov/omnipay-wirecard) | igaponov/omnipay-wirecard | [Igor Gaponov](https://github.com/igaponov)
