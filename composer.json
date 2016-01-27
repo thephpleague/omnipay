@@ -118,6 +118,7 @@
         "justinbusschau/omnipay-secpay": "SecPay",
         "lokielse/omnipay-alipay": "Alipay",
         "lokielse/omnipay-unionpay": "UnionPay",
+        "lokielse/omnipay-wechatpay": "WechatPay",
         "mfauveau/omnipay-nmi": "Network Merchants Inc. (NMI)",
         "mfauveau/omnipay-pacnet": "Pacnet",
         "omnipay/payu": "PayU",
