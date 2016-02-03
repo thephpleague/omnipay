@@ -3,8 +3,8 @@
 **An easy to use, consistent payment processing library for PHP 5.3+**
 
 [![Build Status](https://travis-ci.org/thephpleague/omnipay-common.png?branch=master)](https://travis-ci.org/thephpleague/omnipay-common)
-[![Latest Stable Version](https://poser.pugx.org/omnipay/omnipay/version.png)](https://packagist.org/packages/omnipay/omnipay)
-[![Total Downloads](https://poser.pugx.org/omnipay/omnipay/d/total.png)](https://packagist.org/packages/omnipay/omnipay)
+[![Latest Stable Version](https://poser.pugx.org/omnipay/omnipay/version)](https://packagist.org/packages/omnipay/omnipay)
+[![Total Downloads](https://poser.pugx.org/omnipay/omnipay/d/total)](https://packagist.org/packages/omnipay/omnipay)
 
 Omnipay is a payment processing library for PHP. It has been designed based on
 ideas from [Active Merchant](http://activemerchant.org/), plus experience implementing
@@ -78,7 +78,7 @@ and code style used in other Omnipay gateways.
 
 ## Installation
 
-Omnipay is installed via [Composer](http://getcomposer.org/). For most uses, you will need to require an individual gateway:
+Omnipay is installed via [Composer](https://getcomposer.org/). For most uses, you will need to require an individual gateway:
 
 ```
 composer require omnipay/paypal:~2.0
@@ -116,7 +116,7 @@ Gateway | Composer Package | Maintainer
 [Coinbase](https://github.com/thephpleague/omnipay-coinbase) | omnipay/coinbase | [Kayla Daniels](https://github.com/kayladnls)
 [Creditcall](https://github.com/meebio/omnipay-creditcall) | meebio/omnipay-creditcall | [John Jablonski](https://github.com/jan-j)
 [Cybersource](https://github.com/dioscouri/omnipay-cybersource) | dioscouri/omnipay-cybersource | [Dioscouri Design](https://github.com/dioscouri)
-[Cybersource SOAP](https://github.com/DABSquared/omnipay-cybersource-soap) | dabsquared/omnipay-cybersource-soap | [DABSquared](https://github.com/DABSquared)
+[Cybersource SOAP](https://github.com/Klinche/omnipay-cybersource-soap) | dabsquared/omnipay-cybersource-soap | [DABSquared](https://github.com/DABSquared)
 [DataCash](https://github.com/coatesap/omnipay-datacash) | coatesap/omnipay-datacash | [Andrew Coates](https://github.com/coatesap)
 [Dummy](https://github.com/thephpleague/omnipay-dummy) | omnipay/dummy | [Kayla Daniels](https://github.com/kayladnls)
 [ecoPayz](https://github.com/dercoder/omnipay-ecopayz) | dercoder/omnipay-ecopayz | [Alexander Fedra](https://github.com/dercoder)
