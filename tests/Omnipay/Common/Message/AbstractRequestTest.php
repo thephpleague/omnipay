@@ -124,7 +124,7 @@ class AbstractRequestTest extends TestCase
         $this->changeProtectedProperty('zeroAmountAllowed', false);
         $this->request->setAmount('0.00');
         $this->request->getAmount();
-	}
+    }
 
     // See https://github.com/thephpleague/omnipay-common/issues/69
     public function testAmountPrecision()
