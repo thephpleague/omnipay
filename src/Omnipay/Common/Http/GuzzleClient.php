@@ -26,6 +26,20 @@ class GuzzleClient implements ClientInterface
     }
 
     /**
+     * @param  string
+     * @param  string|UriInterface $uri
+     * @param  array $headers
+     * @param  string|resource|StreamInterface $body
+     * @return ResponseInterface
+     */
+    public function request($method, $uri, array $headers = [], $body = null)
+    {
+        $request = $this->createRequest($method, $uri, $headers, $body);
+
+        return $this->sendRequest($request);
+    }
+
+    /**
      * @param  RequestInterface $request
      * @return ResponseInterface
      */
@@ -63,32 +77,5 @@ class GuzzleClient implements ClientInterface
     public function createStream($resource)
     {
         return \GuzzleHttp\Psr7\stream_for($resource);
-    }
-
-    /**
-     * Send a GET request
-     *
-     * @param string|UriInterface $uri
-     * @param array $headers
-     * @return ResponseInterface
-     */
-    public function get($uri, array $headers = [])
-    {
-        $request = $this->createRequest('GET', $uri, $headers);
-
-        return $this->sendRequest($request);
-    }
-
-    /**
-     * @param  string|UriInterface $uri
-     * @param  array $headers
-     * @param  string|resource|StreamInterface $body
-     * @return ResponseInterface
-     */
-    public function post($uri, array $headers = [], $body = null)
-    {
-        $request = $this->createRequest('POST', $uri, $headers, $body);
-
-        return $this->sendRequest($request);
     }
 }

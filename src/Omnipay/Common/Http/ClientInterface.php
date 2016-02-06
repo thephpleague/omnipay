@@ -17,21 +17,13 @@ use Psr\Http\Message\UriInterface;
 interface ClientInterface
 {
     /**
-     * Send a GET request
-     *
-     * @param string|UriInterface $uri
-     * @param array $headers
-     * @return ResponseInterface
-     */
-    public function get($uri, array $headers = []);
-
-    /**
+     * @param  string
      * @param  string|UriInterface$uri
      * @param  array $headers
      * @param  string|resource|StreamInterface $body
      * @return ResponseInterface
      */
-    public function post($uri, array $headers = [], $body = null);
+    public function request($method, $uri, array $headers = [], $body = null);
 
     /**
      * @param  RequestInterface $request
@@ -60,4 +52,5 @@ interface ClientInterface
      * @return StreamInterface
      */
     public function createStream($body);
+
 }
