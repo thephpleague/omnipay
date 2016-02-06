@@ -15,6 +15,22 @@ class AbstractRequestTest extends TestCase
         $this->request->initialize();
     }
 
+    /**
+     * Allow changing a protected property using reflections.
+     *
+     * @param $property
+     * @param bool|true $value
+     */
+    private function changeProtectedProperty($property, $value = true)
+    {
+        $reflection = new \ReflectionClass($this->request);
+
+        $reflection_property = $reflection->getProperty($property);
+        $reflection_property->setAccessible(true);
+        $reflection_property->setValue($this->request, $value);
+        $reflection_property->setAccessible(false);
+    }
+
     public function testConstruct()
     {
         $this->request = new AbstractRequestTest_MockAbstractRequest($this->getHttpClient(), $this->getHttpRequest());
@@ -97,6 +113,52 @@ class AbstractRequestTest extends TestCase
     {
         $this->assertSame($this->request, $this->request->setAmount('0.000000'));
         $this->assertSame('0.00', $this->request->getAmount());
+    }
+
+    /**
+     * @expectedException Omnipay\Common\Exception\InvalidRequestException
+     * @expectedExceptionMessage A zero amount is not allowed.
+     */
+    public function testAmountZeroNotAllowed()
+    {
+        $this->changeProtectedProperty('zeroAmountAllowed', false);
+        $this->request->setAmount('0.00');
+        $this->request->getAmount();
+    }
+
+    // See https://github.com/thephpleague/omnipay-common/issues/69
+    public function testAmountPrecision()
+    {
+        // The default precision for PHP is 6 decimal places.
+        ini_set('precision', 6);
+        $this->assertSame($this->request, $this->request->setAmount('67.10'));
+        $this->assertSame('67.10', $this->request->getAmount());
+
+        // At 17 decimal places, 67.10 will echo as 67.09999...
+        // This is *why* PHP sets the default precision at 6.
+        ini_set('precision', 17);
+        $this->assertSame('67.10', $this->request->getAmount());
+
+        $this->assertSame($this->request, $this->request->setAmount('67.01'));
+        $this->assertSame('67.01', $this->request->getAmount());
+
+        $this->assertSame($this->request, $this->request->setAmount('0.10'));
+        $this->assertSame('0.10', $this->request->getAmount());
+
+        $this->assertSame($this->request, $this->request->setAmount('0.01'));
+        $this->assertSame('0.01', $this->request->getAmount());
+    }
+
+    /**
+     * @expectedException Omnipay\Common\Exception\InvalidRequestException
+     *
+     * We still want to catch obvious fractions of the minor units that are
+     * not precision errors at a much lower level.
+     */
+    public function testAmountPrecisionTooHigh()
+    {
+        $this->assertSame($this->request, $this->request->setAmount('123.005'));
+        $this->assertSame('123.005', $this->request->getAmount());
     }
 
     public function testGetAmountNoDecimals()

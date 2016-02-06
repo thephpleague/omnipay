@@ -109,6 +109,21 @@ class CreditCardTest extends TestCase
         $this->assertArrayHasKey(CreditCard::BRAND_VISA, $brands);
     }
 
+    public function testCustomSupportedBrand()
+    {
+        $this->card->addSupportedBrand('omniexpress', '/^9\d{12}(\d{3})?$/');
+        $this->assertArrayHasKey('omniexpress', $this->card->getSupportedBrands());
+    }
+
+    public function testCustomBrandWorks()
+    {
+        $this->card->addSupportedBrand('omniexpress', '/^9\d{12}(\d{3})?$/');
+        $this->assertArrayHasKey('omniexpress', $this->card->getSupportedBrands());
+        $this->card->setNumber('9111111111111110');
+        $this->card->validate();
+        $this->assertEquals('omniexpress', $this->card->getBrand());
+    }
+
     public function testTitle()
     {
         $this->card->setTitle('Mr.');
@@ -403,6 +418,13 @@ class CreditCardTest extends TestCase
         $this->assertSame('12345', $this->card->getPhone());
     }
 
+    public function testBillingPhoneExtension()
+    {
+        $this->card->setBillingPhoneExtension('001');
+        $this->assertSame('001', $this->card->getBillingPhoneExtension());
+        $this->assertSame('001', $this->card->getPhoneExtension());
+    }
+
     public function testBillingFax()
     {
         $this->card->setBillingFax('54321');
@@ -487,6 +509,12 @@ class CreditCardTest extends TestCase
         $this->assertEquals('12345', $this->card->getShippingPhone());
     }
 
+    public function testShippingPhoneExtension()
+    {
+        $this->card->setShippingPhoneExtension('001');
+        $this->assertEquals('001', $this->card->getShippingPhoneExtension());
+    }
+
     public function testShippingFax()
     {
         $this->card->setShippingFax('54321');
@@ -557,6 +585,14 @@ class CreditCardTest extends TestCase
         $this->assertEquals('12345', $this->card->getShippingPhone());
     }
 
+    public function testPhoneExtension()
+    {
+        $this->card->setPhoneExtension('001');
+        $this->assertEquals('001', $this->card->getPhoneExtension());
+        $this->assertEquals('001', $this->card->getBillingPhoneExtension());
+        $this->assertEquals('001', $this->card->getShippingPhoneExtension());
+    }
+
     public function testFax()
     {
         $this->card->setFax('54321');
@@ -592,10 +628,21 @@ class CreditCardTest extends TestCase
 
     /**
      * @expectedException Omnipay\Common\Exception\InvalidCreditCardException
+     * @expectedExceptionMessage Card number is invalid
+     */
+    public function testInvalidLuhn()
+    {
+        $this->card->setNumber('43');
+        $this->card->validate();
+    }
+
+    /**
+     * @expectedException Omnipay\Common\Exception\InvalidCreditCardException
+     * @expectedExceptionMessage Card number should have 12 to 19 digits
      */
     public function testInvalidShortCard()
     {
-        $this->card->setNumber('43');
+        $this->card->setNumber('4440');
         $this->card->validate();
     }
 }
