@@ -12,8 +12,10 @@ namespace Omnipay\Common;
  *
  * @see ItemInterface
  */
-class Item implements ItemInterface
+class Item implements ItemInterface, ParameterizedInterface
 {
+    use HasParametersTrait;
+
     /**
      * @var ParameterBag
      */
@@ -27,38 +29,6 @@ class Item implements ItemInterface
     public function __construct($parameters = null)
     {
         $this->initialize($parameters);
-    }
-
-    /**
-     * Initialize this item with the specified parameters
-     *
-     * @param array|null $parameters An array of parameters to set on this object
-     * @return $this Item
-     */
-    public function initialize($parameters = null)
-    {
-        $this->parameters = new ParameterBag;
-
-        Helper::initialize($this, $parameters);
-
-        return $this;
-    }
-
-    public function getParameters()
-    {
-        return $this->parameters->all();
-    }
-
-    protected function getParameter($key)
-    {
-        return $this->parameters->get($key);
-    }
-
-    protected function setParameter($key, $value)
-    {
-        $this->parameters->set($key, $value);
-
-        return $this;
     }
 
     /**

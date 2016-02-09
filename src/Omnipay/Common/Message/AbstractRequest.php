@@ -5,6 +5,7 @@
 
 namespace Omnipay\Common\Message;
 
+use Omnipay\Common\HasParametersTrait;
 use Omnipay\Common\Http\ClientInterface;
 use Omnipay\Common\CreditCard;
 use Omnipay\Common\Currency;
@@ -13,6 +14,7 @@ use Omnipay\Common\Exception\RuntimeException;
 use Omnipay\Common\Helper;
 use Omnipay\Common\ItemBag;
 use Omnipay\Common\ParameterBag;
+use Omnipay\Common\ParameterizedInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use InvalidArgumentException;
 
@@ -59,7 +61,7 @@ use InvalidArgumentException;
  * @see RequestInterface
  * @see AbstractResponse
  */
-abstract class AbstractRequest implements RequestInterface
+abstract class AbstractRequest implements RequestInterface, ParameterizedInterface
 {
     /**
      * The request parameters
@@ -122,7 +124,7 @@ abstract class AbstractRequest implements RequestInterface
      * @return $this
      * @throws RuntimeException
      */
-    public function initialize(array $parameters = array())
+    public function initialize(array $parameters = [])
     {
         if (null !== $this->response) {
             throw new RuntimeException('Request cannot be modified after it has been sent!');
@@ -130,7 +132,7 @@ abstract class AbstractRequest implements RequestInterface
 
         $this->parameters = new ParameterBag;
 
-        Helper::initialize($this, $parameters);
+        Helper::initializeParameters($this, $parameters);
 
         return $this;
     }
@@ -151,7 +153,7 @@ abstract class AbstractRequest implements RequestInterface
      * @param string $key The parameter key
      * @return mixed
      */
-    protected function getParameter($key)
+    public function getParameter($key)
     {
         return $this->parameters->get($key);
     }
@@ -164,7 +166,7 @@ abstract class AbstractRequest implements RequestInterface
      * @return AbstractRequest Provides a fluent interface
      * @throws RuntimeException if a request parameter is modified after the request has been sent.
      */
-    protected function setParameter($key, $value)
+    public function setParameter($key, $value)
     {
         if (null !== $this->response) {
             throw new RuntimeException('Request cannot be modified after it has been sent!');
