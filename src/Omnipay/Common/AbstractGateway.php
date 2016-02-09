@@ -47,11 +47,6 @@ abstract class AbstractGateway implements GatewayInterface, ParameterizedInterfa
     use HasParametersTrait;
 
     /**
-     * @var ParameterBag
-     */
-    protected $parameters;
-
-    /**
      * @var ClientInterface
      */
     protected $httpClient;

@@ -55,7 +55,7 @@ class AbstractGatewayTest extends TestCase
             'unknown' => '42',
         ));
 
-        $this->assertSame(array('currency' => 'USD'), $this->gateway->getParameters());
+        $this->assertSame(array('currency' => 'USD', 'unknown' => '42'), $this->gateway->getParameters());
     }
 
     public function testGetDefaultParameters()

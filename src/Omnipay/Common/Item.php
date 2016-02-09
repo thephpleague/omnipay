@@ -17,16 +17,11 @@ class Item implements ItemInterface, ParameterizedInterface
     use HasParametersTrait;
 
     /**
-     * @var ParameterBag
-     */
-    protected $parameters;
-
-    /**
      * Create a new item with the specified parameters
      *
-     * @param array|null $parameters An array of parameters to set on the new object
+     * @param array $parameters An array of parameters to set on the new object
      */
-    public function __construct($parameters = null)
+    public function __construct(array $parameters = [])
     {
         $this->initialize($parameters);
     }

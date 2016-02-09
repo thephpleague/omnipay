@@ -43,33 +43,12 @@ class HelperTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testInitializeIgnoresNull()
-    {
-        $target = m::mock();
-        Helper::initializeParameters($target, null);
-    }
-
-    public function testInitializeIgnoresString()
-    {
-        $target = m::mock();
-        Helper::initializeParameters($target, 'invalid');
-    }
-
     public function testInitializeCallsSetters()
     {
         $target = m::mock('\Omnipay\Common\CreditCard');
-        $target->shouldReceive('setName')->once()->with('adrian');
         $target->shouldReceive('setNumber')->once()->with('1234');
 
-        Helper::initializeParameters($target, ['name' => 'adrian', 'number' => '1234']);
-    }
-
-    public function testInitializeIgnoresInvalidParameters()
-    {
-        $target = m::mock('\Omnipay\Common\CreditCard');
-        $target->shouldReceive('setName')->once()->with('adrian');
-
-        Helper::initializeParameters($target, ['name' => 'adrian', 'extra' => 'invalid']);
+        Helper::initializeParameters($target, ['number' => '1234']);
     }
 
     public function testGetGatewayShortNameSimple()
