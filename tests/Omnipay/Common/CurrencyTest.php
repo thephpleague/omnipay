@@ -25,6 +25,13 @@ class CurrencyTest extends TestCase
         $this->assertSame(2, $currency->getDecimals());
     }
 
+    public function testNumericCodeReturnsNull()
+    {
+        $currency = Currency::find('840');
+
+        $this->assertNull($currency);
+    }
+
     public function testUnknownCurrencyReturnsNull()
     {
         $currency = Currency::find('XYZ');

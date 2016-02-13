@@ -71,8 +71,8 @@ class Currency
         $iso4217 = new ISO4217();
 
         try {
-            $currency = $iso4217->getByCode($code);
-        } catch (\OutOfBoundsException $e) {
+            $currency = $iso4217->getByAlpha3($code);
+        } catch (\Exception $e) {
             return null;
         }
 

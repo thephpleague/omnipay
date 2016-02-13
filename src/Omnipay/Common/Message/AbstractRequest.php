@@ -5,6 +5,7 @@
 
 namespace Omnipay\Common\Message;
 
+use Omnipay\Common\Amount;
 use Omnipay\Common\HasParametersTrait;
 use Omnipay\Common\Http\ClientInterface;
 use Omnipay\Common\CreditCard;
@@ -146,7 +147,6 @@ abstract class AbstractRequest implements RequestInterface, ParameterizedInterfa
     {
         return $this->parameters->all();
     }
-
     /**
      * Get a single parameter.
      *
@@ -157,7 +157,6 @@ abstract class AbstractRequest implements RequestInterface, ParameterizedInterfa
     {
         return $this->parameters->get($key);
     }
-
     /**
      * Set a single parameter
      *
@@ -171,9 +170,7 @@ abstract class AbstractRequest implements RequestInterface, ParameterizedInterfa
         if (null !== $this->response) {
             throw new RuntimeException('Request cannot be modified after it has been sent!');
         }
-
         $this->parameters->set($key, $value);
-
         return $this;
     }
 
@@ -285,153 +282,69 @@ abstract class AbstractRequest implements RequestInterface, ParameterizedInterfa
     }
 
     /**
-     * Convert an amount into a float.
-     *
-     * @var string|int|float $value The value to convert.
-     * @throws InvalidRequestException on any validation failure.
-     * @return float The amount converted to a float.
+     * @return string
      */
-
-    public function toFloat($value)
+    protected function getCurrency()
     {
-        try {
-            return Helper::toFloat($value);
-        } catch (InvalidArgumentException $e) {
-            // Throw old exception for legacy implementations.
-            throw new InvalidRequestException($e->getMessage(), $e->getCode(), $e);
-        }
+        return strtoupper($this->getParameter('currency'));
     }
 
     /**
-     * Validates and returns the formated amount.
+     * @param  string $value
+     * @return $this
+     */
+    public function setCurrency($value)
+    {
+        return $this->setParameter('currency', $value);
+    }
+
+    /**
+     * Validates and returns  amount as integer.
      *
      * @throws InvalidRequestException on any validation failure.
-     * @return string The amount formatted to the correct number of decimal places for the selected currency.
+     * @return string The amount in smallest unit possible (eg. 'cents')
      */
     public function getAmount()
     {
         $amount = $this->getParameter('amount');
 
         if ($amount !== null) {
-            // Don't allow integers for currencies that support decimals.
-            // This is for legacy reasons - upgrades from v0.9
-            if ($this->getCurrencyDecimalPlaces() > 0) {
-                if (is_int($amount) || (is_string($amount) && false === strpos((string) $amount, '.'))) {
-                    throw new InvalidRequestException(
-                        'Please specify amount as a string or float, '
-                        . 'with decimal places (e.g. \'10.00\' to represent $10.00).'
-                    );
-                };
+            if (!$amount instanceof Amount) {
+
+                // Default currency when none set
+                $currency = $this->getCurrency();
+
+                if ($currency == null) {
+                    throw new InvalidRequestException('A currency is required.');
+                }
+
+                $amount = new Amount($amount, $currency);
             }
 
-            $amount = $this->toFloat($amount);
-
             // Check for a negative amount.
-            if (!$this->negativeAmountAllowed && $amount < 0) {
+            if (!$this->negativeAmountAllowed && $amount->isNegative()) {
                 throw new InvalidRequestException('A negative amount is not allowed.');
             }
 
             // Check for a zero amount.
-            if (!$this->zeroAmountAllowed && $amount === 0.0) {
+            if (!$this->zeroAmountAllowed && $amount->isZero()) {
                 throw new InvalidRequestException('A zero amount is not allowed.');
             }
 
-            // Check for rounding that may occur if too many significant decimal digits are supplied.
-            $decimal_count = strlen(substr(strrchr(sprintf('%.8g', $amount), '.'), 1));
-            if ($decimal_count > $this->getCurrencyDecimalPlaces()) {
-                throw new InvalidRequestException('Amount precision is too high for currency.');
-            }
-
-            return $this->formatCurrency($amount);
+            return $amount;
         }
     }
 
     /**
      * Sets the payment amount.
      *
-     * @param string $value
+     * @param string|Amount $value
      * @return AbstractRequest Provides a fluent interface
+     * @throws InvalidRequestException
      */
     public function setAmount($value)
     {
         return $this->setParameter('amount', $value);
-    }
-
-    /**
-     * Get the payment amount as an integer.
-     *
-     * @return integer
-     */
-    public function getAmountInteger()
-    {
-        return (int) round($this->getAmount() * $this->getCurrencyDecimalFactor());
-    }
-
-    /**
-     * Get the payment currency code.
-     *
-     * @return string
-     */
-    public function getCurrency()
-    {
-        return $this->getParameter('currency');
-    }
-
-    /**
-     * Sets the payment currency code.
-     *
-     * @param string $value
-     * @return AbstractRequest Provides a fluent interface
-     */
-    public function setCurrency($value)
-    {
-        return $this->setParameter('currency', strtoupper($value));
-    }
-
-    /**
-     * Get the payment currency number.
-     *
-     * @return integer
-     */
-    public function getCurrencyNumeric()
-    {
-        if ($currency = Currency::find($this->getCurrency())) {
-            return $currency->getNumeric();
-        }
-    }
-
-    /**
-     * Get the number of decimal places in the payment currency.
-     *
-     * @return integer
-     */
-    public function getCurrencyDecimalPlaces()
-    {
-        if ($currency = Currency::find($this->getCurrency())) {
-            return $currency->getDecimals();
-        }
-
-        return 2;
-    }
-
-    private function getCurrencyDecimalFactor()
-    {
-        return pow(10, $this->getCurrencyDecimalPlaces());
-    }
-
-    /**
-     * Format an amount for the payment currency.
-     *
-     * @return string
-     */
-    public function formatCurrency($amount)
-    {
-        return number_format(
-            $amount,
-            $this->getCurrencyDecimalPlaces(),
-            '.',
-            ''
-        );
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace Omnipay\Common\Message;
 
 use Mockery as m;
+use Omnipay\Common\Amount;
 use Omnipay\Common\CreditCard;
 use Omnipay\Common\ItemBag;
 use Omnipay\Tests\TestCase;
@@ -12,7 +13,9 @@ class AbstractRequestTest extends TestCase
     public function setUp()
     {
         $this->request = m::mock('\Omnipay\Common\Message\AbstractRequest')->makePartial();
-        $this->request->initialize();
+        $this->request->initialize([
+            'currency' => 'USD',
+        ]);
     }
 
     /**
@@ -39,8 +42,8 @@ class AbstractRequestTest extends TestCase
 
     public function testInitializeWithParams()
     {
-        $this->assertSame($this->request, $this->request->initialize(array('amount' => '1.23')));
-        $this->assertSame('1.23', $this->request->getAmount());
+        $this->assertSame($this->request, $this->request->initialize(array('amount' => '123', 'currency' => 'USD')));
+        $this->assertSame('123', $this->request->getAmount()->getAmount());
     }
 
     /**
@@ -87,14 +90,14 @@ class AbstractRequestTest extends TestCase
 
     public function testAmount()
     {
-        $this->assertSame($this->request, $this->request->setAmount('2.00'));
-        $this->assertSame('2.00', $this->request->getAmount());
+        $this->assertSame($this->request, $this->request->setAmount(2));
+        $this->assertSame('2', $this->request->getAmount()->getAmount());
     }
 
-    public function testAmountWithFloat()
+    public function testAmountWithInt()
     {
-        $this->assertSame($this->request, $this->request->setAmount(2.0));
-        $this->assertSame('2.00', $this->request->getAmount());
+        $this->assertSame($this->request, $this->request->setAmount(2));
+        $this->assertSame('2', $this->request->getAmount()->getAmount());
     }
 
     public function testAmountWithEmpty()
@@ -105,14 +108,14 @@ class AbstractRequestTest extends TestCase
 
     public function testAmountZeroFloat()
     {
-        $this->assertSame($this->request, $this->request->setAmount(0.0));
-        $this->assertSame('0.00', $this->request->getAmount());
+        $this->assertSame($this->request, $this->request->setAmount(0));
+        $this->assertSame('0', $this->request->getAmount()->getAmount());
     }
 
     public function testAmountZeroString()
     {
-        $this->assertSame($this->request, $this->request->setAmount('0.000000'));
-        $this->assertSame('0.00', $this->request->getAmount());
+        $this->assertSame($this->request, $this->request->setAmount('0'));
+        $this->assertSame('0', $this->request->getAmount()->getAmount());
     }
 
     /**
@@ -122,175 +125,35 @@ class AbstractRequestTest extends TestCase
     public function testAmountZeroNotAllowed()
     {
         $this->changeProtectedProperty('zeroAmountAllowed', false);
-        $this->request->setAmount('0.00');
-        $this->request->getAmount();
-    }
-
-    // See https://github.com/thephpleague/omnipay-common/issues/69
-    public function testAmountPrecision()
-    {
-        // The default precision for PHP is 6 decimal places.
-        ini_set('precision', 6);
-        $this->assertSame($this->request, $this->request->setAmount('67.10'));
-        $this->assertSame('67.10', $this->request->getAmount());
-
-        // At 17 decimal places, 67.10 will echo as 67.09999...
-        // This is *why* PHP sets the default precision at 6.
-        ini_set('precision', 17);
-        $this->assertSame('67.10', $this->request->getAmount());
-
-        $this->assertSame($this->request, $this->request->setAmount('67.01'));
-        $this->assertSame('67.01', $this->request->getAmount());
-
-        $this->assertSame($this->request, $this->request->setAmount('0.10'));
-        $this->assertSame('0.10', $this->request->getAmount());
-
-        $this->assertSame($this->request, $this->request->setAmount('0.01'));
-        $this->assertSame('0.01', $this->request->getAmount());
-    }
-
-    /**
-     * @expectedException Omnipay\Common\Exception\InvalidRequestException
-     *
-     * We still want to catch obvious fractions of the minor units that are
-     * not precision errors at a much lower level.
-     */
-    public function testAmountPrecisionTooHigh()
-    {
-        $this->assertSame($this->request, $this->request->setAmount('123.005'));
-        $this->assertSame('123.005', $this->request->getAmount());
-    }
-
-    public function testGetAmountNoDecimals()
-    {
-        $this->assertSame($this->request, $this->request->setCurrency('JPY'));
-        $this->assertSame($this->request, $this->request->setAmount('1366'));
-        $this->assertSame('1366', $this->request->getAmount());
-    }
-
-    /**
-     * @expectedException Omnipay\Common\Exception\InvalidRequestException
-     */
-    public function testGetAmountNoDecimalsRounding()
-    {
-        // There will not be any rounding; the amount is sent as requested or not at all.
-        $this->assertSame($this->request, $this->request->setAmount('136.5'));
-        $this->assertSame($this->request, $this->request->setCurrency('JPY'));
+        $this->request->setAmount('0');
         $this->request->getAmount();
     }
 
     /**
-     * @expectedException Omnipay\Common\Exception\InvalidRequestException
+     * @expectedException InvalidArgumentException
      */
-    public function testAmountWithIntThrowsException()
+    public function testAmountWithFloatStringThrowsException()
     {
-        // ambiguous value, avoid errors upgrading from v0.9
-        $this->assertSame($this->request, $this->request->setAmount(10));
+        $this->assertSame($this->request, $this->request->setAmount('10.00'));
         $this->request->getAmount();
     }
 
-    /**
-     * @expectedException Omnipay\Common\Exception\InvalidRequestException
-     */
-    public function testAmountWithIntStringThrowsException()
+    public function testGetAmountFormatted()
     {
-        // ambiguous value, avoid errors upgrading from v0.9
-        // Some currencies only take integers, so an integer (in a string) should be valid.
-        $this->assertSame($this->request, $this->request->setAmount('10'));
-        $this->request->getAmount();
-    }
-
-    public function testGetAmountInteger()
-    {
-        $this->assertSame($this->request, $this->request->setAmount('13.66'));
-        $this->assertSame(1366, $this->request->getAmountInteger());
-    }
-
-    public function testGetAmountIntegerNoDecimals()
-    {
-        $this->assertSame($this->request, $this->request->setCurrency('JPY'));
-        $this->assertSame($this->request, $this->request->setAmount('1366'));
-        $this->assertSame(1366, $this->request->getAmountInteger());
-    }
-
-    /**
-     * @expectedException Omnipay\Common\Exception\InvalidRequestException
-     */
-    public function testAmountThousandsSepThrowsException()
-    {
-        $this->assertSame($this->request, $this->request->setAmount('1,234.00'));
-        $this->request->getAmount();
-    }
-
-    /**
-     * @expectedException Omnipay\Common\Exception\InvalidRequestException
-     */
-    public function testAmountInvalidFormatThrowsException()
-    {
-        $this->assertSame($this->request, $this->request->setAmount('1.234.00'));
-        $this->request->getAmount();
-    }
-
-    /**
-     * @expectedException Omnipay\Common\Exception\InvalidRequestException
-     */
-    public function testAmountInvalidTypeThrowsException()
-    {
-        $this->assertSame($this->request, $this->request->setAmount(true));
-        $this->request->getAmount();
-    }
-
-    /**
-     * @expectedException Omnipay\Common\Exception\InvalidRequestException
-     */
-    public function testAmountNegativeStringThrowsException()
-    {
-        $this->assertSame($this->request, $this->request->setAmount('-123.00'));
-        $this->request->getAmount();
-    }
-
-    /**
-     * @expectedException Omnipay\Common\Exception\InvalidRequestException
-     */
-    public function testAmountNegativeFloatThrowsException()
-    {
-        $this->assertSame($this->request, $this->request->setAmount(-123.00));
-        $this->request->getAmount();
+        $this->assertSame($this->request, $this->request->setAmount(1366));
+        $this->assertSame('13.66', $this->request->getAmount()->getFormatted());
     }
 
     public function testCurrency()
     {
-        $this->assertSame($this->request, $this->request->setCurrency('USD'));
-        $this->assertSame('USD', $this->request->getCurrency());
+        $this->assertSame($this->request, $this->request->setCurrency('EUR')->setAmount(1));
+        $this->assertSame('EUR', $this->request->getAmount()->getCurrency()->getCode());
     }
 
-    public function testCurrencyLowercase()
+    public function testAmountWithCurrency()
     {
-        $this->assertSame($this->request, $this->request->setCurrency('usd'));
-        $this->assertSame('USD', $this->request->getCurrency());
-    }
-
-    public function testCurrencyNumeric()
-    {
-        $this->assertSame($this->request, $this->request->setCurrency('USD'));
-        $this->assertSame('840', $this->request->getCurrencyNumeric());
-    }
-
-    public function testCurrencyDecimals()
-    {
-        $this->assertSame($this->request, $this->request->setCurrency('JPY'));
-        $this->assertSame(0, $this->request->getCurrencyDecimalPlaces());
-    }
-
-    public function testFormatCurrency()
-    {
-        $this->assertSame('1234.00', $this->request->formatCurrency(1234));
-    }
-
-    public function testFormatCurrencyNoDecimals()
-    {
-        $this->request->setCurrency('JPY');
-        $this->assertSame('1234', $this->request->formatCurrency(1234));
+        $this->assertSame($this->request, $this->request->setCurrency('USD')->setAmount(new Amount(1, 'EUR')));
+        $this->assertSame('EUR', $this->request->getAmount()->getCurrency()->getCode());
     }
 
     public function testDescription()
@@ -388,6 +251,7 @@ class AbstractRequestTest extends TestCase
         $expected = array(
             'testMode' => true,
             'token' => 'asdf',
+            'currency' => 'USD',
         );
         $this->assertEquals($expected, $this->request->getParameters());
     }
@@ -401,7 +265,7 @@ class AbstractRequestTest extends TestCase
         $this->request = new AbstractRequestTest_MockAbstractRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->send();
 
-        $this->request->setCurrency('PHP');
+        $this->request->setCurrency('USD');
     }
 
     public function testCanValidateExistingParameters()
@@ -422,9 +286,9 @@ class AbstractRequestTest extends TestCase
         $this->request->validate('testMode', 'token');
     }
 
-    public function testNoCurrencyReturnedIfCurrencyNotSet()
+    public function testNoAmountReturnedIfAmountNotSet()
     {
-        $this->assertNull($this->request->getCurrencyNumeric());
+        $this->assertNull($this->request->getAmount());
     }
 
     public function testSend()
