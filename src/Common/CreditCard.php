@@ -89,7 +89,7 @@ use League\Omnipay\Common\Exception\InvalidCreditCardException;
  *
  * If any unknown parameters are passed in, they will be ignored.  No error is thrown.
  */
-class CreditCard implements ParameterizedInterface,  \JsonSerializable
+class CreditCard implements ParameterizedInterface, \JsonSerializable
 {
     use HasParametersTrait;
 
@@ -522,7 +522,7 @@ class CreditCard implements ParameterizedInterface,  \JsonSerializable
         }
 
         $maskedKeys = ['expiryYear', 'expiryMonth', 'cvv', 'issueNumber'];
-        foreach ($maskedKeys as $key){
+        foreach ($maskedKeys as $key) {
             if (isset($params[$key])) {
                 $params[$key] = str_pad('', strlen((string)$params[$key]), '*');
             }
