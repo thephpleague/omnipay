@@ -76,16 +76,18 @@ class Helper
      * Parameters are automatically converted to camelCase. Any parameters which do
      * not match a setter on the target object are ignored.
      *
-     * @param mixed $target     The object to set parameters on
+     * @param ParameterizedInterface $target     The object to set parameters on
      * @param array $parameters An array of parameters to set
      */
-    public static function initialize($target, $parameters)
+    public static function initializeParameters(ParameterizedInterface $target, array $parameters = [])
     {
         if (is_array($parameters)) {
             foreach ($parameters as $key => $value) {
                 $method = 'set'.ucfirst(static::camelCase($key));
                 if (method_exists($target, $method)) {
                     $target->$method($value);
+                } else {
+                    $target->setParameter($key, $value);
                 }
             }
         }

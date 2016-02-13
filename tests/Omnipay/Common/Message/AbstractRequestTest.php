@@ -265,7 +265,7 @@ class AbstractRequestTest extends TestCase
         $this->request = new AbstractRequestTest_MockAbstractRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->send();
 
-        $this->request->setAmount('100');
+        $this->request->setCurrency('USD');
     }
 
     public function testCanValidateExistingParameters()

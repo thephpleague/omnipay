@@ -10,8 +10,6 @@ class CreditCardTest extends TestCase
     {
         $this->card = new CreditCard;
         $this->card->setNumber('4111111111111111');
-        $this->card->setFirstName('Example');
-        $this->card->setLastName('Customer');
         $this->card->setExpiryMonth('4');
         $this->card->setExpiryYear(gmdate('Y')+2);
         $this->card->setCvv('123');
@@ -19,29 +17,26 @@ class CreditCardTest extends TestCase
 
     public function testConstructWithParams()
     {
-        $card = new CreditCard(array('name' => 'Test Customer'));
-        $this->assertSame('Test Customer', $card->getName());
+        $card = new CreditCard(array('number' => '4111111111111111'));
+        $this->assertSame('4111111111111111', $card->getNumber());
     }
 
     public function testInitializeWithParams()
     {
         $card = new CreditCard;
-        $card->initialize(array('name' => 'Test Customer'));
-        $this->assertSame('Test Customer', $card->getName());
+        $card->initialize(array('number' => '4111111111111111'));
+        $this->assertSame('4111111111111111', $card->getNumber());
     }
 
     public function testGetParamters()
     {
         $card = new CreditCard(array(
-            'name' => 'Example Customer',
             'number' => '1234',
             'expiryMonth' => 6,
             'expiryYear' => 2016,
         ));
 
         $parameters = $card->getParameters();
-        $this->assertSame('Example', $parameters['billingFirstName']);
-        $this->assertSame('Customer', $parameters['billingLastName']);
         $this->assertSame('1234', $parameters['number']);
         $this->assertSame(6, $parameters['expiryMonth']);
         $this->assertSame(2016, $parameters['expiryYear']);
@@ -122,52 +117,6 @@ class CreditCardTest extends TestCase
         $this->card->setNumber('9111111111111110');
         $this->card->validate();
         $this->assertEquals('omniexpress', $this->card->getBrand());
-    }
-
-    public function testTitle()
-    {
-        $this->card->setTitle('Mr.');
-        $this->assertEquals('Mr.', $this->card->getTitle());
-    }
-
-    public function testFirstName()
-    {
-        $this->card->setFirstName('Bob');
-        $this->assertEquals('Bob', $this->card->getFirstName());
-    }
-
-    public function testLastName()
-    {
-        $this->card->setLastName('Smith');
-        $this->assertEquals('Smith', $this->card->getLastName());
-    }
-
-    public function testGetName()
-    {
-        $this->card->setFirstName('Bob');
-        $this->card->setLastName('Smith');
-        $this->assertEquals('Bob Smith', $this->card->getName());
-    }
-
-    public function testSetName()
-    {
-        $this->card->setName('Bob Smith');
-        $this->assertEquals('Bob', $this->card->getFirstName());
-        $this->assertEquals('Smith', $this->card->getLastName());
-    }
-
-    public function testSetNameWithOneName()
-    {
-        $this->card->setName('Bob');
-        $this->assertEquals('Bob', $this->card->getFirstName());
-        $this->assertEquals('', $this->card->getLastName());
-    }
-
-    public function testSetNameWithMultipleNames()
-    {
-        $this->card->setName('Bob John Smith');
-        $this->assertEquals('Bob', $this->card->getFirstName());
-        $this->assertEquals('John Smith', $this->card->getLastName());
     }
 
     public function testNumber()
@@ -328,302 +277,6 @@ class CreditCardTest extends TestCase
     {
         $this->card->setIssueNumber('12');
         $this->assertSame('12', $this->card->getIssueNumber());
-    }
-
-    public function testBillingTitle()
-    {
-        $this->card->setBillingTitle('Mrs.');
-        $this->assertEquals('Mrs.', $this->card->getBillingTitle());
-        $this->assertEquals('Mrs.', $this->card->getTitle());
-    }
-
-    public function testBillingFirstName()
-    {
-        $this->card->setBillingFirstName('Bob');
-        $this->assertEquals('Bob', $this->card->getBillingFirstName());
-        $this->assertEquals('Bob', $this->card->getFirstName());
-    }
-
-    public function testBillingLastName()
-    {
-        $this->card->setBillingLastName('Smith');
-        $this->assertEquals('Smith', $this->card->getBillingLastName());
-        $this->assertEquals('Smith', $this->card->getLastName());
-    }
-
-    public function testBillingName()
-    {
-        $this->card->setBillingFirstName('Bob');
-        $this->card->setBillingLastName('Smith');
-        $this->assertEquals('Bob Smith', $this->card->getBillingName());
-
-        $this->card->setBillingName('John Foo');
-        $this->assertEquals('John', $this->card->getBillingFirstName());
-        $this->assertEquals('Foo', $this->card->getBillingLastName());
-    }
-
-    public function testBillingCompany()
-    {
-        $this->card->setBillingCompany('SuperSoft');
-        $this->assertEquals('SuperSoft', $this->card->getBillingCompany());
-        $this->assertEquals('SuperSoft', $this->card->getCompany());
-    }
-
-    public function testBillingAddress1()
-    {
-        $this->card->setBillingAddress1('31 Spooner St');
-        $this->assertEquals('31 Spooner St', $this->card->getBillingAddress1());
-        $this->assertEquals('31 Spooner St', $this->card->getAddress1());
-    }
-
-    public function testBillingAddress2()
-    {
-        $this->card->setBillingAddress2('Suburb');
-        $this->assertEquals('Suburb', $this->card->getBillingAddress2());
-        $this->assertEquals('Suburb', $this->card->getAddress2());
-    }
-
-    public function testBillingCity()
-    {
-        $this->card->setBillingCity('Quahog');
-        $this->assertEquals('Quahog', $this->card->getBillingCity());
-        $this->assertEquals('Quahog', $this->card->getCity());
-    }
-
-    public function testBillingPostcode()
-    {
-        $this->card->setBillingPostcode('12345');
-        $this->assertEquals('12345', $this->card->getBillingPostcode());
-        $this->assertEquals('12345', $this->card->getPostcode());
-    }
-
-    public function testBillingState()
-    {
-        $this->card->setBillingState('RI');
-        $this->assertEquals('RI', $this->card->getBillingState());
-        $this->assertEquals('RI', $this->card->getState());
-    }
-
-    public function testBillingCountry()
-    {
-        $this->card->setBillingCountry('US');
-        $this->assertEquals('US', $this->card->getBillingCountry());
-        $this->assertEquals('US', $this->card->getCountry());
-    }
-
-    public function testBillingPhone()
-    {
-        $this->card->setBillingPhone('12345');
-        $this->assertSame('12345', $this->card->getBillingPhone());
-        $this->assertSame('12345', $this->card->getPhone());
-    }
-
-    public function testBillingPhoneExtension()
-    {
-        $this->card->setBillingPhoneExtension('001');
-        $this->assertSame('001', $this->card->getBillingPhoneExtension());
-        $this->assertSame('001', $this->card->getPhoneExtension());
-    }
-
-    public function testBillingFax()
-    {
-        $this->card->setBillingFax('54321');
-        $this->assertSame('54321', $this->card->getBillingFax());
-        $this->assertSame('54321', $this->card->getFax());
-    }
-
-    public function testShippingTitle()
-    {
-        $this->card->setShippingTitle('Dr.');
-        $this->assertEquals('Dr.', $this->card->getShippingTitle());
-    }
-
-    public function testShippingFirstName()
-    {
-        $this->card->setShippingFirstName('James');
-        $this->assertEquals('James', $this->card->getShippingFirstName());
-    }
-
-    public function testShippingLastName()
-    {
-        $this->card->setShippingLastName('Doctor');
-        $this->assertEquals('Doctor', $this->card->getShippingLastName());
-    }
-
-    public function testShippingName()
-    {
-        $this->card->setShippingFirstName('Bob');
-        $this->card->setShippingLastName('Smith');
-        $this->assertEquals('Bob Smith', $this->card->getShippingName());
-
-        $this->card->setShippingName('John Foo');
-        $this->assertEquals('John', $this->card->getShippingFirstName());
-        $this->assertEquals('Foo', $this->card->getShippingLastName());
-    }
-
-    public function testShippingCompany()
-    {
-        $this->card->setShippingCompany('SuperSoft');
-        $this->assertEquals('SuperSoft', $this->card->getShippingCompany());
-    }
-
-    public function testShippingAddress1()
-    {
-        $this->card->setShippingAddress1('31 Spooner St');
-        $this->assertEquals('31 Spooner St', $this->card->getShippingAddress1());
-    }
-
-    public function testShippingAddress2()
-    {
-        $this->card->setShippingAddress2('Suburb');
-        $this->assertEquals('Suburb', $this->card->getShippingAddress2());
-    }
-
-    public function testShippingCity()
-    {
-        $this->card->setShippingCity('Quahog');
-        $this->assertEquals('Quahog', $this->card->getShippingCity());
-    }
-
-    public function testShippingPostcode()
-    {
-        $this->card->setShippingPostcode('12345');
-        $this->assertEquals('12345', $this->card->getShippingPostcode());
-    }
-
-    public function testShippingState()
-    {
-        $this->card->setShippingState('RI');
-        $this->assertEquals('RI', $this->card->getShippingState());
-    }
-
-    public function testShippingCountry()
-    {
-        $this->card->setShippingCountry('US');
-        $this->assertEquals('US', $this->card->getShippingCountry());
-    }
-
-    public function testShippingPhone()
-    {
-        $this->card->setShippingPhone('12345');
-        $this->assertEquals('12345', $this->card->getShippingPhone());
-    }
-
-    public function testShippingPhoneExtension()
-    {
-        $this->card->setShippingPhoneExtension('001');
-        $this->assertEquals('001', $this->card->getShippingPhoneExtension());
-    }
-
-    public function testShippingFax()
-    {
-        $this->card->setShippingFax('54321');
-        $this->assertEquals('54321', $this->card->getShippingFax());
-    }
-
-    public function testCompany()
-    {
-        $this->card->setCompany('FooBar');
-        $this->assertEquals('FooBar', $this->card->getCompany());
-        $this->assertEquals('FooBar', $this->card->getBillingCompany());
-        $this->assertEquals('FooBar', $this->card->getShippingCompany());
-    }
-
-    public function testAddress1()
-    {
-        $this->card->setAddress1('31 Spooner St');
-        $this->assertEquals('31 Spooner St', $this->card->getAddress1());
-        $this->assertEquals('31 Spooner St', $this->card->getBillingAddress1());
-        $this->assertEquals('31 Spooner St', $this->card->getShippingAddress1());
-    }
-
-    public function testAddress2()
-    {
-        $this->card->setAddress2('Suburb');
-        $this->assertEquals('Suburb', $this->card->getAddress2());
-        $this->assertEquals('Suburb', $this->card->getBillingAddress2());
-        $this->assertEquals('Suburb', $this->card->getShippingAddress2());
-    }
-
-    public function testCity()
-    {
-        $this->card->setCity('Quahog');
-        $this->assertEquals('Quahog', $this->card->getCity());
-        $this->assertEquals('Quahog', $this->card->getBillingCity());
-        $this->assertEquals('Quahog', $this->card->getShippingCity());
-    }
-
-    public function testPostcode()
-    {
-        $this->card->setPostcode('12345');
-        $this->assertEquals('12345', $this->card->getPostcode());
-        $this->assertEquals('12345', $this->card->getBillingPostcode());
-        $this->assertEquals('12345', $this->card->getShippingPostcode());
-    }
-
-    public function testState()
-    {
-        $this->card->setState('RI');
-        $this->assertEquals('RI', $this->card->getState());
-        $this->assertEquals('RI', $this->card->getBillingState());
-        $this->assertEquals('RI', $this->card->getShippingState());
-    }
-
-    public function testCountry()
-    {
-        $this->card->setCountry('US');
-        $this->assertEquals('US', $this->card->getCountry());
-        $this->assertEquals('US', $this->card->getBillingCountry());
-        $this->assertEquals('US', $this->card->getShippingCountry());
-    }
-
-    public function testPhone()
-    {
-        $this->card->setPhone('12345');
-        $this->assertEquals('12345', $this->card->getPhone());
-        $this->assertEquals('12345', $this->card->getBillingPhone());
-        $this->assertEquals('12345', $this->card->getShippingPhone());
-    }
-
-    public function testPhoneExtension()
-    {
-        $this->card->setPhoneExtension('001');
-        $this->assertEquals('001', $this->card->getPhoneExtension());
-        $this->assertEquals('001', $this->card->getBillingPhoneExtension());
-        $this->assertEquals('001', $this->card->getShippingPhoneExtension());
-    }
-
-    public function testFax()
-    {
-        $this->card->setFax('54321');
-        $this->assertEquals('54321', $this->card->getFax());
-        $this->assertEquals('54321', $this->card->getBillingFax());
-        $this->assertEquals('54321', $this->card->getShippingFax());
-    }
-
-    public function testEmail()
-    {
-        $this->card->setEmail('adrian@example.com');
-        $this->assertEquals('adrian@example.com', $this->card->getEmail());
-    }
-
-    public function testBirthday()
-    {
-        $this->card->setBirthday('01-02-2000');
-        $this->assertEquals('2000-02-01', $this->card->getBirthday());
-        $this->assertEquals('01/02/2000', $this->card->getBirthday('d/m/Y'));
-    }
-
-    public function testBirthdayEmpty()
-    {
-        $this->card->setBirthday('');
-        $this->assertNull($this->card->getBirthday());
-    }
-
-    public function testGender()
-    {
-        $this->card->setGender('female');
-        $this->assertEquals('female', $this->card->getGender());
     }
 
     /**
