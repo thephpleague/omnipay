@@ -1,5 +1,5 @@
 {
-    "name": "omnipay/common",
+    "name": "league/omnipay",
     "type": "library",
     "description": "Common components for Omnipay payment processing library",
     "keywords": [
@@ -23,8 +23,7 @@
         }
     ],
     "autoload": {
-        "psr-0": { "Omnipay\\Common\\" : "src/" },
-        "classmap": ["src/Omnipay/Omnipay.php"]
+        "psr-4": { "League\\Omnipay\\" : "src/" }
     },
     "require": {
         "php": ">=5.6",
@@ -37,44 +36,5 @@
         "omnipay/tests": "^3.0"
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "extra": {
-        "branch-alias": {
-            "dev-master": "3.0.x-dev"
-        },
-        "gateways": [
-            "AuthorizeNet_AIM",
-            "AuthorizeNet_SIM",
-            "Buckaroo_Ideal",
-            "Buckaroo_PayPal",
-            "CardSave",
-            "Coinbase",
-            "Dummy",
-            "Eway_Rapid",
-            "FirstData_Connect",
-            "GoCardless",
-            "Manual",
-            "Migs_ThreeParty",
-            "Migs_TwoParty",
-            "Mollie",
-            "MultiSafepay",
-            "Netaxept",
-            "NetBanx",
-            "PayFast",
-            "Payflow_Pro",
-            "PaymentExpress_PxPay",
-            "PaymentExpress_PxPost",
-            "PayPal_Express",
-            "PayPal_Pro",
-            "Pin",
-            "SagePay_Direct",
-            "SagePay_Server",
-            "SecurePay_DirectPost",
-            "Stripe",
-            "TargetPay_Directebanking",
-            "TargetPay_Ideal",
-            "TargetPay_Mrcash",
-            "WorldPay"
-        ]
-    }
+    "prefer-stable": true
 }

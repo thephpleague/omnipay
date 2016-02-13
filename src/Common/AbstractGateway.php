@@ -1,0 +1,314 @@
+<?php
+/**
+ * Base payment gateway class
+ */
+
+namespace League\Omnipay\Common;
+
+use League\Omnipay\Common\Http\GuzzleClient;
+use Psr\Http\Message\ServerRequestInterface;
+use Zend\Diactoros\ServerRequestFactory;
+use League\Omnipay\Common\Http\ClientInterface;
+
+/**
+ * Base payment gateway class
+ *
+ * This abstract class should be extended by all payment gateways
+ * throughout the Omnipay system.  It enforces implementation of
+ * the GatewayInterface interface and defines various common attibutes
+ * and methods that all gateways should have.
+ *
+ * Example:
+ *
+ * <code>
+ *   // Initialise the gateway
+ *   $gateway->initialize(...);
+ *
+ *   // Get the gateway parameters.
+ *   $parameters = $gateway->getParameters();
+ *
+ *   // Create a credit card object
+ *   $card = new CreditCard(...);
+ *
+ *   // Do an authorisation transaction on the gateway
+ *   if ($gateway->supportsAuthorize()) {
+ *       $gateway->authorize(...);
+ *   } else {
+ *       throw new \Exception('Gateway does not support authorize()');
+ *   }
+ * </code>
+ *
+ * For further code examples see the *omnipay-example* repository on github.
+ *
+ * @see GatewayInterface
+ */
+abstract class AbstractGateway implements GatewayInterface, ParameterizedInterface
+{
+    use HasParametersTrait;
+
+    /**
+     * @var ClientInterface
+     */
+    protected $httpClient;
+
+    /**
+     * @var ServerRequestInterface
+     */
+    protected $httpRequest;
+
+    /**
+     * Create a new gateway instance
+     *
+     * @param ClientInterface $httpClient  A HTTP client to make API calls with
+     * @param ServerRequestInterface     $httpRequest A HTTP request object
+     */
+    public function __construct(ClientInterface $httpClient = null, ServerRequestInterface $httpRequest = null)
+    {
+        $this->httpClient = $httpClient ?: $this->getDefaultHttpClient();
+        $this->httpRequest = $httpRequest ?: $this->getDefaultHttpRequest();
+        $this->initialize();
+    }
+
+    /**
+     * Get the short name of the Gateway
+     *
+     * @return string
+     */
+    public function getShortName()
+    {
+        return Helper::getGatewayShortName(get_class($this));
+    }
+
+    /**
+     * Initialize this gateway with default parameters
+     *
+     * @param  array $parameters
+     * @return $this
+     */
+    public function initialize(array $parameters = array())
+    {
+        $this->parameters = new ParameterBag;
+
+        // set default parameters
+        foreach ($this->getDefaultParameters() as $key => $value) {
+            if (is_array($value)) {
+                $this->parameters->set($key, reset($value));
+            } else {
+                $this->parameters->set($key, $value);
+            }
+        }
+
+        Helper::initializeParameters($this, $parameters);
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDefaultParameters()
+    {
+        return array();
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getTestMode()
+    {
+        return $this->getParameter('testMode');
+    }
+
+    /**
+     * @param  boolean $value
+     * @return $this
+     */
+    public function setTestMode($value)
+    {
+        return $this->setParameter('testMode', $value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrency()
+    {
+        return strtoupper($this->getParameter('currency'));
+    }
+
+    /**
+     * @param  string $value
+     * @return $this
+     */
+    public function setCurrency($value)
+    {
+        return $this->setParameter('currency', $value);
+    }
+
+    /**
+     * Supports Authorize
+     *
+     * @return boolean True if this gateway supports the authorize() method
+     */
+    public function supportsAuthorize()
+    {
+        return method_exists($this, 'authorize');
+    }
+
+    /**
+     * Supports Complete Authorize
+     *
+     * @return boolean True if this gateway supports the completeAuthorize() method
+     */
+    public function supportsCompleteAuthorize()
+    {
+        return method_exists($this, 'completeAuthorize');
+    }
+
+    /**
+     * Supports Capture
+     *
+     * @return boolean True if this gateway supports the capture() method
+     */
+    public function supportsCapture()
+    {
+        return method_exists($this, 'capture');
+    }
+
+    /**
+     * Supports Purchase
+     *
+     * @return boolean True if this gateway supports the purchase() method
+     */
+    public function supportsPurchase()
+    {
+        return method_exists($this, 'purchase');
+    }
+
+    /**
+     * Supports Complete Purchase
+     *
+     * @return boolean True if this gateway supports the completePurchase() method
+     */
+    public function supportsCompletePurchase()
+    {
+        return method_exists($this, 'completePurchase');
+    }
+
+    /**
+     * Supports Refund
+     *
+     * @return boolean True if this gateway supports the refund() method
+     */
+    public function supportsRefund()
+    {
+        return method_exists($this, 'refund');
+    }
+
+    /**
+     * Supports Void
+     *
+     * @return boolean True if this gateway supports the void() method
+     */
+    public function supportsVoid()
+    {
+        return method_exists($this, 'void');
+    }
+
+    /**
+     * Supports AcceptNotification
+     *
+     * @return boolean True if this gateway supports the acceptNotification() method
+     */
+    public function supportsAcceptNotification()
+    {
+        return method_exists($this, 'acceptNotification');
+    }
+
+    /**
+     * Supports CreateCard
+     *
+     * @return boolean True if this gateway supports the create() method
+     */
+    public function supportsCreateCard()
+    {
+        return method_exists($this, 'createCard');
+    }
+
+    /**
+     * Supports DeleteCard
+     *
+     * @return boolean True if this gateway supports the delete() method
+     */
+    public function supportsDeleteCard()
+    {
+        return method_exists($this, 'deleteCard');
+    }
+
+    /**
+     * Supports UpdateCard
+     *
+     * @return boolean True if this gateway supports the update() method
+     */
+    public function supportsUpdateCard()
+    {
+        return method_exists($this, 'updateCard');
+    }
+
+    /**
+     * Create and initialize a request object
+     *
+     * This function is usually used to create objects of type
+     * League\Omnipay\Common\Message\AbstractRequest (or a non-abstract subclass of it)
+     * and initialise them with using existing parameters from this gateway.
+     *
+     * Example:
+     *
+     * <code>
+     *   class MyRequest extends \League\Omnipay\Common\Message\AbstractRequest {};
+     *
+     *   class MyGateway extends \League\Omnipay\Common\AbstractGateway {
+     *     function myRequest($parameters) {
+     *       $this->createRequest('MyRequest', $parameters);
+     *     }
+     *   }
+     *
+     *   // Create the gateway object
+     *   $gw = Omnipay::create('MyGateway');
+     *
+     *   // Create the request object
+     *   $myRequest = $gw->myRequest($someParameters);
+     * </code>
+     *
+     * @see \League\Omnipay\Common\Message\AbstractRequest
+     * @param string $class The request class name
+     * @param array $parameters
+     * @return \League\Omnipay\Common\Message\AbstractRequest
+     */
+    protected function createRequest($class, array $parameters)
+    {
+        $obj = new $class($this->httpClient, $this->httpRequest);
+
+        return $obj->initialize(array_replace($this->getParameters(), $parameters));
+    }
+
+    /**
+     * Get the global default HTTP client.
+     *
+     * @return ClientInterface
+     */
+    protected function getDefaultHttpClient()
+    {
+        return new GuzzleClient();
+    }
+
+    /**
+     * Get the global default HTTP request.
+     *
+     * @return ServerRequestInterface
+     */
+    protected function getDefaultHttpRequest()
+    {
+        return ServerRequestFactory::fromGlobals();
+    }
+}
