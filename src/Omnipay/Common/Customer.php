@@ -18,7 +18,7 @@ class Customer implements ParameterizedInterface
     }
 
     /**
-     * Get Card Title.
+     * Get Customer Title.
      *
      * @return string
      */
@@ -28,7 +28,7 @@ class Customer implements ParameterizedInterface
     }
 
     /**
-     * Set Card Title.
+     * Set Customer Title.
      *
      * @param string $value Parameter value
      * @return CreditCard provides a fluent interface.
@@ -41,7 +41,7 @@ class Customer implements ParameterizedInterface
     }
 
     /**
-     * Get Card First Name.
+     * Get Customer First Name.
      *
      * @return string
      */
@@ -51,10 +51,10 @@ class Customer implements ParameterizedInterface
     }
 
     /**
-     * Set Card First Name (Billing and Shipping).
+     * Set Customer First Name (Billing and Shipping).
      *
      * @param string $value Parameter value
-     * @return CreditCard provides a fluent interface.
+     * @return $this provides a fluent interface.
      */
     public function setFirstName($value)
     {
@@ -64,7 +64,7 @@ class Customer implements ParameterizedInterface
     }
 
     /**
-     * Get Card Last Name.
+     * Get Customer Last Name.
      *
      * @return string
      */
@@ -74,10 +74,10 @@ class Customer implements ParameterizedInterface
     }
 
     /**
-     * Set Card Last Name (Billing and Shipping).
+     * Set Customer Last Name (Billing and Shipping).
      *
      * @param string $value Parameter value
-     * @return CreditCard provides a fluent interface.
+     * @return $this provides a fluent interface.
      */
     public function setLastName($value)
     {
@@ -87,7 +87,7 @@ class Customer implements ParameterizedInterface
     }
 
     /**
-     * Get Card Name.
+     * Get Customer Name.
      *
      * @return string
      */
@@ -97,10 +97,10 @@ class Customer implements ParameterizedInterface
     }
 
     /**
-     * Set Card Name (Billing and Shipping).
+     * Set Customer Name (Billing and Shipping).
      *
      * @param string $value Parameter value
-     * @return CreditCard provides a fluent interface.
+     * @return $this provides a fluent interface.
      */
     public function setName($value)
     {
@@ -125,7 +125,7 @@ class Customer implements ParameterizedInterface
      * Sets the address, line 1.
      *
      * @param string $value
-     * @return CreditCard provides a fluent interface.
+     * @return $this provides a fluent interface.
      */
     public function setAddress1($value)
     {
@@ -135,7 +135,7 @@ class Customer implements ParameterizedInterface
     }
 
     /**
-     * Get the   address, line 2.
+     * Get the address, line 2.
      *
      * @return string
      */
@@ -148,7 +148,7 @@ class Customer implements ParameterizedInterface
      * Sets the address, line 2.
      *
      * @param string $value
-     * @return CreditCard provides a fluent interface.
+     * @return $this provides a fluent interface.
      */
     public function setAddress2($value)
     {
@@ -158,7 +158,7 @@ class Customer implements ParameterizedInterface
     }
 
     /**
-     * Get the   city.
+     * Get the city.
      *
      * @return string
      */
@@ -171,7 +171,7 @@ class Customer implements ParameterizedInterface
      * Sets the city.
      *
      * @param string $value
-     * @return CreditCard provides a fluent interface.
+     * @return $this provides a fluent interface.
      */
     public function setCity($value)
     {
@@ -181,7 +181,7 @@ class Customer implements ParameterizedInterface
     }
 
     /**
-     * Get the   postcode.
+     * Get the postcode.
      *
      * @return string
      */
@@ -194,7 +194,7 @@ class Customer implements ParameterizedInterface
      * Sets the postcode.
      *
      * @param string $value
-     * @return CreditCard provides a fluent interface.
+     * @return $this provides a fluent interface.
      */
     public function setPostcode($value)
     {
@@ -204,7 +204,7 @@ class Customer implements ParameterizedInterface
     }
 
     /**
-     * Get the   state.
+     * Get the state.
      *
      * @return string
      */
@@ -217,7 +217,7 @@ class Customer implements ParameterizedInterface
      * Sets the state.
      *
      * @param string $value
-     * @return CreditCard provides a fluent interface.
+     * @return $this provides a fluent interface.
      */
     public function setState($value)
     {
@@ -227,7 +227,7 @@ class Customer implements ParameterizedInterface
     }
 
     /**
-     * Get the   country.
+     * Get the country.
      *
      * @return string
      */
@@ -240,7 +240,7 @@ class Customer implements ParameterizedInterface
      * Sets the country.
      *
      * @param string $value
-     * @return CreditCard provides a fluent interface.
+     * @return $this provides a fluent interface.
      */
     public function setCountry($value)
     {
@@ -250,7 +250,7 @@ class Customer implements ParameterizedInterface
     }
 
     /**
-     * Get the   phone number.
+     * Get the phone number.
      *
      * @return string
      */
@@ -263,7 +263,7 @@ class Customer implements ParameterizedInterface
      * Sets the phone number.
      *
      * @param string $value
-     * @return CreditCard provides a fluent interface.
+     * @return $this provides a fluent interface.
      */
     public function setPhone($value)
     {
@@ -273,7 +273,7 @@ class Customer implements ParameterizedInterface
     }
 
     /**
-     * Get the   phone number extension.
+     * Get the phone number extension.
      *
      * @return string
      */
@@ -286,7 +286,7 @@ class Customer implements ParameterizedInterface
      * Sets the phone number extension.
      *
      * @param string $value
-     * @return CreditCard provides a fluent interface.
+     * @return $this provides a fluent interface.
      */
     public function setPhoneExtension($value)
     {
@@ -296,7 +296,7 @@ class Customer implements ParameterizedInterface
     }
 
     /**
-     * Get the  fax number..
+     * Get the fax number..
      *
      * @return string
      */
@@ -309,7 +309,7 @@ class Customer implements ParameterizedInterface
      * Sets the fax number.
      *
      * @param string $value
-     * @return CreditCard provides a fluent interface.
+     * @return $this provides a fluent interface.
      */
     public function setFax($value)
     {
@@ -319,7 +319,7 @@ class Customer implements ParameterizedInterface
     }
 
     /**
-     * Get the card company name.
+     * Get the company name.
      *
      * @return string
      */
@@ -332,7 +332,7 @@ class Customer implements ParameterizedInterface
      * Sets the company name.
      *
      * @param string $value
-     * @return CreditCard provides a fluent interface.
+     * @return $this provides a fluent interface.
      */
     public function setCompany($value)
     {
@@ -342,7 +342,7 @@ class Customer implements ParameterizedInterface
     }
 
     /**
-     * Get the cardholder's email address.
+     * Get the customer's email address.
      *
      * @return string
      */
@@ -352,10 +352,10 @@ class Customer implements ParameterizedInterface
     }
 
     /**
-     * Sets the cardholder's email address.
+     * Sets the customer's email address.
      *
      * @param string $value
-     * @return CreditCard provides a fluent interface.
+     * @return $this provides a fluent interface.
      */
     public function setEmail($value)
     {
@@ -363,7 +363,7 @@ class Customer implements ParameterizedInterface
     }
 
     /**
-     * Get the cardholder's birthday.
+     * Get the customer's birthday.
      *
      * @return string
      */
@@ -375,10 +375,10 @@ class Customer implements ParameterizedInterface
     }
 
     /**
-     * Sets the cardholder's birthday.
+     * Sets the customer's birthday.
      *
      * @param string $value
-     * @return CreditCard provides a fluent interface.
+     * @return $this provides a fluent interface.
      */
     public function setBirthday($value)
     {
@@ -392,7 +392,7 @@ class Customer implements ParameterizedInterface
     }
 
     /**
-     * Get the cardholder's gender.
+     * Get the customer's gender.
      *
      * @return string
      */
@@ -402,10 +402,10 @@ class Customer implements ParameterizedInterface
     }
 
     /**
-     * Sets the cardholder's gender.
+     * Sets the customer's gender.
      *
      * @param string $value
-     * @return CreditCard provides a fluent interface.
+     * @return $this provides a fluent interface.
      */
     public function setGender($value)
     {
