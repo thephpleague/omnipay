@@ -298,4 +298,30 @@ class CreditCardTest extends TestCase
         $this->card->setNumber('4440');
         $this->card->validate();
     }
+
+    public function testMaskedJson()
+    {
+        $card = json_decode(json_encode($this->card), true);
+
+        $this->assertEquals('XXXXXXXXXXXX1111', $card['number']);
+        $this->assertEquals('****', $card['expiryYear']);
+        $this->assertEquals('*', $card['expiryMonth']);
+        $this->assertEquals('***', $card['cvv']);
+    }
+
+
+    public function testMaskedDebug()
+    {
+        if (version_compare(PHP_VERSION, '5.6.0', '<')) {
+            $this->markTestSkipped(
+                '__debugInfo is not available in PHP 5.6'
+            );
+        }
+
+        $output = print_r($this->card, true);
+
+        $this->assertContains('XXXXXXXXXXXX1111', $output);
+        $this->assertNotContains('4111111111111111', $output);
+        $this->assertContains('****', $output);
+    }
 }

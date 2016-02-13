@@ -89,7 +89,7 @@ use League\Omnipay\Common\Exception\InvalidCreditCardException;
  *
  * If any unknown parameters are passed in, they will be ignored.  No error is thrown.
  */
-class CreditCard implements ParameterizedInterface
+class CreditCard implements ParameterizedInterface,  \JsonSerializable
 {
     use HasParametersTrait;
 
@@ -506,5 +506,48 @@ class CreditCard implements ParameterizedInterface
     public function getCustomer()
     {
         return $this->getBillingCustomer();
+    }
+
+    /**
+     * Mask some parameters when debugging.
+     *
+     * @return array
+     */
+    protected function toMaskedArray()
+    {
+        $params = $this->parameters->all();
+
+        if (isset($params['number'])) {
+            $params['number'] = $this->getNumberMasked();
+        }
+
+        $maskedKeys = ['expiryYear', 'expiryMonth', 'cvv', 'issueNumber'];
+        foreach ($maskedKeys as $key){
+            if (isset($params[$key])) {
+                $params[$key] = str_pad('', strlen((string)$params[$key]), '*');
+            }
+        }
+
+        return $params;
+    }
+
+    /**
+     * Serialize with sensitive data
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return $this->toMaskedArray();
+    }
+
+    /**
+     * var_dump or print_r without sensitive data
+     *
+     * @return array
+     */
+    public function __debuginfo()
+    {
+        return $this->toMaskedArray();
     }
 }
