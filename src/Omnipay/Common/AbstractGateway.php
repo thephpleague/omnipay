@@ -42,12 +42,9 @@ use Omnipay\Common\Http\ClientInterface;
  *
  * @see GatewayInterface
  */
-abstract class AbstractGateway implements GatewayInterface
+abstract class AbstractGateway implements GatewayInterface, ParameterizedInterface
 {
-    /**
-     * @var ParameterBag
-     */
-    protected $parameters;
+    use HasParametersTrait;
 
     /**
      * @var ClientInterface
@@ -101,7 +98,7 @@ abstract class AbstractGateway implements GatewayInterface
             }
         }
 
-        Helper::initialize($this, $parameters);
+        Helper::initializeParameters($this, $parameters);
 
         return $this;
     }
@@ -112,35 +109,6 @@ abstract class AbstractGateway implements GatewayInterface
     public function getDefaultParameters()
     {
         return array();
-    }
-
-    /**
-     * @return array
-     */
-    public function getParameters()
-    {
-        return $this->parameters->all();
-    }
-
-    /**
-     * @param  string $key
-     * @return mixed
-     */
-    public function getParameter($key)
-    {
-        return $this->parameters->get($key);
-    }
-
-    /**
-     * @param  string $key
-     * @param  mixed  $value
-     * @return $this
-     */
-    public function setParameter($key, $value)
-    {
-        $this->parameters->set($key, $value);
-
-        return $this;
     }
 
     /**
