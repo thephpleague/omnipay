@@ -53,6 +53,12 @@ class GatewayFactoryTest extends TestCase
         $this->assertInstanceOf('\\League\\Omnipay\\SpareChange\\TestGateway', $gateway);
     }
 
+    public function testCreateExistingClass()
+    {
+        $gateway = $this->factory->create('League\\Omnipay\\SpareChange\\TestGateway');
+        $this->assertInstanceOf('\\League\\Omnipay\\SpareChange\\TestGateway', $gateway);
+    }
+
     /**
      * @expectedException \League\Omnipay\Common\Exception\RuntimeException
      * @expectedExceptionMessage Class '\League\Omnipay\Invalid\Gateway' not found

@@ -78,12 +78,16 @@ class GatewayFactory
      * @throws RuntimeException                 If no such gateway is found
      * @return GatewayInterface                 An object of class $class is created and returned
      */
-    public function create($class, ClientInterface $httpClient = null, ServerRequestInterface $httpRequest = null)
+    public function create($gateway, ClientInterface $httpClient = null, ServerRequestInterface $httpRequest = null)
     {
-        $class = Helper::getGatewayClassName($class);
+        $class = Helper::getGatewayClassName($gateway);
 
         if (!class_exists($class)) {
-            throw new RuntimeException("Class '$class' not found");
+            if (class_exists($gateway)) {
+                $class = $gateway;
+            } else {
+                throw new RuntimeException("Class '$class' not found");
+            }
         }
 
         return new $class($httpClient, $httpRequest);
