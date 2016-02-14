@@ -129,6 +129,7 @@ Gateway | Composer Package | Maintainer
 [GoCardless](https://github.com/thephpleague/omnipay-gocardless) | omnipay/gocardless | [Kayla Daniels](https://github.com/kayladnls)
 [GVP (Garanti)](https://github.com/yasinkuyu/omnipay-gvp) | yasinkuyu/omnipay-gvp | [Yasin Kuyu](https://github.com/yasinkuyu)
 [Helcim](https://github.com/academe/omnipay-helcim) | academe/omnipay-helcim | [Jason Judge](https://github.com/judgej)
+[IfthenPay](https://github.com/ifthenpay/omnipay-ifthenpay) | ifthenpay/omnipay-ifthenpay | [Rafael Almeida](https://github.com/rafaelcpalmeida)
 [Iyzico](https://github.com/yasinkuyu/omnipay-iyzico) | yasinkuyu/omnipay-iyzico | [Yasin Kuyu](https://github.com/yasinkuyu)
 [Komoju](https://github.com/dannyvink/omnipay-komoju) | vink/omnipay-komoju | [Danny Vink](https://github.com/dannyvink)
 [Manual](https://github.com/thephpleague/omnipay-manual) | omnipay/manual | [Kayla Daniels](https://github.com/kayladnls)
