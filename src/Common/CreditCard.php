@@ -546,7 +546,7 @@ class CreditCard implements ParameterizedInterface, \JsonSerializable
      *
      * @return array
      */
-    public function __debuginfo()
+    public function __debugInfo()
     {
         return $this->toMaskedArray();
     }
