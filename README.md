@@ -158,6 +158,7 @@ Gateway | Composer Package | Maintainer
 [Pin Payments](https://github.com/thephpleague/omnipay-pin) | omnipay/pin | [Kayla Daniels](https://github.com/kayladnls)
 [Portmanat](https://github.com/dercoder/omnipay-portmanat) | dercoder/omnipay-portmanat | [Alexander Fedra](https://github.com/dercoder)
 [Posnet](https://github.com/yasinkuyu/omnipay-posnet) | yasinkuyu/omnipay-posnet | [Yasin Kuyu](https://github.com/yasinkuyu)
+[Postfinance](https://github.com/bummzack/omnipay-postfinance) | bummzack/omnipay-postfinance | [Roman Schmid](https://github.com/bummzack)
 [Realex](https://github.com/coatesap/omnipay-realex) | coatesap/omnipay-realex | [Andrew Coates](https://github.com/coatesap)
 [RedSys](https://github.com/jsampedro77/sermepa-omnipay) | nazka/sermepa-omnipay | [Javier Sampedro](https://github.com/jsampedro77)
 [Sage Pay](https://github.com/thephpleague/omnipay-sagepay) | omnipay/sagepay | [Kayla Daniels](https://github.com/kayladnls)
