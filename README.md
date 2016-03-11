@@ -103,6 +103,7 @@ The following gateways are available:
 Gateway | Composer Package | Maintainer
 --- | --- | ---
 [2Checkout](https://github.com/thephpleague/omnipay-2checkout) | omnipay/2checkout | [Kayla Daniels](https://github.com/kayladnls)
+[2Checkout Improved](https://github.com/collizo4sky/omnipay-2checkout) | collizo4sky/omnipay-2checkout | [Agbonghama Collins](https://github.com/collizo4sky)
 [Agms](https://github.com/agmscode/omnipay-agms) | agmscode/omnipay-agms | [Maanas Royy](https://github.com/maanas)
 [Alipay(Global)](https://github.com/lokielse/omnipay-global-alipay) | lokielse/omnipay-global-alipay | [Loki Else](https://github.com/lokielse)
 [Alipay](https://github.com/lokielse/omnipay-alipay) | lokielse/omnipay-alipay | [Loki Else](https://github.com/lokielse)
@@ -174,7 +175,7 @@ Gateway | Composer Package | Maintainer
 [WebMoney](https://github.com/dercoder/omnipay-webmoney) | dercoder/omnipay-webmoney | [Alexander Fedra](https://github.com/dercoder)
 [WeChat](https://github.com/labs7in0/omnipay-wechat) | labs7in0/omnipay-wechat | [7IN0's Labs](https://github.com/labs7in0)
 [WechatPay](https://github.com/lokielse/omnipay-wechatpay) | lokielse/omnipay-wechatpay |  [Loki Else](https://github.com/lokielse)
-[WePay](https://github.com/Collizo4sky/omnipay-wepay) | Collizo4sky/omnipay-wepay | [Agbonghama Collins](https://github.com/Collizo4sky)
+[WePay](https://github.com/collizo4sky/omnipay-wepay) | collizo4sky/omnipay-wepay | [Agbonghama Collins](https://github.com/collizo4sky)
 [Wirecard](https://github.com/igaponov/omnipay-wirecard) | igaponov/omnipay-wirecard | [Igor Gaponov](https://github.com/igaponov)
 [WorldPay](https://github.com/thephpleague/omnipay-worldpay) | omnipay/worldpay | [Kayla Daniels](https://github.com/kayladnls)
 [WorldPay XML Direct](https://github.com/teaandcode/omnipay-worldpay-xml) | teaandcode/omnipay-worldpay-xml | [Dave Nash](https://github.com/teaandcode)
