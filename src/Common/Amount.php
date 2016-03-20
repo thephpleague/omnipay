@@ -12,7 +12,7 @@ use InvalidArgumentException;
  *
  * This class abstracts certain functionality around amount and currencies in the Omnipay system.
  */
-final class Amount
+final class Amount implements AmountInterface
 {
     /** @var  string */
     private $amount;
