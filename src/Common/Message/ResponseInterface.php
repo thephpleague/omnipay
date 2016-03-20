@@ -15,6 +15,14 @@ namespace League\Omnipay\Common\Message;
  */
 interface ResponseInterface extends MessageInterface
 {
+    const STATUS_AUTHORIZED = 'authorized';
+    const STATUS_CANCELLED = 'cancelled';
+    const STATUS_CAPTURED = 'captured';
+    const STATUS_EXPIRED = 'expired';
+    const STATUS_PENDING = 'pending';
+    const STATUS_REFUNDED = 'refunded';
+    const STATUS_UNDEFINED = 'undefined';
+
     /**
      * Get the original request which generated this response
      *
@@ -23,11 +31,11 @@ interface ResponseInterface extends MessageInterface
     public function getRequest();
 
     /**
-     * Is the response successful?
+     * Is the transaction completed?
      *
      * @return boolean
      */
-    public function isSuccessful();
+    public function isCompleted();
 
     /**
      * Does the response require a redirect?
@@ -56,6 +64,13 @@ interface ResponseInterface extends MessageInterface
      * @return null|string A response code from the payment gateway
      */
     public function getCode();
+
+    /**
+     * Status
+     *
+     * @return null|string The status of the response
+     */
+    public function getStatus();
 
     /**
      * Gateway Reference
