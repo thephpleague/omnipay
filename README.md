@@ -71,7 +71,7 @@ For example, if your GitHub username was `santa`, and you were implementing the 
 payment library, a good name for your composer package would be `santa/omnipay-giftpay`.
 
 If you want to transfer your gateway to the `omnipay` GitHub organization and add it
-to the list of officially supported gateways, please open a pull request on the 
+to the list of officially supported gateways, please open a pull request on the
 [omnipay/common](https://github.com/thephpleague/omnipay-common) package. Before new gateways will
 be accepted, they must have 100% unit test code coverage, and follow the conventions
 and code style used in other Omnipay gateways.
@@ -85,11 +85,11 @@ composer require omnipay/paypal:~2.0
 ```
 
  To install all officially supported gateways:
- 
+
 ```
 composer require omnipay/omnipay:~2.0
 ```
- 
+
 > This will require **ALL** ~25 Omnipay gateways and is generally discouraged.
 
 
@@ -109,6 +109,7 @@ Gateway | Composer Package | Maintainer
 [Alipay](https://github.com/lokielse/omnipay-alipay) | lokielse/omnipay-alipay | [Loki Else](https://github.com/lokielse)
 [Authorize.Net](https://github.com/thephpleague/omnipay-authorizenet) | omnipay/authorizenet | [Kayla Daniels](https://github.com/kayladnls)
 [Barclays ePDQ](https://github.com/samvaughton/omnipay-barclays-epdq) | samvaughton/omnipay-barclays-epdq | [Sam Vaughton](https://github.com/samvaughton)
+[Beanstream](https://github.com/lemonstand/omnipay-beanstream) | lemonstand/omnipay-beanstream | [LemonStand](https://github.com/lemonstand)
 [BKM Express](https://github.com/yasinkuyu/omnipay-bkm) | yasinkuyu/omnipay-bkm | [Yasin Kuyu](https://github.com/yasinkuyu)
 [Buckaroo](https://github.com/thephpleague/omnipay-buckaroo) | omnipay/buckaroo | [Kayla Daniels](https://github.com/kayladnls)
 [CardGate](https://github.com/cardgate/omnipay-cardgate) | cardgate/omnipay-cardgate | [CardGate](https://github.com/cardgate)
