@@ -122,6 +122,7 @@ Gateway | Composer Package | Maintainer
 [DataCash](https://github.com/coatesap/omnipay-datacash) | coatesap/omnipay-datacash | [Andrew Coates](https://github.com/coatesap)
 [Dummy](https://github.com/thephpleague/omnipay-dummy) | omnipay/dummy | [Kayla Daniels](https://github.com/kayladnls)
 [ecoPayz](https://github.com/dercoder/omnipay-ecopayz) | dercoder/omnipay-ecopayz | [Alexander Fedra](https://github.com/dercoder)
+[Elavon](https://github.com/lemonstand/omnipay-elavon) | lemonstand/omnipay-elavon | [LemonStand](https://github.com/lemonstand)
 [eWAY](https://github.com/thephpleague/omnipay-eway) | omnipay/eway | [Kayla Daniels](https://github.com/kayladnls)
 [Fasapay](https://github.com/andreas22/omnipay-fasapay) | andreas22/omnipay-fasapay | [Andreas Christodoulou](https://github.com/andreas22)
 [Fat Zebra](https://github.com/delatbabel/omnipay-fatzebra) | delatbabel/omnipay-fatzebra | [Del](https://github.com/delatbabel)
