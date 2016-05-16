@@ -166,6 +166,7 @@ Gateway | Composer Package | Maintainer
 [Postfinance](https://github.com/bummzack/omnipay-postfinance) | bummzack/omnipay-postfinance | [Roman Schmid](https://github.com/bummzack)
 [Realex](https://github.com/coatesap/omnipay-realex) | coatesap/omnipay-realex | [Andrew Coates](https://github.com/coatesap)
 [RedSys](https://github.com/jsampedro77/sermepa-omnipay) | nazka/sermepa-omnipay | [Javier Sampedro](https://github.com/jsampedro77)
+[RentMoola](https://github.com/rentmoola/omnipay-rentmoola) | rentmoola/omnipay-rentmoola | [Geoff Shaw](https://github.com/Shawg)
 [Sage Pay](https://github.com/thephpleague/omnipay-sagepay) | omnipay/sagepay | [Kayla Daniels](https://github.com/kayladnls)
 [SecPay](https://github.com/justinbusschau/omnipay-secpay) | justinbusschau/omnipay-secpay | [Justin Busschau](https://github.com/justinbusschau)
 [SecurePay](https://github.com/thephpleague/omnipay-securepay) | omnipay/securepay | [Kayla Daniels](https://github.com/kayladnls)
