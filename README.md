@@ -121,6 +121,7 @@ Gateway | Composer Package | Maintainer
 [Cybersource SOAP](https://github.com/Klinche/omnipay-cybersource-soap) | dabsquared/omnipay-cybersource-soap | [DABSquared](https://github.com/DABSquared)
 [DataCash](https://github.com/coatesap/omnipay-datacash) | coatesap/omnipay-datacash | [Andrew Coates](https://github.com/coatesap)
 [Dummy](https://github.com/thephpleague/omnipay-dummy) | omnipay/dummy | [Kayla Daniels](https://github.com/kayladnls)
+[Dwolla](https://github.com/Dwolla/omnipay-dwolla) | Dwolla/omnipay-dwolla | [David Stancu] (https://github.com/mach-kernel)
 [ecoPayz](https://github.com/dercoder/omnipay-ecopayz) | dercoder/omnipay-ecopayz | [Alexander Fedra](https://github.com/dercoder)
 [Elavon](https://github.com/lemonstand/omnipay-elavon) | lemonstand/omnipay-elavon | [LemonStand](https://github.com/lemonstand)
 [eWAY](https://github.com/thephpleague/omnipay-eway) | omnipay/eway | [Kayla Daniels](https://github.com/kayladnls)
