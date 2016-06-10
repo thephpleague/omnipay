@@ -102,7 +102,7 @@ The following gateways are available:
 
 Gateway | Composer Package | Maintainer
 --- | --- | ---
-[2Checkout](https://github.com/thephpleague/omnipay-2checkout) | omnipay/2checkout | [Kayla Daniels](https://github.com/kayladnls)
+[2Checkout](https://github.com/thephpleague/omnipay-2checkout) | omnipay/2checkout | [Graham Daniels](https://github.com/greydnls)
 [2Checkout Improved](https://github.com/collizo4sky/omnipay-2checkout) | collizo4sky/omnipay-2checkout | [Agbonghama Collins](https://github.com/collizo4sky)
 [Agms](https://github.com/agmscode/omnipay-agms) | agmscode/omnipay-agms | [Maanas Royy](https://github.com/maanas)
 [Alipay(Global)](https://github.com/lokielse/omnipay-global-alipay) | lokielse/omnipay-global-alipay | [Loki Else](https://github.com/lokielse)
