@@ -311,7 +311,6 @@ abstract class AbstractRequest implements RequestInterface, ParameterizedInterfa
 
         if ($amount !== null) {
             if (!$amount instanceof AmountInterface) {
-
                 // Default currency when none set
                 $currency = $this->getCurrency();
 
