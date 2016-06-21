@@ -69,13 +69,30 @@ abstract class AbstractResponse implements ResponseInterface
     }
 
     /**
-     * Is the response successful?
+     * Is the response completed?
+     *
+     * @return boolean
+     */
+    abstract public function isCompleted();
+
+    /**
+     * Get the response status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return ResponseInterface::STATUS_UNDEFINED;
+    }
+
+    /**
+     * Is the response pending?
      *
      * @return boolean
      */
     public function isPending()
     {
-        return false;
+        return $this->getStatus() === ResponseInterface::STATUS_PENDING;
     }
 
     /**
@@ -105,7 +122,7 @@ abstract class AbstractResponse implements ResponseInterface
      */
     public function isCancelled()
     {
-        return false;
+        return $this->getStatus() === ResponseInterface::STATUS_CANCELLED;
     }
 
     /**

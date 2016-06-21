@@ -99,7 +99,7 @@ class AbstractResponseTest_MockRedirectResponse extends AbstractResponse impleme
         return false;
     }
 
-    public function isSuccessful()
+    public function isCompleted()
     {
         return false;
     }
