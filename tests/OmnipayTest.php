@@ -36,14 +36,14 @@ class OmnipayTest extends TestCase
         $this->assertSame($factory, Omnipay::getFactory());
     }
 
-    public function testCallStatic()
+    public function testCreate()
     {
         $factory = m::mock('League\Omnipay\Common\GatewayFactory');
-        $factory->shouldReceive('testMethod')->with('some-argument')->once()->andReturn('some-result');
+        $factory->shouldReceive('create')->with('some-argument')->once()->andReturn('some-result');
 
         Omnipay::setFactory($factory);
 
-        $result = Omnipay::testMethod('some-argument');
+        $result = Omnipay::create('some-argument');
         $this->assertSame('some-result', $result);
     }
 }

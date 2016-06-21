@@ -26,7 +26,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * <code>
  *   // Create a gateway for the PayPal ExpressGateway
  *   // (routes to GatewayFactory::create)
- *   $gateway = Omnipay::create('ExpressGateway');
+ *   $gateway = Omnipay::create(Express\Gateway::class);
  *
  *   // Initialise the gateway
  *   $gateway->initialize(...);
@@ -47,14 +47,6 @@ use Psr\Http\Message\ServerRequestInterface;
  *
  * For further code examples see the *omnipay-example* repository on github.
  *
- * @method static array  all()
- * @method static array  replace(array $gateways)
- * @method static string register(string $className)
- * @method static array  find()
- * @method static array  getSupportedGateways()
- * @codingStandardsIgnoreStart
- * @method static GatewayInterface create(string $class, ClientInterface $httpClient = null, ServerRequestInterface $httpRequest = null)
- * @codingStandardsIgnoreEnd
  *
  * @see League\Omnipay\Common\GatewayFactory
  */
@@ -105,31 +97,8 @@ class Omnipay
         static::$factory = $factory;
     }
 
-    /**
-     * Static function call router.
-     *
-     * All other function calls to the Omnipay class are routed to the
-     * factory.  e.g. Omnipay::getSupportedGateways(1, 2, 3, 4) is routed to the
-     * factory's getSupportedGateways method and passed the parameters 1, 2, 3, 4.
-     *
-     * Example:
-     *
-     * <code>
-     *   // Create a gateway for the PayPal ExpressGateway
-     *   $gateway = Omnipay::create('ExpressGateway');
-     * </code>
-     *
-     * @see GatewayFactory
-     *
-     * @param string $method     The factory method to invoke.
-     * @param array  $parameters Parameters passed to the factory method.
-     *
-     * @return mixed
-     */
-    public static function __callStatic($method, $parameters)
+    public static function create($gateway)
     {
-        $factory = static::getFactory();
-
-        return call_user_func_array(array($factory, $method), $parameters);
+        return static::getFactory()->create($gateway);
     }
 }
