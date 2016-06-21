@@ -15,6 +15,7 @@ use League\Omnipay\Common\Exception\InvalidRequestException;
 use League\Omnipay\Common\Exception\RuntimeException;
 use League\Omnipay\Common\Helper;
 use League\Omnipay\Common\ItemBag;
+use League\Omnipay\Common\Locale;
 use League\Omnipay\Common\ParameterBag;
 use League\Omnipay\Common\ParameterizedInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -345,6 +346,36 @@ abstract class AbstractRequest implements RequestInterface, ParameterizedInterfa
     public function setAmount($value)
     {
         return $this->setParameter('amount', $value);
+    }
+
+    /**
+     * Get the request locale.
+     *
+     * @return Locale
+     */
+    public function getLocale()
+    {
+        return $this->getParameter('locale');
+    }
+
+    /**
+     * Set the request Locale
+     *
+     * @param  string|Locale $value
+     * @throws InvalidRequestException
+     * @return AbstractRequest Provides a fluent interface
+     */
+    public function setLocale($value)
+    {
+        if (is_string($value)) {
+            $value = Locale::parse($value);
+        }
+
+        if (! $value instanceof Locale) {
+            throw new InvalidRequestException('A valid Locale is required');
+        }
+
+        return $this->setParameter('locale', $value);
     }
 
     /**

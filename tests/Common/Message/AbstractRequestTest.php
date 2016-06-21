@@ -156,6 +156,15 @@ class AbstractRequestTest extends TestCase
         $this->assertSame('EUR', $this->request->getAmount()->getCurrency()->getCode());
     }
 
+    public function testLocale()
+    {
+        $this->assertSame($this->request, $this->request->setLocale('en-us'));
+
+        $locale = $this->request->getLocale();
+        $this->assertInstanceOf('\League\Omnipay\Common\Locale', $locale);
+        $this->assertSame('en-us', $locale->getLocale());
+    }
+
     public function testDescription()
     {
         $this->assertSame($this->request, $this->request->setDescription('Cool product'));
