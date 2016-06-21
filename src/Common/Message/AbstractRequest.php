@@ -6,6 +6,7 @@
 namespace League\Omnipay\Common\Message;
 
 use League\Omnipay\Common\Amount;
+use League\Omnipay\Common\AmountInterface;
 use League\Omnipay\Common\HasParametersTrait;
 use League\Omnipay\Common\Http\ClientInterface;
 use League\Omnipay\Common\CreditCard;
@@ -309,7 +310,7 @@ abstract class AbstractRequest implements RequestInterface, ParameterizedInterfa
         $amount = $this->getParameter('amount');
 
         if ($amount !== null) {
-            if (!$amount instanceof Amount) {
+            if (!$amount instanceof AmountInterface) {
 
                 // Default currency when none set
                 $currency = $this->getCurrency();
@@ -338,7 +339,7 @@ abstract class AbstractRequest implements RequestInterface, ParameterizedInterfa
     /**
      * Sets the payment amount.
      *
-     * @param string|Amount $value
+     * @param string|AmountInterface $value
      * @return AbstractRequest Provides a fluent interface
      * @throws InvalidRequestException
      */
