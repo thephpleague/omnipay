@@ -5,9 +5,9 @@
 
 namespace League\Omnipay\Common;
 
-use League\Omnipay\Common\Http\ClientInterface;
-use League\Omnipay\Common\Exception\RuntimeException;
-use Psr\Http\Message\ServerRequestInterface;
+use Interop\Container\ContainerInterface;
+use Interop\Container\Exception\ContainerException;
+use Interop\Container\Exception\NotFoundException;
 
 /**
  * Omnipay Gateway Factory class
@@ -23,7 +23,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * <code>
  *   // Create a gateway for the PayPal ExpressGateway
  *   // (routes to GatewayFactory::create)
- *   $gateway = Omnipay::create('ExpressGateway');
+ *   $gateway = Omnipay::create(Omnipay\Express\Gateway::class);
  * </code>
  *
  * @see Omnipay\Omnipay
@@ -31,65 +31,38 @@ use Psr\Http\Message\ServerRequestInterface;
 class GatewayFactory
 {
     /**
-     * Internal storage for all available gateways
-     *
-     * @var array
+     * @var ContainerInterface
      */
-    private $gateways = array();
+    protected $container;
 
     /**
-     * All available gateways
+     * GatewayFactory constructor.
      *
-     * @return array An array of gateway names
+     * @param ContainerInterface $container
      */
-    public function all()
+    public function __construct(ContainerInterface $container)
     {
-        return $this->gateways;
+        $this->container = $container;
     }
 
     /**
-     * Replace the list of available gateways
-     *
-     * @param array $gateways An array of gateway names
+     * @return ContainerInterface
      */
-    public function replace(array $gateways)
+    public function getContainer()
     {
-        $this->gateways = $gateways;
-    }
-
-    /**
-     * Register a new gateway
-     *
-     * @param string $className Gateway name
-     */
-    public function register($className)
-    {
-        if (!in_array($className, $this->gateways)) {
-            $this->gateways[] = $className;
-        }
+        return $this->container;
     }
 
     /**
      * Create a new gateway instance
      *
-     * @param string               $class       Gateway name
-     * @param ClientInterface|null $httpClient  A HTTP Client implementation
-     * @param ServerRequestInterface|null     $httpRequest A HTTP Request implementation
-     * @throws RuntimeException                 If no such gateway is found
-     * @return GatewayInterface                 An object of class $class is created and returned
+     * @param  string  $gateway     Gateway classname
+     * @throws ContainerException   If the gateway cannot be instantiated
+     * @throws NotFoundException    If no such gateway is found
+     * @return GatewayInterface     An object of class $class is created and returned
      */
-    public function create($gateway, ClientInterface $httpClient = null, ServerRequestInterface $httpRequest = null)
+    public function create($gateway)
     {
-        $class = Helper::getGatewayClassName($gateway);
-
-        if (!class_exists($class)) {
-            if (class_exists($gateway)) {
-                $class = $gateway;
-            } else {
-                throw new RuntimeException("Class '$class' not found");
-            }
-        }
-
-        return new $class($httpClient, $httpRequest);
+        return $this->container->get($gateway);
     }
 }

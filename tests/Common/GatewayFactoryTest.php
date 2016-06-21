@@ -3,7 +3,9 @@
 namespace League\Omnipay\Common;
 
 use Mockery as m;
+use League\Omnipay\Omnipay;
 use League\Omnipay\Tests\TestCase;
+use Interop\Container\ContainerInterface;
 
 class GatewayFactoryTest extends TestCase
 {
@@ -14,37 +16,15 @@ class GatewayFactoryTest extends TestCase
 
     public function setUp()
     {
-        $this->factory = new GatewayFactory;
+        $this->factory = Omnipay::getFactory();
     }
 
-    public function testReplace()
+    public function testConstruct()
     {
-        $gateways = array('Foo');
-        $this->factory->replace($gateways);
+        $container = m::mock(ContainerInterface::class);
+        $factory = new GatewayFactory($container);
 
-        $this->assertSame($gateways, $this->factory->all());
-    }
-
-    public function testRegister()
-    {
-        $this->factory->register('Bar');
-
-        $this->assertSame(array('Bar'), $this->factory->all());
-    }
-
-    public function testRegisterExistingGateway()
-    {
-        $this->factory->register('Milky');
-        $this->factory->register('Bar');
-        $this->factory->register('Bar');
-
-        $this->assertSame(array('Milky', 'Bar'), $this->factory->all());
-    }
-
-    public function testCreateShortName()
-    {
-        $gateway = $this->factory->create('SpareChange_Test');
-        $this->assertInstanceOf('\\League\\Omnipay\\SpareChange\\TestGateway', $gateway);
+        $this->assertInstanceOf(ContainerInterface::class, $factory->getContainer());
     }
 
     public function testCreateFullyQualified()
@@ -60,8 +40,7 @@ class GatewayFactoryTest extends TestCase
     }
 
     /**
-     * @expectedException \League\Omnipay\Common\Exception\RuntimeException
-     * @expectedExceptionMessage Class '\League\Omnipay\Invalid\Gateway' not found
+     * @expectedException \Interop\Container\Exception\NotFoundException
      */
     public function testCreateInvalid()
     {

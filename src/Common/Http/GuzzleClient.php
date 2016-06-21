@@ -20,9 +20,9 @@ class GuzzleClient implements ClientInterface
     /** @var  \GuzzleHttp\Client */
     protected $guzzle;
 
-    public function __construct(Client $client = null)
+    public function __construct(Client $client)
     {
-        $this->guzzle = $client ?: new Client();
+        $this->guzzle = $client;
     }
 
     /**

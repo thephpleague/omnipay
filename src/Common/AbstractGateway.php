@@ -5,6 +5,7 @@
 
 namespace League\Omnipay\Common;
 
+use Interop\Container\ContainerInterface;
 use League\Omnipay\Common\Http\GuzzleClient;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\ServerRequestFactory;
@@ -47,36 +48,19 @@ abstract class AbstractGateway implements GatewayInterface, ParameterizedInterfa
     use HasParametersTrait;
 
     /**
-     * @var ClientInterface
+     * @var ContainerInterface
      */
-    protected $httpClient;
-
-    /**
-     * @var ServerRequestInterface
-     */
-    protected $httpRequest;
+    protected $container;
 
     /**
      * Create a new gateway instance
      *
-     * @param ClientInterface $httpClient  A HTTP client to make API calls with
-     * @param ServerRequestInterface     $httpRequest A HTTP request object
+     * @param ContainerInterface $container
      */
-    public function __construct(ClientInterface $httpClient = null, ServerRequestInterface $httpRequest = null)
+    public function __construct(ContainerInterface $container)
     {
-        $this->httpClient = $httpClient ?: $this->getDefaultHttpClient();
-        $this->httpRequest = $httpRequest ?: $this->getDefaultHttpRequest();
+        $this->container = $container;
         $this->initialize();
-    }
-
-    /**
-     * Get the short name of the Gateway
-     *
-     * @return string
-     */
-    public function getShortName()
-    {
-        return Helper::getGatewayShortName(get_class($this));
     }
 
     /**
@@ -287,28 +271,8 @@ abstract class AbstractGateway implements GatewayInterface, ParameterizedInterfa
      */
     protected function createRequest($class, array $parameters)
     {
-        $obj = new $class($this->httpClient, $this->httpRequest);
+        $obj = $this->container->get($class);
 
         return $obj->initialize(array_replace($this->getParameters(), $parameters));
-    }
-
-    /**
-     * Get the global default HTTP client.
-     *
-     * @return ClientInterface
-     */
-    protected function getDefaultHttpClient()
-    {
-        return new GuzzleClient();
-    }
-
-    /**
-     * Get the global default HTTP request.
-     *
-     * @return ServerRequestInterface
-     */
-    protected function getDefaultHttpRequest()
-    {
-        return ServerRequestFactory::fromGlobals();
     }
 }

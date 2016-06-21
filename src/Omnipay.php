@@ -5,9 +5,13 @@
 
 namespace League\Omnipay;
 
+use League\Container\Container;
+use League\Container\ReflectionContainer;
 use League\Omnipay\Common\GatewayFactory;
 use League\Omnipay\Common\GatewayInterface;
 use League\Omnipay\Common\Http\ClientInterface;
+use League\Omnipay\Common\Container\HttpClientServiceProvider;
+use League\Omnipay\Common\Container\ServerRequestServiceProvider;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -74,7 +78,18 @@ class Omnipay
     public static function getFactory()
     {
         if (is_null(static::$factory)) {
-            static::$factory = new GatewayFactory;
+            $container = new Container();
+
+            // register service providers to set up default implementations
+            $container->addServiceProvider(HttpClientServiceProvider::class);
+            $container->addServiceProvider(ServerRequestServiceProvider::class);
+
+            // register the reflection container as a delegate to enable auto wiring
+            $container->delegate(
+                new ReflectionContainer
+            );
+
+            static::$factory = new GatewayFactory($container);
         }
 
         return static::$factory;

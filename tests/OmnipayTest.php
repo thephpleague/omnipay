@@ -4,6 +4,8 @@ namespace League\Omnipay;
 
 use Mockery as m;
 use League\Omnipay\Tests\TestCase;
+use Interop\Container\ContainerInterface;
+use League\Omnipay\Common\Http\ClientInterface;
 
 class OmnipayTest extends TestCase
 {
@@ -18,6 +20,11 @@ class OmnipayTest extends TestCase
 
         $factory = Omnipay::getFactory();
         $this->assertInstanceOf('League\Omnipay\Common\GatewayFactory', $factory);
+
+        $container = $factory->getContainer();
+
+        $this->assertInstanceOf(ContainerInterface::class, $container);
+        $this->assertTrue($container->has(ClientInterface::class));
     }
 
     public function testSetFactory()

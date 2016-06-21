@@ -18,14 +18,6 @@ class GuzzleClientTest extends TestCase
         $this->client = new GuzzleClient($this->guzzle);
     }
 
-    public function testEmptyConstruct()
-    {
-        $client = new GuzzleClientTest_MockGuzzleClient();
-        $this->assertInstanceOf(ClientInterface::class, $client);
-        $this->assertInstanceOf(Guzzle::class, $client->guzzle);
-        $this->assertNotEquals($this->guzzle, $client->guzzle);
-    }
-
     public function testGuzzleConstruct()
     {
         $client = new GuzzleClientTest_MockGuzzleClient($this->guzzle);

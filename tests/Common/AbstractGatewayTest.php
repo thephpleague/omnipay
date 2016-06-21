@@ -2,9 +2,12 @@
 
 namespace League\Omnipay\Common;
 
+use Interop\Container\ContainerInterface;
+use League\Omnipay\Common\Http\ClientInterface;
 use Mockery as m;
 use League\Omnipay\Common\Message\AbstractRequest;
 use League\Omnipay\Tests\TestCase;
+use Psr\Http\Message\ServerRequestInterface;
 
 class AbstractGatewayTest extends TestCase
 {
@@ -16,15 +19,10 @@ class AbstractGatewayTest extends TestCase
 
     public function testConstruct()
     {
-        $this->gateway = new AbstractGatewayTest_MockAbstractGateway;
-        $this->assertInstanceOf('\League\Omnipay\Common\Http\ClientInterface', $this->gateway->getProtectedHttpClient());
-        $this->assertInstanceOf('\Psr\Http\Message\ServerRequestInterface', $this->gateway->getProtectedHttpRequest());
+        $container = m::mock(ContainerInterface::class);
+        $this->gateway = new AbstractGatewayTest_MockAbstractGateway($container);
+        $this->assertInstanceOf(ContainerInterface::class, $this->gateway->getProtectedContainer());
         $this->assertSame(array(), $this->gateway->getParameters());
-    }
-
-    public function testGetShortName()
-    {
-        $this->assertSame('\\'.get_class($this->gateway), $this->gateway->getShortName());
     }
 
     public function testInitializeDefaults()
@@ -139,7 +137,12 @@ class AbstractGatewayTest extends TestCase
 
     public function testCreateRequest()
     {
-        $this->gateway = new AbstractGatewayTest_MockAbstractGateway;
+        $container = m::mock(ContainerInterface::class);
+        $httpClient = m::mock(ClientInterface::class);
+        $httpRequest = m::mock(ServerRequestInterface::class);
+        $request = new AbstractGatewayTest_MockAbstractRequest($httpClient, $httpRequest);
+        $container->shouldReceive('get')->andReturn($request);
+        $this->gateway = new AbstractGatewayTest_MockAbstractGateway($container);
         $request = $this->gateway->callCreateRequest(
             '\League\Omnipay\Common\AbstractGatewayTest_MockAbstractRequest',
             array('currency' => 'THB')
@@ -156,14 +159,9 @@ class AbstractGatewayTest_MockAbstractGateway extends AbstractGateway
         return 'Mock Gateway Implementation';
     }
 
-    public function getProtectedHttpClient()
+    public function getProtectedContainer()
     {
-        return $this->httpClient;
-    }
-
-    public function getProtectedHttpRequest()
-    {
-        return $this->httpRequest;
+        return $this->container;
     }
 
     public function callCreateRequest($class, array $parameters)

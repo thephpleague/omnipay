@@ -30,7 +30,9 @@
         "alcohol/iso4217": "^3.1",
         "guzzlehttp/guzzle": "^6.0",
         "psr/http-message": "^1.0",
-        "zendframework/zend-diactoros": "^1.1.0"
+        "zendframework/zend-diactoros": "^1.1.0",
+        "league/container": "^2.2",
+        "container-interop/container-interop": "^1.1"
     },
     "require-dev": {
         "omnipay/tests": "^3.0"

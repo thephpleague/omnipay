@@ -44,14 +44,6 @@ interface GatewayInterface
     public function getName();
 
     /**
-     * Get gateway short name
-     *
-     * This name can be used with GatewayFactory as an alias of the gateway class,
-     * to create new instances of this gateway.
-     */
-    public function getShortName();
-
-    /**
      * Define gateway parameters, in the following format:
      *
      * array(
