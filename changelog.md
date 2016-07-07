@@ -11,7 +11,7 @@ Changelog
 
 ### Package Separation
 
-As of 2.0, Omnipay has been split into separate packages. Core functionality is contained within the [omnipay/common](https://github.com/omnipay/common) repository, and all gateways have their own repositories. This means that if your project only requires on a single gateway, you can load it without installing all of the other gateways. All officially supported gateways can be found under the [Omnipay GitHub organization](http://github.com/omnipay).
+As of 2.0, Omnipay has been split into separate packages. Core functionality is contained within the [omnipay/common](https://github.com/omnipay/common) repository, and all gateways have their own repositories. This means that if your project only requires on a single gateway, you can load it without installing all of the other gateways. All officially supported gateways can be found under the [Omnipay GitHub organization](//github.com/omnipay).
 
 If you want to install all gateways, you can still use the `omnipay/omnipay` metapackage in `composer.json`:
 
