@@ -19,13 +19,15 @@ is fully unit tested, and even comes with an example application to get you star
 * Because most payment gateways have exceptionally poor documentation
 * Because you are writing a shopping cart and need to support multiple gateways
 
-**Important Note: Upgrading from < 2.0**
+**Important Note: Compatibility with Symfony 3 Event Dispatcher**
 
-If you are upgrading from a pre-2.0 version of Omnipay, please note that the
-project has now been split into multiple packages. There have also been some
-changes to how gateway instances are created. See the
-[full release notes](https://github.com/thephpleague/omnipay/releases/tag/v2.0.0)
-for more details.
+If you are using Symfony 3 (or Symfony 3 components), please note that Omnipay 2.x still relies on Guzzle3, which in turn depends on symfony/event-dispatcher 2.x. This conflicts with Symfony 3 (standard install), so cannot be installed. Development for Omnipay 3.x is still in progress at the moment.
+
+If you are just using the Symfony 3 components (eg. stand-alone or Silex/Laravel etc), you could try to force the install of symfony/event-dispatcher:^2.8, which is compatible with both Symfony 3 components and Guzzle 3.
+
+```
+composer require symfony/event-dispatcher:^2.8
+```
 
 ## TL;DR
 
