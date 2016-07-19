@@ -8,6 +8,7 @@ namespace League\Omnipay\Common;
 use Interop\Container\ContainerInterface;
 use Interop\Container\Exception\ContainerException;
 use Interop\Container\Exception\NotFoundException;
+use League\Omnipay\Common\Exception\InvalidArgumentException;
 
 /**
  * Omnipay Gateway Factory class
@@ -54,15 +55,23 @@ class GatewayFactory
     }
 
     /**
-     * Create a new gateway instance
+     * Create a new gateway instance.
      *
-     * @param  string  $gateway     Gateway classname
-     * @throws ContainerException   If the gateway cannot be instantiated
-     * @throws NotFoundException    If no such gateway is found
-     * @return GatewayInterface     An object of class $class is created and returned
+     * @param  string  $gateway             Gateway classname
+     * @throws ContainerException           If the gateway cannot be instantiated
+     * @throws NotFoundException            If no such gateway is found
+     * @throws InvalidArgumentException     If gateway doesn't implement GatewayInterface interface
+     * @return GatewayInterface             An object of class $gateway is created and returned
      */
     public function create($gateway)
     {
-        return $this->container->get($gateway);
+        $instance =  $this->container->get($gateway);
+        
+        if ($instance instanceof GatewayInterface === false) {
+            
+            throw new InvalidArgumentException(sprintf("Gateway must implement %s interface", GatewayInterface::class));
+        }
+        
+        return $instance;
     }
 }
