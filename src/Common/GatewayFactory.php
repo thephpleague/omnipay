@@ -68,7 +68,6 @@ class GatewayFactory
         $instance =  $this->container->get($gateway);
         
         if ($instance instanceof GatewayInterface === false) {
-            
             throw new InvalidArgumentException(sprintf("Gateway must implement %s interface", GatewayInterface::class));
         }
         
