@@ -35,9 +35,10 @@ for more details.
 Just want to see some code?
 
 ```php
-use Omnipay\Omnipay;
+use League\Omnipay\Omnipay;
+use League\Omnipay\Stripe\StripeGateway;
 
-$gateway = Omnipay::create('Stripe');
+$gateway = Omnipay::create(StripeGateway::class); // or Omnipay::create('League\Omnipay\Stripe\StripeGateway');
 $gateway->setApiKey('abc123');
 
 $formData = array('number' => '4242424242424242', 'expiryMonth' => '6', 'expiryYear' => '2016', 'cvv' => '123');
@@ -98,9 +99,10 @@ The available gateways can be viewed at http://omnipay.thephpleague.com/gateways
 Gateways are created and initialized like so:
 
 ```php
-use Omnipay\Omnipay;
+use League\Omnipay\Omnipay;
+use League\Omnipay\PayPal\ExpressGateway;
 
-$gateway = Omnipay::create('PayPal_Express');
+$gateway = Omnipay::create(ExpressGateway::class);
 $gateway->setUsername('adrian');
 $gateway->setPassword('12345');
 ```
