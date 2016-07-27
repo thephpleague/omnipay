@@ -7,6 +7,7 @@ namespace League\Omnipay;
 
 use League\Container\Container;
 use League\Container\ReflectionContainer;
+use League\Omnipay\Common\Container\ContainerAliasServiceProvider;
 use League\Omnipay\Common\GatewayFactory;
 use League\Omnipay\Common\GatewayInterface;
 use League\Omnipay\Common\Http\ClientInterface;
@@ -73,6 +74,7 @@ class Omnipay
             $container = new Container();
 
             // register service providers to set up default implementations
+            $container->addServiceProvider(ContainerAliasServiceProvider::class);
             $container->addServiceProvider(HttpClientServiceProvider::class);
             $container->addServiceProvider(ServerRequestServiceProvider::class);
 
