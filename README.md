@@ -133,6 +133,7 @@ Gateway | Composer Package | Maintainer
 [Flo2cash](https://github.com/guisea/omnipay-flo2cash) | guisea/omnipay-flo2cash | [Aaron Guise](https://github.com/guisea)
 [Globalcloudpay](https://github.com/dercoder/omnipay-globalcloudpay) | dercoder/omnipay-globalcloudpay | [Alexander Fedra](https://github.com/dercoder)
 [GoCardless](https://github.com/thephpleague/omnipay-gocardless) | omnipay/gocardless | [Del](https://github.com/delatbabel)
+[GovPayNet](https://github.com/flexcoders/omnipay-govpaynet) | omnipay/omnipay-govpaynet | [FlexCoders] (https://github.com/flexcoders)
 [GVP (Garanti)](https://github.com/yasinkuyu/omnipay-gvp) | yasinkuyu/omnipay-gvp | [Yasin Kuyu](https://github.com/yasinkuyu)
 [Helcim](https://github.com/academe/omnipay-helcim) | academe/omnipay-helcim | [Jason Judge](https://github.com/judgej)
 [IfthenPay](https://github.com/ifthenpay/omnipay-ifthenpay) | ifthenpay/omnipay-ifthenpay | [Rafael Almeida](https://github.com/rafaelcpalmeida)
