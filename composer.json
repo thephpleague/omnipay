@@ -34,6 +34,7 @@
         "payflow",
         "payment",
         "paymentexpress",
+        "payone",
         "paypal",
         "pin",
         "purchase",
@@ -98,6 +99,7 @@
     },
     "suggest": {
         "academe/omnipay-helcim": "Helcim",
+        "academe/omnipay-payone": "PAYONE",
         "agmscode/omnipay-agms": "Agms",
         "alfaproject/omnipay-neteller": "Neteller",
         "alfaproject/omnipay-skrill": "Skrill",
