@@ -119,6 +119,7 @@ Gateway | Composer Package | Maintainer
 [CardSave](https://github.com/thephpleague/omnipay-cardsave) | omnipay/cardsave | [Omnipay](https://github.com/thephpleague/omnipay)
 [Checkout.com](https://github.com/fotografde/omnipay-checkoutcom) | fotografde/checkoutcom | [fotograf.de](https://github.com/fotografde)
 [Coinbase](https://github.com/thephpleague/omnipay-coinbase) | omnipay/coinbase | [Omnipay](https://github.com/thephpleague/omnipay)
+[CoinGate](https://github.com/coingate/omnipay-coingate) | coingate/omnipay-coingate | [CoinGate](https://github.com/coingate)
 [Creditcall](https://github.com/meebio/omnipay-creditcall) | meebio/omnipay-creditcall | [John Jablonski](https://github.com/jan-j)
 [Cybersource](https://github.com/dioscouri/omnipay-cybersource) | dioscouri/omnipay-cybersource | [Dioscouri Design](https://github.com/dioscouri)
 [Cybersource SOAP](https://github.com/Klinche/omnipay-cybersource-soap) | dabsquared/omnipay-cybersource-soap | [DABSquared](https://github.com/DABSquared)
