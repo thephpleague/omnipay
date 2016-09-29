@@ -2,7 +2,7 @@
 
 namespace League\Omnipay\Common;
 
-use League\Omnipay\Tests\TestCase;
+use League\Omnipay\TestCase;
 
 class AmountTest extends TestCase
 {

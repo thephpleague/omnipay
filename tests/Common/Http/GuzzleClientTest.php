@@ -3,7 +3,7 @@
 namespace League\Omnipay\Common\Http;
 
 use Mockery as m;
-use League\Omnipay\Tests\TestCase;
+use League\Omnipay\TestCase;
 use GuzzleHttp\Client as Guzzle;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;

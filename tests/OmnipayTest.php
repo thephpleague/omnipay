@@ -3,7 +3,6 @@
 namespace League\Omnipay;
 
 use Mockery as m;
-use League\Omnipay\Tests\TestCase;
 
 class OmnipayTest extends TestCase
 {

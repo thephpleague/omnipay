@@ -3,7 +3,7 @@
 namespace League\Omnipay\Common;
 
 use League\Omnipay\Common\Currency;
-use League\Omnipay\Tests\TestCase;
+use League\Omnipay\TestCase;
 
 class CurrencyTest extends TestCase
 {

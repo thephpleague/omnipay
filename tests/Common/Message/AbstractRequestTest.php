@@ -2,20 +2,31 @@
 
 namespace League\Omnipay\Common\Message;
 
-use Mockery as m;
 use League\Omnipay\Common\Amount;
 use League\Omnipay\Common\CreditCard;
+use League\Omnipay\Common\Http\ClientInterface;
 use League\Omnipay\Common\ItemBag;
-use League\Omnipay\Tests\TestCase;
+use League\Omnipay\TestCase;
+use Mockery as m;
+use Psr\Http\Message\ServerRequestInterface;
 
 class AbstractRequestTest extends TestCase
 {
+    private $client;
+    private $httpRequest;
+
+    /**
+     * @var SomeRequest
+     */
+    private $request;
+
     public function setUp()
     {
-        $this->request = m::mock('\League\Omnipay\Common\Message\AbstractRequest')->makePartial();
-        $this->request->initialize([
-            'currency' => 'USD',
-        ]);
+        $this->client      = $this->createMock(ClientInterface::class);
+        $this->httpRequest = $this->createMock(ServerRequestInterface::class);
+
+        $this->request = new SomeRequest($this->client, $this->httpRequest);
+        $this->request->initialize(['currency' => 'USD']);
     }
 
     /**
@@ -36,13 +47,16 @@ class AbstractRequestTest extends TestCase
 
     public function testConstruct()
     {
-        $this->request = new AbstractRequestTest_MockAbstractRequest($this->getHttpClient(), $this->getHttpRequest());
+        $this->request = new SomeRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->assertSame(array(), $this->request->getParameters());
     }
 
     public function testInitializeWithParams()
     {
-        $this->assertSame($this->request, $this->request->initialize(array('amount' => '123', 'currency' => 'USD')));
+        $params = array('amount' => '123', 'currency' => 'USD');
+
+        $this->request->initialize($params);
+
         $this->assertSame('123', $this->request->getAmount()->getAmount());
     }
 
@@ -52,7 +66,7 @@ class AbstractRequestTest extends TestCase
      */
     public function testInitializeAfterRequestSent()
     {
-        $this->request = new AbstractRequestTest_MockAbstractRequest($this->getHttpClient(), $this->getHttpRequest());
+        $this->request = new SomeRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->send();
 
         $this->request->initialize();
@@ -61,8 +75,10 @@ class AbstractRequestTest extends TestCase
     public function testCard()
     {
         // no type checking on card parameter
-        $card = new CreditCard;
-        $this->assertSame($this->request, $this->request->setCard($card));
+        $card = new CreditCard();
+
+        $this->request->setCard($card);
+
         $this->assertSame($card, $this->request->getCard());
     }
 
@@ -119,7 +135,7 @@ class AbstractRequestTest extends TestCase
     }
 
     /**
-     * @expectedException League\Omnipay\Common\Exception\InvalidRequestException
+     * @expectedException \League\Omnipay\Common\Exception\InvalidRequestException
      * @expectedExceptionMessage A zero amount is not allowed.
      */
     public function testAmountZeroNotAllowed()
@@ -130,7 +146,7 @@ class AbstractRequestTest extends TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testAmountWithFloatStringThrowsException()
     {
@@ -271,7 +287,7 @@ class AbstractRequestTest extends TestCase
      */
     public function testSetParameterAfterRequestSent()
     {
-        $this->request = new AbstractRequestTest_MockAbstractRequest($this->getHttpClient(), $this->getHttpRequest());
+        $this->request = new SomeRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->send();
 
         $this->request->setCurrency('USD');
@@ -302,11 +318,7 @@ class AbstractRequestTest extends TestCase
 
     public function testSend()
     {
-        $response = m::mock('\League\Omnipay\Common\Message\ResponseInterface');
-        $data = array('request data');
-
-        $this->request->shouldReceive('getData')->once()->andReturn($data);
-        $this->request->shouldReceive('sendData')->once()->with($data)->andReturn($response);
+        $response = $this->request->sendData(array('request data'));
 
         $this->assertSame($response, $this->request->send());
     }
@@ -317,26 +329,35 @@ class AbstractRequestTest extends TestCase
      */
     public function testGetResponseBeforeRequestSent()
     {
-        $this->request = new AbstractRequestTest_MockAbstractRequest($this->getHttpClient(), $this->getHttpRequest());
-        $this->request->getResponse();
+        $request = new SomeRequest($this->getHttpClient(), $this->getHttpRequest());
+        $request->getResponse();
     }
 
     public function testGetResponseAfterRequestSent()
     {
-        $this->request = new AbstractRequestTest_MockAbstractRequest($this->getHttpClient(), $this->getHttpRequest());
-        $this->request->send();
+        $request = new SomeRequest($this->getHttpClient(), $this->getHttpRequest());
+        $request->send();
 
-        $response = $this->request->getResponse();
+        $response = $request->getResponse();
         $this->assertInstanceOf('\League\Omnipay\Common\Message\ResponseInterface', $response);
     }
 }
 
-class AbstractRequestTest_MockAbstractRequest extends AbstractRequest
+class SomeRequest extends AbstractRequest
 {
-    public function getData() {}
+    public function getData()
+    {
+    }
 
     public function sendData($data)
     {
-        $this->response = m::mock('\League\Omnipay\Common\Message\AbstractResponse');
+        $this->response = new SomeResponse($this, $data);
+    }
+}
+
+class SomeResponse extends AbstractResponse
+{
+    public function isCompleted()
+    {
     }
 }

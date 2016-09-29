@@ -2,9 +2,9 @@
 
 namespace League\Omnipay\Common;
 
-use Mockery as m;
 use League\Omnipay\Common\Message\AbstractRequest;
-use League\Omnipay\Tests\TestCase;
+use League\Omnipay\TestCase;
+use Mockery as m;
 
 class AbstractGatewayTest extends TestCase
 {

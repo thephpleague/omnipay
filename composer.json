@@ -23,7 +23,14 @@
         }
     ],
     "autoload": {
-        "psr-4": { "League\\Omnipay\\" : "src/" }
+        "psr-4": {
+            "League\\Omnipay\\" : ["src"]
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "League\\Omnipay\\" : ["tests"]
+        }
     },
     "require": {
         "php": ">=5.6",
@@ -33,7 +40,8 @@
         "zendframework/zend-diactoros": "^1.1.0"
     },
     "require-dev": {
-        "omnipay/tests": "^3.0"
+        "phpunit/phpunit": "~5.5",
+        "mockery/mockery": "^0.9.5"
     },
     "minimum-stability": "dev",
     "prefer-stable": true

@@ -2,7 +2,7 @@
 
 namespace League\Omnipay\Common\Exception;
 
-use League\Omnipay\Tests\TestCase;
+use League\Omnipay\TestCase;
 
 class InvalidResponseExceptionTest extends TestCase
 {

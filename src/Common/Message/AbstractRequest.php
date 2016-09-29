@@ -301,7 +301,7 @@ abstract class AbstractRequest implements RequestInterface, ParameterizedInterfa
     }
 
     /**
-     * Validates and returns  amount as integer.
+     * Validates and returns amount as integer.
      *
      * @throws InvalidRequestException on any validation failure.
      * @return string The amount in smallest unit possible (eg. 'cents')
