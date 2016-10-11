@@ -160,6 +160,7 @@ Gateway | Composer Package | Maintainer
 [PayFast](https://github.com/thephpleague/omnipay-payfast) | omnipay/payfast | [Omnipay](https://github.com/thephpleague/omnipay)
 [Payflow](https://github.com/thephpleague/omnipay-payflow) | omnipay/payflow | [Del](https://github.com/delatbabel)
 [PaymentExpress (DPS)](https://github.com/thephpleague/omnipay-paymentexpress) | omnipay/paymentexpress | [Del](https://github.com/delatbabel)
+[PaymentgateRu](https://github.com/pinguinjkeke/omnipay-paymentgateru) | pinguinjkeke/omnipay-paymentgateru | [Alexander Avakov](https://github.com/pinguinjkeke)
 [PaymentSense](https://github.com/coatesap/omnipay-paymentsense) | coatesap/omnipay-paymentsense | [Andrew Coates](https://github.com/coatesap)
 [PaymentWall](https://github.com/incube8/omnipay-paymentwall) | incube8/omnipay-paymentwall | [Del](https://github.com/delatbabel)
 [PayPal](https://github.com/thephpleague/omnipay-paypal) | omnipay/paypal | [Del](https://github.com/delatbabel)
