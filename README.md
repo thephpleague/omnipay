@@ -188,6 +188,7 @@ Gateway | Composer Package | Maintainer
 [UnionPay](https://github.com/lokielse/omnipay-unionpay) | lokielse/omnipay-unionpay | [Loki Else](https://github.com/lokielse)
 [Vantiv](https://github.com/lemonstand/omnipay-vantiv) | lemonstand/omnipay-vantiv | [LemonStand](https://github.com/lemonstand)
 [Veritrans](https://github.com/andylibrian/omnipay-veritrans) | andylibrian/omnipay-veritrans | [Andy Librian](https://github.com/andylibrian)
+[Vindicia](https://github.com/vimeo/omnipay-vindicia) | vimeo/omnipay-vindicia | [Vimeo](https://github.com/vimeo)
 [WebMoney](https://github.com/dercoder/omnipay-webmoney) | dercoder/omnipay-webmoney | [Alexander Fedra](https://github.com/dercoder)
 [WeChat](https://github.com/labs7in0/omnipay-wechat) | labs7in0/omnipay-wechat | [7IN0's Labs](https://github.com/labs7in0)
 [WechatPay](https://github.com/lokielse/omnipay-wechatpay) | lokielse/omnipay-wechatpay |  [Loki Else](https://github.com/lokielse)
