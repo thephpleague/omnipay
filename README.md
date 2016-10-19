@@ -72,12 +72,6 @@ it is officially supported. You should use your own username as the vendor prefi
 For example, if your GitHub username was `santa`, and you were implementing the `giftpay`
 payment library, a good name for your composer package would be `santa/omnipay-giftpay`.
 
-If you want to transfer your gateway to the `omnipay` GitHub organization and add it
-to the list of officially supported gateways, please open a pull request on the
-[omnipay/common](https://github.com/thephpleague/omnipay-common) package. Before new gateways will
-be accepted, they must have 100% unit test code coverage, and follow the conventions
-and code style used in other Omnipay gateways.
-
 ## Installation
 
 Omnipay is installed via [Composer](https://getcomposer.org/). For most uses, you will need to require an individual gateway:
