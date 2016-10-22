@@ -30,7 +30,9 @@
         "php": ">=5.6",
         "guzzlehttp/guzzle": "^6",
         "omnipay/common": "^3@dev",
-        "zendframework/zend-diactoros": "^1.1"
+        "zendframework/zend-diactoros": "^1.1",
+        "league/container": "^2.2",
+        "container-interop/container-interop": "^1.1"
     },
     "require-dev": {
         "omnipay/tests": "^3@dev"
