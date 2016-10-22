@@ -1,6 +1,6 @@
 # Omnipay
 
-**An easy to use, consistent payment processing library for PHP 5.3+**
+**An easy to use, consistent payment processing library for PHP 5.6+**
 
 [![Build Status](https://travis-ci.org/thephpleague/omnipay-common.png?branch=master)](https://travis-ci.org/thephpleague/omnipay-common)
 [![Latest Stable Version](https://poser.pugx.org/omnipay/omnipay/version)](https://packagist.org/packages/omnipay/omnipay)
@@ -19,24 +19,14 @@ is fully unit tested, and even comes with an example application to get you star
 * Because most payment gateways have exceptionally poor documentation
 * Because you are writing a shopping cart and need to support multiple gateways
 
-**Important Note: Compatibility with Symfony 3 Event Dispatcher**
-
-If you are using Symfony 3 (or Symfony 3 components), please note that Omnipay 2.x still relies on Guzzle3, which in turn depends on symfony/event-dispatcher 2.x. This conflicts with Symfony 3 (standard install), so cannot be installed. Development for Omnipay 3.x is still in progress at the moment.
-
-If you are just using the Symfony 3 components (eg. stand-alone or Silex/Laravel etc), you could try to force the install of symfony/event-dispatcher:^2.8, which is compatible with both Symfony 3 components and Guzzle 3.
-
-```
-composer require symfony/event-dispatcher:^2.8
-```
-
 ## TL;DR
 
 Just want to see some code?
 
 ```php
-use Omnipay\Omnipay;
+use League\Omnipay\Omnipay;
 
-$gateway = Omnipay::create('Stripe');
+$gateway = Omnipay::create(Omnipay\Stripe\Gateway::class);
 $gateway->setApiKey('abc123');
 
 $formData = array('number' => '4242424242424242', 'expiryMonth' => '6', 'expiryYear' => '2016', 'cvv' => '123');
@@ -59,7 +49,7 @@ as possible the differences between the various payments gateways.
 
 ## Package Layout
 
-Omnipay is a collection of packages which all depend on the
+Omnipay has a lot of packages which all depend on the
 [omnipay/common](https://github.com/thephpleague/omnipay-common) package to provide
 a consistent interface. There are no dependencies on official payment gateway PHP packages -
 we prefer to work with the HTTP API directly. Under the hood, we use the popular and powerful
@@ -79,15 +69,6 @@ Omnipay is installed via [Composer](https://getcomposer.org/). For most uses, yo
 ```
 composer require omnipay/paypal:~2.0
 ```
-
- To install all officially supported gateways:
-
-```
-composer require omnipay/omnipay:~2.0
-```
-
-> This will require **ALL** ~25 Omnipay gateways and is generally discouraged.
-
 
 ## Payment Gateways
 
