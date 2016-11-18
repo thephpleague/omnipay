@@ -105,7 +105,7 @@ Gateway | Composer Package | Maintainer
 [Alipay](https://github.com/lokielse/omnipay-alipay) | lokielse/omnipay-alipay | [Loki Else](https://github.com/lokielse)
 [Allied Wallet](https://github.com/delatbabel/omnipay-alliedwallet) | delatbabel/omnipay-alliedwallet | [Del](https://github.com/delatbabel)
 [Authorize.Net](https://github.com/thephpleague/omnipay-authorizenet) | omnipay/authorizenet | [Jason Judge](https://github.com/judgej)
-[Barclays ePDQ](https://github.com/samvaughton/omnipay-barclays-epdq) | samvaughton/omnipay-barclays-epdq | [Sam Vaughton](https://github.com/samvaughton)
+[Barclays ePDQ](https://github.com/digitickets/omnipay-barclays-epdq) | digitickets/omnipay-barclays-epdq | [DigiTickets](https://github.com/digitickets)
 [Beanstream](https://github.com/lemonstand/omnipay-beanstream) | lemonstand/omnipay-beanstream | [LemonStand](https://github.com/lemonstand)
 [BKM Express](https://github.com/yasinkuyu/omnipay-bkm) | yasinkuyu/omnipay-bkm | [Yasin Kuyu](https://github.com/yasinkuyu)
 [Braintree](https://github.com/thephpleague/omnipay-braintree) | omnipay/braintree | [Omnipay](https://github.com/thephpleague/omnipay)
