@@ -146,7 +146,7 @@ Gateway | Composer Package | Maintainer
 [NestPay (EST)](https://github.com/yasinkuyu/omnipay-nestpay) | yasinkuyu/omnipay-nestpay | [Yasin Kuyu](https://github.com/yasinkuyu)
 [Netaxept (BBS)](https://github.com/thephpleague/omnipay-netaxept) | omnipay/netaxept | [Omnipay](https://github.com/thephpleague/omnipay)
 [Netbanx](https://github.com/thephpleague/omnipay-netbanx) | omnipay/netbanx | [Maks Rafalko](https://github.com/borNfreee)
-[Neteller](https://github.com/alfaproject/omnipay-neteller) | alfaproject/omnipay-neteller | [João Dias](https://github.com/alfaproject)
+[Neteller](https://github.com/dercoder/omnipay-neteller) | dercoder/omnipay-neteller | [Alexander Fedra](https://github.com/dercoder)
 [NetPay](https://github.com/netpay/omnipay-netpay) | netpay/omnipay-netpay | [NetPay](https://github.com/netpay)
 [Network Merchants Inc. (NMI)](https://github.com/mfauveau/omnipay-nmi) | mfauveau/omnipay-nmi | [Matthieu Fauveau](https://github.com/mfauveau)
 [Pacnet](https://github.com/mfauveau/omnipay-pacnet) | mfauveau/omnipay-pacnet | [Matthieu Fauveau](https://github.com/mfauveau)
