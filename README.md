@@ -194,6 +194,7 @@ Gateway | Composer Package | Maintainer
 [WorldPay](https://github.com/thephpleague/omnipay-worldpay) | omnipay/worldpay | [Omnipay](https://github.com/thephpleague/omnipay)
 [WorldPay XML Direct](https://github.com/teaandcode/omnipay-worldpay-xml) | teaandcode/omnipay-worldpay-xml | [Dave Nash](https://github.com/teaandcode)
 [Yandex.Money](https://github.com/aTastyCookie/yandexmoney_omnipay) | aTastyCookie/yandexmoney_omnipay | [Roman Ananyev](https://github.com/aTastyCookie/)
+[Datatrans](https://github.com/w-vision/omnipay-datatrans) | w-vision/datatrans | [Dominik Pfaffenbauer](https://github.com/dpfaffenbauer)
 
 Gateways are created and initialized like so:
 
