@@ -475,6 +475,12 @@ $notification->getMessage(); // Additional message, if any, provided by the gate
 // update the status of the corresponding transaction in your database
 ```
 
+**Note:** some earlier gateways used the `completeAuthorize` and `completePurchase` messages to handle the incoming
+notifications. These are being converted and the `complete*` messages deprecated.
+They won't be removed in OmniPay 2.x, but it is advisable to switch to the `acceptNotification` message when convenient.
+An example is Sage Pay Server [completeAuthorize](https://github.com/thephpleague/omnipay-sagepay/blob/master/src/ServerGateway.php#L81)
+which is now handled by [acceptNotification](https://github.com/thephpleague/omnipay-sagepay/blob/master/src/ServerGateway.php#L40).
+
 ## Example Application
 
 An example application is provided in the [omnipay/example](https://github.com/thephpleague/omnipay-example) repo.
