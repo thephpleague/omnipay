@@ -437,6 +437,25 @@ try {
 }
 ```
 
+## Test mode and developer mode
+  Most gateways allow you to set up a sandbox or developer account which uses a different url
+  and credentials. Some also allow you to do test transactions against the live site, which does
+  not result in a live transaction.
+  
+  Gateways that implement only the developer account (most of them) call it testMode. Authorize.net,
+  however, implements both and refers to this mode as developerMode.  
+  
+  When implementing with multiple gateways you should use a construct along the lines of the following:
+  
+  if ($is_developer_mode) 
+  {
+    if (method_exists($gateway, 'setDeveloperMode')) {
+        $gateway->setDeveloperMode(TRUE);
+    } else {
+      $gateway->setTestMode(TRUE);
+    } 
+  }
+
 ## Token Billing
 
 Token billing allows you to store a credit card with your gateway, and charge it at a later date.
