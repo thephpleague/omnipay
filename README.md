@@ -29,6 +29,8 @@ If you are just using the Symfony 3 components (eg. stand-alone or Silex/Laravel
 composer require symfony/event-dispatcher:^2.8
 ```
 
+**Please do not submit any more issues or pull requests for updating Omnipay from Guzzle 3 to GuzzleHttp.  The update is going to happen in Omnipay version 3.0 which is not yet ready for release.**
+
 ## TL;DR
 
 Just want to see some code?
