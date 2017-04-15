@@ -1,0 +1,13 @@
+HTTP/1.1 200 OK
+cache-control: Private, no-cache
+content-type: text/html; charset=iso-8859-1
+Date: Thu, 31 Oct 2013 20:39:08 GMT
+expires: -1
+mime-version: 1.0
+pragma: no-cache
+Server: 10328:d:8000
+strict-transport-security: max-age=15768000; includeSubDomains
+Content-Length: 713
+Connection: keep-alive
+
+Amount=1000&ApprovalCode=&CardBrand=Visa%2FDelta%2FElectron&CardNumber=400000%2A%2A%2A%2A%2A%2A0093&CurrencyCode=USD&CVV2=%2A%2A%2A&CVV2ResponseCode=cvv2_not_checked&ErrorCode=rejected%3AAccountBlocked&ExpiryDate=0919&Filename=ernest%2DRT2013%2D10%2D31&FormattedAmount=10%2E00&FormattedTicketAmount=&Message=Invalid+because+activity+on+the+account+is+blocked%2E&PRN=840033&PymtType=cc_preauth&RAPIVersion=2&RequestID=5A6EF33038684D309B9AD368A919926A&RequestNumber=5872742&RequestResult=ok&Signature=455040fc918791bbad4d8c632cc428d5aaa9b3c1&Status=Rejected%3AAccountBlocked&TicketCurrency=&TicketExchangeRate=&Timestamp=2013%2D10%2D31T20%3A39%3A08%2E000Z&TrackingNumber=10000165844&UnresolvedFlags=&UserName=ernest

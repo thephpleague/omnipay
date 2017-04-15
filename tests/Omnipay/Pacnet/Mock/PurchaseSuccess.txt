@@ -1,0 +1,13 @@
+HTTP/1.1 200 OK
+cache-control: Private, no-cache
+content-type: text/html; charset=iso-8859-1
+Date: Thu, 31 Oct 2013 18:55:34 GMT
+expires: -1
+mime-version: 1.0
+pragma: no-cache
+Server: 10328:d:8000
+strict-transport-security: max-age=15768000; includeSubDomains
+Content-Length: 622
+Connection: keep-alive
+
+Amount=1000&ApprovalCode=034783&CardBrand=Visa%2FDelta%2FElectron&CardNumber=400000%2A%2A%2A%2A%2A%2A0010&CurrencyCode=USD&CVV2=%2A%2A%2A&CVV2ResponseCode=cvv2_not_checked&ErrorCode=&ExpiryDate=0919&Filename=ernest%2DRT2013%2D10%2D31&FormattedAmount=10%2E00&FormattedTicketAmount=&Message=&PRN=840033&PymtType=cc_debit&RAPIVersion=2&RequestID=57662BB559774D4CB36909F36130EDE6&RequestNumber=5870167&RequestResult=ok&Signature=df6b9e5901457988e0b9b6e649faa64b6bc5309d&Status=Approved&TicketCurrency=&TicketExchangeRate=&Timestamp=2013%2D10%2D31T18%3A55%3A34%2E000Z&TrackingNumber=10000165604&UnresolvedFlags=&UserName=ernest
