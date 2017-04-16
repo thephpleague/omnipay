@@ -1,5 +1,11 @@
-/vendor
+/vendor/*
+!/vendor/omnipay
+
+/vendor/omnipay/*
+!/vendor/omnipay/agms
+
 composer.lock
 composer.phar
 phpunit.xml
 .idea/*
+
