@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/thephpleague/omnipay.png?label=ready&title=Ready)](https://waffle.io/thephpleague/omnipay)
 # Omnipay
 
 **An easy to use, consistent payment processing library for PHP 5.3+**
