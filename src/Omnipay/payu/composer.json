@@ -1,0 +1,40 @@
+{
+    "name": "omnipay/payu",
+    "type": "library",
+    "description": "PayU gateway for Omnipay payment processing library",
+    "keywords": [
+        "gateway",
+        "merchant",
+        "omnipay",
+        "pay",
+        "payment",
+        "payu",
+        "purchase"
+    ],
+    "homepage": "https://github.com/thephpleague/omnipay-payu",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Said İmamoğlu",
+            "email": "said.imamoglu@biberltd.com"
+        },
+        {
+            "name": "Omnipay Contributors",
+            "homepage": "https://github.com/thephpleague/omnipay-payu/contributors"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Omnipay\\PayU\\" : "src/" }
+    },
+    "require": {
+        "omnipay/common": "~2.0"
+    },
+    "require-dev": {
+        "omnipay/tests": "~2.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.3.x-dev"
+        }
+    }
+}
