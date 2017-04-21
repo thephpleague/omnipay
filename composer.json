@@ -62,76 +62,27 @@
             "email": "kayladnls@gmail.com"
         },
         {
+            "name": "Barry vd. Heuvel",
+            "email": "barryvdh@gmail.com"
+        },
+        {
             "name": "Omnipay Community",
             "homepage": "https://github.com/thephpleague/omnipay/graphs/contributors"
         }
     ],
     "require": {
-        "omnipay/2checkout": "~2.0",
-        "omnipay/authorizenet": "~2.0",
-        "omnipay/buckaroo": "~2.0",
-        "omnipay/cardsave": "~2.0",
-        "omnipay/coinbase": "~2.0",
-        "omnipay/common": "~2.3",
-        "omnipay/dummy": "~2.0",
-        "omnipay/eway": "~2.0",
-        "omnipay/firstdata": "~2.0",
-        "omnipay/gocardless": "~2.0",
-        "omnipay/manual": "~2.0",
-        "omnipay/migs": "~2.0",
-        "omnipay/mollie": "~3.0",
-        "omnipay/multisafepay": "~2.0",
-        "omnipay/netaxept": "~2.0",
-        "omnipay/netbanx": "~2.0",
-        "omnipay/payfast": "~2.0",
-        "omnipay/payflow": "~2.0",
-        "omnipay/paymentexpress": "~2.0",
-        "omnipay/paypal": "~2.0",
-        "omnipay/pin": "~2.0",
-        "omnipay/sagepay": "~2.0",
-        "omnipay/securepay": "~2.0",
-        "omnipay/stripe": "~2.0",
-        "omnipay/targetpay": "~2.0",
-        "omnipay/worldpay": "~2.0"
+        "php": "^5.6|^7",
+        "omnipay/common": "~3.0",
+        "php-http/guzzle6-adapter": "^1.1"
     },
     "require-dev": {
-        "omnipay/tests": "~2.0"
-    },
-    "suggest": {
-        "academe/omnipay-helcim": "Helcim",
-        "agmscode/omnipay-agms": "Agms",
-        "alfaproject/omnipay-neteller": "Neteller",
-        "alfaproject/omnipay-skrill": "Skrill",
-        "andreas22/omnipay-fasapay": "Fasapay",
-        "andylibrian/omnipay-veritrans": "Veritrans",
-        "cardgate/omnipay-cardgate": "CardGate",
-        "coatesap/omnipay-datacash": "DataCash",
-        "coatesap/omnipay-paymentsense": "PaymentSense",
-        "coatesap/omnipay-realex": "Realex",
-        "dabsquared/omnipay-cybersource-soap": "Cybersource SOAP",
-        "delatbabel/omnipay-fatzebra": "Fat Zebra",
-        "dercoder/omnipay-ecopayz": "ecoPayz",
-        "dercoder/omnipay-globalcloudpay": "Globalcloudpay",
-        "descubraomundo/omnipay-pagarme": "Pagar.me",
-        "dioscouri/omnipay-cybersource": "Cybersource",
-        "fruitcakestudio/omnipay-sisow": "Sisow",
-        "igaponov/omnipay-wirecard": "Wirecard",
-        "justinbusschau/omnipay-secpay": "SecPay",
-        "lokielse/omnipay-alipay": "Alipay",
-        "lokielse/omnipay-global-alipay": "Global Alipay",
-        "lokielse/omnipay-unionpay": "UnionPay",
-        "lokielse/omnipay-wechatpay": "WechatPay",
-        "mfauveau/omnipay-nmi": "Network Merchants Inc. (NMI)",
-        "mfauveau/omnipay-pacnet": "Pacnet",
-        "omnipay/payu": "PayU",
-        "paypronl/omnipay-paypro": "PayPro",
-        "samvaughton/omnipay-barclays-epdq": "Barclays ePDQ",
-        "teaandcode/omnipay-worldpay-xml": "WorldPay XML Direct",
-        "fotografde/omnipay-checkoutcom": "Checkout.com"
+        "omnipay/tests": "~3.0"
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.0.x-dev"
+            "dev-master": "3.0.x-dev"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
