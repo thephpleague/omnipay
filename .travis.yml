@@ -17,4 +17,4 @@ before_script:
   - composer --version
   - composer require symfony/http-foundation:${SYMFONY_VERSION} --no-update
 
-script: composer install -n --dev --prefer-source
+script: composer install --prefer-dist --no-interaction

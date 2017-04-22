@@ -50,33 +50,21 @@
         "payU",
         "checkoutcom"
     ],
-    "homepage": "https://github.com/thephpleague/omnipay",
+    "homepage": "http://omnipay.thephpleague.com/",
     "license": "MIT",
     "authors": [
         {
             "name": "Adrian Macneil",
             "email": "adrian@adrianmacneil.com"
-        },
-        {
-            "name": "Kayla Daniels",
-            "email": "kayladnls@gmail.com"
-        },
-        {
-            "name": "Barry vd. Heuvel",
-            "email": "barryvdh@gmail.com"
-        },
-        {
-            "name": "Omnipay Community",
-            "homepage": "https://github.com/thephpleague/omnipay/graphs/contributors"
         }
     ],
     "require": {
         "php": "^5.6|^7",
-        "omnipay/common": "~3.0",
+        "omnipay/common": "^3",
         "php-http/guzzle6-adapter": "^1.1"
     },
     "require-dev": {
-        "omnipay/tests": "~3.0"
+        "omnipay/tests": "^3"
     },
     "extra": {
         "branch-alias": {
