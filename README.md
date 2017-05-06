@@ -151,6 +151,7 @@ Gateway | Composer Package | Maintainer
 [Neteller](https://github.com/dercoder/omnipay-neteller) | dercoder/omnipay-neteller | [Alexander Fedra](https://github.com/dercoder)
 [NetPay](https://github.com/netpay/omnipay-netpay) | netpay/omnipay-netpay | [NetPay](https://github.com/netpay)
 [Network Merchants Inc. (NMI)](https://github.com/mfauveau/omnipay-nmi) | mfauveau/omnipay-nmi | [Matthieu Fauveau](https://github.com/mfauveau)
+[Oppwa](https://github.com/vdbelt/omnipay-oppwa) | vdbelt/omnipay-oppwa | [Martin van de Belt](https://github.com/vdbelt)
 [Pacnet](https://github.com/mfauveau/omnipay-pacnet) | mfauveau/omnipay-pacnet | [Matthieu Fauveau](https://github.com/mfauveau)
 [Pagar.me](https://github.com/descubraomundo/omnipay-pagarme) | descubraomundo/omnipay-pagarme | [Descubra o Mundo](https://github.com/descubraomundo)
 [PayFast](https://github.com/thephpleague/omnipay-payfast) | omnipay/payfast | [Omnipay](https://github.com/thephpleague/omnipay)
