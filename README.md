@@ -35,6 +35,8 @@ composer require symfony/event-dispatcher:^2.8
 
 Just want to see some code?
 
+**Stripe Gateway:
+
 ```php
 use Omnipay\Omnipay;
 
@@ -53,6 +55,28 @@ if ($response->isRedirect()) {
 } else {
     // payment failed: display message to customer
     echo $response->getMessage();
+}
+```
+
+**Authorize.net AIM:
+```php
+/** @var \Omnipay\AuthorizeNet\AIMGateway */
+$gateway = GatewayFactory::create('AuthorizeNet_AIM');
+$gateway->setApiLoginId('*****');
+$gateway->setTransactionKey('******');
+
+$formData = ['number' => '4242424242424242', 'expiryMonth' => '6', 'expiryYear' => '2016', 'cvv' => '123'];
+$response = $gateway->purchase(['developerMode'=>true,'amount' => '10.00', 'currency' => 'USD', 'card' => $formData])->send();
+
+if ($response->isSuccessful()) {
+    // payment was successful: update database
+    echo 'success';
+} elseif ($response->isRedirect()) {
+    // redirect to offsite payment gateway
+    $response->redirect();
+} else {
+    // payment failed: display message to customer
+    var_dump( $response->getMessage());
 }
 ```
 
