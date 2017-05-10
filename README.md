@@ -168,6 +168,7 @@ Gateway | Composer Package | Maintainer
 [PayU](https://github.com/efesaid/omnipay-payu) | omnipay/payu | [efesaid](https://github.com/efesaid)
 [Pin Payments](https://github.com/thephpleague/omnipay-pin) | omnipay/pin | [Del](https://github.com/delatbabel)
 [Ping++](https://github.com/phoenixg/omnipay-pingpp) | phoenixg/omnipay-pingpp | [Huang Feng](https://github.com/phoenixg)
+[POLi](https://github.com/burnbright/omnipay-poli) | burnbright/omnipay-poli | [Sid](https://github.com/onlinesid)
 [Portmanat](https://github.com/dercoder/omnipay-portmanat) | dercoder/omnipay-portmanat | [Alexander Fedra](https://github.com/dercoder)
 [Posnet](https://github.com/yasinkuyu/omnipay-posnet) | yasinkuyu/omnipay-posnet | [Yasin Kuyu](https://github.com/yasinkuyu)
 [Postfinance](https://github.com/bummzack/omnipay-postfinance) | bummzack/omnipay-postfinance | [Roman Schmid](https://github.com/bummzack)
