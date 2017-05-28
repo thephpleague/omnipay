@@ -93,8 +93,8 @@ composer require omnipay/omnipay:~2.0
 
 ## Payment Gateways
 
-All payment gateways must implement [GatewayInterface](https://github.com/thephpleague/omnipay-common/blob/master/src/Omnipay/Common/GatewayInterface.php), and will usually
-extend [AbstractGateway](https://github.com/thephpleague/omnipay-common/blob/master/src/Omnipay/Common/AbstractGateway.php) for basic functionality.
+All payment gateways must implement [GatewayInterface](https://github.com/thephpleague/omnipay-common/blob/master/src/Common/GatewayInterface.php), and will usually
+extend [AbstractGateway](https://github.com/thephpleague/omnipay-common/blob/master/src/Common/AbstractGateway.php) for basic functionality.
 
 The following gateways are available:
 
