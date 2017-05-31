@@ -1,0 +1,9 @@
+HTTP/1.1 500 Internal Server Error
+Content-Length: 231
+Content-Type: text/xml; charset=utf-8
+Server: Microsoft-IIS/7.5
+X-Powered-By: ASP.NET
+X-NLB: BELLA
+Date: Wed, 04 Sep 2013 13:48:43 GMT
+
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body><s:Fault><faultcode>s:Client</faultcode><faultstring xml:lang="en-US">ERR_0006: MerchantID '666' was not found</faultstring></s:Fault></s:Body></s:Envelope>
