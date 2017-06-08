@@ -197,6 +197,7 @@ Gateway | Composer Package | Maintainer
 [WechatPay](https://github.com/lokielse/omnipay-wechatpay) | lokielse/omnipay-wechatpay |  [Loki Else](https://github.com/lokielse)
 [WePay](https://github.com/collizo4sky/omnipay-wepay) | collizo4sky/omnipay-wepay | [Agbonghama Collins](https://github.com/collizo4sky)
 [Wirecard](https://github.com/igaponov/omnipay-wirecard) | igaponov/omnipay-wirecard | [Igor Gaponov](https://github.com/igaponov)
+[Wirecard](https://github.com/academe/omnipay-wirecard) | academe/omnipay-wirecard | [Jason Judge](https://github.com/judgej)
 [WorldPay](https://github.com/thephpleague/omnipay-worldpay) | omnipay/worldpay | [Omnipay](https://github.com/thephpleague/omnipay)
 [WorldPay XML Direct](https://github.com/teaandcode/omnipay-worldpay-xml) | teaandcode/omnipay-worldpay-xml | [Dave Nash](https://github.com/teaandcode)
 [Yandex.Money](https://github.com/aTastyCookie/yandexmoney_omnipay) | aTastyCookie/yandexmoney_omnipay | [Roman Ananyev](https://github.com/aTastyCookie/)
