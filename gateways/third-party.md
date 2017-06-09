@@ -21,6 +21,7 @@ Gateway | Composer Package | Maintainer
 [Fat Zebra](/gateways/fatzebra) |	`delatbabel/omnipay-fatzebra` |	Del
 [Globalcloudpay](https://github.com/dercoder/omnipay-globalcloudpay) | `dercoder/omnipay-globalcloudpay` | [Alexander Fedra](https://github.com/dercoder)
 [Helcim](https://github.com/academe/omnipay-helcim) | `academe/omnipay-helcim` | [Jason Judge](https://github.com/judgej)
+[Judo Pay](https://github.com/Transportersio/omnipay-judopay) | `transportersio/omnipay-judopay` | [Transporters.io](https://github.com/Transportersio)
 [Neteller](/gateways/neteller/) | `alfaproject/omnipay-neteller` | João Dias
 [Network Merchants Inc. (NMI)](https://github.com/mfauveau/omnipay-nmi) | `mfauveau/omnipay-nmi` | [Matthieu Fauveau](https://github.com/mfauveau)
 [Pacnet](/gateways/pacnet/) | `mfauveau/omnipay-pacnet` | Matthieu Fauveau
