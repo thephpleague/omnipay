@@ -32,6 +32,8 @@ $gateway->initialize([
 ]);
 ~~~
 
+Setting parameters this way will start by taking the default parameters as a base,
+and then merging your supplied parameters over the top.
 
 ## Gateway settings
 
