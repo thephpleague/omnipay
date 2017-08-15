@@ -169,6 +169,7 @@ Gateway | Composer Package | Maintainer
 [PAYONE](https://github.com/academe/omnipay-payone) | academe/omnipay-payone | [Jason Judge](https://github.com/judgej)
 [Paysafecard](https://github.com/dercoder/omnipay-paysafecard) | dercoder/omnipay-paysafecard | [Alexander Fedra](https://github.com/dercoder)
 [Paysera](https://github.com/povils/omnipay-paysera) | povils/omnipay-paysera | [Povils](https://github.com/povils)
+[PaySimple](https://github.com/dranes/omnipay-paysimple) | dranes/omnipay-paysimple | [Dranes](https://github.com/dranes)
 [PayTrace](https://github.com/iddqdidkfa/omnipay-paytrace) | softcommerce/omnipay-paytrace | [Oleg Ilyushyn](https://github.com/iddqdidkfa)
 [PayU](https://github.com/efesaid/omnipay-payu) | omnipay/payu | [efesaid](https://github.com/efesaid)
 [Pin Payments](https://github.com/thephpleague/omnipay-pin) | omnipay/pin | [Del](https://github.com/delatbabel)
