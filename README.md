@@ -110,6 +110,7 @@ Gateway | Composer Package | Maintainer
 [Barclays ePDQ](https://github.com/digitickets/omnipay-barclays-epdq) | digitickets/omnipay-barclays-epdq | [DigiTickets](https://github.com/digitickets)
 [Beanstream](https://github.com/lemonstand/omnipay-beanstream) | lemonstand/omnipay-beanstream | [LemonStand](https://github.com/lemonstand)
 [BKM Express](https://github.com/yasinkuyu/omnipay-bkm) | yasinkuyu/omnipay-bkm | [Yasin Kuyu](https://github.com/yasinkuyu)
+[BlueSnap](https://github.com/vimeo/omnipay-bluesnap) | vimeo/omnipay-bluesnap | [Vimeo](https://github.com/vimeo)
 [Braintree](https://github.com/thephpleague/omnipay-braintree) | omnipay/braintree | [Omnipay](https://github.com/thephpleague/omnipay)
 [Buckaroo](https://github.com/thephpleague/omnipay-buckaroo) | omnipay/buckaroo | [Omnipay](https://github.com/thephpleague/omnipay)
 [CardGate](https://github.com/cardgate/omnipay-cardgate) | cardgate/omnipay-cardgate | [CardGate](https://github.com/cardgate)
