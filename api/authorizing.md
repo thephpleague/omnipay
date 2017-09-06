@@ -48,3 +48,16 @@ To summarize the various parameters you have available to you:
 * Gateway settings (e.g. username and password) are set directly on the gateway. These settings apply to all payments, and generally you will store these in a configuration file or in the database.
 * Method options are used for any payment-specific options, which are not set by the customer. For example, the payment `amount`, `currency`, `transactionId` and `returnUrl`.
 * CreditCard parameters are data which the user supplies. For example, you want the user to specify their `firstName` and `billingCountry`, but you don't want a user to specify the payment `currency` or `returnUrl`.
+
+The parameters can be set in two ways:
+
+* As an array when creating the request object, as shown above.
+* Using setter methods on the request object following a similar naming convention.
+
+For example, the card and amount can be set after the `authorize` request has been created like this:
+
+```php
+$request = $gateway->authorize(['returnUrl' => 'https://www.example.com/return']);
+$request->setCard($card);
+$request->setAmount('10.00');
+```
