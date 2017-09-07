@@ -459,15 +459,15 @@ try {
   however, implements both and refers to this mode as developerMode.  
   
   When implementing with multiple gateways you should use a construct along the lines of the following:
-  
-  if ($is_developer_mode) 
-  {
+```php
+if ($is_developer_mode) {
     if (method_exists($gateway, 'setDeveloperMode')) {
         $gateway->setDeveloperMode(TRUE);
     } else {
-      $gateway->setTestMode(TRUE);
-    } 
-  }
+        $gateway->setTestMode(TRUE);
+    }
+}
+```
 
 ## Token Billing
 
