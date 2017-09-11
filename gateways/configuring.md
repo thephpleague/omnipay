@@ -22,6 +22,19 @@ $gateway->setUsername('adrian');
 $gateway->setPassword('12345');
 ~~~
 
+Alternatively, multiple parameters can be initialized at once, directly from data:
+
+~~~ php
+...
+$gateway->initialize([
+    'username' => 'adrian',
+    'password' => '12345',
+]);
+~~~
+
+Setting parameters this way will start by taking the default parameters as a base,
+and then merging your supplied parameters over the top.
+
 ## Gateway settings
 
 Most settings are gateway specific. If you need to query a gateway to get a list of available settings, you can call `getDefaultParameters()`:
