@@ -207,7 +207,7 @@ Gateway | Composer Package | Maintainer
 [Worldpay XML Direct Corporate Gateway](https://github.com/teaandcode/omnipay-worldpay-xml) | teaandcode/omnipay-worldpay-xml | [Dave Nash](https://github.com/teaandcode)
 [Worldpay XML Hosted Corporate Gateway](https://github.com/comicrelief/omnipay-worldpay-cg-hosted) | comicrelief/omnipay-worldpay-cg-hosted | [Comic Relief](https://github.com/comicrelief)
 [Worldpay Business Gateway](https://github.com/thephpleague/omnipay-worldpay) | omnipay/worldpay | [Omnipay](https://github.com/thephpleague/omnipay)
-[Yandex.Money](https://github.com/aTastyCookie/yandexmoney_omnipay) | aTastyCookie/yandexmoney_omnipay | [Roman Ananyev](https://github.com/aTastyCookie/)
+[Yandex.Money](https://github.com/yandex-money/yandex-money-cms-omnipay) | yandexmoney/omnipay | [Roman Ananyev](https://github.com/aTastyCookie/)
 [Datatrans](https://github.com/w-vision/omnipay-datatrans) | w-vision/datatrans | [Dominik Pfaffenbauer](https://github.com/dpfaffenbauer)
 
 Gateways are created and initialized like so:
@@ -460,15 +460,15 @@ try {
   however, implements both and refers to this mode as developerMode.  
   
   When implementing with multiple gateways you should use a construct along the lines of the following:
-  
-  if ($is_developer_mode) 
-  {
+```php
+if ($is_developer_mode) {
     if (method_exists($gateway, 'setDeveloperMode')) {
         $gateway->setDeveloperMode(TRUE);
     } else {
-      $gateway->setTestMode(TRUE);
-    } 
-  }
+        $gateway->setTestMode(TRUE);
+    }
+}
+```
 
 ## Token Billing
 
