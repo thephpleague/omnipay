@@ -19,6 +19,7 @@ Gateway | Composer Package | Maintainer
 [ecoPayz](https://github.com/dercoder/omnipay-ecopayz) | `dercoder/omnipay-ecopayz` | [Alexander Fedra](https://github.com/dercoder)
 [Fasapay](https://github.com/andreas22/omnipay-fasapay) | `andreas22/omnipay-fasapay` | [Andreas Christodoulou](https://github.com/andreas22)
 [Fat Zebra](/gateways/fatzebra) |	`delatbabel/omnipay-fatzebra` |	Del
+[Free / Zero Amount](https://github.com/colinodell/omnipay-zero) | `colinodell/omnipay-zero` | [Colin O'Dell](https://github.com/colinodell)
 [Globalcloudpay](https://github.com/dercoder/omnipay-globalcloudpay) | `dercoder/omnipay-globalcloudpay` | [Alexander Fedra](https://github.com/dercoder)
 [Helcim](https://github.com/academe/omnipay-helcim) | `academe/omnipay-helcim` | [Jason Judge](https://github.com/judgej)
 [Judo Pay](https://github.com/Transportersio/omnipay-judopay) | `transportersio/omnipay-judopay` | [Transporters.io](https://github.com/Transportersio)
