@@ -132,7 +132,7 @@ Gateway | Composer Package | Maintainer
 [Fat Zebra](https://github.com/delatbabel/omnipay-fatzebra) | delatbabel/omnipay-fatzebra | [Del](https://github.com/delatbabel)
 [First Data](https://github.com/thephpleague/omnipay-firstdata) | omnipay/firstdata | [OmniPay](https://github.com/thephpleague/omnipay)
 [Flo2cash](https://github.com/guisea/omnipay-flo2cash) | guisea/omnipay-flo2cash | [Aaron Guise](https://github.com/guisea)
-[Free / Zero](https://github.com/colinodell/omnipay-zero) | colinodell/omnipay-zero | [Colin O'Dell](https://github.com/colinodell)
+[Free / Zero Amount](https://github.com/colinodell/omnipay-zero) | colinodell/omnipay-zero | [Colin O'Dell](https://github.com/colinodell)
 [Globalcloudpay](https://github.com/dercoder/omnipay-globalcloudpay) | dercoder/omnipay-globalcloudpay | [Alexander Fedra](https://github.com/dercoder)
 [GoCardless](https://github.com/thephpleague/omnipay-gocardless) | omnipay/gocardless | [Del](https://github.com/delatbabel)
 [GovPayNet](https://github.com/flexcoders/omnipay-govpaynet) | omnipay/omnipay-govpaynet | [FlexCoders](https://github.com/flexcoders)
