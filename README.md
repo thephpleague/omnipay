@@ -149,6 +149,7 @@ Gateway | Composer Package | Maintainer
 [MOLPay](https://github.com/leesiongchan/omnipay-molpay) | leesiongchan/molpay | [Lee Siong Chan](https://github.com/leesiongchan)
 [MultiCards](https://github.com/incube8/omnipay-multicards) | incube8/omnipay-multicards | [Del](https://github.com/delatbabel)
 [MultiSafepay](https://github.com/thephpleague/omnipay-multisafepay) | omnipay/multisafepay | [Alexander Deruwe](https://github.com/aderuwe)
+[MyCard](https://github.com/xxtime/omnipay-mycard) | xxtime/omnipay-mycard | [Joe Chu](https://github.com/xxtime)
 [NestPay (EST)](https://github.com/yasinkuyu/omnipay-nestpay) | yasinkuyu/omnipay-nestpay | [Yasin Kuyu](https://github.com/yasinkuyu)
 [Netaxept (BBS)](https://github.com/thephpleague/omnipay-netaxept) | omnipay/netaxept | [Omnipay](https://github.com/thephpleague/omnipay)
 [Netbanx](https://github.com/thephpleague/omnipay-netbanx) | omnipay/netbanx | [Maks Rafalko](https://github.com/borNfreee)
