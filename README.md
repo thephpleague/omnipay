@@ -185,6 +185,7 @@ Gateway | Composer Package | Maintainer
 [RedSys](https://github.com/jsampedro77/sermepa-omnipay) | nazka/sermepa-omnipay | [Javier Sampedro](https://github.com/jsampedro77)
 [RentMoola](https://github.com/rentmoola/omnipay-rentmoola) | rentmoola/omnipay-rentmoola | [Geoff Shaw](https://github.com/Shawg)
 [Sage Pay](https://github.com/thephpleague/omnipay-sagepay) | omnipay/sagepay | [Jason Judge](https://github.com/judgej)
+[Sberbank](https://github.com/AndrewNovikof/omnipay-sberbank) | andrewnovikof/omnipay-sberbank | [Andrew Novikov](https://github.com/AndrewNovikof)
 [SecPay](https://github.com/justinbusschau/omnipay-secpay) | justinbusschau/omnipay-secpay | [Justin Busschau](https://github.com/justinbusschau)
 [SecurePay](https://github.com/thephpleague/omnipay-securepay) | omnipay/securepay | [Omnipay](https://github.com/thephpleague/omnipay)
 [Secure Trading](https://github.com/meebio/omnipay-secure-trading) | meebio/omnipay-secure-trading | [John Jablonski](https://github.com/jan-j)
