@@ -1,0 +1,44 @@
+{
+    "name": "omnipay/tpay",
+    "version": "v1.0.0",
+    "version_normalized": "1.0.0.0",
+    "type": "library",
+    "description": "Tpay gateway for Omnipay payment processing library",
+    "keywords": [
+        "gateway",
+        "merchant",
+        "omnipay",
+        "pay",
+        "payment",
+        "tpay",
+        "tpay.com",
+        "purchase"
+    ],
+    "homepage": "https://github.com/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tpay.com",
+            "email": "pt@tpay.com"
+        },
+        {
+            "name": "Tpay contributors",
+            "homepage": "https://github.com/"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Omnipay\\Tpay\\" : "src/" }
+    },
+    "require": {
+        "omnipay/common": "~2.0"
+    },
+    "require-dev": {
+        "omnipay/tests": "~2.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.3.x-dev"
+        }
+    },
+    "minimum-stability": "dev"
+}
