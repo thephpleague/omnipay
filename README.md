@@ -247,7 +247,7 @@ gateway (other than by the methods they support).
 
 ## Credit Card / Payment Form Input
 
-User form input is directed to an [CreditCard](https://github.com/thephpleague/omnipay-common/blob/master/src/Omnipay/Common/CreditCard.php)
+User form input is directed to an [CreditCard](https://github.com/thephpleague/omnipay-common/blob/master/src/Common/CreditCard.php)
 object. This provides a safe way to accept user input.
 
 The `CreditCard` object has the following fields:
