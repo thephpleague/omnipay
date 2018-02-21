@@ -48,7 +48,8 @@
         "twocheckout",
         "worldpay",
         "payU",
-        "checkoutcom"
+        "checkoutcom",
+        "tpay"
     ],
     "homepage": "http://omnipay.thephpleague.com/",
     "license": "MIT",
