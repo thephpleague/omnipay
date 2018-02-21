@@ -123,6 +123,7 @@ Gateway | Composer Package | Maintainer
 [Cybersource](https://github.com/dioscouri/omnipay-cybersource) | dioscouri/omnipay-cybersource | [Dioscouri Design](https://github.com/dioscouri)
 [Cybersource SOAP](https://github.com/Klinche/omnipay-cybersource-soap) | dabsquared/omnipay-cybersource-soap | [DABSquared](https://github.com/DABSquared)
 [DataCash](https://github.com/digitickets/omnipay-datacash) | digitickets/omnipay-datacash | [DigiTickets](https://github.com/digitickets)
+[Docdata Payments](https://github.com/Uskur/omnipay-docdata-payments) | uskur/omnipay-docdata-payments | [Uskur](https://github.com/Uskur)
 [Dummy](https://github.com/thephpleague/omnipay-dummy) | omnipay/dummy | [Del](https://github.com/delatbabel)
 [ecoPayz](https://github.com/dercoder/omnipay-ecopayz) | dercoder/omnipay-ecopayz | [Alexander Fedra](https://github.com/dercoder)
 [EgopayRu](https://github.com/pinguinjkeke/omnipay-egopaymentru) | pinguinjkeke/omnipay-egopaymentru | [Alexander Avakov](https://github.com/pinguinjkeke)
