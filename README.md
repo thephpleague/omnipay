@@ -142,6 +142,7 @@ Gateway | Composer Package | Maintainer
 [IfthenPay](https://github.com/ifthenpay/omnipay-ifthenpay) | ifthenpay/omnipay-ifthenpay | [Rafael Almeida](https://github.com/rafaelcpalmeida)
 [Iyzico](https://github.com/yasinkuyu/omnipay-iyzico) | yasinkuyu/omnipay-iyzico | [Yasin Kuyu](https://github.com/yasinkuyu)
 [Judo Pay](https://github.com/Transportersio/omnipay-judopay) | transportersio/omnipay-judopay | [Transporters.io](https://github.com/Transportersio)
+[Klarna Checkout](https://github.com/MyOnlineStore/omnipay-klarna-checkout) | myonlinestore/omnipay-klarna-checkout | [MyOnlineStore](https://github.com/MyOnlineStore)
 [Komerci (Rede, former RedeCard)](https://github.com/byjg/omnipay-komerci) | byjg/omnipay-komerci | [João Gilberto Magalhães](https://github.com/byjg)
 [Komoju](https://github.com/dannyvink/omnipay-komoju) | vink/omnipay-komoju | [Danny Vink](https://github.com/dannyvink)
 [Manual](https://github.com/thephpleague/omnipay-manual) | omnipay/manual | [Del](https://github.com/delatbabel)
