@@ -167,7 +167,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Payflow](https://github.com/thephpleague/omnipay-payflow) | ✓ | - | omnipay/payflow | [Del](https://github.com/delatbabel)
 [PaymentExpress (DPS)](https://github.com/thephpleague/omnipay-paymentexpress) | ✓ | - | omnipay/paymentexpress | [Del](https://github.com/delatbabel)
 [PaymentExpress / DPS (A2A)](https://github.com/onlinesid/omnipay-paymentexpress-a2a) | ✓ | - | onlinesid/omnipay-paymentexpress-a2a | [Sid](https://github.com/onlinesid)
-[PaymentgateRu](https://github.com/pinguinjkeke/omnipay-paymentgateru) | ✓ | - | pinguinjkeke/omnipay-paymentgateru | [Alexander Avakov](https://github.com/pinguinjkeke)
+[PaymentgateRu](https://github.com/pinguinjkeke/omnipay-paymentgateru) | ✓ | ✓ | pinguinjkeke/omnipay-paymentgateru | [Alexander Avakov](https://github.com/pinguinjkeke)
 [PaymentSense](https://github.com/digitickets/omnipay-paymentsense) | ✓ | - | digitickets/omnipay-paymentsense | [DigiTickets](https://github.com/digitickets)
 [PaymentWall](https://github.com/incube8/omnipay-paymentwall) | ✓ | - | incube8/omnipay-paymentwall | [Del](https://github.com/delatbabel)
 [PayPal](https://github.com/thephpleague/omnipay-paypal) | ✓ | - | omnipay/paypal | [Del](https://github.com/delatbabel)
