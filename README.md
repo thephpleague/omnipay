@@ -198,7 +198,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Skrill](https://github.com/alfaproject/omnipay-skrill) | ✓ | - | alfaproject/omnipay-skrill | [João Dias](https://github.com/alfaproject)
 [Sofort](https://github.com/aimeoscom/omnipay-sofort) | ✓ | - | aimeoscom/omnipay-sofort | [Aimeos GmbH](https://github.com/aimeoscom)
 [Square](https://github.com/Transportersio/omnipay-square) | ✓ | - | transportersio/omnipay-square | [Transporters.io](https://github.com/Transportersio)
-[Stripe](https://github.com/thephpleague/omnipay-stripe) | ✓ | - | omnipay/stripe | [Del](https://github.com/delatbabel)
+[Stripe](https://github.com/thephpleague/omnipay-stripe) | ✓ | ✓ | omnipay/stripe | [Del](https://github.com/delatbabel)
 [TargetPay](https://github.com/thephpleague/omnipay-targetpay) | ✓ | - | omnipay/targetpay | [Alexander Deruwe](https://github.com/aderuwe)
 [UnionPay](https://github.com/lokielse/omnipay-unionpay) | ✓ | - | lokielse/omnipay-unionpay | [Loki Else](https://github.com/lokielse)
 [Vantiv](https://github.com/lemonstand/omnipay-vantiv) | ✓ | - | lemonstand/omnipay-vantiv | [LemonStand](https://github.com/lemonstand)
