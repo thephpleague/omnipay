@@ -103,7 +103,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [2Checkout](https://github.com/thephpleague/omnipay-2checkout) | ✓ | - | omnipay/2checkout | [Omnipay](https://github.com/thephpleague/omnipay)
 [2Checkout Improved](https://github.com/collizo4sky/omnipay-2checkout) | ✓ | - | collizo4sky/omnipay-2checkout | [Agbonghama Collins](https://github.com/collizo4sky)
 [Agms](https://github.com/agmscode/omnipay-agms) | ✓ | - | agmscode/omnipay-agms | [Maanas Royy](https://github.com/maanas)
-[Alipay(Global)](https://github.com/lokielse/omnipay-global-alipay) | ✓ | - | lokielse/omnipay-global-alipay | [Loki Else](https://github.com/lokielse)
+[Alipay(Global)](https://github.com/lokielse/omnipay-global-alipay) | ✓ | ✓ | lokielse/omnipay-global-alipay | [Loki Else](https://github.com/lokielse)
 [Alipay](https://github.com/lokielse/omnipay-alipay) | ✓ | ✓ | lokielse/omnipay-alipay | [Loki Else](https://github.com/lokielse)
 [Allied Wallet](https://github.com/delatbabel/omnipay-alliedwallet) | ✓ | - | delatbabel/omnipay-alliedwallet | [Del](https://github.com/delatbabel)
 [Authorize.Net](https://github.com/thephpleague/omnipay-authorizenet) | ✓ | - | omnipay/authorizenet | [Jason Judge](https://github.com/judgej)
