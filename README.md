@@ -208,7 +208,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [VivaPayments](https://github.com/delatbabel/omnipay-vivapayments) | ✓ | - | delatbabel/omnipay-vivapayments | [Del](https://github.com/delatbabel)
 [WebMoney](https://github.com/dercoder/omnipay-webmoney) | ✓ | - | dercoder/omnipay-webmoney | [Alexander Fedra](https://github.com/dercoder)
 [WeChat](https://github.com/labs7in0/omnipay-wechat) | ✓ | - | labs7in0/omnipay-wechat | [7IN0's Labs](https://github.com/labs7in0)
-[WechatPay](https://github.com/lokielse/omnipay-wechatpay) | ✓ | - | lokielse/omnipay-wechatpay |  [Loki Else](https://github.com/lokielse)
+[WechatPay](https://github.com/lokielse/omnipay-wechatpay) | ✓ | ✓ | lokielse/omnipay-wechatpay |  [Loki Else](https://github.com/lokielse)
 [WePay](https://github.com/collizo4sky/omnipay-wepay) | ✓ | - | collizo4sky/omnipay-wepay | [Agbonghama Collins](https://github.com/collizo4sky)
 [Wirecard](https://github.com/igaponov/omnipay-wirecard) | ✓ | - | igaponov/omnipay-wirecard | [Igor Gaponov](https://github.com/igaponov)
 [Wirecard](https://github.com/academe/omnipay-wirecard) | ✓ | - | academe/omnipay-wirecard | [Jason Judge](https://github.com/judgej)
