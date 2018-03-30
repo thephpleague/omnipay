@@ -201,7 +201,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Square](https://github.com/Transportersio/omnipay-square) | ✓ | - | transportersio/omnipay-square | [Transporters.io](https://github.com/Transportersio)
 [Stripe](https://github.com/thephpleague/omnipay-stripe) | ✓ | ✓ | omnipay/stripe | [Del](https://github.com/delatbabel)
 [TargetPay](https://github.com/thephpleague/omnipay-targetpay) | ✓ | - | omnipay/targetpay | [Alexander Deruwe](https://github.com/aderuwe)
-[UnionPay](https://github.com/lokielse/omnipay-unionpay) | ✓ | - | lokielse/omnipay-unionpay | [Loki Else](https://github.com/lokielse)
+[UnionPay](https://github.com/lokielse/omnipay-unionpay) | ✓ | ✓ | lokielse/omnipay-unionpay | [Loki Else](https://github.com/lokielse)
 [Vantiv](https://github.com/lemonstand/omnipay-vantiv) | ✓ | - | lemonstand/omnipay-vantiv | [LemonStand](https://github.com/lemonstand)
 [Veritrans](https://github.com/andylibrian/omnipay-veritrans) | ✓ | - | andylibrian/omnipay-veritrans | [Andy Librian](https://github.com/andylibrian)
 [Vindicia](https://github.com/vimeo/omnipay-vindicia) | ✓ | - | vimeo/omnipay-vindicia | [Vimeo](https://github.com/vimeo)
