@@ -9,7 +9,7 @@ Responses
 
 ## The Payment Response
 
-The payment response must implement [ResponseInterface](https://github.com/thephpleague/omnipay-common/blob/master/src/Omnipay/Common/Message/ResponseInterface.php). There are two main types of response:
+The payment response must implement [ResponseInterface](https://github.com/thephpleague/omnipay-common/blob/master/src/Common/Message/ResponseInterface.php). There are two main types of response:
 
 * Payment was successful (standard response)
 * Website requires redirect to off-site payment form (redirect response)

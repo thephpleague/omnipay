@@ -7,7 +7,7 @@ title: Cards
 Cards
 =====
 
-User form input is directed to an [CreditCard](https://github.com/thephpleague/omnipay-common/blob/master/src/Omnipay/Common/CreditCard.php)
+User form input is directed to an [CreditCard](https://github.com/thephpleague/omnipay-common/blob/master/src/Common/CreditCard.php)
 object. This provides a safe way to accept user input.
 
 The `CreditCard` object has the following fields:
@@ -69,7 +69,7 @@ $card->setFirstName('Adrian');
 ~~~
 
 If you submit credit card details which are obviously invalid (missing required fields, or a number
-which fails the Luhn check), [InvalidCreditCardException](https://github.com/thephpleague/omnipay-common/blob/master/src/Omnipay/Common/Exception/InvalidCreditCardException.php)
+which fails the Luhn check), [InvalidCreditCardException](https://github.com/thephpleague/omnipay-common/blob/master/src/Common/Exception/InvalidCreditCardException.php)
 will be thrown.  You should validate the card details using your framework's validation library
 before submitting the details to your gateway, to avoid unnecessary API calls.
 
