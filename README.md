@@ -204,6 +204,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Sisow](https://github.com/fruitcake/omnipay-sisow) | ✓ | ✓ | fruitcakestudio/omnipay-sisow | [Fruitcake](https://github.com/fruitcake)
 [Skrill](https://github.com/alfaproject/omnipay-skrill) | ✓ | - | alfaproject/omnipay-skrill | [João Dias](https://github.com/alfaproject)
 [Sofort](https://github.com/aimeoscom/omnipay-sofort) | ✓ | - | aimeoscom/omnipay-sofort | [Aimeos GmbH](https://github.com/aimeoscom)
+[Spreedly](https://github.com/gregoriohc/omnipay-spreedly) | ✓ | - | gregoriohc/omnipay-spreedly | [Gregorio Hernández Caso](https://github.com/gregoriohc)
 [Square](https://github.com/Transportersio/omnipay-square) | ✓ | - | transportersio/omnipay-square | [Transporters.io](https://github.com/Transportersio)
 [Stripe](https://github.com/thephpleague/omnipay-stripe) | ✓ | ✓ | omnipay/stripe | [Del](https://github.com/delatbabel)
 [TargetPay](https://github.com/thephpleague/omnipay-targetpay) | ✓ | - | omnipay/targetpay | [Alexander Deruwe](https://github.com/aderuwe)
