@@ -30,6 +30,7 @@ Gateway | Composer Package | Maintainer
 [PayPro](https://github.com/payproNL/omnipay-paypro) | `paypronl/omnipay-paypro` | [Fruitcake Studio](https://github.com/fruitcakestudio)
 [PayU](https://github.com/efesaid/omnipay-payu) | `omnipay/payu` | [efesaid](https://github.com/efesaid)
 [Realex](/gateways/realex/) | `coatesap/omnipay-realex` | Andrew Coates
+[Ping++](https://github.com/phoenixg/omnipay-pingpp) | `phoenixg/omnipay-pingpp` | [Huang Feng](https://github.com/phoenixg)
 [SecPay](/gateways/secpay/) | `justinbusschau/omnipay-secpay` | Justin Busschau
 [Sisow](https://github.com/fruitcakestudio/omnipay-sisow ) | `fruitcakestudio/omnipay-sisow` | [Fruitcake Studio](https://github.com/fruitcakestudio)
 [Skrill](/gateways/skrill/) | `alfaproject/omnipay-skrill` | João Dias
