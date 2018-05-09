@@ -136,7 +136,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [First Data](https://github.com/thephpleague/omnipay-firstdata) | ✓ | - | omnipay/firstdata | [OmniPay](https://github.com/thephpleague/omnipay)
 [Flo2cash](https://github.com/guisea/omnipay-flo2cash) | ✓ | - | guisea/omnipay-flo2cash | [Aaron Guise](https://github.com/guisea)
 [Free / Zero Amount](https://github.com/colinodell/omnipay-zero) | ✓ | - | colinodell/omnipay-zero | [Colin O'Dell](https://github.com/colinodell)
-[GiroCheckout](https://github.com/academe/Omnipay-GiroCheckout) | ✓ | - | academe/omnipay-girocheckout | [Jason Judge](https://github.com/judgej)
+[GiroCheckout](https://github.com/academe/Omnipay-GiroCheckout) | ✓ | ✓ | academe/omnipay-girocheckout | [Jason Judge](https://github.com/judgej)
 [Globalcloudpay](https://github.com/dercoder/omnipay-globalcloudpay) | ✓ | - | dercoder/omnipay-globalcloudpay | [Alexander Fedra](https://github.com/dercoder)
 [GoCardless](https://github.com/thephpleague/omnipay-gocardless) | ✓ | - | omnipay/gocardless | [Del](https://github.com/delatbabel)
 [GovPayNet](https://github.com/flexcoders/omnipay-govpaynet) | ✓ | - | omnipay/omnipay-govpaynet | [FlexCoders](https://github.com/flexcoders)
