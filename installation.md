@@ -7,30 +7,16 @@ title: Installation
 Installation
 ============
 
-Omnipay is installed via [Composer](http://getcomposer.org/). To install all officially
-supported gateways, simply add the following to your `composer.json` file:
+Omnipay is installed via [Composer](https://getcomposer.org/). 
+For most uses, you will need to require `omnipay/omnipay` and an individual gateway:
 
-~~~ javascript
-{
-    "require": {
-        "omnipay/omnipay": "~2.0"
-    }
-}
-~~~
+```
+composer require omnipay/omnipay:^3 omnipay/paypal
+```
 
-Alternatively, you can require individual gateways:
+If you want to use your own HTTP Client instead of Guzzle (which is the default for `omnipay/omnipay`),
+you can require `omnipay/common` and any `php-http/client-implementation` (see [PHP Http](http://docs.php-http.org/en/latest/clients.html))
 
-~~~ javascript
-{
-    "require": {
-        "omnipay/paypal": "~2.0"
-    }
-}
-~~~ 
-
-Next, run composer to update your dependencies:
-
-~~~ bash
-$ curl -s http://getcomposer.org/installer | php
-$ php composer.phar update
-~~~
+```
+composer require omnipay/common:^3 omnipay/paypal php-http/buzz-adapter
+```

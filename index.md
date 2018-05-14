@@ -28,13 +28,10 @@ So, why use Omnipay instead of a gateway's official PHP package/example code?
 - Because most payment gateways have exceptionally poor documentation
 - Because you are writing a shopping cart and need to support multiple gateways
 
-## Upgrading to 2.0
+## Upgrading to 3.0
 
-If you are upgrading from a pre-2.0 version of Omnipay, please note that the
-project has now been split into multiple packages. There have also been some
-changes to how gateway instances are created. See the
-[full release notes](/changelog/)
-for more details.
+If you are upgrading from a pre-3.0 version of Omnipay, please note that there are some changes regarding the HTTP Client.
+There have also been some changes to how gateway instances are created. See the [full release notes](/changelog/) for more details.
 
 ## Support
 

@@ -4,8 +4,7 @@ Getting Started:
     Installation: '/installation/'
     Changelog: '/changelog/'
 Gateways:
-    Official: '/gateways/official/'
-    Third party: '/gateways/third-party/'
+    Community: '/gateways/community/'
     Build your own: '/gateways/build-your-own/'
     Configuring: '/gateways/configuring/'
 API:
