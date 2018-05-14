@@ -1,8 +1,6 @@
 language: php
 
 php:
-  - 5.6
-  - 7.0
   - 7.1
   - 7.2
 
@@ -11,6 +9,8 @@ env:
   - SYMFONY_VERSION="2.*"
   - SYMFONY_VERSION="3.0"
   - SYMFONY_VERSION="3.*"
+  - SYMFONY_VERSION="4.0"
+  - SYMFONY_VERSION="4.*"
 
 before_script:
   - composer self-update
