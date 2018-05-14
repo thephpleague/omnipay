@@ -51,16 +51,20 @@
         "checkoutcom",
         "tpay"
     ],
-    "homepage": "http://omnipay.thephpleague.com/",
+    "homepage": "https://omnipay.thephpleague.com/",
     "license": "MIT",
     "authors": [
         {
             "name": "Adrian Macneil",
             "email": "adrian@adrianmacneil.com"
+        },
+        {
+            "name": "Barry vd. Heuvel",
+            "email": "barryvdh@gmail.com"
         }
     ],
     "require": {
-        "php": "^5.6|^7",
+        "php": "^7.1",
         "omnipay/common": "^3",
         "php-http/guzzle6-adapter": "^1.1"
     },
@@ -72,6 +76,5 @@
             "dev-master": "3.0.x-dev"
         }
     },
-    "minimum-stability": "dev",
     "prefer-stable": true
 }
