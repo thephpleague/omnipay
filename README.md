@@ -6,7 +6,7 @@
 [![Latest Stable Version](https://poser.pugx.org/omnipay/omnipay/version)](https://packagist.org/packages/omnipay/omnipay)
 [![Total Downloads](https://poser.pugx.org/omnipay/omnipay/d/total)](https://packagist.org/packages/omnipay/omnipay)
 
-Omnipay is a payment processing library for PHP. It has been designed based on
+Omnipay is a payment processing library for PHP 7.1+. It has been designed based on
 ideas from [Active Merchant](http://activemerchant.org/), plus experience implementing
 dozens of gateways for [CI Merchant]. It has a clear and consistent API,
 is fully unit tested, and even comes with an example application to get you started.
@@ -69,14 +69,14 @@ Omnipay is installed via [Composer](https://getcomposer.org/).
 For most uses, you will need to require `omnipay/omnipay` and an individual gateway:
 
 ```
-composer require omnipay/omnipay omnipay/paypal
+composer require omnipay/omnipay:^3 omnipay/paypal
 ```
 
 If you want to use your own HTTP Client instead of Guzzle (which is the default for `omnipay/omnipay`),
 you can require `omnipay/common` and any `php-http/client-implementation` (see [PHP Http](http://docs.php-http.org/en/latest/clients.html))
 
 ```
-composer require omnipay/common omnipay/paypal php-http/buzz-adapter
+composer require omnipay/common:^3 omnipay/paypal php-http/buzz-adapter
 ```
 
 ## Upgrade from v2 to v3
