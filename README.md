@@ -3,8 +3,8 @@
 **An easy to use, consistent payment processing library for PHP**
 
 [![Build Status](https://travis-ci.org/thephpleague/omnipay-common.png?branch=master)](https://travis-ci.org/thephpleague/omnipay-common)
-[![Latest Stable Version](https://poser.pugx.org/omnipay/omnipay/version)](https://packagist.org/packages/omnipay/omnipay)
-[![Total Downloads](https://poser.pugx.org/omnipay/omnipay/d/total)](https://packagist.org/packages/omnipay/omnipay)
+[![Latest Stable Version](https://poser.pugx.org/omnipay/common/version)](https://packagist.org/packages/omnipay/common)
+[![Total Downloads](https://poser.pugx.org/omnipay/common/d/total)](https://packagist.org/packages/omnipay/common)
 
 Omnipay is a payment processing library for PHP. It has been designed based on
 ideas from [Active Merchant](http://activemerchant.org/), plus experience implementing
@@ -54,7 +54,7 @@ Omnipay is a collection of packages which all depend on the
 a consistent interface. There are no dependencies on official payment gateway PHP packages -
 we prefer to work with the HTTP API directly. Under the hood, we use the popular and powerful
 [PHP-HTTP](http://docs.php-http.org/en/latest/index.html) library to make HTTP requests. 
-A [Guzzle](http://guzzlephp.org/) adapter is required by default, when using `omnipay/omnipay`.
+A [Guzzle](http://guzzlephp.org/) adapter is required by default, when using `league/omnipay`.
 
 New gateways can be created by cloning the layout of an existing package. When choosing a
 name for your package, please don't use the `omnipay` vendor prefix, as this implies that
@@ -66,25 +66,27 @@ payment library, a good name for your composer package would be `santa/omnipay-g
 ## Installation
 
 Omnipay is installed via [Composer](https://getcomposer.org/). 
-For most uses, you will need to require `omnipay/omnipay` and an individual gateway:
+For most uses, you will need to require `league/omnipay` and an individual gateway:
 
 ```
-composer require omnipay/omnipay:^3 omnipay/paypal
+composer require league/omnipay:^3 omnipay/paypal
 ```
 
-If you want to use your own HTTP Client instead of Guzzle (which is the default for `omnipay/omnipay`),
-you can require `omnipay/common` and any `php-http/client-implementation` (see [PHP Http](http://docs.php-http.org/en/latest/clients.html))
+If you want to use your own HTTP Client instead of Guzzle (which is the default for `league/omnipay`),
+you can require `league/common` and any `php-http/client-implementation` (see [PHP Http](http://docs.php-http.org/en/latest/clients.html))
 
 ```
-composer require omnipay/common:^3 omnipay/paypal php-http/buzz-adapter
+composer require league/common:^3 omnipay/paypal php-http/buzz-adapter
 ```
 
 ## Upgrade from v2 to v3
 
-If your gateway is supported for v3, you can require that version. Make sure you require `omnipay/omnipay` or a separate Http Adaper.
+If your gateway is supported for v3, you can require that version. Make sure you require `league/omnipay` or a separate Http Adaper.
 
 If there is no version for v3 yet, please raise an issue or upgrade the gateways yourself and create a PR.
 See the [Upgrade guide for omnipay/common](https://github.com/thephpleague/omnipay-common/blob/master/UPGRADE.md)
+
+> Note: The package name has been changed from `omnipay/omnipay` to `league/omnipay` for v3
 
 ## Payment Gateways
 
