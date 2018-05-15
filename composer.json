@@ -64,7 +64,7 @@
         }
     ],
     "require": {
-        "php": "^7.1",
+        "php": "^5.6|^7.1",
         "omnipay/common": "^3",
         "php-http/guzzle6-adapter": "^1.1"
     },
