@@ -80,6 +80,8 @@ $this->expectExceptionMessage($message);
 
 - Tests that do not perform any assertions, will be marked as risky. This can be avoided by annotating them with ` @doesNotPerformAssertions`
 
+- You can remove the `Mockery\Adapter\Phpunit\TestListener` in phpunit.xml.dist
+
 
 ## v2.0.0 - 2013-11-17
 
