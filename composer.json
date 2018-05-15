@@ -1,7 +1,7 @@
 {
     "name": "league/omnipay",
     "type": "metapackage",
-    "description": "Includes Omnipay payment processing library and all officially supported gateways",
+    "description": "Omnipay payment processing library",
     "keywords": [
         "omnipay",
         "checkout",
