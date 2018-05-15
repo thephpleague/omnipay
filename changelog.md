@@ -13,12 +13,15 @@ Omnipay 3.0 focuses on separation of the HTTP Client, to be independent of Guzzl
 This release brings compatibility with the latest Symfony 3+4 and Laravel 5. 
 The breaking changes for applications using Omnipay are kept to a minimum.
 
+The `omnipay/omnipay` package name has been changed to `league/omnipay`
+
 ### Upgrading applications from Omnipay 2.x to 3.x
 
 #### Breaking changes
  - The `redirect()` method no calls `exit()` after sending the content. This is up to the developer now.
- - An HTTP Client is required. Guzzle will be installed when using `omnipay/omnipay`, 
+ - An HTTP Client is required. Guzzle will be installed when using `league/omnipay`, 
  but otherwise you need to required your own implementation (see [PHP HTTP Clients](http://docs.php-http.org/en/latest/clients.html))
+- The `omnipay/omnipay` package name has been changed to `league/omnipay` and no longers installs all the gateways directly.
 
 #### Added
  - It is now possible to use `setAmountInteger(integer $value)` to set the amount in the base units of the currency.
@@ -36,7 +39,7 @@ The primary difference is the HTTP Client. We are now using HTTPlug (http://http
 - When sending a JSON body, convert the body to a string with `json_encode()` and set the correct Content-Type.
 - The response is a PSR-7 Response object. You can call `$response->getBody()->getContents()` to get the body as string.
 - `$response->json()` and `$response->xml()` are gone, but you can implement the logic directly.
-- An HTTP Client is no longer added by default by `omnipay/common`, but `omnipay/omnipay` will add Guzzle. 
+- An HTTP Client is no longer added by default by `omnipay/common`, but `league/omnipay` will add Guzzle. 
 Gateways should not rely on Guzzle or other clients directly.
 - `$body` should be a string (eg. `http_build_query($data)` or `json_encode($data)` instead of just `$data`).
 - The `$headers` parameters should be an `array` (not `null`, but can be empty)

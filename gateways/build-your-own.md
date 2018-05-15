@@ -12,7 +12,7 @@ Omnipay is a collection of packages which all depend on the
 a consistent interface. There are no dependencies on official payment gateway PHP packages -
 we prefer to work with the HTTP API directly. Under the hood, we use the popular and powerful
 [PHP-HTTP](http://docs.php-http.org/en/latest/index.html) library to make HTTP requests. 
-A [Guzzle](http://guzzlephp.org/) adapter is required by default, when using `omnipay/omnipay`.
+A [Guzzle](http://guzzlephp.org/) adapter is required by default, when using `league/omnipay`.
 
 New gateways can be created by cloning the layout of an existing package. When choosing a
 name for your package, please don't use the `omnipay` vendor prefix, as this implies that

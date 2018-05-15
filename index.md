@@ -10,8 +10,8 @@ Introduction
 [![Source Code](//img.shields.io/badge/source-league/omnipay-blue.svg?style=flat-square)](https://github.com/thephpleague/omnipay)
 [![Build Status](https://img.shields.io/travis/thephpleague/omnipay-common/master.svg?style=flat-square)](https://travis-ci.org/thephpleague/omnipay-common)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](//github.com/thephpleague/omnipay/blob/master/LICENSE)
-[![Latest Stable Version](https://img.shields.io/packagist/v/omnipay/omnipay.svg?style=flat-square)](https://packagist.org/packages/omnipay/omnipay)
-[![Total Downloads](https://poser.pugx.org/omnipay/omnipay/d/total.png)](https://packagist.org/packages/omnipay/omnipay)
+[![Latest Stable Version](https://img.shields.io/packagist/v/omnipay/common.svg?style=flat-square)](https://packagist.org/packages/omnipay/common)
+[![Total Downloads](https://poser.pugx.org/omnipay/common/d/total.png)](https://packagist.org/packages/omnipay/common)
 
 Omnipay is a payment processing library for PHP. It has been designed based on
 ideas from [Active Merchant](//activemerchant.org/), plus experience implementing
