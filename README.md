@@ -81,7 +81,7 @@ composer require league/common:^3 omnipay/paypal php-http/buzz-adapter
 
 ## Upgrade from v2 to v3
 
-If your gateway is supported for v3, you can require that version. Make sure you require `league/omnipay` or a separate Http Adaper.
+If your gateway is supported for v3, you can require that version. Make sure you require `league/omnipay` or a separate Http Adapter.
 
 If there is no version for v3 yet, please raise an issue or upgrade the gateways yourself and create a PR.
 See the [Upgrade guide for omnipay/common](https://github.com/thephpleague/omnipay-common/blob/master/UPGRADE.md)
