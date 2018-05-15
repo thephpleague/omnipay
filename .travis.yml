@@ -1,20 +1,34 @@
 language: php
 
 php:
+  - 5.6
+  - 7.0
   - 7.1
   - 7.2
 
-env:
-  - SYMFONY_VERSION="2.1"
-  - SYMFONY_VERSION="2.*"
-  - SYMFONY_VERSION="3.0"
-  - SYMFONY_VERSION="3.*"
-  - SYMFONY_VERSION="4.0"
-  - SYMFONY_VERSION="4.*"
+# This triggers builds to run on the new TravisCI infrastructure.
+# See: http://docs.travis-ci.com/user/workers/container-based-infrastructure/
+sudo: false
 
-before_script:
-  - composer self-update
-  - composer --version
-  - composer require symfony/http-foundation:${SYMFONY_VERSION} --no-update
+## Cache composer
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+env:
+  global:
+    - symfony="*"
+
+matrix:
+  include:
+    - php: 5.6
+      env: symfony="^2.1"
+    - php: 5.6
+      env: symfony="^3"
+    - php: 7.1
+      env: symfony="^4"
+
+install:
+  - if [[ $symfony != '*' ]]; then travis_retry composer require symfony/http-foundation:${symfony} --no-update --no-interaction; fi
 
 script: composer install --prefer-dist --no-interaction
