@@ -196,7 +196,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Sage Pay](https://github.com/thephpleague/omnipay-sagepay) | ✓ | - | omnipay/sagepay | [Jason Judge](https://github.com/judgej)
 [Sberbank](https://github.com/AndrewNovikof/omnipay-sberbank) | - | ✓ | andrewnovikof/omnipay-sberbank | [Andrew Novikov](https://github.com/AndrewNovikof)
 [SecPay](https://github.com/justinbusschau/omnipay-secpay) | ✓ | - | justinbusschau/omnipay-secpay | [Justin Busschau](https://github.com/justinbusschau)
-[SecurePay](https://github.com/thephpleague/omnipay-securepay) | ✓ | - | omnipay/securepay | [Omnipay](https://github.com/thephpleague/omnipay)
+[SecurePay](https://github.com/thephpleague/omnipay-securepay) | ✓ | ✓ | omnipay/securepay | [Omnipay](https://github.com/thephpleague/omnipay)
 [Secure Trading](https://github.com/meebio/omnipay-secure-trading) | ✓ | - | meebio/omnipay-secure-trading | [John Jablonski](https://github.com/jan-j)
 [Sisow](https://github.com/fruitcake/omnipay-sisow) | ✓ | ✓ | fruitcakestudio/omnipay-sisow | [Fruitcake](https://github.com/fruitcake)
 [Skrill](https://github.com/alfaproject/omnipay-skrill) | ✓ | - | alfaproject/omnipay-skrill | [João Dias](https://github.com/alfaproject)
