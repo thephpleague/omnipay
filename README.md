@@ -113,6 +113,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Buckaroo](https://github.com/thephpleague/omnipay-buckaroo) | ✓ | - | omnipay/buckaroo | [Omnipay](https://github.com/thephpleague/omnipay)
 [CardGate](https://github.com/cardgate/omnipay-cardgate) | ✓ | - | cardgate/omnipay-cardgate | [CardGate](https://github.com/cardgate)
 [CardSave](https://github.com/thephpleague/omnipay-cardsave) | ✓ | - | omnipay/cardsave | [Omnipay](https://github.com/thephpleague/omnipay)
+[CashBaBa](https://github.com/tapos007/omnipay-cashbaba) | ✓ | - | omnipay/cashbaba | [Recursion Technologies Ltd](https://github.com/tapos007)
 [Checkout.com](https://github.com/fotografde/omnipay-checkoutcom) | ✓ | - | fotografde/checkoutcom | [fotograf.de](https://github.com/fotografde)
 [CloudBanking](https://github.com/spsingh/omnipay-cloudbanking) | ✓ | - | cloudbanking/omnipay-cloudbanking | [Cloudbanking](http://cloudbanking.com.au/)
 [Coinbase](https://github.com/thephpleague/omnipay-coinbase) | ✓ | - | omnipay/coinbase | [Omnipay](https://github.com/thephpleague/omnipay)
@@ -223,7 +224,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Yandex.Money](https://github.com/yandex-money/yandex-money-cms-omnipay) | ✓ | - | yandexmoney/omnipay | [Roman Ananyev](https://github.com/aTastyCookie/)
 [Datatrans](https://github.com/w-vision/omnipay-datatrans) | ✓ | - | w-vision/datatrans | [Dominik Pfaffenbauer](https://github.com/dpfaffenbauer)
 [Tpay](https://github.com/tpay-com/omnipay-tpay) | ✓ | - | omnipay/tpay | [Tpay.com](https://github.com/tpay-com)
-[CashBaBa](https://github.com/tapos007/omnipay-cashbaba) | ✓ | - | omnipay/cashbaba | [Recursion Technologies Ltd](https://github.com/tapos007)
+
 
 Gateways are created and initialized like so:
 
