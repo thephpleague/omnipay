@@ -103,6 +103,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Agms](https://github.com/agmscode/omnipay-agms) | ✓ | - | agmscode/omnipay-agms | [Maanas Royy](https://github.com/maanas)
 [Alipay(Global)](https://github.com/lokielse/omnipay-global-alipay) | ✓ | ✓ | lokielse/omnipay-global-alipay | [Loki Else](https://github.com/lokielse)
 [Alipay](https://github.com/lokielse/omnipay-alipay) | ✓ | ✓ | lokielse/omnipay-alipay | [Loki Else](https://github.com/lokielse)
+[99Bill](https://github.com/laraveler/omnipay-99bill) | - | ✓ | x-class/omnipay-99bill | [Laraveler](https://github.com/laraveler)
 [Allied Wallet](https://github.com/delatbabel/omnipay-alliedwallet) | ✓ | - | delatbabel/omnipay-alliedwallet | [Del](https://github.com/delatbabel)
 [Authorize.Net](https://github.com/thephpleague/omnipay-authorizenet) | ✓ | - | omnipay/authorizenet | [Jason Judge](https://github.com/judgej)
 [Barclays ePDQ](https://github.com/digitickets/omnipay-barclays-epdq) | ✓ | - | digitickets/omnipay-barclays-epdq | [DigiTickets](https://github.com/digitickets)
