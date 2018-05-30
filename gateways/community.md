@@ -16,7 +16,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Alipay(Global)](https://github.com/lokielse/omnipay-global-alipay) | ✓ | ✓ | lokielse/omnipay-global-alipay | [Loki Else](https://github.com/lokielse)
 [Alipay](https://github.com/lokielse/omnipay-alipay) | ✓ | ✓ | lokielse/omnipay-alipay | [Loki Else](https://github.com/lokielse)
 [Allied Wallet](https://github.com/delatbabel/omnipay-alliedwallet) | ✓ | - | delatbabel/omnipay-alliedwallet | [Del](https://github.com/delatbabel)
-[Authorize.Net](https://github.com/thephpleague/omnipay-authorizenet) | ✓ | - | omnipay/authorizenet | [Jason Judge](https://github.com/judgej)
+[Authorize.Net](https://github.com/thephpleague/omnipay-authorizenet) | ✓ | ✓ | omnipay/authorizenet | [Jason Judge](https://github.com/judgej)
 [Authorize.Net API](https://github.com/academe/omnipay-authorizenetapi) | - | ✓ | academe/omnipay-authorizenetapi | [Jason Judge](https://github.com/judgej)
 [Barclays ePDQ](https://github.com/digitickets/omnipay-barclays-epdq) | ✓ | - | digitickets/omnipay-barclays-epdq | [DigiTickets](https://github.com/digitickets)
 [Beanstream](https://github.com/lemonstand/omnipay-beanstream) | ✓ | - | lemonstand/omnipay-beanstream | [LemonStand](https://github.com/lemonstand)
