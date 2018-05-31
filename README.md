@@ -129,7 +129,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [ecoPayz](https://github.com/dercoder/omnipay-ecopayz) | ✓ | - | dercoder/omnipay-ecopayz | [Alexander Fedra](https://github.com/dercoder)
 [EgopayRu](https://github.com/pinguinjkeke/omnipay-egopaymentru) | ✓ | - | pinguinjkeke/omnipay-egopaymentru | [Alexander Avakov](https://github.com/pinguinjkeke)
 [Elavon](https://github.com/lemonstand/omnipay-elavon) | ✓ | - | lemonstand/omnipay-elavon | [LemonStand](https://github.com/lemonstand)
-[eWAY](https://github.com/thephpleague/omnipay-eway) | ✓ | - | omnipay/eway | [Del](https://github.com/delatbabel)
+[eWAY](https://github.com/thephpleague/omnipay-eway) | ✓ | ✓ | omnipay/eway | [Del](https://github.com/delatbabel)
 [Fasapay](https://github.com/andreas22/omnipay-fasapay) | ✓ | - | andreas22/omnipay-fasapay | [Andreas Christodoulou](https://github.com/andreas22)
 [Fat Zebra](https://github.com/delatbabel/omnipay-fatzebra) | ✓ | - | delatbabel/omnipay-fatzebra | [Del](https://github.com/delatbabel)
 [First Data](https://github.com/thephpleague/omnipay-firstdata) | ✓ | - | omnipay/firstdata | [OmniPay](https://github.com/thephpleague/omnipay)
