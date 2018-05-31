@@ -141,6 +141,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [GovPayNet](https://github.com/flexcoders/omnipay-govpaynet) | ✓ | - | omnipay/omnipay-govpaynet | [FlexCoders](https://github.com/flexcoders)
 [GVP (Garanti)](https://github.com/yasinkuyu/omnipay-gvp) | ✓ | - | yasinkuyu/omnipay-gvp | [Yasin Kuyu](https://github.com/yasinkuyu)
 [Helcim](https://github.com/academe/omnipay-helcim) | ✓ | - | academe/omnipay-helcim | [Jason Judge](https://github.com/judgej)
+[iDram](https://github.com/ptuchik/omnipay-idram) | - | ✓ | ptuchik/omnipay-idram | [Avik Aghajanyan](https://github.com/ptuchik)
 [iPay88](https://github.com/dilab/omnipay-ipay88) | ✓ | ✓ | dilab/omnipay-ipay88 | [Xu Ding](https://github.com/dilab)
 [IfthenPay](https://github.com/ifthenpay/omnipay-ifthenpay) | ✓ | - | ifthenpay/omnipay-ifthenpay | [Rafael Almeida](https://github.com/rafaelcpalmeida)
 [Iyzico](https://github.com/yasinkuyu/omnipay-iyzico) | ✓ | - | yasinkuyu/omnipay-iyzico | [Yasin Kuyu](https://github.com/yasinkuyu)
