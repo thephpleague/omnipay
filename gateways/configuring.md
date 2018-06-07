@@ -7,8 +7,8 @@ title: Configuring gateways
 Configuring gateways
 ====================
 
-All payment gateways must implement [GatewayInterface](https://github.com/thephpleague/omnipay-common/blob/master/src/Omnipay/Common/GatewayInterface.php), and will usually
-extend [AbstractGateway](https://github.com/thephpleague/omnipay-common/blob/master/src/Omnipay/Common/AbstractGateway.php) for basic functionality.
+All payment gateways must implement [GatewayInterface](https://github.com/thephpleague/omnipay-common/blob/master/src/Common/GatewayInterface.php), and will usually
+extend [AbstractGateway](https://github.com/thephpleague/omnipay-common/blob/master/src/Common/AbstractGateway.php) for basic functionality.
 
 ## Initialize a gateway
 
