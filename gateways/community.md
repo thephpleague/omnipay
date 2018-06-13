@@ -128,7 +128,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [WechatPay](https://github.com/lokielse/omnipay-wechatpay) | ✓ | ✓ | lokielse/omnipay-wechatpay |  [Loki Else](https://github.com/lokielse)
 [WePay](https://github.com/collizo4sky/omnipay-wepay) | ✓ | - | collizo4sky/omnipay-wepay | [Agbonghama Collins](https://github.com/collizo4sky)
 [Wirecard](https://github.com/igaponov/omnipay-wirecard) | ✓ | - | igaponov/omnipay-wirecard | [Igor Gaponov](https://github.com/igaponov)
-[Wirecard](https://github.com/academe/omnipay-wirecard) | ✓ | - | academe/omnipay-wirecard | [Jason Judge](https://github.com/judgej)
+[Wirecard](https://github.com/academe/omnipay-wirecard) | ✓ | ✓ | academe/omnipay-wirecard | [Jason Judge](https://github.com/judgej)
 [Worldpay XML Direct Corporate Gateway](https://github.com/teaandcode/omnipay-worldpay-xml) | ✓ | - | teaandcode/omnipay-worldpay-xml | [Dave Nash](https://github.com/teaandcode)
 [Worldpay XML Hosted Corporate Gateway](https://github.com/comicrelief/omnipay-worldpay-cg-hosted) | ✓ | - | comicrelief/omnipay-worldpay-cg-hosted | [Comic Relief](https://github.com/comicrelief)
 [Worldpay Business Gateway](https://github.com/thephpleague/omnipay-worldpay) | ✓ | - | omnipay/worldpay | [Omnipay](https://github.com/thephpleague/omnipay)
