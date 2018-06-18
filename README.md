@@ -188,6 +188,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [PaySsion](https://github.com/InkedCurtis/omnipay-payssion) | ✓ | - | inkedcurtis/omnipay-payssion | [Curtis](https://github.com/inkedcurtis)
 [PayTrace](https://github.com/iddqdidkfa/omnipay-paytrace) | ✓ | - | softcommerce/omnipay-paytrace | [Oleg Ilyushyn](https://github.com/iddqdidkfa)
 [PayU](https://github.com/efesaid/omnipay-payu) | ✓ | - | omnipay/payu | [efesaid](https://github.com/efesaid)
+[Pelecard](https://github.com/Uskur/omnipay-pelecard) | ✓ | - | uskur/omnipay-pelecard | [Uskur](https://github.com/Uskur)
 [Pin Payments](https://github.com/thephpleague/omnipay-pin) | ✓ | - | omnipay/pin | [Del](https://github.com/delatbabel)
 [Ping++](https://github.com/phoenixg/omnipay-pingpp) | ✓ | - | phoenixg/omnipay-pingpp | [Huang Feng](https://github.com/phoenixg)
 [POLi](https://github.com/burnbright/omnipay-poli) | ✓ | - | burnbright/omnipay-poli | [Sid](https://github.com/onlinesid)
