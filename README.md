@@ -120,6 +120,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [CloudBanking](https://github.com/spsingh/omnipay-cloudbanking) | ✓ | - | cloudbanking/omnipay-cloudbanking | [Cloudbanking](http://cloudbanking.com.au/)
 [Coinbase](https://github.com/thephpleague/omnipay-coinbase) | ✓ | - | omnipay/coinbase | [Omnipay](https://github.com/thephpleague/omnipay)
 [CoinGate](https://github.com/coingate/omnipay-coingate) | ✓ | - | coingate/omnipay-coingate | [CoinGate](https://github.com/coingate)
+[CoinPayments](https://github.com/InkedCurtis/omnipay-coinpayments) | ✓ | ✓ | InkedCurtis/omnipay-coinpayments | [InkedCurtis](https://github.com/InkedCurtis)
 [Creditcall](https://github.com/meebio/omnipay-creditcall) | ✓ | - | meebio/omnipay-creditcall | [John Jablonski](https://github.com/jan-j)
 [Cybersource](https://github.com/dioscouri/omnipay-cybersource) | ✓ | - | dioscouri/omnipay-cybersource | [Dioscouri Design](https://github.com/dioscouri)
 [Cybersource SOAP](https://github.com/Klinche/omnipay-cybersource-soap) | ✓ | - | dabsquared/omnipay-cybersource-soap | [DABSquared](https://github.com/DABSquared)
