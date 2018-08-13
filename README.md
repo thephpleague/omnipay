@@ -363,6 +363,7 @@ The main methods implemented by gateways are:
 * `void($options)` - generally can only be called up to 24 hours after submitting a transaction
 * `acceptNotification()` - convert an incoming request from an off-site gateway to a generic notification object
   for further processing
+* `createCard` - get a cardReference that can be used for future payments. This might be used in a monthly billing scenario, for example.  
 
 On-site gateways do not need to implement the `completeAuthorize` and `completePurchase` methods. Gateways that don't
 receive payment notifications don't need to implement `acceptNotification`. If any gateway does not support certain
