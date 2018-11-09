@@ -209,6 +209,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Posnet](https://github.com/yasinkuyu/omnipay-posnet) | ✓ | - | yasinkuyu/omnipay-posnet | [Yasin Kuyu](https://github.com/yasinkuyu)
 [Postfinance](https://github.com/bummzack/omnipay-postfinance) | ✓ | - | bummzack/omnipay-postfinance | [Roman Schmid](https://github.com/bummzack)
 [Qiwi](https://github.com/hiqdev/omnipay-qiwi) | ✓ | - | hiqdev/omnipay-qiwi | [HiQDev](https://github.com/hiqdev)
+[QQ Wallet(QPay)](https://github.com/kuangjy2/omnipay-qpay) | - | ✓ | kuangjy/omnipay-qpay | [Kuang Jiaye](https://github.com/kuangjy2)
 [Quickpay](https://github.com/NobrainerWeb/omnipay-quickpay) | ✓ | - | nobrainerweb/omnipay-quickpay | [Nobrainer Web](https://github.com/NobrainerWeb)
 [Realex](https://github.com/digitickets/omnipay-realex) | ✓ | - | digitickets/omnipay-realex | [DigiTickets](https://github.com/digitickets)
 [RedSys](https://github.com/jsampedro77/sermepa-omnipay) | ✓ | - | nazka/sermepa-omnipay | [Javier Sampedro](https://github.com/jsampedro77)
