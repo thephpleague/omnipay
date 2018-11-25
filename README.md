@@ -187,7 +187,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Paratika (Asseco)](https://github.com/yasinkuyu/omnipay-paratika) | ✓ | - | yasinkuyu/omnipay-paratika | [Yasin Kuyu](https://github.com/yasinkuyu)
 [PayFast](https://github.com/thephpleague/omnipay-payfast) | ✓ | - | omnipay/payfast | [Omnipay](https://github.com/thephpleague/omnipay)
 [Payflow](https://github.com/thephpleague/omnipay-payflow) | ✓ | - | omnipay/payflow | [Del](https://github.com/delatbabel)
-[PaymentExpress (DPS)](https://github.com/thephpleague/omnipay-paymentexpress) | ✓ | - | omnipay/paymentexpress | [Del](https://github.com/delatbabel)
+[PaymentExpress (DPS)](https://github.com/thephpleague/omnipay-paymentexpress) | ✓ | ✓ | omnipay/paymentexpress | [Del](https://github.com/delatbabel)
 [PaymentExpress / DPS (A2A)](https://github.com/onlinesid/omnipay-paymentexpress-a2a) | ✓ | - | onlinesid/omnipay-paymentexpress-a2a | [Sid](https://github.com/onlinesid)
 [PaymentgateRu](https://github.com/pinguinjkeke/omnipay-paymentgateru) | ✓ | ✓ | pinguinjkeke/omnipay-paymentgateru | [Alexander Avakov](https://github.com/pinguinjkeke)
 [PaymentSense](https://github.com/digitickets/omnipay-paymentsense) | ✓ | - | digitickets/omnipay-paymentsense | [DigiTickets](https://github.com/digitickets)
