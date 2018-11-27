@@ -136,7 +136,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [eCoin](https://github.com/hiqdev/omnipay-ecoin) | ✓ | - | hiqdev/omnipay-ecoin | [HiQDev](https://github.com/hiqdev)
 [ecoPayz](https://github.com/dercoder/omnipay-ecopayz) | ✓ | - | dercoder/omnipay-ecopayz | [Alexander Fedra](https://github.com/dercoder)
 [EgopayRu](https://github.com/pinguinjkeke/omnipay-egopaymentru) | ✓ | - | pinguinjkeke/omnipay-egopaymentru | [Alexander Avakov](https://github.com/pinguinjkeke)
-[Elavon](https://github.com/lemonstand/omnipay-elavon) | ✓ | - | lemonstand/omnipay-elavon | [LemonStand](https://github.com/lemonstand)
+[Elavon](https://github.com/lxrco/omnipay-elavon) | ✓ | ✓ | lxrco/omnipay-elavon | [Korri](https://github.com/Korri)
 [ePayments](https://github.com/hiqdev/omnipay-epayments) | ✓ | - | hiqdev/omnipay-epayments | [HiQDev](https://github.com/hiqdev)
 [ePayService](https://github.com/hiqdev/omnipay-epayservice) | ✓ | - | hiqdev/omnipay-epayservice | [HiQDev](https://github.com/hiqdev)
 [eWAY](https://github.com/thephpleague/omnipay-eway) | ✓ | ✓ | omnipay/eway | [Del](https://github.com/delatbabel)
