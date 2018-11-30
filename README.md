@@ -166,6 +166,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Magnius](https://github.com/fruitcake/omnipay-magnius) | - | ✓ | fruitcake/omnipay-magnius | [Fruitcake](https://github.com/fruitcake)
 [Manual](https://github.com/thephpleague/omnipay-manual) | ✓ | - | omnipay/manual | [Del](https://github.com/delatbabel)
 [Migs](https://github.com/thephpleague/omnipay-migs) | ✓ | - | omnipay/migs | [Omnipay](https://github.com/thephpleague/omnipay)
+[MTNCAM Mobile Money](https://github.com/larrytech7/omnipay-momocm) | ✓ | ✓ | larrytech7/omnipay-momocm | [Akah Harvey](https://github.com/larrytech7)
 [Mollie](https://github.com/thephpleague/omnipay-mollie) | ✓ | ✓ | omnipay/mollie | [Barry vd. Heuvel](https://github.com/barryvdh)
 [MOLPay](https://github.com/leesiongchan/omnipay-molpay) | ✓ | - | leesiongchan/molpay | [Lee Siong Chan](https://github.com/leesiongchan)
 [MultiCards](https://github.com/incube8/omnipay-multicards) | ✓ | - | incube8/omnipay-multicards | [Del](https://github.com/delatbabel)
