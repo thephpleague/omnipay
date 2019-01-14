@@ -53,7 +53,7 @@ Omnipay is a collection of packages which all depend on the
 [omnipay/common](https://github.com/thephpleague/omnipay-common) package to provide
 a consistent interface. There are no dependencies on official payment gateway PHP packages -
 we prefer to work with the HTTP API directly. Under the hood, we use the popular and powerful
-[PHP-HTTP](http://docs.php-http.org/en/latest/index.html) library to make HTTP requests. 
+[PHP-HTTP](http://docs.php-http.org/en/latest/index.html) library to make HTTP requests.
 A [Guzzle](http://guzzlephp.org/) adapter is required by default, when using `league/omnipay`.
 
 New gateways can be created by cloning the layout of an existing package. When choosing a
@@ -65,7 +65,7 @@ payment library, a good name for your composer package would be `santa/omnipay-g
 
 ## Installation
 
-Omnipay is installed via [Composer](https://getcomposer.org/). 
+Omnipay is installed via [Composer](https://getcomposer.org/).
 For most uses, you will need to require `league/omnipay` and an individual gateway:
 
 ```
@@ -244,7 +244,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Wirecard](https://github.com/igaponov/omnipay-wirecard) | ✓ | ✓ | igaponov/omnipay-wirecard | [Igor Gaponov](https://github.com/igaponov)
 [Wirecard](https://github.com/academe/omnipay-wirecard) | ✓ | - | academe/omnipay-wirecard | [Jason Judge](https://github.com/judgej)
 [Worldpay XML Direct Corporate Gateway](https://github.com/teaandcode/omnipay-worldpay-xml) | ✓ | - | teaandcode/omnipay-worldpay-xml | [Dave Nash](https://github.com/teaandcode)
-[Worldpay XML Hosted Corporate Gateway](https://github.com/comicrelief/omnipay-worldpay-cg-hosted) | ✓ | - | comicrelief/omnipay-worldpay-cg-hosted | [Comic Relief](https://github.com/comicrelief)
+[Worldpay XML Hosted Corporate Gateway](https://github.com/catharsisjelly/omnipay-worldpay-cg-hosted) | ✓ | ✓ | catharsisjelly/omnipay-worldpay-cg-hosted | [Chris Lock](https://github.com/catharsisjelly)
 [Worldpay Business Gateway](https://github.com/thephpleague/omnipay-worldpay) | ✓ | ✓ | omnipay/worldpay | [Omnipay](https://github.com/thephpleague/omnipay)
 [Yandex.Money](https://github.com/yandex-money/yandex-money-cms-omnipay) | ✓ | - | yandexmoney/omnipay | [Roman Ananyev](https://github.com/aTastyCookie/)
 [Yandex.Money for P2P payments](https://github.com/hiqdev/omnipay-yandexmoney) | ✓ | - | hiqdev/omnipay-yandexmoney | [HiQDev](https://github.com/hiqdev)
@@ -496,10 +496,10 @@ try {
   Most gateways allow you to set up a sandbox or developer account which uses a different url
   and credentials. Some also allow you to do test transactions against the live site, which does
   not result in a live transaction.
-  
+
   Gateways that implement only the developer account (most of them) call it testMode. Authorize.net,
   however, implements both and refers to this mode as developerMode.  
-  
+
   When implementing with multiple gateways you should use a construct along the lines of the following:
 ```php
 if ($is_developer_mode) {
