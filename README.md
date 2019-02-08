@@ -161,6 +161,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Iyzico](https://github.com/yasinkuyu/omnipay-iyzico) | ✓ | - | yasinkuyu/omnipay-iyzico | [Yasin Kuyu](https://github.com/yasinkuyu)
 [Judo Pay](https://github.com/Transportersio/omnipay-judopay) | ✓ | - | transportersio/omnipay-judopay | [Transporters.io](https://github.com/Transportersio)
 [Klarna Checkout](https://github.com/MyOnlineStore/omnipay-klarna-checkout) | ✓ | ✓ | myonlinestore/omnipay-klarna-checkout | [MyOnlineStore](https://github.com/MyOnlineStore)
+[Laybuy](https://github.com/mediabeastnz/omnipay-laybuy) | ✓ | - | mediabeastnz/omnipay-laybuy | [Myles Derham](https://github.com/mediabeastnz)
 [Komerci (Rede, former RedeCard)](https://github.com/byjg/omnipay-komerci) | ✓ | - | byjg/omnipay-komerci | [João Gilberto Magalhães](https://github.com/byjg)
 [Komoju](https://github.com/dannyvink/omnipay-komoju) | ✓ | - | vink/omnipay-komoju | [Danny Vink](https://github.com/dannyvink)
 [Midtrans](https://github.com/dilab/omnipay-midtrans) | ✓ | ✓ | dilab/omnipay-midtrans | [Xu Ding](https://github.com/dilab)
