@@ -5,7 +5,6 @@ php:
   - 7.0
   - 7.1
   - 7.2
-  - 7.3
 
 # This triggers builds to run on the new TravisCI infrastructure.
 # See: http://docs.travis-ci.com/user/workers/container-based-infrastructure/
@@ -15,21 +14,5 @@ sudo: false
 cache:
   directories:
     - $HOME/.composer/cache
-
-env:
-  global:
-    - symfony="*"
-
-matrix:
-  include:
-    - php: 5.6
-      env: symfony="^2.1"
-    - php: 5.6
-      env: symfony="^3"
-    - php: 7.1
-      env: symfony="^4"
-
-install:
-  - if [[ $symfony != '*' ]]; then travis_retry composer require symfony/http-foundation:${symfony} --no-update --no-interaction; fi
 
 script: composer install --prefer-dist --no-interaction
