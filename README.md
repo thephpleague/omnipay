@@ -184,6 +184,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Nocks](https://github.com/nocksapp/checkout-omnipay) | ✓ | - | nocksapp/omnipay-nocks | [Nocks](https://github.com/nocksapp)
 [OkPay](https://github.com/hiqdev/omnipay-okpay) | ✓ | - | hiqdev/omnipay-okpay | [HiQDev](https://github.com/hiqdev)
 [OnePay](https://github.com/dilab/omnipay-onepay) | ✓ | ✓ | dilab/omnipay-onepay | [Xu Ding](https://github.com/dilab)
+[Openpay Australia](https://github.com/sudiptpa/openpay) | ✓ | ✓ | sudiptpa/omnipay-openpay | [Sujip Thapa](https://github.com/sudiptpa)
 [Oppwa](https://github.com/vdbelt/omnipay-oppwa) | ✓ | ✓ | vdbelt/omnipay-oppwa | [Martin van de Belt](https://github.com/vdbelt)
 [Payoo](https://github.com/dilab/omnipay-payoo) | ✓ | ✓ | dilab/omnipay-payoo | [Xu Ding](https://github.com/dilab)
 [Pacnet](https://github.com/mfauveau/omnipay-pacnet) | ✓ | - | mfauveau/omnipay-pacnet | [Matthieu Fauveau](https://github.com/mfauveau)
