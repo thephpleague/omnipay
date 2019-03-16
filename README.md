@@ -137,6 +137,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [eGHL](https://github.com/dilab/omnipay-eghl) | ✓ | ✓ | dilab/omnipay-eghl | [Xu Ding](https://github.com/dilab)
 [eCoin](https://github.com/hiqdev/omnipay-ecoin) | ✓ | - | hiqdev/omnipay-ecoin | [HiQDev](https://github.com/hiqdev)
 [ecoPayz](https://github.com/dercoder/omnipay-ecopayz) | ✓ | - | dercoder/omnipay-ecopayz | [Alexander Fedra](https://github.com/dercoder)
+[eSewa](https://github.com/sudiptpa/esewa) | - | ✓ | sudiptpa/omnipay-esewa | [Sujip Thapa](https://github.com/sudiptpa)
 [EgopayRu](https://github.com/pinguinjkeke/omnipay-egopaymentru) | ✓ | - | pinguinjkeke/omnipay-egopaymentru | [Alexander Avakov](https://github.com/pinguinjkeke)
 [Elavon](https://github.com/lxrco/omnipay-elavon) | ✓ | ✓ | lxrco/omnipay-elavon | [Korri](https://github.com/Korri)
 [ePayments](https://github.com/hiqdev/omnipay-epayments) | ✓ | - | hiqdev/omnipay-epayments | [HiQDev](https://github.com/hiqdev)
