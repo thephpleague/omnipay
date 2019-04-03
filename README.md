@@ -156,6 +156,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [GVP (Garanti)](https://github.com/yasinkuyu/omnipay-gvp) | ✓ | - | yasinkuyu/omnipay-gvp | [Yasin Kuyu](https://github.com/yasinkuyu)
 [Helcim](https://github.com/academe/omnipay-helcim) | ✓ | - | academe/omnipay-helcim | [Jason Judge](https://github.com/judgej)
 [iDram](https://github.com/ptuchik/omnipay-idram) | - | ✓ | ptuchik/omnipay-idram | [Avik Aghajanyan](https://github.com/ptuchik)
+[iDeal](https://github.com/deniztezcan/omnipay-ideal) | - | ✓ | deniztezcan/omnipay-ideal | [Deniz Tezcan](https://github.com/deniztezcan)
 [iPay88](https://github.com/dilab/omnipay-ipay88) | ✓ | ✓ | dilab/omnipay-ipay88 | [Xu Ding](https://github.com/dilab)
 [IfthenPay](https://github.com/ifthenpay/omnipay-ifthenpay) | ✓ | - | ifthenpay/omnipay-ifthenpay | [Rafael Almeida](https://github.com/rafaelcpalmeida)
 [InterKassa](https://github.com/hiqdev/omnipay-interkassa) | ✓ | ✓ | hiqdev/omnipay-interkassa | [HiQDev](https://github.com/hiqdev)
