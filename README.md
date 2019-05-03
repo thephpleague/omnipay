@@ -146,6 +146,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Fasapay](https://github.com/andreas22/omnipay-fasapay) | ✓ | - | andreas22/omnipay-fasapay | [Andreas Christodoulou](https://github.com/andreas22)
 [Fat Zebra](https://github.com/delatbabel/omnipay-fatzebra) | ✓ | - | delatbabel/omnipay-fatzebra | [Del](https://github.com/delatbabel)
 [FreeKassa](https://github.com/hiqdev/omnipay-freekassa) | ✓ | - | hiqdev/omnipay-freekassa | [HiQDev](https://github.com/hiqdev)
+[Fibank](https://github.com/ampeco/omnipay-fibank) | - | ✓ | ampeco/omnipay-fibank | [Ampeco](https://github.com/ampeco)
 [First Data](https://github.com/thephpleague/omnipay-firstdata) | ✓ | - | omnipay/firstdata | [OmniPay](https://github.com/thephpleague/omnipay)
 [Flo2cash](https://github.com/guisea/omnipay-flo2cash) | ✓ | - | guisea/omnipay-flo2cash | [Aaron Guise](https://github.com/guisea)
 [Free / Zero Amount](https://github.com/colinodell/omnipay-zero) | ✓ | - | colinodell/omnipay-zero | [Colin O'Dell](https://github.com/colinodell)
