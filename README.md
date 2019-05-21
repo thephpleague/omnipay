@@ -168,6 +168,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Komerci (Rede, former RedeCard)](https://github.com/byjg/omnipay-komerci) | ✓ | - | byjg/omnipay-komerci | [João Gilberto Magalhães](https://github.com/byjg)
 [Komoju](https://github.com/dannyvink/omnipay-komoju) | ✓ | - | vink/omnipay-komoju | [Danny Vink](https://github.com/dannyvink)
 [Midtrans](https://github.com/dilab/omnipay-midtrans) | ✓ | ✓ | dilab/omnipay-midtrans | [Xu Ding](https://github.com/dilab)
+[MercadoPago](https://github.com/lucassmacedo/omnipay-mercadopago) | - | ✓ | lucassmacedo/omnipay-mercadopago | [Lucas Macedo](https://github.com/lucassmacedo)
 [Magnius](https://github.com/fruitcake/omnipay-magnius) | - | ✓ | fruitcake/omnipay-magnius | [Fruitcake](https://github.com/fruitcake)
 [Manual](https://github.com/thephpleague/omnipay-manual) | ✓ | - | omnipay/manual | [Del](https://github.com/delatbabel)
 [Migs](https://github.com/thephpleague/omnipay-migs) | ✓ | - | omnipay/migs | [Omnipay](https://github.com/thephpleague/omnipay)
