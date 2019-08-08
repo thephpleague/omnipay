@@ -247,7 +247,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Veritrans](https://github.com/andylibrian/omnipay-veritrans) | ✓ | - | andylibrian/omnipay-veritrans | [Andy Librian](https://github.com/andylibrian)
 [Vindicia](https://github.com/vimeo/omnipay-vindicia) | ✓ | - | vimeo/omnipay-vindicia | [Vimeo](https://github.com/vimeo)
 [VivaPayments](https://github.com/delatbabel/omnipay-vivapayments) | ✓ | - | delatbabel/omnipay-vivapayments | [Del](https://github.com/delatbabel)
-[VR Payments](https://github.com/antibodies-online/omnipay-vr-payment) | ✓ | - | antibodies-online/omnipay-vr-payment | [antibodies-online](https://github.com/antibodies-online)
+[VR Payment](https://github.com/antibodies-online/omnipay-vr-payment) | ✓ | - | antibodies-online/omnipay-vr-payment | [antibodies-online](https://github.com/antibodies-online)
 [WebMoney](https://github.com/dercoder/omnipay-webmoney) | ✓ | - | dercoder/omnipay-webmoney | [Alexander Fedra](https://github.com/dercoder)
 [WeChat](https://github.com/labs7in0/omnipay-wechat) | ✓ | - | labs7in0/omnipay-wechat | [7IN0's Labs](https://github.com/labs7in0)
 [WechatPay](https://github.com/lokielse/omnipay-wechatpay) | ✓ | ✓ | lokielse/omnipay-wechatpay |  [Loki Else](https://github.com/lokielse)
