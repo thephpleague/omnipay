@@ -126,6 +126,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [CoinGate](https://github.com/coingate/omnipay-coingate) | ✓ | - | coingate/omnipay-coingate | [CoinGate](https://github.com/coingate)
 [CoinPayments](https://github.com/InkedCurtis/omnipay-coinpayments) | ✓ | ✓ | InkedCurtis/omnipay-coinpayments | [InkedCurtis](https://github.com/InkedCurtis)
 [Creditcall](https://github.com/meebio/omnipay-creditcall) | ✓ | - | meebio/omnipay-creditcall | [John Jablonski](https://github.com/jan-j)
+[CSOB](https://github.com/bileto/omnipay-csob) (GP WebPay) | ✓ | - | bileto/omnipay-csob |
 [Cybersource](https://github.com/dioscouri/omnipay-cybersource) | ✓ | ✓ | dioscouri/omnipay-cybersource | [Dioscouri Design](https://github.com/dioscouri)
 [Cybersource SOAP](https://github.com/Klinche/omnipay-cybersource-soap) | ✓ | - | dabsquared/omnipay-cybersource-soap | [DABSquared](https://github.com/DABSquared)
 [DataCash](https://github.com/digitickets/omnipay-datacash) | ✓ | - | digitickets/omnipay-datacash | [DigiTickets](https://github.com/digitickets)
@@ -153,6 +154,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [GiroCheckout](https://github.com/academe/Omnipay-GiroCheckout) | ✓ | ✓ | academe/omnipay-girocheckout | [Jason Judge](https://github.com/judgej)
 [Globalcloudpay](https://github.com/dercoder/omnipay-globalcloudpay) | ✓ | - | dercoder/omnipay-globalcloudpay | [Alexander Fedra](https://github.com/dercoder)
 [GoCardless](https://github.com/thephpleague/omnipay-gocardless) | ✓ | - | omnipay/gocardless | [Del](https://github.com/delatbabel)
+[GoPay](https://github.com/bileto/omnipay-gopay) | ✓ | - | bileto/omnipay-gopay |
 [GovPayNet](https://github.com/flexcoders/omnipay-govpaynet) | ✓ | - | omnipay/omnipay-govpaynet | [FlexCoders](https://github.com/flexcoders)
 [GVP (Garanti)](https://github.com/yasinkuyu/omnipay-gvp) | ✓ | - | yasinkuyu/omnipay-gvp | [Yasin Kuyu](https://github.com/yasinkuyu)
 [Helcim](https://github.com/academe/omnipay-helcim) | ✓ | - | academe/omnipay-helcim | [Jason Judge](https://github.com/judgej)
@@ -213,6 +215,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [PaySsion](https://github.com/InkedCurtis/omnipay-payssion) | ✓ | - | inkedcurtis/omnipay-payssion | [Curtis](https://github.com/inkedcurtis)
 [PayTrace](https://github.com/iddqdidkfa/omnipay-paytrace) | ✓ | - | softcommerce/omnipay-paytrace | [Oleg Ilyushyn](https://github.com/iddqdidkfa)
 [PayU](https://github.com/efesaid/omnipay-payu) | ✓ | - | omnipay/payu | [efesaid](https://github.com/efesaid)
+[PayU](https://github.com/bileto/omnipay-payu) | ✓ | - | bileto/omnipay-payu |
 [PayZen](https://github.com/ubitransports/omnipay-payzen) | ✓ | - | ubitransports/omnipay-payzen | [Ubitransport](https://github.com/ubitransports)
 [Paxum](https://github.com/hiqdev/omnipay-paxum) | ✓ | - | hiqdev/omnipay-paxum | [HiQDev](https://github.com/hiqdev)
 [Pelecard](https://github.com/Uskur/omnipay-pelecard) | ✓ | ✓ | uskur/omnipay-pelecard | [Uskur](https://github.com/Uskur)
@@ -242,6 +245,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Square](https://github.com/Transportersio/omnipay-square) | ✓ | - | transportersio/omnipay-square | [Transporters.io](https://github.com/Transportersio)
 [Stripe](https://github.com/thephpleague/omnipay-stripe) | ✓ | ✓ | omnipay/stripe | [Del](https://github.com/delatbabel)
 [TargetPay](https://github.com/thephpleague/omnipay-targetpay) | ✓ | - | omnipay/targetpay | [Alexander Deruwe](https://github.com/aderuwe)
+[TatraBank](https://github.com/bileto/omnipay-tatrabank) | ✓ | - | omnipay-tatrabank |
 [UnionPay](https://github.com/lokielse/omnipay-unionpay) | ✓ | ✓ | lokielse/omnipay-unionpay | [Loki Else](https://github.com/lokielse)
 [Vantiv](https://github.com/lemonstand/omnipay-vantiv) | ✓ | - | lemonstand/omnipay-vantiv | [LemonStand](https://github.com/lemonstand)
 [Veritrans](https://github.com/andylibrian/omnipay-veritrans) | ✓ | - | andylibrian/omnipay-veritrans | [Andy Librian](https://github.com/andylibrian)
