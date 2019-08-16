@@ -178,6 +178,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [MTNCAM Mobile Money](https://github.com/larrytech7/omnipay-momocm) | ✓ | ✓ | larrytech7/omnipay-momocm | [Akah Harvey](https://github.com/larrytech7)
 [Mollie](https://github.com/thephpleague/omnipay-mollie) | ✓ | ✓ | omnipay/mollie | [Barry vd. Heuvel](https://github.com/barryvdh)
 [MOLPay](https://github.com/leesiongchan/omnipay-molpay) | ✓ | - | leesiongchan/molpay | [Lee Siong Chan](https://github.com/leesiongchan)
+[MoMo](https://github.com/phpviet/omnipay-momo) | - | ✓ | phpviet/omnipay-momo | [PHPViet](https://github.com/phpviet)
 [MultiCards](https://github.com/incube8/omnipay-multicards) | ✓ | - | incube8/omnipay-multicards | [Del](https://github.com/delatbabel)
 [MultiSafepay](https://github.com/thephpleague/omnipay-multisafepay) | ✓ | - | omnipay/multisafepay | [Alexander Deruwe](https://github.com/aderuwe)
 [MyCard](https://github.com/xxtime/omnipay-mycard) | ✓ | - | xxtime/omnipay-mycard | [Joe Chu](https://github.com/xxtime)
