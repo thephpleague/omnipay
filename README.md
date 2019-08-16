@@ -115,7 +115,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [BitPay](https://github.com/hiqdev/omnipay-bitpay) | ✓ | - | hiqdev/omnipay-bitpay | [HiQDev](https://github.com/hiqdev)
 [BKM Express](https://github.com/yasinkuyu/omnipay-bkm) | ✓ | - | yasinkuyu/omnipay-bkm | [Yasin Kuyu](https://github.com/yasinkuyu)
 [BlueSnap](https://github.com/vimeo/omnipay-bluesnap) | ✓ | - | vimeo/omnipay-bluesnap | [Vimeo](https://github.com/vimeo)
-[Braintree](https://github.com/thephpleague/omnipay-braintree) | ✓ | - | omnipay/braintree | [Omnipay](https://github.com/thephpleague/omnipay)
+[Braintree](https://github.com/thephpleague/omnipay-braintree) | ✓ | ✓ | omnipay/braintree | [Omnipay](https://github.com/thephpleague/omnipay)
 [Buckaroo](https://github.com/thephpleague/omnipay-buckaroo) | ✓ | - | omnipay/buckaroo | [Omnipay](https://github.com/thephpleague/omnipay)
 [CardGate](https://github.com/cardgate/omnipay-cardgate) | ✓ | - | cardgate/omnipay-cardgate | [CardGate](https://github.com/cardgate)
 [CardSave](https://github.com/thephpleague/omnipay-cardsave) | ✓ | - | omnipay/cardsave | [Omnipay](https://github.com/thephpleague/omnipay)
