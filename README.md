@@ -134,6 +134,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Datatrans](https://github.com/academe/omnipay-datatrans) | ✓ | ✓ | academe/omnipay-datatrans | [Jason Judge](https://github.com/judgej)
 [Docdata Payments](https://github.com/Uskur/omnipay-docdata-payments) | ✓ | ✓ | uskur/omnipay-docdata-payments | [Uskur](https://github.com/Uskur)
 [Dummy](https://github.com/thephpleague/omnipay-dummy) | ✓ | ✓ | omnipay/dummy | [Del](https://github.com/delatbabel)
+[Ebanx](https://github.com/descubraomundo/omnipay-ebanx) | - | ✓ | descubraomundo/omnipay-ebanx | [Descubra o Mundo](https://github.com/descubraomundo/)
 [eGHL](https://bitbucket.org/eghl/eghl-omnipay/src/master/) | - | ✓ | e-ghl/omnipay | [Jawad Humayun](https://bitbucket.org/jawad242/)
 [eGHL](https://github.com/dilab/omnipay-eghl) | ✓ | ✓ | dilab/omnipay-eghl | [Xu Ding](https://github.com/dilab)
 [eCoin](https://github.com/hiqdev/omnipay-ecoin) | ✓ | - | hiqdev/omnipay-ecoin | [HiQDev](https://github.com/hiqdev)
