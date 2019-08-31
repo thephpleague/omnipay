@@ -269,7 +269,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Yandex.Money for P2P payments](https://github.com/hiqdev/omnipay-yandexmoney) | ✓ | - | hiqdev/omnipay-yandexmoney | [HiQDev](https://github.com/hiqdev)
 [Tpay](https://github.com/tpay-com/omnipay-tpay) | ✓ | - | omnipay/tpay | [Tpay.com](https://github.com/tpay-com)
 [Faspay](https://github.com/David-Kurniawan/omnipay-faspay) | ✓ | ✓ | David-Kurniawan/omnipay-faspay | [David](https://github.com/David-Kurniawan)
-
+[ZarinPal](https://github.com/nekofar/omnipay-zarinpal) | - | ✓ | nekofar/omnipay-zarinpal | [Milad Nekofar](https://github.com/nekofar)
 
 Gateways are created and initialized like so:
 
