@@ -163,6 +163,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Icepay Payments](https://github.com/superbrave/omnipay-icepay-payments) | - | ✓ | superbrave/omnipay-icepay-payments | [SuperBrave](https://github.com/superbrave)
 [iDram](https://github.com/ptuchik/omnipay-idram) | - | ✓ | ptuchik/omnipay-idram | [Avik Aghajanyan](https://github.com/ptuchik)
 [iDeal](https://github.com/deniztezcan/omnipay-ideal) | - | ✓ | deniztezcan/omnipay-ideal | [Deniz Tezcan](https://github.com/deniztezcan)
+[Ingenico ePayments](https://github.com/deniztezcan/omnipay-ingenico-epayments) | - | ✓ | deniztezcan/omnipay-ingenico-epayments | [Deniz Tezcan](https://github.com/deniztezcan)
 [iPay88](https://github.com/dilab/omnipay-ipay88) | ✓ | ✓ | dilab/omnipay-ipay88 | [Xu Ding](https://github.com/dilab)
 [IfthenPay](https://github.com/ifthenpay/omnipay-ifthenpay) | ✓ | - | ifthenpay/omnipay-ifthenpay | [Rafael Almeida](https://github.com/rafaelcpalmeida)
 [InterKassa](https://github.com/hiqdev/omnipay-interkassa) | ✓ | ✓ | hiqdev/omnipay-interkassa | [HiQDev](https://github.com/hiqdev)
