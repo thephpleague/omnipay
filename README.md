@@ -277,6 +277,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Yekpay](https://github.com/nekofar/omnipay-yekpay) | - | ✓ | nekofar/omnipay-yekpay | [Milad Nekofar](https://github.com/nekofar)
 [ZarinPal](https://github.com/nekofar/omnipay-zarinpal) | - | ✓ | nekofar/omnipay-zarinpal | [Milad Nekofar](https://github.com/nekofar)
 [Moneris](https://github.com/unoapp-dev/omnipay-moneris) | - | ✓ | unoapp-dev/omnipay-moneris | [UNOapp Dev](https://github.com/unoapp-dev)
+[toyyibPay](https://github.com/sitehandy/omnipay-toyyibpay) | - | ✓ | sitehandy/omnipay-toyyibpay | [Amirol Zolkifli](https://github.com/sitehandy)
 
 Gateways are created and initialized like so:
 
