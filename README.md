@@ -201,7 +201,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Openpay Australia](https://github.com/sudiptpa/openpay) | ✓ | ✓ | sudiptpa/omnipay-openpay | [Sujip Thapa](https://github.com/sudiptpa)
 [Oppwa](https://github.com/vdbelt/omnipay-oppwa) | ✓ | ✓ | vdbelt/omnipay-oppwa | [Martin van de Belt](https://github.com/vdbelt)
 [PAY. (Pay.nl & Pay.be)](https://github.com/paynl/omnipay-paynl) | ✓ | ✓ | paynl/omnipay-paynl | [Andy Pieters](https://github.com/andypieters)
-[PayMongo](https://github.com/omarusman/omnipay-paymongo) | - | ✓ | omarusman/omnipay-paymongo | [Omar Usman](https://github.com/omarusman)
+[PayMongo](https://github.com/oozman/omnipay-paymongo) | - | ✓ | oozman/omnipay-paymongo | [Oozman](https://github.com/oozman)
 [Payoo](https://github.com/dilab/omnipay-payoo) | ✓ | ✓ | dilab/omnipay-payoo | [Xu Ding](https://github.com/dilab)
 [Pacnet](https://github.com/mfauveau/omnipay-pacnet) | ✓ | - | mfauveau/omnipay-pacnet | [Matthieu Fauveau](https://github.com/mfauveau)
 [Pagar.me](https://github.com/descubraomundo/omnipay-pagarme) | ✓ | - | descubraomundo/omnipay-pagarme | [Descubra o Mundo](https://github.com/descubraomundo)
