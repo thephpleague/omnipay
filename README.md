@@ -219,6 +219,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [PAYONE](https://github.com/academe/omnipay-payone) | ✓ | ✓ | academe/omnipay-payone | [Jason Judge](https://github.com/judgej)
 [Paysafecard](https://github.com/dercoder/omnipay-paysafecard) | ✓ | - | dercoder/omnipay-paysafecard | [Alexander Fedra](https://github.com/dercoder)
 [Paysafecard](https://github.com/worldstream-labs/omnipay-paysafecard) | - | ✓ | worldstream-labs/omnipay-paysafecard | [Worldstream](https://github.com/worldstream-labs)
+[Paysafe Payment Hub (Neteller)](https://github.com/worldstream-labs/omnipay-paysafe-payment-hub) | - | ✓ | worldstream-labs/omnipay-paysafe-payment-hub | [Worldstream](https://github.com/worldstream-labs)
 [Paysera](https://github.com/povils/omnipay-paysera) | ✓ | - | povils/omnipay-paysera | [Povils](https://github.com/povils)
 [Paysera](https://github.com/semyonchetvertnyh/omnipay-paysera) | - | ✓ | semyonchetvertnyh/omnipay-paysera | [Semyon Chetvertnyh](https://github.com/semyonchetvertnyh)
 [PaySimple](https://github.com/dranes/omnipay-paysimple) | ✓ | - | dranes/omnipay-paysimple | [Dranes](https://github.com/dranes)
