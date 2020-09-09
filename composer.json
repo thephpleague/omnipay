@@ -33,5 +33,6 @@
             "dev-master": "3.1.x-dev"
         }
     },
+    "minimum-stability": "dev",
     "prefer-stable": true
 }
