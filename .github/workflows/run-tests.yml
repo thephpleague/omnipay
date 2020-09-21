@@ -33,7 +33,7 @@ jobs:
       with:
         php-version: ${{ matrix.php }}
         coverage: none
-        tools: composer:v2
+        tools: composer
 
     - name: Install dependencies
       run: |
