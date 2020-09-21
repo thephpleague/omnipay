@@ -28,10 +28,16 @@
     "require-dev": {
         "omnipay/tests": "^3"
     },
+    "autoload-dev": {
+        "psr-4": { "Omnipay\\Tests\\" : "tests" }
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "3.0.x-dev"
         }
+    },
+    "scripts": {
+        "test": "phpunit"
     },
     "prefer-stable": true
 }
