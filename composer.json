@@ -23,8 +23,7 @@
     "require": {
         "php": "^7.2",
         "omnipay/common": "^3",
-        "guzzlehttp/guzzle": "^7",
-        "php-http/guzzle7-adapter": "^1"
+        "php-http/guzzle7-adapter": "^0.1"
     },
     "require-dev": {
         "omnipay/tests": "^3"
