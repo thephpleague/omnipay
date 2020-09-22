@@ -21,9 +21,10 @@
         }
     ],
     "require": {
-        "php": "^5.6|^7",
+        "php": "^7.2",
         "omnipay/common": "^3",
-        "php-http/guzzle6-adapter": "^1.1|^2"
+        "php-http/discovery": "^1.12",
+        "php-http/guzzle7-adapter": "^0.1"
     },
     "require-dev": {
         "omnipay/tests": "^3"
@@ -33,11 +34,12 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.0.x-dev"
+            "dev-master": "3.1.x-dev"
         }
     },
     "scripts": {
         "test": "phpunit"
     },
+    "minimum-stability": "dev",
     "prefer-stable": true
 }
