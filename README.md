@@ -240,6 +240,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [QQ Wallet(QPay)](https://github.com/kuangjy2/omnipay-qpay) | - | ✓ | kuangjy/omnipay-qpay | [Kuang Jiaye](https://github.com/kuangjy2)
 [Quickpay](https://github.com/NobrainerWeb/omnipay-quickpay) | ✓ | - | nobrainerweb/omnipay-quickpay | [Nobrainer Web](https://github.com/NobrainerWeb)
 [Rabobank](https://github.com/thephpleague/omnipay-rabobank) | ✓ | - | omnipay/rabobank | [Barry vd. Heuvel](https://github.com/barryvdh)
+[Razorpay](https://github.com/razorpay/omnipay-razorpay) | ✓ | - |  razorpay/omnipay-razorpay  | [razorpay](https://github.com/razorpay)
 [Realex](https://github.com/digitickets/omnipay-realex) | ✓ | - | digitickets/omnipay-realex | [DigiTickets](https://github.com/digitickets)
 [RedSys](https://github.com/jsampedro77/sermepa-omnipay) | ✓ | - | nazka/sermepa-omnipay | [Javier Sampedro](https://github.com/jsampedro77)
 [RentMoola](https://github.com/rentmoola/omnipay-rentmoola) | ✓ | - | rentmoola/omnipay-rentmoola | [Geoff Shaw](https://github.com/Shawg)
