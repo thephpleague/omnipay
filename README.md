@@ -197,6 +197,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [NetPay](https://github.com/netpay/omnipay-netpay) | ✓ | - | netpay/omnipay-netpay | [NetPay](https://github.com/netpay)
 [Network Merchants Inc. (NMI)](https://github.com/mfauveau/omnipay-nmi) | ✓ | - | mfauveau/omnipay-nmi | [Matthieu Fauveau](https://github.com/mfauveau)
 [Nocks](https://github.com/nocksapp/checkout-omnipay) | ✓ | ✓ | nocksapp/omnipay-nocks | [Nocks](https://github.com/nocksapp)
+[Nuvei](https://github.com/diversifiedtech/omnipay-nuvei) | - | ✓ | nmc9/omnipay-nuvei | [DiversifiedTech](https://github.com/diversifiedtech)
 [OkPay](https://github.com/hiqdev/omnipay-okpay) | ✓ | - | hiqdev/omnipay-okpay | [HiQDev](https://github.com/hiqdev)
 [OnePay](https://github.com/dilab/omnipay-onepay) | ✓ | ✓ | dilab/omnipay-onepay | [Xu Ding](https://github.com/dilab)
 [Openpay Australia](https://github.com/sudiptpa/openpay) | ✓ | ✓ | sudiptpa/omnipay-openpay | [Sujip Thapa](https://github.com/sudiptpa)
