@@ -552,9 +552,14 @@ are available:
 * `updateCard($options)` - update a stored card, not all gateways support this method
 * `deleteCard($options)` - remove a stored card, not all gateways support this method
 
-Once you have a `cardReference`, you can use it instead of the `card` parameter when creating a charge:
+Once you have a `cardReference`, (which should be available from the response object
+using getCardReference) you can use it instead of the `card` parameter when creating a charge:
 
     $gateway->purchase(array('amount' => '10.00', 'cardReference' => 'abc'));
+    
+In many cases the createCard action will also process the initial payment at the same time.
+In these cases you should pass in the 'action' ('authorize' or 'purchase') in the createCard
+options.
 
 ## Recurring Billing
 
