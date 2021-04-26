@@ -173,6 +173,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Judo Pay](https://github.com/Transportersio/omnipay-judopay) | ✓ | - | transportersio/omnipay-judopay | [Transporters.io](https://github.com/Transportersio)
 [Klarna Checkout](https://github.com/MyOnlineStore/omnipay-klarna-checkout) | ✓ | ✓ | myonlinestore/omnipay-klarna-checkout | [MyOnlineStore](https://github.com/MyOnlineStore)
 [Laybuy](https://github.com/mediabeastnz/omnipay-laybuy) | ✓ | - | mediabeastnz/omnipay-laybuy | [Myles Derham](https://github.com/mediabeastnz)
+[Luminor Gateway](https://github.com/DeH4eG/omnipay-luminor) | - | ✓ | deh4eg/omnipay-luminor | [Denis Smolakov](https://github.com/DeH4eG)
 [Komerci (Rede, former RedeCard)](https://github.com/byjg/omnipay-komerci) | ✓ | - | byjg/omnipay-komerci | [João Gilberto Magalhães](https://github.com/byjg)
 [Komoju](https://github.com/dannyvink/omnipay-komoju) | ✓ | - | vink/omnipay-komoju | [Danny Vink](https://github.com/dannyvink)
 [Midtrans](https://github.com/dilab/omnipay-midtrans) | ✓ | ✓ | dilab/omnipay-midtrans | [Xu Ding](https://github.com/dilab)
@@ -552,9 +553,14 @@ are available:
 * `updateCard($options)` - update a stored card, not all gateways support this method
 * `deleteCard($options)` - remove a stored card, not all gateways support this method
 
-Once you have a `cardReference`, you can use it instead of the `card` parameter when creating a charge:
+Once you have a `cardReference`, (which should be available from the response object
+using getCardReference) you can use it instead of the `card` parameter when creating a charge:
 
     $gateway->purchase(array('amount' => '10.00', 'cardReference' => 'abc'));
+    
+In many cases the createCard action will also process the initial payment at the same time.
+In these cases you should pass in the 'action' ('authorize' or 'purchase') in the createCard
+options.
 
 ## Recurring Billing
 
