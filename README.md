@@ -112,6 +112,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Authorize.Net Recurring Billing](https://github.com/cimpleo/omnipay-authorizenetrecurring) | - | ✓ | cimpleo/omnipay-authorizenetrecurring | [CimpleO](https://github.com/cimpleo)
 [Bankart](https://github.com/ampeco/omnipay-bankart) | ✓ | ✓ | ampeco/omnipay-bankart | [Ampeco](https://github.com/ampeco)
 [Barclays ePDQ](https://github.com/digitickets/omnipay-barclays-epdq) | ✓ | - | digitickets/omnipay-barclays-epdq | [DigiTickets](https://github.com/digitickets)
+[BlueOrange bank](https://github.com/DeH4eG/omnipay-blueorange) | - | ✓ | deh4eg/omnipay-blueorange | [Denis Smolakov](https://github.com/DeH4eG)
 [Beanstream](https://github.com/lemonstand/omnipay-beanstream) | ✓ | - | lemonstand/omnipay-beanstream | [LemonStand](https://github.com/lemonstand)
 [BitPay](https://github.com/hiqdev/omnipay-bitpay) | ✓ | - | hiqdev/omnipay-bitpay | [HiQDev](https://github.com/hiqdev)
 [BKM Express](https://github.com/yasinkuyu/omnipay-bkm) | ✓ | - | yasinkuyu/omnipay-bkm | [Yasin Kuyu](https://github.com/yasinkuyu)
