@@ -8,7 +8,8 @@
         "omnipay",
         "pay",
         "payment",
-        "myfatoorah"
+        "myfatoorah",
+        "refund"
     ],
     "homepage": "https://github.com/MyFatoorahHub/omnipay",
     "license": "MIT",
