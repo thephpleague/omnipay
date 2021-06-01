@@ -27,7 +27,7 @@
         "php-http/guzzle7-adapter": "^0.1"
     },
     "require-dev": {
-        "omnipay/tests": "^3"
+        "omnipay/tests": "^3|^4"
     },
     "autoload-dev": {
         "psr-4": { "Omnipay\\Tests\\" : "tests" }
