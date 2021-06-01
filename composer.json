@@ -21,20 +21,20 @@
         }
     ],
     "require": {
-        "php": "^7.2|^8.0",
-        "omnipay/common": "^3",
+        "php": "^7.3|^8.0",
+        "omnipay/common": "^3.1",
         "php-http/discovery": "^1.12",
         "php-http/guzzle7-adapter": "^0.1"
     },
     "require-dev": {
-        "omnipay/tests": "^3"
+        "omnipay/tests": "^3|^4"
     },
     "autoload-dev": {
         "psr-4": { "Omnipay\\Tests\\" : "tests" }
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.1.x-dev"
+            "dev-master": "3.2.x-dev"
         }
     },
     "scripts": {
