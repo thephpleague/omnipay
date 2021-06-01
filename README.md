@@ -230,7 +230,6 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [PaySimple](https://github.com/dranes/omnipay-paysimple) | ✓ | - | dranes/omnipay-paysimple | [Dranes](https://github.com/dranes)
 [PaySsion](https://github.com/InkedCurtis/omnipay-payssion) | ✓ | - | inkedcurtis/omnipay-payssion | [Curtis](https://github.com/inkedcurtis)
 [PayTrace](https://github.com/iddqdidkfa/omnipay-paytrace) | ✓ | - | softcommerce/omnipay-paytrace | [Oleg Ilyushyn](https://github.com/iddqdidkfa)
-[PayU](https://github.com/efesaid/omnipay-payu) | ✓ | - | omnipay/payu | [efesaid](https://github.com/efesaid)
 [PayU](https://github.com/bileto/omnipay-payu) | ✓ | - | bileto/omnipay-payu |
 [PayZen](https://github.com/ubitransports/omnipay-payzen) | ✓ | - | ubitransports/omnipay-payzen | [Ubitransport](https://github.com/ubitransports)
 [Paxum](https://github.com/hiqdev/omnipay-paxum) | ✓ | - | hiqdev/omnipay-paxum | [HiQDev](https://github.com/hiqdev)
