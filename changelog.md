@@ -7,7 +7,16 @@ title: Changelog
 Changelog
 =========
 
-## v3.0.0 - 2018-05-14
+## v3.2 - 2021-06-01
+
+Omnipay 3.2 is compatible with PHP8. This is done by upgrading the test suite to PHPUnit 9, with the release of omnipay/tests v4 and omnipay/common v3.1. This change is primarily for gateway developers, to make it possible to actually test PHP8, but they will need to upgrade their tests to use PHPUnit 9 (the currently supported PHPUnit version). The minimum PHP versions is bumped to 7.3 because of this.
+
+## v3.1 - 2020-10-29
+
+Omnipay 3.1 uses Guzzle 7 by default (using the Guzzle 7 adapter). This doesn't change omnipay-common because they will work with any compatible Http Client.
+The minimum PHP versions is bumped to 7.2 because of this.
+
+## v3.0 - 2018-05-14
 
 Omnipay 3.0 focuses on separation of the HTTP Client, to be independent of Guzzle. 
 This release brings compatibility with the latest Symfony 3+4 and Laravel 5. 
