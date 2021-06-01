@@ -2,7 +2,7 @@
 
 **An easy to use, consistent payment processing library for PHP**
 
-[![Build Status](https://travis-ci.org/thephpleague/omnipay-common.svg?branch=master)](https://travis-ci.org/thephpleague/omnipay-common)
+[![Unit Tests](https://github.com/thephpleague/omnipay/actions/workflows/run-tests.yml/badge.svg)](https://github.com/thephpleague/omnipay/actions/workflows/run-tests.yml)
 [![Latest Stable Version](https://poser.pugx.org/omnipay/common/version)](https://packagist.org/packages/omnipay/common)
 [![Total Downloads](https://poser.pugx.org/omnipay/common/d/total)](https://packagist.org/packages/omnipay/common)
 
