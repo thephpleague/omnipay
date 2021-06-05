@@ -2,7 +2,7 @@
 
 **An easy to use, consistent payment processing library for PHP**
 
-[![Build Status](https://travis-ci.org/thephpleague/omnipay-common.svg?branch=master)](https://travis-ci.org/thephpleague/omnipay-common)
+[![Unit Tests](https://github.com/thephpleague/omnipay/actions/workflows/run-tests.yml/badge.svg)](https://github.com/thephpleague/omnipay/actions/workflows/run-tests.yml)
 [![Latest Stable Version](https://poser.pugx.org/omnipay/common/version)](https://packagist.org/packages/omnipay/common)
 [![Total Downloads](https://poser.pugx.org/omnipay/common/d/total)](https://packagist.org/packages/omnipay/common)
 
@@ -102,16 +102,19 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [2Checkout Improved](https://github.com/collizo4sky/omnipay-2checkout) | ✓ | - | collizo4sky/omnipay-2checkout | [Agbonghama Collins](https://github.com/collizo4sky)
 [Acapture (PayVision)](https://github.com/queueup-dev/omnipay-acapture) | ✓ | - | qup/omnipay-acapture | [Niels de Vries](https://github.com/niels-qup)
 [Adyen](https://github.com/academe/omnipay-adyen) | - | ✓ | academe/omnipay-adyen | [Jason Judge](https://github.com/judgej)
+[Affirm](https://github.com/eduardlleshi/omnipay-affirm) | ✓ | ✓ | eduardlleshi/omnipay-affirm | [Eduard Lleshi](https://github.com/eduardlleshi)
 [Agms](https://github.com/agmscode/omnipay-agms) | ✓ | - | agmscode/omnipay-agms | [Maanas Royy](https://github.com/maanas)
 [Alipay(Global)](https://github.com/lokielse/omnipay-global-alipay) | ✓ | ✓ | lokielse/omnipay-global-alipay | [Loki Else](https://github.com/lokielse)
 [Alipay](https://github.com/lokielse/omnipay-alipay) | ✓ | ✓ | lokielse/omnipay-alipay | [Loki Else](https://github.com/lokielse)
 [99Bill](https://github.com/laraveler/omnipay-99bill) | - | ✓ | x-class/omnipay-99bill | [Laraveler](https://github.com/laraveler)
 [Allied Wallet](https://github.com/delatbabel/omnipay-alliedwallet) | ✓ | - | delatbabel/omnipay-alliedwallet | [Del](https://github.com/delatbabel)
+[Arca](https://github.com/k3rnel/omnipay-arca) | - | ✓ | k3rnel/omnipay-arca | [Poghos Boyajyan](https://github.com/k3rnel)
 [Authorize.Net](https://github.com/thephpleague/omnipay-authorizenet) | ✓ | ✓ | omnipay/authorizenet | [Jason Judge](https://github.com/judgej)
 [Authorize.Net API](https://github.com/academe/omnipay-authorizenetapi) | - | ✓ | academe/omnipay-authorizenetapi | [Jason Judge](https://github.com/judgej)
 [Authorize.Net Recurring Billing](https://github.com/cimpleo/omnipay-authorizenetrecurring) | - | ✓ | cimpleo/omnipay-authorizenetrecurring | [CimpleO](https://github.com/cimpleo)
 [Bankart](https://github.com/ampeco/omnipay-bankart) | ✓ | ✓ | ampeco/omnipay-bankart | [Ampeco](https://github.com/ampeco)
 [Barclays ePDQ](https://github.com/digitickets/omnipay-barclays-epdq) | ✓ | - | digitickets/omnipay-barclays-epdq | [DigiTickets](https://github.com/digitickets)
+[BlueOrange bank](https://github.com/DeH4eG/omnipay-blueorange) | - | ✓ | deh4eg/omnipay-blueorange | [Denis Smolakov](https://github.com/DeH4eG)
 [Beanstream](https://github.com/lemonstand/omnipay-beanstream) | ✓ | - | lemonstand/omnipay-beanstream | [LemonStand](https://github.com/lemonstand)
 [BitPay](https://github.com/hiqdev/omnipay-bitpay) | ✓ | - | hiqdev/omnipay-bitpay | [HiQDev](https://github.com/hiqdev)
 [BKM Express](https://github.com/yasinkuyu/omnipay-bkm) | ✓ | - | yasinkuyu/omnipay-bkm | [Yasin Kuyu](https://github.com/yasinkuyu)
@@ -173,6 +176,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Judo Pay](https://github.com/Transportersio/omnipay-judopay) | ✓ | - | transportersio/omnipay-judopay | [Transporters.io](https://github.com/Transportersio)
 [Klarna Checkout](https://github.com/MyOnlineStore/omnipay-klarna-checkout) | ✓ | ✓ | myonlinestore/omnipay-klarna-checkout | [MyOnlineStore](https://github.com/MyOnlineStore)
 [Laybuy](https://github.com/mediabeastnz/omnipay-laybuy) | ✓ | - | mediabeastnz/omnipay-laybuy | [Myles Derham](https://github.com/mediabeastnz)
+[Luminor Gateway](https://github.com/DeH4eG/omnipay-luminor) | - | ✓ | deh4eg/omnipay-luminor | [Denis Smolakov](https://github.com/DeH4eG)
 [Komerci (Rede, former RedeCard)](https://github.com/byjg/omnipay-komerci) | ✓ | - | byjg/omnipay-komerci | [João Gilberto Magalhães](https://github.com/byjg)
 [Komoju](https://github.com/dannyvink/omnipay-komoju) | ✓ | - | vink/omnipay-komoju | [Danny Vink](https://github.com/dannyvink)
 [Midtrans](https://github.com/dilab/omnipay-midtrans) | ✓ | ✓ | dilab/omnipay-midtrans | [Xu Ding](https://github.com/dilab)
@@ -197,12 +201,13 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [NetPay](https://github.com/netpay/omnipay-netpay) | ✓ | - | netpay/omnipay-netpay | [NetPay](https://github.com/netpay)
 [Network Merchants Inc. (NMI)](https://github.com/mfauveau/omnipay-nmi) | ✓ | - | mfauveau/omnipay-nmi | [Matthieu Fauveau](https://github.com/mfauveau)
 [Nocks](https://github.com/nocksapp/checkout-omnipay) | ✓ | ✓ | nocksapp/omnipay-nocks | [Nocks](https://github.com/nocksapp)
+[Nuvei](https://github.com/diversifiedtech/omnipay-nuvei) | - | ✓ | nmc9/omnipay-nuvei | [DiversifiedTech](https://github.com/diversifiedtech)
 [OkPay](https://github.com/hiqdev/omnipay-okpay) | ✓ | - | hiqdev/omnipay-okpay | [HiQDev](https://github.com/hiqdev)
 [OnePay](https://github.com/dilab/omnipay-onepay) | ✓ | ✓ | dilab/omnipay-onepay | [Xu Ding](https://github.com/dilab)
 [Openpay Australia](https://github.com/sudiptpa/openpay) | ✓ | ✓ | sudiptpa/omnipay-openpay | [Sujip Thapa](https://github.com/sudiptpa)
 [Oppwa](https://github.com/vdbelt/omnipay-oppwa) | ✓ | ✓ | vdbelt/omnipay-oppwa | [Martin van de Belt](https://github.com/vdbelt)
 [PAY. (Pay.nl & Pay.be)](https://github.com/paynl/omnipay-paynl) | ✓ | ✓ | paynl/omnipay-paynl | [Andy Pieters](https://github.com/andypieters)
-[PayMongo](https://github.com/omarusman/omnipay-paymongo) | - | ✓ | omarusman/omnipay-paymongo | [Omar Usman](https://github.com/omarusman)
+[PayMongo](https://github.com/oozman/omnipay-paymongo) | - | ✓ | oozman/omnipay-paymongo | [Oozman](https://github.com/oozman)
 [Payoo](https://github.com/dilab/omnipay-payoo) | ✓ | ✓ | dilab/omnipay-payoo | [Xu Ding](https://github.com/dilab)
 [Pacnet](https://github.com/mfauveau/omnipay-pacnet) | ✓ | - | mfauveau/omnipay-pacnet | [Matthieu Fauveau](https://github.com/mfauveau)
 [Pagar.me](https://github.com/descubraomundo/omnipay-pagarme) | ✓ | - | descubraomundo/omnipay-pagarme | [Descubra o Mundo](https://github.com/descubraomundo)
@@ -225,7 +230,6 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [PaySimple](https://github.com/dranes/omnipay-paysimple) | ✓ | - | dranes/omnipay-paysimple | [Dranes](https://github.com/dranes)
 [PaySsion](https://github.com/InkedCurtis/omnipay-payssion) | ✓ | - | inkedcurtis/omnipay-payssion | [Curtis](https://github.com/inkedcurtis)
 [PayTrace](https://github.com/iddqdidkfa/omnipay-paytrace) | ✓ | - | softcommerce/omnipay-paytrace | [Oleg Ilyushyn](https://github.com/iddqdidkfa)
-[PayU](https://github.com/efesaid/omnipay-payu) | ✓ | - | omnipay/payu | [efesaid](https://github.com/efesaid)
 [PayU](https://github.com/bileto/omnipay-payu) | ✓ | - | bileto/omnipay-payu |
 [PayZen](https://github.com/ubitransports/omnipay-payzen) | ✓ | - | ubitransports/omnipay-payzen | [Ubitransport](https://github.com/ubitransports)
 [Paxum](https://github.com/hiqdev/omnipay-paxum) | ✓ | - | hiqdev/omnipay-paxum | [HiQDev](https://github.com/hiqdev)
@@ -240,6 +244,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [QQ Wallet(QPay)](https://github.com/kuangjy2/omnipay-qpay) | - | ✓ | kuangjy/omnipay-qpay | [Kuang Jiaye](https://github.com/kuangjy2)
 [Quickpay](https://github.com/NobrainerWeb/omnipay-quickpay) | ✓ | - | nobrainerweb/omnipay-quickpay | [Nobrainer Web](https://github.com/NobrainerWeb)
 [Rabobank](https://github.com/thephpleague/omnipay-rabobank) | ✓ | - | omnipay/rabobank | [Barry vd. Heuvel](https://github.com/barryvdh)
+[Razorpay](https://github.com/razorpay/omnipay-razorpay) | ✓ | - |  razorpay/omnipay-razorpay  | [razorpay](https://github.com/razorpay)
 [Realex](https://github.com/digitickets/omnipay-realex) | ✓ | - | digitickets/omnipay-realex | [DigiTickets](https://github.com/digitickets)
 [RedSys](https://github.com/jsampedro77/sermepa-omnipay) | ✓ | - | nazka/sermepa-omnipay | [Javier Sampedro](https://github.com/jsampedro77)
 [RentMoola](https://github.com/rentmoola/omnipay-rentmoola) | ✓ | - | rentmoola/omnipay-rentmoola | [Geoff Shaw](https://github.com/Shawg)
@@ -255,6 +260,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Sofort](https://github.com/aimeoscom/omnipay-sofort) | ✓ | - | aimeoscom/omnipay-sofort | [Aimeos GmbH](https://github.com/aimeoscom)
 [Spreedly](https://github.com/gregoriohc/omnipay-spreedly) | ✓ | - | gregoriohc/omnipay-spreedly | [Gregorio Hernández Caso](https://github.com/gregoriohc)
 [Square](https://github.com/Transportersio/omnipay-square) | ✓ | ✓ | transportersio/omnipay-square | [Transporters.io](https://github.com/Transportersio)
+[Starkpay](https://github.com/starkpay/omnipay) | ✓ | ✓ | starkpay/omnipay | [Starkpay](https://github.com/starkpay)
 [Stripe](https://github.com/thephpleague/omnipay-stripe) | ✓ | ✓ | omnipay/stripe | [Del](https://github.com/delatbabel)
 [TargetPay](https://github.com/thephpleague/omnipay-targetpay) | ✓ | - | omnipay/targetpay | [Alexander Deruwe](https://github.com/aderuwe)
 [TatraBank](https://github.com/bileto/omnipay-tatrabank) | ✓ | - | omnipay-tatrabank |
@@ -281,6 +287,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Yekpay](https://github.com/nekofar/omnipay-yekpay) | - | ✓ | nekofar/omnipay-yekpay | [Milad Nekofar](https://github.com/nekofar)
 [ZarinPal](https://github.com/nekofar/omnipay-zarinpal) | - | ✓ | nekofar/omnipay-zarinpal | [Milad Nekofar](https://github.com/nekofar)
 [Moneris](https://github.com/unoapp-dev/omnipay-moneris) | - | ✓ | unoapp-dev/omnipay-moneris | [UNOapp Dev](https://github.com/unoapp-dev)
+[toyyibPay](https://github.com/sitehandy/omnipay-toyyibpay) | - | ✓ | sitehandy/omnipay-toyyibpay | [Amirol Zolkifli](https://github.com/sitehandy)
 
 Gateways are created and initialized like so:
 
@@ -402,6 +409,7 @@ The main methods implemented by gateways are:
 * `void($options)` - generally can only be called up to 24 hours after submitting a transaction
 * `acceptNotification()` - convert an incoming request from an off-site gateway to a generic notification object
   for further processing
+* `createCard` - get a cardReference that can be used for future payments. This might be used in a monthly billing scenario, for example.  
 
 On-site gateways do not need to implement the `completeAuthorize` and `completePurchase` methods. Gateways that don't
 receive payment notifications don't need to implement `acceptNotification`. If any gateway does not support certain
@@ -466,6 +474,8 @@ $response->getMessage(); // a message generated by the payment gateway
 ```
 
 In addition, most gateways will override the response object, and provide access to any extra fields returned by the gateway.
+If the payment authorization is re-usable the gateway will implement ```$response->getCardReference();```. This
+method is always available (but may return NULL) from 3.1.1
 
 ### Redirect Response
 
@@ -552,9 +562,14 @@ are available:
 * `updateCard($options)` - update a stored card, not all gateways support this method
 * `deleteCard($options)` - remove a stored card, not all gateways support this method
 
-Once you have a `cardReference`, you can use it instead of the `card` parameter when creating a charge:
+Once you have a `cardReference`, (which should be available from the response object
+using getCardReference) you can use it instead of the `card` parameter when creating a charge:
 
     $gateway->purchase(array('amount' => '10.00', 'cardReference' => 'abc'));
+    
+In many cases the createCard action will also process the initial payment at the same time.
+In these cases you should pass in the 'action' ('authorize' or 'purchase') in the createCard
+options.
 
 ## Recurring Billing
 
