@@ -9,7 +9,7 @@ Changelog
 
 ## v3.2 - 2021-06-01
 
-Omnipay 3.2 is compatible with PHP8. This is done by upgrading the test suite to PHPUnit 9, with the release of omnipay/tests v4 and omnipay/common v3.1. This change is primarily for gateway developers, to make it possible to actually test PHP8, but they will need to upgrade their tests to use PHPUnit 9 (the currently supported PHPUnit version). The minimum PHP versions is bumped to 7.3 because of this.
+Omnipay 3.2 is compatible with PHP8. This is done by upgrading the test suite to PHPUnit 8/9, with the release of omnipay/tests v4 and omnipay/common v3.1. This change is primarily for gateway developers, to make it possible to actually test PHP8, but they will need to upgrade their tests to use PHPUnit 9 (the currently supported PHPUnit version).
 
 ## v3.1 - 2020-10-29
 
