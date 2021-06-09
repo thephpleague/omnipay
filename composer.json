@@ -30,13 +30,13 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "^3.0"
+            "dev-master": "^3.0-dev"
         }
     },  
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-    	"myfatoorah/omnipay": "^3.0"
+    	"myfatoorah/omnipay": "^3.0-dev"
    }
 }
 
