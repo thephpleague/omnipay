@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         backupGlobals="false"
+<phpunit backupGlobals="false"
          backupStaticAttributes="false"
          bootstrap="vendor/autoload.php"
          colors="true"
@@ -9,15 +8,15 @@
          convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="false"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-  <coverage>
-    <include>
-      <directory>./src</directory>
-    </include>
-  </coverage>
-  <testsuites>
-    <testsuite name="Omnipay Test Suite">
-      <directory>./tests/</directory>
-    </testsuite>
-  </testsuites>
+         syntaxCheck="false">
+    <testsuites>
+        <testsuite name="Omnipay Test Suite">
+            <directory>./tests/</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory>./src</directory>
+        </whitelist>
+    </filter>
 </phpunit>
