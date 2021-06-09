@@ -24,14 +24,14 @@
     "require": {
         "php": ">=5.4.0",
         "omnipay/common": "~3.0",    	
-        "myfatoorah/omnipay": "*-dev"
+        "myfatoorah/omnipay": "3.0.x-dev"
     },
     "require-dev": {
         "omnipay/tests": "^3.0"
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "*-dev"
+            "dev-master": "3.0.x-dev"
         }
     }
 }
