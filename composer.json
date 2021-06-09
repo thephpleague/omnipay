@@ -1,5 +1,5 @@
 {
-    "name": "appsmyfatoorah/omnipay-myfatoorah",
+    "name": "omnipay/myfatoorah",
     "type": "library",
     "description": "MyFatoorah driver for the Omnipay payment processing library",
     "keywords": [
@@ -22,17 +22,15 @@
         "psr-4": { "Omnipay\\Myfatoorah\\" : "src/" }
     },
     "require": {
-        "omnipay/common": "~3.0"
+        "league/omnipay": "^3.0",
     },
     "require-dev": {
-        "omnipay/tests": "~3.0"
+        "omnipay/tests": "^3.0"
     },
     "extra": {
         "branch-alias": {
             "dev-master": "3.0.x-dev"
         }
-    },
-    "prefer-stable": true,
-    "minimum-stability": "dev"
+    }
 }
 
