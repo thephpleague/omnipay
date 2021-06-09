@@ -1,5 +1,5 @@
 {
-    "name": "omnipay/myfatoorah",
+    "name": "myfatoorah/omnipay",
     "type": "library",
     "description": "MyFatoorah driver for the Omnipay payment processing library",
     "keywords": [
