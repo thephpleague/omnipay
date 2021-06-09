@@ -22,15 +22,16 @@
         "psr-4": { "Omnipay\\Myfatoorah\\" : "src/" }
     },
     "require": {
-        "league/omnipay": "^3.0"
+        "php": ">=5.4.0",
+        "omnipay/common": "~3.0"
     },
     "require-dev": {
         "omnipay/tests": "^3.0"
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.0.x-dev"
-        }
+            "dev-master": "3.0-dev"
+        },
     },  
     "minimum-stability": "dev",
     "prefer-stable": true,
