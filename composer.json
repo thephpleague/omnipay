@@ -26,6 +26,15 @@
     },
     "require-dev": {
         "omnipay/tests": "^3.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.1.x-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+        "omnipay/tests": "^3.0"
     }
 }
 
