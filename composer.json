@@ -22,7 +22,7 @@
         "psr-4": { "Omnipay\\Myfatoorah\\" : "src/" }
     },
     "require": {
-        "league/omnipay": "^3.0",
+        "league/omnipay": "^3.0"
     },
     "require-dev": {
         "omnipay/tests": "^3.0"
