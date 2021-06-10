@@ -1,5 +1,5 @@
 {
-    "name": "MyFatoorahHub/omnipay-myfatoorah",
+    "name": "myfatoorah/omnipay",
     "type": "library",
     "description": "MyFatoorah driver for the Omnipay payment processing library",
     "keywords": [
@@ -10,7 +10,7 @@
         "payment",
         "myfatoorah"
     ],
-    "homepage": "https://github.com/MyFatoorahHub/omnipay-myfatoorah",
+    "homepage": "https://github.com/appsmyfatoorah/omnipay",
     "license": "MIT",
     "authors": [
         {
@@ -22,11 +22,16 @@
         "psr-4": { "Omnipay\\Myfatoorah\\" : "src/" }
     },
     "require": {
-        "league/omnipay": "^3.0",
-        "squizlabs/php_codesniffer": "^3"
+        "php": ">=5.4.0",
+        "omnipay/common": "~3.0"
     },
     "require-dev": {
         "omnipay/tests": "^3.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.0.x-dev"
+        }
     }
 }
 
