@@ -1,45 +1,25 @@
 {
-    "name": "league/omnipay",
-    "type": "metapackage",
-    "description": "Omnipay payment processing library",
-    "keywords": [
-        "omnipay",
-        "checkout",
-        "creditcard",
-        "payment"
-    ],
-    "homepage": "https://omnipay.thephpleague.com/",
+    "name": "myfatoorah/omnipay",
+    "description": "MyFatoorah driver for the Omnipay payment processing library",
+    "type": "library",
+    "require": {
+        "omnipay/common": "~3.0"
+    },
+    "require-dev": {
+        "omnipay/tests": "~3.0"
+    },
+    "autoload": {
+        "psr-4": { "Omnipay\\Myfatoorah\\" : "src/" }
+    },
+    "require": {
+        "php": ">=5.4.0"
+    },
     "license": "MIT",
     "authors": [
         {
-            "name": "Adrian Macneil",
-            "email": "adrian@adrianmacneil.com"
-        },
-        {
-            "name": "Barry vd. Heuvel",
-            "email": "barryvdh@gmail.com"
+            "name": "MyFatoorah Technical Support Team",
+            "email": "plugins@myfatoorah.com"
         }
     ],
-    "require": {
-        "php": "^7.2|^8.0",
-        "omnipay/common": "^3.1",
-        "php-http/discovery": "^1.14",
-        "php-http/guzzle7-adapter": "^1"
-    },
-    "require-dev": {
-        "omnipay/tests": "^3|^4"
-    },
-    "autoload-dev": {
-        "psr-4": { "Omnipay\\Tests\\" : "tests" }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "3.2.x-dev"
-        }
-    },
-    "scripts": {
-        "test": "phpunit"
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    "minimum-stability": "dev"
 }
