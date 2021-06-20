@@ -195,7 +195,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [MultiCards](https://github.com/incube8/omnipay-multicards) | ✓ | - | incube8/omnipay-multicards | [Del](https://github.com/delatbabel)
 [MultiSafepay](https://github.com/thephpleague/omnipay-multisafepay) | ✓ | - | omnipay/multisafepay | [Alexander Deruwe](https://github.com/aderuwe)
 [MyCard](https://github.com/xxtime/omnipay-mycard) | ✓ | - | xxtime/omnipay-mycard | [Joe Chu](https://github.com/xxtime)
-[MyFatoorah](https://github.com/my-fatoorah/omnipay-myfatoorah) | - | ✓ | my-fatoorah/omnipay-myfatoorah | [MyFatoorah Plugins Team](https://github.com/my-fatoorah)
+[MyFatoorah](https://github.com/my-fatoorah/omnipay-myfatoorah) | - | ✓ | myfatoorah/omnipay | [MyFatoorah Plugins Team](https://github.com/my-fatoorah)
 [National Australia Bank (NAB) Transact](https://github.com/sudiptpa/omnipay-nabtransact) | ✓ | ✓ | sudiptpa/omnipay-nabtransact | [Sujip Thapa](https://github.com/sudiptpa)
 [NestPay (EST)](https://github.com/yasinkuyu/omnipay-nestpay) | ✓ | - | yasinkuyu/omnipay-nestpay | [Yasin Kuyu](https://github.com/yasinkuyu)
 [NestPay (EST)](https://github.com/uskur/omnipay-nestpay) | - | ✓ | uskur/omnipay-nestpay | [Uskur](https://github.com/uskur)
