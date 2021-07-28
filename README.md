@@ -154,6 +154,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Fat Zebra](https://github.com/delatbabel/omnipay-fatzebra) | ✓ | - | delatbabel/omnipay-fatzebra | [Del](https://github.com/delatbabel)
 [FreeKassa](https://github.com/hiqdev/omnipay-freekassa) | ✓ | ✓ | hiqdev/omnipay-freekassa | [HiQDev](https://github.com/hiqdev)
 [Fibank](https://github.com/ampeco/omnipay-fibank) | - | ✓ | ampeco/omnipay-fibank | [Ampeco](https://github.com/ampeco)
+[First Atlantic Commerce](https://github.com/cloudcogsio/omnipay-firstatlanticcommerce-gateway) | - | ✓ | cloudcogsio/omnipay-firstatlanticcommerce-gateway | [Cloudcogs.io](https://github.com/cloudcogsio)
 [First Data](https://github.com/thephpleague/omnipay-firstdata) | ✓ | - | omnipay/firstdata | [OmniPay](https://github.com/thephpleague/omnipay)
 [Flo2cash](https://github.com/guisea/omnipay-flo2cash) | ✓ | - | guisea/omnipay-flo2cash | [Aaron Guise](https://github.com/guisea)
 [Free / Zero Amount](https://github.com/colinodell/omnipay-zero) | ✓ | - | colinodell/omnipay-zero | [Colin O'Dell](https://github.com/colinodell)
