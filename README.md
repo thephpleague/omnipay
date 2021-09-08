@@ -223,6 +223,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [PaymentgateRu](https://github.com/pinguinjkeke/omnipay-paymentgateru) | ✓ | ✓ | pinguinjkeke/omnipay-paymentgateru | [Alexander Avakov](https://github.com/pinguinjkeke)
 [PaymentSense](https://github.com/digitickets/omnipay-paymentsense) | ✓ | - | digitickets/omnipay-paymentsense | [DigiTickets](https://github.com/digitickets)
 [PaymentWall](https://github.com/incube8/omnipay-paymentwall) | ✓ | - | incube8/omnipay-paymentwall | [Del](https://github.com/delatbabel)
+[Paynow](https://github.com/pay-now/omnipay-paynow) | - | ✓ | pay-now/omnipay-paynow | [Paynow](https://github.com/pay-now)
 [PayPal](https://github.com/thephpleague/omnipay-paypal) | ✓ | ✓ | omnipay/paypal | [Del](https://github.com/delatbabel)
 [PayPro](https://github.com/payproNL/omnipay-paypro) | ✓ | - | paypronl/omnipay-paypro | [Fruitcake](https://github.com/fruitcake)
 [PAYONE](https://github.com/academe/omnipay-payone) | ✓ | ✓ | academe/omnipay-payone | [Jason Judge](https://github.com/judgej)
