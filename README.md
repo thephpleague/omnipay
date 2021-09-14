@@ -291,6 +291,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Yandex.Money for P2P payments](https://github.com/hiqdev/omnipay-yandexmoney) | ✓ | ✓ | hiqdev/omnipay-yandexmoney | [HiQDev](https://github.com/hiqdev)
 [Yekpay](https://github.com/nekofar/omnipay-yekpay) | - | ✓ | nekofar/omnipay-yekpay | [Milad Nekofar](https://github.com/nekofar)
 [ZarinPal](https://github.com/nekofar/omnipay-zarinpal) | - | ✓ | nekofar/omnipay-zarinpal | [Milad Nekofar](https://github.com/nekofar)
+[Xendit Invoice](https://github.com/David-Kurniawan/omnipay-xeninvoice) | - | ✓ | david-kurniawan/omnipay-xeninvoice | [David Kurniawan](https://github.com/David-Kurniawan)
 
 Gateways are created and initialized like so:
 
