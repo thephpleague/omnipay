@@ -122,6 +122,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Braintree](https://github.com/thephpleague/omnipay-braintree) | ✓ | ✓ | omnipay/braintree | [Omnipay](https://github.com/thephpleague/omnipay)
 [Buckaroo](https://github.com/thephpleague/omnipay-buckaroo) | ✓ | - | omnipay/buckaroo | [Omnipay](https://github.com/thephpleague/omnipay)
 [CardGate](https://github.com/cardgate/omnipay-cardgate) | ✓ | - | cardgate/omnipay-cardgate | [CardGate](https://github.com/cardgate)
+[Cardinity](https://github.com/janwebdev/omnipay-cardinity) | - | ✓ | janwebdev/omnipay-cardinity | [Yan Rogozinsky](https://github.com/janwebdev)
 [CardSave](https://github.com/thephpleague/omnipay-cardsave) | ✓ | - | omnipay/cardsave | [Omnipay](https://github.com/thephpleague/omnipay)
 [CashBaBa](https://github.com/tapos007/omnipay-cashbaba) | ✓ | ✓ | omnipay/cashbaba | [Recursion Technologies Ltd](https://github.com/tapos007)
 [Checkout.com](https://github.com/fotografde/omnipay-checkoutcom) | ✓ | - | fotografde/checkoutcom | [fotograf.de](https://github.com/fotografde)
