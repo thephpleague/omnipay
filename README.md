@@ -217,6 +217,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Pagar.me](https://github.com/descubraomundo/omnipay-pagarme) | ✓ | - | descubraomundo/omnipay-pagarme | [Descubra o Mundo](https://github.com/descubraomundo)
 [Paratika (Asseco)](https://github.com/yasinkuyu/omnipay-paratika) | ✓ | - | yasinkuyu/omnipay-paratika | [Yasin Kuyu](https://github.com/yasinkuyu)
 [PayFast](https://github.com/thephpleague/omnipay-payfast) | ✓ | - | omnipay/payfast | [Omnipay](https://github.com/thephpleague/omnipay)
+[PayGate](https://github.com/mvnrsa/omnipay-paygate) | ✓ | - | mvnrsa/paygate | [Marnus van Niekerk](https://github.com/mvnrsa)
 [Payflow](https://github.com/thephpleague/omnipay-payflow) | ✓ | - | omnipay/payflow | [Del](https://github.com/delatbabel)
 [PaymentExpress (DPS)](https://github.com/thephpleague/omnipay-paymentexpress) | ✓ | ✓ | omnipay/paymentexpress | [Del](https://github.com/delatbabel)
 [PaymentExpress / DPS (A2A)](https://github.com/onlinesid/omnipay-paymentexpress-a2a) | ✓ | - | onlinesid/omnipay-paymentexpress-a2a | [Sid](https://github.com/onlinesid)
