@@ -37,7 +37,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        composer update --${{ matrix.dependency-version }} --prefer-dist --no-progress
+        composer update --${{ matrix.dependency-version }} --prefer-dist --no-progress --no-plugins
 
     - name: Execute Unit Tests
       run: composer test
