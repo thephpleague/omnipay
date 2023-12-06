@@ -174,7 +174,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Ikajo](https://github.com/hiqdev/omnipay-ikajo) | ✓ | ✓ | hiqdev/omnipay-ikajo | [HiQDev](https://github.com/hiqdev)
 [InterKassa](https://github.com/hiqdev/omnipay-interkassa) | ✓ | ✓ | hiqdev/omnipay-interkassa | [HiQDev](https://github.com/hiqdev)
 [InovioPay](https://github.com/mvestil/omnipay-inoviopay) | ✓ | ✓ | mvestil/omnipay-inoviopay | [Mark Vestil](https://github.com/mvestil)
-[Iyzico](https://github.com/yasinkuyu/omnipay-iyzico) | ✓ | - | yasinkuyu/omnipay-iyzico | [Yasin Kuyu](https://github.com/yasinkuyu)
+[Iyzico](https://github.com/yasinkuyu/omnipay-iyzico) | ✓ | ✓ | yasinkuyu/omnipay-iyzico | [Yasin Kuyu](https://github.com/yasinkuyu)
 [Judo Pay](https://github.com/Transportersio/omnipay-judopay) | ✓ | - | transportersio/omnipay-judopay | [Transporters.io](https://github.com/Transportersio)
 [Klarna Checkout](https://github.com/MyOnlineStore/omnipay-klarna-checkout) | ✓ | ✓ | myonlinestore/omnipay-klarna-checkout | [MyOnlineStore](https://github.com/MyOnlineStore)
 [Laybuy](https://github.com/mediabeastnz/omnipay-laybuy) | ✓ | - | mediabeastnz/omnipay-laybuy | [Myles Derham](https://github.com/mediabeastnz)
