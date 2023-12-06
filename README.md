@@ -433,6 +433,7 @@ All gateways will accept a subset of these options:
 * clientIp
 * returnUrl
 * cancelUrl
+* cardTransactionType (one of 'ecommerce', 'continuous', 'moto' or 'retail', see below for more)
 
 Pass the options through to the method like so:
 
@@ -582,6 +583,18 @@ This is because there is likely far too many differences between how each gatewa
 recurring billing profiles. Also in most cases token billing will cover your needs, as you can
 store a credit card then charge it on whatever schedule you like. Feel free to get in touch if
 you really think this should be a core feature and worth the effort.
+
+## Card transaction Type
+
+Some gateways support multiple card transaction types with different requirements. For example eWay
+requires the cvn to be re-entered in an 'ecommerce' token transaction where the card owner is present
+but not when processing a 'continuous' transaction - such as a monthly donation.
+
+You can set this as:
+- ecommerce: card owner present online; 3D-Secure supported; saved tokens may be used.
+- continuous: card owner not present; repeats a previous approved transaction.
+- moto: card owner MAY be present; NO 3D-Secure; saved tokens may be used.
+- retail: POS machine or similar. Card owner present, PIN authorization possible. No 3D-Secure, no saved tokens.
 
 ## Incoming Notifications
 
