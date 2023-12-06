@@ -256,7 +256,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [RentMoola](https://github.com/rentmoola/omnipay-rentmoola) | ✓ | - | rentmoola/omnipay-rentmoola | [Geoff Shaw](https://github.com/Shawg)
 [RoboKassa](https://github.com/hiqdev/omnipay-robokassa) | ✓ | ✓ | hiqdev/omnipay-robokassa | [HiQDev](https://github.com/hiqdev)
 [RocketGate](https://github.com/mvestil/omnipay-rocketgate) | ✓ | ✓ | mvestil/omnipay-rocketgate | [Mark Vestil](https://github.com/mvestil)
-[Sage Pay](https://github.com/thephpleague/omnipay-sagepay) | ✓ | ✓ | omnipay/sagepay | [Jason Judge](https://github.com/judgej)
+[Sage Pay (now Opayo)](https://github.com/thephpleague/omnipay-sagepay) | ✓ | ✓ | omnipay/sagepay | [Jason Judge](https://github.com/judgej)
 [Sberbank](https://github.com/AndrewNovikof/omnipay-sberbank) | - | ✓ | andrewnovikof/omnipay-sberbank | [Andrew Novikov](https://github.com/AndrewNovikof)
 [SecPay](https://github.com/justinbusschau/omnipay-secpay) | ✓ | - | justinbusschau/omnipay-secpay | [Justin Busschau](https://github.com/justinbusschau)
 [SecurePay](https://github.com/thephpleague/omnipay-securepay) | ✓ | ✓ | omnipay/securepay | [Omnipay](https://github.com/thephpleague/omnipay)
