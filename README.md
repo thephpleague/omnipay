@@ -73,7 +73,7 @@ composer require league/omnipay:^3 omnipay/paypal
 ```
 
 If you want to use your own HTTP Client instead of Guzzle (which is the default for `league/omnipay`),
-you can require `league/common` and any `php-http/client-implementation` (see [PHP Http](http://docs.php-http.org/en/latest/clients.html))
+you can require `omnipay/common` and any `php-http/client-implementation` (see [PHP Http](http://docs.php-http.org/en/latest/clients.html))
 
 ```
 composer require league/common:^3 omnipay/paypal php-http/buzz-adapter
