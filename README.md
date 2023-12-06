@@ -287,6 +287,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Worldpay XML Direct Corporate Gateway](https://github.com/teaandcode/omnipay-worldpay-xml) | ✓ | - | teaandcode/omnipay-worldpay-xml | [Dave Nash](https://github.com/teaandcode)
 [Worldpay XML Hosted Corporate Gateway](https://github.com/catharsisjelly/omnipay-worldpay-cg-hosted) | ✓ | ✓ | catharsisjelly/omnipay-worldpay-cg-hosted | [Chris Lock](https://github.com/catharsisjelly)
 [Worldpay Business Gateway](https://github.com/thephpleague/omnipay-worldpay) | ✓ | ✓ | omnipay/worldpay | [Omnipay](https://github.com/thephpleague/omnipay)
+[Xendit Invoice](https://github.com/David-Kurniawan/omnipay-xeninvoice) | - | ✓ | david-kurniawan/omnipay-xeninvoice | [David Kurniawan](https://github.com/David-Kurniawan)
 [Yandex.Kassa](https://github.com/hiqdev/omnipay-yandex-kassa) | ✓ | ✓ | hiqdev/omnipay-yandex-kassa | [HiQDev](https://github.com/hiqdev)
 [Yandex.Money](https://github.com/yandex-money/yandex-money-cms-omnipay) | ✓ | - | yandexmoney/omnipay | [Roman Ananyev](https://github.com/aTastyCookie/)
 [Yandex.Money for P2P payments](https://github.com/hiqdev/omnipay-yandexmoney) | ✓ | ✓ | hiqdev/omnipay-yandexmoney | [HiQDev](https://github.com/hiqdev)
