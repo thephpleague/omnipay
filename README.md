@@ -124,6 +124,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [CardGate](https://github.com/cardgate/omnipay-cardgate) | ✓ | - | cardgate/omnipay-cardgate | [CardGate](https://github.com/cardgate)
 [CardSave](https://github.com/thephpleague/omnipay-cardsave) | ✓ | - | omnipay/cardsave | [Omnipay](https://github.com/thephpleague/omnipay)
 [CashBaBa](https://github.com/tapos007/omnipay-cashbaba) | ✓ | ✓ | omnipay/cashbaba | [Recursion Technologies Ltd](https://github.com/tapos007)
+[Cashfree](https://github.com/cashfree/omnipay-cashfree) | - | ✓ |  cashfree/omnipay-cashfree  | [Cashfree](https://github.com/cashfree)
 [Checkout.com](https://github.com/fotografde/omnipay-checkoutcom) | ✓ | - | fotografde/checkoutcom | [fotograf.de](https://github.com/fotografde)
 [CloudBanking](https://github.com/spsingh/omnipay-cloudbanking) | ✓ | - | cloudbanking/omnipay-cloudbanking | [Cloudbanking](http://cloudbanking.com.au/)
 [Coinbase](https://github.com/thephpleague/omnipay-coinbase) | ✓ | - | omnipay/coinbase | [Omnipay](https://github.com/thephpleague/omnipay)
