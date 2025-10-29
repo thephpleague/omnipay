@@ -169,6 +169,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [iDram](https://github.com/ptuchik/omnipay-idram) | - | ✓ | ptuchik/omnipay-idram | [Avik Aghajanyan](https://github.com/ptuchik)
 [iDeal](https://github.com/deniztezcan/omnipay-ideal) | - | ✓ | deniztezcan/omnipay-ideal | [Deniz Tezcan](https://github.com/deniztezcan)
 [Ingenico ePayments](https://github.com/deniztezcan/omnipay-ingenico-epayments) | - | ✓ | deniztezcan/omnipay-ingenico-epayments | [Deniz Tezcan](https://github.com/deniztezcan)
+[iPara](https://github.com/tcgunel/omnipay-ipara) | - | ✓ | tcgunel/omnipay-ipara | [Tolga Can Günel](https://github.com/tcgunel)
 [iPay88](https://github.com/dilab/omnipay-ipay88) | ✓ | ✓ | dilab/omnipay-ipay88 | [Xu Ding](https://github.com/dilab)
 [IfthenPay](https://github.com/ifthenpay/omnipay-ifthenpay) | ✓ | - | ifthenpay/omnipay-ifthenpay | [Rafael Almeida](https://github.com/rafaelcpalmeida)
 [Ikajo](https://github.com/hiqdev/omnipay-ikajo) | ✓ | ✓ | hiqdev/omnipay-ikajo | [HiQDev](https://github.com/hiqdev)
