@@ -1,0 +1,45 @@
+{
+    "name": "paythefly/omnipay-paythefly",
+    "type": "library",
+    "description": "PayTheFly crypto payment gateway for the Omnipay payment processing library",
+    "keywords": [
+        "omnipay",
+        "paythefly",
+        "crypto",
+        "blockchain",
+        "bsc",
+        "tron",
+        "payment"
+    ],
+    "homepage": "https://paythefly.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "PayTheFly",
+            "email": "dev@paythefly.com"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "omnipay/common": "^3.0"
+    },
+    "require-dev": {
+        "omnipay/tests": "^4.0",
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Omnipay\\PayTheFly\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Omnipay\\PayTheFly\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}
