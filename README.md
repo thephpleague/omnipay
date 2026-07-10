@@ -151,6 +151,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [eSewa](https://github.com/sudiptpa/esewa) | - | ✓ | sudiptpa/omnipay-esewa | [Sujip Thapa](https://github.com/sudiptpa)
 [EgopayRu](https://github.com/pinguinjkeke/omnipay-egopaymentru) | ✓ | - | pinguinjkeke/omnipay-egopaymentru | [Alexander Avakov](https://github.com/pinguinjkeke)
 [Elavon](https://github.com/lxrco/omnipay-elavon) | ✓ | ✓ | lxrco/omnipay-elavon | [Korri](https://github.com/Korri)
+[Elavon](https://github.com/academe/omnipay-elavon) | ✓ | ✓ | academe/omnipay-elavon | [Jason Judge](https://github.com/judgej)
 [ePayments](https://github.com/hiqdev/omnipay-epayments) | ✓ | ✓ | hiqdev/omnipay-epayments | [HiQDev](https://github.com/hiqdev)
 [ePayService](https://github.com/hiqdev/omnipay-epayservice) | ✓ | ✓ | hiqdev/omnipay-epayservice | [HiQDev](https://github.com/hiqdev)
 [eWAY](https://github.com/thephpleague/omnipay-eway) | ✓ | ✓ | omnipay/eway | [Del](https://github.com/delatbabel)
