@@ -102,6 +102,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [2Checkout Improved](https://github.com/collizo4sky/omnipay-2checkout) | ✓ | - | collizo4sky/omnipay-2checkout | [Agbonghama Collins](https://github.com/collizo4sky)
 [99Bill](https://github.com/laraveler/omnipay-99bill) | - | ✓ | x-class/omnipay-99bill | [Laraveler](https://github.com/laraveler)
 [Acapture (PayVision)](https://github.com/queueup-dev/omnipay-acapture) | ✓ | - | qup/omnipay-acapture | [Niels de Vries](https://github.com/niels-qup)
+[Accept Blue](https://github.com/futureecom/omnipay-acceptblue) | - | ✓ | futureecom/omnipay-acceptblue | [FutureEcom](https://github.com/futureecom)
 [Adyen](https://github.com/academe/omnipay-adyen) | - | ✓ | academe/omnipay-adyen | [Jason Judge](https://github.com/judgej)
 [Affirm](https://github.com/eduardlleshi/omnipay-affirm) | ✓ | ✓ | eduardlleshi/omnipay-affirm | [Eduard Lleshi](https://github.com/eduardlleshi)
 [Agms](https://github.com/agmscode/omnipay-agms) | ✓ | - | agmscode/omnipay-agms | [Maanas Royy](https://github.com/maanas)
