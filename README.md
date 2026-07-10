@@ -271,6 +271,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Stripe](https://github.com/thephpleague/omnipay-stripe) | ✓ | ✓ | omnipay/stripe | [Del](https://github.com/delatbabel)
 [TargetPay](https://github.com/thephpleague/omnipay-targetpay) | ✓ | - | omnipay/targetpay | [Alexander Deruwe](https://github.com/aderuwe)
 [TatraBank](https://github.com/bileto/omnipay-tatrabank) | ✓ | - | omnipay-tatrabank |
+[Tap](https://github.com/adnane-ka/omnipay-tap) | ✓ | ✓ | adnane-ka/omnipay-tap | [Adnane Kadri](https://github.com/adnane-ka)
 [ToyyibPay](https://github.com/sitehandy/omnipay-toyyibpay) | - | ✓ | sitehandy/omnipay-toyyibpay | [Amirol Zolkifli](https://github.com/sitehandy)
 [Tpay](https://github.com/tpay-com/omnipay-tpay) | ✓ | - | omnipay/tpay | [Tpay.com](https://github.com/tpay-com)
 [UnionPay](https://github.com/lokielse/omnipay-unionpay) | ✓ | ✓ | lokielse/omnipay-unionpay | [Loki Else](https://github.com/lokielse)
