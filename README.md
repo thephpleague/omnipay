@@ -278,6 +278,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Tap](https://github.com/adnane-ka/omnipay-tap) | ✓ | ✓ | adnane-ka/omnipay-tap | [Adnane Kadri](https://github.com/adnane-ka)
 [ToyyibPay](https://github.com/sitehandy/omnipay-toyyibpay) | - | ✓ | sitehandy/omnipay-toyyibpay | [Amirol Zolkifli](https://github.com/sitehandy)
 [Tpay](https://github.com/tpay-com/omnipay-tpay) | ✓ | - | omnipay/tpay | [Tpay.com](https://github.com/tpay-com)
+[Tranzila](https://github.com/futureecom/omnipay-tranzila) | - | ✓ | futureecom/omnipay-tranzila | [FutureEcom](https://github.com/futureecom)
 [UnionPay](https://github.com/lokielse/omnipay-unionpay) | ✓ | ✓ | lokielse/omnipay-unionpay | [Loki Else](https://github.com/lokielse)
 [Vantiv](https://github.com/lemonstand/omnipay-vantiv) | ✓ | - | lemonstand/omnipay-vantiv | [LemonStand](https://github.com/lemonstand)
 [Veritrans](https://github.com/andylibrian/omnipay-veritrans) | ✓ | - | andylibrian/omnipay-veritrans | [Andy Librian](https://github.com/andylibrian)
