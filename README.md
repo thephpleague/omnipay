@@ -236,6 +236,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Paymob](https://gitlab.com/paymob-integrations/omnipay) | - | ✓ | paymob/omnipay | [Paymob](https://gitlab.com/paymob-integrations)
 [Paynow](https://github.com/pay-now/omnipay-paynow) | - | ✓ | pay-now/omnipay-paynow | [Paynow](https://github.com/pay-now)
 [PayPal](https://github.com/thephpleague/omnipay-paypal) | ✓ | ✓ | omnipay/paypal | [Del](https://github.com/delatbabel)
+[PayPal](https://github.com/futureecom/omnipay-paypal) | - | ✓ |  futureecom/omnipay-paypal | [FutureEcom](https://github.com/futureecom)
 [PayPro](https://github.com/payproNL/omnipay-paypro) | ✓ | - | paypronl/omnipay-paypro | [Fruitcake](https://github.com/fruitcake)
 [PAYONE](https://github.com/academe/omnipay-payone) | ✓ | ✓ | academe/omnipay-payone | [Jason Judge](https://github.com/judgej)
 [Paysafecard](https://github.com/dercoder/omnipay-paysafecard) | ✓ | - | dercoder/omnipay-paysafecard | [Alexander Fedra](https://github.com/dercoder)
