@@ -248,6 +248,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [PayTrace](https://github.com/iddqdidkfa/omnipay-paytrace) | ✓ | - | softcommerce/omnipay-paytrace | [Oleg Ilyushyn](https://github.com/iddqdidkfa)
 [PayU](https://github.com/bileto/omnipay-payu) | ✓ | - | bileto/omnipay-payu |
 [PayZen](https://github.com/ubitransports/omnipay-payzen) | ✓ | - | ubitransports/omnipay-payzen | [Ubitransport](https://github.com/ubitransports)
+[Payzum](https://github.com/payzum-dev/omnipay-payzum) | - | ✓ | payzum/omnipay-payzum | [Payzum](https://github.com/payzum-dev)
 [Paxum](https://github.com/hiqdev/omnipay-paxum) | ✓ | ✓ | hiqdev/omnipay-paxum | [HiQDev](https://github.com/hiqdev)
 [Pelecard](https://github.com/Uskur/omnipay-pelecard) | ✓ | ✓ | uskur/omnipay-pelecard | [Uskur](https://github.com/Uskur)
 [Pin Payments](https://github.com/thephpleague/omnipay-pin) | ✓ | - | omnipay/pin | [Del](https://github.com/delatbabel)
