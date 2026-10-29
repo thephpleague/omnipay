@@ -278,6 +278,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Sofort](https://github.com/aimeoscom/omnipay-sofort) | ✓ | - | aimeoscom/omnipay-sofort | [Aimeos GmbH](https://github.com/aimeoscom)
 [Spreedly](https://github.com/gregoriohc/omnipay-spreedly) | ✓ | - | gregoriohc/omnipay-spreedly | [Gregorio Hernández Caso](https://github.com/gregoriohc)
 [Square](https://github.com/Transportersio/omnipay-square) | ✓ | ✓ | transportersio/omnipay-square | [Transporters.io](https://github.com/Transportersio)
+[SSLCommerz](https://github.com/mmrtonmoybd/omnipay-sslcommerz) | - | ✓ | mmrtonmoybd/omnipay-sslcommerz | [Moshiur Rahman](https://github.com/mmrtonmoybd)
 [Starkpay](https://github.com/starkpay/omnipay) | ✓ | ✓ | starkpay/omnipay | [Starkpay](https://github.com/starkpay)
 [Stripe](https://github.com/thephpleague/omnipay-stripe) | ✓ | ✓ | omnipay/stripe | [Del](https://github.com/delatbabel)
 [Swile](https://bitbucket.org/potagercity/swile-connector/src/master/) | ✓ | ✓ | potagercity/swile | [Potagercity](https://packagist.org/users/potagercity/)
