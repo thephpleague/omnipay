@@ -194,6 +194,7 @@ Gateway | 2.x | 3.x | Composer Package | Maintainer
 [Spreedly](https://github.com/gregoriohc/omnipay-spreedly) | ✓ | - | gregoriohc/omnipay-spreedly | [Gregorio Hernández Caso](https://github.com/gregoriohc)
 [Square](https://github.com/Transportersio/omnipay-square) | ✓ | ✓ | transportersio/omnipay-square | [Transporters.io](https://github.com/Transportersio)
 [Starkpay](https://github.com/starkpay/omnipay) | ✓ | ✓ | starkpay/omnipay | [Starkpay](https://github.com/starkpay)
+[Stitch Express](https://github.com/rrcatto/omnipay-stitch-express) | - | ✓ | rrcatto/omnipay-stitch-express | [rrcatto](https://github.com/rrcatto)
 [Stripe](https://github.com/thephpleague/omnipay-stripe) | ✓ | ✓ | omnipay/stripe | [Del](https://github.com/delatbabel)
 [Swile](https://bitbucket.org/potagercity/swile-connector/src/master/) | ✓ | ✓ | potagercity/swile | [Potagercity](https://packagist.org/users/potagercity/)
 [TargetPay](https://github.com/thephpleague/omnipay-targetpay) | ✓ | - | omnipay/targetpay | [Alexander Deruwe](https://github.com/aderuwe)
